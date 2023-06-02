@@ -6,7 +6,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_144867": {
+                "Dock to rm_a6b17": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -24,16 +24,38 @@
                     "default_connection": {
                         "region": "The Nest",
                         "area": "rm_a6b17",
-                        "node": "node_144652"
+                        "node": "Dock to rm_a7a01"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a02": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Power Grip Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_144868": {
+                "Dock to rm_a7a02": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -51,14 +73,36 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a02",
-                        "node": "node_145025"
+                        "node": "Dock to rm_a7a01"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a6b17": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Power Grip Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -66,7 +110,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_145025": {
+                "Dock to rm_a7a01": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -84,16 +128,29 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a01",
-                        "node": "node_144868"
+                        "node": "Dock to rm_a7a02"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a03": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Hijump Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_145026": {
+                "Dock to rm_a7a03": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -111,14 +168,22 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a03",
-                        "node": "node_145248"
+                        "node": "Dock to rm_a7a02"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a01": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -126,7 +191,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_145248": {
+                "Dock to rm_a7a02": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -144,16 +209,24 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a02",
-                        "node": "node_145026"
+                        "node": "Dock to rm_a7a03"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a04": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_145249": {
+                "Dock to rm_a7a04": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -171,14 +244,22 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a04",
-                        "node": "node_145427"
+                        "node": "Dock to rm_a7a03"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a02": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -186,7 +267,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_145427": {
+                "Dock to rm_a7a03": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -204,16 +285,33 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a03",
-                        "node": "node_145249"
+                        "node": "Dock to rm_a7a04"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a05": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Power Grip Wall"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Tunnel Climb"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_145428": {
+                "Dock to rm_a7a05": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -231,14 +329,32 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a05",
-                        "node": "node_145597"
+                        "node": "Dock to rm_a7a04"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a03": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morphball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -246,7 +362,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_145597": {
+                "Dock to rm_a7a04": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -264,16 +380,38 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a04",
-                        "node": "node_145428"
+                        "node": "Dock to rm_a7a05"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a06": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Power Grip Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_145598": {
+                "Dock to rm_a7a06": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -291,14 +429,27 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a06",
-                        "node": "node_145726"
+                        "node": "Dock to rm_a7a05"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a04": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Power Grip Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -306,7 +457,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_145726": {
+                "Dock to rm_a7a05": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -324,16 +475,29 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a05",
-                        "node": "node_145598"
+                        "node": "Dock to rm_a7a06"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a07": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Hijump Tunnel Climb"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_145727": {
+                "Dock to rm_a7a07": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -351,14 +515,22 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a07",
-                        "node": "node_145811"
+                        "node": "Dock to rm_a7a06"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a05": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -366,7 +538,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_145811": {
+                "Dock to rm_a7a06": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -384,21 +556,29 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a06",
-                        "node": "node_145727"
+                        "node": "Dock to rm_a7a07"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a07a": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_145824": {
+                "Dock to rm_a7a07a": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1280.0,
-                        "y": 80.0,
+                        "x": 1276.740614603535,
+                        "y": 80.64519180738847,
                         "z": 0.0
                     },
                     "description": "",
@@ -411,14 +591,57 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a07a",
-                        "node": "node_145832"
+                        "node": "Dock to rm_a7a07"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a06": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock from rm_a7a08": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 483.59,
+                        "y": 225.96,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Genetics Laboratory",
+                        "area": "rm_a7a08",
+                        "node": "Dock to rm_a7a07"
+                    },
+                    "default_dock_weakness": "Back Only",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to rm_a7a07a": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -426,7 +649,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_145832": {
+                "Dock to rm_a7a07": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -444,16 +667,29 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a07",
-                        "node": "node_145824"
+                        "node": "Dock to rm_a7a07a"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a08": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Hijump With Power Grip Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_145833": {
+                "Dock to rm_a7a08": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -471,14 +707,22 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a08",
-                        "node": "node_146403"
+                        "node": "Dock to rm_a7a07a"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a07": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -486,7 +730,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_146397": {
+                "Dock to rm_a7a07": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -494,7 +738,7 @@
                         "y": 0.0,
                         "z": 0.0
                     },
-                    "description": "Door connection is broken, this is a fallback connection!",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
@@ -504,7 +748,7 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a07",
-                        "node": "node_145811"
+                        "node": "Dock from rm_a7a08"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -513,7 +757,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "node_146398": {
+                "Dock to rm_a7b01A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -531,16 +775,24 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b01A",
-                        "node": "node_146500"
+                        "node": "Dock to rm_a7a08"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a07a": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_146403": {
+                "Dock to rm_a7a07a": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -558,14 +810,142 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a07a",
-                        "node": "node_145833"
+                        "node": "Dock to rm_a7a08"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a07": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to rm_a7b01A": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spacejump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speedbooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hijump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -573,7 +953,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_146500": {
+                "Dock to rm_a7a08": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -591,16 +971,24 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7a08",
-                        "node": "node_146398"
+                        "node": "Dock to rm_a7b01A"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a7b02A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_146502": {
+                "Door to rm_a7b02A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -614,18 +1002,26 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b02A",
-                        "node": "node_146516"
+                        "node": "Door to rm_a7b01A"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7a08": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -633,12 +1029,12 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_Heal_146512": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 144.0,
-                        "y": 96.0,
+                        "x": 157.22,
+                        "y": 110.16,
                         "z": 0.0
                     },
                     "description": "",
@@ -646,10 +1042,25 @@
                         "default"
                     ],
                     "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {}
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to rm_a7b03A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to rm_a7b01A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_146515": {
+                "Door to rm_a7b03A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -663,20 +1074,28 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b03A",
-                        "node": "node_146534"
+                        "node": "Door to rm_a7b02A"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_146516": {
+                "Door to rm_a7b01A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -690,18 +1109,26 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b01A",
-                        "node": "node_146502"
+                        "node": "Door to rm_a7b02A"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -709,7 +1136,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_146533": {
+                "Door to rm_a7b04A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -723,20 +1150,28 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b04A",
-                        "node": "node_146603"
+                        "node": "Door to rm_a7b03A"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a7b03B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_146534": {
+                "Door to rm_a7b02A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -750,20 +1185,28 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b02A",
-                        "node": "node_146515"
+                        "node": "Door to rm_a7b03A"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a7b03B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_146536": {
+                "Door to rm_a7b03B": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -777,31 +1220,151 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b03B",
-                        "node": "node_146565"
+                        "node": "Door to rm_a7b03A"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a7b04A": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hijump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spacejump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MorphGlide",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to rm_a7b02A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "rm_a7b03B": {
-            "default_node": "node_146565",
+            "default_node": "Door to rm_a7b03A",
             "extra": {},
             "nodes": {
-                "node_146565": {
+                "Door to rm_a7b03A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
                         "y": 64.0,
+                        "z": 0.0
+                    },
+                    "description": "TODO: check when the wall here gets destroyed\n\n",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Genetics Laboratory",
+                        "area": "rm_a7b03A",
+                        "node": "Door to rm_a7b03B"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Teleporter Pipe": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Teleporter Pipe": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 492.05,
+                        "y": 116.47,
                         "z": 0.0
                     },
                     "description": "",
@@ -810,18 +1373,21 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Genetics Laboratory",
-                        "area": "rm_a7b03A",
-                        "node": "node_146536"
+                    "destination": {
+                        "region": "Hydro Station",
+                        "area": "rm_a2a19"
                     },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {
+                        "Door to rm_a7b03A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -829,7 +1395,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_146603": {
+                "Door to rm_a7b03A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -843,20 +1409,33 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b03A",
-                        "node": "node_146533"
+                        "node": "Door to rm_a7b04A"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a7b04": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_146604": {
+                "Door to rm_a7b04": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -870,18 +1449,31 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b04",
-                        "node": "node_146831"
+                        "node": "Door to rm_a7b04A"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a7b03A": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -889,7 +1481,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_146831": {
+                "Door to rm_a7b04A": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -903,20 +1495,119 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b04A",
-                        "node": "node_146604"
+                        "node": "Door to rm_a7b04"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to rm_a7b05": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Hijump Tunnel Climb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get up to highest point",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hijump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spacejump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "IBJ",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Shinespark from next room",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speedbooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Shinesparking",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_146832": {
+                "Tunnel to rm_a7b05": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -930,18 +1621,36 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b05",
-                        "node": "node_146876"
+                        "node": "Tunnel to rm_a7b04"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a7b04A": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morphball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -949,7 +1658,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_146876": {
+                "Tunnel to rm_a7b04": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -963,20 +1672,38 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b04",
-                        "node": "node_146832"
+                        "node": "Tunnel to rm_a7b05"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Bottom": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morphball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_146877": {
+                "Door to rm_a7b06": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -990,18 +1717,47 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b06",
                         "node": "node_146928"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
+                },
+                "Bottom": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 222.98282957286787,
+                        "y": 51.88590889740311,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Tunnel to rm_a7b04": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Power Grip Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1027,7 +1783,7 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b05",
-                        "node": "node_146877"
+                        "node": "Door to rm_a7b06"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1447,7 +2203,7 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7c01",
-                        "node": "node_147904"
+                        "node": "Dock to rm_a7b11"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1489,7 +2245,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_147904": {
+                "Dock to rm_a7b11": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1514,9 +2270,17 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Event - Baby": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_147905": {
+                "Dock to rm_a7c02": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1541,7 +2305,46 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Event - Baby": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Baby": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 793.3248190719455,
+                        "y": 59.15141194834678,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Dock to rm_a7b11": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to rm_a7c02": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1567,7 +2370,7 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7c01",
-                        "node": "node_147905"
+                        "node": "Dock to rm_a7c02"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,

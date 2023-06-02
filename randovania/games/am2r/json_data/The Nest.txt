@@ -1,426 +1,832 @@
 ----------------
 rm_a6a01
-> node_136919; Heals? False
+> Dock to rm_a6a02; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a02/node_137185
+  * Open Passage to rm_a6a02/Dock to rm_a6a01
+  > Dock to rm_a0h35
+      Trivial
 
-> node_136920; Heals? False
+> Dock to rm_a0h35; Heals? False
   * Layers: default
   * Open Passage to rm_a0h35/Dock to rm_a6a01
+  > Dock to rm_a6a02
+      Trivial
 
 ----------------
 rm_a6a02
-> node_137185; Heals? False
+> Dock to rm_a6a01; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a01/node_136919
+  * Open Passage to rm_a6a01/Dock to rm_a6a02
+  > Dock to rm_a6a03
+      Power Grip Wall
 
-> node_137186; Heals? False
+> Dock to rm_a6a03; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a03/node_137439
+  * Open Passage to rm_a6a03/Dock to rm_a6a02
+  > Dock to rm_a6a01
+      Trivial
 
 ----------------
 rm_a6a03
-> node_137439; Heals? False
+> Dock to rm_a6a02; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a02/node_137186
+  * Open Passage to rm_a6a02/Dock to rm_a6a03
+  > Middle pillars
+      Trivial
 
-> node_137440; Heals? False
+> Dock to rm_a6a04; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a04/node_137592
+  * Open Passage to rm_a6a04/Dock to rm_a6a03
+  > Middle pillars
+      Trivial
+
+> Middle pillars; Heals? False
+  * Layers: default
+  > Dock to rm_a6a02
+      Power Grip Wall
+  > Dock to rm_a6a04
+      Trivial
+  > Pickup (Missile)
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              Gravity
+              Damage Boost (Beginner) and Lava ≥ 30
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 60; Category? Minor
+  > Middle pillars
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              Gravity
+              Damage Boost (Beginner) and Lava ≥ 30
 
 ----------------
 rm_a6a04
-> node_137592; Heals? False
+> Dock to rm_a6a03; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a03/node_137440
+  * Open Passage to rm_a6a03/Dock to rm_a6a04
+  > Dock to rm_a6a05
+      Trivial
 
-> node_137593; Heals? False
+> Dock to rm_a6a05; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a05/node_137845
+  * Open Passage to rm_a6a05/Dock to rm_a6a04
+  > Dock to rm_a6a03
+      Power Grip Wall
 
 ----------------
 rm_a6a05
-> node_137845; Heals? False
+> Dock to rm_a6a04; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a04/node_137593
+  * Open Passage to rm_a6a04/Dock to rm_a6a05
+  > Dock to rm_a6a06
+      Destroy Ice Barrier
 
-> node_137846; Heals? False
+> Dock to rm_a6a06; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a06/node_138130
+  * Open Passage to rm_a6a06/Dock to rm_a6a05
+  > Dock to rm_a6a04
+      Destroy Ice Barrier
 
 ----------------
 rm_a6a06
-> node_138130; Heals? False
+> Dock to rm_a6a05; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a05/node_137846
+  * Open Passage to rm_a6a05/Dock to rm_a6a06
+  > Dock to rm_a6a12
+      Trivial
 
-> node_138131; Heals? False
+> Dock to rm_a6a11; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a11/node_138849
+  * Open Passage to rm_a6a11/Dock to rm_a6a06
+  > Dock to rm_a6a12
+      Before Area 6 - Last Alpha or After Area 6 - First Omega
+  > Dock to rm_a6a07
+      Power Grip Wall
 
-> node_138132; Heals? False
+> Dock to rm_a6a12; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a12/node_139080
+  * Open Passage to rm_a6a12/Dock to rm_a6a06
+  * TODO: this room changes, and thus makes requirements to go up different.
 
-> node_138133; Heals? False
+
+  > Dock to rm_a6a05
+      Trivial
+  > Dock to rm_a6a11
+      Trivial
+
+> Dock to rm_a6a07; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a07/node_138265
+  * Open Passage to rm_a6a07/Dock to rm_a6a06
+  > Dock to rm_a6a11
+      Trivial
+  > Event - Pre First Omega Scan
+      After Area 6 - Last Alpha
+
+> Event - Pre First Omega Scan; Heals? False
+  * Layers: default
+  * Event Nest Scan Before First Omega
+  > Dock to rm_a6a07
+      Trivial
 
 ----------------
 rm_a6a07
-> node_138265; Heals? False
+> Dock to rm_a6a06; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a06/node_138133
+  * Open Passage to rm_a6a06/Dock to rm_a6a07
+  > Dock to rm_a6a08
+      Trivial
 
-> node_138266; Heals? False
+> Dock to rm_a6a08; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a08/node_138439
+  * Open Passage to rm_a6a08/Dock to rm_a6a07
+  > Dock to rm_a6a06
+      Trivial
 
 ----------------
 rm_a6a08
-> node_138439; Heals? False
+> Dock to rm_a6a07; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a07/node_138266
+  * Open Passage to rm_a6a07/Dock to rm_a6a08
+  > Dock to rm_a6a09
+      Hijump Wall
 
-> node_138440; Heals? False
+> Dock to rm_a6a09; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a09/node_138470
+  * Open Passage to rm_a6a09/Dock to rm_a6a08
+  > Dock to rm_a6a07
+      Trivial
 
 ----------------
 rm_a6a09
-> node_138470; Heals? False
+> Dock to rm_a6a08; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a08/node_138440
+  * Open Passage to rm_a6a08/Dock to rm_a6a09
+  > Dock to rm_a6a10
+      Trivial
+  > Dock to rm_a6a09A
+      After Nest Scan Before First Omega and Hijump With Power Grip Wall
+  > Event - Alpha
+      Before Nest Scan Before First Omega and Defeat Alpha
 
-> node_138471; Heals? False
+> Dock to rm_a6a10; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a10/node_138799
+  * Open Passage to rm_a6a10/Dock to rm_a6a09
+  > Dock to rm_a6a08
+      Trivial
 
-> node_138494; Heals? False
+> Dock to rm_a6a09A; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a09A/node_138544
+  * Open Passage to rm_a6a09A/Dock to rm_a6a09
+  > Dock to rm_a6a08
+      Any of the following:
+          After Nest Scan Before First Omega
+          Speedbooster and After Area 6 - Last Alpha and Shinesparking Tricks (Beginner) and Power Grip Wall
+
+> Event - Alpha; Heals? False
+  * Layers: default
+  * Event Area 6 - Last Alpha
+  > Dock to rm_a6a08
+      Trivial
 
 ----------------
 rm_a6a09A
-> node_138502; Heals? False
+> Dock to rm_a6a09B; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a09B/node_138560
+  * Open Passage to rm_a6a09B/Dock to rm_a6a09A
+  > Dock to rm_a6a09
+      Trivial
 
-> node_138544; Heals? False
+> Dock to rm_a6a09; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a09/node_138494
+  * Open Passage to rm_a6a09/Dock to rm_a6a09A
+  > Dock to rm_a6a09B
+      Power Grip Wall
 
 ----------------
 rm_a6a09B
-> node_138559; Heals? False
+> Dock to rm_a6a09C; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a09C/node_138582
+  * Open Passage to rm_a6a09C/Dock to rm_a6a09B
+  > Dock to rm_a6a09A
+      Trivial
 
-> node_138560; Heals? False
+> Dock to rm_a6a09A; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a09A/node_138502
+  * Open Passage to rm_a6a09A/Dock to rm_a6a09B
+  > Dock to rm_a6a09C
+      Any of the following:
+          Power Grip Wall
+          Speedbooster and After Area 6 - First Omega and Shinesparking Tricks (Beginner)
+  > Event - Omega
+      Defeat Omega
+
+> Event - Omega; Heals? False
+  * Layers: default
+  * Event Area 6 - First Omega
+  > Dock to rm_a6a09A
+      Trivial
 
 ----------------
 rm_a6a09C
-> node_138582; Heals? False
+> Dock to rm_a6a09B; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a09B/node_138559
+  * Open Passage to rm_a6a09B/Dock to rm_a6a09C
+  > Pickup (Super Missile)
+      Trivial
+
+> Pickup (Super Missile); Heals? False
+  * Layers: default
+  * Pickup 51; Category? Minor
+  > Dock to rm_a6a09B
+      Trivial
 
 ----------------
 rm_a6a10
-> node_138799; Heals? False
+> Dock to rm_a6a09; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a09/node_138471
+  * Open Passage to rm_a6a09/Dock to rm_a6a10
+  > Dock to rm_a6a10B
+      Trivial
 
-> node_138800; Heals? False
+> Dock to rm_a6a11; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a11/node_138848
+  * Open Passage to rm_a6a11/Dock to rm_a6a10
+  > Dock to rm_a6a10B
+      Trivial
 
-> node_138813; Heals? False
+> Dock to rm_a6a10B; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a10B/node_150335
+  * Open Passage to rm_a6a10B/Dock to rm_a6a10
+  > Dock to rm_a6a09
+      Hijump With Power Grip Wall
+  > Dock to rm_a6a11
+      Trivial
 
 ----------------
 rm_a6a11
-> node_138848; Heals? False
+> Dock to rm_a6a10; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a10/node_138800
+  * Open Passage to rm_a6a10/Dock to rm_a6a11
+  > Dock to rm_a6a06
+      Trivial
 
-> node_138849; Heals? False
+> Dock to rm_a6a06; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a06/node_138131
+  * Open Passage to rm_a6a06/Dock to rm_a6a11
+  > Dock to rm_a6a10
+      Trivial
 
 ----------------
 rm_a6a12
-> node_139080; Heals? False
+> Dock to rm_a6a06; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a06/node_138132
+  * Open Passage to rm_a6a06/Dock to rm_a6a12
+  > Bottom
+      Morphball
 
-> node_139081; Heals? False
+> Tunnel to rm_a6a13; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a13/node_139311
+  * Morph Ball Tunnel to rm_a6a13/Tunnel to rm_a6a12
+  > Bottom
+      Morphball
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to rm_a6a06
+      All of the following:
+          Power Grip Climb
+          Any of the following:
+              Hijump or Spacejump or Can Use Spider Ball
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+              All of the following:
+                  Morph Glide (Intermediate)
+                  Power Grip or Walljump (Intermediate)
+  > Tunnel to rm_a6a13
+      Tunnel Climb
 
 ----------------
 rm_a6a13
-> node_139311; Heals? False
+> Tunnel to rm_a6a12; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a12/node_139081
+  * Morph Ball Tunnel to rm_a6a12/Tunnel to rm_a6a13
+  > Dock to rm_a6a14
+      All of the following:
+          Morphball
+          Gravity or Damage Boost (Advanced)
+  > Middle Platform
+      Morphball and Destroy Ice Barrier
 
-> node_139312; Heals? False
+> Dock to rm_a6a14; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a14/node_139581
+  * Open Passage to rm_a6a14/Dock to rm_a6a13
+  > Tunnel to rm_a6a12
+      All of the following:
+          Morphball
+          Any of the following:
+              Gravity
+              Damage Boost (Advanced) and Power Grip Wall
+  > Middle Platform
+      Destroy Ice Barrier
+
+> Middle Platform; Heals? False
+  * Layers: default
+  > Tunnel to rm_a6a12
+      Morphball and Destroy Ice Barrier
+  > Dock to rm_a6a14
+      Destroy Ice Barrier
 
 ----------------
 rm_a6a14
-> node_139581; Heals? False
+> Dock to rm_a6a13; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a13/node_139312
+  * Open Passage to rm_a6a13/Dock to rm_a6a14
+  > Dock to rm_a6a15
+      Trivial
+  > Dock to rm_a6a16
+      Hijump Wall
 
-> node_139582; Heals? False
+> Dock to rm_a6a15; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a15/node_139652
+  * Open Passage to rm_a6a15/Dock to rm_a6a14
+  > Dock to rm_a6a13
+      Trivial
 
-> node_139583; Heals? False
+> Dock to rm_a6a16; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a16/node_139883
+  * Open Passage to rm_a6a16/Dock to rm_a6a14
+  > Dock to rm_a6a13
+      Trivial
 
 ----------------
 rm_a6a15
-> node_Heal_139651; Heals? True
+> Save Station; Heals? True
   * Layers: default
+  > Dock to rm_a6a14
+      Trivial
 
-> node_139652; Heals? False
+> Dock to rm_a6a14; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a14/node_139582
+  * Open Passage to rm_a6a14/Dock to rm_a6a15
+  > Save Station
+      Trivial
 
 ----------------
 rm_a6a16
-> node_139883; Heals? False
+> Dock to rm_a6a14; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a14/node_139583
+  * Open Passage to rm_a6a14/Dock to rm_a6a16
+  > Dock to rm_a6a17
+      Space Jump Wall
 
-> node_139884; Heals? False
+> Dock to rm_a6a17; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a17/node_140258
+  * Open Passage to rm_a6a17/Dock to rm_a6a16
+  > Dock to rm_a6a14
+      Trivial
 
 ----------------
 rm_a6a17
-> node_140258; Heals? False
+> Dock to rm_a6a16; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a16/node_139884
+  * Open Passage to rm_a6a16/Dock to rm_a6a17
+  > Dock to rm_a6a18
+      Power Grip Wall
 
-> node_140259; Heals? False
+> Dock to rm_a6a18; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a18/node_140696
+  * Open Passage to rm_a6a18/Dock to rm_a6a17
+  > Dock to rm_a6a16
+      Trivial
 
 ----------------
 rm_a6a18
-> node_140696; Heals? False
+> Dock to rm_a6a17; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a17/node_140259
+  * Open Passage to rm_a6a17/Dock to rm_a6a18
+  > Dock to rm_a6b01
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              Tunnel Climb
+              Morphball and Mid-Air Morph (Intermediate)
 
-> node_140697; Heals? False
+> Dock to rm_a6b01; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b01/node_140802
+  * Open Passage to rm_a6b01/Dock to rm_a6a18
+  > Dock to rm_a6a17
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              Tunnel Climb
+              Morphball and Mid-Air Morph (Intermediate)
 
 ----------------
 rm_a6b01
-> node_140802; Heals? False
+> Dock to rm_a6a18; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a18/node_140697
+  * Open Passage to rm_a6a18/Dock to rm_a6b01
+  > Dock to rm_a6b02
+      Trivial
 
-> node_140803; Heals? False
+> Dock to rm_a6b02; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b02/node_141243
+  * Open Passage to rm_a6b02/Dock to rm_a6b01
+  > Dock to rm_a6a18
+      Trivial
 
 ----------------
 rm_a6b02
-> node_141243; Heals? False
+> Dock to rm_a6b01; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b01/node_140803
+  * Open Passage to rm_a6b01/Dock to rm_a6b02
+  > Dock to rm_a6b03 (Bottom)
+      Trivial
+  > Dock to rm_a6b05
+      Speedbooster and Combat (Beginner) and Shinesparking Tricks (Beginner) and Disabled Entrance Rando and Power Grip Wall
 
-> node_141244; Heals? False
+> Dock to rm_a6b03 (Bottom); Heals? False
   * Layers: default
-  * Open Passage to rm_a6b03/node_141411
+  * Open Passage to rm_a6b03/Dock to rm_a6b02 (Bottom Right)
+  > Dock to rm_a6b01
+      Trivial
 
-> node_141245; Heals? False
+> Dock to rm_a6b03 (Top); Heals? False
   * Layers: default
-  * Open Passage to rm_a6b03/node_141412
+  * Open Passage to rm_a6b03/Dock to rm_a6b02 (Middle Right)
+  > Dock to rm_a6b04 (Bottom)
+      Power Grip Wall
 
-> node_141246; Heals? False
+> Dock to rm_a6b04 (Bottom); Heals? False
   * Layers: default
-  * Open Passage to rm_a6b04/node_141569
+  * Open Passage to rm_a6b04/Dock to rm_a6b02 (Middle Left)
+  > Dock to rm_a6b03 (Top)
+      Trivial
 
-> node_141247; Heals? False
+> Dock to rm_a6b04 (Top); Heals? False
   * Layers: default
-  * Open Passage to rm_a6b04/node_141570
+  * Open Passage to rm_a6b04/Dock to rm_a6b02 (Top Left)
+  > Dock to rm_a6b05
+      Any of the following:
+          Hijump or Spacejump or Can Use Spider Ball
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Can Use Bombs
 
-> node_141248; Heals? False
+> Dock to rm_a6b05; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b05/node_141626
+  * Open Passage to rm_a6b05/Dock to rm_a6b02
+  > Dock to rm_a6b04 (Top)
+      Trivial
 
 ----------------
 rm_a6b03
-> node_141411; Heals? False
+> Dock to rm_a6b02 (Bottom Right); Heals? False
   * Layers: default
-  * Open Passage to rm_a6b02/node_141244
+  * Open Passage to rm_a6b02/Dock to rm_a6b03 (Bottom)
+  > Dock to rm_a6b02 (Middle Right)
+      Power Grip Wall
 
-> node_141412; Heals? False
+> Dock to rm_a6b02 (Middle Right); Heals? False
   * Layers: default
-  * Open Passage to rm_a6b02/node_141245
+  * Open Passage to rm_a6b02/Dock to rm_a6b03 (Top)
+  > Dock to rm_a6b02 (Bottom Right)
+      Trivial
 
 ----------------
 rm_a6b04
-> node_141569; Heals? False
+> Dock to rm_a6b02 (Middle Left); Heals? False
   * Layers: default
-  * Open Passage to rm_a6b02/node_141246
+  * Open Passage to rm_a6b02/Dock to rm_a6b04 (Bottom)
+  > Dock to rm_a6b02 (Top Left)
+      Power Grip Wall
 
-> node_141570; Heals? False
+> Dock to rm_a6b02 (Top Left); Heals? False
   * Layers: default
-  * Open Passage to rm_a6b02/node_141247
+  * Open Passage to rm_a6b02/Dock to rm_a6b04 (Top)
+  > Dock to rm_a6b02 (Middle Left)
+      Trivial
 
 ----------------
 rm_a6b05
-> node_141626; Heals? False
+> Dock to rm_a6b02; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b02/node_141248
+  * Open Passage to rm_a6b02/Dock to rm_a6b05
+  > Dock to rm_a6b06
+      Trivial
 
-> node_141627; Heals? False
+> Dock to rm_a6b06; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b06/node_141779
+  * Open Passage to rm_a6b06/Dock to rm_a6b05
+  > Dock to rm_a6b02
+      Power Grip Wall
+  > Dock to rm_a6b11
+      Space Jump Wall
 
-> node_141628; Heals? False
+> Dock to rm_a6b11; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b11/node_142982
+  * Open Passage to rm_a6b11/Dock to rm_a6b05
+  > Dock to rm_a6b06
+      Trivial
+  > Dock to rm_a6b09
+      Space Jump Wall
 
-> node_141629; Heals? False
+> Dock to rm_a6b09; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b09/node_142565
+  * Open Passage to rm_a6b09/Dock to rm_a6b05
+  > Dock to rm_a6b11
+      Trivial
+  > Dock to rm_a6b07
+      Space Jump Wall
 
-> node_141630; Heals? False
+> Dock to rm_a6b07; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b07/node_142186
+  * Open Passage to rm_a6b07/Dock to rm_a6b05
+  > Dock to rm_a6b09
+      Trivial
 
 ----------------
 rm_a6b06
-> node_Heal_141778; Heals? True
+> Save Station; Heals? True
   * Layers: default
+  > Dock to rm_a6b05
+      Trivial
 
-> node_141779; Heals? False
+> Dock to rm_a6b05; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b05/node_141627
+  * Open Passage to rm_a6b05/Dock to rm_a6b06
+  > Save Station
+      Trivial
 
 ----------------
 rm_a6b07
-> node_142186; Heals? False
+> Dock to rm_a6b05; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b05/node_141630
+  * Open Passage to rm_a6b05/Dock to rm_a6b07
+  > Tunnel to rm_a6b08
+      All of the following:
+          Any of the following:
+              # Reach platform
+              Movement (Advanced) or Space Jump Wall
+          Any of the following:
+              # Get into tunnel
+              Tunnel Climb
+              Morphball and Mid-Air Morph (Intermediate)
 
-> node_142187; Heals? False
+> Tunnel to rm_a6b08; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b08/node_142282
+  * Morph Ball Tunnel to rm_a6b08/Tunnel to rm_a6b07
+  > Dock to rm_a6b05
+      All of the following:
+          Morphball
+          Movement (Advanced) or Space Jump Wall
 
 ----------------
 rm_a6b08
-> node_142282; Heals? False
+> Tunnel to rm_a6b07; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b07/node_142187
+  * Morph Ball Tunnel to rm_a6b07/Tunnel to rm_a6b08
+  > Event - Omega
+      Morphball and Defeat Omega
+
+> Event - Omega; Heals? False
+  * Layers: default
+  * Event Area 6 - Nest Left Top Omega
+  > Tunnel to rm_a6b07
+      Power Grip Climb
 
 ----------------
 rm_a6b09
-> node_142565; Heals? False
+> Dock to rm_a6b05; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b05/node_141629
+  * Open Passage to rm_a6b05/Dock to rm_a6b09
+  > Tunnel to rm_a6b10
+      All of the following:
+          Power Grip Wall
+          Any of the following:
+              Tunnel Climb
+              Morphball and Mid-Air Morph (Intermediate)
 
-> node_142566; Heals? False
+> Tunnel to rm_a6b10; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b10/node_142663
+  * Morph Ball Tunnel to rm_a6b10/Tunnel to rm_a6b09
+  > Dock to rm_a6b05
+      Morphball and Power Grip Wall
 
 ----------------
 rm_a6b10
-> node_142663; Heals? False
+> Tunnel to rm_a6b09; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b09/node_142566
+  * Morph Ball Tunnel to rm_a6b09/Tunnel to rm_a6b10
+  > Event - Omega
+      Morphball and Defeat Omega
+
+> Event - Omega; Heals? False
+  * Layers: default
+  * Event Area 6 - Nest Right Omega
+  > Tunnel to rm_a6b09
+      Hijump Tunnel Climb
 
 ----------------
 rm_a6b11
-> node_142982; Heals? False
+> Dock to rm_a6b05; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b05/node_141628
+  * Open Passage to rm_a6b05/Dock to rm_a6b11
+  > Middle Right
+      Movement (Intermediate) or Power Grip Wall or Tunnel Climb
 
-> node_142983; Heals? False
+> Tunnel to rm_a6b12; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b12/node_143091
+  * Morph Ball Tunnel to rm_a6b12/Tunnel to rm_a6b11
+  > Middle Left
+      All of the following:
+          Morphball
+          Movement (Intermediate) or Power Grip Wall
 
-> node_142984; Heals? False
+> Dock to rm_a6b13; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b13/node_143602
+  * Open Passage to rm_a6b13/Dock to rm_a6b11
+  > Middle Right
+      Trivial
+
+> Middle Right; Heals? False
+  * Layers: default
+  > Dock to rm_a6b05
+      Morphball or Movement (Beginner) or Power Grip Wall
+  > Dock to rm_a6b13
+      Trivial
+  > Middle Left
+      Movement (Beginner) or Power Grip Wall
+
+> Middle Left; Heals? False
+  * Layers: default
+  > Tunnel to rm_a6b12
+      All of the following:
+          Morphball
+          Movement (Intermediate) or Power Grip Wall
+  > Middle Right
+      Trivial
 
 ----------------
 rm_a6b12
-> node_143091; Heals? False
+> Tunnel to rm_a6b11; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b11/node_142983
+  * Morph Ball Tunnel to rm_a6b11/Tunnel to rm_a6b12
+  > Event - Omega
+      Morphball and Defeat Omega
+
+> Event - Omega; Heals? False
+  * Layers: default
+  * Event Area 6 - Nest Left Bottom Omega
+  > Tunnel to rm_a6b11
+      Hijump Tunnel Climb
 
 ----------------
 rm_a6b13
-> node_143602; Heals? False
+> Dock to rm_a6b11; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b11/node_142984
+  * Open Passage to rm_a6b11/Dock to rm_a6b13
+  > Top Pillar
+      Trivial
 
-> node_143603; Heals? False
+> Dock to rm_a6b14; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b14/node_144170
+  * Open Passage to rm_a6b14/Dock to rm_a6b13
+  > Above Bomb Blocks
+      All of the following:
+          Space Jump Wall
+          Any of the following:
+              Can Use Power Bombs
+              All of the following:
+                  Can Use Bombs
+                  Infinite Bomb Jumping (Beginner) or Mid-Air Morph (Intermediate) or Can Use Spring Ball
+
+> Top Pillar; Heals? False
+  * Layers: default
+  * TODO: metroid event to go down
+
+
+  > Dock to rm_a6b11
+      Any of the following:
+          Spacejump or Walljump (Intermediate) or Can Use Spider Ball
+          Hijump and Power Grip
+  > Above Bomb Blocks
+      Trivial
+
+> Above Bomb Blocks; Heals? False
+  * Layers: default
+  > Dock to rm_a6b14
+      Can Use Any Bombs
+  > Top Pillar
+      All of the following:
+          Morphball
+          Any of the following:
+              Spacejump or Can Use Spider Ball
+              Hijump and Walljump (Intermediate)
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Advanced) and Can Use Bombs
 
 ----------------
 rm_a6b14
-> node_144170; Heals? False
+> Dock to rm_a6b13; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b13/node_143603
+  * Open Passage to rm_a6b13/Dock to rm_a6b14
+  > Top
+      Any of the following:
+          Space Jump Wall
+          Speedbooster and Shinesparking Tricks (Beginner)
 
-> node_144171; Heals? False
+> Dock to rm_a6b15; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b15/node_144368
+  * Open Passage to rm_a6b15/Dock to rm_a6b14
+  > Bottom
+      Trivial
+
+> Top; Heals? False
+  * Layers: default
+  > Dock to rm_a6b13
+      Trivial
+  > Bottom
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to rm_a6b15
+      Any of the following:
+          Space Jump Wall
+          Speedbooster and Shinesparking Tricks (Beginner)
+  > Top
+      Any of the following:
+          Space Jump Wall
+          Speedbooster and Shinesparking Tricks (Beginner)
 
 ----------------
 rm_a6b15
-> node_144368; Heals? False
+> Dock to rm_a6b14; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b14/node_144171
+  * Open Passage to rm_a6b14/Dock to rm_a6b15
+  > Dock to rm_a6b16
+      Trivial
 
-> node_144369; Heals? False
+> Dock to rm_a6b16; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b16/node_144392
+  * Open Passage to rm_a6b16/Dock to rm_a6b15
+  > Dock to rm_a6b14
+      Trivial
+  > Dock to rm_a6b17
+      Space Jump Wall
 
-> node_144370; Heals? False
+> Dock to rm_a6b17; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b17/node_144651
+  * Open Passage to rm_a6b17/Dock to rm_a6b15
+  > Dock to rm_a6b16
+      Trivial
 
 ----------------
 rm_a6b16
-> node_144392; Heals? False
+> Dock to rm_a6b15; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b15/node_144369
+  * Open Passage to rm_a6b15/Dock to rm_a6b16
+  > Save Station
+      Trivial
 
-> node_Heal_144447; Heals? True
+> Save Station; Heals? True
   * Layers: default
+  > Dock to rm_a6b15
+      Trivial
 
 ----------------
 rm_a6b17
-> node_144651; Heals? False
+> Dock to rm_a6b15; Heals? False
   * Layers: default
-  * Open Passage to rm_a6b15/node_144370
+  * Open Passage to rm_a6b15/Dock to rm_a6b17
+  > Dock to rm_a7a01
+      Any of the following:
+          Space Jump Wall
+          Speedbooster and Shinesparking Tricks (Beginner)
 
-> node_144652; Heals? False
+> Dock to rm_a7a01; Heals? False
   * Layers: default
-  * Open Passage to rm_a7a01/node_144867
+  * Open Passage to rm_a7a01/Dock to rm_a6b17
+  > Dock to rm_a6b15
+      Trivial
 
 ----------------
 rm_a6a10B
-> node_Heal_150316; Heals? True
+> Save Station; Heals? True; Spawn Point
   * Layers: default
+  > Dock to rm_a6a10
+      Trivial
 
-> node_150335; Heals? False
+> Dock to rm_a6a10; Heals? False
   * Layers: default
-  * Open Passage to rm_a6a10/node_138813
+  * Open Passage to rm_a6a10/Dock to rm_a6a10B
+  > Save Station
+      Trivial
 
