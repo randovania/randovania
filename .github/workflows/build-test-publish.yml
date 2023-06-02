@@ -496,7 +496,7 @@ jobs:
           projects: randovania-client randovania-bot randovania-server
 
       - name: Upload binaries to GitHub Release
-        uses: svenstaro/upload-release-action@2.6.0
+        uses: svenstaro/upload-release-action@2.6.1
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
