@@ -255,7 +255,7 @@ rm_a4h04
 
 > Door to rm_a4b01; Heals? False
   * Layers: default
-  * Normal Door to rm_a4b01/node_129385
+  * Normal Door to rm_a4b01/Door to rm_a4h04
   > Dock to rm_a4h12
       Power Grip Wall
   > Dock to rm_a4h03
@@ -972,29 +972,48 @@ rm_a4a14
 
 ----------------
 rm_a4b01
-> node_129385; Heals? False
+> Door to rm_a4h04; Heals? False
   * Layers: default
-  * Open Passage to rm_a4h04/Door to rm_a4b01
+  * Normal Door to rm_a4h04/Door to rm_a4b01
+  > Dock to rm_a4b02
+      Before GeothermalExploded
 
-> node_129386; Heals? False
+> Dock to rm_a4b02; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b02/node_129506
+  * Open Passage to rm_a4b02/Dock to rm_a4b01
+  > Door to rm_a4h04
+      Trivial
+
+> Dock to rm_a4b02a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a4b02a/node_129520
 
 ----------------
 rm_a4b02
-> node_129506; Heals? False
+> Dock to rm_a4b01; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b01/node_129386
+  * Open Passage to rm_a4b01/Dock to rm_a4b02
+  > Door to rm_a4b03
+      Before GeothermalEscape
 
-> node_129507; Heals? False
+> Door to rm_a4b03; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b03/node_129848
+  * Normal Door to rm_a4b03/Door to rm_a4b02
+  > Dock to rm_a4b01
+      Any of the following:
+          Spacejump or Can Use Spider Ball
+          All of the following:
+              Walljump (Beginner)
+              Hijump or Enabled Septogg Helpers
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Can Use Bombs
 
 ----------------
 rm_a4b02a
 > node_129520; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b01/node_129386
+  * Open Passage to rm_a4b01/Dock to rm_a4b02a
 
 > node_129622; Heals? False
   * Layers: default
@@ -1008,111 +1027,208 @@ rm_a4b02b
 
 ----------------
 rm_a4b03
-> node_129848; Heals? False
+> Door to rm_a4b02; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b02/node_129507
+  * Normal Door to rm_a4b02/Door to rm_a4b03
+  > Outside of Left Tunnel
+      Can Use Any Bombs
 
-> node_129849; Heals? False
+> Tunnel to rm_a4b04; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b04/node_129982
+  * Morph Ball Tunnel to rm_a4b04/Tunnel to rm_a4b03
+  > Outside of Left Tunnel
+      Can Use Any Bombs
+
+> Outside of Left Tunnel; Heals? False
+  * Layers: default
+  > Door to rm_a4b02
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              Hijump Tunnel Climb
+              Enabled Septogg Helpers and Power Grip Climb
+  > Tunnel to rm_a4b04
+      All of the following:
+          Power Grip Climb
+          Any of the following:
+              Can Use Power Bombs
+              Hijump and Mid-Air Morph (Beginner) and Can Use Bombs
+              Can Use Any Bombs and Can Use Spider Ball
 
 ----------------
 rm_a4b04
-> node_129982; Heals? False
+> Tunnel to rm_a4b03; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b03/node_129849
+  * Morph Ball Tunnel to rm_a4b03/Tunnel to rm_a4b04
+  > Door to rm_a4b05
+      Morphball and Before GeothermalEscape
 
-> node_129983; Heals? False
+> Door to rm_a4b05; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b05/node_130021
+  * Normal Door to rm_a4b05/Door to rm_a4b04
+  > Tunnel to rm_a4b03
+      Morphball and Space Jump Wall
 
 ----------------
 rm_a4b05
-> node_130002; Heals? False
+> Door to rm_a4b06; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b06/node_130065
+  * Normal Door to rm_a4b06/Door to rm_a4b05
+  > Door to rm_a4b04
+      Hijump Wall
 
-> node_130021; Heals? False
+> Door to rm_a4b04; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b04/node_129983
+  * Normal Door to rm_a4b04/Door to rm_a4b05
+  > Door to rm_a4b06
+      Before GeothermalEscape and Power Grip Wall
+
+> Dock from rm_a4b07; Heals? False
+  * Layers: default
+  * Back Only to rm_a4b07/Dock to rm_a4b05
+  > Door to rm_a4b06
+      Trivial
 
 ----------------
 rm_a4b06
-> node_130065; Heals? False
+> Door to rm_a4b05; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b05/node_130002
+  * Normal Door to rm_a4b05/Door to rm_a4b06
+  > Door to rm_a4b07
+      After GeothermalEscape and Hijump With Power Grip Wall
+  > Door to rm_a4b09
+      Before GeothermalEscape
 
-> node_130066; Heals? False
+> Door to rm_a4b07; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b07/node_130120
+  * Normal Door to rm_a4b07/Door from rm_a4b06
+  > Door to rm_a4b05
+      Before GeothermalEscape
+  > Door to rm_a4b09
+      Before GeothermalEscape
 
-> node_130067; Heals? False
+> Door to rm_a4b09; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b09/node_130363
+  * Normal Door to rm_a4b09/Door to rm_a4b06
+  > Door to rm_a4b05
+      Any of the following:
+          Spacejump or Can Use Spider Ball
+          Enabled Septogg Helpers and Hijump Wall
+          Hijump and Walljump (Beginner)
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
 ----------------
 rm_a4b07
-> node_130120; Heals? False
+> Door from rm_a4b06; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b06/node_130066
+  * Locked Door to rm_a4b06/Door to rm_a4b07
+  > Dock to rm_a4b05
+      Trivial
 
-> node_130130; Heals? False
+> Dock to rm_a4b05; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b05/node_130002
-  * Door connection is broken, this is a fallback connection!
+  * Open Passage to rm_a4b05/Dock from rm_a4b07
+  > Door from rm_a4b06
+      Trivial
 
 ----------------
 rm_a4b09
-> node_130363; Heals? False
+> Door to rm_a4b06; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b06/node_130067
+  * Normal Door to rm_a4b06/Door to rm_a4b09
+  > Door to rm_a4b10
+      Before GeothermalEscape
 
-> node_130364; Heals? False
+> Door to rm_a4b10; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b10/node_130662
+  * Normal Door to rm_a4b10/Door to rm_a4b09
+  > Door to rm_a4b06
+      Any of the following:
+          Space Jump Wall
+          Speedbooster and Knowledge (Intermediate) and Shinesparking Tricks (Intermediate) and Disabled Entrance Rando
 
 ----------------
 rm_a4b10
-> node_130659; Heals? False
+> Door to rm_a4b11; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b11/node_130715
+  * Normal Door to rm_a4b11/Door to rm_a4b10
+  > Door to rm_a4b09
+      Any of the following:
+          Missile and Knowledge (Intermediate)
+          Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
 
-> node_130662; Heals? False
+> Door to rm_a4b09; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b09/node_130364
+  * Normal Door to rm_a4b09/Door to rm_a4b10
+  > Door to rm_a4b11
+      All of the following:
+          Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
+          Any of the following:
+              # Bottom Left Area
+              Hijump or Can Use Spider Ball
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+              Walljump (Beginner) and Enabled Septogg Helpers
+          Any of the following:
+              # Middle Right Area
+              Spacejump or Walljump (Advanced) or Can Use Spider Ball
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Advanced) and Can Use Bombs
+              All of the following:
+                  Walljump (Intermediate)
+                  Hijump or Enabled Septogg Helpers
 
 ----------------
 rm_a4b11
-> node_130715; Heals? False
+> Door to rm_a4b10; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b10/node_130659
+  * Normal Door to rm_a4b10/Door to rm_a4b11
+  > Bottom Elevator
+      Trivial
 
 > node_130716; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b12/node_130788
+  * Open Passage to rm_a4b12/Door to rm_a4b11
 
 > node_130766; Heals? False
   * Layers: default
   * Open Passage to rm_a4b19/node_131301
 
+> Bottom Elevator; Heals? False
+  * Layers: default
+  > Door to rm_a4b10
+      Trivial
+
 ----------------
 rm_a4b12
-> node_130777; Heals? False
+> Door to rm_a4b13; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b13/node_130798
+  * Normal Door to rm_a4b13/node_130798
+  > Save Station
+      Before GeothermalEscape
 
-> node_Heal_130784; Heals? True
+> Save Station; Heals? True
   * Layers: default
+  > Door to rm_a4b13
+      Before GeothermalEscape
+  > Door to rm_a4b11
+      Trivial
 
-> node_130788; Heals? False
+> Door to rm_a4b11; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b11/node_130716
+  * Normal Door to rm_a4b11/node_130716
+  > Save Station
+      Trivial
 
 ----------------
 rm_a4b13
 > node_130798; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b12/node_130777
+  * Open Passage to rm_a4b12/Door to rm_a4b13
 
 > node_130806; Heals? False
   * Layers: default

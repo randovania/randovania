@@ -421,6 +421,46 @@
             "BabyCollected": {
                 "long_name": "Collected the Baby",
                 "extra": {}
+            },
+            "GeothermalExploded": {
+                "long_name": "GeothermalExploded",
+                "extra": {}
+            },
+            "GeothermalEscape": {
+                "long_name": "GeothermalEscape",
+                "extra": {}
+            },
+            "Larva": {
+                "long_name": "Area 7 - Introduction Larva",
+                "extra": {}
+            },
+            "Larva2": {
+                "long_name": "Area 7 - Small Shaft Larva",
+                "extra": {}
+            },
+            "Larva3": {
+                "long_name": "Area 7 - Big Shaft Bottom Larva",
+                "extra": {}
+            },
+            "Larva4": {
+                "long_name": "Area 7 - Big Shaft Top Larva",
+                "extra": {}
+            },
+            "Larva5": {
+                "long_name": "Area 7 - Long Hallway Right Larva",
+                "extra": {}
+            },
+            "Larva6": {
+                "long_name": "Area 7 - Long Hallway Left Larva",
+                "extra": {}
+            },
+            "Larva7": {
+                "long_name": "Area 7 - Big Arena Bottom Larva",
+                "extra": {}
+            },
+            "Larva8": {
+                "long_name": "Area 7 - Big Arena Top Larva",
+                "extra": {}
             }
         },
         "tricks": {
@@ -477,6 +517,16 @@
             "DiagonalIBJ": {
                 "long_name": "Diagonal Infinite Bomb Jumping",
                 "description": "If this trick is enabled, the player may be expected to gain height diagonally by placing bombs and moving in a rhythm.",
+                "extra": {}
+            },
+            "Zip": {
+                "long_name": "Zip Trick",
+                "description": "",
+                "extra": {}
+            },
+            "ChargedBombJump": {
+                "long_name": "Charged Bomb Jump",
+                "description": "",
                 "extra": {}
             }
         },
@@ -1944,6 +1994,190 @@
                                             "type": "items",
                                             "name": "Missile",
                                             "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SuperMissile",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "ZipFromDestroyable": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Zip",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Power Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Zip",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Can Use Charged Bomb Jump": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Charge Beam",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Power beam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave Beam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spazer Beam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Plasma Beam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ice Beam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Can Use Bombs"
+                        }
+                    ]
+                }
+            },
+            "Defeat Larva": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice Beam",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missile",
+                                            "amount": 5,
                                             "negate": false
                                         }
                                     },

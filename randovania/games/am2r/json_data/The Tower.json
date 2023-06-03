@@ -1980,7 +1980,7 @@
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b01",
-                        "node": "node_129385"
+                        "node": "Door to rm_a4h04"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -7138,7 +7138,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_129385": {
+                "Door to rm_a4h04": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7152,25 +7152,51 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4h04",
                         "node": "Door to rm_a4b01"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a4b02": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GeothermalExploded",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_129386": {
+                "Dock to rm_a4b02": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 640.0,
-                        "y": 144.0,
+                        "x": 637.65,
+                        "y": 170.39,
                         "z": 0.0
                     },
                     "description": "",
@@ -7183,7 +7209,42 @@
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b02",
-                        "node": "node_129506"
+                        "node": "Dock to rm_a4b01"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to rm_a4h04": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to rm_a4b02a": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 639.91,
+                        "y": 95.65,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "The Tower",
+                        "area": "rm_a4b02a",
+                        "node": "node_129520"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7198,7 +7259,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_129506": {
+                "Dock to rm_a4b01": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7216,16 +7277,34 @@
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b01",
-                        "node": "node_129386"
+                        "node": "Dock to rm_a4b02"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b03": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GeothermalEscape",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_129507": {
+                "Door to rm_a4b03": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7239,18 +7318,104 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b03",
-                        "node": "node_129848"
+                        "node": "Door to rm_a4b02"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a4b01": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spacejump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hijump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "Septogg",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7276,7 +7441,7 @@
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b01",
-                        "node": "node_129386"
+                        "node": "Dock to rm_a4b02a"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7351,7 +7516,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_129848": {
+                "Door to rm_a4b02": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7365,20 +7530,33 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b02",
-                        "node": "node_129507"
+                        "node": "Door to rm_a4b03"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Outside of Left Tunnel": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_129849": {
+                "Tunnel to rm_a4b04": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7392,18 +7570,171 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b04",
-                        "node": "node_129982"
+                        "node": "Tunnel to rm_a4b03"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Outside of Left Tunnel": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Outside of Left Tunnel": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 153.01005918730252,
+                        "y": 68.19120418292329,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to rm_a4b02": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hijump Tunnel Climb"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "Septogg",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Power Grip Climb"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to rm_a4b04": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Power Grip Climb"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hijump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MidAirMorph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Bombs"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Spider Ball"
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Any Bombs"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7411,7 +7742,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_129982": {
+                "Tunnel to rm_a4b03": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7425,20 +7756,47 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b03",
-                        "node": "node_129849"
+                        "node": "Tunnel to rm_a4b04"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b05": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morphball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GeothermalEscape",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_129983": {
+                "Door to rm_a4b05": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7452,18 +7810,40 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b05",
-                        "node": "node_130021"
+                        "node": "Door to rm_a4b04"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to rm_a4b03": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Space Jump Wall"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morphball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7471,7 +7851,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_130002": {
+                "Door to rm_a4b06": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7485,20 +7865,33 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b06",
-                        "node": "node_130065"
+                        "node": "Door to rm_a4b05"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b04": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Hijump Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_130021": {
+                "Door to rm_a4b04": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7512,18 +7905,75 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b04",
-                        "node": "node_129983"
+                        "node": "Door to rm_a4b05"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b06": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Power Grip Wall"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GeothermalEscape",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock from rm_a4b07": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 459.94,
+                        "y": 211.73,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "The Tower",
+                        "area": "rm_a4b07",
+                        "node": "Dock to rm_a4b05"
+                    },
+                    "default_dock_weakness": "Back Only",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to rm_a4b06": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7531,7 +7981,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_130065": {
+                "Door to rm_a4b05": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7545,20 +7995,59 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b05",
-                        "node": "node_130002"
+                        "node": "Door to rm_a4b06"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b07": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Hijump With Power Grip Wall"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GeothermalEscape",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to rm_a4b09": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GeothermalEscape",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_130066": {
+                "Door to rm_a4b07": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7572,20 +8061,55 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b07",
-                        "node": "node_130120"
+                        "node": "Door from rm_a4b06"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b05": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GeothermalEscape",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to rm_a4b09": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GeothermalEscape",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_130067": {
+                "Door to rm_a4b09": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7599,18 +8123,108 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b09",
-                        "node": "node_130363"
+                        "node": "Door to rm_a4b06"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b05": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "Septogg",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Hijump Wall"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spacejump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hijump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7618,7 +8232,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_130120": {
+                "Door from rm_a4b06": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7632,20 +8246,28 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b06",
-                        "node": "node_130066"
+                        "node": "Door to rm_a4b07"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Locked Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a4b05": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_130130": {
+                "Dock to rm_a4b05": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7653,7 +8275,7 @@
                         "y": 0.0,
                         "z": 0.0
                     },
-                    "description": "Door connection is broken, this is a fallback connection!",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
@@ -7663,14 +8285,22 @@
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b05",
-                        "node": "node_130002"
+                        "node": "Dock from rm_a4b07"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door from rm_a4b06": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7678,7 +8308,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_130363": {
+                "Door to rm_a4b06": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7692,20 +8322,38 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b06",
-                        "node": "node_130067"
+                        "node": "Door to rm_a4b09"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b10": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GeothermalEscape",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_130364": {
+                "Door to rm_a4b10": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7719,18 +8367,75 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b10",
-                        "node": "node_130662"
+                        "node": "Door to rm_a4b09"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b06": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Space Jump Wall"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speedbooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7738,7 +8443,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_130659": {
+                "Door to rm_a4b11": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7752,20 +8457,71 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b11",
-                        "node": "node_130715"
+                        "node": "Door to rm_a4b10"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b09": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Any Bombs"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Low Mid-Air Morph Tunnel Climb"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_130662": {
+                "Door to rm_a4b09": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7779,18 +8535,206 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b09",
-                        "node": "node_130364"
+                        "node": "Door to rm_a4b10"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b11": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Low Mid-Air Morph Tunnel Climb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Bottom Left Area",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hijump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "IBJ",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "Septogg",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Middle Right Area",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spacejump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hijump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "IBJ",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "Septogg",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7798,7 +8742,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_130715": {
+                "Door to rm_a4b10": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7812,18 +8756,26 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b10",
-                        "node": "node_130659"
+                        "node": "Door to rm_a4b11"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Bottom Elevator": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "node_130716": {
                     "node_type": "dock",
@@ -7843,7 +8795,7 @@
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b12",
-                        "node": "node_130788"
+                        "node": "Door to rm_a4b11"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7878,6 +8830,30 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
+                },
+                "Bottom Elevator": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 151.31984809734166,
+                        "y": 372.9055258467024,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to rm_a4b10": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7885,7 +8861,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_130777": {
+                "Door to rm_a4b13": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7899,25 +8875,43 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b13",
                         "node": "node_130798"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GeothermalEscape",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_Heal_130784": {
+                "Save Station": {
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 144.0,
-                        "y": 80.0,
+                        "x": 159.73,
+                        "y": 95.53,
                         "z": 0.0
                     },
                     "description": "",
@@ -7926,9 +8920,34 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a4b13": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GeothermalEscape",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to rm_a4b11": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "node_130788": {
+                "Door to rm_a4b11": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7942,18 +8961,26 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b11",
                         "node": "node_130716"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -7979,7 +9006,7 @@
                     "default_connection": {
                         "region": "The Tower",
                         "area": "rm_a4b12",
-                        "node": "node_130777"
+                        "node": "Door to rm_a4b13"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,

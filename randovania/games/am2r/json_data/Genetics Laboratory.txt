@@ -212,17 +212,18 @@ rm_a7b03B
 > Door to rm_a7b03A; Heals? False; Default Node
   * Layers: default
   * Normal Door to rm_a7b03A/Door to rm_a7b03B
-  * TODO: check when the wall here gets destroyed
-
-
   > Teleporter Pipe
-      Trivial
+      After Area 6 - Nest Left Bottom Omega and After Area 6 - Nest Left Top Omega and After Area 6 - Nest Right Omega
 
 > Teleporter Pipe; Heals? False
   * Layers: default
   * Teleporter to Hydro Station - rm_a2a19
   > Door to rm_a7b03A
-      Trivial
+      All of the following:
+          Morphball
+          All of the following:
+              # Last 3 omegas
+              After Area 6 - Nest Left Bottom Omega and After Area 6 - Nest Left Top Omega and After Area 6 - Nest Right Omega
 
 ----------------
 rm_a7b04A
@@ -272,78 +273,236 @@ rm_a7b05
 
 > Door to rm_a7b06; Heals? False
   * Layers: default
-  * Normal Door to rm_a7b06/node_146928
+  * Normal Door to rm_a7b06/Door to rm_a7b05
+  > Bottom
+      Trivial
 
 > Bottom; Heals? False
   * Layers: default
   > Tunnel to rm_a7b04
       Power Grip Wall
+  > Door to rm_a7b06
+      Trivial
+  > Event - Larva Metroid
+      Defeat Larva
+
+> Event - Larva Metroid; Heals? False
+  * Layers: default
+  * Event Area 7 - Introduction Larva
+  > Bottom
+      Trivial
 
 ----------------
 rm_a7b06
-> node_146928; Heals? False
+> Door to rm_a7b05; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b05/Door to rm_a7b06
+  * Normal Door to rm_a7b05/Door to rm_a7b06
+  > Door to rm_a7b06A
+      Power Grip Wall
 
-> node_146929; Heals? False
+> Door to rm_a7b06A; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b06A/node_146963
+  * Normal Door to rm_a7b06A/Door to rm_a7b06
+  > Door to rm_a7b05
+      Trivial
+  > Event - Larva
+      Defeat Larva
+
+> Event - Larva; Heals? False
+  * Layers: default
+  * Event Area 7 - Small Shaft Larva
+  > Door to rm_a7b06A
+      Trivial
 
 ----------------
 rm_a7b06A
-> node_146963; Heals? False
+> Door to rm_a7b06; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b06/node_146929
+  * Normal Door to rm_a7b06/Door to rm_a7b06A
+  > Door to rm_a7b07
+      Trivial
 
-> node_146964; Heals? False
+> Door to rm_a7b07; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b07/node_146992
+  * Normal Door to rm_a7b07/Door to rm_a7b06A
+  > Door to rm_a7b06
+      Trivial
 
 ----------------
 rm_a7b07
-> node_146992; Heals? False
+> Door to rm_a7b06A; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b06A/node_146964
+  * Normal Door to rm_a7b06A/Door to rm_a7b07
+  > Door to rm_a7b08
+      Any of the following:
+          Spacejump or Walljump (Advanced) or Can Use Spider Ball
+          Hijump and Power Grip
+          All of the following:
+              # IBJ
+              Charged Bomb Jump (Intermediate) and Can Use Bombs
+          Morph Glide (Beginner) and Walljump (Intermediate)
 
-> node_146993; Heals? False
+> Door to rm_a7b08; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b08/node_147038
+  * Normal Door to rm_a7b08/Door to rm_a7b07
+  > Door to rm_a7b06A
+      Trivial
+  > Event - Top Larva
+      Defeat Larva
+  > Event - Bottom Larva
+      Defeat Larva
+
+> Event - Top Larva; Heals? False
+  * Layers: default
+  * Event Area 7 - Big Arena Top Larva
+  > Door to rm_a7b06A
+      Trivial
+
+> Event - Bottom Larva; Heals? False
+  * Layers: default
+  * Event Area 7 - Big Shaft Bottom Larva
+  > Door to rm_a7b06A
+      Trivial
 
 ----------------
 rm_a7b08
-> node_147023; Heals? False
+> Door to rm_a7b08A; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b08A/node_147079
+  * Normal Door to rm_a7b08A/Door to rm_a7b08
+  > Middle Platform
+      Any of the following:
+          Spacejump or Damage Boost (Intermediate) or Can Use Spider Ball
+          All of the following:
+              Hijump
+              Any of the following:
+                  Morph Glide (Expert)
+                  All of the following:
+                      Morph Glide (Advanced)
+                      Power Grip or Walljump (Advanced)
 
-> node_147038; Heals? False
+> Door to rm_a7b07; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b07/node_146993
+  * Normal Door to rm_a7b07/Door to rm_a7b08
+  > Middle Platform
+      Any of the following:
+          Spacejump or Damage Boost (Intermediate) or Can Use Spider Ball
+          All of the following:
+              Hijump
+              Any of the following:
+                  Morph Glide (Expert)
+                  All of the following:
+                      Morph Glide (Advanced)
+                      Power Grip or Walljump (Advanced)
+
+> Event - Right Larva; Heals? False
+  * Layers: default
+  * Event Area 7 - Long Hallway Right Larva
+  > Middle Platform
+      Trivial
+
+> Event - Left Larva; Heals? False
+  * Layers: default
+  * Event Area 7 - Long Hallway Left Larva
+  > Middle Platform
+      Trivial
+
+> Middle Platform; Heals? False
+  * Layers: default
+  > Door to rm_a7b08A
+      Any of the following:
+          Spacejump or Damage Boost (Intermediate) or Morph Glide (Expert)
+          All of the following:
+              # Reach ceiling
+              Can Use Spider Ball
+              Any of the following:
+                  All of the following:
+                      # IBJ
+                      Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+                  Hijump and Mid-Air Morph (Beginner)
+                  Charged Bomb Jump (Beginner) and Can Use Charged Bomb Jump
+          All of the following:
+              Morph Glide (Advanced)
+              Power Grip or Walljump (Advanced)
+  > Door to rm_a7b07
+      Any of the following:
+          Spacejump or Damage Boost (Intermediate) or Morph Glide (Advanced)
+          All of the following:
+              # Reach ceiling
+              Can Use Spider Ball
+              Any of the following:
+                  All of the following:
+                      # IBJ
+                      Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+                  Hijump and Mid-Air Morph (Beginner)
+                  Charged Bomb Jump (Beginner) and Can Use Charged Bomb Jump
+          All of the following:
+              Morph Glide (Intermediate)
+              Power Grip or Walljump (Intermediate)
+  > Event - Right Larva
+      Defeat Larva
+  > Event - Left Larva
+      Defeat Larva
 
 ----------------
 rm_a7b08A
-> node_147079; Heals? False
+> Door to rm_a7b08; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b08/node_147023
+  * Normal Door to rm_a7b08/Door to rm_a7b08A
+  > Door to rm_a7b09
+      Can Use Any Bombs
 
-> node_147289; Heals? False
+> Door to rm_a7b09; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b09/node_147399
+  * Normal Door to rm_a7b09/Door to rm_a7b08A
+  > Door to rm_a7b08
+      All of the following:
+          Space Jump Wall
+          Any of the following:
+              Can Use Power Bombs
+              All of the following:
+                  Can Use Bombs
+                  Any of the following:
+                      Infinite Bomb Jumping (Intermediate)
+                      Charged Bomb Jump (Intermediate) and Can Use Charged Bomb Jump
+                      All of the following:
+                          Mid-Air Morph (Beginner)
+                          Hijump or Walljump (Intermediate)
+  > Event - Bottom Larva
+      Defeat Larva
+  > Event - Top Larva
+      Defeat Larva
+
+> Event - Bottom Larva; Heals? False
+  * Layers: default
+  * Event Area 7 - Big Arena Bottom Larva
+  > Door to rm_a7b09
+      Trivial
+
+> Event - Top Larva; Heals? False
+  * Layers: default
+  * Event Area 7 - Big Arena Top Larva
+  > Door to rm_a7b09
+      Trivial
 
 ----------------
 rm_a7b09
-> node_147399; Heals? False
+> Door to rm_a7b08A; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b08A/node_147289
+  * Normal Door to rm_a7b08A/Door to rm_a7b09
+  > Door to rm_a7b10
+      Trivial
 
-> node_147400; Heals? False
+> Door to rm_a7b10; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b10/node_147646
+  * Normal Door to rm_a7b10/Door to rm_a7b09
+  > Door to rm_a7b08A
+      Power Grip Wall
 
 ----------------
 rm_a7b10
-> node_147646; Heals? False
+> Door to rm_a7b09; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b09/node_147400
+  * Normal Door to rm_a7b09/Door to rm_a7b10
 
 > Dock to rm_a7b11; Heals? False
   * Layers: default
@@ -375,6 +534,7 @@ rm_a7c01
 
 > Event - Baby; Heals? False
   * Layers: default
+  * Event Collected the Baby
   > Dock to rm_a7b11
       Trivial
   > Dock to rm_a7c02
