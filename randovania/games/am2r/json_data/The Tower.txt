@@ -977,6 +977,8 @@ rm_a4b01
   * Normal Door to rm_a4h04/Door to rm_a4b01
   > Dock to rm_a4b02
       Before GeothermalExploded
+  > Dock to rm_a4b02a
+      After GeothermalExploded and Low Mid-Air Morph Tunnel Climb
 
 > Dock to rm_a4b02; Heals? False
   * Layers: default
@@ -986,7 +988,9 @@ rm_a4b01
 
 > Dock to rm_a4b02a; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b02a/node_129520
+  * Open Passage to rm_a4b02a/Dock to rm_a4b01
+  > Door to rm_a4h04
+      Morphball
 
 ----------------
 rm_a4b02
@@ -1011,19 +1015,66 @@ rm_a4b02
 
 ----------------
 rm_a4b02a
-> node_129520; Heals? False
+> Dock to rm_a4b01; Heals? False
   * Layers: default
   * Open Passage to rm_a4b01/Dock to rm_a4b02a
+  > Bottom
+      Can Use Any Bombs
 
-> node_129622; Heals? False
+> Tunnel to rm_a4b02b; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b02b/node_129633
+  * Morph Ball Tunnel to rm_a4b02b/Tunnel to rm_a4b02a
+  > Bottom
+      Can Use Any Bombs
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to rm_a4b01
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              # Get up
+              ScrewAttack or Can Use Spider Ball
+              Walljump (Advanced) and Enabled Septogg Helpers
+              Hijump and Walljump (Intermediate)
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Advanced) and Can Use Bombs
+  > Tunnel to rm_a4b02b
+      Power Grip Climb
 
 ----------------
 rm_a4b02b
-> node_129633; Heals? False
+> Tunnel to rm_a4b02a; Heals? False
   * Layers: default
-  * Open Passage to rm_a4b02a/node_129622
+  * Morph Ball Tunnel to rm_a4b02a/Tunnel to rm_a4b02b
+  > Bottom
+      Can Use Any Bombs
+
+> Pickup (Etank); Heals? False
+  * Layers: default
+  * Pickup 254; Category? Minor
+  > Bottom
+      Trivial
+
+> Pickup (Super Missile); Heals? False
+  * Layers: default
+  * Pickup 255; Category? Minor
+  > Tunnel to rm_a4b02a
+      Morphball
+
+> Bottom; Heals? False
+  * Layers: default
+  > Tunnel to rm_a4b02a
+      Power Grip Climb
+  > Pickup (Etank)
+      Trivial
+  > Pickup (Super Missile)
+      All of the following:
+          SuperMissile and Power Grip Wall
+          Any of the following:
+              Knowledge (Intermediate)
+              Speedbooster and Shinesparking Tricks (Beginner)
 
 ----------------
 rm_a4b03

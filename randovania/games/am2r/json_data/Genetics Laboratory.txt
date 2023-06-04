@@ -503,32 +503,49 @@ rm_a7b10
 > Door to rm_a7b09; Heals? False
   * Layers: default
   * Normal Door to rm_a7b09/Door to rm_a7b10
+  > Dock to rm_a7b11
+      Any of the following:
+          Spacejump or Damage Boost (Intermediate)
+          All of the following:
+              # DIBJ
+              Diagonal Infinite Bomb Jumping (Expert) and Can Use Bombs
 
 > Dock to rm_a7b11; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b11/Dock to rm_a7b10
+  * Open Passage to rm_a7b11/Dock from rm_a7b10
+  > Door to rm_a7b09
+      Any of the following:
+          Spacejump or Damage Boost (Intermediate)
+          All of the following:
+              # DIBJ
+              Diagonal Infinite Bomb Jumping (Expert) and Can Use Bombs
 
 ----------------
 rm_a7b11
-> node_147703; Heals? False
+> Dock to rm_a7c01; Heals? False
   * Layers: default
   * Open Passage to rm_a7c01/Dock to rm_a7b11
 
-> Dock to rm_a7b10; Heals? False
+> Dock from rm_a7b10; Heals? False
   * Layers: default
-  * Not Determined to rm_a7b10/Dock to rm_a7b11
+  * Back Only to rm_a7b10/Dock to rm_a7b11
+  * TODO: queen requirements
+
+
+  > Dock to rm_a7c01
+      Trivial
 
 ----------------
 rm_a7c01
 > Dock to rm_a7b11; Heals? False
   * Layers: default
-  * Open Passage to rm_a7b11/node_147703
+  * Open Passage to rm_a7b11/Dock to rm_a7c01
   > Event - Baby
       Trivial
 
 > Dock to rm_a7c02; Heals? False
   * Layers: default
-  * Open Passage to rm_a7c02/node_148221
+  * Open Passage to rm_a7c02/Dock to rm_a7c01
   > Event - Baby
       Trivial
 
@@ -542,41 +559,68 @@ rm_a7c01
 
 ----------------
 rm_a7c02
-> node_148221; Heals? False
+> Dock to rm_a7c01; Heals? False
   * Layers: default
   * Open Passage to rm_a7c01/Dock to rm_a7c02
+  > Dock to rm_a7c03
+      All of the following:
+          After Collected the Baby
+          Any of the following:
+              Spacejump or Can Use Spider Ball
+              All of the following:
+                  Hijump
+                  Any of the following:
+                      Walljump (Advanced)
+                      Morphball and Morph Glide (Advanced) and Walljump (Intermediate)
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Expert) and Can Use Bombs
 
-> node_148222; Heals? False
+> Dock to rm_a7c03; Heals? False
   * Layers: default
-  * Open Passage to rm_a7c03/node_148553
+  * Open Passage to rm_a7c03/Dock to rm_a7c02
+  > Dock to rm_a7c01
+      After Collected the Baby
 
 ----------------
 rm_a7c03
-> node_148553; Heals? False
+> Dock to rm_a7c02; Heals? False
   * Layers: default
-  * Open Passage to rm_a7c02/node_148222
+  * Open Passage to rm_a7c02/Dock to rm_a7c03
+  > Dock to rm_a7c04
+      After Collected the Baby and Power Grip Wall
 
-> node_148554; Heals? False
+> Dock to rm_a7c04; Heals? False
   * Layers: default
-  * Open Passage to rm_a7c04/node_149046
+  * Open Passage to rm_a7c04/Dock to rm_a7c03
+  > Dock to rm_a7c02
+      After Collected the Baby
 
 ----------------
 rm_a7c04
-> node_149046; Heals? False
+> Dock to rm_a7c03; Heals? False
   * Layers: default
-  * Open Passage to rm_a7c03/node_148554
+  * Open Passage to rm_a7c03/Dock to rm_a7c04
+  > Dock to rm_a7c05
+      After Collected the Baby or Hijump Wall
 
-> node_149047; Heals? False
+> Dock to rm_a7c05; Heals? False
   * Layers: default
-  * Open Passage to rm_a7c05/node_149328
+  * Open Passage to rm_a7c05/Dock to rm_a7c04
+  > Dock to rm_a7c03
+      After Collected the Baby
 
 ----------------
 rm_a7c05
-> node_149328; Heals? False
+> Dock to rm_a7c04; Heals? False
   * Layers: default
-  * Open Passage to rm_a7c04/node_149047
+  * Open Passage to rm_a7c04/Dock to rm_a7c05
+  > Dock to rm_a0h01
+      After Collected the Baby and Space Jump Wall
 
-> node_149329; Heals? False
+> Dock to rm_a0h01; Heals? False
   * Layers: default
   * Open Passage to rm_a0h01/Dock to rm_a7c05
+  > Dock to rm_a7c04
+      After Collected the Baby
 

@@ -3416,7 +3416,55 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7b11": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spacejump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DamageBoost",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "DIBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DiagonalIBJ",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Dock to rm_a7b11": {
                     "node_type": "dock",
@@ -3436,14 +3484,62 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b11",
-                        "node": "Dock to rm_a7b10"
+                        "node": "Dock from rm_a7b10"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to rm_a7b09": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spacejump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DamageBoost",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "DIBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DiagonalIBJ",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3451,7 +3547,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_147703": {
+                "Dock to rm_a7c01": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3478,7 +3574,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Dock to rm_a7b10": {
+                "Dock from rm_a7b10": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3486,7 +3582,7 @@
                         "y": 197.17,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "TODO: queen requirements\n\n",
                     "layers": [
                         "default"
                     ],
@@ -3498,12 +3594,20 @@
                         "area": "rm_a7b10",
                         "node": "Dock to rm_a7b11"
                     },
-                    "default_dock_weakness": "Not Determined",
+                    "default_dock_weakness": "Back Only",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7c01": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3529,7 +3633,7 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7b11",
-                        "node": "node_147703"
+                        "node": "Dock to rm_a7c01"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3564,7 +3668,7 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7c02",
-                        "node": "node_148221"
+                        "node": "Dock to rm_a7c01"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3619,7 +3723,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_148221": {
+                "Dock to rm_a7c01": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3644,9 +3748,146 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7c03": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BabyCollected",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Spacejump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hijump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Morphball",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "MorphGlide",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "IBJ",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_148222": {
+                "Dock to rm_a7c03": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3664,14 +3905,32 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7c03",
-                        "node": "node_148553"
+                        "node": "Dock to rm_a7c02"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7c01": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BabyCollected",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3679,7 +3938,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_148553": {
+                "Dock to rm_a7c02": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3697,16 +3956,38 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7c02",
-                        "node": "node_148222"
+                        "node": "Dock to rm_a7c03"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7c04": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BabyCollected",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Power Grip Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_148554": {
+                "Dock to rm_a7c04": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3724,14 +4005,32 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7c04",
-                        "node": "node_149046"
+                        "node": "Dock to rm_a7c03"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7c02": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BabyCollected",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3739,7 +4038,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_149046": {
+                "Dock to rm_a7c03": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3757,16 +4056,38 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7c03",
-                        "node": "node_148554"
+                        "node": "Dock to rm_a7c04"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7c05": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BabyCollected",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Hijump Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_149047": {
+                "Dock to rm_a7c05": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3784,14 +4105,32 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7c05",
-                        "node": "node_149328"
+                        "node": "Dock to rm_a7c04"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7c03": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BabyCollected",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3799,7 +4138,7 @@
             "default_node": null,
             "extra": {},
             "nodes": {
-                "node_149328": {
+                "Dock to rm_a7c04": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3817,16 +4156,38 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7c04",
-                        "node": "node_149047"
+                        "node": "Dock to rm_a7c05"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a0h01": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BabyCollected",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Space Jump Wall"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "node_149329": {
+                "Dock to rm_a0h01": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3851,7 +4212,25 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Dock to rm_a7c04": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BabyCollected",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         }
