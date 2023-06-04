@@ -230,6 +230,14 @@
                 "long_name": "EMP A5RobotsEMP",
                 "extra": {}
             },
+            "A5NearPipeHubEMP": {
+                "long_name": "A5NearPipeHubEMP",
+                "extra": {}
+            },
+            "A5NearRightSideEMP": {
+                "long_name": "A5NearRightSideEMP",
+                "extra": {}
+            },
             "Alpha1": {
                 "long_name": "Surface - Alpha Metroid",
                 "extra": {}
@@ -2329,46 +2337,188 @@
                     "After Tester Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "TesterDead",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
-                        "lock": {
-                            "lock_type": "front-blast-back-if-matching",
-                            "requirement": {
-                                "type": "resource",
-                                "data": {
-                                    "type": "events",
-                                    "name": "TesterDead",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        }
+                        "lock": null
                     },
                     "Tower Activated Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "TowerActivated",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
-                        "lock": {
-                            "lock_type": "front-blast-back-if-matching",
-                            "requirement": {
-                                "type": "resource",
-                                "data": {
-                                    "type": "events",
-                                    "name": "TowerActivated",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                        "lock": null
+                    },
+                    "Golden Temple EMP Activated Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "GTEMP",
+                                "amount": 1,
+                                "negate": false
                             }
-                        }
+                        },
+                        "lock": null
+                    },
+                    "Hydro Station EMP Activated Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "A2EMP",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Industrial Complex EMP Activated Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "A3EMP",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "A5 Activation Tower Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "EMP",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "A5 Near Activation Tower EMP Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "NearA5EMPActivationStatueEMP",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "A5 Robots Showcase EMP Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "A5RobotsEMP",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "A5 Near Save EMP Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "NearA5SaveEMP",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "A5 Near Screw EMP Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "NearScrewEMP",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "A5 Near Pipe Hub EMP Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "A5NearPipeHubEMP",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "A5 Near Right Side EMP Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "A5NearRightSideEMP",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Serris Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "IceItem",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Serris",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "lock": null
                     },
                     "Back-Only Door": {
                         "extra": {},
@@ -2417,12 +2567,18 @@
                     "change_from": [
                         "Back-Only Door",
                         "Locked Door",
-                        "Normal Door"
+                        "Missile Door",
+                        "Normal Door",
+                        "PowerBomb Door",
+                        "Super Missile Door"
                     ],
                     "change_to": [
                         "Back-Only Door",
                         "Locked Door",
-                        "Normal Door"
+                        "Missile Door",
+                        "Normal Door",
+                        "PowerBomb Door",
+                        "Super Missile Door"
                     ]
                 }
             },
