@@ -92,12 +92,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Proper combat requirements for the Amorbis fight.
 - Removed: Incorrect and improper connections to and from the Amorbis fight.
 
-### Metroid Prime
-
-#### Logic Database
-
-- Added: 48 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) 216
-
 ### Metroid Dread
 
 #### Logic Database
