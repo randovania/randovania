@@ -605,7 +605,7 @@
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "rm_a2a08",
-                        "node": "Dock to rm_a2h02"
+                        "node": "Door to rm_a2h02"
                     },
                     "default_dock_weakness": "Water Turbine Door",
                     "exclude_from_dock_rando": false,
@@ -2809,7 +2809,7 @@
                 "map_name": "rm_a2a08"
             },
             "nodes": {
-                "Dock to rm_a2h02": {
+                "Door to rm_a2h02": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2823,13 +2823,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "rm_a2h02",
                         "node": "Door to rm_a2a08"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2940,7 +2940,7 @@
                     "valid_starting_location": false,
                     "event_name": "A2WaterLowered",
                     "connections": {
-                        "Dock to rm_a2h02": {
+                        "Door to rm_a2h02": {
                             "type": "and",
                             "data": {
                                 "comment": null,
