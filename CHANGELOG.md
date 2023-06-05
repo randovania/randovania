@@ -5,16 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.7.1] - 2023-06-01
+## [5.8.0] - 2023-06-05
 
 - Added: It's now possible to save rdvgame files for race games. This is not available for multiworld.
 - Fixed: Batch generation now properly prevents Windows from going to sleep.
 
 ### Metroid Prime
 
-- Added: Missile Stations refill Power Bombs by default.
+- Added: Missile Stations refill Power Bomb. In this version, this is always enabled.
 
-## [5.7.0] - 2023-05-??
+## [5.7.0] - 2023-05-05
 
 - Added: Skip usual Door Lock randomizer logic when the only valid lock option is unlocked doors.
 - Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.
