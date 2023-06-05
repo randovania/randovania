@@ -2278,7 +2278,7 @@
                             }
                         },
                         "lock": {
-                            "lock_type": "front-blast-back-if-matching",
+                            "lock_type": "front-blast-back-free-unlock",
                             "requirement": {
                                 "type": "resource",
                                 "data": {
@@ -2300,7 +2300,7 @@
                             }
                         },
                         "lock": {
-                            "lock_type": "front-blast-back-if-matching",
+                            "lock_type": "front-blast-back-free-unlock",
                             "requirement": {
                                 "type": "resource",
                                 "data": {
@@ -2322,7 +2322,7 @@
                             }
                         },
                         "lock": {
-                            "lock_type": "front-blast-back-if-matching",
+                            "lock_type": "front-blast-back-free-unlock",
                             "requirement": {
                                 "type": "resource",
                                 "data": {
@@ -2331,6 +2331,23 @@
                                     "amount": 1,
                                     "negate": false
                                 }
+                            }
+                        }
+                    },
+                    "Water Turbine Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Destroy Turbine"
                             }
                         }
                     },
