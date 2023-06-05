@@ -125,6 +125,11 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
                 if other_node.default_connection != region_list.identifier_for_node(node):
                     yield (f"{node.name} connects to '{node.default_connection}', but that dock connects "
                            f"to '{other_node.default_connection}' instead.")
+                if not node.exclude_from_dock_rando and other_node.dock_type != node.dock_type:
+                    yield (f"'{node.name}' is of type '{node.dock_type.long_name}', but the connected dock "
+                           f"'{other_node.name}' is of type '{other_node.dock_type.long_name}' instead.")
+            else:
+                yield f"{node.name} connects to '{node.default_connection}' which is not a DockNode"
 
     elif any(re.match(fr"{dock_type.long_name}\s*(to|from)", node.name)
              for dock_type in game.dock_weakness_database.dock_types):
