@@ -263,6 +263,16 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         return result
 
+    def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
+        local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
+        local_pos -= self.get_area_canvas_offset()
+
+        nodes_at_mouse = self._nodes_at_position(local_pos)
+        if nodes_at_mouse:
+            if len(nodes_at_mouse) == 1 and nodes_at_mouse[0] != self.highlighted_node:
+                self.SelectConnectionsRequest.emit(nodes_at_mouse[0])
+            return
+
     def mouseDoubleClickEvent(self, event: QtGui.QMouseEvent) -> None:
         local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
         local_pos -= self.get_area_canvas_offset()
