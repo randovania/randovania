@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Generator unable to pass through one-way permanently locked doors such as the ones in uncrashed Frigate
+- Fixed: Exporting games with both Door Lock Rando and Room Rando will now preserve both modifications
 - Added: Missile Stations refill Power Bomb. In this version, this is always enabled.
 
 #### Logic Database
