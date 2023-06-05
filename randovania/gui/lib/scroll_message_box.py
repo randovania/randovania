@@ -1,4 +1,4 @@
-from PySide6 import QtWidgets
+from PySide6 import QtCore, QtWidgets
 
 
 class ScrollMessageBox(QtWidgets.QMessageBox):
@@ -22,6 +22,8 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
 
         label = QtWidgets.QLabel(old_label.text(), self)
         label.setWordWrap(True)
+        label.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
+        label.setCursor(QtCore.Qt.CursorShape.IBeamCursor)
         self.label = label
 
         scroll = QtWidgets.QScrollArea(self)
