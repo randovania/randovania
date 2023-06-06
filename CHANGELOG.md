@@ -13,7 +13,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Generator unable to pass through one-way permanently locked doors such as the ones in uncrashed Frigate
+- Fixed: Exporting games with both Door Lock Rando and Room Rando will now preserve both modifications
 - Added: Missile Stations refill Power Bomb. In this version, this is always enabled.
+
+#### Logic Database
+
+- Added: 55 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) to 224
+
+##### Tallon Overworld 
+
+- Added: Biotech Research Area 1 - Easier gravityless NSJ method from room center to Deck Beta Security Hall
+- Added: Root Cave - L-Jump method to reach upper area
+
+#### Magmoor Caverns
+
+- Added: Twin Fires Tunnel - Transport to Talon -> Twin Fires, NSJ & SJ dashes now require standable terrain
+
+##### Phendrana Drifts
+
+- Added: Hunter Cave - Lower Edge Tunnel -> Hunter Cave Access, NSJ requires a slope jump or bomb jump after the grapple point to reach the platform with the doors.
+- Added: Hunter Cave - Hunter Cave Access -> Lower Edge Tunnell, NSJ requires an L-Jump to reach the platforms across the water without falling in. Added Gravity logic if falling in (matches Lake Tunnel -> Lower Edge Tunnel).
+
+##### Phazon Mines
+
+- Fixed: Fungal Hall B - Scan dash method now requires scan visor
+- Fixed: Ventillation Shaft - Combat dash to climb room now requires door lock rando to be off 
 
 ## [5.7.0] - 2023-05-05
 
