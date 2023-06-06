@@ -2,7 +2,7 @@
     "name": "Main Caves",
     "extra": {},
     "areas": {
-        "rm_a0h01": {
+        "Landing Site": {
             "default_node": "Ship",
             "extra": {
                 "map_name": "rm_a0h01"
@@ -23,7 +23,7 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to rm_a0h02": {
+                        "Dock to Hornoad Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -130,7 +130,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h02": {
+                "Dock to Hornoad Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -147,8 +147,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h02",
-                        "node": "Dock to rm_a0h01"
+                        "area": "Hornoad Hallway",
+                        "node": "Dock to Landing Site"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -183,7 +183,7 @@
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "rm_a7c05",
-                        "node": "Dock to rm_a0h01"
+                        "node": "Dock to Landing Site"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -375,13 +375,13 @@
                 }
             }
         },
-        "rm_a0h02": {
+        "Hornoad Hallway": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h02"
             },
             "nodes": {
-                "Dock to rm_a0h01": {
+                "Dock to Landing Site": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -398,8 +398,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h01",
-                        "node": "Dock to rm_a0h02"
+                        "area": "Landing Site",
+                        "node": "Dock to Hornoad Hallway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -416,7 +416,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h02a": {
+                "Dock to Tsumuri Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -433,8 +433,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h02a",
-                        "node": "Dock to rm_a0h02"
+                        "area": "Tsumuri Tunnel",
+                        "node": "Dock to Hornoad Hallway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -476,7 +476,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h01": {
+                        "Dock to Landing Site": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -488,7 +488,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h02a": {
+                        "Dock to Tsumuri Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -509,13 +509,13 @@
                 }
             }
         },
-        "rm_a0h02a": {
+        "Tsumuri Tunnel": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h02a"
             },
             "nodes": {
-                "Dock to rm_a0h03": {
+                "Dock to Cavern Crossroads": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -532,8 +532,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h03",
-                        "node": "Dock to rm_a0h02a"
+                        "area": "Cavern Crossroads",
+                        "node": "Dock to Tsumuri Tunnel"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -541,7 +541,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h02": {
+                        "Dock to Hornoad Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -590,7 +590,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h02": {
+                "Dock to Hornoad Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -607,8 +607,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h02",
-                        "node": "Dock to rm_a0h02a"
+                        "area": "Hornoad Hallway",
+                        "node": "Dock to Tsumuri Tunnel"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -616,7 +616,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h03": {
+                        "Dock to Cavern Crossroads": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -627,13 +627,13 @@
                 }
             }
         },
-        "rm_a0h03": {
+        "Cavern Crossroads": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h03"
             },
             "nodes": {
-                "Dock to rm_a0h02a": {
+                "Dock to Tsumuri Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -650,8 +650,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h02a",
-                        "node": "Dock to rm_a0h03"
+                        "area": "Tsumuri Tunnel",
+                        "node": "Dock to Cavern Crossroads"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -659,14 +659,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h03a": {
+                        "Dock to Surface Cave Save": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a0h03b": {
+                        "Dock to Rocky Stairs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -675,7 +675,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h03a": {
+                "Dock to Surface Cave Save": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -692,8 +692,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h03a",
-                        "node": "Dock to rm_a0h03"
+                        "area": "Surface Cave Save",
+                        "node": "Dock to Cavern Crossroads"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -701,7 +701,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h02a": {
+                        "Dock to Tsumuri Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -710,7 +710,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h03b": {
+                "Dock to Rocky Stairs": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -727,8 +727,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h03b",
-                        "node": "Dock to rm_a0h03"
+                        "area": "Rocky Stairs",
+                        "node": "Dock to Cavern Crossroads"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -736,7 +736,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h02a": {
+                        "Dock to Tsumuri Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -747,7 +747,7 @@
                 }
             }
         },
-        "rm_a0h03a": {
+        "Surface Cave Save": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h03a"
@@ -768,14 +768,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h06": {
+                        "Dock to Twisty Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a0h03": {
+                        "Dock to Cavern Crossroads": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -784,7 +784,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h06": {
+                "Dock to Twisty Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -801,8 +801,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h06",
-                        "node": "Dock to rm_a0h03a"
+                        "area": "Twisty Tunnel",
+                        "node": "Dock to Surface Cave Save"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -819,7 +819,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h03": {
+                "Dock to Cavern Crossroads": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -836,8 +836,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h03",
-                        "node": "Dock to rm_a0h03a"
+                        "area": "Cavern Crossroads",
+                        "node": "Dock to Surface Cave Save"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -856,13 +856,13 @@
                 }
             }
         },
-        "rm_a0h03b": {
+        "Rocky Stairs": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h03b"
             },
             "nodes": {
-                "Dock to rm_a0h04": {
+                "Dock to Access to Surface Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -879,8 +879,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h04",
-                        "node": "Dock to rm_a0h03b"
+                        "area": "Access to Surface Pond",
+                        "node": "Dock to Rocky Stairs"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -888,7 +888,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h03": {
+                        "Dock to Cavern Crossroads": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -897,7 +897,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h03": {
+                "Dock to Cavern Crossroads": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -914,8 +914,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h03",
-                        "node": "Dock to rm_a0h03b"
+                        "area": "Cavern Crossroads",
+                        "node": "Dock to Rocky Stairs"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -923,7 +923,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h04": {
+                        "Dock to Access to Surface Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -934,13 +934,13 @@
                 }
             }
         },
-        "rm_a0h04": {
+        "Access to Surface Pond": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h04"
             },
             "nodes": {
-                "Dock to rm_a0h04b": {
+                "Dock to Surface Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -957,8 +957,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h04b",
-                        "node": "Dock to rm_a0h04"
+                        "area": "Surface Pond",
+                        "node": "Dock to Access to Surface Pond"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -966,7 +966,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h03b": {
+                        "Dock to Rocky Stairs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -975,7 +975,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h03b": {
+                "Dock to Rocky Stairs": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -992,8 +992,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h03b",
-                        "node": "Dock to rm_a0h04"
+                        "area": "Rocky Stairs",
+                        "node": "Dock to Access to Surface Pond"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1001,7 +1001,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h04b": {
+                        "Dock to Surface Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1012,13 +1012,13 @@
                 }
             }
         },
-        "rm_a0h04b": {
+        "Surface Pond": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h04b"
             },
             "nodes": {
-                "Dock to rm_a0h04": {
+                "Dock to Access to Surface Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1035,8 +1035,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h04",
-                        "node": "Dock to rm_a0h04b"
+                        "area": "Access to Surface Pond",
+                        "node": "Dock to Surface Pond"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1044,7 +1044,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a0h04c": {
+                        "Door to Surface Pond Save": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1053,7 +1053,7 @@
                         }
                     }
                 },
-                "Door to rm_a0h04c": {
+                "Door to Surface Pond Save": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1070,8 +1070,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h04c",
-                        "node": "Door to rm_a0h04b"
+                        "area": "Surface Pond Save",
+                        "node": "Door to Surface Pond"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1079,7 +1079,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h04": {
+                        "Dock to Access to Surface Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1090,7 +1090,7 @@
                 }
             }
         },
-        "rm_a0h04c": {
+        "Surface Pond Save": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h04c"
@@ -1111,14 +1111,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a0h04b": {
+                        "Door to Surface Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a0h04d": {
+                        "Dock to Surface Lava Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1127,7 +1127,7 @@
                         }
                     }
                 },
-                "Door to rm_a0h04b": {
+                "Door to Surface Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1144,8 +1144,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h04b",
-                        "node": "Door to rm_a0h04c"
+                        "area": "Surface Pond",
+                        "node": "Door to Surface Pond Save"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1162,7 +1162,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h04d": {
+                "Dock to Surface Lava Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1179,8 +1179,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h04d",
-                        "node": "Dock to rm_a0h04c"
+                        "area": "Surface Lava Pond",
+                        "node": "Dock to Surface Pond Save"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1199,13 +1199,13 @@
                 }
             }
         },
-        "rm_a0h04d": {
+        "Surface Lava Pond": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h04d"
             },
             "nodes": {
-                "Dock to rm_a0h05": {
+                "Dock to Surface Alpha Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1222,8 +1222,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h05",
-                        "node": "Dock to rm_a0h04d"
+                        "area": "Surface Alpha Nest",
+                        "node": "Dock to Surface Lava Pond"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1240,7 +1240,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h04c": {
+                "Dock to Surface Pond Save": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1257,8 +1257,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h04c",
-                        "node": "Dock to rm_a0h04d"
+                        "area": "Surface Pond Save",
+                        "node": "Dock to Surface Lava Pond"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1290,7 +1290,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h05": {
+                        "Dock to Surface Alpha Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1302,7 +1302,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h04c": {
+                        "Dock to Surface Pond Save": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1318,13 +1318,13 @@
                 }
             }
         },
-        "rm_a0h05": {
+        "Surface Alpha Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h05"
             },
             "nodes": {
-                "Dock to rm_a0h04d": {
+                "Dock to Surface Lava Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1341,8 +1341,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h04d",
-                        "node": "Dock to rm_a0h05"
+                        "area": "Surface Lava Pond",
+                        "node": "Dock to Surface Alpha Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1372,7 +1372,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha1",
                     "connections": {
-                        "Dock to rm_a0h04d": {
+                        "Dock to Surface Lava Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1383,13 +1383,13 @@
                 }
             }
         },
-        "rm_a0h06": {
+        "Twisty Tunnel": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h06"
             },
             "nodes": {
-                "Dock to rm_a0h03a": {
+                "Dock to Surface Cave Save": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1406,8 +1406,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h03a",
-                        "node": "Dock to rm_a0h06"
+                        "area": "Surface Cave Save",
+                        "node": "Dock to Twisty Tunnel"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1415,7 +1415,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h07": {
+                        "Dock to Grave Grotto": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1424,7 +1424,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h07": {
+                "Dock to Grave Grotto": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1441,8 +1441,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h07",
-                        "node": "Dock to rm_a0h06"
+                        "area": "Grave Grotto",
+                        "node": "Dock to Twisty Tunnel"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1450,7 +1450,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h03a": {
+                        "Dock to Surface Cave Save": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1461,13 +1461,13 @@
                 }
             }
         },
-        "rm_a0h07": {
+        "Grave Grotto": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h07"
             },
             "nodes": {
-                "Dock to rm_a0h06": {
+                "Dock to Twisty Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1484,8 +1484,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h06",
-                        "node": "Dock to rm_a0h07"
+                        "area": "Twisty Tunnel",
+                        "node": "Dock to Grave Grotto"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1493,7 +1493,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h08": {
+                        "Dock to Mumbo Manor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1509,7 +1509,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h08": {
+                "Dock to Mumbo Manor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1526,8 +1526,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h08",
-                        "node": "Dock to rm_a0h07"
+                        "area": "Mumbo Manor",
+                        "node": "Dock to Grave Grotto"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1535,7 +1535,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h06": {
+                        "Dock to Twisty Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1544,7 +1544,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a0h09": {
+                "Tunnel to Surface Gunzoo Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1561,8 +1561,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h09",
-                        "node": "Tunnel to rm_a0h07"
+                        "area": "Surface Gunzoo Room",
+                        "node": "Tunnel to Grave Grotto"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1607,7 +1607,7 @@
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "rm_a2h01",
-                        "node": "Dock to rm_a0h07"
+                        "node": "Dock to Grave Grotto"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1615,7 +1615,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to rm_a0h09": {
+                        "Tunnel to Surface Gunzoo Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1629,7 +1629,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a0h07A": {
+                "Tunnel to Surface Spider Ball Challenge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1646,8 +1646,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h07A",
-                        "node": "Tunnel to rm_a0h07"
+                        "area": "Surface Spider Ball Challenge",
+                        "node": "Tunnel to Grave Grotto"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1655,13 +1655,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h09": {
+                        "Dock to Surface Gunzoo Room": {
                             "type": "template",
                             "data": "Can Use Any Bombs"
                         }
                     }
                 },
-                "Dock to rm_a0h09": {
+                "Dock to Surface Gunzoo Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1678,8 +1678,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h09",
-                        "node": "Dock to rm_a0h07"
+                        "area": "Surface Gunzoo Room",
+                        "node": "Dock to Grave Grotto"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1763,14 +1763,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h06": {
+                        "Dock to Twisty Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to rm_a0h07A": {
+                        "Tunnel to Surface Spider Ball Challenge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1786,7 +1786,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h09": {
+                        "Dock to Surface Gunzoo Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1797,13 +1797,13 @@
                 }
             }
         },
-        "rm_a0h07A": {
+        "Surface Spider Ball Challenge": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h07A"
             },
             "nodes": {
-                "Tunnel to rm_a0h07": {
+                "Tunnel to Grave Grotto": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1820,8 +1820,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h07",
-                        "node": "Tunnel to rm_a0h07A"
+                        "area": "Grave Grotto",
+                        "node": "Tunnel to Surface Spider Ball Challenge"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1930,7 +1930,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to rm_a0h07": {
+                        "Tunnel to Grave Grotto": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2188,7 +2188,7 @@
                 }
             }
         },
-        "rm_a0h08": {
+        "Mumbo Manor": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h08"
@@ -2212,7 +2212,7 @@
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Security Check",
-                        "node": "Dock to rm_a0h08"
+                        "node": "Dock to Mumbo Manor"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2220,7 +2220,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h07": {
+                        "Dock to Grave Grotto": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2229,7 +2229,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h07": {
+                "Dock to Grave Grotto": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2246,8 +2246,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h07",
-                        "node": "Dock to rm_a0h08"
+                        "area": "Grave Grotto",
+                        "node": "Dock to Mumbo Manor"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2266,13 +2266,13 @@
                 }
             }
         },
-        "rm_a0h09": {
+        "Surface Gunzoo Room": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h09"
             },
             "nodes": {
-                "Tunnel to rm_a0h07": {
+                "Tunnel to Grave Grotto": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2289,8 +2289,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h07",
-                        "node": "Tunnel to rm_a0h09"
+                        "area": "Grave Grotto",
+                        "node": "Tunnel to Surface Gunzoo Room"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2317,7 +2317,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h10": {
+                "Dock to Spike Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2334,8 +2334,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h10",
-                        "node": "Dock to rm_a0h09"
+                        "area": "Spike Maze",
+                        "node": "Dock to Surface Gunzoo Room"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2343,7 +2343,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h11": {
+                        "Dock to Bend Chasm": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2352,7 +2352,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h11": {
+                "Dock to Bend Chasm": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2369,8 +2369,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h11",
-                        "node": "Dock to rm_a0h09"
+                        "area": "Bend Chasm",
+                        "node": "Dock to Surface Gunzoo Room"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2378,7 +2378,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h10": {
+                        "Dock to Spike Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2387,7 +2387,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a0h09A": {
+                "Tunnel to Surface Space Jump Challenge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2404,8 +2404,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h09A",
-                        "node": "Tunnel to rm_a0h09"
+                        "area": "Surface Space Jump Challenge",
+                        "node": "Tunnel to Surface Gunzoo Room"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2427,7 +2427,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h07": {
+                "Dock to Grave Grotto": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2444,8 +2444,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h07",
-                        "node": "Dock to rm_a0h09"
+                        "area": "Grave Grotto",
+                        "node": "Dock to Surface Gunzoo Room"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2462,7 +2462,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a0h11": {
+                "Tunnel to Bend Chasm": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2479,8 +2479,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h11",
-                        "node": "Tunnel to rm_a0h09"
+                        "area": "Bend Chasm",
+                        "node": "Tunnel to Surface Gunzoo Room"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2517,7 +2517,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to rm_a0h07": {
+                        "Tunnel to Grave Grotto": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2534,7 +2534,7 @@
                                 ]
                             }
                         },
-                        "Tunnel to rm_a0h09A": {
+                        "Tunnel to Surface Space Jump Challenge": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2614,14 +2614,14 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h07": {
+                        "Dock to Grave Grotto": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to rm_a0h11": {
+                        "Tunnel to Bend Chasm": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2632,13 +2632,13 @@
                 }
             }
         },
-        "rm_a0h09A": {
+        "Surface Space Jump Challenge": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h09A"
             },
             "nodes": {
-                "Tunnel to rm_a0h09": {
+                "Tunnel to Surface Gunzoo Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2655,8 +2655,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h09",
-                        "node": "Tunnel to rm_a0h09A"
+                        "area": "Surface Gunzoo Room",
+                        "node": "Tunnel to Surface Space Jump Challenge"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2698,7 +2698,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to rm_a0h09": {
+                        "Tunnel to Surface Gunzoo Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2993,13 +2993,13 @@
                 }
             }
         },
-        "rm_a0h10": {
+        "Spike Maze": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h10"
             },
             "nodes": {
-                "Dock to rm_a0h10a": {
+                "Dock to Access To Mines": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3016,8 +3016,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h10a",
-                        "node": "Dock to rm_a0h10"
+                        "area": "Access To Mines",
+                        "node": "Dock to Spike Maze"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3048,7 +3048,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h09": {
+                "Dock to Surface Gunzoo Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3065,8 +3065,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h09",
-                        "node": "Dock to rm_a0h10"
+                        "area": "Surface Gunzoo Room",
+                        "node": "Dock to Spike Maze"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3144,7 +3144,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h09": {
+                        "Dock to Surface Gunzoo Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3199,7 +3199,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h10a": {
+                        "Dock to Access To Mines": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3270,13 +3270,13 @@
                 }
             }
         },
-        "rm_a0h10a": {
+        "Access To Mines": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h10a"
             },
             "nodes": {
-                "Dock to rm_a0h10": {
+                "Dock to Spike Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3293,8 +3293,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h10",
-                        "node": "Dock to rm_a0h10a"
+                        "area": "Spike Maze",
+                        "node": "Dock to Access To Mines"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3311,7 +3311,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h16": {
+                "Dock to Mines 3-Shape Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3328,8 +3328,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h16",
-                        "node": "Dock to rm_a0h10a"
+                        "area": "Mines 3-Shape Shaft",
+                        "node": "Dock to Access To Mines"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3391,7 +3391,7 @@
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "rm_a3h01",
-                        "node": "Dock to rm_a0h10a"
+                        "node": "Door to Access To Mines"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3408,7 +3408,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h10b": {
+                "Dock to Hidden Mines Route": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3425,8 +3425,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h10b",
-                        "node": "Dock to rm_a0h10a"
+                        "area": "Hidden Mines Route",
+                        "node": "Dock to Access To Mines"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3450,7 +3450,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h10": {
+                        "Dock to Spike Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3493,7 +3493,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h16": {
+                        "Dock to Mines 3-Shape Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3510,7 +3510,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h10b": {
+                        "Dock to Hidden Mines Route": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3594,13 +3594,13 @@
                 }
             }
         },
-        "rm_a0h10b": {
+        "Hidden Mines Route": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h10b"
             },
             "nodes": {
-                "Dock to rm_a0h10a": {
+                "Dock to Access To Mines": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3617,8 +3617,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h10a",
-                        "node": "Dock to rm_a0h10b"
+                        "area": "Access To Mines",
+                        "node": "Dock to Hidden Mines Route"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3626,7 +3626,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h11": {
+                        "Dock to Bend Chasm": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3635,7 +3635,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h11": {
+                "Dock to Bend Chasm": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3652,8 +3652,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h11",
-                        "node": "Dock to rm_a0h10b"
+                        "area": "Bend Chasm",
+                        "node": "Dock to Hidden Mines Route"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3661,7 +3661,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h10a": {
+                        "Dock to Access To Mines": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3672,13 +3672,13 @@
                 }
             }
         },
-        "rm_a0h11": {
+        "Bend Chasm": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h11"
             },
             "nodes": {
-                "Dock to rm_a0h09": {
+                "Dock to Surface Gunzoo Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3695,8 +3695,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h09",
-                        "node": "Dock to rm_a0h11"
+                        "area": "Surface Gunzoo Room",
+                        "node": "Dock to Bend Chasm"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3704,7 +3704,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to rm_a0h09": {
+                        "Tunnel to Surface Gunzoo Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3744,7 +3744,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h12": {
+                "Dock to Octroll Lava Pool": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3761,8 +3761,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h12",
-                        "node": "Dock to rm_a0h11"
+                        "area": "Octroll Lava Pool",
+                        "node": "Dock to Bend Chasm"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3770,7 +3770,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h24": {
+                        "Dock to Western Cave Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3786,7 +3786,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h10b": {
+                "Dock to Hidden Mines Route": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3803,8 +3803,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h10b",
-                        "node": "Dock to rm_a0h11"
+                        "area": "Hidden Mines Route",
+                        "node": "Dock to Bend Chasm"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3831,7 +3831,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h24": {
+                "Dock to Western Cave Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3848,8 +3848,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h24",
-                        "node": "Dock to rm_a0h11"
+                        "area": "Western Cave Entrance",
+                        "node": "Dock to Bend Chasm"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3857,7 +3857,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h12": {
+                        "Dock to Octroll Lava Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3871,7 +3871,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a0h09": {
+                "Tunnel to Surface Gunzoo Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3888,8 +3888,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h09",
-                        "node": "Tunnel to rm_a0h11"
+                        "area": "Surface Gunzoo Room",
+                        "node": "Tunnel to Bend Chasm"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3897,7 +3897,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h09": {
+                        "Dock to Surface Gunzoo Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3931,7 +3931,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h09": {
+                        "Dock to Surface Gunzoo Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3968,7 +3968,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h12": {
+                        "Dock to Octroll Lava Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3979,13 +3979,13 @@
                 }
             }
         },
-        "rm_a0h24": {
+        "Western Cave Entrance": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h24"
             },
             "nodes": {
-                "Dock to rm_a0h11": {
+                "Dock to Bend Chasm": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4002,8 +4002,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h11",
-                        "node": "Dock to rm_a0h24"
+                        "area": "Bend Chasm",
+                        "node": "Dock to Western Cave Entrance"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4020,7 +4020,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h25": {
+                "Dock to Western Cave Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4037,8 +4037,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h25",
-                        "node": "Dock to rm_a0h24"
+                        "area": "Western Cave Shaft",
+                        "node": "Dock to Western Cave Entrance"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4103,7 +4103,7 @@
                     "pickup_index": 54,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to rm_a0h25": {
+                        "Dock to Western Cave Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4127,7 +4127,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h11": {
+                        "Dock to Bend Chasm": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4139,7 +4139,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h25": {
+                        "Dock to Western Cave Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4150,13 +4150,13 @@
                 }
             }
         },
-        "rm_a0h25": {
+        "Western Cave Shaft": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h25"
             },
             "nodes": {
-                "Dock to rm_a0h24": {
+                "Dock to Western Cave Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4173,8 +4173,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h24",
-                        "node": "Dock to rm_a0h25"
+                        "area": "Western Cave Entrance",
+                        "node": "Dock to Western Cave Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4191,7 +4191,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h26": {
+                "Dock to Western Cave Save": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4208,8 +4208,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h26",
-                        "node": "Dock to rm_a0h25"
+                        "area": "Western Cave Save",
+                        "node": "Dock to Western Cave Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4217,7 +4217,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h27": {
+                        "Dock to Snaky Skorp Cavern": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4331,7 +4331,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h27": {
+                "Dock to Snaky Skorp Cavern": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4348,8 +4348,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h27",
-                        "node": "Dock to rm_a0h25"
+                        "area": "Snaky Skorp Cavern",
+                        "node": "Dock to Western Cave Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4357,7 +4357,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h26": {
+                        "Dock to Western Cave Save": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4381,7 +4381,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h26": {
+                        "Dock to Western Cave Save": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4417,7 +4417,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h24": {
+                        "Dock to Western Cave Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4479,7 +4479,7 @@
                 }
             }
         },
-        "rm_a0h26": {
+        "Western Cave Save": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h26"
@@ -4500,7 +4500,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h25": {
+                        "Dock to Western Cave Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4509,7 +4509,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h25": {
+                "Dock to Western Cave Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4526,8 +4526,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h25",
-                        "node": "Dock to rm_a0h26"
+                        "area": "Western Cave Shaft",
+                        "node": "Dock to Western Cave Save"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4546,13 +4546,13 @@
                 }
             }
         },
-        "rm_a0h27": {
+        "Snaky Skorp Cavern": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h27"
             },
             "nodes": {
-                "Dock to rm_a0h25": {
+                "Dock to Western Cave Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4569,8 +4569,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h25",
-                        "node": "Dock to rm_a0h27"
+                        "area": "Western Cave Shaft",
+                        "node": "Dock to Snaky Skorp Cavern"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4587,7 +4587,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h28": {
+                "Dock to The Pit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4604,8 +4604,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h28",
-                        "node": "Dock to rm_a0h27"
+                        "area": "The Pit",
+                        "node": "Dock to Snaky Skorp Cavern"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4680,7 +4680,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h25": {
+                        "Dock to Western Cave Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4692,7 +4692,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h28": {
+                        "Dock to The Pit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4708,13 +4708,13 @@
                 }
             }
         },
-        "rm_a0h28": {
+        "The Pit": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h28"
             },
             "nodes": {
-                "Dock to rm_a0h27": {
+                "Dock to Snaky Skorp Cavern": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4731,8 +4731,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h27",
-                        "node": "Dock to rm_a0h28"
+                        "area": "Snaky Skorp Cavern",
+                        "node": "Dock to The Pit"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4767,7 +4767,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "rm_a0h29",
-                        "node": "Dock to rm_a0h28"
+                        "node": "Dock to The Pit"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4775,7 +4775,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h27": {
+                        "Dock to Snaky Skorp Cavern": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4853,7 +4853,7 @@
                 "map_name": "rm_a0h29"
             },
             "nodes": {
-                "Dock to rm_a0h28": {
+                "Dock to The Pit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4870,7 +4870,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h28",
+                        "area": "The Pit",
                         "node": "Dock to rm_a0h29"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -4949,7 +4949,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h28": {
+                        "Dock to The Pit": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6857,13 +6857,13 @@
                 }
             }
         },
-        "rm_a0h12": {
+        "Octroll Lava Pool": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h12"
             },
             "nodes": {
-                "Dock to rm_a0h11": {
+                "Dock to Bend Chasm": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6880,8 +6880,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h11",
-                        "node": "Dock to rm_a0h12"
+                        "area": "Bend Chasm",
+                        "node": "Dock to Octroll Lava Pool"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6889,7 +6889,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h13": {
+                        "Dock to Access To Research Site": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6963,7 +6963,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h13": {
+                "Dock to Access To Research Site": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6980,8 +6980,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h13",
-                        "node": "Dock to rm_a0h12"
+                        "area": "Access To Research Site",
+                        "node": "Dock to Octroll Lava Pool"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6989,7 +6989,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h11": {
+                        "Dock to Bend Chasm": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7065,13 +7065,13 @@
                 }
             }
         },
-        "rm_a0h13": {
+        "Access To Research Site": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h13"
             },
             "nodes": {
-                "Dock to rm_a0h12": {
+                "Dock to Octroll Lava Pool": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7088,8 +7088,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h12",
-                        "node": "Dock to rm_a0h13"
+                        "area": "Octroll Lava Pool",
+                        "node": "Dock to Access To Research Site"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7097,7 +7097,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h14": {
+                        "Dock to Research Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7111,7 +7111,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h14": {
+                "Dock to Research Site": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7128,8 +7128,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h14",
-                        "node": "Dock to rm_a0h13"
+                        "area": "Research Site",
+                        "node": "Dock to Access To Research Site"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7137,7 +7137,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h12": {
+                        "Dock to Octroll Lava Pool": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7193,7 +7193,7 @@
                     "default_connection": {
                         "region": "GFS Thoth",
                         "area": "rm_a8h00",
-                        "node": "Dock to rm_a0h13"
+                        "node": "Door to Access To Research Site"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7201,7 +7201,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h14": {
+                        "Dock to Research Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7236,7 +7236,7 @@
                     "valid_starting_location": false,
                     "event_name": "ThothPBEntrance",
                     "connections": {
-                        "Dock to rm_a0h14": {
+                        "Dock to Research Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7247,13 +7247,13 @@
                 }
             }
         },
-        "rm_a0h14": {
+        "Research Site": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h14"
             },
             "nodes": {
-                "Dock to rm_a0h15": {
+                "Dock to Research Site Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7270,8 +7270,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h15",
-                        "node": "Dock to rm_a0h14"
+                        "area": "Research Site Storage",
+                        "node": "Dock to Research Site"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7279,7 +7279,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h13": {
+                        "Dock to Access To Research Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7330,7 +7330,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h13": {
+                "Dock to Access To Research Site": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7347,8 +7347,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h13",
-                        "node": "Dock to rm_a0h14"
+                        "area": "Access To Research Site",
+                        "node": "Dock to Research Site"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7356,7 +7356,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h15": {
+                        "Dock to Research Site Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7381,7 +7381,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha16",
                     "connections": {
-                        "Dock to rm_a0h15": {
+                        "Dock to Research Site Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7406,7 +7406,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha15",
                     "connections": {
-                        "Dock to rm_a0h15": {
+                        "Dock to Research Site Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7417,13 +7417,13 @@
                 }
             }
         },
-        "rm_a0h15": {
+        "Research Site Storage": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h15"
             },
             "nodes": {
-                "Dock to rm_a0h14": {
+                "Dock to Research Site": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7440,8 +7440,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h14",
-                        "node": "Dock to rm_a0h15"
+                        "area": "Research Site",
+                        "node": "Dock to Research Site Storage"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7500,7 +7500,7 @@
                     "valid_starting_location": false,
                     "event_name": "DualAlphasTrigger",
                     "connections": {
-                        "Dock to rm_a0h14": {
+                        "Dock to Research Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7518,13 +7518,13 @@
                 }
             }
         },
-        "rm_a0h16": {
+        "Mines 3-Shape Shaft": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h16"
             },
             "nodes": {
-                "Dock to rm_a0h10a": {
+                "Dock to Access To Mines": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7541,8 +7541,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h10a",
-                        "node": "Dock to rm_a0h16"
+                        "area": "Access To Mines",
+                        "node": "Dock to Mines 3-Shape Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7550,7 +7550,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17": {
+                        "Dock to Mines O-Shape Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7559,7 +7559,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h17": {
+                "Dock to Mines O-Shape Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7576,8 +7576,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17",
-                        "node": "Dock to rm_a0h16"
+                        "area": "Mines O-Shape Shaft",
+                        "node": "Dock to Mines 3-Shape Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7585,7 +7585,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h10a": {
+                        "Dock to Access To Mines": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7601,13 +7601,13 @@
                 }
             }
         },
-        "rm_a0h17": {
+        "Mines O-Shape Shaft": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h17"
             },
             "nodes": {
-                "Dock to rm_a0h16": {
+                "Dock to Mines 3-Shape Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7624,8 +7624,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h16",
-                        "node": "Dock to rm_a0h17"
+                        "area": "Mines 3-Shape Shaft",
+                        "node": "Dock to Mines O-Shape Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7633,7 +7633,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17a": {
+                        "Dock to Small Moto Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7642,7 +7642,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h17a": {
+                "Dock to Small Moto Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7659,8 +7659,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17a",
-                        "node": "Dock to rm_a0h17"
+                        "area": "Small Moto Corridor",
+                        "node": "Dock to Mines O-Shape Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7668,7 +7668,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h16": {
+                        "Dock to Mines 3-Shape Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7747,13 +7747,13 @@
                 }
             }
         },
-        "rm_a0h17a": {
+        "Small Moto Corridor": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h17a"
             },
             "nodes": {
-                "Dock to rm_a0h17": {
+                "Dock to Mines O-Shape Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7770,8 +7770,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17",
-                        "node": "Dock to rm_a0h17a"
+                        "area": "Mines O-Shape Shaft",
+                        "node": "Dock to Small Moto Corridor"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7779,7 +7779,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17b": {
+                        "Dock to Destroyed Drill Cavern": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7788,7 +7788,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h17b": {
+                "Dock to Destroyed Drill Cavern": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7805,8 +7805,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17b",
-                        "node": "Dock to rm_a0h17a"
+                        "area": "Destroyed Drill Cavern",
+                        "node": "Dock to Small Moto Corridor"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7814,7 +7814,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17": {
+                        "Dock to Mines O-Shape Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7825,13 +7825,13 @@
                 }
             }
         },
-        "rm_a0h17b": {
+        "Destroyed Drill Cavern": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h17b"
             },
             "nodes": {
-                "Dock to rm_a0h17a": {
+                "Dock to Small Moto Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7848,8 +7848,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17a",
-                        "node": "Dock to rm_a0h17b"
+                        "area": "Small Moto Corridor",
+                        "node": "Dock to Destroyed Drill Cavern"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7857,7 +7857,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17c": {
+                        "Dock to Long Moto Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7866,7 +7866,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h17c": {
+                "Dock to Long Moto Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7883,8 +7883,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17c",
-                        "node": "Dock to rm_a0h17b"
+                        "area": "Long Moto Corridor",
+                        "node": "Dock to Destroyed Drill Cavern"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7892,7 +7892,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17a": {
+                        "Dock to Small Moto Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7908,13 +7908,13 @@
                 }
             }
         },
-        "rm_a0h17c": {
+        "Long Moto Corridor": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h17c"
             },
             "nodes": {
-                "Dock to rm_a0h17d": {
+                "Dock to Access To Drill Excavation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7931,8 +7931,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17d",
-                        "node": "Dock to rm_a0h17c"
+                        "area": "Access To Drill Excavation",
+                        "node": "Dock to Long Moto Corridor"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7940,7 +7940,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17b": {
+                        "Dock to Destroyed Drill Cavern": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7949,7 +7949,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h17b": {
+                "Dock to Destroyed Drill Cavern": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7966,8 +7966,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17b",
-                        "node": "Dock to rm_a0h17c"
+                        "area": "Destroyed Drill Cavern",
+                        "node": "Dock to Long Moto Corridor"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7975,7 +7975,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17d": {
+                        "Dock to Access To Drill Excavation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7986,13 +7986,13 @@
                 }
             }
         },
-        "rm_a0h17d": {
+        "Access To Drill Excavation": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h17d"
             },
             "nodes": {
-                "Dock to rm_a0h17c": {
+                "Dock to Long Moto Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8009,8 +8009,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17c",
-                        "node": "Dock to rm_a0h17d"
+                        "area": "Long Moto Corridor",
+                        "node": "Dock to Access To Drill Excavation"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8018,7 +8018,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17e": {
+                        "Dock to Drill Excavation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8027,7 +8027,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h17e": {
+                "Dock to Drill Excavation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8044,8 +8044,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17e",
-                        "node": "Dock to rm_a0h17d"
+                        "area": "Drill Excavation",
+                        "node": "Dock to Access To Drill Excavation"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8053,7 +8053,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17c": {
+                        "Dock to Long Moto Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8069,13 +8069,13 @@
                 }
             }
         },
-        "rm_a0h17e": {
+        "Drill Excavation": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h17e"
             },
             "nodes": {
-                "Dock to rm_a0h18": {
+                "Dock to Mines Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8092,8 +8092,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h18",
-                        "node": "Dock to rm_a0h17e"
+                        "area": "Mines Intersection",
+                        "node": "Dock to Drill Excavation"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8110,7 +8110,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h17d": {
+                "Dock to Access To Drill Excavation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8127,8 +8127,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17d",
-                        "node": "Dock to rm_a0h17e"
+                        "area": "Access To Drill Excavation",
+                        "node": "Dock to Drill Excavation"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8195,7 +8195,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h18": {
+                        "Dock to Mines Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8233,7 +8233,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h17d": {
+                        "Dock to Access To Drill Excavation": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8268,7 +8268,7 @@
                     "valid_starting_location": false,
                     "event_name": "DrillCrystal",
                     "connections": {
-                        "Dock to rm_a0h17d": {
+                        "Dock to Access To Drill Excavation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8288,13 +8288,13 @@
                 }
             }
         },
-        "rm_a0h18": {
+        "Mines Intersection": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h18"
             },
             "nodes": {
-                "Dock to rm_a0h17e": {
+                "Dock to Drill Excavation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8311,8 +8311,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h17e",
-                        "node": "Dock to rm_a0h18"
+                        "area": "Drill Excavation",
+                        "node": "Dock to Mines Intersection"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8320,7 +8320,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h19": {
+                        "Dock to Mining Facility Save": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8339,7 +8339,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h19": {
+                "Dock to Mining Facility Save": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8356,8 +8356,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h19",
-                        "node": "Dock to rm_a0h18"
+                        "area": "Mining Facility Save",
+                        "node": "Dock to Mines Intersection"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8365,7 +8365,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h17e": {
+                        "Dock to Drill Excavation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8382,7 +8382,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h20": {
+                        "Dock to Access To Mines Alpha Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8391,7 +8391,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h20": {
+                "Dock to Access To Mines Alpha Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8408,8 +8408,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h20",
-                        "node": "Dock to rm_a0h18"
+                        "area": "Access To Mines Alpha Nest",
+                        "node": "Dock to Mines Intersection"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8417,7 +8417,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h19": {
+                        "Dock to Mining Facility Save": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8429,7 +8429,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a0h22": {
+                        "Dock to Access to Mines Gamma Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8438,7 +8438,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h22": {
+                "Dock to Access to Mines Gamma Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8455,8 +8455,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h22",
-                        "node": "Dock to rm_a0h18"
+                        "area": "Access to Mines Gamma Nest",
+                        "node": "Dock to Mines Intersection"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8464,7 +8464,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h20": {
+                        "Dock to Access To Mines Alpha Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8475,7 +8475,7 @@
                 }
             }
         },
-        "rm_a0h19": {
+        "Mining Facility Save": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h19"
@@ -8496,7 +8496,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a0h18": {
+                        "Dock to Mines Intersection": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8505,7 +8505,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h18": {
+                "Dock to Mines Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8522,8 +8522,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h18",
-                        "node": "Dock to rm_a0h19"
+                        "area": "Mines Intersection",
+                        "node": "Dock to Mining Facility Save"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8542,13 +8542,13 @@
                 }
             }
         },
-        "rm_a0h20": {
+        "Access To Mines Alpha Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h20"
             },
             "nodes": {
-                "Dock to rm_a0h18": {
+                "Dock to Mines Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8565,8 +8565,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h18",
-                        "node": "Dock to rm_a0h20"
+                        "area": "Mines Intersection",
+                        "node": "Dock to Access To Mines Alpha Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8574,7 +8574,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h21": {
+                        "Dock to Mines Alpha Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8631,7 +8631,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h21": {
+                "Dock to Mines Alpha Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8648,8 +8648,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h21",
-                        "node": "Dock to rm_a0h20"
+                        "area": "Mines Alpha Nest",
+                        "node": "Dock to Access To Mines Alpha Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8657,7 +8657,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h18": {
+                        "Dock to Mines Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8704,13 +8704,13 @@
                 }
             }
         },
-        "rm_a0h21": {
+        "Mines Alpha Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h21"
             },
             "nodes": {
-                "Dock to rm_a0h20": {
+                "Dock to Access To Mines Alpha Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8727,8 +8727,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h20",
-                        "node": "Dock to rm_a0h21"
+                        "area": "Access To Mines Alpha Nest",
+                        "node": "Dock to Mines Alpha Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8766,7 +8766,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha17",
                     "connections": {
-                        "Dock to rm_a0h20": {
+                        "Dock to Access To Mines Alpha Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8891,13 +8891,13 @@
                 }
             }
         },
-        "rm_a0h22": {
+        "Access to Mines Gamma Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h22"
             },
             "nodes": {
-                "Dock to rm_a0h18": {
+                "Dock to Mines Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8914,8 +8914,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h18",
-                        "node": "Dock to rm_a0h22"
+                        "area": "Mines Intersection",
+                        "node": "Dock to Access to Mines Gamma Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8923,7 +8923,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h23": {
+                        "Dock to Mines Gamma Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8968,7 +8968,7 @@
                         }
                     }
                 },
-                "Dock to rm_a0h23": {
+                "Dock to Mines Gamma Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8985,8 +8985,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h23",
-                        "node": "Dock to rm_a0h22"
+                        "area": "Mines Gamma Nest",
+                        "node": "Dock to Access to Mines Gamma Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8994,7 +8994,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a0h18": {
+                        "Dock to Mines Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9041,13 +9041,13 @@
                 }
             }
         },
-        "rm_a0h23": {
+        "Mines Gamma Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h23"
             },
             "nodes": {
-                "Dock to rm_a0h22": {
+                "Dock to Access to Mines Gamma Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9064,8 +9064,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "rm_a0h22",
-                        "node": "Dock to rm_a0h23"
+                        "area": "Access to Mines Gamma Nest",
+                        "node": "Dock to Mines Gamma Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9103,7 +9103,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma10",
                     "connections": {
-                        "Dock to rm_a0h22": {
+                        "Dock to Access to Mines Gamma Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
