@@ -667,13 +667,13 @@ Extra - map_name: rm_a3a12
   * Open Passage to rm_a3a13/Dock to rm_a3a12
   > Dock to rm_a3a11
       All of the following:
-          Speedbooster
+          Speedbooster and Shinesparking Tricks (Beginner)
           Any of the following:
               # A way to climb the left
               Movement (Beginner) or Power Grip Wall
   > Pickup (Missile)
       All of the following:
-          Morphball and Speedbooster
+          Morphball and Speedbooster and Shinesparking Tricks (Beginner)
           Any of the following:
               # A way to go into Tunnel
               Power Grip or Can Use Spider Ball
@@ -969,13 +969,22 @@ Extra - map_name: rm_a3a22
           Hijump With Power Grip Wall
           Any of the following:
               # Break the super blocks
-              Morphball or SuperMissile ≥ 3
+              Morphball
+              SuperMissile ≥ 3 and Before Area 3 Skippy
+  > Event - Skippy
+      Morphball
 
 > Dock to rm_a3a23; Heals? False
   * Layers: default
   * Open Passage to rm_a3a23/Dock to rm_a3a22
   > Dock to rm_a3a21
       Space Jump Wall
+
+> Event - Skippy; Heals? False
+  * Layers: default
+  * Event Area 3 Skippy
+  > Dock to rm_a3a21
+      Trivial
 
 ----------------
 rm_a3a23
@@ -993,6 +1002,14 @@ Extra - map_name: rm_a3a23
       Any of the following:
           Spacejump or Walljump (Intermediate) or Can Use Spider Ball
           Hijump and Power Grip
+  > Event - MakeSkippyBeCleared
+      Trivial
+
+> Event - MakeSkippyBeCleared; Heals? False
+  * Layers: default
+  * Event Area 3 Skippy
+  > Dock to rm_a3a23a
+      Trivial
 
 ----------------
 rm_a3a23a

@@ -100,6 +100,9 @@ _ignore_pickups_for_game = {
     # These 3 indices are in Olympus and are unreachable given the default preset
     RandovaniaGame.METROID_PRIME_CORRUPTION: {0, 1, 2},
 
+    # These items require shinesparking, which due to varying difficulty has been made into a trick
+    RandovaniaGame.AM2R: {110, 161, 162, 204, 205, 208, 212, 209, 54, 55, 255, 309, 305, 306, 56 },
+
     # Unknown reason why
     RandovaniaGame.SUPER_METROID: {0, 11, 78, 129},
     RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
