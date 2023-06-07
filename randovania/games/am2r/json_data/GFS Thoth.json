@@ -2,7 +2,7 @@
     "name": "GFS Thoth",
     "extra": {},
     "areas": {
-        "rm_a8h00": {
+        "Elevator Shaft": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8h00"
@@ -26,7 +26,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Research Site Access",
-                        "node": "Dock to rm_a8h00"
+                        "node": "Dock to Elevator Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -34,7 +34,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a8h01": {
+                        "Dock to GFS Thoth Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -53,7 +53,7 @@
                         }
                     }
                 },
-                "Dock to rm_a8h01": {
+                "Dock to GFS Thoth Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -70,8 +70,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8h01",
-                        "node": "Dock to rm_a8h00"
+                        "area": "GFS Thoth Exterior",
+                        "node": "Dock to Elevator Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -100,13 +100,13 @@
                 }
             }
         },
-        "rm_a8h01": {
+        "GFS Thoth Exterior": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8h01"
             },
             "nodes": {
-                "Door to rm_a8a01": {
+                "Door to Thoth East Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -123,8 +123,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a01",
-                        "node": "Door to rm_a8h01"
+                        "area": "Thoth East Entrance",
+                        "node": "Door to GFS Thoth Exterior"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -210,7 +210,7 @@
                         }
                     }
                 },
-                "Door to rm_a8a06": {
+                "Door to Thoth West Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -227,8 +227,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a06",
-                        "node": "Door to rm_a8h01"
+                        "area": "Thoth West Entrance",
+                        "node": "Door to GFS Thoth Exterior"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -236,7 +236,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a8h00": {
+                        "Dock to Elevator Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -245,7 +245,7 @@
                         }
                     }
                 },
-                "Dock to rm_a8h00": {
+                "Dock to Elevator Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -262,8 +262,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8h00",
-                        "node": "Dock to rm_a8h01"
+                        "area": "Elevator Shaft",
+                        "node": "Dock to GFS Thoth Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -271,14 +271,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a06": {
+                        "Door to Thoth West Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a8h02": {
+                        "Dock to Hornoad Dorm": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -356,7 +356,7 @@
                         }
                     }
                 },
-                "Dock to rm_a8h02": {
+                "Dock to Hornoad Dorm": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -373,8 +373,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8h02",
-                        "node": "Dock to rm_a8h01"
+                        "area": "Hornoad Dorm",
+                        "node": "Dock to GFS Thoth Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -382,7 +382,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a8h00": {
+                        "Dock to Elevator Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -408,7 +408,7 @@
                     "pickup_index": 59,
                     "location_category": "minor",
                     "connections": {
-                        "Door to rm_a8a01": {
+                        "Door to Thoth East Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -432,14 +432,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a8a01": {
+                        "Door to Thoth East Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a8a06": {
+                        "Door to Thoth West Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -450,13 +450,13 @@
                 }
             }
         },
-        "rm_a8h02": {
+        "Hornoad Dorm": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8h02"
             },
             "nodes": {
-                "Dock to rm_a8h01": {
+                "Dock to GFS Thoth Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -473,8 +473,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8h01",
-                        "node": "Dock to rm_a8h02"
+                        "area": "GFS Thoth Exterior",
+                        "node": "Dock to Hornoad Dorm"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -508,7 +508,7 @@
                     "pickup_index": 58,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to rm_a8h01": {
+                        "Dock to GFS Thoth Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -519,13 +519,13 @@
                 }
             }
         },
-        "rm_a8a01": {
+        "Thoth East Entrance": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a01"
             },
             "nodes": {
-                "Door to rm_a8h01": {
+                "Door to GFS Thoth Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -542,8 +542,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8h01",
-                        "node": "Door to rm_a8a01"
+                        "area": "GFS Thoth Exterior",
+                        "node": "Door to Thoth East Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -551,7 +551,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a02": {
+                        "Door to Thoth East Lift": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -560,7 +560,7 @@
                         }
                     }
                 },
-                "Door to rm_a8a02": {
+                "Door to Thoth East Lift": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -577,8 +577,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a02",
-                        "node": "Door to rm_a8a01"
+                        "area": "Thoth East Lift",
+                        "node": "Door to Thoth East Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -586,7 +586,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8h01": {
+                        "Door to GFS Thoth Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -597,13 +597,13 @@
                 }
             }
         },
-        "rm_a8a02": {
+        "Thoth East Lift": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a02"
             },
             "nodes": {
-                "Door to rm_a8a01": {
+                "Door to Thoth East Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -620,8 +620,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a01",
-                        "node": "Door to rm_a8a02"
+                        "area": "Thoth East Entrance",
+                        "node": "Door to Thoth East Lift"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -629,7 +629,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a03": {
+                        "Door to Thoth Bridge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -638,7 +638,7 @@
                         }
                     }
                 },
-                "Door to rm_a8a03": {
+                "Door to Thoth Bridge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -655,8 +655,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a03",
-                        "node": "Door to rm_a8a02"
+                        "area": "Thoth Bridge",
+                        "node": "Door to Thoth East Lift"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -664,14 +664,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a01": {
+                        "Door to Thoth East Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a8a08": {
+                        "Door to Thoth Research": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -680,7 +680,7 @@
                         }
                     }
                 },
-                "Door to rm_a8a08": {
+                "Door to Thoth Research": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -697,8 +697,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a08",
-                        "node": "Door to rm_a8a02"
+                        "area": "Thoth Research",
+                        "node": "Door to Thoth East Lift"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -706,14 +706,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a03": {
+                        "Door to Thoth Bridge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a8a07": {
+                        "Door to Thoth Cockpit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -722,7 +722,7 @@
                         }
                     }
                 },
-                "Door to rm_a8a07": {
+                "Door to Thoth Cockpit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -739,8 +739,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a07",
-                        "node": "Door to rm_a8a02"
+                        "area": "Thoth Cockpit",
+                        "node": "Door to Thoth East Lift"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -748,7 +748,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a08": {
+                        "Door to Thoth Research": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -759,13 +759,13 @@
                 }
             }
         },
-        "rm_a8a03": {
+        "Thoth Bridge": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a03"
             },
             "nodes": {
-                "Door to rm_a8a02": {
+                "Door to Thoth East Lift": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -782,8 +782,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a02",
-                        "node": "Door to rm_a8a03"
+                        "area": "Thoth East Lift",
+                        "node": "Door to Thoth Bridge"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -791,7 +791,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a10": {
+                        "Door to Thoth Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -800,7 +800,7 @@
                         }
                     }
                 },
-                "Door to rm_a8a10": {
+                "Door to Thoth Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -817,8 +817,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a10",
-                        "node": "Door to rm_a8a03"
+                        "area": "Thoth Storage",
+                        "node": "Door to Thoth Bridge"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -826,7 +826,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a02": {
+                        "Door to Thoth East Lift": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -837,13 +837,13 @@
                 }
             }
         },
-        "rm_a8a06": {
+        "Thoth West Entrance": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a06"
             },
             "nodes": {
-                "Door to rm_a8a10": {
+                "Door to Thoth Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -860,8 +860,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a10",
-                        "node": "Door to rm_a8a06"
+                        "area": "Thoth Storage",
+                        "node": "Door to Thoth West Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -869,7 +869,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8h01": {
+                        "Door to GFS Thoth Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -878,7 +878,7 @@
                         }
                     }
                 },
-                "Door to rm_a8h01": {
+                "Door to GFS Thoth Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -895,8 +895,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8h01",
-                        "node": "Door to rm_a8a06"
+                        "area": "GFS Thoth Exterior",
+                        "node": "Door to Thoth West Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -904,7 +904,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a10": {
+                        "Door to Thoth Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -915,13 +915,13 @@
                 }
             }
         },
-        "rm_a8a07": {
+        "Thoth Cockpit": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a07"
             },
             "nodes": {
-                "Door to rm_a8a02": {
+                "Door to Thoth East Lift": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -938,8 +938,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a02",
-                        "node": "Door to rm_a8a07"
+                        "area": "Thoth East Lift",
+                        "node": "Door to Thoth Cockpit"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -950,13 +950,13 @@
                 }
             }
         },
-        "rm_a8a08": {
+        "Thoth Research": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a08"
             },
             "nodes": {
-                "Door to rm_a8a02": {
+                "Door to Thoth East Lift": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -973,8 +973,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a02",
-                        "node": "Door to rm_a8a08"
+                        "area": "Thoth East Lift",
+                        "node": "Door to Thoth Research"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -982,7 +982,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to rm_a8a13": {
+                        "Tunnel to Thoth West Lift": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1017,7 +1017,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a8a13": {
+                "Tunnel to Thoth West Lift": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1034,8 +1034,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a13",
-                        "node": "Tunnel to rm_a8a08"
+                        "area": "Thoth West Lift",
+                        "node": "Tunnel to Thoth Research"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1043,7 +1043,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a02": {
+                        "Door to Thoth East Lift": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1059,13 +1059,13 @@
                 }
             }
         },
-        "rm_a8a10": {
+        "Thoth Storage": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a10"
             },
             "nodes": {
-                "Door to rm_a8a06": {
+                "Door to Thoth West Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1082,8 +1082,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a06",
-                        "node": "Door to rm_a8a10"
+                        "area": "Thoth West Entrance",
+                        "node": "Door to Thoth Storage"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1091,7 +1091,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a03": {
+                        "Door to Thoth Bridge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1100,7 +1100,7 @@
                         }
                     }
                 },
-                "Door to rm_a8a03": {
+                "Door to Thoth Bridge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1117,8 +1117,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a03",
-                        "node": "Door to rm_a8a10"
+                        "area": "Thoth Bridge",
+                        "node": "Door to Thoth Storage"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1126,7 +1126,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a06": {
+                        "Door to Thoth West Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1137,13 +1137,13 @@
                 }
             }
         },
-        "rm_a8a11": {
+        "Genesis Arena": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a11"
             },
             "nodes": {
-                "Door to rm_a8a13": {
+                "Door to Thoth West Lift": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1160,8 +1160,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a13",
-                        "node": "Door to rm_a8a11"
+                        "area": "Thoth West Lift",
+                        "node": "Door to Genesis Arena"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1195,7 +1195,7 @@
                     "pickup_index": 50,
                     "location_category": "minor",
                     "connections": {
-                        "Door to rm_a8a13": {
+                        "Door to Thoth West Lift": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1325,7 +1325,7 @@
                     "valid_starting_location": false,
                     "event_name": "GenesisKilled",
                     "connections": {
-                        "Door to rm_a8a13": {
+                        "Door to Thoth West Lift": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1336,13 +1336,13 @@
                 }
             }
         },
-        "rm_a8a12": {
+        "Save Station Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a12"
             },
             "nodes": {
-                "Door to rm_a8a13": {
+                "Door to Thoth West Lift": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1359,8 +1359,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a13",
-                        "node": "Door to rm_a8a12"
+                        "area": "Thoth West Lift",
+                        "node": "Door to Save Station Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1368,7 +1368,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to rm_a8a14": {
+                        "Tunnel to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1382,7 +1382,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a8a14": {
+                "Tunnel to Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1399,8 +1399,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a14",
-                        "node": "Tunnel to rm_a8a12"
+                        "area": "Save Station",
+                        "node": "Tunnel to Save Station Access"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1408,7 +1408,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a13": {
+                        "Door to Thoth West Lift": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1424,13 +1424,13 @@
                 }
             }
         },
-        "rm_a8a13": {
+        "Thoth West Lift": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a13"
             },
             "nodes": {
-                "Door to rm_a8a11": {
+                "Door to Genesis Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1447,8 +1447,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a11",
-                        "node": "Door to rm_a8a13"
+                        "area": "Genesis Arena",
+                        "node": "Door to Thoth West Lift"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1456,7 +1456,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a12": {
+                        "Door to Save Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1465,7 +1465,7 @@
                         }
                     }
                 },
-                "Door to rm_a8a12": {
+                "Door to Save Station Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1482,8 +1482,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a12",
-                        "node": "Door to rm_a8a13"
+                        "area": "Save Station Access",
+                        "node": "Door to Thoth West Lift"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1491,14 +1491,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a11": {
+                        "Door to Genesis Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tunnel to rm_a8a08": {
+                        "Tunnel to Thoth Research": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1512,7 +1512,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a8a08": {
+                "Tunnel to Thoth Research": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1529,8 +1529,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a08",
-                        "node": "Tunnel to rm_a8a13"
+                        "area": "Thoth Research",
+                        "node": "Tunnel to Thoth West Lift"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1538,7 +1538,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a8a12": {
+                        "Door to Save Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1559,13 +1559,13 @@
                 }
             }
         },
-        "rm_a8a14": {
+        "Save Station": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a8a14"
             },
             "nodes": {
-                "Tunnel to rm_a8a12": {
+                "Tunnel to Save Station Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1582,8 +1582,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "GFS Thoth",
-                        "area": "rm_a8a12",
-                        "node": "Tunnel to rm_a8a14"
+                        "area": "Save Station Access",
+                        "node": "Tunnel to Save Station"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1625,7 +1625,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to rm_a8a12": {
+                        "Tunnel to Save Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
