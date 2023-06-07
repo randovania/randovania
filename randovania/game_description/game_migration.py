@@ -219,6 +219,11 @@ def _migrate_v17(data: dict) -> dict:
     return data
 
 
+def _migrate_v18(data: dict) -> dict:
+    data["resource_database"].pop("item_percentage_index")
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -237,6 +242,7 @@ _MIGRATIONS = [
     _migrate_v15,
     _migrate_v16,
     _migrate_v17,
+    _migrate_v18,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -228,7 +228,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
     item_percentage_resource = []
     if has_item_percentage:
         item_percentage_resource = [
-            (db.item_percentage, 1),
+            (db.get_item("Percent"), 1),
         ]
 
     pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=tuple(),
@@ -309,14 +309,9 @@ async def test_fetch_game_status(connector: EchoesRemoteConnector, version: Echo
 
 async def test_receive_required_missile_launcher(connector: EchoesRemoteConnector,
                                                  echoes_pickup_database, echoes_resource_database):
-    pickup = pickup_creator.create_standard_pickup(
-        echoes_pickup_database.standard_pickups["Missile Launcher"],
-        StandardPickupState(included_ammo=(5,)),
-        True,
-        echoes_resource_database,
-        echoes_pickup_database.ammo_pickups["Missile Expansion"],
-        True,
-    )
+    pickup = pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups["Missile Launcher"],
+                                                   StandardPickupState(included_ammo=(5,)), echoes_resource_database,
+                                                   echoes_pickup_database.ammo_pickups["Missile Expansion"], True)
 
     connector.execute_remote_patches = AsyncMock()
     permanent_pickups = (("Received Missile Launcher from Someone Else", pickup),)

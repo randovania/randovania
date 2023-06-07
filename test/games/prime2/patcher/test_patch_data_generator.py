@@ -24,6 +24,7 @@ from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.standard_pickup_state import StandardPickupState
@@ -44,8 +45,8 @@ def test_create_starting_popup_items(echoes_game_patches, echoes_pickup_database
     db = echoes_game_patches.game.resource_database
 
     def create_major(n):
-        return pickup_creator.create_standard_pickup(echoes_pickup_database.get_pickup_with_name(n), StandardPickupState(), False, db,
-                                                None, False)
+        return pickup_creator.create_standard_pickup(echoes_pickup_database.get_pickup_with_name(n),
+                                                     StandardPickupState(), db, None, False)
 
     missile = pickup_creator.create_ammo_pickup(echoes_pickup_database.get_pickup_with_name("Missile Expansion"),
                                                    [5], False, db)
@@ -119,12 +120,10 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
     # Setup
     resource_db = echoes_game_description.resource_database
 
-    morph = pickup_creator.create_standard_pickup(
-        echoes_pickup_database.get_pickup_with_name("Morph Ball"),
-        StandardPickupState(), False, resource_db, None, False,
-    )
+    morph = pickup_creator.create_standard_pickup(echoes_pickup_database.get_pickup_with_name("Morph Ball"),
+                                                  StandardPickupState(), resource_db, None, False)
 
-    loc = AreaIdentifier("Temple Grounds", "Hive Chamber B")
+    loc = NodeIdentifier.create("Temple Grounds", "Hive Chamber B", "Door to Hive Storage")
     patches = empty_patches.assign_starting_location(loc).assign_extra_starting_pickups([morph])
 
     capacities = [
@@ -365,14 +364,9 @@ def test_pickup_data_for_seeker_launcher(echoes_pickup_database, echoes_resource
         num_included_in_starting_pickups=0,
         included_ammo=(5,),
     )
-    pickup = pickup_creator.create_standard_pickup(
-        echoes_pickup_database.standard_pickups["Seeker Launcher"],
-        state,
-        True,
-        echoes_resource_database,
-        echoes_pickup_database.ammo_pickups["Missile Expansion"],
-        True
-    )
+    pickup = pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups["Seeker Launcher"], state,
+                                                   echoes_resource_database,
+                                                   echoes_pickup_database.ammo_pickups["Missile Expansion"], True)
     creator = pickup_exporter.PickupExporterSolo(patch_data_factory._simplified_memo_data())
 
     # Run

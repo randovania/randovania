@@ -27,7 +27,8 @@ def test_get_single_hud_text_all_standard_pickups(echoes_pickup_database, echoes
 
     # Run
     for item in echoes_pickup_database.standard_pickups.values():
-        pickup = pickup_creator.create_standard_pickup(item, StandardPickupState(), False, echoes_resource_database, None, False)
+        pickup = pickup_creator.create_standard_pickup(item, StandardPickupState(), echoes_resource_database, None,
+                                                       False)
 
         result = pickup_exporter._get_all_hud_text(pickup_exporter._conditional_resources_for_pickup(pickup),
                                                    memo_data)
@@ -351,8 +352,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 def test_pickup_scan_for_progressive_suit(echoes_pickup_database, echoes_resource_database):
     # Setup
     progressive_suit = echoes_pickup_database.standard_pickups["Progressive Suit"]
-    pickup = pickup_creator.create_standard_pickup(progressive_suit, StandardPickupState(), False, echoes_resource_database,
-                                              None, False)
+    pickup = pickup_creator.create_standard_pickup(progressive_suit, StandardPickupState(), echoes_resource_database,
+                                                   None, False)
 
     # Run
     result = pickup_exporter._pickup_description(pickup)

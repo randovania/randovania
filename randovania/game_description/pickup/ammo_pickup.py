@@ -1,5 +1,6 @@
 import dataclasses
 from dataclasses import dataclass
+from typing import Self
 
 from frozendict import frozendict
 
@@ -19,6 +20,7 @@ class AmmoPickupDefinition:
     items: tuple[str, ...]
     preferred_location_category: LocationCategory
     broad_category: PickupCategory
+    additional_resources: frozendict[str, int] = dataclasses.field(default_factory=frozendict)
     unlocked_by: str | None = None
     temporary: str | None = None
     allows_negative: bool | None = None
@@ -38,7 +40,7 @@ class AmmoPickupDefinition:
 
     @classmethod
     def from_json(cls, name: str, value: dict, game: RandovaniaGame,
-                  pickup_categories: dict[str, PickupCategory]) -> "AmmoPickupDefinition":
+                  pickup_categories: dict[str, PickupCategory]) -> Self:
         return cls(
             game=game,
             name=name,
@@ -46,6 +48,7 @@ class AmmoPickupDefinition:
             items=frozen_lib.wrap(value["items"]),
             preferred_location_category=LocationCategory(value["preferred_location_category"]),
             broad_category=pickup_categories[value["broad_category"]],
+            additional_resources=frozen_lib.wrap(value.get("additional_resources", {})),
             unlocked_by=value.get("unlocked_by"),
             temporary=value.get("temporary"),
             allows_negative=value.get("allows_negative"),
@@ -60,6 +63,7 @@ class AmmoPickupDefinition:
             "items": frozen_lib.unwrap(self.items),
             "preferred_location_category": self.preferred_location_category.value,
             "broad_category": self.broad_category.name,
+            "additional_resources": frozen_lib.unwrap(self.additional_resources),
             "extra": frozen_lib.unwrap(self.extra),
         }
         if self.unlocked_by is not None:

@@ -1,5 +1,6 @@
 import dataclasses
 from dataclasses import dataclass
+from typing import Self
 
 from frozendict import frozendict
 
@@ -23,6 +24,7 @@ class StandardPickupDefinition:
     preferred_location_category: LocationCategory
     ammo: tuple[str, ...] = tuple()
     unlocks_ammo: bool = False
+    additional_resources: frozendict[str, int] = dataclasses.field(default_factory=frozendict)
     hide_from_gui: bool = False
     must_be_starting: bool = False
     original_location: PickupIndex | None = None
@@ -37,7 +39,7 @@ class StandardPickupDefinition:
 
     @classmethod
     def from_json(cls, name: str, value: dict, game: RandovaniaGame,
-                  pickup_categories: dict[str, PickupCategory]) -> "StandardPickupDefinition":
+                  pickup_categories: dict[str, PickupCategory]) -> Self:
         return cls(
             game=game,
             name=name,
@@ -49,6 +51,7 @@ class StandardPickupDefinition:
             default_starting_count=value["default_starting_count"],
             ammo=frozen_lib.wrap(value.get("ammo", [])),
             unlocks_ammo=value.get("unlocks_ammo", False),
+            additional_resources=frozen_lib.wrap(value.get("additional_resources", {})),
             hide_from_gui=value.get("hide_from_gui", False),
             must_be_starting=value.get("must_be_starting", False),
             original_location=PickupIndex(value["original_location"]) if "original_location" in value else None,
@@ -56,7 +59,7 @@ class StandardPickupDefinition:
             probability_multiplier=value["probability_multiplier"],
             description=value.get("description"),
             preferred_location_category=LocationCategory(value["preferred_location_category"]),
-            extra=frozen_lib.wrap(value.get("extra", {}))
+            extra=frozen_lib.wrap(value.get("extra", {})),
         )
 
     @property
@@ -70,6 +73,7 @@ class StandardPickupDefinition:
             "default_starting_count": self.default_starting_count,
             "ammo": frozen_lib.unwrap(self.ammo),
             "unlocks_ammo": self.unlocks_ammo,
+            "additional_resources": frozen_lib.unwrap(self.additional_resources),
             "hide_from_gui": self.hide_from_gui,
             "must_be_starting": self.must_be_starting,
             "probability_offset": self.probability_offset,

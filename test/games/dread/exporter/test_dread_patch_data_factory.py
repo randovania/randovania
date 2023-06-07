@@ -95,14 +95,11 @@ def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager)
     resource_db = dread_game_description.resource_database
 
     # Setup
-    pickup = pickup_creator.create_standard_pickup(
-        pickup_database.standard_pickups["Power Bomb"],
-        StandardPickupState(included_ammo=(3,)),
-        include_percentage=False,
-        resource_database=resource_db,
-        ammo=pickup_database.ammo_pickups["Power Bomb Tank"],
-        ammo_requires_main_item=locked,
-    )
+    pickup = pickup_creator.create_standard_pickup(pickup_database.standard_pickups["Power Bomb"],
+                                                   StandardPickupState(included_ammo=(3,)),
+                                                   resource_database=resource_db,
+                                                   ammo=pickup_database.ammo_pickups["Power Bomb Tank"],
+                                                   ammo_requires_main_item=locked)
 
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())
 
@@ -130,14 +127,9 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
     description.get_seed_for_player.return_value = 1000
 
     # Setup
-    pickup = pickup_creator.create_standard_pickup(
-        pickup_database.standard_pickups["Speed Booster"],
-        StandardPickupState(),
-        include_percentage=False,
-        resource_database=resource_db,
-        ammo=None,
-        ammo_requires_main_item=False,
-    )
+    pickup = pickup_creator.create_standard_pickup(pickup_database.standard_pickups["Speed Booster"],
+                                                   StandardPickupState(), resource_database=resource_db, ammo=None,
+                                                   ammo_requires_main_item=False)
 
     factory = DreadPatchDataFactory(description, PlayersConfiguration(0, {0: "Dread"}), MagicMock())
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())

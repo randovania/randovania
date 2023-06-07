@@ -234,10 +234,6 @@ class PrimeRemoteConnector(RemoteConnector):
         resources_to_give.add_resource_gain(pickup_resources)
         resources_to_give.add_resource_gain(pickup.conversion_resource_gain(inventory_resources))
 
-        # Ignore item% for received items
-        if self.game.resource_database.item_percentage is not None:
-            resources_to_give.remove_resource(self.game.resource_database.item_percentage)
-
         return item_name, resources_to_give
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory

@@ -31,6 +31,7 @@ from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
+from randovania.games.prime2.patcher import echoes_items
 from randovania.games.prime2.patcher.echoes_dol_patcher import EchoesDolPatchesData
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -103,6 +104,7 @@ def _create_spawn_point_field(patches: GamePatches,
                               game: GameDescription,
                               ) -> dict:
     starting_resources = patches.starting_resources()
+    starting_resources.set_resource(game.resource_database.get_item(echoes_items.PERCENTAGE), 0)
     capacities = [
         {
             "index": item_id_for_item_resource(item),
@@ -112,7 +114,7 @@ def _create_spawn_point_field(patches: GamePatches,
     ]
 
     return {
-        "location": _area_identifier_to_json(game.region_list, patches.starting_location),
+        "location": _area_identifier_to_json(game.region_list, patches.starting_location.area_identifier),
         "amount": capacities,
         "capacity": capacities,
     }
