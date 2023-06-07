@@ -2,7 +2,7 @@
     "name": "Golden Temple",
     "extra": {},
     "areas": {
-        "Security Check": {
+        "Guardian Arena": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a1h01"
@@ -26,7 +26,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Mumbo Manor",
-                        "node": "Dock to Security Check"
+                        "node": "Dock to Guardian Arena"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -61,7 +61,7 @@
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Needler Shaft",
-                        "node": "Dock to Security Check"
+                        "node": "Dock to Guardian Arena"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -431,7 +431,7 @@
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Torture Room",
-                        "node": "Dock to Security Check"
+                        "node": "Dock to Guardian Arena"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -476,7 +476,7 @@
             }
         },
         "Breeding Grounds Save Station": {
-            "default_node": null,
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a1h02"
             },
@@ -494,7 +494,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Dock to Needler Shaft": {
                             "type": "and",
@@ -590,7 +590,7 @@
                 "map_name": "rm_a1h03"
             },
             "nodes": {
-                "Dock to Security Check": {
+                "Dock to Guardian Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -607,7 +607,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Security Check",
+                        "area": "Guardian Arena",
                         "node": "Dock to Needler Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -658,7 +658,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Security Check": {
+                        "Dock to Guardian Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -693,7 +693,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Security Check": {
+                        "Dock to Guardian Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -823,7 +823,7 @@
                         }
                     }
                 },
-                "Dock to Outer Temple Save": {
+                "Dock to Outer Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -840,7 +840,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Outer Temple Save",
+                        "area": "Outer Temple Save Station",
                         "node": "Dock to Golden Temple Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -1151,7 +1151,7 @@
                         }
                     }
                 },
-                "Door to Inner Temple Save": {
+                "Door to Inner Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1168,7 +1168,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Inner Temple Save",
+                        "area": "Inner Temple Save Station",
                         "node": "Door to Golden Temple Exterior"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1384,14 +1384,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Outer Temple Save": {
+                        "Dock to Outer Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Inner Temple Save": {
+                        "Door to Inner Temple Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1508,7 +1508,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Outer Temple Save": {
+                        "Dock to Outer Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1549,7 +1549,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Missile)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1603,7 +1603,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Inner Temple Save": {
+                        "Door to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1894,7 +1894,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (Missile)": {
+                        "Pickup (Missile Tank)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1960,7 +1960,7 @@
                         }
                     }
                 },
-                "Pickup (Missile)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2009,7 +2009,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Inner Temple Save": {
+                        "Door to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2093,8 +2093,8 @@
                 }
             }
         },
-        "Outer Temple Save": {
-            "default_node": null,
+        "Outer Temple Save Station": {
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a1h07"
             },
@@ -2112,7 +2112,7 @@
                         "default"
                     ],
                     "extra": {},
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Dock to Golden Temple Exterior": {
                             "type": "and",
@@ -2158,7 +2158,7 @@
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Golden Temple Exterior",
-                        "node": "Dock to Outer Temple Save"
+                        "node": "Dock to Outer Temple Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2193,7 +2193,7 @@
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Spider Ball Chamber",
-                        "node": "Dock to Outer Temple Save"
+                        "node": "Dock to Outer Temple Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2228,7 +2228,7 @@
                 "map_name": "rm_a1h08"
             },
             "nodes": {
-                "Dock to Outer Temple Save": {
+                "Dock to Outer Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2245,7 +2245,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Outer Temple Save",
+                        "area": "Outer Temple Save Station",
                         "node": "Dock to Spider Ball Chamber"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -2254,7 +2254,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Spiderball)": {
+                        "Pickup (Spider Ball)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2300,7 +2300,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Pickup (Spiderball)": {
+                "Pickup (Spider Ball)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2317,7 +2317,7 @@
                     "pickup_index": 2,
                     "location_category": "major",
                     "connections": {
-                        "Dock to Outer Temple Save": {
+                        "Dock to Outer Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2379,7 +2379,7 @@
                 "map_name": "rm_a1h09"
             },
             "nodes": {
-                "Dock to Security Check": {
+                "Dock to Guardian Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2396,7 +2396,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Security Check",
+                        "area": "Guardian Arena",
                         "node": "Dock to Torture Room"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -2911,7 +2911,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Security Check": {
+                        "Dock to Guardian Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2923,7 +2923,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Missile)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2932,7 +2932,7 @@
                         }
                     }
                 },
-                "Pickup (Missile)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2992,7 +2992,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (PowerBomb)": {
+                        "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3001,7 +3001,7 @@
                         }
                     }
                 },
-                "Pickup (PowerBomb)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3029,8 +3029,8 @@
                 }
             }
         },
-        "Inner Temple Save": {
-            "default_node": null,
+        "Inner Temple Save Station": {
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a1a01"
             },
@@ -3084,7 +3084,7 @@
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Golden Temple Exterior",
-                        "node": "Door to Inner Temple Save"
+                        "node": "Door to Inner Temple Save Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3119,7 +3119,7 @@
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple West Hall",
-                        "node": "Dock to Inner Temple Save"
+                        "node": "Dock to Inner Temple Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3144,7 +3144,7 @@
                 "map_name": "rm_a1a02"
             },
             "nodes": {
-                "Dock to Inner Temple Save": {
+                "Dock to Inner Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3161,7 +3161,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Inner Temple Save",
+                        "area": "Inner Temple Save Station",
                         "node": "Dock to Inner Temple West Hall"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -3351,7 +3351,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Inner Temple Save": {
+                        "Dock to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3493,7 +3493,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (Missile)": {
+                        "Pickup (Missile Tank)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3533,7 +3533,7 @@
                         }
                     }
                 },
-                "Pickup (Missile)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3619,7 +3619,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Right Missile)": {
+                        "Pickup (Right Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3636,7 +3636,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Etank)": {
+                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3702,7 +3702,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Left Missile)": {
+                        "Pickup (Left Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3718,7 +3718,7 @@
                         }
                     }
                 },
-                "Pickup (Left Missile)": {
+                "Pickup (Left Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3744,7 +3744,7 @@
                         }
                     }
                 },
-                "Pickup (Right Missile)": {
+                "Pickup (Right Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3780,7 +3780,7 @@
                         }
                     }
                 },
-                "Pickup (Etank)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -4350,7 +4350,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Etank)": {
+                        "Pickup (Energy Tank)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4417,7 +4417,7 @@
                         }
                     }
                 },
-                "Pickup (Etank)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -4540,21 +4540,21 @@
                                 ]
                             }
                         },
-                        "Pickup (Left Missile)": {
+                        "Pickup (Left Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Pickup (Bottom Missile)": {
+                        "Pickup (Bottom Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Pickup (Top Missile)": {
+                        "Pickup (Top Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4799,7 +4799,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Right Missile)": {
+                        "Pickup (Right Missile Tank)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4913,7 +4913,7 @@
                         }
                     }
                 },
-                "Pickup (Left Missile)": {
+                "Pickup (Left Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -4939,7 +4939,7 @@
                         }
                     }
                 },
-                "Pickup (Bottom Missile)": {
+                "Pickup (Bottom Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -4965,7 +4965,7 @@
                         }
                     }
                 },
-                "Pickup (Top Missile)": {
+                "Pickup (Top Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -5001,7 +5001,7 @@
                         }
                     }
                 },
-                "Pickup (Right Missile)": {
+                "Pickup (Right Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -5256,7 +5256,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Charge)": {
+                        "Pickup (Charge Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5265,7 +5265,7 @@
                         }
                     }
                 },
-                "Pickup (Charge)": {
+                "Pickup (Charge Beam)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -5418,7 +5418,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Super)": {
+                        "Pickup (Super Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5507,7 +5507,7 @@
                         }
                     }
                 },
-                "Pickup (Super)": {
+                "Pickup (Super Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
