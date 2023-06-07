@@ -9,6 +9,12 @@ from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -19,12 +25,6 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
-from randovania.game_description.db.region_list import RegionList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
@@ -725,9 +725,10 @@ def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: 
         exporter=pickup_exporter.create_pickup_exporter(game, memo_data, players_config),
         visual_etm=pickup_creator.create_visual_etm(),
     )
+    multiworld_item = game.resource_database.get_item(echoes_items.MULTIWORLD_ITEM)
 
     return [
-        echoes_pickup_details_to_patcher(details, rng)
+        echoes_pickup_details_to_patcher(details, multiworld_item, rng)
         for details in pickup_list
     ]
 
@@ -758,7 +759,8 @@ def _create_pickup_resources_for(resources: ResourceGain):
     ]
 
 
-def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDetails, rng: Random) -> dict:
+def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDetails,
+                                     multiworld_item: ItemResourceInfo, rng: Random) -> dict:
     model = details.model.as_json
 
     if (model["name"] == "MissileExpansion"
@@ -772,13 +774,17 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
             rng.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0):
         hud_text = ["Run validated!"]
 
+    multiworld_tuple = (multiworld_item, details.index.index + 1),
+
     return {
         "pickup_index": details.index.index,
-        "resources": _create_pickup_resources_for(details.conditional_resources[0].resources),
+        "resources": _create_pickup_resources_for(
+            details.conditional_resources[0].resources + multiworld_tuple
+        ),
         "conditional_resources": [
             {
                 "item": conditional.item.extra["item_id"],
-                "resources": _create_pickup_resources_for(conditional.resources),
+                "resources": _create_pickup_resources_for(conditional.resources + multiworld_tuple),
             }
             for conditional in details.conditional_resources[1:]
         ],

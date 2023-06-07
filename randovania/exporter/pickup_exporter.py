@@ -200,10 +200,8 @@ class PickupExporterSolo(PickupExporter):
 
 
 class PickupExporterMulti(PickupExporter):
-    def __init__(self, solo_creator: PickupExporter, multiworld_item: ItemResourceInfo,
-                 players_config: PlayersConfiguration):
+    def __init__(self, solo_creator: PickupExporter, players_config: PlayersConfiguration):
         self.solo_creator = solo_creator
-        self.multiworld_item = multiworld_item
         self.players_config = players_config
 
     def create_details(self,
@@ -220,10 +218,6 @@ class PickupExporterMulti(PickupExporter):
             return dataclasses.replace(details, name=f"Your {details.name}")
         else:
             other_name = self.players_config.player_names[pickup_target.player]
-            if self.multiworld_item is not None:
-                resources = ((self.multiworld_item, original_index.index + 1),)
-            else:
-                resources = tuple()
 
             return ExportedPickupDetails(
                 index=original_index,
@@ -233,7 +227,7 @@ class PickupExporterMulti(PickupExporter):
                 conditional_resources=[ConditionalResources(
                     name=None,
                     item=None,
-                    resources=resources,
+                    resources=tuple(),
                 )],
                 conversion=[],
                 model=model,
@@ -309,6 +303,5 @@ class GenericAcquiredMemo(dict):
 def create_pickup_exporter(game: GameDescription, memo_data: dict, players_config: PlayersConfiguration):
     exporter = PickupExporterSolo(memo_data)
     if players_config.is_multiworld:
-        exporter = PickupExporterMulti(exporter, game.resource_database.multiworld_magic_item,
-                                       players_config)
+        exporter = PickupExporterMulti(exporter, players_config)
     return exporter

@@ -423,7 +423,7 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
 def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
     # Setup
     solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
-    creator = pickup_exporter.PickupExporterMulti(solo, MagicMock(), PlayersConfiguration(0, {0: "You", 1: "Someone"}))
+    creator = pickup_exporter.PickupExporterMulti(solo, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
@@ -452,9 +452,8 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
 
 def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
     # Setup
-    multi = ItemResourceInfo("Multiworld", "Multiworld", 30, None)
     solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
-    creator = pickup_exporter.PickupExporterMulti(solo, multi, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
+    creator = pickup_exporter.PickupExporterMulti(solo, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
 
     # Run
@@ -469,7 +468,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
         description="Scan Text",
         collection_text=['Sent The Name to Someone!'],
         conditional_resources=[
-            ConditionalResources(None, None, ((multi, 11),)),
+            ConditionalResources(None, None, tuple()),
         ],
         conversion=[],
         model=model,

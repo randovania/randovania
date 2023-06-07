@@ -123,12 +123,16 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
     pickup_type = "Nothing"
     count = 0
 
-    for resource, quantity in detail.conditional_resources[0].resources:
-        if resource.extra["item_id"] >= 1000:
-            continue
-        pickup_type = resource.long_name
-        count = quantity
-        break
+    if detail.other_player:
+        pickup_type = "Unknown Item 1"
+        count = detail.index.index + 1
+    else:
+        for resource, quantity in detail.conditional_resources[0].resources:
+            if resource.extra["item_id"] >= 1000:
+                continue
+            pickup_type = resource.long_name
+            count = quantity
+            break
 
     if (model["name"] == "Missile" and not detail.other_player
             and "Missile Expansion" in collection_text
@@ -953,7 +957,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     "Energy Tank": db.resource_database.get_item("EnergyTank").max_capacity,
                     "Power Bomb": db.resource_database.get_item("PowerBomb").max_capacity,
                     "Missile": db.resource_database.get_item("Missile").max_capacity,
-                    "Unknown Item 1": db.resource_database.multiworld_magic_item.max_capacity,
+                    "Unknown Item 1": db.resource_database.get_item(prime_items.MULTIWORLD_ITEM).max_capacity,
                 },
 
                 "mainPlazaDoor": self.configuration.main_plaza_door,

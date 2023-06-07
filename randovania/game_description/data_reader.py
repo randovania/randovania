@@ -462,7 +462,6 @@ def read_resource_database(game: RandovaniaGame, data: dict) -> ResourceDatabase
         requirement_template={},
         damage_reductions={},
         energy_tank_item_index=data["energy_tank_item_index"],
-        multiworld_magic_item_index=data["multiworld_magic_item_index"]
     )
     db.requirement_template.update(read_requirement_templates(data["requirement_template"], db))
     db.damage_reductions.update(read_resource_reductions_dict(data["damage_reductions"], db))

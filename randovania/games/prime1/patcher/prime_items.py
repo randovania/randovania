@@ -18,3 +18,4 @@ ARTIFACT_ITEMS = [
 ]
 ARTIFACT_NAMES = ["Artifact of " + item for item in ARTIFACT_ITEMS]
 ARTIFACT_MODEL = list(ARTIFACT_NAMES)
+MULTIWORLD_ITEM = "Unknown1"

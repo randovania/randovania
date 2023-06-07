@@ -134,7 +134,6 @@ ConstructResourceDatabase = Struct(
     requirement_template=ConstructDict(ConstructRequirement),
     damage_reductions=PrefixedArray(VarInt, ConstructDamageReductions),
     energy_tank_item_index=String,
-    multiworld_magic_item_index=OptionalValue(String),
 )
 
 ConstructResourceGain = Struct(

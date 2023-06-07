@@ -110,6 +110,10 @@ class PrimeRemoteConnector(RemoteConnector):
                                    ) -> list[MemoryOperation]:
         raise NotImplementedError()
 
+    @property
+    def multiworld_magic_item(self) -> ItemResourceInfo:
+        raise NotImplementedError()
+
     async def get_inventory(self) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
 
@@ -124,7 +128,7 @@ class PrimeRemoteConnector(RemoteConnector):
         for item, memory_op in zip(self.game.resource_database.item, memory_ops):
             inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
             if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (
-                    item != self.game.resource_database.multiworld_magic_item):
+                    item != self.multiworld_magic_item):
                 raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv
 
@@ -135,7 +139,7 @@ class PrimeRemoteConnector(RemoteConnector):
         The list may return less than all collected locations, depending on implementation details.
         This function also returns a list of remote patches that must be performed via `execute_remote_patches`.
         """
-        multiworld_magic_item = self.game.resource_database.multiworld_magic_item
+        multiworld_magic_item = self.multiworld_magic_item
         if multiworld_magic_item is None:
             return set()
 
@@ -161,7 +165,7 @@ class PrimeRemoteConnector(RemoteConnector):
             self, inventory: Inventory, remote_pickups: tuple[PickupEntryWithOwner, ...],
     ) -> None:
         in_cooldown = self.message_cooldown > 0.0
-        multiworld_magic_item = self.game.resource_database.multiworld_magic_item
+        multiworld_magic_item = self.multiworld_magic_item
         magic_inv = inventory.get(multiworld_magic_item)
         if magic_inv is None or magic_inv.amount > 0 or magic_inv.capacity >= len(remote_pickups) or in_cooldown:
             return

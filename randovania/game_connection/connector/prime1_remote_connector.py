@@ -40,6 +40,10 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
     def _asset_id_format(self):
         return ">I"
 
+    @property
+    def multiworld_magic_item(self) -> ItemResourceInfo:
+        return self.game.resource_database.get_item(prime_items.MULTIWORLD_ITEM)
+
     async def current_game_status(self) -> tuple[bool, Region | None]:
         """
         Fetches the region the player's currently at, or None if they're not in-game.

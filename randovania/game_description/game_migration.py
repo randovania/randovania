@@ -221,6 +221,7 @@ def _migrate_v17(data: dict) -> dict:
 
 def _migrate_v18(data: dict) -> dict:
     data["resource_database"].pop("item_percentage_index")
+    data["resource_database"].pop("multiworld_magic_item_index")
     return data
 
 

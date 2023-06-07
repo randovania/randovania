@@ -6,6 +6,7 @@ from randovania.game_description.db.region import Region
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.games.prime2.patcher import echoes_items
 from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion
 from randovania.patching.prime import (all_prime_dol_patches)
 
@@ -38,6 +39,10 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
 
     def _asset_id_format(self):
         return ">I"
+
+    @property
+    def multiworld_magic_item(self) -> ItemResourceInfo:
+        return self.game.resource_database.get_item(echoes_items.MULTIWORLD_ITEM)
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
         """
