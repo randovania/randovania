@@ -15,7 +15,6 @@ sample_data = {
     "resource_database": {
         "items": {},
         "energy_tank_item_index": "",
-        "multiworld_magic_item_index": "",
         "events": {},
         "tricks": {},
         "damage": {},
