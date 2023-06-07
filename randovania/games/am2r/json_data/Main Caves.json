@@ -127,6 +127,23 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Victory": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BabyCollected",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -365,6 +382,31 @@
                             }
                         },
                         "Next to Crystal Blocks": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Victory": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3255.3,
+                        "y": 284.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "VictoryEvent",
+                    "connections": {
+                        "Ship": {
                             "type": "and",
                             "data": {
                                 "comment": null,

@@ -461,6 +461,10 @@
             "Larva8": {
                 "long_name": "Area 7 - Big Arena Top Larva",
                 "extra": {}
+            },
+            "VictoryEvent": {
+                "long_name": "Victory Event",
+                "extra": {}
             }
         },
         "tricks": {
@@ -2240,7 +2244,17 @@
         "type": "and",
         "data": {
             "comment": null,
-            "items": []
+            "items": [
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": "events",
+                        "name": "VictoryEvent",
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            ]
         }
     },
     "dock_weakness_database": {

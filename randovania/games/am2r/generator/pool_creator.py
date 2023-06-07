@@ -11,27 +11,6 @@ from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def create_victory_key(resource_database: ResourceDatabase):
-    return PickupEntry(
-        name="Victory Key",
-        progression=((resource_database.get_item("Spacejump"), 1),),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name="Spacejump"
-        ),
-        pickup_category=pickup_category.GENERIC_KEY_CATEGORY,
-        broad_category=pickup_category.GENERIC_KEY_CATEGORY,
-        generator_params=PickupGeneratorParams(
-            preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=0.25,
-        ),
-    )
-
-
 def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription,
                  base_patches: GamePatches, rng: Random) -> None:
     assert isinstance(configuration, AM2RConfiguration)
-
-    results.to_place.append(
-        create_victory_key(game.resource_database)
-    )
