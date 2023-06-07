@@ -124,6 +124,17 @@ class JsonDataclass:
             if not field.init or field.metadata.get("init_from_extra"):
                 continue
             value = getattr(self, field.name)
+
+            if field.metadata.get("exclude_if_default"):
+                if field.default is not dataclasses.MISSING:
+                    if value == field.default:
+                        continue
+                elif field.default_factory is not dataclasses.MISSING:
+                    if value == field.default_factory():
+                        continue
+                else:
+                    raise RuntimeError(f"exclude_if_default, but field {field.name} has no default?")
+
             result[field.name] = _encode_value(value)
         return result
 
