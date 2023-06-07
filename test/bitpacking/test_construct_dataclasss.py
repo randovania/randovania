@@ -41,13 +41,15 @@ class D:
     a: int
     b: str | None
     c: list[uuid.UUID]
+    d: tuple[str, int]
 
 
 def test_encode_dataclass():
     data = {
         "a": 2,
         "b": None,
-        "c": ["00000000-0000-1111-0000-000000000000", "00000000-0000-1111-0000-000000000001"]
+        "c": ["00000000-0000-1111-0000-000000000000", "00000000-0000-1111-0000-000000000001"],
+        "d": ["foo", 50]
     }
 
     con = construct_dataclass.construct_for_type(D)
@@ -61,9 +63,11 @@ class K(JsonDataclass):
     a: str | None
     b: int
 
+
 class L(NamedTuple):
     a: int
     b: bool
+
 
 @dataclasses.dataclass()
 class J(JsonDataclass):

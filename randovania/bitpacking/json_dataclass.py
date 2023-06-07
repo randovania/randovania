@@ -23,6 +23,9 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
     if issubclass(type_, Enum):
         return type_(arg)
 
+    elif type_lib.is_named_tuple(type_):
+        return type_(**arg)
+
     elif type_origin == list:
         if type_args := typing.get_args(type_):
             value_types = type_args[0]
@@ -59,9 +62,6 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
             (_decode_with_type(key, key_type, {}), _decode_with_type(value, value_types, {}))
             for key, value in arg.items()
         )
-    
-    elif type_lib.is_named_tuple(type_):
-        return type_(**arg)
 
     elif type_ is uuid.UUID:
         return uuid.UUID(arg)
@@ -88,6 +88,9 @@ def _encode_value(value: typing.Any) -> typing.Any:
     elif isinstance(value, uuid.UUID):
         return str(value)
 
+    elif type_lib.is_named_tuple(type(value)):
+        return _encode_value(value._asdict())
+
     elif isinstance(value, (tuple, list)):
         return [
             _encode_value(v)
@@ -102,9 +105,6 @@ def _encode_value(value: typing.Any) -> typing.Any:
         if isinstance(value, frozendict):
             result = frozendict(result)
         return result
-    
-    elif type_lib.is_named_tuple(type(value)):
-        return _encode_value(value._asdict())
 
     elif isinstance(value, datetime.datetime):
         return value.astimezone(datetime.timezone.utc).isoformat()
