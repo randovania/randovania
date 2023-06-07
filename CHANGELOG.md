@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [5.8.0] - 2023-06-05
 
 - Added: It's now possible to save rdvgame files for race games. This is not available for multiworld.
+- Changed: Use the user's new discord display name instead of their username, for users that migrated.
 - Fixed: Batch generation now properly prevents Windows from going to sleep.
 
 ### Metroid Prime
