@@ -2,13 +2,13 @@
     "name": "Hydro Station",
     "extra": {},
     "areas": {
-        "rm_a2h01": {
+        "Hydro Station Entrance": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2h01"
             },
             "nodes": {
-                "Dock to rm_a2h02": {
+                "Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -25,8 +25,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h02",
-                        "node": "Dock to rm_a2h01"
+                        "area": "Hydro Station Exterior",
+                        "node": "Dock to Hydro Station Entrance"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -66,7 +66,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Grave Grotto",
-                        "node": "Dock to rm_a2h01"
+                        "node": "Dock to Hydro Station Entrance"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -74,7 +74,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2h02": {
+                        "Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -132,13 +132,13 @@
                 }
             }
         },
-        "rm_a2h02": {
+        "Hydro Station Exterior": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2h02"
             },
             "nodes": {
-                "Dock to rm_a2h01": {
+                "Dock to Hydro Station Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -155,8 +155,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h01",
-                        "node": "Dock to rm_a2h02"
+                        "area": "Hydro Station Entrance",
+                        "node": "Dock to Hydro Station Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -164,7 +164,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a01": {
+                        "Dock to Broken Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -185,7 +185,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a01": {
+                "Dock to Broken Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -202,8 +202,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a01",
-                        "node": "Dock to rm_a2h02"
+                        "area": "Broken Save Station",
+                        "node": "Dock to Hydro Station Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -211,7 +211,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2h01": {
+                        "Dock to Hydro Station Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -220,7 +220,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a01A": {
+                "Dock to Inner Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -237,8 +237,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a01A",
-                        "node": "Dock to rm_a2h02"
+                        "area": "Inner Save Station",
+                        "node": "Dock to Hydro Station Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -246,14 +246,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a2a08": {
+                        "Door to Water Turbine Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2c01 (Bottom)": {
+                        "Dock to Breeding Grounds Access (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -283,7 +283,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a05": {
+                "Dock to Inner Alpha Nest North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -300,8 +300,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a05",
-                        "node": "Dock to rm_a2h02"
+                        "area": "Inner Alpha Nest North",
+                        "node": "Dock to Hydro Station Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -328,7 +328,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a2a05": {
+                "Tunnel to Inner Alpha Nest North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -345,8 +345,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a05",
-                        "node": "Tunnel to rm_a2h02"
+                        "area": "Inner Alpha Nest North",
+                        "node": "Tunnel to Hydro Station Exterior"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -354,7 +354,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a01": {
+                        "Dock to Broken Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -363,7 +363,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a03": {
+                "Dock to Arachnus Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -380,8 +380,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a03",
-                        "node": "Dock to rm_a2h02"
+                        "area": "Arachnus Save Station",
+                        "node": "Dock to Hydro Station Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -389,14 +389,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to rm_a2a05": {
+                        "Tunnel to Inner Alpha Nest North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2h03": {
+                        "Dock to Outer Alpha Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -587,7 +587,7 @@
                         }
                     }
                 },
-                "Door to rm_a2a08": {
+                "Door to Water Turbine Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -604,8 +604,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a08",
-                        "node": "Door to rm_a2h02"
+                        "area": "Water Turbine Station",
+                        "node": "Door to Hydro Station Exterior"
                     },
                     "default_dock_weakness": "Water Turbine Door",
                     "exclude_from_dock_rando": false,
@@ -613,7 +613,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a01A": {
+                        "Dock to Inner Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -622,7 +622,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2h03": {
+                "Dock to Outer Alpha Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -639,8 +639,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h03",
-                        "node": "Dock to rm_a2h02"
+                        "area": "Outer Alpha Nest",
+                        "node": "Dock to Hydro Station Exterior"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -648,7 +648,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2c01 (Top)": {
+                        "Dock to Breeding Grounds Access (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -669,7 +669,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2c01 (Top)": {
+                "Dock to Breeding Grounds Access (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -686,8 +686,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c01",
-                        "node": "Dock to rm_a2h02 (Top)"
+                        "area": "Breeding Grounds Access",
+                        "node": "Dock to Hydro Station Exterior (Top)"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -695,7 +695,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2c01 (Bottom)": {
+                        "Dock to Breeding Grounds Access (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -704,7 +704,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2c01 (Bottom)": {
+                "Dock to Breeding Grounds Access (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -721,8 +721,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c01",
-                        "node": "Dock to rm_a2h02 (Bottom)"
+                        "area": "Breeding Grounds Access",
+                        "node": "Dock to Hydro Station Exterior (Bottom)"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -730,14 +730,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a01A": {
+                        "Dock to Inner Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2c01 (Top)": {
+                        "Dock to Breeding Grounds Access (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -827,14 +827,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a2a01A": {
+                        "Dock to Inner Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2a05": {
+                        "Dock to Inner Alpha Nest North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -851,7 +851,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a2a03": {
+                        "Dock to Arachnus Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1048,7 +1048,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a2c01 (Top)": {
+                        "Dock to Breeding Grounds Access (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1110,14 +1110,14 @@
                     "pickup_index": 163,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to rm_a2a01": {
+                        "Dock to Broken Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2a03": {
+                        "Dock to Arachnus Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1129,7 +1129,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a2h03": {
+                        "Dock to Outer Alpha Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1145,13 +1145,13 @@
                 }
             }
         },
-        "rm_a2h03": {
+        "Outer Alpha Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2h03"
             },
             "nodes": {
-                "Dock to rm_a2h02": {
+                "Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1168,8 +1168,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h02",
-                        "node": "Dock to rm_a2h03"
+                        "area": "Hydro Station Exterior",
+                        "node": "Dock to Outer Alpha Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1207,7 +1207,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha7",
                     "connections": {
-                        "Dock to rm_a2h02": {
+                        "Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1218,13 +1218,13 @@
                 }
             }
         },
-        "rm_a2a01": {
+        "Broken Save Station": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a01"
             },
             "nodes": {
-                "Dock to rm_a2a02": {
+                "Dock to Autrack Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1241,8 +1241,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a02",
-                        "node": "Dock to rm_a2a01"
+                        "area": "Autrack Corridor",
+                        "node": "Dock to Broken Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1250,7 +1250,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2h02": {
+                        "Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1259,7 +1259,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2h02": {
+                "Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1276,8 +1276,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h02",
-                        "node": "Dock to rm_a2a01"
+                        "area": "Hydro Station Exterior",
+                        "node": "Dock to Broken Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1285,7 +1285,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a02": {
+                        "Dock to Autrack Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1296,7 +1296,7 @@
                 }
             }
         },
-        "rm_a2a01A": {
+        "Inner Save Station": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a01A"
@@ -1317,14 +1317,14 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to rm_a2h02": {
+                        "Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2a02": {
+                        "Dock to Autrack Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1333,7 +1333,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2h02": {
+                "Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1350,8 +1350,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h02",
-                        "node": "Dock to rm_a2a01A"
+                        "area": "Hydro Station Exterior",
+                        "node": "Dock to Inner Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1368,7 +1368,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a02": {
+                "Dock to Autrack Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1385,8 +1385,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a02",
-                        "node": "Dock to rm_a2a01A"
+                        "area": "Autrack Corridor",
+                        "node": "Dock to Inner Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1405,13 +1405,13 @@
                 }
             }
         },
-        "rm_a2a02": {
+        "Autrack Corridor": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a02"
             },
             "nodes": {
-                "Dock to rm_a2a01A": {
+                "Dock to Inner Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1428,8 +1428,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a01A",
-                        "node": "Dock to rm_a2a02"
+                        "area": "Inner Save Station",
+                        "node": "Dock to Autrack Corridor"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1437,7 +1437,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a01": {
+                        "Dock to Broken Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1456,7 +1456,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a01": {
+                "Dock to Broken Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1473,8 +1473,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a01",
-                        "node": "Dock to rm_a2a02"
+                        "area": "Broken Save Station",
+                        "node": "Dock to Autrack Corridor"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1482,7 +1482,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a01A": {
+                        "Dock to Inner Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1503,13 +1503,13 @@
                 }
             }
         },
-        "rm_a2a02A": {
+        "Autrack Corridor Right Water Pipe": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a02A"
             },
             "nodes": {
-                "Dock to rm_a2a06A": {
+                "Dock to Varia Chamber Access Water Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1526,8 +1526,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a06A",
-                        "node": "Dock to rm_a2a02A"
+                        "area": "Varia Chamber Access Water Pipe",
+                        "node": "Dock to Autrack Corridor Right Water Pipe"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1535,7 +1535,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a11": {
+                        "Dock to Wave Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1544,7 +1544,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a11": {
+                "Dock to Wave Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1561,8 +1561,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a11",
-                        "node": "Dock to rm_a2a02A"
+                        "area": "Wave Beam Chamber Access",
+                        "node": "Dock to Autrack Corridor Right Water Pipe"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1570,7 +1570,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a06A": {
+                        "Dock to Varia Chamber Access Water Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1581,13 +1581,13 @@
                 }
             }
         },
-        "rm_a2a02B": {
+        "Autrack Corridor Left Water Pipe": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a02B"
             },
             "nodes": {
-                "Dock to rm_a2a11A": {
+                "Dock to Wave Beam Chamber Access Water Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1604,8 +1604,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a11A",
-                        "node": "Dock to rm_a2a02B"
+                        "area": "Wave Beam Chamber Access Water Pipe",
+                        "node": "Dock to Autrack Corridor Left Water Pipe"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1613,7 +1613,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a06": {
+                        "Dock to Varia Chamber Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1680,7 +1680,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a06": {
+                "Dock to Varia Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1697,8 +1697,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a06",
-                        "node": "Dock to rm_a2a02B"
+                        "area": "Varia Chamber Access",
+                        "node": "Dock to Autrack Corridor Left Water Pipe"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1706,7 +1706,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a11A": {
+                        "Dock to Wave Beam Chamber Access Water Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1717,13 +1717,13 @@
                 }
             }
         },
-        "rm_a2a03": {
+        "Arachnus Save Station": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a03"
             },
             "nodes": {
-                "Dock to rm_a2h02": {
+                "Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1740,8 +1740,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h02",
-                        "node": "Dock to rm_a2a03"
+                        "area": "Hydro Station Exterior",
+                        "node": "Dock to Arachnus Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1773,14 +1773,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a2h02": {
+                        "Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a2a04": {
+                        "Door to Arachnus Arena": {
                             "type": "and",
                             "data": {
                                 "comment": "Able to go through lower path",
@@ -1858,7 +1858,7 @@
                         }
                     }
                 },
-                "Door to rm_a2a04": {
+                "Door to Arachnus Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1875,8 +1875,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a04",
-                        "node": "Door to rm_a2a03"
+                        "area": "Arachnus Arena",
+                        "node": "Door to Arachnus Save Station"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1938,13 +1938,13 @@
                 }
             }
         },
-        "rm_a2a04": {
+        "Arachnus Arena": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a04"
             },
             "nodes": {
-                "Door to rm_a2a03": {
+                "Door to Arachnus Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1961,8 +1961,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a03",
-                        "node": "Door to rm_a2a04"
+                        "area": "Arachnus Save Station",
+                        "node": "Door to Arachnus Arena"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2077,7 +2077,7 @@
                     "valid_starting_location": false,
                     "event_name": "Arachnus",
                     "connections": {
-                        "Door to rm_a2a03": {
+                        "Door to Arachnus Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2103,7 +2103,7 @@
                     "pickup_index": 3,
                     "location_category": "major",
                     "connections": {
-                        "Door to rm_a2a03": {
+                        "Door to Arachnus Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2114,13 +2114,13 @@
                 }
             }
         },
-        "rm_a2a05": {
+        "Inner Alpha Nest North": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a05"
             },
             "nodes": {
-                "Dock to rm_a2h02": {
+                "Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2137,8 +2137,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h02",
-                        "node": "Dock to rm_a2a05"
+                        "area": "Hydro Station Exterior",
+                        "node": "Dock to Inner Alpha Nest North"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2146,7 +2146,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a06A": {
+                        "Dock to Varia Chamber Access Water Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2176,7 +2176,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a2h02": {
+                "Tunnel to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2193,8 +2193,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h02",
-                        "node": "Tunnel to rm_a2a05"
+                        "area": "Hydro Station Exterior",
+                        "node": "Tunnel to Inner Alpha Nest North"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -2211,7 +2211,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a06A": {
+                "Dock to Varia Chamber Access Water Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2228,8 +2228,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a06A",
-                        "node": "Dock to rm_a2a05"
+                        "area": "Varia Chamber Access Water Pipe",
+                        "node": "Dock to Inner Alpha Nest North"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2237,7 +2237,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2h02": {
+                        "Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2268,7 +2268,7 @@
                     "pickup_index": 152,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to rm_a2h02": {
+                        "Tunnel to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2293,7 +2293,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha8",
                     "connections": {
-                        "Dock to rm_a2h02": {
+                        "Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2304,13 +2304,13 @@
                 }
             }
         },
-        "rm_a2a06": {
+        "Varia Chamber Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a06"
             },
             "nodes": {
-                "Door to rm_a2a07": {
+                "Door to Varia Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2327,8 +2327,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a07",
-                        "node": "Door to rm_a2a06"
+                        "area": "Varia Chamber",
+                        "node": "Door to Varia Chamber Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -2336,7 +2336,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a02B": {
+                        "Dock to Autrack Corridor Left Water Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2452,7 +2452,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a02B": {
+                "Dock to Autrack Corridor Left Water Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2469,8 +2469,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a02B",
-                        "node": "Dock to rm_a2a06"
+                        "area": "Autrack Corridor Left Water Pipe",
+                        "node": "Dock to Varia Chamber Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2478,7 +2478,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a2a07": {
+                        "Door to Varia Chamber": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2594,7 +2594,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a2a07": {
+                        "Door to Varia Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2622,13 +2622,13 @@
                 }
             }
         },
-        "rm_a2a06A": {
+        "Varia Chamber Access Water Pipe": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a06A"
             },
             "nodes": {
-                "Dock to rm_a2a05": {
+                "Dock to Inner Alpha Nest North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2645,8 +2645,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a05",
-                        "node": "Dock to rm_a2a06A"
+                        "area": "Inner Alpha Nest North",
+                        "node": "Dock to Varia Chamber Access Water Pipe"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2654,7 +2654,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a02A": {
+                        "Dock to Autrack Corridor Right Water Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2673,7 +2673,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a02A": {
+                "Dock to Autrack Corridor Right Water Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2690,8 +2690,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a02A",
-                        "node": "Dock to rm_a2a06A"
+                        "area": "Autrack Corridor Right Water Pipe",
+                        "node": "Dock to Varia Chamber Access Water Pipe"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2699,7 +2699,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a05": {
+                        "Dock to Inner Alpha Nest North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2720,13 +2720,13 @@
                 }
             }
         },
-        "rm_a2a07": {
+        "Varia Chamber": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a07"
             },
             "nodes": {
-                "Door to rm_a2a06": {
+                "Door to Varia Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2743,8 +2743,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a06",
-                        "node": "Door to rm_a2a07"
+                        "area": "Varia Chamber Access",
+                        "node": "Door to Varia Chamber"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2783,7 +2783,7 @@
                     "pickup_index": 5,
                     "location_category": "major",
                     "connections": {
-                        "Door to rm_a2a06": {
+                        "Door to Varia Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2803,13 +2803,13 @@
                 }
             }
         },
-        "rm_a2a08": {
+        "Water Turbine Station": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a08"
             },
             "nodes": {
-                "Door to rm_a2h02": {
+                "Door to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2826,8 +2826,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h02",
-                        "node": "Door to rm_a2a08"
+                        "area": "Hydro Station Exterior",
+                        "node": "Door to Water Turbine Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2844,7 +2844,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a09": {
+                "Dock to Inner Alpha Nest South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2861,8 +2861,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a09",
-                        "node": "Dock to rm_a2a08"
+                        "area": "Inner Alpha Nest South",
+                        "node": "Dock to Water Turbine Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2879,7 +2879,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a19": {
+                "Dock to Pipe To Genetics Laboratory": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2896,8 +2896,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a19",
-                        "node": "Dock to rm_a2a08"
+                        "area": "Pipe To Genetics Laboratory",
+                        "node": "Dock to Water Turbine Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2940,7 +2940,7 @@
                     "valid_starting_location": false,
                     "event_name": "A2WaterLowered",
                     "connections": {
-                        "Door to rm_a2h02": {
+                        "Door to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3104,14 +3104,14 @@
                     "valid_starting_location": false,
                     "event_name": "A2BottomWaterTurbine",
                     "connections": {
-                        "Dock to rm_a2a09": {
+                        "Dock to Inner Alpha Nest South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2a19": {
+                        "Dock to Pipe To Genetics Laboratory": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3175,13 +3175,13 @@
                 }
             }
         },
-        "rm_a2a09": {
+        "Inner Alpha Nest South": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a09"
             },
             "nodes": {
-                "Dock to rm_a2a08": {
+                "Dock to Water Turbine Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3198,8 +3198,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a08",
-                        "node": "Dock to rm_a2a09"
+                        "area": "Water Turbine Station",
+                        "node": "Dock to Inner Alpha Nest South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3207,7 +3207,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a11A": {
+                        "Dock to Wave Beam Chamber Access Water Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3298,7 +3298,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a2a18": {
+                        "Dock to Pipe To The Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3484,7 +3484,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a11A": {
+                "Dock to Wave Beam Chamber Access Water Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3501,8 +3501,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a11A",
-                        "node": "Dock to rm_a2a09"
+                        "area": "Wave Beam Chamber Access Water Pipe",
+                        "node": "Dock to Inner Alpha Nest South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3510,7 +3510,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a08": {
+                        "Dock to Water Turbine Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3519,7 +3519,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a18": {
+                "Dock to Pipe To The Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3536,8 +3536,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a18",
-                        "node": "Dock to rm_a2a09"
+                        "area": "Pipe To The Tower",
+                        "node": "Dock to Inner Alpha Nest South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3545,7 +3545,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a08": {
+                        "Dock to Water Turbine Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3580,7 +3580,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha9",
                     "connections": {
-                        "Dock to rm_a2a08": {
+                        "Dock to Water Turbine Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3606,7 +3606,7 @@
                     "pickup_index": 151,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to rm_a2a08": {
+                        "Dock to Water Turbine Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3617,13 +3617,13 @@
                 }
             }
         },
-        "rm_a2a10": {
+        "Wave Beam Chamber": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a10"
             },
             "nodes": {
-                "Door to rm_a2a11": {
+                "Door to Wave Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3640,8 +3640,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a11",
-                        "node": "Door to rm_a2a10"
+                        "area": "Wave Beam Chamber Access",
+                        "node": "Door to Wave Beam Chamber"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3675,7 +3675,7 @@
                     "pickup_index": 12,
                     "location_category": "major",
                     "connections": {
-                        "Door to rm_a2a11": {
+                        "Door to Wave Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3686,13 +3686,13 @@
                 }
             }
         },
-        "rm_a2a11": {
+        "Wave Beam Chamber Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a11"
             },
             "nodes": {
-                "Door to rm_a2a10": {
+                "Door to Wave Beam Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3709,8 +3709,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a10",
-                        "node": "Door to rm_a2a11"
+                        "area": "Wave Beam Chamber",
+                        "node": "Door to Wave Beam Chamber Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3732,7 +3732,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a02A": {
+                "Dock to Autrack Corridor Right Water Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3749,8 +3749,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a02A",
-                        "node": "Dock to rm_a2a11"
+                        "area": "Autrack Corridor Right Water Pipe",
+                        "node": "Dock to Wave Beam Chamber Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3767,7 +3767,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a12": {
+                "Dock to Lower Hydro Station Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3784,8 +3784,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a12",
-                        "node": "Dock to rm_a2a11"
+                        "area": "Lower Hydro Station Hub",
+                        "node": "Dock to Wave Beam Chamber Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3822,7 +3822,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a2a02A": {
+                        "Dock to Autrack Corridor Right Water Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3839,7 +3839,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a2a12": {
+                        "Dock to Lower Hydro Station Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3901,7 +3901,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a2a10": {
+                        "Door to Wave Beam Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3929,13 +3929,13 @@
                 }
             }
         },
-        "rm_a2a11A": {
+        "Wave Beam Chamber Access Water Pipe": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a11A"
             },
             "nodes": {
-                "Dock to rm_a2a02B": {
+                "Dock to Autrack Corridor Left Water Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3952,8 +3952,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a02B",
-                        "node": "Dock to rm_a2a11A"
+                        "area": "Autrack Corridor Left Water Pipe",
+                        "node": "Dock to Wave Beam Chamber Access Water Pipe"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3961,7 +3961,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a09": {
+                        "Dock to Inner Alpha Nest South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3970,7 +3970,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a09": {
+                "Dock to Inner Alpha Nest South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3987,8 +3987,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a09",
-                        "node": "Dock to rm_a2a11A"
+                        "area": "Inner Alpha Nest South",
+                        "node": "Dock to Wave Beam Chamber Access Water Pipe"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -3996,7 +3996,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a02B": {
+                        "Dock to Autrack Corridor Left Water Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4065,13 +4065,13 @@
                 }
             }
         },
-        "rm_a2a12": {
+        "Lower Hydro Station Hub": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a12"
             },
             "nodes": {
-                "Dock to rm_a2a11": {
+                "Dock to Wave Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4088,8 +4088,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a11",
-                        "node": "Dock to rm_a2a12"
+                        "area": "Wave Beam Chamber Access",
+                        "node": "Dock to Lower Hydro Station Hub"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4106,7 +4106,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a13": {
+                "Dock to Hi-Jump Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4123,8 +4123,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a13",
-                        "node": "Dock to rm_a2a12"
+                        "area": "Hi-Jump Chamber Access",
+                        "node": "Dock to Lower Hydro Station Hub"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4141,7 +4141,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a15": {
+                "Dock to Autoad Playground": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4158,8 +4158,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a15",
-                        "node": "Dock to rm_a2a12"
+                        "area": "Autoad Playground",
+                        "node": "Dock to Lower Hydro Station Hub"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4176,7 +4176,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a18": {
+                "Dock to Pipe To The Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4193,8 +4193,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a18",
-                        "node": "Dock to rm_a2a12"
+                        "area": "Pipe To The Tower",
+                        "node": "Dock to Lower Hydro Station Hub"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4236,28 +4236,28 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a2a11": {
+                        "Dock to Wave Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2a13": {
+                        "Dock to Hi-Jump Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2a15": {
+                        "Dock to Autoad Playground": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2a18": {
+                        "Dock to Pipe To The Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4278,13 +4278,13 @@
                 }
             }
         },
-        "rm_a2a13": {
+        "Hi-Jump Chamber Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a13"
             },
             "nodes": {
-                "Door to rm_a2a14": {
+                "Door to Hi-Jump Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4301,8 +4301,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a14",
-                        "node": "Door to rm_a2a13"
+                        "area": "Hi-Jump Chamber",
+                        "node": "Door to Hi-Jump Chamber Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -4310,7 +4310,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a12": {
+                        "Dock to Lower Hydro Station Hub": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4333,7 +4333,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a12": {
+                "Dock to Lower Hydro Station Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4350,8 +4350,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a12",
-                        "node": "Dock to rm_a2a13"
+                        "area": "Lower Hydro Station Hub",
+                        "node": "Dock to Hi-Jump Chamber Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4359,7 +4359,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a2a14": {
+                        "Door to Hi-Jump Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4370,13 +4370,13 @@
                 }
             }
         },
-        "rm_a2a14": {
+        "Hi-Jump Chamber": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a14"
             },
             "nodes": {
-                "Door to rm_a2a13": {
+                "Door to Hi-Jump Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4393,8 +4393,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a13",
-                        "node": "Door to rm_a2a14"
+                        "area": "Hi-Jump Chamber Access",
+                        "node": "Door to Hi-Jump Chamber"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4402,7 +4402,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to rm_a2a17": {
+                        "Tunnel to Hydro Station Basement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4427,7 +4427,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a2a17": {
+                "Tunnel to Hydro Station Basement": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4444,8 +4444,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a17",
-                        "node": "Tunnel to rm_a2a14"
+                        "area": "Hydro Station Basement",
+                        "node": "Tunnel to Hi-Jump Chamber"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -4453,7 +4453,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a2a13": {
+                        "Door to Hi-Jump Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4484,7 +4484,7 @@
                     "pickup_index": 4,
                     "location_category": "major",
                     "connections": {
-                        "Door to rm_a2a13": {
+                        "Door to Hi-Jump Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4495,13 +4495,13 @@
                 }
             }
         },
-        "rm_a2a15": {
+        "Autoad Playground": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a15"
             },
             "nodes": {
-                "Dock to rm_a2a16": {
+                "Dock to Wallfire Venue": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4518,8 +4518,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a16",
-                        "node": "Dock to rm_a2a15"
+                        "area": "Wallfire Venue",
+                        "node": "Dock to Autoad Playground"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4527,7 +4527,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a12": {
+                        "Dock to Lower Hydro Station Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4659,7 +4659,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a12": {
+                "Dock to Lower Hydro Station Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4676,8 +4676,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a12",
-                        "node": "Dock to rm_a2a15"
+                        "area": "Lower Hydro Station Hub",
+                        "node": "Dock to Autoad Playground"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4685,7 +4685,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a16": {
+                        "Dock to Wallfire Venue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4744,7 +4744,7 @@
                     "pickup_index": 153,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to rm_a2a16": {
+                        "Dock to Wallfire Venue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4779,7 +4779,7 @@
                     "pickup_index": 154,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to rm_a2a12": {
+                        "Dock to Lower Hydro Station Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4816,13 +4816,13 @@
                 }
             }
         },
-        "rm_a2a16": {
+        "Wallfire Venue": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a16"
             },
             "nodes": {
-                "Dock to rm_a2a15": {
+                "Dock to Autoad Playground": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4839,8 +4839,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a15",
-                        "node": "Dock to rm_a2a16"
+                        "area": "Autoad Playground",
+                        "node": "Dock to Wallfire Venue"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4848,7 +4848,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a17": {
+                        "Dock to Hydro Station Basement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4857,7 +4857,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a17": {
+                "Dock to Hydro Station Basement": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4874,8 +4874,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a17",
-                        "node": "Dock to rm_a2a16"
+                        "area": "Hydro Station Basement",
+                        "node": "Dock to Wallfire Venue"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4883,7 +4883,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a15": {
+                        "Dock to Autoad Playground": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4899,13 +4899,13 @@
                 }
             }
         },
-        "rm_a2a17": {
+        "Hydro Station Basement": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2a17"
             },
             "nodes": {
-                "Dock to rm_a2a16": {
+                "Dock to Wallfire Venue": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4922,8 +4922,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a16",
-                        "node": "Dock to rm_a2a17"
+                        "area": "Wallfire Venue",
+                        "node": "Dock to Hydro Station Basement"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4949,7 +4949,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a2a14": {
+                "Tunnel to Hi-Jump Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4966,8 +4966,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a14",
-                        "node": "Tunnel to rm_a2a17"
+                        "area": "Hi-Jump Chamber",
+                        "node": "Tunnel to Hydro Station Basement"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -5156,7 +5156,7 @@
                     "pickup_index": 157,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to rm_a2a14": {
+                        "Tunnel to Hi-Jump Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5192,7 +5192,7 @@
                     "pickup_index": 156,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to rm_a2a14": {
+                        "Tunnel to Hi-Jump Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5227,7 +5227,7 @@
                     "pickup_index": 155,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to rm_a2a16": {
+                        "Dock to Wallfire Venue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5243,13 +5243,13 @@
                 }
             }
         },
-        "rm_a2a18": {
-            "default_node": "Dock to rm_a2a09",
+        "Pipe To The Tower": {
+            "default_node": "Dock to Inner Alpha Nest South",
             "extra": {
                 "map_name": "rm_a2a18"
             },
             "nodes": {
-                "Dock to rm_a2a09": {
+                "Dock to Inner Alpha Nest South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5266,8 +5266,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a09",
-                        "node": "Dock to rm_a2a18"
+                        "area": "Inner Alpha Nest South",
+                        "node": "Dock to Pipe To The Tower"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5275,7 +5275,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a12": {
+                        "Dock to Lower Hydro Station Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5284,7 +5284,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2a12": {
+                "Dock to Lower Hydro Station Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5301,8 +5301,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a12",
-                        "node": "Dock to rm_a2a18"
+                        "area": "Lower Hydro Station Hub",
+                        "node": "Dock to Pipe To The Tower"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5310,7 +5310,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2a09": {
+                        "Dock to Inner Alpha Nest South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5412,7 +5412,7 @@
                     "keep_name_when_vanilla": false,
                     "editable": true,
                     "connections": {
-                        "Dock to rm_a2a12": {
+                        "Dock to Lower Hydro Station Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5433,13 +5433,13 @@
                 }
             }
         },
-        "rm_a2a19": {
-            "default_node": "Dock to rm_a2a08",
+        "Pipe To Genetics Laboratory": {
+            "default_node": "Dock to Water Turbine Station",
             "extra": {
                 "map_name": "rm_a2a19"
             },
             "nodes": {
-                "Dock to rm_a2a08": {
+                "Dock to Water Turbine Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5456,8 +5456,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2a08",
-                        "node": "Dock to rm_a2a19"
+                        "area": "Water Turbine Station",
+                        "node": "Dock to Pipe To Genetics Laboratory"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5505,7 +5505,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Dock to rm_a2a08": {
+                        "Dock to Water Turbine Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5526,13 +5526,13 @@
                 }
             }
         },
-        "rm_a2c01": {
+        "Breeding Grounds Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c01"
             },
             "nodes": {
-                "Dock to rm_a2h02 (Top)": {
+                "Dock to Hydro Station Exterior (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5549,8 +5549,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h02",
-                        "node": "Dock to rm_a2c01 (Top)"
+                        "area": "Hydro Station Exterior",
+                        "node": "Dock to Breeding Grounds Access (Top)"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5598,7 +5598,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2h02 (Bottom)": {
+                "Dock to Hydro Station Exterior (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5615,8 +5615,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2h02",
-                        "node": "Dock to rm_a2c01 (Bottom)"
+                        "area": "Hydro Station Exterior",
+                        "node": "Dock to Breeding Grounds Access (Bottom)"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5624,7 +5624,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to rm_a2c02": {
+                        "Tunnel to Breeding Grounds Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5756,7 +5756,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a2c10": {
+                        "Door to Speedboosting Challenge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6054,7 +6054,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a2c02": {
+                "Tunnel to Breeding Grounds Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6071,8 +6071,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c02",
-                        "node": "Tunnel to rm_a2c01"
+                        "area": "Breeding Grounds Save Station",
+                        "node": "Tunnel to Breeding Grounds Access"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6080,7 +6080,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2h02 (Bottom)": {
+                        "Dock to Hydro Station Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6099,7 +6099,7 @@
                         }
                     }
                 },
-                "Door to rm_a2c10": {
+                "Door to Speedboosting Challenge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6116,8 +6116,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c10",
-                        "node": "Door to rm_a2c01"
+                        "area": "Speedboosting Challenge",
+                        "node": "Door to Breeding Grounds Access"
                     },
                     "default_dock_weakness": "Hydro Station EMP Activated Door",
                     "exclude_from_dock_rando": false,
@@ -6125,7 +6125,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2h02 (Bottom)": {
+                        "Dock to Hydro Station Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6150,7 +6150,7 @@
                     "valid_starting_location": false,
                     "event_name": "A2EMP",
                     "connections": {
-                        "Dock to rm_a2h02 (Bottom)": {
+                        "Dock to Hydro Station Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6174,7 +6174,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a2h02 (Top)": {
+                        "Dock to Hydro Station Exterior (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6191,7 +6191,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a2h02 (Bottom)": {
+                        "Dock to Hydro Station Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6223,7 +6223,7 @@
                 }
             }
         },
-        "rm_a2c02": {
+        "Breeding Grounds Save Station": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c02"
@@ -6244,7 +6244,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Tunnel to rm_a2c01": {
+                        "Tunnel to Breeding Grounds Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6256,7 +6256,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a2c03": {
+                        "Dock to Breeding Grounds Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6265,7 +6265,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a2c01": {
+                "Tunnel to Breeding Grounds Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6282,8 +6282,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c01",
-                        "node": "Tunnel to rm_a2c02"
+                        "area": "Breeding Grounds Access",
+                        "node": "Tunnel to Breeding Grounds Save Station"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -6310,7 +6310,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2c03": {
+                "Dock to Breeding Grounds Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6327,8 +6327,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c03",
-                        "node": "Dock to rm_a2c02"
+                        "area": "Breeding Grounds Shaft",
+                        "node": "Dock to Breeding Grounds Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6347,13 +6347,13 @@
                 }
             }
         },
-        "rm_a2c03": {
+        "Breeding Grounds Shaft": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c03"
             },
             "nodes": {
-                "Dock to rm_a2c02": {
+                "Dock to Breeding Grounds Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6370,8 +6370,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c02",
-                        "node": "Dock to rm_a2c03"
+                        "area": "Breeding Grounds Save Station",
+                        "node": "Dock to Breeding Grounds Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6388,7 +6388,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2c04": {
+                "Dock to Breeding Grounds Alpha Nest East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6405,8 +6405,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c04",
-                        "node": "Dock to rm_a2c03"
+                        "area": "Breeding Grounds Alpha Nest East",
+                        "node": "Dock to Breeding Grounds Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6414,7 +6414,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2c05": {
+                        "Dock to Breeding Grounds Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6521,7 +6521,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2c05": {
+                "Dock to Breeding Grounds Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6538,8 +6538,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c05",
-                        "node": "Dock to rm_a2c03"
+                        "area": "Breeding Grounds Lobby",
+                        "node": "Dock to Breeding Grounds Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6547,7 +6547,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2c04": {
+                        "Dock to Breeding Grounds Alpha Nest East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6561,7 +6561,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2c09": {
+                "Dock to Breeding Grounds Overgrown Alley": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6578,8 +6578,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c09",
-                        "node": "Dock to rm_a2c03"
+                        "area": "Breeding Grounds Overgrown Alley",
+                        "node": "Dock to Breeding Grounds Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6625,7 +6625,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a2c02": {
+                        "Dock to Breeding Grounds Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6637,14 +6637,14 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a2c04": {
+                        "Dock to Breeding Grounds Alpha Nest East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2c09": {
+                        "Dock to Breeding Grounds Overgrown Alley": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6669,13 +6669,13 @@
                 }
             }
         },
-        "rm_a2c04": {
+        "Breeding Grounds Alpha Nest East": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c04"
             },
             "nodes": {
-                "Dock to rm_a2c03": {
+                "Dock to Breeding Grounds Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6692,8 +6692,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c03",
-                        "node": "Dock to rm_a2c04"
+                        "area": "Breeding Grounds Shaft",
+                        "node": "Dock to Breeding Grounds Alpha Nest East"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6731,7 +6731,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha10",
                     "connections": {
-                        "Dock to rm_a2c03": {
+                        "Dock to Breeding Grounds Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6747,13 +6747,13 @@
                 }
             }
         },
-        "rm_a2c05": {
+        "Breeding Grounds Lobby": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c05"
             },
             "nodes": {
-                "Dock to rm_a2c03": {
+                "Dock to Breeding Grounds Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6770,8 +6770,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c03",
-                        "node": "Dock to rm_a2c05"
+                        "area": "Breeding Grounds Shaft",
+                        "node": "Dock to Breeding Grounds Lobby"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6788,7 +6788,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2c07": {
+                "Dock to Breeding Grounds Gamma Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6805,8 +6805,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c07",
-                        "node": "Dock to rm_a2c05"
+                        "area": "Breeding Grounds Gamma Nest",
+                        "node": "Dock to Breeding Grounds Lobby"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6828,7 +6828,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2c06": {
+                "Dock to Breeding Grounds Alpha Nest West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6845,8 +6845,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c06",
-                        "node": "Dock to rm_a2c05"
+                        "area": "Breeding Grounds Alpha Nest West",
+                        "node": "Dock to Breeding Grounds Lobby"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6913,21 +6913,21 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a2c03": {
+                        "Dock to Breeding Grounds Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2c07": {
+                        "Dock to Breeding Grounds Gamma Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a2c06": {
+                        "Dock to Breeding Grounds Alpha Nest West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6995,13 +6995,13 @@
                 }
             }
         },
-        "rm_a2c06": {
+        "Breeding Grounds Alpha Nest West": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c06"
             },
             "nodes": {
-                "Dock to rm_a2c05": {
+                "Dock to Breeding Grounds Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7018,8 +7018,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c05",
-                        "node": "Dock to rm_a2c06"
+                        "area": "Breeding Grounds Lobby",
+                        "node": "Dock to Breeding Grounds Alpha Nest West"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7027,7 +7027,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2c09": {
+                        "Dock to Breeding Grounds Overgrown Alley": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7084,7 +7084,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2c09": {
+                "Dock to Breeding Grounds Overgrown Alley": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7101,8 +7101,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c09",
-                        "node": "Dock from rm_a2c06"
+                        "area": "Breeding Grounds Overgrown Alley",
+                        "node": "Dock from Breeding Grounds Alpha Nest West"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7127,7 +7127,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha11",
                     "connections": {
-                        "Dock to rm_a2c05": {
+                        "Dock to Breeding Grounds Lobby": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7147,13 +7147,13 @@
                 }
             }
         },
-        "rm_a2c07": {
+        "Breeding Grounds Gamma Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c07"
             },
             "nodes": {
-                "Dock to rm_a2c05": {
+                "Dock to Breeding Grounds Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7170,8 +7170,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c05",
-                        "node": "Dock to rm_a2c07"
+                        "area": "Breeding Grounds Lobby",
+                        "node": "Dock to Breeding Grounds Gamma Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7179,7 +7179,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2c08": {
+                        "Dock to Breeding Grounds Alpha Nest South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7188,7 +7188,7 @@
                         }
                     }
                 },
-                "Dock to rm_a2c08": {
+                "Dock to Breeding Grounds Alpha Nest South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7205,8 +7205,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c08",
-                        "node": "Dock to rm_a2c07"
+                        "area": "Breeding Grounds Alpha Nest South",
+                        "node": "Dock to Breeding Grounds Gamma Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7214,7 +7214,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a2c05": {
+                        "Dock to Breeding Grounds Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7260,7 +7260,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma1",
                     "connections": {
-                        "Dock to rm_a2c08": {
+                        "Dock to Breeding Grounds Alpha Nest South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7271,13 +7271,13 @@
                 }
             }
         },
-        "rm_a2c08": {
+        "Breeding Grounds Alpha Nest South": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c08"
             },
             "nodes": {
-                "Dock to rm_a2c07": {
+                "Dock to Breeding Grounds Gamma Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7294,8 +7294,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c07",
-                        "node": "Dock to rm_a2c08"
+                        "area": "Breeding Grounds Gamma Nest",
+                        "node": "Dock to Breeding Grounds Alpha Nest South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7366,7 +7366,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha12",
                     "connections": {
-                        "Dock to rm_a2c07": {
+                        "Dock to Breeding Grounds Gamma Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7403,13 +7403,13 @@
                 }
             }
         },
-        "rm_a2c09": {
+        "Breeding Grounds Overgrown Alley": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c09"
             },
             "nodes": {
-                "Dock to rm_a2c03": {
+                "Dock to Breeding Grounds Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7426,8 +7426,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c03",
-                        "node": "Dock to rm_a2c09"
+                        "area": "Breeding Grounds Shaft",
+                        "node": "Dock to Breeding Grounds Overgrown Alley"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7501,7 +7501,7 @@
                         }
                     }
                 },
-                "Dock from rm_a2c06": {
+                "Dock from Breeding Grounds Alpha Nest West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7518,8 +7518,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c06",
-                        "node": "Dock to rm_a2c09"
+                        "area": "Breeding Grounds Alpha Nest West",
+                        "node": "Dock to Breeding Grounds Overgrown Alley"
                     },
                     "default_dock_weakness": "Back Only",
                     "exclude_from_dock_rando": false,
@@ -7556,7 +7556,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to rm_a2c03": {
+                        "Dock to Breeding Grounds Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7588,13 +7588,13 @@
                 }
             }
         },
-        "rm_a2c10": {
+        "Speedboosting Challenge": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a2c10"
             },
             "nodes": {
-                "Door to rm_a2c01": {
+                "Door to Breeding Grounds Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7611,8 +7611,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
-                        "area": "rm_a2c01",
-                        "node": "Door to rm_a2c10"
+                        "area": "Breeding Grounds Access",
+                        "node": "Door to Speedboosting Challenge"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -7682,7 +7682,7 @@
                     "pickup_index": 162,
                     "location_category": "minor",
                     "connections": {
-                        "Door to rm_a2c01": {
+                        "Door to Breeding Grounds Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,

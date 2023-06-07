@@ -1,16 +1,16 @@
 ----------------
-rm_a2h01
+Hydro Station Entrance
 Extra - map_name: rm_a2h01
-> Dock to rm_a2h02; Heals? False
+> Dock to Hydro Station Exterior; Heals? False
   * Layers: default
-  * Open Passage to rm_a2h02/Dock to rm_a2h01
+  * Open Passage to Hydro Station Exterior/Dock to Hydro Station Entrance
   > Dock to Grave Grotto
       Tunnel Climb
 
 > Dock to Grave Grotto; Heals? False
   * Layers: default
-  * Open Passage to Grave Grotto/Dock to rm_a2h01
-  > Dock to rm_a2h02
+  * Open Passage to Grave Grotto/Dock to Hydro Station Entrance
+  > Dock to Hydro Station Exterior
       Morphball
   > Event - Alpha
       Defeat Alpha
@@ -22,50 +22,50 @@ Extra - map_name: rm_a2h01
       Trivial
 
 ----------------
-rm_a2h02
+Hydro Station Exterior
 Extra - map_name: rm_a2h02
-> Dock to rm_a2h01; Heals? False
+> Dock to Hydro Station Entrance; Heals? False
   * Layers: default
-  * Open Passage to rm_a2h01/Dock to rm_a2h02
-  > Dock to rm_a2a01
+  * Open Passage to Hydro Station Entrance/Dock to Hydro Station Exterior
+  > Dock to Broken Save Station
       Trivial
   > Pickup (Missile Tank)
       Can Use Spider Ball
 
-> Dock to rm_a2a01; Heals? False
+> Dock to Broken Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a01/Dock to rm_a2h02
-  > Dock to rm_a2h01
+  * Open Passage to Broken Save Station/Dock to Hydro Station Exterior
+  > Dock to Hydro Station Entrance
       Trivial
 
-> Dock to rm_a2a01A; Heals? False
+> Dock to Inner Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a01A/Dock to rm_a2h02
-  > Door to rm_a2a08
+  * Open Passage to Inner Save Station/Dock to Hydro Station Exterior
+  > Door to Water Turbine Station
       Trivial
-  > Dock to rm_a2c01 (Bottom)
+  > Dock to Breeding Grounds Access (Bottom)
       Trivial
   > Middle Left
       Power Grip or Hijump Wall
 
-> Dock to rm_a2a05; Heals? False
+> Dock to Inner Alpha Nest North; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a05/Dock to rm_a2h02
+  * Open Passage to Inner Alpha Nest North/Dock to Hydro Station Exterior
   > Middle Left
       Morphball
 
-> Tunnel to rm_a2a05; Heals? False
+> Tunnel to Inner Alpha Nest North; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a2a05/Tunnel to rm_a2h02
-  > Dock to rm_a2a01
+  * Morph Ball Tunnel to Inner Alpha Nest North/Tunnel to Hydro Station Exterior
+  > Dock to Broken Save Station
       Trivial
 
-> Dock to rm_a2a03; Heals? False
+> Dock to Arachnus Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a03/Dock to rm_a2h02
-  > Tunnel to rm_a2a05
+  * Open Passage to Arachnus Save Station/Dock to Hydro Station Exterior
+  > Tunnel to Inner Alpha Nest North
       Trivial
-  > Dock to rm_a2h03
+  > Dock to Outer Alpha Nest
       Any of the following:
           Spacejump
           All of the following:
@@ -88,32 +88,32 @@ Extra - map_name: rm_a2h02
               # IBJ
               Infinite Bomb Jumping (Advanced) and Can Use Bombs
 
-> Door to rm_a2a08; Heals? False
+> Door to Water Turbine Station; Heals? False
   * Layers: default
-  * Water Turbine Door to rm_a2a08/Door to rm_a2h02
-  > Dock to rm_a2a01A
+  * Water Turbine Door to Water Turbine Station/Door to Hydro Station Exterior
+  > Dock to Inner Save Station
       Trivial
 
-> Dock to rm_a2h03; Heals? False
+> Dock to Outer Alpha Nest; Heals? False
   * Layers: default
-  * Open Passage to rm_a2h03/Dock to rm_a2h02
-  > Dock to rm_a2c01 (Top)
+  * Open Passage to Outer Alpha Nest/Dock to Hydro Station Exterior
+  > Dock to Breeding Grounds Access (Top)
       Can Use Spider Ball
   > Middle Left
       Trivial
 
-> Dock to rm_a2c01 (Top); Heals? False
+> Dock to Breeding Grounds Access (Top); Heals? False
   * Layers: default
-  * Open Passage to rm_a2c01/Dock to rm_a2h02 (Top)
-  > Dock to rm_a2c01 (Bottom)
+  * Open Passage to Breeding Grounds Access/Dock to Hydro Station Exterior (Top)
+  > Dock to Breeding Grounds Access (Bottom)
       Trivial
 
-> Dock to rm_a2c01 (Bottom); Heals? False
+> Dock to Breeding Grounds Access (Bottom); Heals? False
   * Layers: default
-  * Open Passage to rm_a2c01/Dock to rm_a2h02 (Bottom)
-  > Dock to rm_a2a01A
+  * Open Passage to Breeding Grounds Access/Dock to Hydro Station Exterior (Bottom)
+  > Dock to Inner Save Station
       Trivial
-  > Dock to rm_a2c01 (Top)
+  > Dock to Breeding Grounds Access (Top)
       Any of the following:
           Spacejump
           All of the following:
@@ -125,11 +125,11 @@ Extra - map_name: rm_a2h02
 
 > Middle Left; Heals? False
   * Layers: default
-  > Dock to rm_a2a01A
+  > Dock to Inner Save Station
       Trivial
-  > Dock to rm_a2a05
+  > Dock to Inner Alpha Nest North
       Morphball
-  > Dock to rm_a2a03
+  > Dock to Arachnus Save Station
       Any of the following:
           Power beam or Spacejump or Walljump (Advanced)
           All of the following:
@@ -146,7 +146,7 @@ Extra - map_name: rm_a2h02
           All of the following:
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
-  > Dock to rm_a2c01 (Top)
+  > Dock to Breeding Grounds Access (Top)
       All of the following:
           # Shinespark from the room on the right
           Morphball and Speedbooster and Shinesparking Tricks (Beginner)
@@ -154,126 +154,126 @@ Extra - map_name: rm_a2h02
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 163; Category? Minor
-  > Dock to rm_a2a01
+  > Dock to Broken Save Station
       Trivial
-  > Dock to rm_a2a03
+  > Dock to Arachnus Save Station
       Can Use Spider Ball
-  > Dock to rm_a2h03
+  > Dock to Outer Alpha Nest
       Can Use Spider Ball
 
 ----------------
-rm_a2h03
+Outer Alpha Nest
 Extra - map_name: rm_a2h03
-> Dock to rm_a2h02; Heals? False
+> Dock to Hydro Station Exterior; Heals? False
   * Layers: default
-  * Open Passage to rm_a2h02/Dock to rm_a2h03
+  * Open Passage to Hydro Station Exterior/Dock to Outer Alpha Nest
   > Event - Alpha
       Defeat Alpha
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Area 2 - Exterior Alpha
-  > Dock to rm_a2h02
+  > Dock to Hydro Station Exterior
       Trivial
 
 ----------------
-rm_a2a01
+Broken Save Station
 Extra - map_name: rm_a2a01
-> Dock to rm_a2a02; Heals? False
+> Dock to Autrack Corridor; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a02/Dock to rm_a2a01
-  > Dock to rm_a2h02
+  * Open Passage to Autrack Corridor/Dock to Broken Save Station
+  > Dock to Hydro Station Exterior
       Trivial
 
-> Dock to rm_a2h02; Heals? False
+> Dock to Hydro Station Exterior; Heals? False
   * Layers: default
-  * Open Passage to rm_a2h02/Dock to rm_a2a01
-  > Dock to rm_a2a02
+  * Open Passage to Hydro Station Exterior/Dock to Broken Save Station
+  > Dock to Autrack Corridor
       Trivial
 
 ----------------
-rm_a2a01A
+Inner Save Station
 Extra - map_name: rm_a2a01A
 > Save Station; Heals? True; Spawn Point
   * Layers: default
-  > Dock to rm_a2h02
+  > Dock to Hydro Station Exterior
       Trivial
-  > Dock to rm_a2a02
+  > Dock to Autrack Corridor
       Trivial
 
-> Dock to rm_a2h02; Heals? False
+> Dock to Hydro Station Exterior; Heals? False
   * Layers: default
-  * Open Passage to rm_a2h02/Dock to rm_a2a01A
+  * Open Passage to Hydro Station Exterior/Dock to Inner Save Station
   > Save Station
       Trivial
 
-> Dock to rm_a2a02; Heals? False
+> Dock to Autrack Corridor; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a02/Dock to rm_a2a01A
+  * Open Passage to Autrack Corridor/Dock to Inner Save Station
   > Save Station
       Trivial
 
 ----------------
-rm_a2a02
+Autrack Corridor
 Extra - map_name: rm_a2a02
-> Dock to rm_a2a01A; Heals? False
+> Dock to Inner Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a01A/Dock to rm_a2a02
-  > Dock to rm_a2a01
+  * Open Passage to Inner Save Station/Dock to Autrack Corridor
+  > Dock to Broken Save Station
       Morphball
 
-> Dock to rm_a2a01; Heals? False
+> Dock to Broken Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a01/Dock to rm_a2a02
-  > Dock to rm_a2a01A
+  * Open Passage to Broken Save Station/Dock to Autrack Corridor
+  > Dock to Inner Save Station
       Morphball
 
 ----------------
-rm_a2a02A
+Autrack Corridor Right Water Pipe
 Extra - map_name: rm_a2a02A
-> Dock to rm_a2a06A; Heals? False
+> Dock to Varia Chamber Access Water Pipe; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a06A/Dock to rm_a2a02A
-  > Dock to rm_a2a11
+  * Open Passage to Varia Chamber Access Water Pipe/Dock to Autrack Corridor Right Water Pipe
+  > Dock to Wave Beam Chamber Access
       Trivial
 
-> Dock to rm_a2a11; Heals? False
+> Dock to Wave Beam Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a11/Dock to rm_a2a02A
-  > Dock to rm_a2a06A
+  * Open Passage to Wave Beam Chamber Access/Dock to Autrack Corridor Right Water Pipe
+  > Dock to Varia Chamber Access Water Pipe
       Trivial
 
 ----------------
-rm_a2a02B
+Autrack Corridor Left Water Pipe
 Extra - map_name: rm_a2a02B
-> Dock to rm_a2a11A; Heals? False
+> Dock to Wave Beam Chamber Access Water Pipe; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a11A/Dock to rm_a2a02B
-  > Dock to rm_a2a06
+  * Open Passage to Wave Beam Chamber Access Water Pipe/Dock to Autrack Corridor Left Water Pipe
+  > Dock to Varia Chamber Access
       Any of the following:
           Spacejump or Walljump (Advanced) or Disabled Entrance Rando or Can Use Spider Ball
           Hijump and Walljump (Intermediate)
 
-> Dock to rm_a2a06; Heals? False
+> Dock to Varia Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a06/Dock to rm_a2a02B
-  > Dock to rm_a2a11A
+  * Open Passage to Varia Chamber Access/Dock to Autrack Corridor Left Water Pipe
+  > Dock to Wave Beam Chamber Access Water Pipe
       Trivial
 
 ----------------
-rm_a2a03
+Arachnus Save Station
 Extra - map_name: rm_a2a03
-> Dock to rm_a2h02; Heals? False
+> Dock to Hydro Station Exterior; Heals? False
   * Layers: default
-  * Open Passage to rm_a2h02/Dock to rm_a2a03
+  * Open Passage to Hydro Station Exterior/Dock to Arachnus Save Station
   > Save Station
       Trivial
 
 > Save Station; Heals? True
   * Layers: default
-  > Dock to rm_a2h02
+  > Dock to Hydro Station Exterior
       Trivial
-  > Door to rm_a2a04
+  > Door to Arachnus Arena
       All of the following:
           # Able to go through lower path
           Can Use Any Bombs
@@ -284,9 +284,9 @@ Extra - map_name: rm_a2a03
                   Mid-Air Morph (Advanced)
                   Hijump or Spacejump or Walljump (Advanced)
 
-> Door to rm_a2a04; Heals? False
+> Door to Arachnus Arena; Heals? False
   * Layers: default
-  * Missile Door to rm_a2a04/Door to rm_a2a03
+  * Missile Door to Arachnus Arena/Door to Arachnus Save Station
   > Save Station
       All of the following:
           Power Grip Wall
@@ -295,11 +295,11 @@ Extra - map_name: rm_a2a03
               Morphball and Mid-Air Morph (Intermediate)
 
 ----------------
-rm_a2a04
+Arachnus Arena
 Extra - map_name: rm_a2a04
-> Door to rm_a2a03; Heals? False
+> Door to Arachnus Save Station; Heals? False
   * Layers: default
-  * Normal Door to rm_a2a03/Door to rm_a2a04
+  * Normal Door to Arachnus Save Station/Door to Arachnus Arena
   > Event - Arachnus
       All of the following:
           Any of the following:
@@ -315,57 +315,57 @@ Extra - map_name: rm_a2a04
 > Event - Arachnus; Heals? False
   * Layers: default
   * Event Boss Arachnus Defeated
-  > Door to rm_a2a03
+  > Door to Arachnus Save Station
       Trivial
 
 > Pickup (Spring Ball); Heals? False
   * Layers: default
   * Pickup 3; Category? Major
-  > Door to rm_a2a03
+  > Door to Arachnus Save Station
       Trivial
 
 ----------------
-rm_a2a05
+Inner Alpha Nest North
 Extra - map_name: rm_a2a05
-> Dock to rm_a2h02; Heals? False
+> Dock to Hydro Station Exterior; Heals? False
   * Layers: default
-  * Open Passage to rm_a2h02/Dock to rm_a2a05
-  > Dock to rm_a2a06A
+  * Open Passage to Hydro Station Exterior/Dock to Inner Alpha Nest North
+  > Dock to Varia Chamber Access Water Pipe
       Can Use Any Bombs and High Mid-Air Morph Tunnel Climb
   > Event - Alpha
       Defeat Alpha
 
-> Tunnel to rm_a2h02; Heals? False
+> Tunnel to Hydro Station Exterior; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a2h02/Tunnel to rm_a2a05
+  * Morph Ball Tunnel to Hydro Station Exterior/Tunnel to Inner Alpha Nest North
   > Pickup (Missile Tank)
       Trivial
 
-> Dock to rm_a2a06A; Heals? False
+> Dock to Varia Chamber Access Water Pipe; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a06A/Dock to rm_a2a05
-  > Dock to rm_a2h02
+  * Open Passage to Varia Chamber Access Water Pipe/Dock to Inner Alpha Nest North
+  > Dock to Hydro Station Exterior
       Can Use Any Bombs
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 152; Category? Minor
-  > Tunnel to rm_a2h02
+  > Tunnel to Hydro Station Exterior
       Trivial
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Area 2 - Interior Upper Alpha
-  > Dock to rm_a2h02
+  > Dock to Hydro Station Exterior
       Trivial
 
 ----------------
-rm_a2a06
+Varia Chamber Access
 Extra - map_name: rm_a2a06
-> Door to rm_a2a07; Heals? False
+> Door to Varia Chamber; Heals? False
   * Layers: default
-  * Missile Door to rm_a2a07/Door to rm_a2a06
-  > Dock to rm_a2a02B
+  * Missile Door to Varia Chamber/Door to Varia Chamber Access
+  > Dock to Autrack Corridor Left Water Pipe
       Tunnel Climb
   > Top tunnel
       All of the following:
@@ -378,10 +378,10 @@ Extra - map_name: rm_a2a06
                   Hijump or Spacejump or Walljump (Intermediate)
                   Power Grip or Mid-Air Morph (Intermediate)
 
-> Dock to rm_a2a02B; Heals? False
+> Dock to Autrack Corridor Left Water Pipe; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a02B/Dock to rm_a2a06
-  > Door to rm_a2a07
+  * Open Passage to Autrack Corridor Left Water Pipe/Dock to Varia Chamber Access
+  > Door to Varia Chamber
       Any of the following:
           High Mid-Air Morph Tunnel Climb
           All of the following:
@@ -398,66 +398,66 @@ Extra - map_name: rm_a2a06
 
 > Top tunnel; Heals? False
   * Layers: default
-  > Door to rm_a2a07
+  > Door to Varia Chamber
       Can Use Any Bombs
   > Pickup (Missile Tank)
       Can Use Any Bombs
 
 ----------------
-rm_a2a06A
+Varia Chamber Access Water Pipe
 Extra - map_name: rm_a2a06A
-> Dock to rm_a2a05; Heals? False
+> Dock to Inner Alpha Nest North; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a05/Dock to rm_a2a06A
-  > Dock to rm_a2a02A
+  * Open Passage to Inner Alpha Nest North/Dock to Varia Chamber Access Water Pipe
+  > Dock to Autrack Corridor Right Water Pipe
       Morphball
 
-> Dock to rm_a2a02A; Heals? False
+> Dock to Autrack Corridor Right Water Pipe; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a02A/Dock to rm_a2a06A
-  > Dock to rm_a2a05
+  * Open Passage to Autrack Corridor Right Water Pipe/Dock to Varia Chamber Access Water Pipe
+  > Dock to Inner Alpha Nest North
       Morphball
 
 ----------------
-rm_a2a07
+Varia Chamber
 Extra - map_name: rm_a2a07
-> Door to rm_a2a06; Heals? False
+> Door to Varia Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a2a06/Door to rm_a2a07
+  * Normal Door to Varia Chamber Access/Door to Varia Chamber
   > Pickup (Varia Suit)
       Can Use Any Bombs
 
 > Pickup (Varia Suit); Heals? False
   * Layers: default
   * Pickup 5; Category? Major
-  > Door to rm_a2a06
+  > Door to Varia Chamber Access
       Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
 
 ----------------
-rm_a2a08
+Water Turbine Station
 Extra - map_name: rm_a2a08
-> Door to rm_a2h02; Heals? False
+> Door to Hydro Station Exterior; Heals? False
   * Layers: default
-  * Normal Door to rm_a2h02/Door to rm_a2a08
+  * Normal Door to Hydro Station Exterior/Door to Water Turbine Station
   > Event - A2WaterLowered
       Trivial
 
-> Dock to rm_a2a09; Heals? False
+> Dock to Inner Alpha Nest South; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a09/Dock to rm_a2a08
+  * Open Passage to Inner Alpha Nest South/Dock to Water Turbine Station
   > Event - A2BottomWaterTurbine
       Trivial
 
-> Dock to rm_a2a19; Heals? False
+> Dock to Pipe To Genetics Laboratory; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a19/Dock to rm_a2a08
+  * Open Passage to Pipe To Genetics Laboratory/Dock to Water Turbine Station
   > Event - A2BottomWaterTurbine
       ScrewAttack
 
 > Event - A2WaterLowered; Heals? False
   * Layers: default
   * Event Hydro Station Exterior Water Lowered
-  > Door to rm_a2h02
+  > Door to Hydro Station Exterior
       Trivial
   > Event - A2TopWaterTurbine
       After Hydro Station Top Water Turbine Destroyed or Destroy Turbine
@@ -483,9 +483,9 @@ Extra - map_name: rm_a2a08
 > Event - A2BottomWaterTurbine; Heals? False
   * Layers: default
   * Event Hydro Station Bottom Water Turbine Destroyed
-  > Dock to rm_a2a09
+  > Dock to Inner Alpha Nest South
       Trivial
-  > Dock to rm_a2a19
+  > Dock to Pipe To Genetics Laboratory
       ScrewAttack
   > Event - A2MiddleWaterTurbine
       Power Grip Wall
@@ -497,12 +497,12 @@ Extra - map_name: rm_a2a08
       Can Use Any Bombs
 
 ----------------
-rm_a2a09
+Inner Alpha Nest South
 Extra - map_name: rm_a2a09
-> Dock to rm_a2a08; Heals? False
+> Dock to Water Turbine Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a08/Dock to rm_a2a09
-  > Dock to rm_a2a11A
+  * Open Passage to Water Turbine Station/Dock to Inner Alpha Nest South
+  > Dock to Wave Beam Chamber Access Water Pipe
       Any of the following:
           Spacejump or Walljump (Expert) or Can Use Spider Ball
           All of the following:
@@ -511,7 +511,7 @@ Extra - map_name: rm_a2a09
           All of the following:
               # Shinespark up
               Gravity and Speedbooster and Shinesparking Tricks (Intermediate)
-  > Dock to rm_a2a18
+  > Dock to Pipe To The Tower
       ScrewAttack
   > Event - Alpha
       Defeat Alpha
@@ -527,71 +527,71 @@ Extra - map_name: rm_a2a09
               # Glide from waterjet
               Morphball and Power Grip and Morph Glide (Hypermode) and Walljump (Advanced)
 
-> Dock to rm_a2a11A; Heals? False
+> Dock to Wave Beam Chamber Access Water Pipe; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a11A/Dock to rm_a2a09
-  > Dock to rm_a2a08
+  * Open Passage to Wave Beam Chamber Access Water Pipe/Dock to Inner Alpha Nest South
+  > Dock to Water Turbine Station
       Trivial
 
-> Dock to rm_a2a18; Heals? False
+> Dock to Pipe To The Tower; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a18/Dock to rm_a2a09
-  > Dock to rm_a2a08
+  * Open Passage to Pipe To The Tower/Dock to Inner Alpha Nest South
+  > Dock to Water Turbine Station
       ScrewAttack
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Area 2 - Interior Lower Alpha
-  > Dock to rm_a2a08
+  > Dock to Water Turbine Station
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 151; Category? Minor
-  > Dock to rm_a2a08
+  > Dock to Water Turbine Station
       Trivial
 
 ----------------
-rm_a2a10
+Wave Beam Chamber
 Extra - map_name: rm_a2a10
-> Door to rm_a2a11; Heals? False
+> Door to Wave Beam Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a2a11/Door to rm_a2a10
+  * Normal Door to Wave Beam Chamber Access/Door to Wave Beam Chamber
   > Pickup (Wave Beam)
       Trivial
 
 > Pickup (Wave Beam); Heals? False
   * Layers: default
   * Pickup 12; Category? Major
-  > Door to rm_a2a11
+  > Door to Wave Beam Chamber Access
       Trivial
 
 ----------------
-rm_a2a11
+Wave Beam Chamber Access
 Extra - map_name: rm_a2a11
-> Door to rm_a2a10; Heals? False
+> Door to Wave Beam Chamber; Heals? False
   * Layers: default
-  * Missile Door to rm_a2a10/Door to rm_a2a11
+  * Missile Door to Wave Beam Chamber/Door to Wave Beam Chamber Access
   > Left Wallfire
       Can Use Any Bombs
 
-> Dock to rm_a2a02A; Heals? False
+> Dock to Autrack Corridor Right Water Pipe; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a02A/Dock to rm_a2a11
+  * Open Passage to Autrack Corridor Right Water Pipe/Dock to Wave Beam Chamber Access
   > Waterpipe
       Trivial
 
-> Dock to rm_a2a12; Heals? False
+> Dock to Lower Hydro Station Hub; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a12/Dock to rm_a2a11
+  * Open Passage to Lower Hydro Station Hub/Dock to Wave Beam Chamber Access
   > Waterpipe
       Can Use Any Bombs
 
 > Waterpipe; Heals? False
   * Layers: default
-  > Dock to rm_a2a02A
+  > Dock to Autrack Corridor Right Water Pipe
       Morphball
-  > Dock to rm_a2a12
+  > Dock to Lower Hydro Station Hub
       Can Use Any Bombs
   > Left Wallfire
       All of the following:
@@ -602,109 +602,109 @@ Extra - map_name: rm_a2a11
 
 > Left Wallfire; Heals? False
   * Layers: default
-  > Door to rm_a2a10
+  > Door to Wave Beam Chamber
       Can Use Any Bombs
   > Waterpipe
       Can Use Any Bombs
 
 ----------------
-rm_a2a11A
+Wave Beam Chamber Access Water Pipe
 Extra - map_name: rm_a2a11A
-> Dock to rm_a2a02B; Heals? False
+> Dock to Autrack Corridor Left Water Pipe; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a02B/Dock to rm_a2a11A
-  > Dock to rm_a2a09
+  * Open Passage to Autrack Corridor Left Water Pipe/Dock to Wave Beam Chamber Access Water Pipe
+  > Dock to Inner Alpha Nest South
       Trivial
 
-> Dock to rm_a2a09; Heals? False
+> Dock to Inner Alpha Nest South; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a09/Dock to rm_a2a11A
-  > Dock to rm_a2a02B
+  * Open Passage to Inner Alpha Nest South/Dock to Wave Beam Chamber Access Water Pipe
+  > Dock to Autrack Corridor Left Water Pipe
       Hijump or Spacejump or Walljump (Intermediate) or Walljump (Advanced) or Disabled Entrance Rando or Can Use Spider Ball
 
 ----------------
-rm_a2a12
+Lower Hydro Station Hub
 Extra - map_name: rm_a2a12
-> Dock to rm_a2a11; Heals? False
+> Dock to Wave Beam Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a11/Dock to rm_a2a12
+  * Open Passage to Wave Beam Chamber Access/Dock to Lower Hydro Station Hub
   > Middle
       Trivial
 
-> Dock to rm_a2a13; Heals? False
+> Dock to Hi-Jump Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a13/Dock to rm_a2a12
+  * Open Passage to Hi-Jump Chamber Access/Dock to Lower Hydro Station Hub
   > Middle
       Trivial
 
-> Dock to rm_a2a15; Heals? False
+> Dock to Autoad Playground; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a15/Dock to rm_a2a12
+  * Open Passage to Autoad Playground/Dock to Lower Hydro Station Hub
   > Middle
       Trivial
 
-> Dock to rm_a2a18; Heals? False
+> Dock to Pipe To The Tower; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a18/Dock to rm_a2a12
+  * Open Passage to Pipe To The Tower/Dock to Lower Hydro Station Hub
   > Middle
       ScrewAttack
 
 > Middle; Heals? False
   * Layers: default
-  > Dock to rm_a2a11
+  > Dock to Wave Beam Chamber Access
       Trivial
-  > Dock to rm_a2a13
+  > Dock to Hi-Jump Chamber Access
       Trivial
-  > Dock to rm_a2a15
+  > Dock to Autoad Playground
       Trivial
-  > Dock to rm_a2a18
+  > Dock to Pipe To The Tower
       ScrewAttack
 
 ----------------
-rm_a2a13
+Hi-Jump Chamber Access
 Extra - map_name: rm_a2a13
-> Door to rm_a2a14; Heals? False
+> Door to Hi-Jump Chamber; Heals? False
   * Layers: default
-  * Missile Door to rm_a2a14/Door to rm_a2a13
-  > Dock to rm_a2a12
+  * Missile Door to Hi-Jump Chamber/Door to Hi-Jump Chamber Access
+  > Dock to Lower Hydro Station Hub
       Enabled Septogg Helpers or Hijump Wall
 
-> Dock to rm_a2a12; Heals? False
+> Dock to Lower Hydro Station Hub; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a12/Dock to rm_a2a13
-  > Door to rm_a2a14
+  * Open Passage to Lower Hydro Station Hub/Dock to Hi-Jump Chamber Access
+  > Door to Hi-Jump Chamber
       Trivial
 
 ----------------
-rm_a2a14
+Hi-Jump Chamber
 Extra - map_name: rm_a2a14
-> Door to rm_a2a13; Heals? False
+> Door to Hi-Jump Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a2a13/Door to rm_a2a14
-  > Tunnel to rm_a2a17
+  * Normal Door to Hi-Jump Chamber Access/Door to Hi-Jump Chamber
+  > Tunnel to Hydro Station Basement
       Can Use Any Bombs and Tunnel Climb
   > Pickup (Hi-Jump)
       Trivial
 
-> Tunnel to rm_a2a17; Heals? False
+> Tunnel to Hydro Station Basement; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a2a17/Tunnel to rm_a2a14
-  > Door to rm_a2a13
+  * Morph Ball Tunnel to Hydro Station Basement/Tunnel to Hi-Jump Chamber
+  > Door to Hi-Jump Chamber Access
       Can Use Any Bombs
 
 > Pickup (Hi-Jump); Heals? False
   * Layers: default
   * Pickup 4; Category? Major
-  > Door to rm_a2a13
+  > Door to Hi-Jump Chamber Access
       Trivial
 
 ----------------
-rm_a2a15
+Autoad Playground
 Extra - map_name: rm_a2a15
-> Dock to rm_a2a16; Heals? False
+> Dock to Wallfire Venue; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a16/Dock to rm_a2a15
-  > Dock to rm_a2a12
+  * Open Passage to Wallfire Venue/Dock to Autoad Playground
+  > Dock to Lower Hydro Station Hub
       Trivial
   > Pickup (Top Missile Tank)
       All of the following:
@@ -720,10 +720,10 @@ Extra - map_name: rm_a2a15
                   Hijump or Spacejump or Walljump (Advanced)
                   Power Grip or Mid-Air Morph (Advanced)
 
-> Dock to rm_a2a12; Heals? False
+> Dock to Lower Hydro Station Hub; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a12/Dock to rm_a2a15
-  > Dock to rm_a2a16
+  * Open Passage to Lower Hydro Station Hub/Dock to Autoad Playground
+  > Dock to Wallfire Venue
       Trivial
   > Pickup (Bottom Missile Tank)
       All of the following:
@@ -733,44 +733,44 @@ Extra - map_name: rm_a2a15
 > Pickup (Top Missile Tank); Heals? False
   * Layers: default
   * Pickup 153; Category? Minor
-  > Dock to rm_a2a16
+  > Dock to Wallfire Venue
       Can Use Any Bombs and Tunnel Climb
 
 > Pickup (Bottom Missile Tank); Heals? False
   * Layers: default
   * Pickup 154; Category? Minor
-  > Dock to rm_a2a12
+  > Dock to Lower Hydro Station Hub
       All of the following:
           Can Use Any Bombs
           Mid-Air Morph (Advanced) or Tunnel Climb
 
 ----------------
-rm_a2a16
+Wallfire Venue
 Extra - map_name: rm_a2a16
-> Dock to rm_a2a15; Heals? False
+> Dock to Autoad Playground; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a15/Dock to rm_a2a16
-  > Dock to rm_a2a17
+  * Open Passage to Autoad Playground/Dock to Wallfire Venue
+  > Dock to Hydro Station Basement
       Trivial
 
-> Dock to rm_a2a17; Heals? False
+> Dock to Hydro Station Basement; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a17/Dock to rm_a2a16
-  > Dock to rm_a2a15
+  * Open Passage to Hydro Station Basement/Dock to Wallfire Venue
+  > Dock to Autoad Playground
       Power Grip Wall
 
 ----------------
-rm_a2a17
+Hydro Station Basement
 Extra - map_name: rm_a2a17
-> Dock to rm_a2a16; Heals? False
+> Dock to Wallfire Venue; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a16/Dock to rm_a2a17
+  * Open Passage to Wallfire Venue/Dock to Hydro Station Basement
   > Pickup (Left Missile Tank)
       Can Use Any Bombs and Tunnel Climb
 
-> Tunnel to rm_a2a14; Heals? False
+> Tunnel to Hi-Jump Chamber; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a2a14/Tunnel to rm_a2a17
+  * Morph Ball Tunnel to Hi-Jump Chamber/Tunnel to Hydro Station Basement
   > Pickup (Energy Tank)
       Morphball
   > Pickup (Right Missile Tank)
@@ -792,34 +792,34 @@ Extra - map_name: rm_a2a17
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 157; Category? Minor
-  > Tunnel to rm_a2a14
+  > Tunnel to Hi-Jump Chamber
       Morphball
 
 > Pickup (Right Missile Tank); Heals? False
   * Layers: default
   * Pickup 156; Category? Minor
-  > Tunnel to rm_a2a14
+  > Tunnel to Hi-Jump Chamber
       Can Use Any Bombs and Tunnel Climb
 
 > Pickup (Left Missile Tank); Heals? False
   * Layers: default
   * Pickup 155; Category? Minor
-  > Dock to rm_a2a16
+  > Dock to Wallfire Venue
       Can Use Any Bombs
 
 ----------------
-rm_a2a18
+Pipe To The Tower
 Extra - map_name: rm_a2a18
-> Dock to rm_a2a09; Heals? False; Default Node
+> Dock to Inner Alpha Nest South; Heals? False; Default Node
   * Layers: default
-  * Open Passage to rm_a2a09/Dock to rm_a2a18
-  > Dock to rm_a2a12
+  * Open Passage to Inner Alpha Nest South/Dock to Pipe To The Tower
+  > Dock to Lower Hydro Station Hub
       Trivial
 
-> Dock to rm_a2a12; Heals? False
+> Dock to Lower Hydro Station Hub; Heals? False
   * Layers: default
-  * Open Passage to rm_a2a12/Dock to rm_a2a18
-  > Dock to rm_a2a09
+  * Open Passage to Lower Hydro Station Hub/Dock to Pipe To The Tower
+  > Dock to Inner Alpha Nest South
       Trivial
   > Teleporter Pipe
       Any of the following:
@@ -835,39 +835,39 @@ Extra - map_name: rm_a2a18
 > Teleporter Pipe; Heals? False
   * Layers: default
   * Teleporter to The Tower - rm_a4h16
-  > Dock to rm_a2a12
+  > Dock to Lower Hydro Station Hub
       Morphball
 
 ----------------
-rm_a2a19
+Pipe To Genetics Laboratory
 Extra - map_name: rm_a2a19
-> Dock to rm_a2a08; Heals? False; Default Node
+> Dock to Water Turbine Station; Heals? False; Default Node
   * Layers: default
-  * Open Passage to rm_a2a08/Dock to rm_a2a19
+  * Open Passage to Water Turbine Station/Dock to Pipe To Genetics Laboratory
   > Teleporter Pipe
       Morphball
 
 > Teleporter Pipe; Heals? False
   * Layers: default
   * Teleporter to Genetics Laboratory - rm_a7b03B
-  > Dock to rm_a2a08
+  > Dock to Water Turbine Station
       Morphball
 
 ----------------
-rm_a2c01
+Breeding Grounds Access
 Extra - map_name: rm_a2c01
-> Dock to rm_a2h02 (Top); Heals? False
+> Dock to Hydro Station Exterior (Top); Heals? False
   * Layers: default
-  * Open Passage to rm_a2h02/Dock to rm_a2c01 (Top)
+  * Open Passage to Hydro Station Exterior/Dock to Breeding Grounds Access (Top)
   > EMPBall
       Any of the following:
           Tunnel Climb
           Morphball and Mid-Air Morph (Intermediate)
 
-> Dock to rm_a2h02 (Bottom); Heals? False
+> Dock to Hydro Station Exterior (Bottom); Heals? False
   * Layers: default
-  * Open Passage to rm_a2h02/Dock to rm_a2c01 (Bottom)
-  > Tunnel to rm_a2c02
+  * Open Passage to Hydro Station Exterior/Dock to Breeding Grounds Access (Bottom)
+  > Tunnel to Breeding Grounds Save Station
       All of the following:
           Morphball
           Any of the following:
@@ -880,7 +880,7 @@ Extra - map_name: rm_a2c01
                   Any of the following:
                       Hijump or Spacejump
                       Damage Boost (Intermediate) and Walljump (Expert)
-  > Door to rm_a2c10
+  > Door to Speedboosting Challenge
       Trivial
   > EMPBall
       Any of the following:
@@ -909,68 +909,68 @@ Extra - map_name: rm_a2c01
               # IBJ
               Infinite Bomb Jumping (Advanced) and Can Use Bombs
 
-> Tunnel to rm_a2c02; Heals? False
+> Tunnel to Breeding Grounds Save Station; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a2c02/Tunnel to rm_a2c01
-  > Dock to rm_a2h02 (Bottom)
+  * Morph Ball Tunnel to Breeding Grounds Save Station/Tunnel to Breeding Grounds Access
+  > Dock to Hydro Station Exterior (Bottom)
       Morphball
 
-> Door to rm_a2c10; Heals? False
+> Door to Speedboosting Challenge; Heals? False
   * Layers: default
-  * Hydro Station EMP Activated Door to rm_a2c10/Door to rm_a2c01
-  > Dock to rm_a2h02 (Bottom)
+  * Hydro Station EMP Activated Door to Speedboosting Challenge/Door to Breeding Grounds Access
+  > Dock to Hydro Station Exterior (Bottom)
       Trivial
 
 > Event - A2EMP; Heals? False
   * Layers: default
   * Event EMP in Hydro Station 
-  > Dock to rm_a2h02 (Bottom)
+  > Dock to Hydro Station Exterior (Bottom)
       Trivial
 
 > EMPBall; Heals? False
   * Layers: default
-  > Dock to rm_a2h02 (Top)
+  > Dock to Hydro Station Exterior (Top)
       Morphball
-  > Dock to rm_a2h02 (Bottom)
+  > Dock to Hydro Station Exterior (Bottom)
       Trivial
   > Event - A2EMP
       Missile ≥ 20 or Can Use Bombs
 
 ----------------
-rm_a2c02
+Breeding Grounds Save Station
 Extra - map_name: rm_a2c02
 > Save Station; Heals? True
   * Layers: default
-  > Tunnel to rm_a2c01
+  > Tunnel to Breeding Grounds Access
       Tunnel Climb
-  > Dock to rm_a2c03
+  > Dock to Breeding Grounds Shaft
       Trivial
 
-> Tunnel to rm_a2c01; Heals? False
+> Tunnel to Breeding Grounds Access; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a2c01/Tunnel to rm_a2c02
+  * Morph Ball Tunnel to Breeding Grounds Access/Tunnel to Breeding Grounds Save Station
   > Save Station
       Morphball
 
-> Dock to rm_a2c03; Heals? False
+> Dock to Breeding Grounds Shaft; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c03/Dock to rm_a2c02
+  * Open Passage to Breeding Grounds Shaft/Dock to Breeding Grounds Save Station
   > Save Station
       Trivial
 
 ----------------
-rm_a2c03
+Breeding Grounds Shaft
 Extra - map_name: rm_a2c03
-> Dock to rm_a2c02; Heals? False
+> Dock to Breeding Grounds Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c02/Dock to rm_a2c03
+  * Open Passage to Breeding Grounds Save Station/Dock to Breeding Grounds Shaft
   > Middle
       Trivial
 
-> Dock to rm_a2c04; Heals? False
+> Dock to Breeding Grounds Alpha Nest East; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c04/Dock to rm_a2c03
-  > Dock to rm_a2c05
+  * Open Passage to Breeding Grounds Alpha Nest East/Dock to Breeding Grounds Shaft
+  > Dock to Breeding Grounds Lobby
       Trivial
   > Middle
       Any of the following:
@@ -983,60 +983,60 @@ Extra - map_name: rm_a2c03
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
-> Dock to rm_a2c05; Heals? False
+> Dock to Breeding Grounds Lobby; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c05/Dock to rm_a2c03
-  > Dock to rm_a2c04
+  * Open Passage to Breeding Grounds Lobby/Dock to Breeding Grounds Shaft
+  > Dock to Breeding Grounds Alpha Nest East
       Hijump Wall
 
-> Dock to rm_a2c09; Heals? False
+> Dock to Breeding Grounds Overgrown Alley; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c09/Dock to rm_a2c03
+  * Open Passage to Breeding Grounds Overgrown Alley/Dock to Breeding Grounds Shaft
   > Middle
       ScrewAttack and Go Through Vines
 
 > Middle; Heals? False
   * Layers: default
-  > Dock to rm_a2c02
+  > Dock to Breeding Grounds Save Station
       Power Grip Wall
-  > Dock to rm_a2c04
+  > Dock to Breeding Grounds Alpha Nest East
       Trivial
-  > Dock to rm_a2c09
+  > Dock to Breeding Grounds Overgrown Alley
       ScrewAttack and Go Through Vines
 
 ----------------
-rm_a2c04
+Breeding Grounds Alpha Nest East
 Extra - map_name: rm_a2c04
-> Dock to rm_a2c03; Heals? False
+> Dock to Breeding Grounds Shaft; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c03/Dock to rm_a2c04
+  * Open Passage to Breeding Grounds Shaft/Dock to Breeding Grounds Alpha Nest East
   > Event - Alpha
       Defeat Alpha
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Area 2 - Breeding Grounds Upper Right Alpha
-  > Dock to rm_a2c03
+  > Dock to Breeding Grounds Shaft
       Hijump Wall
 
 ----------------
-rm_a2c05
+Breeding Grounds Lobby
 Extra - map_name: rm_a2c05
-> Dock to rm_a2c03; Heals? False
+> Dock to Breeding Grounds Shaft; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c03/Dock to rm_a2c05
+  * Open Passage to Breeding Grounds Shaft/Dock to Breeding Grounds Lobby
   > Top
       Trivial
 
-> Dock to rm_a2c07; Heals? False
+> Dock to Breeding Grounds Gamma Nest; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c07/Dock to rm_a2c05
+  * Open Passage to Breeding Grounds Gamma Nest/Dock to Breeding Grounds Lobby
   > Top
       Power Grip Wall
 
-> Dock to rm_a2c06; Heals? False
+> Dock to Breeding Grounds Alpha Nest West; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c06/Dock to rm_a2c05
+  * Open Passage to Breeding Grounds Alpha Nest West/Dock to Breeding Grounds Lobby
   > Top
       Trivial
 
@@ -1048,11 +1048,11 @@ Extra - map_name: rm_a2c05
 
 > Top; Heals? False
   * Layers: default
-  > Dock to rm_a2c03
+  > Dock to Breeding Grounds Shaft
       Trivial
-  > Dock to rm_a2c07
+  > Dock to Breeding Grounds Gamma Nest
       Trivial
-  > Dock to rm_a2c06
+  > Dock to Breeding Grounds Alpha Nest West
       Trivial
   > Pickup (Energy Tank)
       All of the following:
@@ -1064,39 +1064,39 @@ Extra - map_name: rm_a2c05
                   Mid-Air Morph (Intermediate) or Tunnel Climb
 
 ----------------
-rm_a2c06
+Breeding Grounds Alpha Nest West
 Extra - map_name: rm_a2c06
-> Dock to rm_a2c05; Heals? False
+> Dock to Breeding Grounds Lobby; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c05/Dock to rm_a2c06
-  > Dock to rm_a2c09
+  * Open Passage to Breeding Grounds Lobby/Dock to Breeding Grounds Alpha Nest West
+  > Dock to Breeding Grounds Overgrown Alley
       Speedbooster and Knowledge (Beginner) and Shinesparking Tricks (Beginner) and Go Through Vines
   > Event - Alpha
       Go Through Vines or Hijump With Power Grip Wall
 
-> Dock to rm_a2c09; Heals? False
+> Dock to Breeding Grounds Overgrown Alley; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c09/Dock from rm_a2c06
+  * Open Passage to Breeding Grounds Overgrown Alley/Dock from Breeding Grounds Alpha Nest West
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Area 2 - Breeding Grounds Left Alpha
-  > Dock to rm_a2c05
+  > Dock to Breeding Grounds Lobby
       Go Through Vines or Hijump Wall
 
 ----------------
-rm_a2c07
+Breeding Grounds Gamma Nest
 Extra - map_name: rm_a2c07
-> Dock to rm_a2c05; Heals? False
+> Dock to Breeding Grounds Lobby; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c05/Dock to rm_a2c07
-  > Dock to rm_a2c08
+  * Open Passage to Breeding Grounds Lobby/Dock to Breeding Grounds Gamma Nest
+  > Dock to Breeding Grounds Alpha Nest South
       Trivial
 
-> Dock to rm_a2c08; Heals? False
+> Dock to Breeding Grounds Alpha Nest South; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c08/Dock to rm_a2c07
-  > Dock to rm_a2c05
+  * Open Passage to Breeding Grounds Alpha Nest South/Dock to Breeding Grounds Gamma Nest
+  > Dock to Breeding Grounds Lobby
       Trivial
   > Event - Gamma
       After Area 1 - Breeding Grounds Lower Right Alpha and Defeat Gamma
@@ -1104,15 +1104,15 @@ Extra - map_name: rm_a2c07
 > Event - Gamma; Heals? False
   * Layers: default
   * Event Area 2 - Breeding Grounds Gamma
-  > Dock to rm_a2c08
+  > Dock to Breeding Grounds Alpha Nest South
       Trivial
 
 ----------------
-rm_a2c08
+Breeding Grounds Alpha Nest South
 Extra - map_name: rm_a2c08
-> Dock to rm_a2c07; Heals? False
+> Dock to Breeding Grounds Gamma Nest; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c07/Dock to rm_a2c08
+  * Open Passage to Breeding Grounds Gamma Nest/Dock to Breeding Grounds Alpha Nest South
   > Event - Alpha
       All of the following:
           Defeat Alpha
@@ -1123,17 +1123,17 @@ Extra - map_name: rm_a2c08
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Area 2 - Breeding Grounds Lower Right Alpha
-  > Dock to rm_a2c07
+  > Dock to Breeding Grounds Gamma Nest
       All of the following:
           Hijump Wall
           Movement (Intermediate) or Go Through Vines
 
 ----------------
-rm_a2c09
+Breeding Grounds Overgrown Alley
 Extra - map_name: rm_a2c09
-> Dock to rm_a2c03; Heals? False
+> Dock to Breeding Grounds Shaft; Heals? False
   * Layers: default
-  * Open Passage to rm_a2c03/Dock to rm_a2c09
+  * Open Passage to Breeding Grounds Shaft/Dock to Breeding Grounds Overgrown Alley
   > Middle
       Go Through Vines
 
@@ -1149,31 +1149,31 @@ Extra - map_name: rm_a2c09
   > Middle
       Trivial
 
-> Dock from rm_a2c06; Heals? False
+> Dock from Breeding Grounds Alpha Nest West; Heals? False
   * Layers: default
-  * Back Only to rm_a2c06/Dock to rm_a2c09
+  * Back Only to Breeding Grounds Alpha Nest West/Dock to Breeding Grounds Overgrown Alley
   > Pickup (Missile Tank)
       Tunnel Climb
 
 > Middle; Heals? False
   * Layers: default
-  > Dock to rm_a2c03
+  > Dock to Breeding Grounds Shaft
       Go Through Vines
   > Pickup (Power Bomb Tank)
       Can Use Power Bombs and Go Through Vines
 
 ----------------
-rm_a2c10
+Speedboosting Challenge
 Extra - map_name: rm_a2c10
-> Door to rm_a2c01; Heals? False
+> Door to Breeding Grounds Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a2c01/Door to rm_a2c10
+  * Normal Door to Breeding Grounds Access/Door to Speedboosting Challenge
   > Pickup (Super Missile Tank)
       Speedbooster and SuperMissile and Shinesparking Tricks (Intermediate)
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 162; Category? Minor
-  > Door to rm_a2c01
+  > Door to Breeding Grounds Access
       Can Use Any Bombs
 
