@@ -378,14 +378,14 @@ def render_region_graph_logic(args):
     from randovania.game_description.db.teleporter_node import TeleporterNode
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.requirements.base import Requirement
 
     gd = load_game_description(args)
-    dot = graphviz.Digraph(comment=gd.game.long_name)
 
     regions = list(gd.region_list.regions)
 
+    single_image: bool = args.single_image
     added_edges = set()
-    _IMPOSSIBLE_LOCKS = {"No Return Portal", "Permanently Locked"}
     vulnerabilities_colors = {
         "Normal Door": None,
         "Morph Ball Door": None,
@@ -415,24 +415,23 @@ def render_region_graph_logic(args):
         h = hashlib.blake2b(s.encode("utf-8"), digest_size=3).digest()
         return "#{:06x}".format(int.from_bytes(h, "big"))
 
-    def _add_connection(dock_node: DockNode):
+    def _add_connection(dot: graphviz.Digraph, dock_node: DockNode):
         the_region = gd.region_list.nodes_to_region(dock_node)
         source_area = gd.region_list.nodes_to_area(dock_node)
         target_node = gd.region_list.node_by_identifier(dock_node.default_connection)
         target_area = gd.region_list.nodes_to_area(target_node)
 
-        if dock_node.default_dock_weakness.name in _IMPOSSIBLE_LOCKS:
+        if dock_node.default_dock_weakness.requirement == Requirement.impossible():
             return
 
-        edge_id = f"{the_region.name}-{source_area.name}-{target_node.name}"
-        if edge_id in added_edges:
+        if dock_node.identifier in added_edges:
             return
 
         weak_name = _weakness_name(dock_node.default_dock_weakness.name)
         direction = None
         if isinstance(target_node, DockNode) and _weakness_name(target_node.default_dock_weakness.name) == weak_name:
             direction = "both"
-            added_edges.add(f"{the_region.name}-{target_area.name}-{target_node.name}")
+            added_edges.add(target_node.identifier)
 
         color = vulnerabilities_colors.get(weak_name, _hash_to_color(weak_name))
         dot.edge(
@@ -440,9 +439,9 @@ def render_region_graph_logic(args):
             f"{the_region.name}-{target_area.name}",
             weak_name, dir=direction, color=color, fontcolor=color,
         )
-        added_edges.add(edge_id)
+        added_edges.add(dock_node.identifier)
 
-    def _add_teleporter(teleporter_node: TeleporterNode):
+    def _add_teleporter(dot: graphviz.Digraph, teleporter_node: TeleporterNode):
         source_region = gd.region_list.nodes_to_region(teleporter_node)
         source_area = gd.region_list.nodes_to_area(teleporter_node)
         target_node = gd.region_list.resolve_teleporter_connection(teleporter_node.default_connection)
@@ -479,7 +478,21 @@ def render_region_graph_logic(args):
         "Great Temple": "#7d2996",
     }
 
+    if single_image:
+        full_dot = graphviz.Digraph(name=gd.game.short_name,
+                                    comment=gd.game.long_name)
+    else:
+        full_dot = None
+    per_region_dot = {}
+
     for region in regions:
+        if single_image:
+            this_dot = full_dot
+        else:
+            this_dot = graphviz.Digraph(name=region.name)
+
+        per_region_dot[region.name] = this_dot
+
         for area in region.areas:
             shape = None
             if any(isinstance(node, TeleporterNode) for node in area.nodes):
@@ -488,7 +501,7 @@ def render_region_graph_logic(args):
             c = (dark_colors if area.in_dark_aether else colors)[region.name]
             fillcolor = "".join(f"{max(0, int(c[i * 2 + 1:i * 2 + 3], 16) - 64):02x}"
                                 for i in range(3))
-            dot.node(
+            this_dot.node(
                 f"{region.name}-{area.name}", area.name,
                 color=c,
                 fillcolor=f"#{fillcolor}",
@@ -500,21 +513,24 @@ def render_region_graph_logic(args):
 
             for node in area.nodes:
                 if args.include_pickups and isinstance(node, PickupNode):
-                    dot.node(str(node.pickup_index), re.search(r"Pickup \(([^)]+)\)", node.name).group(1),
-                             shape="house")
-                    dot.edge(f"{region.name}-{area.name}", str(node.pickup_index))
+                    this_dot.node(str(node.pickup_index), re.search(r"Pickup [^(]*\(([^)]+)\)", node.name).group(1),
+                                  shape="house")
+                    this_dot.edge(f"{region.name}-{area.name}", str(node.pickup_index))
 
     for region in regions:
         print(f"Adding docks for {region.name}")
         for area in region.areas:
             for node in area.nodes:
                 if isinstance(node, DockNode):
-                    _add_connection(node)
+                    _add_connection(per_region_dot[region.name], node)
                 elif isinstance(node, TeleporterNode) and node.editable and args.include_teleporters:
-                    _add_teleporter(node)
+                    _add_teleporter(per_region_dot[region.name], node)
 
-    # os.environ["PATH"] += rf';C:\Program Files\Graphviz\bin'
-    print(dot.render(format="png", cleanup=True, view=True))
+    if single_image:
+        full_dot.render(format="png", view=True, cleanup=True)
+    else:
+        for name, this_dot in per_region_dot.items():
+            this_dot.render(format="png", view=True, cleanup=True)
 
 
 def render_regions_graph(sub_parsers):
@@ -525,6 +541,7 @@ def render_regions_graph(sub_parsers):
     )
     parser.add_argument("--include-teleporters", action="store_true")
     parser.add_argument("--include-pickups", action="store_true")
+    parser.add_argument("--single-image", action="store_true")
 
     parser.set_defaults(func=render_region_graph_logic)
 

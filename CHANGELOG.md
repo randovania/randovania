@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Randovania now internally uses the term `Region` for what used to be called a `World`. This is mostly an internal change.
 - Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 - Fixed: The resolver no longer allows events as additional requirements. This fixes a problem that could lead to an event locking itself.
-- Fixed: Batch generation now properly prevents Windows from going to sleep.
+- Fixed: The `database render-region-graph` command now works properly.
 
 ### Cave Story
 
@@ -73,12 +73,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Fixed: Generator unable to pass through one-way permanently locked doors such as the ones in uncrashed Frigate 
-- Added: Missile Stations refill Power Bombs by default
 - Changed: Divided the "Other" tab into "Quality of Life" and "Chaos".
-- Changed: QoL Game Breaking, QoL Cosmetic, QoL pickup scans, Varia-only Heat Protection and Deterministic RNG settings are now always enabled. A new chaos option "Legacy Mode" has been added as a catch-all replacement.
+- Changed: QoL Game Breaking, QoL Cosmetic, QoL pickup scans, Varia-only Heat Protection and Deterministic RNG settings are now always enabled. A new chaos option "Legacy Mode" has been added as a catch-all replacement, including the PB Refill from 5.8.0.
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
 - Removed: One-Way door lock randomizer has been removed. This has actually been the case since 5.3.0!
+
+
+### Metroid Prime 2: Echoes
+
+- Added: New random elevators mode: Shuffle Regions. In this mode, we keep the game world consistent by shuffling the regions around Temple Grounds, and then changing the elevators to match. See [this map](randovania/data/gui_assets/echoes_elevator_map.png) for reference. 
+- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+- Removed: The elevator sound effect removal is no longer an option and is now automatically enabled in the appropriate circumstances.
+
+#### Logic Database
+
+- Added: Method to climb Forgotten Bridge with Jump Off Enemy (Advanced)
+- Added: Scan Dash to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash (Intermediate)
+- Added: Method to collect the pickup in Reactor Core using the top Rezbit, Bombs, Bomb Space Jump (Advanced), Standable Terrain (Advanced), Movement (Advanced), and Jump Off Enemies (Expert).
+- Added: Method to reach the top cannon in Sanctuary Entrance using Bombs, Space Jump Boots, Bomb Space Jump (Advanced), and Standable Terrain (Advanced).
+
+## [5.8.0] - 2023-06-05
+
+- Added: It's now possible to save rdvgame files for race games. This is not available for multiworld.
+- Changed: Use the user's new discord display name instead of their username, for users that migrated.
+- Fixed: Batch generation now properly prevents Windows from going to sleep.
+
+### Metroid Prime
+
+- Fixed: Generator unable to pass through one-way permanently locked doors such as the ones in uncrashed Frigate
+- Fixed: Exporting games with both Door Lock Rando and Room Rando will now preserve both modifications
+- Added: Missile Stations refill Power Bomb. In this version, this is always enabled.
 
 #### Logic Database
 
@@ -103,21 +127,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Fungal Hall B - Scan dash method now requires scan visor
 - Fixed: Ventillation Shaft - Combat dash to climb room now requires door lock rando to be off 
 
-
-### Metroid Prime 2: Echoes
-
-- Added: New random elevators mode: Shuffle Regions. In this mode, we keep the game world consistent by shuffling the regions around Temple Grounds, and then changing the elevators to match. See [this map](randovania/data/gui_assets/echoes_elevator_map.png) for reference. 
-- Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
-- Removed: The elevator sound effect removal is no longer an option and is now automatically enabled in the appropriate circumstances.
-
-#### Logic Database
-
-- Added: Method to climb Forgotten Bridge with Jump Off Enemy (Advanced)
-- Added: Scan Dash to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash (Intermediate)
-- Added: Method to collect the pickup in Reactor Core using the top Rezbit, Bombs, Bomb Space Jump (Advanced), Standable Terrain (Advanced), Movement (Advanced), and Jump Off Enemies (Expert).
-- Added: Method to reach the top cannon in Sanctuary Entrance using Bombs, Space Jump Boots, Bomb Space Jump (Advanced), and Standable Terrain (Advanced).
-
-# [5.7.0] - 2023-05-??
+## [5.7.0] - 2023-05-05
 
 - Added: Skip usual Door Lock randomizer logic when the only valid lock option is unlocked doors.
 - Added: When major/minor mode is enabled, the count of majors and minors is also displayed next to how many items are the in the pool.

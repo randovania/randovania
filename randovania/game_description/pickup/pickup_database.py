@@ -32,12 +32,12 @@ def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
     }
 
     standard_pickups = {
-        name: StandardPickupDefinition.from_json(name, pickup, game, pickup_categories)
+        name: StandardPickupDefinition.from_json_with_categories(name, game, pickup_categories, pickup)
         for name, pickup in database_data["standard_pickups"].items()
     }
 
     ammo_pickups = {
-        name: AmmoPickupDefinition.from_json(name, pickup, game, pickup_categories)
+        name: AmmoPickupDefinition.from_json_with_categories(name, game, pickup_categories, pickup)
         for name, pickup in database_data["ammo_pickups"].items()
     }
 

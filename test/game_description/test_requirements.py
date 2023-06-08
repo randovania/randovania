@@ -41,8 +41,6 @@ def _database() -> ResourceDatabase:
         requirement_template={},
         damage_reductions={},
         energy_tank_item_index="",
-        item_percentage_index=None,
-        multiworld_magic_item_index=None,
     )
 
 

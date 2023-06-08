@@ -176,10 +176,6 @@ class State:
             pickup.resource_gain(self.resources, force_lock=True)
         )
 
-        # Make sure there's no item percentage on starting items
-        if self.resource_database.item_percentage is not None:
-            pickup_resources.remove_resource(self.resource_database.item_percentage)
-
         new_resources = self.resources.duplicate()
         new_resources.add_resource_gain(pickup_resources.as_resource_gain())
         new_patches = self.patches.assign_extra_starting_pickups([pickup])

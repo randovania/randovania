@@ -103,8 +103,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
 
     def create_pickup(name, percentage=True):
         return pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups[name],
-                                                StandardPickupState(), percentage, game.resource_database,
-                                                None, False)
+                                                     StandardPickupState(), game.resource_database, None, False)
 
     if request.param.get("starting_pickup"):
         item_name = request.param.get("starting_pickup")
