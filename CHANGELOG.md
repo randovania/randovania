@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 - Fixed: The resolver no longer allows events as additional requirements. This fixes a problem that could lead to an event locking itself.
 - Fixed: Batch generation now properly prevents Windows from going to sleep. 
+- Fixed: The `database render-region-graph` command now works properly.
 
 ### Cave Story
 
