@@ -18,7 +18,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
     if arg is None:
         return None
 
-    type_origin = typing.get_origin(type_)
+    type_origin = typing.get_origin(type_) or type_
 
     if issubclass(type_, Enum):
         return type_(arg)
@@ -52,7 +52,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
             for value, value_type in zip(arg, value_types, strict=True)
         )
 
-    elif type_origin == dict:
+    elif type_origin in (dict, frozendict):
         if type_args := typing.get_args(type_):
             key_type, value_types = type_args
         else:
