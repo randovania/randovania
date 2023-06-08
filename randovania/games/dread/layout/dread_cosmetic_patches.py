@@ -34,7 +34,7 @@ class MissileColor(Enum):
     WHITE = "item_missiletank_white"
     GRAY = "item_missiletank_gray"
     BLACK = "item_missiletank_black"
-    
+
 class DreadMissileCosmeticType(Enum):
     """Color schemes for missile tanks"""
     long_name: str
@@ -47,6 +47,7 @@ class DreadMissileCosmeticType(Enum):
     ASEXUAL = "ASEXUAL"
     BISEXUAL = "BISEXUAL"
     PANSEXUAL = "PANSEXUAL"
+    GENDERQUEER = "GENDERQUEER"
 
 enum_lib.add_long_name(DreadMissileCosmeticType, {
     DreadMissileCosmeticType.NONE: "Vanilla",
@@ -55,7 +56,8 @@ enum_lib.add_long_name(DreadMissileCosmeticType, {
     DreadMissileCosmeticType.NONBINARY: "Nonbinary Pride",
     DreadMissileCosmeticType.ASEXUAL: "Asexual Pride",
     DreadMissileCosmeticType.BISEXUAL: "Bisexual Pride",
-    DreadMissileCosmeticType.PANSEXUAL: "Pansexual Pride"
+    DreadMissileCosmeticType.PANSEXUAL: "Pansexual Pride",
+    DreadMissileCosmeticType.GENDERQUEER: "Genderqueer Pride"
 })
 
 enum_lib.add_per_enum_field(DreadMissileCosmeticType, "colors", {
@@ -67,7 +69,8 @@ enum_lib.add_per_enum_field(DreadMissileCosmeticType, "colors", {
                                          MissileColor.BLACK],
     DreadMissileCosmeticType.ASEXUAL: [MissileColor.BLACK, MissileColor.GRAY, MissileColor.WHITE, MissileColor.PURPLE],
     DreadMissileCosmeticType.BISEXUAL: [MissileColor.MAGENTA, MissileColor.PURPLE, MissileColor.BLUE],
-    DreadMissileCosmeticType.PANSEXUAL: [MissileColor.PINK, MissileColor.YELLOW, MissileColor.BLUE]
+    DreadMissileCosmeticType.PANSEXUAL: [MissileColor.PINK, MissileColor.YELLOW, MissileColor.BLUE],
+    DreadMissileCosmeticType.GENDERQUEER: [MissileColor.PURPLE, MissileColor.WHITE, MissileColor.GREEN]
 })
 
 @dataclasses.dataclass(frozen=True)
