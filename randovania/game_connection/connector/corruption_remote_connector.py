@@ -36,6 +36,11 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
     def _asset_id_format(self):
         return ">Q"
 
+    @property
+    def multiworld_magic_item(self) -> ItemResourceInfo:
+        # TODO
+        return None
+
     async def current_game_status(self) -> tuple[bool, Region | None]:
         """
         Fetches the region the player's currently at, or None if they're not in-game.

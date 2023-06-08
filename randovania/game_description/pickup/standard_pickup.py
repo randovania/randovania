@@ -1,84 +1,59 @@
 import dataclasses
 from dataclasses import dataclass
+from typing import Self
 
 from frozendict import frozendict
 
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.lib import frozen_lib
+
+EXCLUDE_DEFAULT = {"exclude_if_default": True}
 
 
 @dataclass(frozen=True)
-class StandardPickupDefinition:
-    game: RandovaniaGame
-    name: str
-    pickup_category: PickupCategory
-    broad_category: PickupCategory
+class StandardPickupDefinition(JsonDataclass):
+    game: RandovaniaGame = dataclasses.field(metadata={"init_from_extra": True})
+    name: str = dataclasses.field(metadata={"init_from_extra": True})
+    pickup_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
+    broad_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
     model_name: str
     progression: tuple[str, ...]
     default_shuffled_count: int
     default_starting_count: int
     preferred_location_category: LocationCategory
-    ammo: tuple[str, ...] = tuple()
-    unlocks_ammo: bool = False
-    hide_from_gui: bool = False
-    must_be_starting: bool = False
-    original_location: PickupIndex | None = None
-    probability_offset: int = 0
-    probability_multiplier: float = 1
-    description: str | None = None
-    extra: frozendict = dataclasses.field(default_factory=frozendict)
+    ammo: tuple[str, ...] = dataclasses.field(default_factory=tuple, metadata=EXCLUDE_DEFAULT)
+    unlocks_ammo: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    additional_resources: frozendict[str, int] = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
+    hide_from_gui: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    must_be_starting: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    original_location: PickupIndex | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    probability_offset: int = dataclasses.field(default=0, metadata=EXCLUDE_DEFAULT)
+    probability_multiplier: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
+    description: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
 
     def __post_init__(self):
         if not self.progression and not self.ammo:
-            raise ValueError(f"Item {self.name} has no progression nor ammo.")
+            raise ValueError(f"Standard Pickup {self.name} has no progression nor ammo.")
 
     @classmethod
-    def from_json(cls, name: str, value: dict, game: RandovaniaGame,
-                  pickup_categories: dict[str, PickupCategory]) -> "StandardPickupDefinition":
-        return cls(
+    def from_json_with_categories(cls, name: str, game: RandovaniaGame, pickup_categories: dict[str, PickupCategory],
+                                  value: dict) -> Self:
+        return cls.from_json(
+            value,
             game=game,
             name=name,
             pickup_category=pickup_categories[value["pickup_category"]],
             broad_category=pickup_categories[value["broad_category"]],
-            model_name=value["model_name"],
-            progression=frozen_lib.wrap(value["progression"]),
-            default_shuffled_count=value["default_shuffled_count"],
-            default_starting_count=value["default_starting_count"],
-            ammo=frozen_lib.wrap(value.get("ammo", [])),
-            unlocks_ammo=value.get("unlocks_ammo", False),
-            hide_from_gui=value.get("hide_from_gui", False),
-            must_be_starting=value.get("must_be_starting", False),
-            original_location=PickupIndex(value["original_location"]) if "original_location" in value else None,
-            probability_offset=value["probability_offset"],
-            probability_multiplier=value["probability_multiplier"],
-            description=value.get("description"),
-            preferred_location_category=LocationCategory(value["preferred_location_category"]),
-            extra=frozen_lib.wrap(value.get("extra", {}))
         )
 
     @property
     def as_json(self) -> dict:
-        result = {
+        return {
             "pickup_category": self.pickup_category.name,
             "broad_category": self.broad_category.name,
-            "model_name": self.model_name,
-            "progression": frozen_lib.unwrap(self.progression),
-            "default_shuffled_count": self.default_shuffled_count,
-            "default_starting_count": self.default_starting_count,
-            "ammo": frozen_lib.unwrap(self.ammo),
-            "unlocks_ammo": self.unlocks_ammo,
-            "hide_from_gui": self.hide_from_gui,
-            "must_be_starting": self.must_be_starting,
-            "probability_offset": self.probability_offset,
-            "probability_multiplier": self.probability_multiplier,
-            "preferred_location_category": self.preferred_location_category.value,
-            "extra": frozen_lib.unwrap(self.extra),
+            **super().as_json,
         }
-        if self.original_location is not None:
-            result["original_location"] = self.original_location.index
-        if self.description is not None:
-            result["description"] = self.description
-        return result

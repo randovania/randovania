@@ -27,7 +27,8 @@ def test_get_single_hud_text_all_standard_pickups(echoes_pickup_database, echoes
 
     # Run
     for item in echoes_pickup_database.standard_pickups.values():
-        pickup = pickup_creator.create_standard_pickup(item, StandardPickupState(), False, echoes_resource_database, None, False)
+        pickup = pickup_creator.create_standard_pickup(item, StandardPickupState(), echoes_resource_database, None,
+                                                       False)
 
         result = pickup_exporter._get_all_hud_text(pickup_exporter._conditional_resources_for_pickup(pickup),
                                                    memo_data)
@@ -351,8 +352,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 def test_pickup_scan_for_progressive_suit(echoes_pickup_database, echoes_resource_database):
     # Setup
     progressive_suit = echoes_pickup_database.standard_pickups["Progressive Suit"]
-    pickup = pickup_creator.create_standard_pickup(progressive_suit, StandardPickupState(), False, echoes_resource_database,
-                                              None, False)
+    pickup = pickup_creator.create_standard_pickup(progressive_suit, StandardPickupState(), echoes_resource_database,
+                                                   None, False)
 
     # Run
     result = pickup_exporter._pickup_description(pickup)
@@ -422,7 +423,7 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
 def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
     # Setup
     solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
-    creator = pickup_exporter.PickupExporterMulti(solo, MagicMock(), PlayersConfiguration(0, {0: "You", 1: "Someone"}))
+    creator = pickup_exporter.PickupExporterMulti(solo, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
@@ -451,9 +452,8 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
 
 def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
     # Setup
-    multi = ItemResourceInfo("Multiworld", "Multiworld", 30, None)
     solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
-    creator = pickup_exporter.PickupExporterMulti(solo, multi, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
+    creator = pickup_exporter.PickupExporterMulti(solo, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
 
     # Run
@@ -468,7 +468,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
         description="Scan Text",
         collection_text=['Sent The Name to Someone!'],
         conditional_resources=[
-            ConditionalResources(None, None, ((multi, 11),)),
+            ConditionalResources(None, None, tuple()),
         ],
         conversion=[],
         model=model,

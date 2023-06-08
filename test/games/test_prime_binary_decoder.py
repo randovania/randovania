@@ -15,8 +15,6 @@ sample_data = {
     "resource_database": {
         "items": {},
         "energy_tank_item_index": "",
-        "item_percentage_index": "",
-        "multiworld_magic_item_index": "",
         "events": {},
         "tricks": {},
         "damage": {},
@@ -166,4 +164,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x00\x01\x00\x01\x00'
+    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x00'

@@ -52,7 +52,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
                              extra,
                          ))
     inventory = {
-        db.multiworld_magic_item: InventoryItem(0, 0),
+        connector.multiworld_magic_item: InventoryItem(0, 0),
         db.energy_tank: InventoryItem(1, 1),
     }
 
@@ -84,7 +84,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
 @pytest.mark.parametrize("has_cooldown", [False, True])
 @pytest.mark.parametrize("has_patches", [False, True])
 async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool, has_patches: bool):
-    connector = PrimeRemoteConnector(ALL_VERSIONS[0], AsyncMock())
+    connector = Prime1RemoteConnector(ALL_VERSIONS[0], AsyncMock())
 
     # Setup
     if has_cooldown:
