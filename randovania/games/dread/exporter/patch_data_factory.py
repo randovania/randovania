@@ -17,9 +17,7 @@ from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.games.dread.layout.dread_cosmetic_patches import (
-    DreadCosmeticPatches, DreadMissileCosmeticType, MissileColor
-    )
+from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 
