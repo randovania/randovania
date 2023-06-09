@@ -448,7 +448,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             location = NodeLocation(self.location_x_spin.value(),
                                     self.location_y_spin.value(),
                                     self.location_z_spin.value())
-        description = self.description_edit.toMarkdown()
+        description = self.description_edit.toMarkdown().strip()
         extra = json.loads(self.extra_edit.toPlainText())
         layers = (self.layers_combo.currentText(),)
 
