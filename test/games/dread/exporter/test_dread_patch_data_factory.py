@@ -10,7 +10,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.dread.exporter.patch_data_factory import DreadPatchDataFactory, DreadAcquiredMemo, \
     get_resources_for_details
-from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
+from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -115,6 +115,57 @@ def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager)
         ]
     ]
 
+def test_pickup_data_for_recolored_missiles(dread_game_description, preset_manager):
+    pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
+    resource_db = dread_game_description.resource_database
+
+    preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_DREAD).get_preset()
+    description = MagicMock(spec=LayoutDescription)
+    description.all_patches = {0: MagicMock()}
+    description.get_preset.return_value = preset
+    description.get_seed_for_player.return_value = 1000
+    cosmetics = DreadCosmeticPatches(missile_cosmetic=DreadMissileCosmeticType.PRIDE)
+
+    # Setup
+    pickup = pickup_creator.create_ammo_pickup(pickup_database.ammo_pickups["Missile Tank"],
+                                               (2,),
+                                               False, 
+                                               resource_database=resource_db)
+
+    factory = DreadPatchDataFactory(description, PlayersConfiguration(0, {0: "Dread"}), cosmetics)
+    creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())
+
+    # Run
+    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
+    result = factory._pickup_detail_for_target(details)
+
+    # Assert
+    assert result == {
+        "pickup_type": "actor",
+        "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
+        "resources": [
+            [
+                {
+                    "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                    "quantity": 2
+                }
+            ]
+        ],
+        "pickup_actor": {
+            "scenario": "s010_cave",
+            "layer": "default",
+            "actor": "ItemSphere_ChargeBeam"
+        },
+        "model": [
+            "item_missiletank_green"
+        ],
+        "map_icon": {
+            "icon_id": "item_missiletank",
+            'original_actor': {'actor': 'powerup_chargebeam',
+                               'layer': 'default',
+                               'scenario': 's010_cave'}
+        }
+    }
 
 def test_pickup_data_for_a_major(dread_game_description, preset_manager):
     pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
