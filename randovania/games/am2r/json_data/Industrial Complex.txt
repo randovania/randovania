@@ -1,103 +1,103 @@
 ----------------
-rm_a3h01
+Outer Caverns Save Station
 Extra - map_name: rm_a3h01
 > Save Station; Heals? True; Spawn Point
   * Layers: default
   > Dock to Mines Access
       Trivial
-  > Dock to rm_a3h02
+  > Dock to Outer Caverns Crossroads
       Trivial
 
 > Dock to Mines Access; Heals? False
   * Layers: default
-  * Open Passage to Mines Access/Dock to rm_a3h01
+  * Open Passage to Mines Access/Dock to Outer Caverns Save Station
   > Save Station
       Trivial
 
-> Dock to rm_a3h02; Heals? False
+> Dock to Outer Caverns Crossroads; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h02/Dock to rm_a3h01
+  * Open Passage to Outer Caverns Crossroads/Dock to Outer Caverns Save Station
   > Save Station
       Trivial
 
-> Dock from rm_a3h08; Heals? False
+> Dock from EMP Sentry Cavern; Heals? False
   * Layers: default
-  * Back Only to rm_a3h08/Dock to rm_a3h01
+  * Back Only to EMP Sentry Cavern/Dock to Outer Caverns Save Station
   > Save Station
       Trivial
 
 ----------------
-rm_a3h02
+Outer Caverns Crossroads
 Extra - map_name: rm_a3h02
-> Dock to rm_a3h01; Heals? False
+> Dock to Outer Caverns Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h01/Dock to rm_a3h02
-  > Dock to rm_a3b01
+  * Open Passage to Outer Caverns Save Station/Dock to Outer Caverns Crossroads
+  > Dock to Breeding Grounds Access East
       Trivial
   > Top
       Hijump Wall
   > Bottom Pit
       Super Missiles
 
-> Dock to rm_a3h03; Heals? False
+> Dock to Industrial Complex Exterior Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h03/Dock to rm_a3h02
+  * Open Passage to Industrial Complex Exterior Access/Dock to Outer Caverns Crossroads
   > Top
       Trivial
 
-> Dock to rm_a3b01; Heals? False
+> Dock to Breeding Grounds Access East; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b01/Dock to rm_a3h02
-  > Dock to rm_a3h01
+  * Open Passage to Breeding Grounds Access East/Dock to Outer Caverns Crossroads
+  > Dock to Outer Caverns Save Station
       Trivial
 
-> Dock to rm_a3b03; Heals? False
+> Dock to Breeding Grounds Gamma Nest West; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b03/Dock to rm_a3h02
+  * Open Passage to Breeding Grounds Gamma Nest West/Dock to Outer Caverns Crossroads
 
-> Dock to rm_a3h08 (Top); Heals? False
+> Dock to EMP Sentry Cavern (Top); Heals? False
   * Layers: default
-  * Open Passage to rm_a3h08/Dock to rm_a3h02 (Top)
+  * Open Passage to EMP Sentry Cavern/Dock to Outer Caverns Crossroads (Top)
   > Top
       Super Missiles
 
-> Dock to rm_a3h08 (Bottom); Heals? False
+> Dock to EMP Sentry Cavern (Bottom); Heals? False
   * Layers: default
-  * Open Passage to rm_a3h08/Dock to rm_a3h02 (Bottom)
-  > Dock to rm_a3h01
+  * Open Passage to EMP Sentry Cavern/Dock to Outer Caverns Crossroads (Bottom)
+  > Dock to Outer Caverns Save Station
       Trivial
 
 > Top; Heals? False
   * Layers: default
-  > Dock to rm_a3h01
+  > Dock to Outer Caverns Save Station
       Trivial
-  > Dock to rm_a3h03
+  > Dock to Industrial Complex Exterior Access
       Hijump Wall
-  > Dock to rm_a3h08 (Top)
+  > Dock to EMP Sentry Cavern (Top)
       Super Missiles and Hijump Wall
-  > Dock to rm_a3h08 (Bottom)
+  > Dock to EMP Sentry Cavern (Bottom)
       Trivial
 
 > Bottom Pit; Heals? False
   * Layers: default
-  > Dock to rm_a3h01
+  > Dock to Outer Caverns Save Station
       Super Missiles and Hijump With Power Grip Wall
-  > Dock to rm_a3b03
+  > Dock to Breeding Grounds Gamma Nest West
       Morph Ball
 
 ----------------
-rm_a3h03
+Industrial Complex Exterior Access
 Extra - map_name: rm_a3h03
-> Dock to rm_a3h02; Heals? False
+> Dock to Outer Caverns Crossroads; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h02/Dock to rm_a3h03
-  > Dock to rm_a3h04
+  * Open Passage to Outer Caverns Crossroads/Dock to Industrial Complex Exterior Access
+  > Dock to Industrial Complex Exterior
       Can Use Any Bombs
 
-> Dock to rm_a3h04; Heals? False
+> Dock to Industrial Complex Exterior; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h04/Dock to rm_a3h03
-  > Dock to rm_a3h02
+  * Open Passage to Industrial Complex Exterior/Dock to Industrial Complex Exterior Access
+  > Dock to Outer Caverns Crossroads
       Any of the following:
           All of the following:
               # Bottom way
@@ -107,12 +107,12 @@ Extra - map_name: rm_a3h03
               Speed Booster and Disabled Entrance Rando
 
 ----------------
-rm_a3h04
+Industrial Complex Exterior
 Extra - map_name: rm_a3h04
-> Dock to rm_a3h05; Heals? False
+> Dock to Exterior Gamma Nest Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h05/Dock to rm_a3h04
-  > Dock to rm_a3a02
+  * Open Passage to Exterior Gamma Nest Access/Dock to Industrial Complex Exterior
+  > Dock to Upper Factory Save Station
       Any of the following:
           Space Jump or Can Use Spider Ball
           All of the following:
@@ -126,10 +126,10 @@ Extra - map_name: rm_a3h04
               # IBJ
               Infinite Bomb Jumping (Expert) and Can Use Bombs
 
-> Dock to rm_a3h03; Heals? False
+> Dock to Industrial Complex Exterior Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h03/Dock to rm_a3h04
-  > Dock to rm_a3a02
+  * Open Passage to Industrial Complex Exterior Access/Dock to Industrial Complex Exterior
+  > Dock to Upper Factory Save Station
       All of the following:
           Can Use Spider Ball
           Any of the following:
@@ -140,28 +140,28 @@ Extra - map_name: rm_a3h04
   > Pickup (Left Missile Tank)
       Trivial
 
-> Tunnel to rm_a3a06 (Bottom); Heals? False
+> Tunnel to Exterior Maze (Bottom); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3a06/Tunnel to rm_a3h04 (Bottom)
+  * Morph Ball Tunnel to Exterior Maze/Tunnel to Industrial Complex Exterior (Bottom)
   > Pickup (Right Missile Tank)
       Morph Ball
 
-> Tunnel to rm_a3a06 (Top); Heals? False
+> Tunnel to Exterior Maze (Top); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3a06/Tunnel to rm_a3h04 (Top)
+  * Morph Ball Tunnel to Exterior Maze/Tunnel to Industrial Complex Exterior (Top)
 
-> Dock to rm_a3a02; Heals? False
+> Dock to Upper Factory Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a02/Dock to rm_a3h04
-  > Dock to rm_a3h05
+  * Open Passage to Upper Factory Save Station/Dock to Industrial Complex Exterior
+  > Dock to Exterior Gamma Nest Access
       Trivial
-  > Tunnel to rm_a3a06 (Top)
+  > Tunnel to Exterior Maze (Top)
       All of the following:
           Morph Ball
           Power Grip or Mid-Air Morph (Beginner)
-  > Door to rm_a3a01
+  > Door to Torizo Arena
       Trivial
-  > Door to rm_a3h07
+  > Door to Exterior Puzzle Cavern
       Any of the following:
           Space Jump or Can Use Spider Ball
           All of the following:
@@ -171,10 +171,10 @@ Extra - map_name: rm_a3h04
               # IBJ
               Infinite Bomb Jumping (Expert) and Can Use Bombs
 
-> Door to rm_a3a01; Heals? False
+> Door to Torizo Arena; Heals? False
   * Layers: default
-  * Missile Door to rm_a3a01/Door to rm_a3h04
-  > Dock to rm_a3a02
+  * Missile Door to Torizo Arena/Door to Industrial Complex Exterior
+  > Dock to Upper Factory Save Station
       Any of the following:
           Space Jump or Enabled Septogg Helpers
           All of the following:
@@ -186,15 +186,15 @@ Extra - map_name: rm_a3h04
   > Above torizo
       Space Jump Wall
 
-> Door to rm_a3h07; Heals? False
+> Door to Exterior Puzzle Cavern; Heals? False
   * Layers: default
-  * Super Missile Door to rm_a3h07/Door to rm_a3h04
-  > Dock to rm_a3a02
+  * Super Missile Door to Exterior Puzzle Cavern/Door to Industrial Complex Exterior
+  > Dock to Upper Factory Save Station
       Trivial
 
 > Left Septogg; Heals? False
   * Layers: default
-  > Dock to rm_a3h03
+  > Dock to Industrial Complex Exterior Access
       Space Jump Wall
   > Above torizo
       Any of the following:
@@ -207,13 +207,13 @@ Extra - map_name: rm_a3h04
 > Pickup (Left Missile Tank); Heals? False
   * Layers: default
   * Pickup 211; Category? Minor
-  * Extra - item_id: 211
+  * Extra - object_name: oItemM_211
   > Left Septogg
       Movement (Beginner) or Hijump Wall
 
 > Above torizo; Heals? False
   * Layers: default
-  > Door to rm_a3a01
+  > Door to Torizo Arena
       Trivial
   > Left Septogg
       Trivial
@@ -221,17 +221,17 @@ Extra - map_name: rm_a3h04
 > Pickup (Right Missile Tank); Heals? False
   * Layers: default
   * Pickup 202; Category? Minor
-  * Extra - item_id: 202
-  > Dock to rm_a3h05
+  * Extra - object_name: oItemM_202
+  > Dock to Exterior Gamma Nest Access
       Trivial
 
 ----------------
-rm_a3h05
+Exterior Gamma Nest Access
 Extra - map_name: rm_a3h05
-> Dock to rm_a3h06; Heals? False
+> Dock to Exterior Gamma Nest; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h06/Dock to rm_a3h05
-  > Dock to rm_a3h04
+  * Open Passage to Exterior Gamma Nest/Dock to Exterior Gamma Nest Access
+  > Dock to Industrial Complex Exterior
       Any of the following:
           Hi-Jump Boots or Space Jump or Speed Booster
           All of the following:
@@ -241,10 +241,10 @@ Extra - map_name: rm_a3h05
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
-> Dock to rm_a3h04; Heals? False
+> Dock to Industrial Complex Exterior; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h04/Dock to rm_a3h05
-  > Dock to rm_a3h06
+  * Open Passage to Industrial Complex Exterior/Dock to Exterior Gamma Nest Access
+  > Dock to Exterior Gamma Nest
       Any of the following:
           Hi-Jump Boots or Space Jump or Speed Booster or Walljump (Hypermode) or Can Use Spider Ball
           All of the following:
@@ -252,17 +252,17 @@ Extra - map_name: rm_a3h05
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
 ----------------
-rm_a3h06
+Exterior Gamma Nest
 Extra - map_name: rm_a3h06
-> Dock to rm_a3h05; Heals? False
+> Dock to Exterior Gamma Nest Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h05/Dock to rm_a3h06
+  * Open Passage to Exterior Gamma Nest Access/Dock to Exterior Gamma Nest
   > Top
       Space Jump Wall
 
 > Top; Heals? False
   * Layers: default
-  > Dock to rm_a3h05
+  > Dock to Exterior Gamma Nest Access
       Trivial
   > Event - Gamma
       Defeat Gamma
@@ -274,60 +274,60 @@ Extra - map_name: rm_a3h06
       Trivial
 
 ----------------
-rm_a3h07
+Exterior Puzzle Cavern
 Extra - map_name: rm_a3h07
-> Door to rm_a3h04; Heals? False
+> Door to Industrial Complex Exterior; Heals? False
   * Layers: default
-  * Normal Door to rm_a3h04/Door to rm_a3h07
+  * Normal Door to Industrial Complex Exterior/Door to Exterior Puzzle Cavern
   > Pickup (Power Bomb Tank)
       Speed Booster and Shinesparking Tricks (Intermediate) and Disabled Entrance Rando and Can Use Power Bombs
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 212; Category? Minor
-  * Extra - item_id: 212
-  > Door to rm_a3h04
+  * Extra - object_name: oItemPB_212
+  > Door to Industrial Complex Exterior
       Hijump Wall
 
 ----------------
-rm_a3h08
+EMP Sentry Cavern
 Extra - map_name: rm_a3h08
-> Dock to rm_a3h02 (Top); Heals? False
+> Dock to Outer Caverns Crossroads (Top); Heals? False
   * Layers: default
-  * Open Passage to rm_a3h02/Dock to rm_a3h08 (Top)
+  * Open Passage to Outer Caverns Crossroads/Dock to EMP Sentry Cavern (Top)
   > Bottom
       Trivial
 
-> Dock to rm_a3h02 (Bottom); Heals? False
+> Dock to Outer Caverns Crossroads (Bottom); Heals? False
   * Layers: default
-  * Open Passage to rm_a3h02/Dock to rm_a3h08 (Bottom)
+  * Open Passage to Outer Caverns Crossroads/Dock to EMP Sentry Cavern (Bottom)
   > Pickup (Missile Tank)
       Trivial
 
-> Door to rm_a3h09; Heals? False
+> Door to Storage Cavern; Heals? False
   * Layers: default
-  * Industrial Complex EMP Activated Door to rm_a3h09/Door to rm_a3h08
+  * Industrial Complex EMP Activated Door to Storage Cavern/Door to EMP Sentry Cavern
   > Bottom
       Trivial
 
-> Dock to rm_a3h01; Heals? False
+> Dock to Outer Caverns Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h01/Dock from rm_a3h08
+  * Open Passage to Outer Caverns Save Station/Dock from EMP Sentry Cavern
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 214; Category? Minor
-  * Extra - item_id: 214
-  > Dock to rm_a3h02 (Bottom)
+  * Extra - object_name: oItemM_214
+  > Dock to Outer Caverns Crossroads (Bottom)
       Trivial
 
 > Bottom; Heals? False
   * Layers: default
-  > Dock to rm_a3h02 (Top)
+  > Dock to Outer Caverns Crossroads (Top)
       Hijump Wall
-  > Door to rm_a3h09
+  > Door to Storage Cavern
       Trivial
-  > Dock to rm_a3h01
+  > Dock to Outer Caverns Save Station
       Can Use Any Bombs
   > Event - A3EMP
       Missiles ≥ 10 and Can Use Power Bombs
@@ -339,34 +339,34 @@ Extra - map_name: rm_a3h08
       Trivial
 
 ----------------
-rm_a3h09
+Storage Cavern
 Extra - map_name: rm_a3h09
-> Door to rm_a3h08; Heals? False
+> Door to EMP Sentry Cavern; Heals? False
   * Layers: default
-  * Normal Door to rm_a3h08/Door to rm_a3h09
+  * Normal Door to EMP Sentry Cavern/Door to Storage Cavern
   > Pickup (Power Bomb Tank)
       Trivial
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 213; Category? Minor
-  * Extra - item_id: 213
-  > Door to rm_a3h08
+  * Extra - object_name: oItemPB_213
+  > Door to EMP Sentry Cavern
       Trivial
 
 ----------------
-rm_a3a01
+Torizo Arena
 Extra - map_name: rm_a3a01
-> Door to rm_a3h04; Heals? False
+> Door to Industrial Complex Exterior; Heals? False
   * Layers: default
-  * Normal Door to rm_a3h04/Door to rm_a3a01
+  * Normal Door to Industrial Complex Exterior/Door to Torizo Arena
   > Pickup (Space Jump)
       Trivial
 
 > Pickup (Space Jump); Heals? False
   * Layers: default
   * Pickup 6; Category? Major
-  * Extra - item_id: 6
+  * Extra - object_name: oItemSpaceJump
   > Event - Torizo
       All of the following:
           Space Jump or Combat (Advanced)
@@ -375,15 +375,15 @@ Extra - map_name: rm_a3a01
 > Event - Torizo; Heals? False
   * Layers: default
   * Event Boss Torizo Defeated
-  > Door to rm_a3h04
+  > Door to Industrial Complex Exterior
       Trivial
 
 ----------------
-rm_a3a02
+Upper Factory Save Station
 Extra - map_name: rm_a3a02
 > In Sand; Heals? False
   * Layers: default
-  > Dock to rm_a3h04
+  > Dock to Industrial Complex Exterior
       Any of the following:
           Space Jump or Can Use Spider Ball
           All of the following:
@@ -398,15 +398,15 @@ Extra - map_name: rm_a3a02
   > Pickup (Missile Tank)
       Trivial
 
-> Dock to rm_a3h04; Heals? False
+> Dock to Industrial Complex Exterior; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h04/Dock to rm_a3a02
+  * Open Passage to Industrial Complex Exterior/Dock to Upper Factory Save Station
   > In Sand
       Trivial
 
-> Dock to rm_a3a03; Heals? False
+> Dock to Upper Factory Intersection; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a03/Dock to rm_a3a02
+  * Open Passage to Upper Factory Intersection/Dock to Upper Factory Save Station
   > Save Station
       Trivial
 
@@ -421,29 +421,29 @@ Extra - map_name: rm_a3a02
           Any of the following:
               # Destroy Sand
               Missiles or Super Missiles or Can Use Any Bombs
-  > Dock to rm_a3a03
+  > Dock to Upper Factory Intersection
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 203; Category? Minor
-  * Extra - item_id: 203
+  * Extra - object_name: oItemM_203
   > In Sand
       Trivial
 
 ----------------
-rm_a3a03
+Upper Factory Intersection
 Extra - map_name: rm_a3a03
-> Dock to rm_a3a02; Heals? False
+> Dock to Upper Factory Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a02/Dock to rm_a3a03
-  > Dock to rm_a3a07
+  * Open Passage to Upper Factory Save Station/Dock to Upper Factory Intersection
+  > Dock to Upper Factory Gamma Nest
       Trivial
 
-> Dock to rm_a3a07; Heals? False
+> Dock to Upper Factory Gamma Nest; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a07/Dock to rm_a3a03
-  > Dock to rm_a3a02
+  * Open Passage to Upper Factory Gamma Nest/Dock to Upper Factory Intersection
+  > Dock to Upper Factory Save Station
       Any of the following:
           Space Jump or Can Use Spider Ball
           All of the following:
@@ -452,13 +452,13 @@ Extra - map_name: rm_a3a03
               Any of the following:
                   # Get up through dock at the top
                   Hi-Jump Boots or Walljump (Beginner)
-  > Dock to rm_a3a04
+  > Dock to Spazer Beam Chamber Access
       Trivial
 
-> Dock to rm_a3a04; Heals? False
+> Dock to Spazer Beam Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a04/Dock to rm_a3a03
-  > Dock to rm_a3a07
+  * Open Passage to Spazer Beam Chamber Access/Dock to Upper Factory Intersection
+  > Dock to Upper Factory Gamma Nest
       Any of the following:
           Space Jump or Can Use Spider Ball
           All of the following:
@@ -469,101 +469,101 @@ Extra - map_name: rm_a3a03
               Infinite Bomb Jumping (Advanced) and Can Use Bombs
 
 ----------------
-rm_a3a04
+Spazer Beam Chamber Access
 Extra - map_name: rm_a3a04
-> Dock to rm_a3a03; Heals? False
+> Dock to Upper Factory Intersection; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a03/Dock to rm_a3a04
-  > Door to rm_a3a05
+  * Open Passage to Upper Factory Intersection/Dock to Spazer Beam Chamber Access
+  > Door to Spazer Beam
       All of the following:
           # Speedboost
           Speed Booster and Knowledge (Intermediate) and Shinesparking Tricks (Intermediate)
   > Bottom
       Trivial
 
-> Door to rm_a3a05; Heals? False
+> Door to Spazer Beam; Heals? False
   * Layers: default
-  * Missile Door to rm_a3a05/Door to rm_a3a04
-  > Dock to rm_a3a03
+  * Missile Door to Spazer Beam/Door to Spazer Beam Chamber Access
+  > Dock to Upper Factory Intersection
       All of the following:
           # Speedboost
           Speed Booster and Knowledge (Intermediate) and Shinesparking Tricks (Intermediate)
   > Bottom
       Trivial
 
-> Dock to rm_a3a27; Heals? False
+> Dock to Pipe To Distribution Center Pipe Hub; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a27/Dock to rm_a3a04
+  * Open Passage to Pipe To Distribution Center Pipe Hub/Dock to Spazer Beam Chamber Access
   > Bottom
       Screw Attack
 
 > Bottom; Heals? False
   * Layers: default
-  > Dock to rm_a3a03
+  > Dock to Upper Factory Intersection
       Hijump Wall
-  > Door to rm_a3a05
+  > Door to Spazer Beam
       Hijump Wall
-  > Dock to rm_a3a27
+  > Dock to Pipe To Distribution Center Pipe Hub
       Screw Attack
 
 ----------------
-rm_a3a05
+Spazer Beam
 Extra - map_name: rm_a3a05
-> Door to rm_a3a04; Heals? False
+> Door to Spazer Beam Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a3a04/Door to rm_a3a05
+  * Normal Door to Spazer Beam Chamber Access/Door to Spazer Beam
   > Pickup (Spazer Beam)
       Trivial
 
 > Pickup (Spazer Beam); Heals? False
   * Layers: default
   * Pickup 13; Category? Major
-  * Extra - item_id: 13
-  > Door to rm_a3a04
+  * Extra - object_name: oItemSBeam
+  > Door to Spazer Beam Chamber Access
       Trivial
 
 ----------------
-rm_a3a06
+Exterior Maze
 Extra - map_name: rm_a3a06
-> Tunnel to rm_a3h04 (Top); Heals? False
+> Tunnel to Industrial Complex Exterior (Top); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3h04/Tunnel to rm_a3a06 (Top)
+  * Morph Ball Tunnel to Industrial Complex Exterior/Tunnel to Exterior Maze (Top)
   > Pickup (Energy Tank)
       Missiles and Power Grip Climb
 
-> Tunnel to rm_a3h04 (Bottom); Heals? False
+> Tunnel to Industrial Complex Exterior (Bottom); Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3h04/Tunnel to rm_a3a06 (Bottom)
+  * Morph Ball Tunnel to Industrial Complex Exterior/Tunnel to Exterior Maze (Bottom)
   > Pickup (Energy Tank)
       Can Use Any Bombs and Power Grip Climb
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 200; Category? Minor
-  * Extra - item_id: 200
-  > Tunnel to rm_a3h04 (Top)
+  * Extra - object_name: oItemETank_200
+  > Tunnel to Industrial Complex Exterior (Top)
       All of the following:
           Tunnel Climb
           Any of the following:
               # Get past missile block
               Movement (Beginner)
               Missiles and Can Use Any Bombs and Power Grip Climb
-  > Tunnel to rm_a3h04 (Bottom)
+  > Tunnel to Industrial Complex Exterior (Bottom)
       Can Use Any Bombs and Power Grip Climb
 
 ----------------
-rm_a3a07
+Upper Factory Gamma Nest
 Extra - map_name: rm_a3a07
-> Dock to rm_a3a03; Heals? False
+> Dock to Upper Factory Intersection; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a03/Dock to rm_a3a07
-  > Dock to rm_a3a08
+  * Open Passage to Upper Factory Intersection/Dock to Upper Factory Gamma Nest
+  > Dock to Upper Factory Autoad Fork
       Trivial
 
-> Dock to rm_a3a08; Heals? False
+> Dock to Upper Factory Autoad Fork; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a08/Dock to rm_a3a07
-  > Dock to rm_a3a03
+  * Open Passage to Upper Factory Autoad Fork/Dock to Upper Factory Gamma Nest
+  > Dock to Upper Factory Intersection
       Any of the following:
           Space Jump Wall
           After Area 3 - Interior Shaft Gamma and Walljump (Beginner) and Enabled Septogg Helpers
@@ -575,46 +575,46 @@ Extra - map_name: rm_a3a07
 > Event - Gamma; Heals? False
   * Layers: default
   * Event Area 3 - Interior Shaft Gamma
-  > Dock to rm_a3a08
+  > Dock to Upper Factory Autoad Fork
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 204; Category? Minor
-  * Extra - item_id: 204
-  > Dock to rm_a3a08
+  * Extra - object_name: oItemM_204
+  > Dock to Upper Factory Autoad Fork
       Trivial
 
 ----------------
-rm_a3a08
+Upper Factory Autoad Fork
 Extra - map_name: rm_a3a08
-> Dock to rm_a3a07; Heals? False
+> Dock to Upper Factory Gamma Nest; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a07/Dock to rm_a3a08
-  > Dock to rm_a3a09
+  * Open Passage to Upper Factory Gamma Nest/Dock to Upper Factory Autoad Fork
+  > Dock to Speed Booster Chamber Access
       Trivial
 
-> Dock to rm_a3a09; Heals? False
+> Dock to Speed Booster Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a09/Dock to rm_a3a08
-  > Dock to rm_a3a07
+  * Open Passage to Speed Booster Chamber Access/Dock to Upper Factory Autoad Fork
+  > Dock to Upper Factory Gamma Nest
       Power Grip Wall
-  > Dock to rm_a3a11
+  > Dock to Shirk Prisons
       Trivial
 
-> Dock to rm_a3a11; Heals? False
+> Dock to Shirk Prisons; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a11/Dock to rm_a3a08
-  > Dock to rm_a3a09
+  * Open Passage to Shirk Prisons/Dock to Upper Factory Autoad Fork
+  > Dock to Speed Booster Chamber Access
       Trivial
 
 ----------------
-rm_a3a09
+Speed Booster Chamber Access
 Extra - map_name: rm_a3a09
-> Door to rm_a3a10; Heals? False
+> Door to Speed Booster Chamber; Heals? False
   * Layers: default
-  * Missile Door to rm_a3a10/Door to rm_a3a09
-  > Dock to rm_a3a08
+  * Missile Door to Speed Booster Chamber/Door to Speed Booster Chamber Access
+  > Dock to Upper Factory Autoad Fork
       Any of the following:
           Speed Booster
           All of the following:
@@ -622,10 +622,10 @@ Extra - map_name: rm_a3a09
               Morph Ball and Can Use Any Bombs
               Mid-Air Morph (Intermediate) or Tunnel Climb
 
-> Dock to rm_a3a08; Heals? False
+> Dock to Upper Factory Autoad Fork; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a08/Dock to rm_a3a09
-  > Door to rm_a3a10
+  * Open Passage to Upper Factory Autoad Fork/Dock to Speed Booster Chamber Access
+  > Door to Speed Booster Chamber
       Any of the following:
           Speed Booster
           All of the following:
@@ -634,49 +634,49 @@ Extra - map_name: rm_a3a09
               Mid-Air Morph (Intermediate) or Tunnel Climb
 
 ----------------
-rm_a3a10
+Speed Booster Chamber
 Extra - map_name: rm_a3a10
-> Door to rm_a3a09; Heals? False
+> Door to Speed Booster Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a3a09/Door to rm_a3a10
+  * Normal Door to Speed Booster Chamber Access/Door to Speed Booster Chamber
   > Pickup (Speed Booster)
       Power Grip Wall
 
 > Pickup (Speed Booster); Heals? False
   * Layers: default
   * Pickup 7; Category? Major
-  * Extra - item_id: 7
-  > Door to rm_a3a09
+  * Extra - object_name: oItemSpeedBooster
+  > Door to Speed Booster Chamber Access
       Trivial
 
 ----------------
-rm_a3a11
+Shirk Prisons
 Extra - map_name: rm_a3a11
-> Dock to rm_a3a12; Heals? False
+> Dock to Treadmill Room; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a12/Dock to rm_a3a11
-  > Dock to rm_a3a08
+  * Open Passage to Treadmill Room/Dock to Shirk Prisons
+  > Dock to Upper Factory Autoad Fork
       Speed Booster and Disabled Entrance Rando
 
-> Dock to rm_a3a08; Heals? False
+> Dock to Upper Factory Autoad Fork; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a08/Dock to rm_a3a11
-  > Dock to rm_a3a12
+  * Open Passage to Upper Factory Autoad Fork/Dock to Shirk Prisons
+  > Dock to Treadmill Room
       Missiles ≥ 2 and Speed Booster
 
 ----------------
-rm_a3a12
+Treadmill Room
 Extra - map_name: rm_a3a12
-> Dock to rm_a3a11; Heals? False
+> Dock to Shirk Prisons; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a11/Dock to rm_a3a12
-  > Dock to rm_a3a13
+  * Open Passage to Shirk Prisons/Dock to Treadmill Room
+  > Dock to Spiky Shaft
       Speed Booster
 
-> Dock to rm_a3a13; Heals? False
+> Dock to Spiky Shaft; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a13/Dock to rm_a3a12
-  > Dock to rm_a3a11
+  * Open Passage to Spiky Shaft/Dock to Treadmill Room
+  > Dock to Shirk Prisons
       All of the following:
           Speed Booster and Shinesparking Tricks (Beginner)
           Any of the following:
@@ -693,16 +693,16 @@ Extra - map_name: rm_a3a12
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 205; Category? Minor
-  * Extra - item_id: 205
-  > Dock to rm_a3a13
+  * Extra - object_name: oItemM_205
+  > Dock to Spiky Shaft
       Morph Ball
 
 ----------------
-rm_a3a13
+Spiky Shaft
 Extra - map_name: rm_a3a13
-> Dock to rm_a3a12; Heals? False
+> Dock to Treadmill Room; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a12/Dock to rm_a3a13
+  * Open Passage to Treadmill Room/Dock to Spiky Shaft
   > Top
       Any of the following:
           Space Jump
@@ -716,10 +716,10 @@ Extra - map_name: rm_a3a13
               # Walljump
               Damage Boost (Intermediate) or Walljump (Advanced)
 
-> Dock to rm_a3a14; Heals? False
+> Dock to Upper Factory Alpha Nest Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a14/Dock to rm_a3a13
-  > Dock to rm_a3a16
+  * Open Passage to Upper Factory Alpha Nest Access/Dock to Spiky Shaft
+  > Dock to Lower Factory Entrance
       All of the following:
           Can Use Spider Ball
           Any of the following:
@@ -728,10 +728,10 @@ Extra - map_name: rm_a3a13
   > Top
       Trivial
 
-> Dock to rm_a3a16; Heals? False
+> Dock to Lower Factory Entrance; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a16/Dock to rm_a3a13
-  > Dock to rm_a3a14
+  * Open Passage to Lower Factory Entrance/Dock to Spiky Shaft
+  > Dock to Upper Factory Alpha Nest Access
       All of the following:
           Can Use Spider Ball
           Any of the following:
@@ -742,34 +742,34 @@ Extra - map_name: rm_a3a13
 
 > Top; Heals? False
   * Layers: default
-  > Dock to rm_a3a12
+  > Dock to Treadmill Room
       Trivial
-  > Dock to rm_a3a14
+  > Dock to Upper Factory Alpha Nest Access
       Trivial
-  > Dock to rm_a3a16
+  > Dock to Lower Factory Entrance
       Trivial
 
 ----------------
-rm_a3a14
+Upper Factory Alpha Nest Access
 Extra - map_name: rm_a3a14
-> Dock to rm_a3a13; Heals? False
+> Dock to Spiky Shaft; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a13/Dock to rm_a3a14
-  > Tunnel to rm_a3a15
+  * Open Passage to Spiky Shaft/Dock to Upper Factory Alpha Nest Access
+  > Tunnel to Upper Factory Alpha Nest
       Can Use Any Bombs and Power Grip Climb
 
-> Tunnel to rm_a3a15; Heals? False
+> Tunnel to Upper Factory Alpha Nest; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3a15/Tunnel to rm_a3a14
-  > Dock to rm_a3a13
+  * Morph Ball Tunnel to Upper Factory Alpha Nest/Tunnel to Upper Factory Alpha Nest Access
+  > Dock to Spiky Shaft
       Power Grip Wall
 
 ----------------
-rm_a3a15
+Upper Factory Alpha Nest
 Extra - map_name: rm_a3a15
-> Tunnel to rm_a3a14; Heals? False
+> Tunnel to Upper Factory Alpha Nest Access; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3a14/Tunnel to rm_a3a15
+  * Morph Ball Tunnel to Upper Factory Alpha Nest Access/Tunnel to Upper Factory Alpha Nest
   > Outside Of Tunnel
       Morph Ball
 
@@ -782,13 +782,13 @@ Extra - map_name: rm_a3a15
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 201; Category? Minor
-  * Extra - item_id: 201
+  * Extra - object_name: oItemETank_201
   > Outside Of Tunnel
       Trivial
 
 > Outside Of Tunnel; Heals? False
   * Layers: default
-  > Tunnel to rm_a3a14
+  > Tunnel to Upper Factory Alpha Nest Access
       High Mid-Air Morph Tunnel Climb
   > Event - Alpha
       Defeat Alpha
@@ -796,86 +796,86 @@ Extra - map_name: rm_a3a15
       Morph Ball and Power Grip Wall
 
 ----------------
-rm_a3a16
+Lower Factory Entrance
 Extra - map_name: rm_a3a16
-> Dock to rm_a3a13; Heals? False
+> Dock to Spiky Shaft; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a13/Dock to rm_a3a16
+  * Open Passage to Spiky Shaft/Dock to Lower Factory Entrance
   > Middle
       Can Use Any Bombs
 
-> Tunnel to rm_a3a18; Heals? False
+> Tunnel to Lower Factory Tunnel; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3a18/Tunnel to rm_a3a16
+  * Morph Ball Tunnel to Lower Factory Tunnel/Tunnel to Lower Factory Entrance
   > Middle
       Morph Ball
 
-> Dock to rm_a3a17; Heals? False
+> Dock to Lower Factory Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a17/Dock to rm_a3a16
+  * Open Passage to Lower Factory Save Station/Dock to Lower Factory Entrance
 
 > Middle; Heals? False
   * Layers: default
-  > Dock to rm_a3a13
+  > Dock to Spiky Shaft
       Can Use Any Bombs and Power Grip Climb
-  > Dock to rm_a3a17
+  > Dock to Lower Factory Save Station
       Any of the following:
           Tunnel Climb
           Morph Ball and Mid-Air Morph (Intermediate)
 
 ----------------
-rm_a3a17
+Lower Factory Save Station
 Extra - map_name: rm_a3a17
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
-  > Dock to rm_a3a16
+  > Dock to Lower Factory Entrance
       Trivial
-  > Dock to rm_a3a19
+  > Dock to Lower Factory Hub
       Trivial
 
-> Dock to rm_a3a16; Heals? False
+> Dock to Lower Factory Entrance; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a16/Dock to rm_a3a17
+  * Open Passage to Lower Factory Entrance/Dock to Lower Factory Save Station
   > Save Station
       Trivial
 
-> Dock to rm_a3a19; Heals? False
+> Dock to Lower Factory Hub; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a19/Dock to rm_a3a17
+  * Open Passage to Lower Factory Hub/Dock to Lower Factory Save Station
   > Save Station
       Trivial
 
 ----------------
-rm_a3a18
+Lower Factory Tunnel
 Extra - map_name: rm_a3a18
-> Tunnel to rm_a3a19; Heals? False
+> Tunnel to Lower Factory Hub; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3a19/Tunnel to rm_a3a18
-  > Tunnel to rm_a3a16
+  * Morph Ball Tunnel to Lower Factory Hub/Tunnel to Lower Factory Tunnel
+  > Tunnel to Lower Factory Entrance
       Trivial
 
-> Tunnel to rm_a3a16; Heals? False
+> Tunnel to Lower Factory Entrance; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3a16/Tunnel to rm_a3a18
-  > Tunnel to rm_a3a19
+  * Morph Ball Tunnel to Lower Factory Entrance/Tunnel to Lower Factory Tunnel
+  > Tunnel to Lower Factory Hub
       Trivial
 
 ----------------
-rm_a3a19
+Lower Factory Hub
 Extra - map_name: rm_a3a19
-> Dock to rm_a3a20; Heals? False
+> Dock to Lower Factory Intersection; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a20/Dock to rm_a3a19
+  * Open Passage to Lower Factory Intersection/Dock to Lower Factory Hub
   > Top left
       Trivial
 
-> Tunnel to rm_a3a18; Heals? False
+> Tunnel to Lower Factory Tunnel; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3a18/Tunnel to rm_a3a19
+  * Morph Ball Tunnel to Lower Factory Tunnel/Tunnel to Lower Factory Hub
 
-> Dock to rm_a3a17; Heals? False
+> Dock to Lower Factory Save Station; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a17/Dock to rm_a3a19
+  * Open Passage to Lower Factory Save Station/Dock to Lower Factory Hub
   > Pickup (Missile Tank)
       Speed Booster and Shinesparking Tricks (Intermediate) and Walljump (Advanced) and Disabled Entrance Rando
   > Top right
@@ -906,20 +906,20 @@ Extra - map_name: rm_a3a19
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 208; Category? Minor
-  * Extra - item_id: 208
-  > Dock to rm_a3a17
+  * Extra - object_name: oItemM_208
+  > Dock to Lower Factory Save Station
       Trivial
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 207; Category? Minor
-  * Extra - item_id: 207
+  * Extra - object_name: oItemSM_207
   > Top left
       Morph Ball and Power Grip Climb and Tunnel Climb
 
 > Top right; Heals? False
   * Layers: default
-  > Tunnel to rm_a3a18
+  > Tunnel to Lower Factory Tunnel
       All of the following:
           Can Use Any Bombs
           Any of the following:
@@ -928,7 +928,7 @@ Extra - map_name: rm_a3a19
 
 > Top left; Heals? False
   * Layers: default
-  > Dock to rm_a3a20
+  > Dock to Lower Factory Intersection
       Trivial
   > Pickup (Missile Tank)
       Speed Booster and Shinesparking Tricks (Intermediate)
@@ -936,50 +936,50 @@ Extra - map_name: rm_a3a19
       Super Missiles and Power Grip Climb and Tunnel Climb
 
 ----------------
-rm_a3a20
+Lower Factory Intersection
 Extra - map_name: rm_a3a20
-> Dock to rm_a3a19; Heals? False
+> Dock to Lower Factory Hub; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a19/Dock to rm_a3a20
-  > Dock to rm_a3a24
+  * Open Passage to Lower Factory Hub/Dock to Lower Factory Intersection
+  > Dock to Lower Factory Lava Lake Access
       Trivial
 
-> Dock to rm_a3a21; Heals? False
+> Dock to Weapon Testing; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a21/Dock to rm_a3a20
-  > Dock to rm_a3a24
+  * Open Passage to Weapon Testing/Dock to Lower Factory Intersection
+  > Dock to Lower Factory Lava Lake Access
       Trivial
 
-> Dock to rm_a3a24; Heals? False
+> Dock to Lower Factory Lava Lake Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a24/Dock to rm_a3a20
-  > Dock to rm_a3a19
+  * Open Passage to Lower Factory Lava Lake Access/Dock to Lower Factory Intersection
+  > Dock to Lower Factory Hub
       Hijump With Power Grip Wall
-  > Dock to rm_a3a21
+  > Dock to Weapon Testing
       Trivial
 
 ----------------
-rm_a3a21
+Weapon Testing
 Extra - map_name: rm_a3a21
-> Dock to rm_a3a20; Heals? False
+> Dock to Lower Factory Intersection; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a20/Dock to rm_a3a21
-  > Dock to rm_a3a22
+  * Open Passage to Lower Factory Intersection/Dock to Weapon Testing
+  > Dock to Skippy Room
       Trivial
 
-> Dock to rm_a3a22; Heals? False
+> Dock to Skippy Room; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a22/Dock to rm_a3a21
-  > Dock to rm_a3a20
+  * Open Passage to Skippy Room/Dock to Weapon Testing
+  > Dock to Lower Factory Intersection
       Trivial
 
 ----------------
-rm_a3a22
+Skippy Room
 Extra - map_name: rm_a3a22
-> Dock to rm_a3a21; Heals? False
+> Dock to Weapon Testing; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a21/Dock to rm_a3a22
-  > Dock to rm_a3a23
+  * Open Passage to Weapon Testing/Dock to Skippy Room
+  > Dock to Super Missile Chamber Access
       All of the following:
           Hijump With Power Grip Wall
           Any of the following:
@@ -989,31 +989,31 @@ Extra - map_name: rm_a3a22
   > Event - Skippy
       Morph Ball
 
-> Dock to rm_a3a23; Heals? False
+> Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a23/Dock to rm_a3a22
-  > Dock to rm_a3a21
+  * Open Passage to Super Missile Chamber Access/Dock to Skippy Room
+  > Dock to Weapon Testing
       Space Jump Wall
 
 > Event - Skippy; Heals? False
   * Layers: default
   * Event Area 3 Skippy
-  > Dock to rm_a3a21
+  > Dock to Weapon Testing
       Trivial
 
 ----------------
-rm_a3a23
+Super Missile Chamber Access
 Extra - map_name: rm_a3a23
-> Dock to rm_a3a22; Heals? False
+> Dock to Skippy Room; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a22/Dock to rm_a3a23
-  > Dock to rm_a3a23a
+  * Open Passage to Skippy Room/Dock to Super Missile Chamber Access
+  > Dock to Super Missile Chamber
       Trivial
 
-> Dock to rm_a3a23a; Heals? False
+> Dock to Super Missile Chamber; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a23a/Dock to rm_a3a23
-  > Dock to rm_a3a22
+  * Open Passage to Super Missile Chamber/Dock to Super Missile Chamber Access
+  > Dock to Skippy Room
       Any of the following:
           Space Jump or Walljump (Intermediate) or Can Use Spider Ball
           Hi-Jump Boots and Power Grip
@@ -1023,15 +1023,15 @@ Extra - map_name: rm_a3a23
 > Event - MakeSkippyBeCleared; Heals? False
   * Layers: default
   * Event Area 3 Skippy
-  > Dock to rm_a3a23a
+  > Dock to Super Missile Chamber
       Trivial
 
 ----------------
-rm_a3a23a
+Super Missile Chamber
 Extra - map_name: rm_a3a23a
-> Dock to rm_a3a23; Heals? False
+> Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a23/Dock to rm_a3a23a
+  * Open Passage to Super Missile Chamber Access/Dock to Super Missile Chamber
   > Before Super
       After Area 3 Crystal before Super Missile or Power Grip Wall
   > Event - SuperCrystal
@@ -1040,13 +1040,13 @@ Extra - map_name: rm_a3a23a
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 206; Category? Minor
-  * Extra - item_id: 206
+  * Extra - object_name: oItemSM_206
   > Before Super
       Trivial
 
 > Before Super; Heals? False
   * Layers: default
-  > Dock to rm_a3a23
+  > Dock to Super Missile Chamber Access
       After Area 3 Crystal before Super Missile
   > Pickup (Super Missile Tank)
       Trivial
@@ -1056,33 +1056,33 @@ Extra - map_name: rm_a3a23a
 > Event - SuperCrystal; Heals? False
   * Layers: default
   * Event Area 3 Crystal before Super Missile
-  > Dock to rm_a3a23
+  > Dock to Super Missile Chamber Access
       Trivial
   > Before Super
       Trivial
 
 ----------------
-rm_a3a24
+Lower Factory Lava Lake Access
 Extra - map_name: rm_a3a24
-> Dock to rm_a3a20; Heals? False
+> Dock to Lower Factory Intersection; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a20/Dock to rm_a3a24
-  > Dock to rm_a3a25
+  * Open Passage to Lower Factory Intersection/Dock to Lower Factory Lava Lake Access
+  > Dock to Lower Factory Lava Lake
       Trivial
 
-> Dock to rm_a3a25; Heals? False
+> Dock to Lower Factory Lava Lake; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a25/Dock to rm_a3a24
-  > Dock to rm_a3a20
+  * Open Passage to Lower Factory Lava Lake/Dock to Lower Factory Lava Lake Access
+  > Dock to Lower Factory Intersection
       Space Jump Wall
 
 ----------------
-rm_a3a25
+Lower Factory Lava Lake
 Extra - map_name: rm_a3a25
-> Dock to rm_a3a26; Heals? False
+> Dock to Lower Factory Gamma Nest; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a26/Dock to rm_a3a25
-  > Dock to rm_a3a24
+  * Open Passage to Lower Factory Gamma Nest/Dock to Lower Factory Lava Lake
+  > Dock to Lower Factory Lava Lake Access
       Any of the following:
           Space Jump
           Any of the following:
@@ -1090,10 +1090,10 @@ Extra - map_name: rm_a3a25
               Gravity Suit
               Damage Boost (Advanced) and Power Grip Wall
 
-> Dock to rm_a3a24; Heals? False
+> Dock to Lower Factory Lava Lake Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a24/Dock to rm_a3a25
-  > Dock to rm_a3a26
+  * Open Passage to Lower Factory Lava Lake Access/Dock to Lower Factory Lava Lake
+  > Dock to Lower Factory Gamma Nest
       Any of the following:
           Space Jump
           All of the following:
@@ -1102,202 +1102,202 @@ Extra - map_name: rm_a3a25
               Gravity Suit or Damage Boost (Advanced)
 
 ----------------
-rm_a3a26
+Lower Factory Gamma Nest
 Extra - map_name: rm_a3a26
-> Dock to rm_a3a25; Heals? False
+> Dock to Lower Factory Lava Lake; Heals? False
   * Layers: default
-  * Open Passage to rm_a3a25/Dock to rm_a3a26
+  * Open Passage to Lower Factory Lava Lake/Dock to Lower Factory Gamma Nest
   > Event - Gamma
       Defeat Gamma
 
 > Event - Gamma; Heals? False
   * Layers: default
   * Event Area 3 - Deep Factory Gamma
-  > Dock to rm_a3a25
+  > Dock to Lower Factory Lava Lake
       Trivial
 
 ----------------
-rm_a3a27
+Pipe To Distribution Center Pipe Hub
 Extra - map_name: rm_a3a27
-> Dock to rm_a3a04; Heals? False; Default Node
+> Dock to Spazer Beam Chamber Access; Heals? False; Default Node
   * Layers: default
-  * Open Passage to rm_a3a04/Dock to rm_a3a27
+  * Open Passage to Spazer Beam Chamber Access/Dock to Pipe To Distribution Center Pipe Hub
   > Teleporter Pipe
       Morph Ball and Power Grip Wall
 
 > Teleporter Pipe; Heals? False
   * Layers: default
-  * Teleporter to Distribution Center - rm_a5c14
-  > Dock to rm_a3a04
+  * Teleporter to Distribution Center - Pipe Hub
+  > Dock to Spazer Beam Chamber Access
       Morph Ball
 
 ----------------
-rm_a3b01
+Breeding Grounds Access East
 Extra - map_name: rm_a3b01
-> Dock to rm_a3h02; Heals? False
+> Dock to Outer Caverns Crossroads; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h02/Dock to rm_a3b01
-  > Dock to rm_a3b02
+  * Open Passage to Outer Caverns Crossroads/Dock to Breeding Grounds Access East
+  > Dock to Breeding Grounds Crossroads
       Speed Booster and Can Use Bombs
 
-> Dock to rm_a3b02; Heals? False
+> Dock to Breeding Grounds Crossroads; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b02/Dock to rm_a3b01
-  > Dock to rm_a3h02
+  * Open Passage to Breeding Grounds Crossroads/Dock to Breeding Grounds Access East
+  > Dock to Outer Caverns Crossroads
       Morph Ball and Power Grip Wall
 
 ----------------
-rm_a3b02
+Breeding Grounds Crossroads
 Extra - map_name: rm_a3b02
-> Dock to rm_a3b01; Heals? False
+> Dock to Breeding Grounds Access East; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b01/Dock to rm_a3b02
-  > Dock to rm_a3b03
+  * Open Passage to Breeding Grounds Access East/Dock to Breeding Grounds Crossroads
+  > Dock to Breeding Grounds Gamma Nest West
       Trivial
 
-> Dock to rm_a3b03; Heals? False
+> Dock to Breeding Grounds Gamma Nest West; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b03/Dock to rm_a3b02
-  > Dock to rm_a3b04
+  * Open Passage to Breeding Grounds Gamma Nest West/Dock to Breeding Grounds Crossroads
+  > Dock to Breeding Grounds Gamma Nest Middle
       Trivial
 
-> Dock to rm_a3b04; Heals? False
+> Dock to Breeding Grounds Gamma Nest Middle; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b04/Dock to rm_a3b02
-  > Dock to rm_a3b01
+  * Open Passage to Breeding Grounds Gamma Nest Middle/Dock to Breeding Grounds Crossroads
+  > Dock to Breeding Grounds Access East
       All of the following:
           Space Jump or Walljump (Advanced) or Can Use Spider Ball
           Walljump (Expert) or Enabled Septogg Helpers
-  > Dock to rm_a3b03
+  > Dock to Breeding Grounds Gamma Nest West
       Any of the following:
           Space Jump Wall
           All of the following:
               # Septogg
               No Hi-Jump Boots and Enabled Septogg Helpers
-  > Dock to rm_a3b08
+  > Dock to Breeding Grounds Gamma Nest Bottom
       Morph Ball and Can Use Any Bombs
 
-> Dock to rm_a3b08; Heals? False
+> Dock to Breeding Grounds Gamma Nest Bottom; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b08/Dock to rm_a3b02
-  > Dock to rm_a3b04
+  * Open Passage to Breeding Grounds Gamma Nest Bottom/Dock to Breeding Grounds Crossroads
+  > Dock to Breeding Grounds Gamma Nest Middle
       Can Use Any Bombs and Power Grip Wall and Tunnel Climb
 
 ----------------
-rm_a3b03
+Breeding Grounds Gamma Nest West
 Extra - map_name: rm_a3b03
-> Dock to rm_a3h02; Heals? False
+> Dock to Outer Caverns Crossroads; Heals? False
   * Layers: default
-  * Open Passage to rm_a3h02/Dock to rm_a3b03
-  > Dock to rm_a3b02
+  * Open Passage to Outer Caverns Crossroads/Dock to Breeding Grounds Gamma Nest West
+  > Dock to Breeding Grounds Crossroads
       Trivial
 
-> Dock to rm_a3b02; Heals? False
+> Dock to Breeding Grounds Crossroads; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b02/Dock to rm_a3b03
+  * Open Passage to Breeding Grounds Crossroads/Dock to Breeding Grounds Gamma Nest West
   > Event - Gamma
       Defeat Gamma
 
 > Event - Gamma; Heals? False
   * Layers: default
   * Event Area 3 - Breeding Grounds Left Gamma
-  > Dock to rm_a3b02
+  > Dock to Breeding Grounds Crossroads
       Trivial
 
 ----------------
-rm_a3b04
+Breeding Grounds Gamma Nest Middle
 Extra - map_name: rm_a3b04
-> Dock to rm_a3b02; Heals? False
+> Dock to Breeding Grounds Crossroads; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b02/Dock to rm_a3b04
-  > Dock to rm_a3b05
+  * Open Passage to Breeding Grounds Crossroads/Dock to Breeding Grounds Gamma Nest Middle
+  > Dock to Breeding Grounds Alpha Nest Access
       Can Use Any Bombs and Power Grip Wall
   > Event - Gamma
       Defeat Gamma
 
-> Dock to rm_a3b05; Heals? False
+> Dock to Breeding Grounds Alpha Nest Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b05/Dock to rm_a3b04
-  > Dock to rm_a3b02
+  * Open Passage to Breeding Grounds Alpha Nest Access/Dock to Breeding Grounds Gamma Nest Middle
+  > Dock to Breeding Grounds Crossroads
       Can Use Any Bombs
 
 > Event - Gamma; Heals? False
   * Layers: default
   * Event Area 3 - Breeding Grounds Middle Middle Gamma
-  > Dock to rm_a3b02
+  > Dock to Breeding Grounds Crossroads
       Trivial
 
 ----------------
-rm_a3b05
+Breeding Grounds Alpha Nest Access
 Extra - map_name: rm_a3b05
-> Dock to rm_a3b06; Heals? False
+> Dock to Breeding Grounds Alpha Nest; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b06/Dock to rm_a3b05
-  > Dock to rm_a3b04
+  * Open Passage to Breeding Grounds Alpha Nest/Dock to Breeding Grounds Alpha Nest Access
+  > Dock to Breeding Grounds Gamma Nest Middle
       Trivial
 
-> Dock to rm_a3b04; Heals? False
+> Dock to Breeding Grounds Gamma Nest Middle; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b04/Dock to rm_a3b05
-  > Dock to rm_a3b06
+  * Open Passage to Breeding Grounds Gamma Nest Middle/Dock to Breeding Grounds Alpha Nest Access
+  > Dock to Breeding Grounds Alpha Nest
       Space Jump or Walljump (Advanced) or Can Use Spider Ball
 
 ----------------
-rm_a3b06
+Breeding Grounds Alpha Nest
 Extra - map_name: rm_a3b06
-> Dock to rm_a3b05; Heals? False
+> Dock to Breeding Grounds Alpha Nest Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b05/Dock to rm_a3b06
-  > Tunnel to rm_a3b07
+  * Open Passage to Breeding Grounds Alpha Nest Access/Dock to Breeding Grounds Alpha Nest
+  > Tunnel to Breeding Grounds Gamma Nest Top
       Hijump Tunnel Climb
   > Event - Alpha
       Defeat Alpha
 
-> Tunnel to rm_a3b07; Heals? False
+> Tunnel to Breeding Grounds Gamma Nest Top; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3b07/Tunnel to rm_a3b06
-  > Dock to rm_a3b05
+  * Morph Ball Tunnel to Breeding Grounds Gamma Nest Top/Tunnel to Breeding Grounds Alpha Nest
+  > Dock to Breeding Grounds Alpha Nest Access
       Morph Ball
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Area 3 - Breeding Grounds Alpha
-  > Dock to rm_a3b05
+  > Dock to Breeding Grounds Alpha Nest Access
       Trivial
 
 ----------------
-rm_a3b07
+Breeding Grounds Gamma Nest Top
 Extra - map_name: rm_a3b07
-> Tunnel to rm_a3b06; Heals? False
+> Tunnel to Breeding Grounds Alpha Nest; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a3b06/Tunnel to rm_a3b07
+  * Morph Ball Tunnel to Breeding Grounds Alpha Nest/Tunnel to Breeding Grounds Gamma Nest Top
   > Event - Gamma
       Can Use Any Bombs and Defeat Gamma
 
 > Event - Gamma; Heals? False
   * Layers: default
   * Event Area 3 - Breeding Grounds Middle Top Gamma
-  > Tunnel to rm_a3b06
+  > Tunnel to Breeding Grounds Alpha Nest
       Trivial
 
 ----------------
-rm_a3b08
+Breeding Grounds Gamma Nest Bottom
 Extra - map_name: rm_a3b08
-> Dock to rm_a3b02; Heals? False
+> Dock to Breeding Grounds Crossroads; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b02/Dock to rm_a3b08
+  * Open Passage to Breeding Grounds Crossroads/Dock to Breeding Grounds Gamma Nest Bottom
   > Bottom
       Can Use Any Bombs
 
-> Dock to rm_a3b09; Heals? False
+> Dock to Breeding Grounds Fly Stadium Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b09/Dock to rm_a3b08
+  * Open Passage to Breeding Grounds Fly Stadium Access/Dock to Breeding Grounds Gamma Nest Bottom
   > Bottom
       Can Use Any Bombs
 
 > Bottom; Heals? False
   * Layers: default
-  > Dock to rm_a3b02
+  > Dock to Breeding Grounds Crossroads
       Any of the following:
           Space Jump or Can Use Spider Ball
           All of the following:
@@ -1306,7 +1306,7 @@ Extra - map_name: rm_a3b08
           All of the following:
               # IBJ
               After Area 3 - Breeding Grounds Middle Bottom Gamma and Infinite Bomb Jumping (Advanced) and Can Use Bombs
-  > Dock to rm_a3b09
+  > Dock to Breeding Grounds Fly Stadium Access
       Any of the following:
           Space Jump
           All of the following:
@@ -1326,26 +1326,26 @@ Extra - map_name: rm_a3b08
       Trivial
 
 ----------------
-rm_a3b09
+Breeding Grounds Fly Stadium Access
 Extra - map_name: rm_a3b09
-> Dock to rm_a3b08; Heals? False
+> Dock to Breeding Grounds Gamma Nest Bottom; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b08/Dock to rm_a3b09
-  > Dock to rm_a3b10
+  * Open Passage to Breeding Grounds Gamma Nest Bottom/Dock to Breeding Grounds Fly Stadium Access
+  > Dock to Breeding Grounds Fly Stadium
       Hijump With Power Grip Wall
 
-> Dock to rm_a3b10; Heals? False
+> Dock to Breeding Grounds Fly Stadium; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b10/Dock to rm_a3b09
-  > Dock to rm_a3b08
+  * Open Passage to Breeding Grounds Fly Stadium/Dock to Breeding Grounds Fly Stadium Access
+  > Dock to Breeding Grounds Gamma Nest Bottom
       Trivial
 
 ----------------
-rm_a3b10
+Breeding Grounds Fly Stadium
 Extra - map_name: rm_a3b10
-> Dock to rm_a3b09; Heals? False
+> Dock to Breeding Grounds Fly Stadium Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b09/Dock to rm_a3b10
+  * Open Passage to Breeding Grounds Fly Stadium Access/Dock to Breeding Grounds Fly Stadium
   > Top Near Pinchers
       Any of the following:
           Hi-Jump Boots or Space Jump or Can Use Spider Ball
@@ -1353,15 +1353,15 @@ Extra - map_name: rm_a3b10
               # IBJ
               Infinite Bomb Jumping (Intermediate) or Can Use Bombs
 
-> Dock to rm_a3b11; Heals? False
+> Dock to Breeding Grounds Maze; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b11/Dock to rm_a3b10
+  * Open Passage to Breeding Grounds Maze/Dock to Breeding Grounds Fly Stadium
   > Top Near Pinchers
       Power Grip Wall
 
 > Top Near Pinchers; Heals? False
   * Layers: default
-  > Dock to rm_a3b11
+  > Dock to Breeding Grounds Maze
       Power Grip Wall
   > Pickup (Super Missile Tank)
       Super Missiles and Shinesparking Tricks (Beginner)
@@ -1369,17 +1369,17 @@ Extra - map_name: rm_a3b10
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 209; Category? Minor
-  * Extra - item_id: 209
-  > Dock to rm_a3b09
+  * Extra - object_name: oItemSM_209
+  > Dock to Breeding Grounds Fly Stadium Access
       Trivial
 
 ----------------
-rm_a3b11
+Breeding Grounds Maze
 Extra - map_name: rm_a3b11
-> Dock to rm_a3b12; Heals? False
+> Dock to Breeding Grounds Gamma Nest East; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b12/Dock to rm_a3b11
-  > Dock to rm_a3b10
+  * Open Passage to Breeding Grounds Gamma Nest East/Dock to Breeding Grounds Maze
+  > Dock to Breeding Grounds Fly Stadium
       Any of the following:
           All of the following:
               # Right side
@@ -1389,10 +1389,10 @@ Extra - map_name: rm_a3b11
               Can Use Any Bombs and Hijump Tunnel Climb and Power Grip Wall and Tunnel Climb
               Can Use Any Bombs or Can Use Spider Ball
 
-> Dock to rm_a3b10; Heals? False
+> Dock to Breeding Grounds Fly Stadium; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b10/Dock to rm_a3b11
-  > Dock to rm_a3b12
+  * Open Passage to Breeding Grounds Fly Stadium/Dock to Breeding Grounds Maze
+  > Dock to Breeding Grounds Gamma Nest East
       All of the following:
           Can Use Any Bombs and High Mid-Air Morph Tunnel Climb
           Any of the following:
@@ -1401,17 +1401,17 @@ Extra - map_name: rm_a3b11
               Movement (Intermediate) and Tunnel Climb
 
 ----------------
-rm_a3b12
+Breeding Grounds Gamma Nest East
 Extra - map_name: rm_a3b12
-> Dock to rm_a3b11; Heals? False
+> Dock to Breeding Grounds Maze; Heals? False
   * Layers: default
-  * Open Passage to rm_a3b11/Dock to rm_a3b12
+  * Open Passage to Breeding Grounds Maze/Dock to Breeding Grounds Gamma Nest East
   > Event - Gamma
       Defeat Gamma
 
 > Event - Gamma; Heals? False
   * Layers: default
   * Event Area 3 - Breeding Grounds Right Gamma
-  > Dock to rm_a3b11
+  > Dock to Breeding Grounds Maze
       Hijump Wall
 

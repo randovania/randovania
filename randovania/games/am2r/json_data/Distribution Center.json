@@ -2,7 +2,7 @@
     "name": "Distribution Center",
     "extra": {},
     "areas": {
-        "rm_a5h01": {
+        "Distribution Entranceway": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5h01"
@@ -26,7 +26,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "The Descent",
-                        "node": "Dock to rm_a5h01"
+                        "node": "Dock to Distribution Entranceway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -34,7 +34,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5h02": {
+                        "Dock to Meboid Blockade Exterior ": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -43,7 +43,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5h02": {
+                "Dock to Meboid Blockade Exterior ": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -60,8 +60,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h02",
-                        "node": "Dock to rm_a5h01"
+                        "area": "Meboid Blockade Exterior ",
+                        "node": "Dock to Distribution Entranceway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -80,13 +80,13 @@
                 }
             }
         },
-        "rm_a5h02": {
+        "Meboid Blockade Exterior ": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5h02"
             },
             "nodes": {
-                "Dock to rm_a5h01": {
+                "Dock to Distribution Entranceway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -103,8 +103,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h01",
-                        "node": "Dock to rm_a5h02"
+                        "area": "Distribution Entranceway",
+                        "node": "Dock to Meboid Blockade Exterior "
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -112,7 +112,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5h03": {
+                        "Dock to Distribution Center Exterior West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -121,7 +121,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5h03": {
+                "Dock to Distribution Center Exterior West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -138,8 +138,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h03",
-                        "node": "Dock to rm_a5h02"
+                        "area": "Distribution Center Exterior West Access",
+                        "node": "Dock to Meboid Blockade Exterior "
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -147,7 +147,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5h01": {
+                        "Dock to Distribution Entranceway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -167,13 +167,13 @@
                 }
             }
         },
-        "rm_a5h03": {
+        "Distribution Center Exterior West Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5h03"
             },
             "nodes": {
-                "Dock to rm_a5h02": {
+                "Dock to Meboid Blockade Exterior ": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -190,8 +190,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h02",
-                        "node": "Dock to rm_a5h03"
+                        "area": "Meboid Blockade Exterior ",
+                        "node": "Dock to Distribution Center Exterior West Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -199,7 +199,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5h04": {
+                        "Dock to Distribution Center Exterior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -208,7 +208,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5h04": {
+                "Dock to Distribution Center Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -225,8 +225,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h04",
-                        "node": "Dock to rm_a5h03"
+                        "area": "Distribution Center Exterior West",
+                        "node": "Dock to Distribution Center Exterior West Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -234,7 +234,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5h02": {
+                        "Dock to Meboid Blockade Exterior ": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -250,13 +250,13 @@
                 }
             }
         },
-        "rm_a5h04": {
+        "Distribution Center Exterior West": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5h04"
             },
             "nodes": {
-                "Door to rm_a5b21": {
+                "Door to Facility Storage Tower West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -273,8 +273,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b21",
-                        "node": "Door to rm_a5h04"
+                        "area": "Facility Storage Tower West",
+                        "node": "Door to Distribution Center Exterior West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -282,14 +282,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5h03": {
+                        "Dock to Distribution Center Exterior West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5c01": {
+                        "Door to Blade Bot Patrol Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -357,7 +357,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5c15": {
+                        "Door to Pipe Hub Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -429,7 +429,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5h03": {
+                "Dock to Distribution Center Exterior West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -446,8 +446,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h03",
-                        "node": "Dock to rm_a5h04"
+                        "area": "Distribution Center Exterior West Access",
+                        "node": "Dock to Distribution Center Exterior West"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -455,7 +455,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b21": {
+                        "Door to Facility Storage Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -464,7 +464,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c01": {
+                "Door to Blade Bot Patrol Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -481,8 +481,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c01",
-                        "node": "Door to rm_a5h04"
+                        "area": "Blade Bot Patrol Room",
+                        "node": "Door to Distribution Center Exterior West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -490,14 +490,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b21": {
+                        "Door to Facility Storage Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5c15": {
+                        "Door to Pipe Hub Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -511,7 +511,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c15": {
+                "Door to Pipe Hub Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -528,8 +528,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c15",
-                        "node": "Door to rm_a5h04"
+                        "area": "Pipe Hub Access",
+                        "node": "Door to Distribution Center Exterior West"
                     },
                     "default_dock_weakness": "A5 Near Pipe Hub EMP Door",
                     "exclude_from_dock_rando": false,
@@ -537,7 +537,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c01": {
+                        "Door to Blade Bot Patrol Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -565,7 +565,7 @@
                     "pickup_index": 309,
                     "location_category": "minor",
                     "connections": {
-                        "Door to rm_a5b21": {
+                        "Door to Facility Storage Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -576,13 +576,13 @@
                 }
             }
         },
-        "rm_a5h05": {
+        "Distribution Center Exterior East": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5h05"
             },
             "nodes": {
-                "Door to rm_a5c33": {
+                "Door to Distribution Center Exterior East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -599,8 +599,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c33",
-                        "node": "Door to rm_a5h05"
+                        "area": "Distribution Center Exterior East Access",
+                        "node": "Door to Distribution Center Exterior East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -608,7 +608,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b09": {
+                        "Door to Facility Storage Spiked Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -633,7 +633,7 @@
                         }
                     }
                 },
-                "Door to rm_a5b09": {
+                "Door to Facility Storage Spiked Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -650,8 +650,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b09",
-                        "node": "Door to rm_a5h05"
+                        "area": "Facility Storage Spiked Path",
+                        "node": "Door to Distribution Center Exterior East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -659,7 +659,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c33": {
+                        "Door to Distribution Center Exterior East Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -816,7 +816,7 @@
                     "pickup_index": 302,
                     "location_category": "minor",
                     "connections": {
-                        "Door to rm_a5c33": {
+                        "Door to Distribution Center Exterior East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -827,13 +827,13 @@
                 }
             }
         },
-        "rm_a5c01": {
+        "Blade Bot Patrol Room": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c01"
             },
             "nodes": {
-                "Door to rm_a5c02": {
+                "Door to Beam Bot Prison": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -850,8 +850,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c02",
-                        "node": "Door to rm_a5c01"
+                        "area": "Beam Bot Prison",
+                        "node": "Door to Blade Bot Patrol Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -859,7 +859,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5h04": {
+                        "Door to Distribution Center Exterior West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -899,7 +899,7 @@
                         }
                     }
                 },
-                "Door to rm_a5h04": {
+                "Door to Distribution Center Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -916,8 +916,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h04",
-                        "node": "Door to rm_a5c01"
+                        "area": "Distribution Center Exterior West",
+                        "node": "Door to Blade Bot Patrol Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -925,7 +925,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c02": {
+                        "Door to Beam Bot Prison": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -967,13 +967,13 @@
                 }
             }
         },
-        "rm_a5c02": {
+        "Beam Bot Prison": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c02"
             },
             "nodes": {
-                "Door to rm_a5c03": {
+                "Door to Energy Distribution Entrance Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -990,8 +990,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c03",
-                        "node": "Door to rm_a5c02"
+                        "area": "Energy Distribution Entrance Save Station",
+                        "node": "Door to Beam Bot Prison"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -999,7 +999,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c01": {
+                        "Door to Blade Bot Patrol Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1013,7 +1013,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c01": {
+                "Door to Blade Bot Patrol Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1030,8 +1030,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c01",
-                        "node": "Door to rm_a5c02"
+                        "area": "Blade Bot Patrol Room",
+                        "node": "Door to Beam Bot Prison"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1039,7 +1039,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c03": {
+                        "Door to Energy Distribution Entrance Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1055,7 +1055,7 @@
                 }
             }
         },
-        "rm_a5c03": {
+        "Energy Distribution Entrance Save Station": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c03"
@@ -1076,14 +1076,14 @@
                     "extra": {},
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to rm_a5c04": {
+                        "Door to Energy Distribution Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5c02": {
+                        "Door to Beam Bot Prison": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1092,7 +1092,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c04": {
+                "Door to Energy Distribution Tower West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1109,8 +1109,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c04",
-                        "node": "Door to rm_a5c03"
+                        "area": "Energy Distribution Tower West",
+                        "node": "Door to Energy Distribution Entrance Save Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1119,7 +1119,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to rm_a5c02": {
+                "Door to Beam Bot Prison": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1136,8 +1136,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c02",
-                        "node": "Door to rm_a5c03"
+                        "area": "Beam Bot Prison",
+                        "node": "Door to Energy Distribution Entrance Save Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1156,13 +1156,13 @@
                 }
             }
         },
-        "rm_a5c04": {
+        "Energy Distribution Tower West": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c04"
             },
             "nodes": {
-                "Door to rm_a5c03": {
+                "Door to Energy Distribution Entrance Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1179,8 +1179,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c03",
-                        "node": "Door to rm_a5c04"
+                        "area": "Energy Distribution Entrance Save Station",
+                        "node": "Door to Energy Distribution Tower West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1188,7 +1188,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c05": {
+                        "Door to Energy Distribution Beam Bot Guards": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1221,7 +1221,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5c11": {
+                        "Door to Energy Distribution Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1230,7 +1230,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c05": {
+                "Door to Energy Distribution Beam Bot Guards": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1247,8 +1247,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c05",
-                        "node": "Door to rm_a5c04"
+                        "area": "Energy Distribution Beam Bot Guards",
+                        "node": "Door to Energy Distribution Tower West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1256,7 +1256,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c03": {
+                        "Door to Energy Distribution Entrance Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1265,7 +1265,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c11": {
+                "Door to Energy Distribution Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1282,8 +1282,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c11",
-                        "node": "Door to rm_a5c04"
+                        "area": "Energy Distribution Tower East",
+                        "node": "Door to Energy Distribution Tower West"
                     },
                     "default_dock_weakness": "A5 Near Save EMP Door",
                     "exclude_from_dock_rando": false,
@@ -1291,7 +1291,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c03": {
+                        "Door to Energy Distribution Entrance Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1302,13 +1302,13 @@
                 }
             }
         },
-        "rm_a5c05": {
+        "Energy Distribution Beam Bot Guards": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c05"
             },
             "nodes": {
-                "Door to rm_a5c06": {
+                "Door to Energy Distribution Activation Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1325,8 +1325,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c06",
-                        "node": "Door to rm_a5c05"
+                        "area": "Energy Distribution Activation Shaft",
+                        "node": "Door to Energy Distribution Beam Bot Guards"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1334,7 +1334,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c04": {
+                        "Door to Energy Distribution Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1374,7 +1374,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c04": {
+                "Door to Energy Distribution Tower West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1391,8 +1391,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c04",
-                        "node": "Door to rm_a5c05"
+                        "area": "Energy Distribution Tower West",
+                        "node": "Door to Energy Distribution Beam Bot Guards"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1400,7 +1400,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c06": {
+                        "Door to Energy Distribution Activation Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1442,13 +1442,13 @@
                 }
             }
         },
-        "rm_a5c06": {
+        "Energy Distribution Activation Shaft": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c06"
             },
             "nodes": {
-                "Door to rm_a5c05": {
+                "Door to Energy Distribution Beam Bot Guards": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1465,8 +1465,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c05",
-                        "node": "Door to rm_a5c06"
+                        "area": "Energy Distribution Beam Bot Guards",
+                        "node": "Door to Energy Distribution Activation Shaft"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1474,7 +1474,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c07": {
+                        "Door to Energy Distribution Activation": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1488,7 +1488,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c07": {
+                "Door to Energy Distribution Activation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1505,8 +1505,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c07",
-                        "node": "Door to rm_a5c06"
+                        "area": "Energy Distribution Activation",
+                        "node": "Door to Energy Distribution Activation Shaft"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1514,7 +1514,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c05": {
+                        "Door to Energy Distribution Beam Bot Guards": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1525,13 +1525,13 @@
                 }
             }
         },
-        "rm_a5c07": {
+        "Energy Distribution Activation": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c07"
             },
             "nodes": {
-                "Door to rm_a5c06": {
+                "Door to Energy Distribution Activation Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1548,8 +1548,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c06",
-                        "node": "Door to rm_a5c07"
+                        "area": "Energy Distribution Activation Shaft",
+                        "node": "Door to Energy Distribution Activation"
                     },
                     "default_dock_weakness": "A5 Activation Tower Door",
                     "exclude_from_dock_rando": false,
@@ -1576,7 +1576,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c08": {
+                "Door to Energy Distribution Emergency Exit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1593,8 +1593,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c08",
-                        "node": "Door to rm_a5c07"
+                        "area": "Energy Distribution Emergency Exit",
+                        "node": "Door to Energy Distribution Activation"
                     },
                     "default_dock_weakness": "A5 Activation Tower Door",
                     "exclude_from_dock_rando": false,
@@ -1627,14 +1627,14 @@
                     "valid_starting_location": false,
                     "event_name": "EMP",
                     "connections": {
-                        "Door to rm_a5c06": {
+                        "Door to Energy Distribution Activation Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5c08": {
+                        "Door to Energy Distribution Emergency Exit": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1676,13 +1676,13 @@
                 }
             }
         },
-        "rm_a5c08": {
+        "Energy Distribution Emergency Exit": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c08"
             },
             "nodes": {
-                "Door to rm_a5c07": {
+                "Door to Energy Distribution Activation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1699,8 +1699,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c07",
-                        "node": "Door to rm_a5c08"
+                        "area": "Energy Distribution Activation",
+                        "node": "Door to Energy Distribution Emergency Exit"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1708,7 +1708,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c09": {
+                        "Door to EMP Ball Introduction": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1727,7 +1727,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c09": {
+                "Door to EMP Ball Introduction": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1744,8 +1744,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c09",
-                        "node": "Door to rm_a5c08"
+                        "area": "EMP Ball Introduction",
+                        "node": "Door to Energy Distribution Emergency Exit"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1791,7 +1791,7 @@
                     "pickup_index": 300,
                     "location_category": "minor",
                     "connections": {
-                        "Door to rm_a5c07": {
+                        "Door to Energy Distribution Activation": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1825,7 +1825,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5c09": {
+                        "Door to EMP Ball Introduction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1846,13 +1846,13 @@
                 }
             }
         },
-        "rm_a5c09": {
+        "EMP Ball Introduction": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c09"
             },
             "nodes": {
-                "Door to rm_a5c10": {
+                "Door to Energy Distribution Robot Home": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1869,8 +1869,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c10",
-                        "node": "Door to rm_a5c09"
+                        "area": "Energy Distribution Robot Home",
+                        "node": "Door to EMP Ball Introduction"
                     },
                     "default_dock_weakness": "A5 Near Activation Tower EMP Door",
                     "exclude_from_dock_rando": false,
@@ -1887,7 +1887,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c08": {
+                "Door to Energy Distribution Emergency Exit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1904,8 +1904,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c08",
-                        "node": "Door to rm_a5c09"
+                        "area": "Energy Distribution Emergency Exit",
+                        "node": "Door to EMP Ball Introduction"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1943,14 +1943,14 @@
                     "valid_starting_location": false,
                     "event_name": "NearA5EMPActivationStatueEMP",
                     "connections": {
-                        "Door to rm_a5c10": {
+                        "Door to Energy Distribution Robot Home": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5c08": {
+                        "Door to Energy Distribution Emergency Exit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1970,13 +1970,13 @@
                 }
             }
         },
-        "rm_a5c10": {
+        "Energy Distribution Robot Home": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c10"
             },
             "nodes": {
-                "Door to rm_a5c11": {
+                "Door to Energy Distribution Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1993,8 +1993,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c11",
-                        "node": "Door to rm_a5c10"
+                        "area": "Energy Distribution Tower East",
+                        "node": "Door to Energy Distribution Robot Home"
                     },
                     "default_dock_weakness": "A5 Robots Showcase EMP Door",
                     "exclude_from_dock_rando": false,
@@ -2011,7 +2011,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c09": {
+                "Door to EMP Ball Introduction": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2028,8 +2028,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c09",
-                        "node": "Door to rm_a5c10"
+                        "area": "EMP Ball Introduction",
+                        "node": "Door to Energy Distribution Robot Home"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2085,14 +2085,14 @@
                     "valid_starting_location": false,
                     "event_name": "A5RobotsEMP",
                     "connections": {
-                        "Door to rm_a5c11": {
+                        "Door to Energy Distribution Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5c09": {
+                        "Door to EMP Ball Introduction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2103,13 +2103,13 @@
                 }
             }
         },
-        "rm_a5c11": {
+        "Energy Distribution Tower East": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c11"
             },
             "nodes": {
-                "Door to rm_a5c04": {
+                "Door to Energy Distribution Tower West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2126,8 +2126,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c04",
-                        "node": "Door to rm_a5c11"
+                        "area": "Energy Distribution Tower West",
+                        "node": "Door to Energy Distribution Tower East"
                     },
                     "default_dock_weakness": "A5 Near Save EMP Door",
                     "exclude_from_dock_rando": false,
@@ -2135,7 +2135,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c12": {
+                        "Door to Energy Distribution Zeta Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2144,7 +2144,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c10": {
+                "Door to Energy Distribution Robot Home": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2161,8 +2161,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c10",
-                        "node": "Door to rm_a5c11"
+                        "area": "Energy Distribution Robot Home",
+                        "node": "Door to Energy Distribution Tower East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2205,7 +2205,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c12": {
+                "Door to Energy Distribution Zeta Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2222,8 +2222,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c12",
-                        "node": "Door to rm_a5c11"
+                        "area": "Energy Distribution Zeta Nest",
+                        "node": "Door to Energy Distribution Tower East"
                     },
                     "default_dock_weakness": "A5 Near Save EMP Door",
                     "exclude_from_dock_rando": false,
@@ -2231,7 +2231,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c04": {
+                        "Door to Energy Distribution Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2256,14 +2256,14 @@
                     "valid_starting_location": false,
                     "event_name": "NearA5SaveEMP",
                     "connections": {
-                        "Door to rm_a5c04": {
+                        "Door to Energy Distribution Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5c10": {
+                        "Door to Energy Distribution Robot Home": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2343,7 +2343,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5c12": {
+                        "Door to Energy Distribution Zeta Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2354,13 +2354,13 @@
                 }
             }
         },
-        "rm_a5c12": {
+        "Energy Distribution Zeta Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c12"
             },
             "nodes": {
-                "Door to rm_a5c13": {
+                "Door to Distribution Facility Tower West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2377,8 +2377,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c13",
-                        "node": "Door to rm_a5c12"
+                        "area": "Distribution Facility Tower West",
+                        "node": "Door to Energy Distribution Zeta Nest"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2404,7 +2404,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c11": {
+                "Door to Energy Distribution Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2421,8 +2421,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c11",
-                        "node": "Door to rm_a5c12"
+                        "area": "Energy Distribution Tower East",
+                        "node": "Door to Energy Distribution Zeta Nest"
                     },
                     "default_dock_weakness": "A5 Near Save EMP Door",
                     "exclude_from_dock_rando": false,
@@ -2488,7 +2488,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a5c13": {
+                        "Door to Distribution Facility Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2568,7 +2568,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5c11": {
+                        "Door to Energy Distribution Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2664,13 +2664,13 @@
                 }
             }
         },
-        "rm_a5c13": {
+        "Distribution Facility Tower West": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c13"
             },
             "nodes": {
-                "Door to rm_a5c12": {
+                "Door to Energy Distribution Zeta Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2687,8 +2687,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c12",
-                        "node": "Door to rm_a5c13"
+                        "area": "Energy Distribution Zeta Nest",
+                        "node": "Door to Distribution Facility Tower West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2696,7 +2696,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pipe to rm_a5c17 (Bottom)": {
+                        "Pipe to Distribution Facility Tower East (Bottom)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2765,7 +2765,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c16": {
+                "Door to Distribution Facility Connecting Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2782,8 +2782,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c16",
-                        "node": "Door to rm_a5c13"
+                        "area": "Distribution Facility Connecting Path",
+                        "node": "Door to Distribution Facility Tower West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2822,7 +2822,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c14": {
+                "Door to Pipe Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2839,8 +2839,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c14",
-                        "node": "Door to rm_a5c13"
+                        "area": "Pipe Hub",
+                        "node": "Door to Distribution Facility Tower West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2867,7 +2867,7 @@
                         }
                     }
                 },
-                "Pipe to rm_a5c17 (Bottom)": {
+                "Pipe to Distribution Facility Tower East (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2884,8 +2884,8 @@
                     "dock_type": "pipe",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c17",
-                        "node": "Pipe to rm_a5c13 (Bottom)"
+                        "area": "Distribution Facility Tower East",
+                        "node": "Pipe to Distribution Facility Tower West (Bottom)"
                     },
                     "default_dock_weakness": "Teleporter Pipe",
                     "exclude_from_dock_rando": false,
@@ -2893,7 +2893,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c12": {
+                        "Door to Energy Distribution Zeta Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2927,7 +2927,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a5c12": {
+                        "Door to Energy Distribution Zeta Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2944,7 +2944,7 @@
                                 ]
                             }
                         },
-                        "Pipe to rm_a5c17 (Middle)": {
+                        "Pipe to Distribution Facility Tower East (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3061,7 +3061,7 @@
                         }
                     }
                 },
-                "Pipe to rm_a5c17 (Middle)": {
+                "Pipe to Distribution Facility Tower East (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3078,8 +3078,8 @@
                     "dock_type": "pipe",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c17",
-                        "node": "Pipe to rm_a5c13 (Top)"
+                        "area": "Distribution Facility Tower East",
+                        "node": "Pipe to Distribution Facility Tower West (Top)"
                     },
                     "default_dock_weakness": "Teleporter Pipe",
                     "exclude_from_dock_rando": false,
@@ -3121,14 +3121,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a5c16": {
+                        "Door to Distribution Facility Connecting Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5c14": {
+                        "Door to Pipe Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3177,13 +3177,13 @@
                 }
             }
         },
-        "rm_a5c14": {
-            "default_node": "Door to rm_a5c13",
+        "Pipe Hub": {
+            "default_node": "Door to Distribution Facility Tower West",
             "extra": {
                 "map_name": "rm_a5c14"
             },
             "nodes": {
-                "Door to rm_a5c13": {
+                "Door to Distribution Facility Tower West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3200,8 +3200,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c13",
-                        "node": "Door to rm_a5c14"
+                        "area": "Distribution Facility Tower West",
+                        "node": "Door to Pipe Hub"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3209,14 +3209,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c15": {
+                        "Door to Pipe Hub Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Pipe to rm_a5a01": {
+                        "Pipe to Gravity Area Moto Room Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3410,7 +3410,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c15": {
+                "Door to Pipe Hub Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3427,8 +3427,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c15",
-                        "node": "Door to rm_a5c14"
+                        "area": "Pipe Hub Access",
+                        "node": "Door to Pipe Hub"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3436,7 +3436,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c13": {
+                        "Door to Distribution Facility Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3445,7 +3445,7 @@
                         }
                     }
                 },
-                "Pipe to rm_a5a01": {
+                "Pipe to Gravity Area Moto Room Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3462,8 +3462,8 @@
                     "dock_type": "pipe",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a01",
-                        "node": "Pipe to rm_a5c14"
+                        "area": "Gravity Area Moto Room Pipe",
+                        "node": "Pipe to Pipe Hub"
                     },
                     "default_dock_weakness": "Teleporter Pipe",
                     "exclude_from_dock_rando": false,
@@ -3471,7 +3471,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c13": {
+                        "Door to Distribution Facility Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3536,12 +3536,12 @@
                     "valid_starting_location": false,
                     "destination": {
                         "region": "Industrial Complex",
-                        "area": "rm_a3a27"
+                        "area": "Pipe To Distribution Center Pipe Hub"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to rm_a5c13": {
+                        "Door to Distribution Facility Tower West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3628,7 +3628,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to rm_a5c13": {
+                        "Door to Distribution Facility Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3649,13 +3649,13 @@
                 }
             }
         },
-        "rm_a5c15": {
+        "Pipe Hub Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c15"
             },
             "nodes": {
-                "Door to rm_a5c14": {
+                "Door to Pipe Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3672,8 +3672,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c14",
-                        "node": "Door to rm_a5c15"
+                        "area": "Pipe Hub",
+                        "node": "Door to Pipe Hub Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3681,7 +3681,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5h04": {
+                        "Door to Distribution Center Exterior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3720,7 +3720,7 @@
                         }
                     }
                 },
-                "Door to rm_a5h04": {
+                "Door to Distribution Center Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3737,8 +3737,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h04",
-                        "node": "Door to rm_a5c15"
+                        "area": "Distribution Center Exterior West",
+                        "node": "Door to Pipe Hub Access"
                     },
                     "default_dock_weakness": "A5 Near Pipe Hub EMP Door",
                     "exclude_from_dock_rando": false,
@@ -3746,7 +3746,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c14": {
+                        "Door to Pipe Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3771,7 +3771,7 @@
                     "valid_starting_location": false,
                     "event_name": "A5NearPipeHubEMP",
                     "connections": {
-                        "Door to rm_a5c14": {
+                        "Door to Pipe Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3782,13 +3782,13 @@
                 }
             }
         },
-        "rm_a5c16": {
+        "Distribution Facility Connecting Path": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c16"
             },
             "nodes": {
-                "Door to rm_a5c13": {
+                "Door to Distribution Facility Tower West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3805,8 +3805,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c13",
-                        "node": "Door to rm_a5c16"
+                        "area": "Distribution Facility Tower West",
+                        "node": "Door to Distribution Facility Connecting Path"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3814,7 +3814,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c17": {
+                        "Door to Distribution Facility Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3878,7 +3878,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c17": {
+                "Door to Distribution Facility Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3895,8 +3895,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c17",
-                        "node": "Door to rm_a5c16"
+                        "area": "Distribution Facility Tower East",
+                        "node": "Door to Distribution Facility Connecting Path"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3904,7 +3904,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c13": {
+                        "Door to Distribution Facility Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3987,13 +3987,13 @@
                 }
             }
         },
-        "rm_a5c17": {
+        "Distribution Facility Tower East": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c17"
             },
             "nodes": {
-                "Door to rm_a5c16": {
+                "Door to Distribution Facility Connecting Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4010,8 +4010,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c16",
-                        "node": "Door to rm_a5c17"
+                        "area": "Distribution Facility Connecting Path",
+                        "node": "Door to Distribution Facility Tower East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4019,7 +4019,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c19": {
+                        "Door to Distribution Facility Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4076,7 +4076,7 @@
                                 ]
                             }
                         },
-                        "Pipe to rm_a5c25": {
+                        "Pipe to Meboid Blockade Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4085,7 +4085,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c19": {
+                "Door to Distribution Facility Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4102,8 +4102,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c19",
-                        "node": "Door to rm_a5c17"
+                        "area": "Distribution Facility Save Station",
+                        "node": "Door to Distribution Facility Tower East"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -4111,7 +4111,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c16": {
+                        "Door to Distribution Facility Connecting Path": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4168,7 +4168,7 @@
                                 ]
                             }
                         },
-                        "Pipe to rm_a5c25": {
+                        "Pipe to Meboid Blockade Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4177,7 +4177,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c18": {
+                "Door to Alpha Squad Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4194,8 +4194,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c18",
-                        "node": "Door to rm_a5c17"
+                        "area": "Alpha Squad Nest",
+                        "node": "Door to Distribution Facility Tower East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4203,7 +4203,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pipe to rm_a5c13 (Top)": {
+                        "Pipe to Distribution Facility Tower West (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4220,7 +4220,7 @@
                                 ]
                             }
                         },
-                        "Pipe to rm_a5c25": {
+                        "Pipe to Meboid Blockade Interior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4234,7 +4234,7 @@
                         }
                     }
                 },
-                "Pipe to rm_a5c13 (Bottom)": {
+                "Pipe to Distribution Facility Tower West (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4251,8 +4251,8 @@
                     "dock_type": "pipe",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c13",
-                        "node": "Pipe to rm_a5c17 (Bottom)"
+                        "area": "Distribution Facility Tower West",
+                        "node": "Pipe to Distribution Facility Tower East (Bottom)"
                     },
                     "default_dock_weakness": "Teleporter Pipe",
                     "exclude_from_dock_rando": false,
@@ -4260,7 +4260,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pipe to rm_a5c13 (Top)": {
+                        "Pipe to Distribution Facility Tower West (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4339,7 +4339,7 @@
                         }
                     }
                 },
-                "Pipe to rm_a5c13 (Top)": {
+                "Pipe to Distribution Facility Tower West (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4356,8 +4356,8 @@
                     "dock_type": "pipe",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c13",
-                        "node": "Pipe to rm_a5c17 (Middle)"
+                        "area": "Distribution Facility Tower West",
+                        "node": "Pipe to Distribution Facility Tower East (Middle)"
                     },
                     "default_dock_weakness": "Teleporter Pipe",
                     "exclude_from_dock_rando": false,
@@ -4365,7 +4365,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c18": {
+                        "Door to Alpha Squad Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4403,7 +4403,7 @@
                                 ]
                             }
                         },
-                        "Pipe to rm_a5c13 (Bottom)": {
+                        "Pipe to Distribution Facility Tower West (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4412,7 +4412,7 @@
                         }
                     }
                 },
-                "Pipe to rm_a5c25": {
+                "Pipe to Meboid Blockade Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4429,8 +4429,8 @@
                     "dock_type": "pipe",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c25",
-                        "node": "Pipe to rm_a5c17"
+                        "area": "Meboid Blockade Interior",
+                        "node": "Pipe to Distribution Facility Tower East"
                     },
                     "default_dock_weakness": "Teleporter Pipe",
                     "exclude_from_dock_rando": false,
@@ -4438,7 +4438,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c19": {
+                        "Door to Distribution Facility Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4566,7 +4566,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5c18": {
+                        "Door to Alpha Squad Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4577,13 +4577,13 @@
                 }
             }
         },
-        "rm_a5c18": {
+        "Alpha Squad Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c18"
             },
             "nodes": {
-                "Door to rm_a5c17": {
+                "Door to Distribution Facility Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4600,8 +4600,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c17",
-                        "node": "Door to rm_a5c18"
+                        "area": "Distribution Facility Tower East",
+                        "node": "Door to Alpha Squad Nest"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4758,7 +4758,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a5c17": {
+                        "Door to Distribution Facility Tower East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4925,7 +4925,7 @@
                 }
             }
         },
-        "rm_a5c19": {
+        "Distribution Facility Save Station": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c19"
@@ -4946,14 +4946,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a5c17": {
+                        "Door to Distribution Facility Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5c20": {
+                        "Door to Distribution Facility Intersection": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4962,7 +4962,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c17": {
+                "Door to Distribution Facility Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4979,8 +4979,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c17",
-                        "node": "Door to rm_a5c19"
+                        "area": "Distribution Facility Tower East",
+                        "node": "Door to Distribution Facility Save Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4997,7 +4997,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c20": {
+                "Door to Distribution Facility Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5014,8 +5014,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c20",
-                        "node": "Door to rm_a5c19"
+                        "area": "Distribution Facility Intersection",
+                        "node": "Door to Distribution Facility Save Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5034,13 +5034,13 @@
                 }
             }
         },
-        "rm_a5c20": {
+        "Distribution Facility Intersection": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c20"
             },
             "nodes": {
-                "Door to rm_a5c19": {
+                "Door to Distribution Facility Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5057,8 +5057,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c19",
-                        "node": "Door to rm_a5c20"
+                        "area": "Distribution Facility Save Station",
+                        "node": "Door to Distribution Facility Intersection"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5066,7 +5066,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c33": {
+                        "Door to Distribution Center Exterior East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5075,7 +5075,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c21": {
+                "Door to Meat Boy Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5092,8 +5092,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c21",
-                        "node": "Door to rm_a5c20"
+                        "area": "Meat Boy Room Access",
+                        "node": "Door to Distribution Facility Intersection"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5101,7 +5101,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c33": {
+                        "Door to Distribution Center Exterior East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5110,7 +5110,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c33": {
+                "Door to Distribution Center Exterior East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5127,8 +5127,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c33",
-                        "node": "Door to rm_a5c20"
+                        "area": "Distribution Center Exterior East Access",
+                        "node": "Door to Distribution Facility Intersection"
                     },
                     "default_dock_weakness": "A5 Near Right Side EMP Door",
                     "exclude_from_dock_rando": false,
@@ -5136,7 +5136,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c19": {
+                        "Door to Distribution Facility Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5148,7 +5148,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5c21": {
+                        "Door to Meat Boy Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5159,13 +5159,13 @@
                 }
             }
         },
-        "rm_a5c21": {
+        "Meat Boy Room Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c21"
             },
             "nodes": {
-                "Door to rm_a5c20": {
+                "Door to Distribution Facility Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5182,8 +5182,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c20",
-                        "node": "Door to rm_a5c21"
+                        "area": "Distribution Facility Intersection",
+                        "node": "Door to Meat Boy Room Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5191,7 +5191,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c22": {
+                        "Door to Meat Boy Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5200,7 +5200,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c22": {
+                "Door to Meat Boy Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5217,8 +5217,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c22",
-                        "node": "Door to rm_a5c21"
+                        "area": "Meat Boy Room",
+                        "node": "Door to Meat Boy Room Access"
                     },
                     "default_dock_weakness": "A5 Near Screw EMP Door",
                     "exclude_from_dock_rando": false,
@@ -5226,7 +5226,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c20": {
+                        "Door to Distribution Facility Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5328,7 +5328,7 @@
                     "valid_starting_location": false,
                     "event_name": "NearScrewEMP",
                     "connections": {
-                        "Door to rm_a5c22": {
+                        "Door to Meat Boy Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5435,13 +5435,13 @@
                 }
             }
         },
-        "rm_a5c22": {
+        "Meat Boy Room": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c22"
             },
             "nodes": {
-                "Door to rm_a5c21": {
+                "Door to Meat Boy Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5458,8 +5458,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c21",
-                        "node": "Door to rm_a5c22"
+                        "area": "Meat Boy Room Access",
+                        "node": "Door to Meat Boy Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5467,7 +5467,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c23": {
+                        "Door to Screw Attack Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5476,7 +5476,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c23": {
+                "Door to Screw Attack Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5493,8 +5493,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c23",
-                        "node": "Door to rm_a5c22"
+                        "area": "Screw Attack Chamber Access",
+                        "node": "Door to Meat Boy Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5502,7 +5502,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c21": {
+                        "Door to Meat Boy Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5527,13 +5527,13 @@
                 }
             }
         },
-        "rm_a5c23": {
+        "Screw Attack Chamber Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c23"
             },
             "nodes": {
-                "Door to rm_a5c22": {
+                "Door to Meat Boy Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5550,8 +5550,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c22",
-                        "node": "Door to rm_a5c23"
+                        "area": "Meat Boy Room",
+                        "node": "Door to Screw Attack Chamber Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5559,7 +5559,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c24": {
+                        "Door to Screw Attack Chamber": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5594,7 +5594,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c24": {
+                "Door to Screw Attack Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5611,8 +5611,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c24",
-                        "node": "Door to rm_a5c23"
+                        "area": "Screw Attack Chamber",
+                        "node": "Door to Screw Attack Chamber Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -5620,7 +5620,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c22": {
+                        "Door to Meat Boy Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5631,13 +5631,13 @@
                 }
             }
         },
-        "rm_a5c24": {
+        "Screw Attack Chamber": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c24"
             },
             "nodes": {
-                "Door to rm_a5c23": {
+                "Door to Screw Attack Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5654,8 +5654,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c23",
-                        "node": "Door to rm_a5c24"
+                        "area": "Screw Attack Chamber Access",
+                        "node": "Door to Screw Attack Chamber"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5691,7 +5691,7 @@
                     "pickup_index": 8,
                     "location_category": "major",
                     "connections": {
-                        "Door to rm_a5c23": {
+                        "Door to Screw Attack Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5702,13 +5702,13 @@
                 }
             }
         },
-        "rm_a5c25": {
+        "Meboid Blockade Interior": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c25"
             },
             "nodes": {
-                "Pipe to rm_a5c17": {
+                "Pipe to Distribution Facility Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5725,8 +5725,8 @@
                     "dock_type": "pipe",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c17",
-                        "node": "Pipe to rm_a5c25"
+                        "area": "Distribution Facility Tower East",
+                        "node": "Pipe to Meboid Blockade Interior"
                     },
                     "default_dock_weakness": "Teleporter Pipe",
                     "exclude_from_dock_rando": false,
@@ -5734,7 +5734,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pipe to rm_a5c26": {
+                        "Pipe to Moheek Hangout": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5836,7 +5836,7 @@
                         }
                     }
                 },
-                "Pipe to rm_a5c26": {
+                "Pipe to Moheek Hangout": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5853,8 +5853,8 @@
                     "dock_type": "pipe",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c26",
-                        "node": "Pipe to rm_a5c25"
+                        "area": "Moheek Hangout",
+                        "node": "Pipe to Meboid Blockade Interior"
                     },
                     "default_dock_weakness": "Teleporter Pipe",
                     "exclude_from_dock_rando": false,
@@ -5862,7 +5862,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pipe to rm_a5c17": {
+                        "Pipe to Distribution Facility Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6008,7 +6008,7 @@
                     "pickup_index": 301,
                     "location_category": "minor",
                     "connections": {
-                        "Pipe to rm_a5c26": {
+                        "Pipe to Moheek Hangout": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6024,13 +6024,13 @@
                 }
             }
         },
-        "rm_a5c26": {
+        "Moheek Hangout": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c26"
             },
             "nodes": {
-                "Door to rm_a5c27": {
+                "Door to Waterblob Habitat": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6047,8 +6047,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c27",
-                        "node": "Door to rm_a5c26"
+                        "area": "Waterblob Habitat",
+                        "node": "Door to Moheek Hangout"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6056,7 +6056,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pipe to rm_a5c25": {
+                        "Pipe to Meboid Blockade Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6134,7 +6134,7 @@
                         }
                     }
                 },
-                "Pipe to rm_a5c25": {
+                "Pipe to Meboid Blockade Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6151,8 +6151,8 @@
                     "dock_type": "pipe",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c25",
-                        "node": "Pipe to rm_a5c26"
+                        "area": "Meboid Blockade Interior",
+                        "node": "Pipe to Moheek Hangout"
                     },
                     "default_dock_weakness": "Teleporter Pipe",
                     "exclude_from_dock_rando": false,
@@ -6160,7 +6160,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c27": {
+                        "Door to Waterblob Habitat": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6232,13 +6232,13 @@
                 }
             }
         },
-        "rm_a5c27": {
+        "Waterblob Habitat": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c27"
             },
             "nodes": {
-                "Door to rm_a5c28": {
+                "Door to Facility Storage Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6255,8 +6255,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c28",
-                        "node": "Door to rm_a5c27"
+                        "area": "Facility Storage Save Station",
+                        "node": "Door to Waterblob Habitat"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6264,7 +6264,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c26": {
+                        "Door to Moheek Hangout": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6318,7 +6318,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c26": {
+                "Door to Moheek Hangout": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6335,8 +6335,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c26",
-                        "node": "Door to rm_a5c27"
+                        "area": "Moheek Hangout",
+                        "node": "Door to Waterblob Habitat"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6344,7 +6344,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c28": {
+                        "Door to Facility Storage Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6400,13 +6400,13 @@
                 }
             }
         },
-        "rm_a5c28": {
+        "Facility Storage Save Station": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c28"
             },
             "nodes": {
-                "Door to rm_a5c29": {
+                "Door to Facility Storage Intersection East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6423,8 +6423,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c29",
-                        "node": "Door to rm_a5c28"
+                        "area": "Facility Storage Intersection East",
+                        "node": "Door to Facility Storage Save Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6456,14 +6456,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a5c29": {
+                        "Door to Facility Storage Intersection East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5c27": {
+                        "Door to Waterblob Habitat": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6472,7 +6472,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c27": {
+                "Door to Waterblob Habitat": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6489,8 +6489,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c27",
-                        "node": "Door to rm_a5c28"
+                        "area": "Waterblob Habitat",
+                        "node": "Door to Facility Storage Save Station"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6509,13 +6509,13 @@
                 }
             }
         },
-        "rm_a5c29": {
+        "Facility Storage Intersection East": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c29"
             },
             "nodes": {
-                "Door to rm_a5c28": {
+                "Door to Facility Storage Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6532,8 +6532,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c28",
-                        "node": "Door to rm_a5c29"
+                        "area": "Facility Storage Save Station",
+                        "node": "Door to Facility Storage Intersection East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6541,7 +6541,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c30": {
+                        "Door to Dual Gamma Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6550,7 +6550,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5b01": {
+                "Dock to Facility Storage Clogged Pipe North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6567,8 +6567,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b01",
-                        "node": "Dock to rm_a5c29"
+                        "area": "Facility Storage Clogged Pipe North",
+                        "node": "Dock to Facility Storage Intersection East"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6576,7 +6576,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c30": {
+                        "Door to Dual Gamma Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6585,7 +6585,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c30": {
+                "Door to Dual Gamma Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6602,8 +6602,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c30",
-                        "node": "Door to rm_a5c29"
+                        "area": "Dual Gamma Nest",
+                        "node": "Door to Facility Storage Intersection East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6611,7 +6611,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c28": {
+                        "Door to Facility Storage Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6679,7 +6679,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a5b01": {
+                        "Dock to Facility Storage Clogged Pipe North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6690,13 +6690,13 @@
                 }
             }
         },
-        "rm_a5c30": {
+        "Dual Gamma Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c30"
             },
             "nodes": {
-                "Door to rm_a5c29": {
+                "Door to Facility Storage Intersection East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6713,8 +6713,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c29",
-                        "node": "Door to rm_a5c30"
+                        "area": "Facility Storage Intersection East",
+                        "node": "Door to Dual Gamma Nest"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -6764,7 +6764,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma14",
                     "connections": {
-                        "Door to rm_a5c29": {
+                        "Door to Facility Storage Intersection East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6789,7 +6789,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma15",
                     "connections": {
-                        "Door to rm_a5c29": {
+                        "Door to Facility Storage Intersection East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6800,13 +6800,13 @@
                 }
             }
         },
-        "rm_a5c31": {
+        "Ice Beam Chamber Access": {
             "default_node": "Teleporter Pipe",
             "extra": {
                 "map_name": "rm_a5c31"
             },
             "nodes": {
-                "Door to rm_a5c32": {
+                "Door to Ice Beam Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6823,8 +6823,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c32",
-                        "node": "Door to rm_a5c31"
+                        "area": "Ice Beam Chamber",
+                        "node": "Door to Ice Beam Chamber Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -6892,12 +6892,12 @@
                     "valid_starting_location": false,
                     "destination": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b03"
+                        "area": "Serris Arena Pipe"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to rm_a5c32": {
+                        "Door to Ice Beam Chamber": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6917,13 +6917,13 @@
                 }
             }
         },
-        "rm_a5c32": {
+        "Ice Beam Chamber": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c32"
             },
             "nodes": {
-                "Door to rm_a5c31": {
+                "Door to Ice Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6940,8 +6940,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c31",
-                        "node": "Door to rm_a5c32"
+                        "area": "Ice Beam Chamber Access",
+                        "node": "Door to Ice Beam Chamber"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -7002,7 +7002,7 @@
                     "valid_starting_location": false,
                     "event_name": "IceItem",
                     "connections": {
-                        "Door to rm_a5c31": {
+                        "Door to Ice Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7013,13 +7013,13 @@
                 }
             }
         },
-        "rm_a5c33": {
+        "Distribution Center Exterior East Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c33"
             },
             "nodes": {
-                "Door to rm_a5h05": {
+                "Door to Distribution Center Exterior East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7036,8 +7036,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h05",
-                        "node": "Door to rm_a5c33"
+                        "area": "Distribution Center Exterior East",
+                        "node": "Door to Distribution Center Exterior East Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -7045,7 +7045,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5c20": {
+                        "Door to Distribution Facility Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7101,7 +7101,7 @@
                         }
                     }
                 },
-                "Door to rm_a5c20": {
+                "Door to Distribution Facility Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7118,8 +7118,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c20",
-                        "node": "Door to rm_a5c33"
+                        "area": "Distribution Facility Intersection",
+                        "node": "Door to Distribution Center Exterior East Access"
                     },
                     "default_dock_weakness": "A5 Near Right Side EMP Door",
                     "exclude_from_dock_rando": false,
@@ -7127,7 +7127,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5h05": {
+                        "Door to Distribution Center Exterior East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7157,7 +7157,7 @@
                     "valid_starting_location": false,
                     "event_name": "A5NearRightSideEMP",
                     "connections": {
-                        "Door to rm_a5h05": {
+                        "Door to Distribution Center Exterior East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7168,13 +7168,13 @@
                 }
             }
         },
-        "rm_a5b01": {
+        "Facility Storage Clogged Pipe North": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b01"
             },
             "nodes": {
-                "Dock to rm_a5b02": {
+                "Dock to Serris Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7191,8 +7191,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b02",
-                        "node": "Dock to rm_a5b01"
+                        "area": "Serris Arena Access",
+                        "node": "Dock to Facility Storage Clogged Pipe North"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7200,7 +7200,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5c29": {
+                        "Dock to Facility Storage Intersection East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7245,7 +7245,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5c29": {
+                "Dock to Facility Storage Intersection East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7262,8 +7262,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c29",
-                        "node": "Dock to rm_a5b01"
+                        "area": "Facility Storage Intersection East",
+                        "node": "Dock to Facility Storage Clogged Pipe North"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7271,7 +7271,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b02": {
+                        "Dock to Serris Arena Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7382,13 +7382,13 @@
                 }
             }
         },
-        "rm_a5b02": {
+        "Serris Arena Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b02"
             },
             "nodes": {
-                "Dock to rm_a5b05": {
+                "Dock to Spiky Spider Trial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7405,8 +7405,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b05",
-                        "node": "Dock to rm_a5b02"
+                        "area": "Spiky Spider Trial",
+                        "node": "Dock to Serris Arena Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7414,7 +7414,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b03a": {
+                        "Door to Serris Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7482,7 +7482,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a5b04": {
+                        "Dock to Facility Storage Clogged Pipe South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7491,7 +7491,7 @@
                         }
                     }
                 },
-                "Door to rm_a5b03a": {
+                "Door to Serris Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7508,8 +7508,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b03a",
-                        "node": "Door to rm_a5b02"
+                        "area": "Serris Arena",
+                        "node": "Door to Serris Arena Access"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -7517,14 +7517,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b05": {
+                        "Dock to Spiky Spider Trial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to rm_a5b01": {
+                        "Dock to Facility Storage Clogged Pipe North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7594,7 +7594,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5b01": {
+                "Dock to Facility Storage Clogged Pipe North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7611,8 +7611,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b01",
-                        "node": "Dock to rm_a5b02"
+                        "area": "Facility Storage Clogged Pipe North",
+                        "node": "Dock to Serris Arena Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7620,7 +7620,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b03a": {
+                        "Door to Serris Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7629,7 +7629,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5b04": {
+                "Dock to Facility Storage Clogged Pipe South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7646,8 +7646,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b04",
-                        "node": "Dock to rm_a5b02"
+                        "area": "Facility Storage Clogged Pipe South",
+                        "node": "Dock to Serris Arena Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7655,7 +7655,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b05": {
+                        "Dock to Spiky Spider Trial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7666,13 +7666,13 @@
                 }
             }
         },
-        "rm_a5b03a": {
+        "Serris Arena": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b03a"
             },
             "nodes": {
-                "Door to rm_a5b02": {
+                "Door to Serris Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7689,8 +7689,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b02",
-                        "node": "Door to rm_a5b03a"
+                        "area": "Serris Arena Access",
+                        "node": "Door to Serris Arena"
                     },
                     "default_dock_weakness": "Serris Door",
                     "exclude_from_dock_rando": false,
@@ -7698,7 +7698,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b03": {
+                        "Door to Serris Arena Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7712,7 +7712,7 @@
                         }
                     }
                 },
-                "Door to rm_a5b03": {
+                "Door to Serris Arena Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7729,8 +7729,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b03",
-                        "node": "Door to rm_a5b03a"
+                        "area": "Serris Arena Pipe",
+                        "node": "Door to Serris Arena"
                     },
                     "default_dock_weakness": "Serris Door",
                     "exclude_from_dock_rando": false,
@@ -7738,7 +7738,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b02": {
+                        "Door to Serris Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7866,7 +7866,7 @@
                     "valid_starting_location": false,
                     "event_name": "Serris",
                     "connections": {
-                        "Door to rm_a5b02": {
+                        "Door to Serris Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7877,13 +7877,13 @@
                 }
             }
         },
-        "rm_a5b03": {
-            "default_node": "Door to rm_a5b03a",
+        "Serris Arena Pipe": {
+            "default_node": "Door to Serris Arena",
             "extra": {
                 "map_name": "rm_a5b03"
             },
             "nodes": {
-                "Door to rm_a5b03a": {
+                "Door to Serris Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7900,8 +7900,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b03a",
-                        "node": "Door to rm_a5b03"
+                        "area": "Serris Arena",
+                        "node": "Door to Serris Arena Pipe"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -7944,12 +7944,12 @@
                     "valid_starting_location": false,
                     "destination": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c31"
+                        "area": "Ice Beam Chamber Access"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to rm_a5b03a": {
+                        "Door to Serris Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7960,13 +7960,13 @@
                 }
             }
         },
-        "rm_a5b04": {
+        "Facility Storage Clogged Pipe South": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b04"
             },
             "nodes": {
-                "Dock to rm_a5b02": {
+                "Dock to Serris Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7983,8 +7983,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b02",
-                        "node": "Dock to rm_a5b04"
+                        "area": "Serris Arena Access",
+                        "node": "Dock to Facility Storage Clogged Pipe South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7992,7 +7992,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b07": {
+                        "Dock to Facility Storage Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8001,7 +8001,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5b07": {
+                "Dock to Facility Storage Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8018,8 +8018,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b07",
-                        "node": "Dock to rm_a5b04"
+                        "area": "Facility Storage Tower East",
+                        "node": "Dock to Facility Storage Clogged Pipe South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8027,7 +8027,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b02": {
+                        "Dock to Serris Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8038,13 +8038,13 @@
                 }
             }
         },
-        "rm_a5b05": {
+        "Spiky Spider Trial": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b05"
             },
             "nodes": {
-                "Dock to rm_a5b02": {
+                "Dock to Serris Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8061,8 +8061,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b02",
-                        "node": "Dock to rm_a5b05"
+                        "area": "Serris Arena Access",
+                        "node": "Dock to Spiky Spider Trial"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8070,7 +8070,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tunnel to rm_a5b06": {
+                        "Tunnel to Spiky Spider Trial Reward Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8199,7 +8199,7 @@
                         }
                     }
                 },
-                "Tunnel to rm_a5b06": {
+                "Tunnel to Spiky Spider Trial Reward Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8216,8 +8216,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b06",
-                        "node": "Tunnel to rm_a5b05"
+                        "area": "Spiky Spider Trial Reward Room",
+                        "node": "Tunnel to Spiky Spider Trial"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -8225,7 +8225,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b02": {
+                        "Dock to Serris Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8236,13 +8236,13 @@
                 }
             }
         },
-        "rm_a5b06": {
+        "Spiky Spider Trial Reward Room": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b06"
             },
             "nodes": {
-                "Tunnel to rm_a5b05": {
+                "Tunnel to Spiky Spider Trial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8259,8 +8259,8 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b05",
-                        "node": "Tunnel to rm_a5b06"
+                        "area": "Spiky Spider Trial",
+                        "node": "Tunnel to Spiky Spider Trial Reward Room"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -8301,7 +8301,7 @@
                     "pickup_index": 303,
                     "location_category": "minor",
                     "connections": {
-                        "Tunnel to rm_a5b05": {
+                        "Tunnel to Spiky Spider Trial": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8343,13 +8343,13 @@
                 }
             }
         },
-        "rm_a5b07": {
+        "Facility Storage Tower East": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b07"
             },
             "nodes": {
-                "Dock to rm_a5b20": {
+                "Dock to Facility Storage Tower Route North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8366,8 +8366,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b20",
-                        "node": "Dock to rm_a5b07"
+                        "area": "Facility Storage Tower Route North",
+                        "node": "Dock to Facility Storage Tower East"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8375,7 +8375,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b04": {
+                        "Dock to Facility Storage Clogged Pipe South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8384,7 +8384,7 @@
                         }
                     }
                 },
-                "Door to rm_a5b22": {
+                "Door to Facility Storage Tower Route South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8401,8 +8401,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b22",
-                        "node": "Door to rm_a5b07"
+                        "area": "Facility Storage Tower Route South",
+                        "node": "Door to Facility Storage Tower East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8410,7 +8410,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b04": {
+                        "Dock to Facility Storage Clogged Pipe South": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8478,7 +8478,7 @@
                                 ]
                             }
                         },
-                        "Dock to rm_a5b15": {
+                        "Dock to Spiky Space Jump Trial Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8487,7 +8487,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5b04": {
+                "Dock to Facility Storage Clogged Pipe South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8504,8 +8504,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b04",
-                        "node": "Dock to rm_a5b07"
+                        "area": "Facility Storage Clogged Pipe South",
+                        "node": "Dock to Facility Storage Tower East"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8513,7 +8513,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b20": {
+                        "Dock to Facility Storage Tower Route North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8548,7 +8548,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5b22": {
+                        "Door to Facility Storage Tower Route South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8557,7 +8557,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5b15": {
+                "Dock to Spiky Space Jump Trial Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8574,8 +8574,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b15",
-                        "node": "Dock to rm_a5b07"
+                        "area": "Spiky Space Jump Trial Entrance",
+                        "node": "Dock to Facility Storage Tower East"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8583,7 +8583,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b22": {
+                        "Door to Facility Storage Tower Route South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8594,13 +8594,13 @@
                 }
             }
         },
-        "rm_a5b08": {
-            "default_node": "Door to rm_a5b09",
+        "Facility Storage Spiked Path Pipe": {
+            "default_node": "Door to Facility Storage Spiked Path",
             "extra": {
                 "map_name": "rm_a5b08"
             },
             "nodes": {
-                "Door to rm_a5b09": {
+                "Door to Facility Storage Spiked Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8617,8 +8617,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b09",
-                        "node": "Door to rm_a5b08"
+                        "area": "Facility Storage Spiked Path",
+                        "node": "Door to Facility Storage Spiked Path Pipe"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8661,12 +8661,12 @@
                     "valid_starting_location": false,
                     "destination": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c31"
+                        "area": "Ice Beam Chamber Access"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to rm_a5b09": {
+                        "Door to Facility Storage Spiked Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8687,13 +8687,13 @@
                 }
             }
         },
-        "rm_a5b09": {
+        "Facility Storage Spiked Path": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b09"
             },
             "nodes": {
-                "Door to rm_a5h05": {
+                "Door to Distribution Center Exterior East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8710,8 +8710,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h05",
-                        "node": "Door to rm_a5b09"
+                        "area": "Distribution Center Exterior East",
+                        "node": "Door to Facility Storage Spiked Path"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8719,7 +8719,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b08": {
+                        "Door to Facility Storage Spiked Path Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8781,7 +8781,7 @@
                         }
                     }
                 },
-                "Door to rm_a5b08": {
+                "Door to Facility Storage Spiked Path Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8798,8 +8798,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b08",
-                        "node": "Door to rm_a5b09"
+                        "area": "Facility Storage Spiked Path Pipe",
+                        "node": "Door to Facility Storage Spiked Path"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -8807,7 +8807,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5h05": {
+                        "Door to Distribution Center Exterior East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8871,13 +8871,13 @@
                 }
             }
         },
-        "rm_a5b15": {
+        "Spiky Space Jump Trial Entrance": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b15"
             },
             "nodes": {
-                "Dock to rm_a5b07": {
+                "Dock to Facility Storage Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8894,8 +8894,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b07",
-                        "node": "Dock to rm_a5b15"
+                        "area": "Facility Storage Tower East",
+                        "node": "Dock to Spiky Space Jump Trial Entrance"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8903,7 +8903,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b16": {
+                        "Dock to Spiky Space Jump Trial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9017,7 +9017,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5b16": {
+                "Dock to Spiky Space Jump Trial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9034,8 +9034,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b16",
-                        "node": "Dock to rm_a5b15"
+                        "area": "Spiky Space Jump Trial",
+                        "node": "Dock to Spiky Space Jump Trial Entrance"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9090,7 +9090,7 @@
                     "pickup_index": 304,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to rm_a5b07": {
+                        "Dock to Facility Storage Tower East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9162,13 +9162,13 @@
                 }
             }
         },
-        "rm_a5b16": {
+        "Spiky Space Jump Trial": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b16"
             },
             "nodes": {
-                "Dock to rm_a5b17": {
+                "Dock to Spiky Space Jump Trial Reward Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9185,8 +9185,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b17",
-                        "node": "Dock to rm_a5b16"
+                        "area": "Spiky Space Jump Trial Reward Room",
+                        "node": "Dock to Spiky Space Jump Trial"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9194,7 +9194,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b15": {
+                        "Dock to Spiky Space Jump Trial Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9256,7 +9256,7 @@
                         }
                     }
                 },
-                "Dock to rm_a5b15": {
+                "Dock to Spiky Space Jump Trial Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9273,8 +9273,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b15",
-                        "node": "Dock to rm_a5b16"
+                        "area": "Spiky Space Jump Trial Entrance",
+                        "node": "Dock to Spiky Space Jump Trial"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9282,7 +9282,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b17": {
+                        "Dock to Spiky Space Jump Trial Reward Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9398,7 +9398,7 @@
                     "pickup_index": 305,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to rm_a5b15": {
+                        "Dock to Spiky Space Jump Trial Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9409,13 +9409,13 @@
                 }
             }
         },
-        "rm_a5b17": {
+        "Spiky Space Jump Trial Reward Room": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b17"
             },
             "nodes": {
-                "Dock to rm_a5b16": {
+                "Dock to Spiky Space Jump Trial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9432,8 +9432,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b16",
-                        "node": "Dock to rm_a5b17"
+                        "area": "Spiky Space Jump Trial",
+                        "node": "Dock to Spiky Space Jump Trial Reward Room"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9474,7 +9474,7 @@
                     "pickup_index": 306,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to rm_a5b16": {
+                        "Dock to Spiky Space Jump Trial": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9537,13 +9537,13 @@
                 }
             }
         },
-        "rm_a5b20": {
+        "Facility Storage Tower Route North": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b20"
             },
             "nodes": {
-                "Dock to rm_a5b07": {
+                "Dock to Facility Storage Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9560,8 +9560,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b07",
-                        "node": "Dock to rm_a5b20"
+                        "area": "Facility Storage Tower East",
+                        "node": "Dock to Facility Storage Tower Route North"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9569,7 +9569,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b21": {
+                        "Door to Facility Storage Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9623,7 +9623,7 @@
                         }
                     }
                 },
-                "Door to rm_a5b21": {
+                "Door to Facility Storage Tower West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9640,8 +9640,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b21",
-                        "node": "Door to rm_a5b20"
+                        "area": "Facility Storage Tower West",
+                        "node": "Door to Facility Storage Tower Route North"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -9649,7 +9649,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to rm_a5b07": {
+                        "Dock to Facility Storage Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9748,7 +9748,7 @@
                     "pickup_index": 307,
                     "location_category": "minor",
                     "connections": {
-                        "Door to rm_a5b21": {
+                        "Door to Facility Storage Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9759,13 +9759,13 @@
                 }
             }
         },
-        "rm_a5b21": {
+        "Facility Storage Tower West": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b21"
             },
             "nodes": {
-                "Door to rm_a5b20": {
+                "Door to Facility Storage Tower Route North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9782,8 +9782,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b20",
-                        "node": "Door to rm_a5b21"
+                        "area": "Facility Storage Tower Route North",
+                        "node": "Door to Facility Storage Tower West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -9791,14 +9791,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b22": {
+                        "Door to Facility Storage Tower Route South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to rm_a5h04": {
+                        "Door to Distribution Center Exterior West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9817,7 +9817,7 @@
                         }
                     }
                 },
-                "Door to rm_a5b22": {
+                "Door to Facility Storage Tower Route South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9834,8 +9834,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b22",
-                        "node": "Door to rm_a5b21"
+                        "area": "Facility Storage Tower Route South",
+                        "node": "Door to Facility Storage Tower West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -9843,7 +9843,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b20": {
+                        "Door to Facility Storage Tower Route North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9911,7 +9911,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5h04": {
+                        "Door to Distribution Center Exterior West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9981,7 +9981,7 @@
                         }
                     }
                 },
-                "Door to rm_a5h04": {
+                "Door to Distribution Center Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9998,8 +9998,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5h04",
-                        "node": "Door to rm_a5b21"
+                        "area": "Distribution Center Exterior West",
+                        "node": "Door to Facility Storage Tower West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10007,7 +10007,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b20": {
+                        "Door to Facility Storage Tower Route North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10024,7 +10024,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5b22": {
+                        "Door to Facility Storage Tower Route South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10035,13 +10035,13 @@
                 }
             }
         },
-        "rm_a5b22": {
+        "Facility Storage Tower Route South": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5b22"
             },
             "nodes": {
-                "Door to rm_a5b07": {
+                "Door to Facility Storage Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10058,8 +10058,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b07",
-                        "node": "Door to rm_a5b22"
+                        "area": "Facility Storage Tower East",
+                        "node": "Door to Facility Storage Tower Route South"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10067,7 +10067,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b21": {
+                        "Door to Facility Storage Tower West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10081,7 +10081,7 @@
                         }
                     }
                 },
-                "Door to rm_a5b21": {
+                "Door to Facility Storage Tower West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10098,8 +10098,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b21",
-                        "node": "Door to rm_a5b22"
+                        "area": "Facility Storage Tower West",
+                        "node": "Door to Facility Storage Tower Route South"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10107,7 +10107,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5b07": {
+                        "Door to Facility Storage Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10123,13 +10123,13 @@
                 }
             }
         },
-        "rm_a5a01": {
+        "Gravity Area Moto Room Pipe": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5a01"
             },
             "nodes": {
-                "Door to rm_a5a02": {
+                "Door to Gravity Area Moto Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10146,8 +10146,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a02",
-                        "node": "Door to rm_a5a01"
+                        "area": "Gravity Area Moto Room",
+                        "node": "Door to Gravity Area Moto Room Pipe"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10155,7 +10155,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pipe to rm_a5c14": {
+                        "Pipe to Pipe Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10195,7 +10195,7 @@
                         }
                     }
                 },
-                "Pipe to rm_a5c14": {
+                "Pipe to Pipe Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10212,8 +10212,8 @@
                     "dock_type": "pipe",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5c14",
-                        "node": "Pipe to rm_a5a01"
+                        "area": "Pipe Hub",
+                        "node": "Pipe to Gravity Area Moto Room Pipe"
                     },
                     "default_dock_weakness": "Teleporter Pipe",
                     "exclude_from_dock_rando": false,
@@ -10221,7 +10221,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a02": {
+                        "Door to Gravity Area Moto Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10242,13 +10242,13 @@
                 }
             }
         },
-        "rm_a5a02": {
+        "Gravity Area Moto Room": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5a02"
             },
             "nodes": {
-                "Door to rm_a5a03": {
+                "Door to Gravity Area One-Way Route": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10265,8 +10265,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a03",
-                        "node": "Door to rm_a5a02"
+                        "area": "Gravity Area One-Way Route",
+                        "node": "Door to Gravity Area Moto Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10274,7 +10274,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a01": {
+                        "Door to Gravity Area Moto Room Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10283,7 +10283,7 @@
                         }
                     }
                 },
-                "Door to rm_a5a01": {
+                "Door to Gravity Area Moto Room Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10300,8 +10300,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a01",
-                        "node": "Door to rm_a5a02"
+                        "area": "Gravity Area Moto Room Pipe",
+                        "node": "Door to Gravity Area Moto Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10309,7 +10309,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a03": {
+                        "Door to Gravity Area One-Way Route": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10320,13 +10320,13 @@
                 }
             }
         },
-        "rm_a5a03": {
+        "Gravity Area One-Way Route": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5a03"
             },
             "nodes": {
-                "Door to rm_a5a04": {
+                "Door to Gravity Area Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10343,8 +10343,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a04",
-                        "node": "Door to rm_a5a03"
+                        "area": "Gravity Area Corridor",
+                        "node": "Door to Gravity Area One-Way Route"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10353,7 +10353,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to rm_a5a02": {
+                "Door to Gravity Area Moto Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10370,8 +10370,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a02",
-                        "node": "Door to rm_a5a03"
+                        "area": "Gravity Area Moto Room",
+                        "node": "Door to Gravity Area One-Way Route"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10379,7 +10379,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a04": {
+                        "Door to Gravity Area Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10390,13 +10390,13 @@
                 }
             }
         },
-        "rm_a5a04": {
+        "Gravity Area Corridor": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5a04"
             },
             "nodes": {
-                "Door to rm_a5a03": {
+                "Door to Gravity Area One-Way Route": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10413,8 +10413,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a03",
-                        "node": "Door to rm_a5a04"
+                        "area": "Gravity Area One-Way Route",
+                        "node": "Door to Gravity Area Corridor"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10436,7 +10436,7 @@
                         }
                     }
                 },
-                "Door to rm_a5a05": {
+                "Door to Gravity Area Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10453,8 +10453,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a05",
-                        "node": "Door to rm_a5a04"
+                        "area": "Gravity Area Shaft",
+                        "node": "Door to Gravity Area Corridor"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10519,7 +10519,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to rm_a5a03": {
+                        "Door to Gravity Area One-Way Route": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10531,7 +10531,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5a05": {
+                        "Door to Gravity Area Shaft": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10580,13 +10580,13 @@
                 }
             }
         },
-        "rm_a5a05": {
+        "Gravity Area Shaft": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5a05"
             },
             "nodes": {
-                "Door to rm_a5a04": {
+                "Door to Gravity Area Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10603,8 +10603,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a04",
-                        "node": "Door to rm_a5a05"
+                        "area": "Gravity Area Corridor",
+                        "node": "Door to Gravity Area Shaft"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10612,7 +10612,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a06": {
+                        "Door to Gravity Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10621,7 +10621,7 @@
                         }
                     }
                 },
-                "Door to rm_a5a06": {
+                "Door to Gravity Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10638,8 +10638,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a06",
-                        "node": "Door to rm_a5a05"
+                        "area": "Gravity Chamber Access",
+                        "node": "Door to Gravity Area Shaft"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -10647,7 +10647,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a04": {
+                        "Door to Gravity Area Corridor": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10690,7 +10690,7 @@
                                 ]
                             }
                         },
-                        "Door to rm_a5a08": {
+                        "Door to Gravity Area Blockade": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10765,7 +10765,7 @@
                         }
                     }
                 },
-                "Door to rm_a5a08": {
+                "Door to Gravity Area Blockade": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10782,8 +10782,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a08",
-                        "node": "Door to rm_a5a05"
+                        "area": "Gravity Area Blockade",
+                        "node": "Door to Gravity Area Shaft"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10791,7 +10791,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a04": {
+                        "Door to Gravity Area Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10802,13 +10802,13 @@
                 }
             }
         },
-        "rm_a5a06": {
+        "Gravity Chamber Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5a06"
             },
             "nodes": {
-                "Door to rm_a5a07": {
+                "Door to Gravity Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10825,8 +10825,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a07",
-                        "node": "Door to rm_a5a06"
+                        "area": "Gravity Chamber",
+                        "node": "Door to Gravity Chamber Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10834,7 +10834,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a05": {
+                        "Door to Gravity Area Shaft": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10869,7 +10869,7 @@
                         }
                     }
                 },
-                "Door to rm_a5a05": {
+                "Door to Gravity Area Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10886,8 +10886,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a05",
-                        "node": "Door to rm_a5a06"
+                        "area": "Gravity Area Shaft",
+                        "node": "Door to Gravity Chamber Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10895,7 +10895,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a07": {
+                        "Door to Gravity Chamber": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10927,13 +10927,13 @@
                 }
             }
         },
-        "rm_a5a07": {
+        "Gravity Chamber": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5a07"
             },
             "nodes": {
-                "Door to rm_a5a06": {
+                "Door to Gravity Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10950,8 +10950,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a06",
-                        "node": "Door to rm_a5a07"
+                        "area": "Gravity Chamber Access",
+                        "node": "Door to Gravity Chamber"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -10987,7 +10987,7 @@
                     "pickup_index": 9,
                     "location_category": "major",
                     "connections": {
-                        "Door to rm_a5a06": {
+                        "Door to Gravity Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10998,13 +10998,13 @@
                 }
             }
         },
-        "rm_a5a08": {
+        "Gravity Area Blockade": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5a08"
             },
             "nodes": {
-                "Door to rm_a5a05": {
+                "Door to Gravity Area Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11021,8 +11021,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a05",
-                        "node": "Door to rm_a5a08"
+                        "area": "Gravity Area Shaft",
+                        "node": "Door to Gravity Area Blockade"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -11030,7 +11030,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a09": {
+                        "Door to Gravity Area Blockade Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11053,7 +11053,7 @@
                         }
                     }
                 },
-                "Door to rm_a5a09": {
+                "Door to Gravity Area Blockade Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11070,8 +11070,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a09",
-                        "node": "Door to rm_a5a08"
+                        "area": "Gravity Area Blockade Pipe",
+                        "node": "Door to Gravity Area Blockade"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -11079,7 +11079,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to rm_a5a05": {
+                        "Door to Gravity Area Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11104,13 +11104,13 @@
                 }
             }
         },
-        "rm_a5a09": {
-            "default_node": "Door to rm_a5a08",
+        "Gravity Area Blockade Pipe": {
+            "default_node": "Door to Gravity Area Blockade",
             "extra": {
                 "map_name": "rm_a5a09"
             },
             "nodes": {
-                "Door to rm_a5a08": {
+                "Door to Gravity Area Blockade": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11127,8 +11127,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "rm_a5a08",
-                        "node": "Door to rm_a5a09"
+                        "area": "Gravity Area Blockade",
+                        "node": "Door to Gravity Area Blockade Pipe"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -11171,12 +11171,12 @@
                     "valid_starting_location": false,
                     "destination": {
                         "region": "Distribution Center",
-                        "area": "rm_a5b08"
+                        "area": "Facility Storage Spiked Path Pipe"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to rm_a5a08": {
+                        "Door to Gravity Area Blockade": {
                             "type": "and",
                             "data": {
                                 "comment": null,

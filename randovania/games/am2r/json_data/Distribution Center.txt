@@ -1,110 +1,110 @@
 ----------------
-rm_a5h01
+Distribution Entranceway
 Extra - map_name: rm_a5h01
 > Dock to The Descent; Heals? False
   * Layers: default
-  * Open Passage to The Descent/Dock to rm_a5h01
-  > Dock to rm_a5h02
+  * Open Passage to The Descent/Dock to Distribution Entranceway
+  > Dock to Meboid Blockade Exterior 
       Trivial
 
-> Dock to rm_a5h02; Heals? False
+> Dock to Meboid Blockade Exterior ; Heals? False
   * Layers: default
-  * Open Passage to rm_a5h02/Dock to rm_a5h01
+  * Open Passage to Meboid Blockade Exterior /Dock to Distribution Entranceway
   > Dock to The Descent
       Trivial
 
 ----------------
-rm_a5h02
+Meboid Blockade Exterior 
 Extra - map_name: rm_a5h02
-> Dock to rm_a5h01; Heals? False
+> Dock to Distribution Entranceway; Heals? False
   * Layers: default
-  * Open Passage to rm_a5h01/Dock to rm_a5h02
-  > Dock to rm_a5h03
+  * Open Passage to Distribution Entranceway/Dock to Meboid Blockade Exterior 
+  > Dock to Distribution Center Exterior West Access
       Trivial
 
-> Dock to rm_a5h03; Heals? False
+> Dock to Distribution Center Exterior West Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a5h03/Dock to rm_a5h02
-  > Dock to rm_a5h01
+  * Open Passage to Distribution Center Exterior West Access/Dock to Meboid Blockade Exterior 
+  > Dock to Distribution Entranceway
       Destroy Ice Barrier and Hijump Wall
 
 ----------------
-rm_a5h03
+Distribution Center Exterior West Access
 Extra - map_name: rm_a5h03
-> Dock to rm_a5h02; Heals? False
+> Dock to Meboid Blockade Exterior ; Heals? False
   * Layers: default
-  * Open Passage to rm_a5h02/Dock to rm_a5h03
-  > Dock to rm_a5h04
+  * Open Passage to Meboid Blockade Exterior /Dock to Distribution Center Exterior West Access
+  > Dock to Distribution Center Exterior West
       Trivial
 
-> Dock to rm_a5h04; Heals? False
+> Dock to Distribution Center Exterior West; Heals? False
   * Layers: default
-  * Open Passage to rm_a5h04/Dock to rm_a5h03
-  > Dock to rm_a5h02
+  * Open Passage to Distribution Center Exterior West/Dock to Distribution Center Exterior West Access
+  > Dock to Meboid Blockade Exterior 
       Space Jump Wall
 
 ----------------
-rm_a5h04
+Distribution Center Exterior West
 Extra - map_name: rm_a5h04
-> Door to rm_a5b21; Heals? False
+> Door to Facility Storage Tower West; Heals? False
   * Layers: default
-  * Normal Door to rm_a5b21/Door to rm_a5h04
-  > Dock to rm_a5h03
+  * Normal Door to Facility Storage Tower West/Door to Distribution Center Exterior West
+  > Dock to Distribution Center Exterior West Access
       Trivial
-  > Door to rm_a5c01
+  > Door to Blade Bot Patrol Room
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
           All of the following:
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
-  > Door to rm_a5c15
+  > Door to Pipe Hub Access
       Gravity Suit and Speed Booster and Shinesparking Tricks (Beginner)
   > Pickup (Missile Tank)
       Gravity Suit and Speed Booster and Shinesparking Tricks (Beginner)
 
-> Dock to rm_a5h03; Heals? False
+> Dock to Distribution Center Exterior West Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a5h03/Dock to rm_a5h04
-  > Door to rm_a5b21
+  * Open Passage to Distribution Center Exterior West Access/Dock to Distribution Center Exterior West
+  > Door to Facility Storage Tower West
       Trivial
 
-> Door to rm_a5c01; Heals? False
+> Door to Blade Bot Patrol Room; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c01/Door to rm_a5h04
-  > Door to rm_a5b21
+  * Normal Door to Blade Bot Patrol Room/Door to Distribution Center Exterior West
+  > Door to Facility Storage Tower West
       Trivial
-  > Door to rm_a5c15
+  > Door to Pipe Hub Access
       Space Jump Wall
 
-> Door to rm_a5c15; Heals? False
+> Door to Pipe Hub Access; Heals? False
   * Layers: default
-  * A5 Near Pipe Hub EMP Door to rm_a5c15/Door to rm_a5h04
-  > Door to rm_a5c01
+  * A5 Near Pipe Hub EMP Door to Pipe Hub Access/Door to Distribution Center Exterior West
+  > Door to Blade Bot Patrol Room
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 309; Category? Minor
-  * Extra - item_id: 309
-  > Door to rm_a5b21
+  * Extra - object_name: oItemM_309
+  > Door to Facility Storage Tower West
       Trivial
 
 ----------------
-rm_a5h05
+Distribution Center Exterior East
 Extra - map_name: rm_a5h05
-> Door to rm_a5c33; Heals? False
+> Door to Distribution Center Exterior East Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c33/Door to rm_a5h05
-  > Door to rm_a5b09
+  * Normal Door to Distribution Center Exterior East Access/Door to Distribution Center Exterior East
+  > Door to Facility Storage Spiked Path
       Trivial
   > Pickup (Power Bomb Tank)
       Can Use Power Bombs and Space Jump Wall
 
-> Door to rm_a5b09; Heals? False
+> Door to Facility Storage Spiked Path; Heals? False
   * Layers: default
-  * Normal Door to rm_a5b09/Door to rm_a5h05
-  > Door to rm_a5c33
+  * Normal Door to Facility Storage Spiked Path/Door to Distribution Center Exterior East
+  > Door to Distribution Center Exterior East Access
       Any of the following:
           All of the following:
               # with gravity
@@ -125,247 +125,247 @@ Extra - map_name: rm_a5h05
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 302; Category? Minor
-  * Extra - item_id: 302
-  > Door to rm_a5c33
+  * Extra - object_name: oItemPB_302
+  > Door to Distribution Center Exterior East Access
       Trivial
 
 ----------------
-rm_a5c01
+Blade Bot Patrol Room
 Extra - map_name: rm_a5c01
-> Door to rm_a5c02; Heals? False
+> Door to Beam Bot Prison; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c02/Door to rm_a5c01
-  > Door to rm_a5h04
+  * Normal Door to Beam Bot Prison/Door to Blade Bot Patrol Room
+  > Door to Distribution Center Exterior West
       Any of the following:
           Tunnel Climb
           Morph Ball and Mid-Air Morph (Beginner)
 
-> Door to rm_a5h04; Heals? False
+> Door to Distribution Center Exterior West; Heals? False
   * Layers: default
-  * Normal Door to rm_a5h04/Door to rm_a5c01
-  > Door to rm_a5c02
+  * Normal Door to Distribution Center Exterior West/Door to Blade Bot Patrol Room
+  > Door to Beam Bot Prison
       Any of the following:
           Tunnel Climb
           Morph Ball and Mid-Air Morph (Beginner)
 
 ----------------
-rm_a5c02
+Beam Bot Prison
 Extra - map_name: rm_a5c02
-> Door to rm_a5c03; Heals? False
+> Door to Energy Distribution Entrance Save Station; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c03/Door to rm_a5c02
-  > Door to rm_a5c01
+  * Normal Door to Energy Distribution Entrance Save Station/Door to Beam Bot Prison
+  > Door to Blade Bot Patrol Room
       Space Jump Wall
 
-> Door to rm_a5c01; Heals? False
+> Door to Blade Bot Patrol Room; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c01/Door to rm_a5c02
-  > Door to rm_a5c03
+  * Normal Door to Blade Bot Patrol Room/Door to Beam Bot Prison
+  > Door to Energy Distribution Entrance Save Station
       Space Jump Wall
 
 ----------------
-rm_a5c03
+Energy Distribution Entrance Save Station
 Extra - map_name: rm_a5c03
 > Save Station; Heals? True; Spawn Point
   * Layers: default
-  > Door to rm_a5c04
+  > Door to Energy Distribution Tower West
       Trivial
-  > Door to rm_a5c02
+  > Door to Beam Bot Prison
       Trivial
 
-> Door to rm_a5c04; Heals? False
+> Door to Energy Distribution Tower West; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c04/Door to rm_a5c03
+  * Normal Door to Energy Distribution Tower West/Door to Energy Distribution Entrance Save Station
 
-> Door to rm_a5c02; Heals? False
+> Door to Beam Bot Prison; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c02/Door to rm_a5c03
+  * Normal Door to Beam Bot Prison/Door to Energy Distribution Entrance Save Station
   > Save Station
       Trivial
 
 ----------------
-rm_a5c04
+Energy Distribution Tower West
 Extra - map_name: rm_a5c04
-> Door to rm_a5c03; Heals? False
+> Door to Energy Distribution Entrance Save Station; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c03/Door to rm_a5c04
-  > Door to rm_a5c05
+  * Normal Door to Energy Distribution Entrance Save Station/Door to Energy Distribution Tower West
+  > Door to Energy Distribution Beam Bot Guards
       Any of the following:
           Hijump With Power Grip Wall
           Movement (Advanced) and Hijump Wall
-  > Door to rm_a5c11
+  > Door to Energy Distribution Tower East
       Trivial
 
-> Door to rm_a5c05; Heals? False
+> Door to Energy Distribution Beam Bot Guards; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c05/Door to rm_a5c04
-  > Door to rm_a5c03
+  * Normal Door to Energy Distribution Beam Bot Guards/Door to Energy Distribution Tower West
+  > Door to Energy Distribution Entrance Save Station
       Trivial
 
-> Door to rm_a5c11; Heals? False
+> Door to Energy Distribution Tower East; Heals? False
   * Layers: default
-  * A5 Near Save EMP Door to rm_a5c11/Door to rm_a5c04
-  > Door to rm_a5c03
+  * A5 Near Save EMP Door to Energy Distribution Tower East/Door to Energy Distribution Tower West
+  > Door to Energy Distribution Entrance Save Station
       Trivial
 
 ----------------
-rm_a5c05
+Energy Distribution Beam Bot Guards
 Extra - map_name: rm_a5c05
-> Door to rm_a5c06; Heals? False
+> Door to Energy Distribution Activation Shaft; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c06/Door to rm_a5c05
-  > Door to rm_a5c04
+  * Normal Door to Energy Distribution Activation Shaft/Door to Energy Distribution Beam Bot Guards
+  > Door to Energy Distribution Tower West
       All of the following:
           Can Use Any Bombs
           Morph Ball or Screw Attack
 
-> Door to rm_a5c04; Heals? False
+> Door to Energy Distribution Tower West; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c04/Door to rm_a5c05
-  > Door to rm_a5c06
+  * Normal Door to Energy Distribution Tower West/Door to Energy Distribution Beam Bot Guards
+  > Door to Energy Distribution Activation Shaft
       All of the following:
           Can Use Any Bombs
           Morph Ball or Screw Attack
 
 ----------------
-rm_a5c06
+Energy Distribution Activation Shaft
 Extra - map_name: rm_a5c06
-> Door to rm_a5c05; Heals? False
+> Door to Energy Distribution Beam Bot Guards; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c05/Door to rm_a5c06
-  > Door to rm_a5c07
+  * Normal Door to Energy Distribution Beam Bot Guards/Door to Energy Distribution Activation Shaft
+  > Door to Energy Distribution Activation
       Space Jump Wall
 
-> Door to rm_a5c07; Heals? False
+> Door to Energy Distribution Activation; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c07/Door to rm_a5c06
-  > Door to rm_a5c05
+  * Normal Door to Energy Distribution Activation/Door to Energy Distribution Activation Shaft
+  > Door to Energy Distribution Beam Bot Guards
       Trivial
 
 ----------------
-rm_a5c07
+Energy Distribution Activation
 Extra - map_name: rm_a5c07
-> Door to rm_a5c06; Heals? False
+> Door to Energy Distribution Activation Shaft; Heals? False
   * Layers: default
-  * A5 Activation Tower Door to rm_a5c06/Door to rm_a5c07
+  * A5 Activation Tower Door to Energy Distribution Activation Shaft/Door to Energy Distribution Activation
   > Event - EMP Activation Statue
       Morph Ball
 
-> Door to rm_a5c08; Heals? False
+> Door to Energy Distribution Emergency Exit; Heals? False
   * Layers: default
-  * A5 Activation Tower Door to rm_a5c08/Door to rm_a5c07
+  * A5 Activation Tower Door to Energy Distribution Emergency Exit/Door to Energy Distribution Activation
   > Event - EMP Activation Statue
       Trivial
 
 > Event - EMP Activation Statue; Heals? False
   * Layers: default
   * Event EMP Activated
-  > Door to rm_a5c06
+  > Door to Energy Distribution Activation Shaft
       Trivial
-  > Door to rm_a5c08
+  > Door to Energy Distribution Emergency Exit
       Any of the following:
           Space Jump Wall
           Speed Booster and Shinesparking Tricks (Beginner)
 
 ----------------
-rm_a5c08
+Energy Distribution Emergency Exit
 Extra - map_name: rm_a5c08
-> Door to rm_a5c07; Heals? False
+> Door to Energy Distribution Activation; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c07/Door to rm_a5c08
-  > Door to rm_a5c09
+  * Normal Door to Energy Distribution Activation/Door to Energy Distribution Emergency Exit
+  > Door to EMP Ball Introduction
       Speed Booster
 
-> Door to rm_a5c09; Heals? False
+> Door to EMP Ball Introduction; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c09/Door to rm_a5c08
+  * Normal Door to EMP Ball Introduction/Door to Energy Distribution Emergency Exit
   > Pickup (Super Missile Tank)
       Screw Attack
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 300; Category? Minor
-  * Extra - item_id: 300
-  > Door to rm_a5c07
+  * Extra - object_name: oItemSM_300
+  > Door to Energy Distribution Activation
       Speed Booster and Shinesparking Tricks (Intermediate)
-  > Door to rm_a5c09
+  > Door to EMP Ball Introduction
       Screw Attack
 
 ----------------
-rm_a5c09
+EMP Ball Introduction
 Extra - map_name: rm_a5c09
-> Door to rm_a5c10; Heals? False
+> Door to Energy Distribution Robot Home; Heals? False
   * Layers: default
-  * A5 Near Activation Tower EMP Door to rm_a5c10/Door to rm_a5c09
+  * A5 Near Activation Tower EMP Door to Energy Distribution Robot Home/Door to EMP Ball Introduction
   > Event - EMPPuzzle
       Trivial
 
-> Door to rm_a5c08; Heals? False
+> Door to Energy Distribution Emergency Exit; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c08/Door to rm_a5c09
+  * Normal Door to Energy Distribution Emergency Exit/Door to EMP Ball Introduction
   > Event - EMPPuzzle
       Can Use Any Bombs
 
 > Event - EMPPuzzle; Heals? False
   * Layers: default
   * Event EMP NearA5EMPActivationStatue
-  > Door to rm_a5c10
+  > Door to Energy Distribution Robot Home
       Trivial
-  > Door to rm_a5c08
+  > Door to Energy Distribution Emergency Exit
       Can Use Any Bombs and Space Jump Tunnel Climb
 
 ----------------
-rm_a5c10
+Energy Distribution Robot Home
 Extra - map_name: rm_a5c10
-> Door to rm_a5c11; Heals? False
+> Door to Energy Distribution Tower East; Heals? False
   * Layers: default
-  * A5 Robots Showcase EMP Door to rm_a5c11/Door to rm_a5c10
+  * A5 Robots Showcase EMP Door to Energy Distribution Tower East/Door to Energy Distribution Robot Home
   > Event - EMPPuzzle
       Trivial
 
-> Door to rm_a5c09; Heals? False
+> Door to EMP Ball Introduction; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c09/Door to rm_a5c10
+  * Normal Door to EMP Ball Introduction/Door to Energy Distribution Robot Home
   > Event - EMPPuzzle
       Missiles ≥ 2 or Super Missiles or Can Use Bombs
 
 > Event - EMPPuzzle; Heals? False
   * Layers: default
   * Event EMP A5RobotsEMP
-  > Door to rm_a5c11
+  > Door to Energy Distribution Tower East
       Trivial
-  > Door to rm_a5c09
+  > Door to EMP Ball Introduction
       Trivial
 
 ----------------
-rm_a5c11
+Energy Distribution Tower East
 Extra - map_name: rm_a5c11
-> Door to rm_a5c04; Heals? False
+> Door to Energy Distribution Tower West; Heals? False
   * Layers: default
-  * A5 Near Save EMP Door to rm_a5c04/Door to rm_a5c11
-  > Door to rm_a5c12
+  * A5 Near Save EMP Door to Energy Distribution Tower West/Door to Energy Distribution Tower East
+  > Door to Energy Distribution Zeta Nest
       Trivial
 
-> Door to rm_a5c10; Heals? False
+> Door to Energy Distribution Robot Home; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c10/Door to rm_a5c11
+  * Normal Door to Energy Distribution Robot Home/Door to Energy Distribution Tower East
   > Event - EMP Puzzle
       Any of the following:
           Can Use Bombs
           Missiles ≥ 10 and Can Use Power Bombs
 
-> Door to rm_a5c12; Heals? False
+> Door to Energy Distribution Zeta Nest; Heals? False
   * Layers: default
-  * A5 Near Save EMP Door to rm_a5c12/Door to rm_a5c11
-  > Door to rm_a5c04
+  * A5 Near Save EMP Door to Energy Distribution Zeta Nest/Door to Energy Distribution Tower East
+  > Door to Energy Distribution Tower West
       Trivial
 
 > Event - EMP Puzzle; Heals? False
   * Layers: default
   * Event EMP NearA5Save
-  > Door to rm_a5c04
+  > Door to Energy Distribution Tower West
       Trivial
-  > Door to rm_a5c10
+  > Door to Energy Distribution Robot Home
       All of the following:
           Can Use Power Bombs
           Any of the following:
@@ -374,21 +374,21 @@ Extra - map_name: rm_a5c11
               All of the following:
                   # IBJ
                   Infinite Bomb Jumping (Intermediate) and Can Use Bombs
-  > Door to rm_a5c12
+  > Door to Energy Distribution Zeta Nest
       Trivial
 
 ----------------
-rm_a5c12
+Energy Distribution Zeta Nest
 Extra - map_name: rm_a5c12
-> Door to rm_a5c13; Heals? False
+> Door to Distribution Facility Tower West; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c13/Door to rm_a5c12
+  * Normal Door to Distribution Facility Tower West/Door to Energy Distribution Zeta Nest
   > Middle
       Can Use Any Bombs and Power Grip Wall
 
-> Door to rm_a5c11; Heals? False
+> Door to Energy Distribution Tower East; Heals? False
   * Layers: default
-  * A5 Near Save EMP Door to rm_a5c11/Door to rm_a5c12
+  * A5 Near Save EMP Door to Energy Distribution Tower East/Door to Energy Distribution Zeta Nest
   > Middle
       Can Use Any Bombs and Power Grip Wall
 
@@ -400,7 +400,7 @@ Extra - map_name: rm_a5c12
 
 > Middle; Heals? False
   * Layers: default
-  > Door to rm_a5c13
+  > Door to Distribution Facility Tower West
       All of the following:
           Power Grip Wall
           Any of the following:
@@ -408,7 +408,7 @@ Extra - map_name: rm_a5c12
               All of the following:
                   Mid-Air Morph (Intermediate)
                   Hi-Jump Boots or Space Jump or Walljump (Beginner) or Can Use Spider Ball
-  > Door to rm_a5c11
+  > Door to Energy Distribution Tower East
       All of the following:
           Power Grip Wall
           Any of the following:
@@ -420,12 +420,12 @@ Extra - map_name: rm_a5c12
       Defeat Zeta
 
 ----------------
-rm_a5c13
+Distribution Facility Tower West
 Extra - map_name: rm_a5c13
-> Door to rm_a5c12; Heals? False
+> Door to Energy Distribution Zeta Nest; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c12/Door to rm_a5c13
-  > Pipe to rm_a5c17 (Bottom)
+  * Normal Door to Energy Distribution Zeta Nest/Door to Distribution Facility Tower West
+  > Pipe to Distribution Facility Tower East (Bottom)
       Morph Ball
   > Near Middle Pipe
       All of the following:
@@ -434,31 +434,31 @@ Extra - map_name: rm_a5c13
               Space Jump Wall
               Movement (Beginner) and Power Grip Wall
 
-> Door to rm_a5c16; Heals? False
+> Door to Distribution Facility Connecting Path; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c16/Door to rm_a5c13
+  * Normal Door to Distribution Facility Connecting Path/Door to Distribution Facility Tower West
   > Near Middle Pipe
       Screw Attack
   > Pillar
       Space Jump Wall
 
-> Door to rm_a5c14; Heals? False
+> Door to Pipe Hub; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c14/Door to rm_a5c13
+  * Normal Door to Pipe Hub/Door to Distribution Facility Tower West
   > Pillar
       Screw Attack
 
-> Pipe to rm_a5c17 (Bottom); Heals? False
+> Pipe to Distribution Facility Tower East (Bottom); Heals? False
   * Layers: default
-  * Teleporter Pipe to rm_a5c17/Pipe to rm_a5c13 (Bottom)
-  > Door to rm_a5c12
+  * Teleporter Pipe to Distribution Facility Tower East/Pipe to Distribution Facility Tower West (Bottom)
+  > Door to Energy Distribution Zeta Nest
       Morph Ball
 
 > Near Middle Pipe; Heals? False
   * Layers: default
-  > Door to rm_a5c12
+  > Door to Energy Distribution Zeta Nest
       Screw Attack
-  > Pipe to rm_a5c17 (Middle)
+  > Pipe to Distribution Facility Tower East (Middle)
       Morph Ball and Power Grip Wall
   > Pillar
       Any of the following:
@@ -471,17 +471,17 @@ Extra - map_name: rm_a5c13
               # IBJ
               Infinite Bomb Jumping (Advanced) and Can Use Bombs
 
-> Pipe to rm_a5c17 (Middle); Heals? False
+> Pipe to Distribution Facility Tower East (Middle); Heals? False
   * Layers: default
-  * Teleporter Pipe to rm_a5c17/Pipe to rm_a5c13 (Top)
+  * Teleporter Pipe to Distribution Facility Tower East/Pipe to Distribution Facility Tower West (Top)
   > Near Middle Pipe
       Morph Ball
 
 > Pillar; Heals? False
   * Layers: default
-  > Door to rm_a5c16
+  > Door to Distribution Facility Connecting Path
       Trivial
-  > Door to rm_a5c14
+  > Door to Pipe Hub
       All of the following:
           Screw Attack
           Movement (Expert) or Power Grip Wall
@@ -489,14 +489,14 @@ Extra - map_name: rm_a5c13
       Trivial
 
 ----------------
-rm_a5c14
+Pipe Hub
 Extra - map_name: rm_a5c14
-> Door to rm_a5c13; Heals? False; Default Node
+> Door to Distribution Facility Tower West; Heals? False; Default Node
   * Layers: default
-  * Normal Door to rm_a5c13/Door to rm_a5c14
-  > Door to rm_a5c15
+  * Normal Door to Distribution Facility Tower West/Door to Pipe Hub
+  > Door to Pipe Hub Access
       Trivial
-  > Pipe to rm_a5a01
+  > Pipe to Gravity Area Moto Room Pipe
       All of the following:
           Morph Ball
           Any of the following:
@@ -515,16 +515,16 @@ Extra - map_name: rm_a5c14
               Mid-Air Morph (Beginner) or Power Grip Wall
               Speed Booster and Shinesparking Tricks (Beginner)
 
-> Door to rm_a5c15; Heals? False
+> Door to Pipe Hub Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c15/Door to rm_a5c14
-  > Door to rm_a5c13
+  * Normal Door to Pipe Hub Access/Door to Pipe Hub
+  > Door to Distribution Facility Tower West
       Trivial
 
-> Pipe to rm_a5a01; Heals? False
+> Pipe to Gravity Area Moto Room Pipe; Heals? False
   * Layers: default
-  * Teleporter Pipe to rm_a5a01/Pipe to rm_a5c14
-  > Door to rm_a5c13
+  * Teleporter Pipe to Gravity Area Moto Room Pipe/Pipe to Pipe Hub
+  > Door to Distribution Facility Tower West
       Morph Ball
 
 > A4Pipe; Heals? False
@@ -535,8 +535,8 @@ Extra - map_name: rm_a5c14
 
 > A3Pipe; Heals? False
   * Layers: default
-  * Teleporter to Industrial Complex - rm_a3a27
-  > Door to rm_a5c13
+  * Teleporter to Industrial Complex - Pipe To Distribution Center Pipe Hub
+  > Door to Distribution Facility Tower West
       Morph Ball
   > A4Pipe
       Any of the following:
@@ -546,39 +546,39 @@ Extra - map_name: rm_a5c14
 > A1Pipe; Heals? False
   * Layers: default
   * Teleporter to Golden Temple - Pipe to Distribution Center Pipe Hub
-  > Door to rm_a5c13
+  > Door to Distribution Facility Tower West
       Morph Ball
 
 ----------------
-rm_a5c15
+Pipe Hub Access
 Extra - map_name: rm_a5c15
-> Door to rm_a5c14; Heals? False
+> Door to Pipe Hub; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c14/Door to rm_a5c15
-  > Door to rm_a5h04
+  * Normal Door to Pipe Hub/Door to Pipe Hub Access
+  > Door to Distribution Center Exterior West
       Trivial
   > Event - NearLeftOutsideEMP
       Missiles ≥ 10 or Super Missiles ≥ 5 or Can Use Any Bombs
 
-> Door to rm_a5h04; Heals? False
+> Door to Distribution Center Exterior West; Heals? False
   * Layers: default
-  * A5 Near Pipe Hub EMP Door to rm_a5h04/Door to rm_a5c15
-  > Door to rm_a5c14
+  * A5 Near Pipe Hub EMP Door to Distribution Center Exterior West/Door to Pipe Hub Access
+  > Door to Pipe Hub
       Trivial
 
 > Event - NearLeftOutsideEMP; Heals? False
   * Layers: default
   * Event A5NearPipeHubEMP
-  > Door to rm_a5c14
+  > Door to Pipe Hub
       Trivial
 
 ----------------
-rm_a5c16
+Distribution Facility Connecting Path
 Extra - map_name: rm_a5c16
-> Door to rm_a5c13; Heals? False
+> Door to Distribution Facility Tower West; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c13/Door to rm_a5c16
-  > Door to rm_a5c17
+  * Normal Door to Distribution Facility Tower West/Door to Distribution Facility Connecting Path
+  > Door to Distribution Facility Tower East
       All of the following:
           Power Grip Wall
           Any of the following:
@@ -587,10 +587,10 @@ Extra - map_name: rm_a5c16
                   Can Use Bombs
                   Infinite Bomb Jumping (Beginner) or Mid-Air Morph (Intermediate)
 
-> Door to rm_a5c17; Heals? False
+> Door to Distribution Facility Tower East; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c17/Door to rm_a5c16
-  > Door to rm_a5c13
+  * Normal Door to Distribution Facility Tower East/Door to Distribution Facility Connecting Path
+  > Door to Distribution Facility Tower West
       All of the following:
           Movement (Advanced) or Power Grip Wall
           Any of the following:
@@ -600,36 +600,36 @@ Extra - map_name: rm_a5c16
                   Infinite Bomb Jumping (Beginner) or Mid-Air Morph (Intermediate)
 
 ----------------
-rm_a5c17
+Distribution Facility Tower East
 Extra - map_name: rm_a5c17
-> Door to rm_a5c16; Heals? False
+> Door to Distribution Facility Connecting Path; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c16/Door to rm_a5c17
-  > Door to rm_a5c19
+  * Normal Door to Distribution Facility Connecting Path/Door to Distribution Facility Tower East
+  > Door to Distribution Facility Save Station
       Power Grip or Space Jump or Morph Glide (Intermediate) or Movement (Advanced) or Walljump (Advanced) or Can Use Spider Ball
-  > Pipe to rm_a5c25
+  > Pipe to Meboid Blockade Interior
       Trivial
 
-> Door to rm_a5c19; Heals? False
+> Door to Distribution Facility Save Station; Heals? False
   * Layers: default
-  * Missile Door to rm_a5c19/Door to rm_a5c17
-  > Door to rm_a5c16
+  * Missile Door to Distribution Facility Save Station/Door to Distribution Facility Tower East
+  > Door to Distribution Facility Connecting Path
       Power Grip or Space Jump or Morph Glide (Intermediate) or Movement (Advanced) or Walljump (Advanced) or Can Use Spider Ball
-  > Pipe to rm_a5c25
+  > Pipe to Meboid Blockade Interior
       Trivial
 
-> Door to rm_a5c18; Heals? False
+> Door to Alpha Squad Nest; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c18/Door to rm_a5c17
-  > Pipe to rm_a5c13 (Top)
+  * Normal Door to Alpha Squad Nest/Door to Distribution Facility Tower East
+  > Pipe to Distribution Facility Tower West (Top)
       Screw Attack
-  > Pipe to rm_a5c25
+  > Pipe to Meboid Blockade Interior
       Space Jump Wall
 
-> Pipe to rm_a5c13 (Bottom); Heals? False
+> Pipe to Distribution Facility Tower West (Bottom); Heals? False
   * Layers: default
-  * Teleporter Pipe to rm_a5c13/Pipe to rm_a5c17 (Bottom)
-  > Pipe to rm_a5c13 (Top)
+  * Teleporter Pipe to Distribution Facility Tower West/Pipe to Distribution Facility Tower East (Bottom)
+  > Pipe to Distribution Facility Tower West (Top)
       Any of the following:
           Space Jump or Walljump (Expert) or Can Use Spider Ball
           All of the following:
@@ -637,20 +637,20 @@ Extra - map_name: rm_a5c17
               Infinite Bomb Jumping (Advanced) and Can Use Bombs
           Morph Glide (Intermediate) and Walljump (Advanced)
 
-> Pipe to rm_a5c13 (Top); Heals? False
+> Pipe to Distribution Facility Tower West (Top); Heals? False
   * Layers: default
-  * Teleporter Pipe to rm_a5c13/Pipe to rm_a5c17 (Middle)
-  > Door to rm_a5c18
+  * Teleporter Pipe to Distribution Facility Tower West/Pipe to Distribution Facility Tower East (Middle)
+  > Door to Alpha Squad Nest
       All of the following:
           Screw Attack
           Movement (Expert) or Hijump Wall
-  > Pipe to rm_a5c13 (Bottom)
+  > Pipe to Distribution Facility Tower West (Bottom)
       Trivial
 
-> Pipe to rm_a5c25; Heals? False
+> Pipe to Meboid Blockade Interior; Heals? False
   * Layers: default
-  * Teleporter Pipe to rm_a5c25/Pipe to rm_a5c17
-  > Door to rm_a5c19
+  * Teleporter Pipe to Meboid Blockade Interior/Pipe to Distribution Facility Tower East
+  > Door to Distribution Facility Save Station
       Any of the following:
           Space Jump or Can Use Spider Ball
           All of the following:
@@ -662,15 +662,15 @@ Extra - map_name: rm_a5c17
                   Walljump (Beginner)
                   Power Grip and Enabled Septogg Helpers
           Walljump (Beginner) and Enabled Septogg Helpers
-  > Door to rm_a5c18
+  > Door to Alpha Squad Nest
       Trivial
 
 ----------------
-rm_a5c18
+Alpha Squad Nest
 Extra - map_name: rm_a5c18
-> Door to rm_a5c17; Heals? False
+> Door to Distribution Facility Tower East; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c17/Door to rm_a5c18
+  * Normal Door to Distribution Facility Tower East/Door to Alpha Squad Nest
   > Bottom
       Trivial
 
@@ -706,7 +706,7 @@ Extra - map_name: rm_a5c18
 
 > Bottom; Heals? False
   * Layers: default
-  > Door to rm_a5c17
+  > Door to Distribution Facility Tower East
       Any of the following:
           Space Jump or Enabled Septogg Helpers or Can Use Spider Ball
           Morph Glide (Advanced) and Walljump (Expert)
@@ -726,63 +726,63 @@ Extra - map_name: rm_a5c18
       Defeat Alpha
 
 ----------------
-rm_a5c19
+Distribution Facility Save Station
 Extra - map_name: rm_a5c19
 > Save Station; Heals? True
   * Layers: default
-  > Door to rm_a5c17
+  > Door to Distribution Facility Tower East
       Trivial
-  > Door to rm_a5c20
+  > Door to Distribution Facility Intersection
       Trivial
 
-> Door to rm_a5c17; Heals? False
+> Door to Distribution Facility Tower East; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c17/Door to rm_a5c19
+  * Normal Door to Distribution Facility Tower East/Door to Distribution Facility Save Station
   > Save Station
       Trivial
 
-> Door to rm_a5c20; Heals? False
+> Door to Distribution Facility Intersection; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c20/Door to rm_a5c19
+  * Normal Door to Distribution Facility Intersection/Door to Distribution Facility Save Station
   > Save Station
       Trivial
 
 ----------------
-rm_a5c20
+Distribution Facility Intersection
 Extra - map_name: rm_a5c20
-> Door to rm_a5c19; Heals? False
+> Door to Distribution Facility Save Station; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c19/Door to rm_a5c20
-  > Door to rm_a5c33
+  * Normal Door to Distribution Facility Save Station/Door to Distribution Facility Intersection
+  > Door to Distribution Center Exterior East Access
       Trivial
 
-> Door to rm_a5c21; Heals? False
+> Door to Meat Boy Room Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c21/Door to rm_a5c20
-  > Door to rm_a5c33
+  * Normal Door to Meat Boy Room Access/Door to Distribution Facility Intersection
+  > Door to Distribution Center Exterior East Access
       Trivial
 
-> Door to rm_a5c33; Heals? False
+> Door to Distribution Center Exterior East Access; Heals? False
   * Layers: default
-  * A5 Near Right Side EMP Door to rm_a5c33/Door to rm_a5c20
-  > Door to rm_a5c19
+  * A5 Near Right Side EMP Door to Distribution Center Exterior East Access/Door to Distribution Facility Intersection
+  > Door to Distribution Facility Save Station
       Space Jump Wall
-  > Door to rm_a5c21
+  > Door to Meat Boy Room Access
       Trivial
 
 ----------------
-rm_a5c21
+Meat Boy Room Access
 Extra - map_name: rm_a5c21
-> Door to rm_a5c20; Heals? False
+> Door to Distribution Facility Intersection; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c20/Door to rm_a5c21
-  > Door to rm_a5c22
+  * Normal Door to Distribution Facility Intersection/Door to Meat Boy Room Access
+  > Door to Meat Boy Room
       Trivial
 
-> Door to rm_a5c22; Heals? False
+> Door to Meat Boy Room; Heals? False
   * Layers: default
-  * A5 Near Screw EMP Door to rm_a5c22/Door to rm_a5c21
-  > Door to rm_a5c20
+  * A5 Near Screw EMP Door to Meat Boy Room/Door to Meat Boy Room Access
+  > Door to Distribution Facility Intersection
       Any of the following:
           Space Jump or Enabled Septogg Helpers or Can Use Spider Ball
           Speed Booster and Shinesparking Tricks (Beginner)
@@ -795,7 +795,7 @@ Extra - map_name: rm_a5c21
 > Event - BeforeScrewEMP; Heals? False
   * Layers: default
   * Event EMP NearScrewEMP
-  > Door to rm_a5c22
+  > Door to Meat Boy Room
       Any of the following:
           Space Jump or Walljump (Expert) or Can Use Spider Ball
           All of the following:
@@ -806,60 +806,60 @@ Extra - map_name: rm_a5c21
               Hi-Jump Boots or Enabled Septogg Helpers
 
 ----------------
-rm_a5c22
+Meat Boy Room
 Extra - map_name: rm_a5c22
-> Door to rm_a5c21; Heals? False
+> Door to Meat Boy Room Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c21/Door to rm_a5c22
-  > Door to rm_a5c23
+  * Normal Door to Meat Boy Room Access/Door to Meat Boy Room
+  > Door to Screw Attack Chamber Access
       Trivial
 
-> Door to rm_a5c23; Heals? False
+> Door to Screw Attack Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c23/Door to rm_a5c22
-  > Door to rm_a5c21
+  * Normal Door to Screw Attack Chamber Access/Door to Meat Boy Room
+  > Door to Meat Boy Room Access
       Power Bombs and Space Jump Wall
 
 ----------------
-rm_a5c23
+Screw Attack Chamber Access
 Extra - map_name: rm_a5c23
-> Door to rm_a5c22; Heals? False
+> Door to Meat Boy Room; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c22/Door to rm_a5c23
-  > Door to rm_a5c24
+  * Normal Door to Meat Boy Room/Door to Screw Attack Chamber Access
+  > Door to Screw Attack Chamber
       Any of the following:
           Space Jump Wall
           Movement (Beginner) and Hijump Wall
 
-> Door to rm_a5c24; Heals? False
+> Door to Screw Attack Chamber; Heals? False
   * Layers: default
-  * Missile Door to rm_a5c24/Door to rm_a5c23
-  > Door to rm_a5c22
+  * Missile Door to Screw Attack Chamber/Door to Screw Attack Chamber Access
+  > Door to Meat Boy Room
       Trivial
 
 ----------------
-rm_a5c24
+Screw Attack Chamber
 Extra - map_name: rm_a5c24
-> Door to rm_a5c23; Heals? False
+> Door to Screw Attack Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c23/Door to rm_a5c24
+  * Normal Door to Screw Attack Chamber Access/Door to Screw Attack Chamber
   > Pickup (Screw Attack)
       Trivial
 
 > Pickup (Screw Attack); Heals? False
   * Layers: default
   * Pickup 8; Category? Major
-  * Extra - item_id: 8
-  > Door to rm_a5c23
+  * Extra - object_name: oItemScrewAttack
+  > Door to Screw Attack Chamber Access
       Trivial
 
 ----------------
-rm_a5c25
+Meboid Blockade Interior
 Extra - map_name: rm_a5c25
-> Pipe to rm_a5c17; Heals? False
+> Pipe to Distribution Facility Tower East; Heals? False
   * Layers: default
-  * Teleporter Pipe to rm_a5c17/Pipe to rm_a5c25
-  > Pipe to rm_a5c26
+  * Teleporter Pipe to Distribution Facility Tower East/Pipe to Meboid Blockade Interior
+  > Pipe to Moheek Hangout
       All of the following:
           Any of the following:
               # Get near pipe
@@ -872,10 +872,10 @@ Extra - map_name: rm_a5c25
                   Mid-Air Morph (Intermediate) or Power Grip Wall
                   Speed Booster and Shinesparking Tricks (Beginner)
 
-> Pipe to rm_a5c26; Heals? False
+> Pipe to Moheek Hangout; Heals? False
   * Layers: default
-  * Teleporter Pipe to rm_a5c26/Pipe to rm_a5c25
-  > Pipe to rm_a5c17
+  * Teleporter Pipe to Moheek Hangout/Pipe to Meboid Blockade Interior
+  > Pipe to Distribution Facility Tower East
       All of the following:
           Any of the following:
               # Get near pipe
@@ -893,17 +893,17 @@ Extra - map_name: rm_a5c25
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 301; Category? Minor
-  * Extra - item_id: 301
-  > Pipe to rm_a5c26
+  * Extra - object_name: oItemPB_301
+  > Pipe to Moheek Hangout
       Power Grip Wall
 
 ----------------
-rm_a5c26
+Moheek Hangout
 Extra - map_name: rm_a5c26
-> Door to rm_a5c27; Heals? False
+> Door to Waterblob Habitat; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c27/Door to rm_a5c26
-  > Pipe to rm_a5c25
+  * Normal Door to Waterblob Habitat/Door to Moheek Hangout
+  > Pipe to Meboid Blockade Interior
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
@@ -911,10 +911,10 @@ Extra - map_name: rm_a5c26
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
-> Pipe to rm_a5c25; Heals? False
+> Pipe to Meboid Blockade Interior; Heals? False
   * Layers: default
-  * Teleporter Pipe to rm_a5c25/Pipe to rm_a5c26
-  > Door to rm_a5c27
+  * Teleporter Pipe to Meboid Blockade Interior/Pipe to Moheek Hangout
+  > Door to Waterblob Habitat
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
@@ -923,80 +923,80 @@ Extra - map_name: rm_a5c26
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
 ----------------
-rm_a5c27
+Waterblob Habitat
 Extra - map_name: rm_a5c27
-> Door to rm_a5c28; Heals? False
+> Door to Facility Storage Save Station; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c28/Door to rm_a5c27
-  > Door to rm_a5c26
+  * Normal Door to Facility Storage Save Station/Door to Waterblob Habitat
+  > Door to Moheek Hangout
       Any of the following:
           Ice Beam or Damage Boost (Intermediate)
           Gravity Suit and Speed Booster
 
-> Door to rm_a5c26; Heals? False
+> Door to Moheek Hangout; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c26/Door to rm_a5c27
-  > Door to rm_a5c28
+  * Normal Door to Moheek Hangout/Door to Waterblob Habitat
+  > Door to Facility Storage Save Station
       Any of the following:
           Ice Beam or Damage Boost (Intermediate)
           Gravity Suit and Speed Booster
 
 ----------------
-rm_a5c28
+Facility Storage Save Station
 Extra - map_name: rm_a5c28
-> Door to rm_a5c29; Heals? False
+> Door to Facility Storage Intersection East; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c29/Door to rm_a5c28
+  * Normal Door to Facility Storage Intersection East/Door to Facility Storage Save Station
   > Save Station
       Trivial
 
 > Save Station; Heals? True
   * Layers: default
-  > Door to rm_a5c29
+  > Door to Facility Storage Intersection East
       Trivial
-  > Door to rm_a5c27
+  > Door to Waterblob Habitat
       Trivial
 
-> Door to rm_a5c27; Heals? False
+> Door to Waterblob Habitat; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c27/Door to rm_a5c28
+  * Normal Door to Waterblob Habitat/Door to Facility Storage Save Station
   > Save Station
       Trivial
 
 ----------------
-rm_a5c29
+Facility Storage Intersection East
 Extra - map_name: rm_a5c29
-> Door to rm_a5c28; Heals? False
+> Door to Facility Storage Save Station; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c28/Door to rm_a5c29
-  > Door to rm_a5c30
+  * Normal Door to Facility Storage Save Station/Door to Facility Storage Intersection East
+  > Door to Dual Gamma Nest
       Trivial
 
-> Dock to rm_a5b01; Heals? False
+> Dock to Facility Storage Clogged Pipe North; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b01/Dock to rm_a5c29
-  > Door to rm_a5c30
+  * Open Passage to Facility Storage Clogged Pipe North/Dock to Facility Storage Intersection East
+  > Door to Dual Gamma Nest
       Trivial
 
-> Door to rm_a5c30; Heals? False
+> Door to Dual Gamma Nest; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c30/Door to rm_a5c29
-  > Door to rm_a5c28
+  * Normal Door to Dual Gamma Nest/Door to Facility Storage Intersection East
+  > Door to Facility Storage Save Station
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
           All of the following:
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
-  > Dock to rm_a5b01
+  > Dock to Facility Storage Clogged Pipe North
       Trivial
 
 ----------------
-rm_a5c30
+Dual Gamma Nest
 Extra - map_name: rm_a5c30
-> Door to rm_a5c29; Heals? False
+> Door to Facility Storage Intersection East; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c29/Door to rm_a5c30
+  * Normal Door to Facility Storage Intersection East/Door to Dual Gamma Nest
   > Event - Left Gamma
       Defeat Gamma
   > Event - Right Gamma
@@ -1005,21 +1005,21 @@ Extra - map_name: rm_a5c30
 > Event - Left Gamma; Heals? False
   * Layers: default
   * Event Area 5 - Dual Left Gamma
-  > Door to rm_a5c29
+  > Door to Facility Storage Intersection East
       Trivial
 
 > Event - Right Gamma; Heals? False
   * Layers: default
   * Event Area 5 - Dual Right Gamma
-  > Door to rm_a5c29
+  > Door to Facility Storage Intersection East
       Trivial
 
 ----------------
-rm_a5c31
+Ice Beam Chamber Access
 Extra - map_name: rm_a5c31
-> Door to rm_a5c32; Heals? False
+> Door to Ice Beam Chamber; Heals? False
   * Layers: default
-  * Missile Door to rm_a5c32/Door to rm_a5c31
+  * Missile Door to Ice Beam Chamber/Door to Ice Beam Chamber Access
   > Teleporter Pipe
       All of the following:
           Morph Ball and Destroy Ice Barrier
@@ -1027,72 +1027,72 @@ Extra - map_name: rm_a5c31
 
 > Teleporter Pipe; Heals? False; Default Node
   * Layers: default
-  * Teleporter to Distribution Center - rm_a5b03
-  > Door to rm_a5c32
+  * Teleporter to Distribution Center - Serris Arena Pipe
+  > Door to Ice Beam Chamber
       Destroy Ice Barrier or Hijump Tunnel Climb
 
 ----------------
-rm_a5c32
+Ice Beam Chamber
 Extra - map_name: rm_a5c32
-> Door to rm_a5c31; Heals? False
+> Door to Ice Beam Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a5c31/Door to rm_a5c32
+  * Normal Door to Ice Beam Chamber Access/Door to Ice Beam Chamber
   > Pickup (Ice Beam)
       Trivial
 
 > Pickup (Ice Beam); Heals? False
   * Layers: default
   * Pickup 11; Category? Major
-  * Extra - item_id: 11
+  * Extra - object_name: oItemIBeam
   > Event - Ice Beam Item collected
       Trivial
 
 > Event - Ice Beam Item collected; Heals? False
   * Layers: default
   * Event Distribution Center Item at Ice location
-  > Door to rm_a5c31
+  > Door to Ice Beam Chamber Access
       Trivial
 
 ----------------
-rm_a5c33
+Distribution Center Exterior East Access
 Extra - map_name: rm_a5c33
-> Door to rm_a5h05; Heals? False
+> Door to Distribution Center Exterior East; Heals? False
   * Layers: default
-  * Normal Door to rm_a5h05/Door to rm_a5c33
-  > Door to rm_a5c20
+  * Normal Door to Distribution Center Exterior East/Door to Distribution Center Exterior East Access
+  > Door to Distribution Facility Intersection
       Can Use Any Bombs
   > Event - NearRightOutsideEMP
       All of the following:
           Can Use Any Bombs
           Missiles ≥ 2 or Super Missiles or Can Use Bombs
 
-> Door to rm_a5c20; Heals? False
+> Door to Distribution Facility Intersection; Heals? False
   * Layers: default
-  * A5 Near Right Side EMP Door to rm_a5c20/Door to rm_a5c33
-  > Door to rm_a5h05
+  * A5 Near Right Side EMP Door to Distribution Facility Intersection/Door to Distribution Center Exterior East Access
+  > Door to Distribution Center Exterior East
       Can Use Any Bombs
 
 > Event - NearRightOutsideEMP; Heals? False
   * Layers: default
   * Event A5NearRightSideEMP
-  > Door to rm_a5h05
+  > Door to Distribution Center Exterior East
       Trivial
 
 ----------------
-rm_a5b01
+Facility Storage Clogged Pipe North
 Extra - map_name: rm_a5b01
-> Dock to rm_a5b02; Heals? False
+> Dock to Serris Arena Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b02/Dock to rm_a5b01
-  > Dock to rm_a5c29
+  * Open Passage to Serris Arena Access/Dock to Facility Storage Clogged Pipe North
+  > Dock to Facility Storage Intersection East
       Any of the following:
           Knowledge (Advanced)
           Gravity Suit and Speed Booster
 
-> Dock to rm_a5c29; Heals? False
+> Dock to Facility Storage Intersection East; Heals? False
   * Layers: default
-  * Open Passage to rm_a5c29/Dock to rm_a5b01
-  > Dock to rm_a5b02
+  * Open Passage to Facility Storage Intersection East/Dock to Facility Storage Clogged Pipe North
+  > Dock to Serris Arena Access
       Any of the following:
           Gravity Suit and Speed Booster and Disabled Entrance Rando
           All of the following:
@@ -1102,27 +1102,27 @@ Extra - map_name: rm_a5b01
                   Morph Ball and Mid-Air Morph (Intermediate)
 
 ----------------
-rm_a5b02
+Serris Arena Access
 Extra - map_name: rm_a5b02
-> Dock to rm_a5b05; Heals? False
+> Dock to Spiky Spider Trial; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b05/Dock to rm_a5b02
-  > Door to rm_a5b03a
+  * Open Passage to Spiky Spider Trial/Dock to Serris Arena Access
+  > Door to Serris Arena
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
           All of the following:
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
-  > Dock to rm_a5b04
+  > Dock to Facility Storage Clogged Pipe South
       Trivial
 
-> Door to rm_a5b03a; Heals? False
+> Door to Serris Arena; Heals? False
   * Layers: default
-  * Missile Door to rm_a5b03a/Door to rm_a5b02
-  > Dock to rm_a5b05
+  * Missile Door to Serris Arena/Door to Serris Arena Access
+  > Dock to Spiky Spider Trial
       Trivial
-  > Dock to rm_a5b01
+  > Dock to Facility Storage Clogged Pipe North
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
@@ -1130,31 +1130,31 @@ Extra - map_name: rm_a5b02
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
-> Dock to rm_a5b01; Heals? False
+> Dock to Facility Storage Clogged Pipe North; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b01/Dock to rm_a5b02
-  > Door to rm_a5b03a
+  * Open Passage to Facility Storage Clogged Pipe North/Dock to Serris Arena Access
+  > Door to Serris Arena
       Trivial
 
-> Dock to rm_a5b04; Heals? False
+> Dock to Facility Storage Clogged Pipe South; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b04/Dock to rm_a5b02
-  > Dock to rm_a5b05
+  * Open Passage to Facility Storage Clogged Pipe South/Dock to Serris Arena Access
+  > Dock to Spiky Spider Trial
       Trivial
 
 ----------------
-rm_a5b03a
+Serris Arena
 Extra - map_name: rm_a5b03a
-> Door to rm_a5b02; Heals? False
+> Door to Serris Arena Access; Heals? False
   * Layers: default
-  * Serris Door to rm_a5b02/Door to rm_a5b03a
-  > Door to rm_a5b03
+  * Serris Door to Serris Arena Access/Door to Serris Arena
+  > Door to Serris Arena Pipe
       Power Grip Wall
 
-> Door to rm_a5b03; Heals? False
+> Door to Serris Arena Pipe; Heals? False
   * Layers: default
-  * Serris Door to rm_a5b03/Door to rm_a5b03a
-  > Door to rm_a5b02
+  * Serris Door to Serris Arena Pipe/Door to Serris Arena
+  > Door to Serris Arena Access
       Power Grip Wall
   > Event - Serris
       All of the following:
@@ -1172,46 +1172,46 @@ Extra - map_name: rm_a5b03a
 > Event - Serris; Heals? False
   * Layers: default
   * Event Boss Serris Defeated
-  > Door to rm_a5b02
+  > Door to Serris Arena Access
       Trivial
 
 ----------------
-rm_a5b03
+Serris Arena Pipe
 Extra - map_name: rm_a5b03
-> Door to rm_a5b03a; Heals? False; Default Node
+> Door to Serris Arena; Heals? False; Default Node
   * Layers: default
-  * Normal Door to rm_a5b03a/Door to rm_a5b03
+  * Normal Door to Serris Arena/Door to Serris Arena Pipe
   > Teleporter Pipe
       Morph Ball
 
 > Teleporter Pipe; Heals? False
   * Layers: default
-  * Teleporter to Distribution Center - rm_a5c31
-  > Door to rm_a5b03a
+  * Teleporter to Distribution Center - Ice Beam Chamber Access
+  > Door to Serris Arena
       Trivial
 
 ----------------
-rm_a5b04
+Facility Storage Clogged Pipe South
 Extra - map_name: rm_a5b04
-> Dock to rm_a5b02; Heals? False
+> Dock to Serris Arena Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b02/Dock to rm_a5b04
-  > Dock to rm_a5b07
+  * Open Passage to Serris Arena Access/Dock to Facility Storage Clogged Pipe South
+  > Dock to Facility Storage Tower East
       Trivial
 
-> Dock to rm_a5b07; Heals? False
+> Dock to Facility Storage Tower East; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b07/Dock to rm_a5b04
-  > Dock to rm_a5b02
+  * Open Passage to Facility Storage Tower East/Dock to Facility Storage Clogged Pipe South
+  > Dock to Serris Arena Access
       Trivial
 
 ----------------
-rm_a5b05
+Spiky Spider Trial
 Extra - map_name: rm_a5b05
-> Dock to rm_a5b02; Heals? False
+> Dock to Serris Arena Access; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b02/Dock to rm_a5b05
-  > Tunnel to rm_a5b06
+  * Open Passage to Serris Arena Access/Dock to Spiky Spider Trial
+  > Tunnel to Spiky Spider Trial Reward Room
       Any of the following:
           All of the following:
               Morph Ball and Mid-Air Morph (Advanced)
@@ -1224,107 +1224,107 @@ Extra - map_name: rm_a5b05
                       Infinite Bomb Jumping (Advanced) and Can Use Bombs
           Gravity Suit and Can Use Spider Ball
 
-> Tunnel to rm_a5b06; Heals? False
+> Tunnel to Spiky Spider Trial Reward Room; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a5b06/Tunnel to rm_a5b05
-  > Dock to rm_a5b02
+  * Morph Ball Tunnel to Spiky Spider Trial Reward Room/Tunnel to Spiky Spider Trial
+  > Dock to Serris Arena Access
       Trivial
 
 ----------------
-rm_a5b06
+Spiky Spider Trial Reward Room
 Extra - map_name: rm_a5b06
-> Tunnel to rm_a5b05; Heals? False
+> Tunnel to Spiky Spider Trial; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to rm_a5b05/Tunnel to rm_a5b06
+  * Morph Ball Tunnel to Spiky Spider Trial/Tunnel to Spiky Spider Trial Reward Room
   > Pickup (Missile Tank)
       Can Use Any Bombs
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 303; Category? Minor
-  * Extra - item_id: 303
-  > Tunnel to rm_a5b05
+  * Extra - object_name: oItemM_303
+  > Tunnel to Spiky Spider Trial
       Any of the following:
           Tunnel Climb
           Morph Ball and Mid-Air Morph (Intermediate)
 
 ----------------
-rm_a5b07
+Facility Storage Tower East
 Extra - map_name: rm_a5b07
-> Dock to rm_a5b20; Heals? False
+> Dock to Facility Storage Tower Route North; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b20/Dock to rm_a5b07
-  > Dock to rm_a5b04
+  * Open Passage to Facility Storage Tower Route North/Dock to Facility Storage Tower East
+  > Dock to Facility Storage Clogged Pipe South
       Trivial
 
-> Door to rm_a5b22; Heals? False
+> Door to Facility Storage Tower Route South; Heals? False
   * Layers: default
-  * Normal Door to rm_a5b22/Door to rm_a5b07
-  > Dock to rm_a5b04
+  * Normal Door to Facility Storage Tower Route South/Door to Facility Storage Tower East
+  > Dock to Facility Storage Clogged Pipe South
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
           All of the following:
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
-  > Dock to rm_a5b15
+  > Dock to Spiky Space Jump Trial Entrance
       Trivial
 
-> Dock to rm_a5b04; Heals? False
+> Dock to Facility Storage Clogged Pipe South; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b04/Dock to rm_a5b07
-  > Dock to rm_a5b20
+  * Open Passage to Facility Storage Clogged Pipe South/Dock to Facility Storage Tower East
+  > Dock to Facility Storage Tower Route North
       Gravity Suit and Speed Booster and Shinesparking Tricks (Beginner)
-  > Door to rm_a5b22
+  > Door to Facility Storage Tower Route South
       Trivial
 
-> Dock to rm_a5b15; Heals? False
+> Dock to Spiky Space Jump Trial Entrance; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b15/Dock to rm_a5b07
-  > Door to rm_a5b22
+  * Open Passage to Spiky Space Jump Trial Entrance/Dock to Facility Storage Tower East
+  > Door to Facility Storage Tower Route South
       Trivial
 
 ----------------
-rm_a5b08
+Facility Storage Spiked Path Pipe
 Extra - map_name: rm_a5b08
-> Door to rm_a5b09; Heals? False; Default Node
+> Door to Facility Storage Spiked Path; Heals? False; Default Node
   * Layers: default
-  * Normal Door to rm_a5b09/Door to rm_a5b08
+  * Normal Door to Facility Storage Spiked Path/Door to Facility Storage Spiked Path Pipe
   > Teleporter Pipe
       Morph Ball
 
 > Teleporter Pipe; Heals? False
   * Layers: default
-  * Teleporter to Distribution Center - rm_a5c31
-  > Door to rm_a5b09
+  * Teleporter to Distribution Center - Ice Beam Chamber Access
+  > Door to Facility Storage Spiked Path
       Morph Ball
 
 ----------------
-rm_a5b09
+Facility Storage Spiked Path
 Extra - map_name: rm_a5b09
-> Door to rm_a5h05; Heals? False
+> Door to Distribution Center Exterior East; Heals? False
   * Layers: default
-  * Normal Door to rm_a5h05/Door to rm_a5b09
-  > Door to rm_a5b08
+  * Normal Door to Distribution Center Exterior East/Door to Facility Storage Spiked Path
+  > Door to Facility Storage Spiked Path Pipe
       Any of the following:
           Gravity Suit and Space Jump
           Damage Boost (Intermediate) and Walljump (Advanced)
 
-> Door to rm_a5b08; Heals? False
+> Door to Facility Storage Spiked Path Pipe; Heals? False
   * Layers: default
-  * Normal Door to rm_a5b08/Door to rm_a5b09
-  > Door to rm_a5h05
+  * Normal Door to Facility Storage Spiked Path Pipe/Door to Facility Storage Spiked Path
+  > Door to Distribution Center Exterior East
       Any of the following:
           Gravity Suit and Space Jump
           Damage Boost (Intermediate) and Walljump (Advanced)
 
 ----------------
-rm_a5b15
+Spiky Space Jump Trial Entrance
 Extra - map_name: rm_a5b15
-> Dock to rm_a5b07; Heals? False
+> Dock to Facility Storage Tower East; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b07/Dock to rm_a5b15
-  > Dock to rm_a5b16
+  * Open Passage to Facility Storage Tower East/Dock to Spiky Space Jump Trial Entrance
+  > Dock to Spiky Space Jump Trial
       Gravity Suit and Speed Booster and Shinesparking Tricks (Beginner)
   > Pickup (Missile Tank)
       Any of the following:
@@ -1334,17 +1334,17 @@ Extra - map_name: rm_a5b15
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
-> Dock to rm_a5b16; Heals? False
+> Dock to Spiky Space Jump Trial; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b16/Dock to rm_a5b15
+  * Open Passage to Spiky Space Jump Trial/Dock to Spiky Space Jump Trial Entrance
   > Pickup (Missile Tank)
       Gravity Suit and Speed Booster
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 304; Category? Minor
-  * Extra - item_id: 304
-  > Dock to rm_a5b07
+  * Extra - object_name: oItemM_304
+  > Dock to Facility Storage Tower East
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
@@ -1353,22 +1353,22 @@ Extra - map_name: rm_a5b15
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
 ----------------
-rm_a5b16
+Spiky Space Jump Trial
 Extra - map_name: rm_a5b16
-> Dock to rm_a5b17; Heals? False
+> Dock to Spiky Space Jump Trial Reward Room; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b17/Dock to rm_a5b16
-  > Dock to rm_a5b15
+  * Open Passage to Spiky Space Jump Trial Reward Room/Dock to Spiky Space Jump Trial
+  > Dock to Spiky Space Jump Trial Entrance
       All of the following:
           Gravity Suit
           Any of the following:
               Space Jump
               Damage Boost (Advanced) and Short Charge (Advanced)
 
-> Dock to rm_a5b15; Heals? False
+> Dock to Spiky Space Jump Trial Entrance; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b15/Dock to rm_a5b16
-  > Dock to rm_a5b17
+  * Open Passage to Spiky Space Jump Trial Entrance/Dock to Spiky Space Jump Trial
+  > Dock to Spiky Space Jump Trial Reward Room
       All of the following:
           Gravity Suit
           Any of the following:
@@ -1380,24 +1380,24 @@ Extra - map_name: rm_a5b16
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 305; Category? Minor
-  * Extra - item_id: 305
-  > Dock to rm_a5b15
+  * Extra - object_name: oItemSM_305
+  > Dock to Spiky Space Jump Trial Entrance
       Trivial
 
 ----------------
-rm_a5b17
+Spiky Space Jump Trial Reward Room
 Extra - map_name: rm_a5b17
-> Dock to rm_a5b16; Heals? False
+> Dock to Spiky Space Jump Trial; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b16/Dock to rm_a5b17
+  * Open Passage to Spiky Space Jump Trial/Dock to Spiky Space Jump Trial Reward Room
   > Pickup (Energy Tank)
       Power Grip Wall
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 306; Category? Minor
-  * Extra - item_id: 306
-  > Dock to rm_a5b16
+  * Extra - object_name: oItemETank_306
+  > Dock to Spiky Space Jump Trial
       Any of the following:
           Walljump (Advanced)
           Gravity Suit and Space Jump Wall
@@ -1406,20 +1406,20 @@ Extra - map_name: rm_a5b17
               Infinite Bomb Jumping (Expert) and Can Use Bombs
 
 ----------------
-rm_a5b20
+Facility Storage Tower Route North
 Extra - map_name: rm_a5b20
-> Dock to rm_a5b07; Heals? False
+> Dock to Facility Storage Tower East; Heals? False
   * Layers: default
-  * Open Passage to rm_a5b07/Dock to rm_a5b20
-  > Door to rm_a5b21
+  * Open Passage to Facility Storage Tower East/Dock to Facility Storage Tower Route North
+  > Door to Facility Storage Tower West
       All of the following:
           Gravity Suit and Speed Booster
           Space Jump or Shinesparking Tricks (Beginner)
 
-> Door to rm_a5b21; Heals? False
+> Door to Facility Storage Tower West; Heals? False
   * Layers: default
-  * Normal Door to rm_a5b21/Door to rm_a5b20
-  > Dock to rm_a5b07
+  * Normal Door to Facility Storage Tower West/Door to Facility Storage Tower Route North
+  > Dock to Facility Storage Tower East
       All of the following:
           Gravity Suit and Speed Booster
           Space Jump or Shinesparking Tricks (Beginner)
@@ -1429,32 +1429,32 @@ Extra - map_name: rm_a5b20
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 307; Category? Minor
-  * Extra - item_id: 307
-  > Door to rm_a5b21
+  * Extra - object_name: oItemM_307
+  > Door to Facility Storage Tower West
       Trivial
 
 ----------------
-rm_a5b21
+Facility Storage Tower West
 Extra - map_name: rm_a5b21
-> Door to rm_a5b20; Heals? False
+> Door to Facility Storage Tower Route North; Heals? False
   * Layers: default
-  * Normal Door to rm_a5b20/Door to rm_a5b21
-  > Door to rm_a5b22
+  * Normal Door to Facility Storage Tower Route North/Door to Facility Storage Tower West
+  > Door to Facility Storage Tower Route South
       Trivial
-  > Door to rm_a5h04
+  > Door to Distribution Center Exterior West
       Gravity Suit
 
-> Door to rm_a5b22; Heals? False
+> Door to Facility Storage Tower Route South; Heals? False
   * Layers: default
-  * Normal Door to rm_a5b22/Door to rm_a5b21
-  > Door to rm_a5b20
+  * Normal Door to Facility Storage Tower Route South/Door to Facility Storage Tower West
+  > Door to Facility Storage Tower Route North
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
           All of the following:
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
-  > Door to rm_a5h04
+  > Door to Distribution Center Exterior West
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
@@ -1462,101 +1462,101 @@ Extra - map_name: rm_a5b21
               # IBJ
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
-> Door to rm_a5h04; Heals? False
+> Door to Distribution Center Exterior West; Heals? False
   * Layers: default
-  * Normal Door to rm_a5h04/Door to rm_a5b21
-  > Door to rm_a5b20
+  * Normal Door to Distribution Center Exterior West/Door to Facility Storage Tower West
+  > Door to Facility Storage Tower Route North
       Gravity Suit
-  > Door to rm_a5b22
+  > Door to Facility Storage Tower Route South
       Trivial
 
 ----------------
-rm_a5b22
+Facility Storage Tower Route South
 Extra - map_name: rm_a5b22
-> Door to rm_a5b07; Heals? False
+> Door to Facility Storage Tower East; Heals? False
   * Layers: default
-  * Normal Door to rm_a5b07/Door to rm_a5b22
-  > Door to rm_a5b21
+  * Normal Door to Facility Storage Tower East/Door to Facility Storage Tower Route South
+  > Door to Facility Storage Tower West
       Destroy Ice Barrier
 
-> Door to rm_a5b21; Heals? False
+> Door to Facility Storage Tower West; Heals? False
   * Layers: default
-  * Normal Door to rm_a5b21/Door to rm_a5b22
-  > Door to rm_a5b07
+  * Normal Door to Facility Storage Tower West/Door to Facility Storage Tower Route South
+  > Door to Facility Storage Tower East
       Destroy Ice Barrier
 
 ----------------
-rm_a5a01
+Gravity Area Moto Room Pipe
 Extra - map_name: rm_a5a01
-> Door to rm_a5a02; Heals? False
+> Door to Gravity Area Moto Room; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a02/Door to rm_a5a01
-  > Pipe to rm_a5c14
+  * Normal Door to Gravity Area Moto Room/Door to Gravity Area Moto Room Pipe
+  > Pipe to Pipe Hub
       All of the following:
           Morph Ball
           Mid-Air Morph (Beginner) or Power Grip Wall
 
-> Pipe to rm_a5c14; Heals? False
+> Pipe to Pipe Hub; Heals? False
   * Layers: default
-  * Teleporter Pipe to rm_a5c14/Pipe to rm_a5a01
-  > Door to rm_a5a02
+  * Teleporter Pipe to Pipe Hub/Pipe to Gravity Area Moto Room Pipe
+  > Door to Gravity Area Moto Room
       Morph Ball
 
 ----------------
-rm_a5a02
+Gravity Area Moto Room
 Extra - map_name: rm_a5a02
-> Door to rm_a5a03; Heals? False
+> Door to Gravity Area One-Way Route; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a03/Door to rm_a5a02
-  > Door to rm_a5a01
+  * Normal Door to Gravity Area One-Way Route/Door to Gravity Area Moto Room
+  > Door to Gravity Area Moto Room Pipe
       Trivial
 
-> Door to rm_a5a01; Heals? False
+> Door to Gravity Area Moto Room Pipe; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a01/Door to rm_a5a02
-  > Door to rm_a5a03
+  * Normal Door to Gravity Area Moto Room Pipe/Door to Gravity Area Moto Room
+  > Door to Gravity Area One-Way Route
       Trivial
 
 ----------------
-rm_a5a03
+Gravity Area One-Way Route
 Extra - map_name: rm_a5a03
-> Door to rm_a5a04; Heals? False
+> Door to Gravity Area Corridor; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a04/Door to rm_a5a03
+  * Normal Door to Gravity Area Corridor/Door to Gravity Area One-Way Route
 
-> Door to rm_a5a02; Heals? False
+> Door to Gravity Area Moto Room; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a02/Door to rm_a5a03
-  > Door to rm_a5a04
+  * Normal Door to Gravity Area Moto Room/Door to Gravity Area One-Way Route
+  > Door to Gravity Area Corridor
       Trivial
 
 ----------------
-rm_a5a04
+Gravity Area Corridor
 Extra - map_name: rm_a5a04
-> Door to rm_a5a03; Heals? False
+> Door to Gravity Area One-Way Route; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a03/Door to rm_a5a04
+  * Normal Door to Gravity Area One-Way Route/Door to Gravity Area Corridor
   > Middle
       Power Grip Wall
 
-> Door to rm_a5a05; Heals? False
+> Door to Gravity Area Shaft; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a05/Door to rm_a5a04
+  * Normal Door to Gravity Area Shaft/Door to Gravity Area Corridor
   > Middle
       Power Grip Wall
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 308; Category? Minor
-  * Extra - item_id: 308
+  * Extra - object_name: oItemM_308
   > Middle
       Trivial
 
 > Middle; Heals? False
   * Layers: default
-  > Door to rm_a5a03
+  > Door to Gravity Area One-Way Route
       Power Grip Wall
-  > Door to rm_a5a05
+  > Door to Gravity Area Shaft
       Power Grip Wall
   > Pickup (Missile Tank)
       Any of the following:
@@ -1564,93 +1564,93 @@ Extra - map_name: rm_a5a04
           Gravity Suit and Can Use Bombs
 
 ----------------
-rm_a5a05
+Gravity Area Shaft
 Extra - map_name: rm_a5a05
-> Door to rm_a5a04; Heals? False
+> Door to Gravity Area Corridor; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a04/Door to rm_a5a05
-  > Door to rm_a5a06
+  * Normal Door to Gravity Area Corridor/Door to Gravity Area Shaft
+  > Door to Gravity Chamber Access
       Trivial
 
-> Door to rm_a5a06; Heals? False
+> Door to Gravity Chamber Access; Heals? False
   * Layers: default
-  * Missile Door to rm_a5a06/Door to rm_a5a05
-  > Door to rm_a5a04
+  * Missile Door to Gravity Chamber Access/Door to Gravity Area Shaft
+  > Door to Gravity Area Corridor
       No Varia Suit and Walljump (Intermediate) and Enabled Septogg Helpers
-  > Door to rm_a5a08
+  > Door to Gravity Area Blockade
       Any of the following:
           Space Jump Wall
           Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
           Varia Suit and Enabled Septogg Helpers
 
-> Door to rm_a5a08; Heals? False
+> Door to Gravity Area Blockade; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a08/Door to rm_a5a05
-  > Door to rm_a5a04
+  * Normal Door to Gravity Area Blockade/Door to Gravity Area Shaft
+  > Door to Gravity Area Corridor
       Trivial
 
 ----------------
-rm_a5a06
+Gravity Chamber Access
 Extra - map_name: rm_a5a06
-> Door to rm_a5a07; Heals? False
+> Door to Gravity Chamber; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a07/Door to rm_a5a06
-  > Door to rm_a5a05
+  * Normal Door to Gravity Chamber/Door to Gravity Chamber Access
+  > Door to Gravity Area Shaft
       Any of the following:
           Can Use Power Bombs
           Gravity Suit and Can Use Bombs
 
-> Door to rm_a5a05; Heals? False
+> Door to Gravity Area Shaft; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a05/Door to rm_a5a06
-  > Door to rm_a5a07
+  * Normal Door to Gravity Area Shaft/Door to Gravity Chamber Access
+  > Door to Gravity Chamber
       Any of the following:
           Can Use Power Bombs
           Can Use Bombs and Hijump Tunnel Climb
 
 ----------------
-rm_a5a07
+Gravity Chamber
 Extra - map_name: rm_a5a07
-> Door to rm_a5a06; Heals? False
+> Door to Gravity Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a06/Door to rm_a5a07
+  * Normal Door to Gravity Chamber Access/Door to Gravity Chamber
   > Pickup (Gravity Suit)
       Trivial
 
 > Pickup (Gravity Suit); Heals? False
   * Layers: default
   * Pickup 9; Category? Major
-  * Extra - item_id: 9
-  > Door to rm_a5a06
+  * Extra - object_name: oItemGravity
+  > Door to Gravity Chamber Access
       Trivial
 
 ----------------
-rm_a5a08
+Gravity Area Blockade
 Extra - map_name: rm_a5a08
-> Door to rm_a5a05; Heals? False
+> Door to Gravity Area Shaft; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a05/Door to rm_a5a08
-  > Door to rm_a5a09
+  * Normal Door to Gravity Area Shaft/Door to Gravity Area Blockade
+  > Door to Gravity Area Blockade Pipe
       Gravity Suit and Space Jump Wall
 
-> Door to rm_a5a09; Heals? False
+> Door to Gravity Area Blockade Pipe; Heals? False
   * Layers: default
-  * Normal Door to rm_a5a09/Door to rm_a5a08
-  > Door to rm_a5a05
+  * Normal Door to Gravity Area Blockade Pipe/Door to Gravity Area Blockade
+  > Door to Gravity Area Shaft
       Gravity Suit and Space Jump Wall
 
 ----------------
-rm_a5a09
+Gravity Area Blockade Pipe
 Extra - map_name: rm_a5a09
-> Door to rm_a5a08; Heals? False; Default Node
+> Door to Gravity Area Blockade; Heals? False; Default Node
   * Layers: default
-  * Normal Door to rm_a5a08/Door to rm_a5a09
+  * Normal Door to Gravity Area Blockade/Door to Gravity Area Blockade Pipe
   > Teleporter Pipe
       Morph Ball
 
 > Teleporter Pipe; Heals? False
   * Layers: default
-  * Teleporter to Distribution Center - rm_a5b08
-  > Door to rm_a5a08
+  * Teleporter to Distribution Center - Facility Storage Spiked Path Pipe
+  > Door to Gravity Area Blockade
       Morph Ball
 
