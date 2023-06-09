@@ -88,6 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: 142 videos to the logic database
 - Added: Method to climb Forgotten Bridge with Jump Off Enemy (Advanced)
 - Added: Scan Dash to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash (Intermediate)
 - Added: Method to collect the pickup in Reactor Core using the top Rezbit, Bombs, Bomb Space Jump (Advanced), Standable Terrain (Advanced), Movement (Advanced), and Jump Off Enemies (Expert).
