@@ -1,5 +1,4 @@
 import copy
-import json
 
 import pytest
 
@@ -7,7 +6,6 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
-from randovania.lib import json_lib
 
 
 @pytest.fixture(
@@ -20,10 +18,10 @@ from randovania.lib import json_lib
         {"game": RandovaniaGame.METROID_PRIME_CORRUPTION, "encoded": b'\x00', "pickups_state": {}},
     ],
     name="config_with_data")
-def _config_with_data(request):
+def _config_with_data(request, test_files_dir):
     game: RandovaniaGame = request.param["game"]
 
-    default_data = json_lib.read_path(game.data_path.joinpath("pickup_database", "default_state", "ammo-pickups.json"))
+    default_data = test_files_dir.read_json("pickup_database", f"{game.value}_default_state", "ammo-pickups.json")
 
     default = AmmoPickupConfiguration.from_json(default_data, game)
     data = copy.deepcopy(default_data)
