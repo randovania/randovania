@@ -286,7 +286,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_generic">
       <attribute name="title">
@@ -484,23 +484,6 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QSpinBox" name="pickup_index_spin">
-         <property name="maximum">
-          <number>999</number>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="location_category_combo"/>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="pickup_index_label">
-         <property name="text">
-          <string>Pickup Index:</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
@@ -513,6 +496,30 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="pickup_index_label">
+         <property name="text">
+          <string>Pickup Index:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="pickup_index_spin">
+         <property name="maximum">
+          <number>999</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="pickup_index_button">
+         <property name="text">
+          <string>Find free index</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QComboBox" name="location_category_combo"/>
        </item>
       </layout>
      </widget>

@@ -1,3 +1,5 @@
+import collections
+import itertools
 import json
 import logging
 import traceback
@@ -169,6 +171,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_type_combo.currentIndexChanged.connect(self.on_dock_type_combo)
         self.dock_update_name_button.clicked.connect(self.on_dock_update_name_button)
         self.dock_incompatible_button.clicked.connect(self.on_dock_incompatible_delete_selected)
+        self.pickup_index_button.clicked.connect(self.on_pickup_index_button)
         self.teleporter_destination_region_combo.currentIndexChanged.connect(self.on_teleporter_destination_region_combo)
         self.hint_requirement_to_collect_button.clicked.connect(self.on_hint_requirement_to_collect_button)
         self.teleporter_network_unlocked_button.clicked.connect(self.on_teleporter_network_unlocked_button)
@@ -379,6 +382,22 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         if indices:
             assert len(indices) == 1
             self.dock_incompatible_model.removeRow(indices[0])
+
+    # Pickup
+
+    def on_pickup_index_button(self):
+        used_indices: dict[int, int] = collections.defaultdict(lambda: 0)
+        for node in self.game.region_list.iterate_nodes():
+            if isinstance(node, PickupNode):
+                used_indices[node.pickup_index.index] += 1
+
+        if isinstance(self.node, PickupNode):
+            used_indices[self.node.pickup_index.index] -= 1
+
+        for new_index in itertools.count(0):
+            if used_indices[new_index] == 0:
+                self.pickup_index_spin.setValue(new_index)
+                return
 
     def on_teleporter_destination_region_combo(self, _):
         region: Region = self.teleporter_destination_region_combo.currentData()
