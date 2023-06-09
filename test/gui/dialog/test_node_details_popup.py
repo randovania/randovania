@@ -1,5 +1,4 @@
 import pytest
-from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 
 from randovania.game_description.db.configurable_node import ConfigurableNode
@@ -25,6 +24,7 @@ from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 def test_unchanged_create_new_node_echoes(skip_qtbot, echoes_game_description, node_type):
     node = next(node for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, node_type))
     dialog = NodeDetailsPopup(echoes_game_description, node)
+    skip_qtbot.addWidget(dialog)
 
     # Run
     new_node = dialog.create_new_node()
@@ -39,6 +39,7 @@ def test_unchanged_create_new_node_echoes(skip_qtbot, echoes_game_description, n
 def test_unchanged_create_new_node_corruption(skip_qtbot, corruption_game_description, node_type):
     node = next(node for node in corruption_game_description.region_list.iterate_nodes() if isinstance(node, node_type))
     dialog = NodeDetailsPopup(corruption_game_description, node)
+    skip_qtbot.addWidget(dialog)
 
     # Run
     new_node = dialog.create_new_node()
@@ -50,6 +51,7 @@ def test_unchanged_create_new_node_corruption(skip_qtbot, corruption_game_descri
 def test_change_incompatible_dock_list(skip_qtbot, echoes_game_description):
     node = next(node for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, DockNode))
     dialog = NodeDetailsPopup(echoes_game_description, node)
+    skip_qtbot.addWidget(dialog)
     model = dialog.dock_incompatible_model
 
     m = model.index(0)
@@ -74,3 +76,21 @@ def test_change_incompatible_dock_list(skip_qtbot, echoes_game_description):
     result = dialog.create_new_node()
     assert isinstance(result, DockNode)
     assert [w.name for w in result.incompatible_dock_weaknesses] == []
+
+
+def test_on_pickup_index_button_generic(skip_qtbot, echoes_game_description):
+    node = next(node for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, GenericNode))
+    dialog = NodeDetailsPopup(echoes_game_description, node)
+    skip_qtbot.addWidget(dialog)
+
+    dialog.on_pickup_index_button()
+    assert dialog.pickup_index_spin.value() == 119
+
+
+def test_on_pickup_index_button_pickup(skip_qtbot, echoes_game_description):
+    node = next(node for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, PickupNode))
+    dialog = NodeDetailsPopup(echoes_game_description, node)
+    skip_qtbot.addWidget(dialog)
+
+    dialog.on_pickup_index_button()
+    assert dialog.pickup_index_spin.value() == node.pickup_index.index
