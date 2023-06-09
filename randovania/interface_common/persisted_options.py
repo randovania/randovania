@@ -144,6 +144,10 @@ def _convert_v23(options: dict) -> dict:
 
     return options
 
+def _convert_v24(options: dict) -> dict:
+    # added Dread's missile pack recolor
+    return options
+
 
 _CONVERTER_FOR_VERSION = [
     None,
@@ -169,6 +173,7 @@ _CONVERTER_FOR_VERSION = [
     _convert_v21,
     _convert_v22,
     _convert_v23,
+    _convert_v24,
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

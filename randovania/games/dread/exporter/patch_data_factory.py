@@ -17,7 +17,7 @@ from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
+from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 
@@ -230,6 +230,12 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         if pickup_type == "actor":
             pickup_actor = self._teleporter_ref_for(pickup_node)
+
+            if self.cosmetic_patches.missile_cosmetic != DreadMissileCosmeticType.NONE:
+                if model_names[0] == "item_missiletank":
+                    colors = self.cosmetic_patches.missile_cosmetic.colors
+                    new_model = colors[self.rng.randint(0, len(colors)-1)].value
+                    model_names = [new_model]
 
             # Progressive models currently crash when placed in Hanubia.
             # See https://github.com/randovania/open-dread-rando/issues/141
