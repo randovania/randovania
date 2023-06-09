@@ -1,0 +1,278 @@
+====================
+Templates
+
+* AnyBombs:
+      All of the following:
+          # Possible to lay any kind of bombs
+          Morphball
+          Bomb or PowerBomb
+
+* Bombs:
+      All of the following:
+          # Able to lay normal bombs
+          Bomb and Morphball
+
+* PowerBombs:
+      All of the following:
+          # Able to lay Power Bombs
+          Morphball and PowerBomb
+
+* SpringBall:
+      All of the following:
+          # Able to use spring ball
+          Morphball and Springball
+
+* SpiderBall:
+      All of the following:
+          # Able to use spider ball
+          Morphball and Spiderball
+
+* IBJ:
+      All of the following:
+          # Able to Infinite Bomb Jump
+          Infinite Bomb Jumping (Beginner) and Bombs
+
+* MidAirMorph:
+      All of the following:
+          # Able to use the MidAirMorphTrick
+          Morphball and Mid-Air Morph (Beginner)
+
+* MidWall:
+      Any of the following:
+          # Able to get over a mid-sized wall
+          Hijump or Power Grip or Spacejump or Walljump (Beginner) or SpiderBall
+          All of the following:
+              # IBJ Beginner
+              Infinite Bomb Jumping (Beginner) and Bombs
+
+* HighWall:
+      Any of the following:
+          # Able to get over a high sized wall
+          Hijump or Spacejump or Walljump (Intermediate) or SpiderBall
+          All of the following:
+              # IBJ Intermediate
+              Infinite Bomb Jumping (Intermediate) and Bombs
+
+* Defat Alpha:
+      Missile ≥ 7 or SuperMissile ≥ 2
+
+* TunnelClimb:
+      All of the following:
+          Morphball
+          Any of the following:
+              # A way to get into hole
+              Bomb or Power Grip or Spiderball or Springball
+
+* DestroyTurbine:
+      Missile ≥ 3 or SuperMissile or AnyBombs
+
+* HighTunnelClimb:
+      All of the following:
+          Morphball
+          Any of the following:
+              # A way to get into hole
+              Power Grip or Spiderball or Mid-Air Morph (Intermediate)
+              All of the following:
+                  # High Sprinball
+                  Hijump and Springball
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Beginner) and Bombs
+              All of the following:
+                  # Bomb Springball
+                  Springball and Bombs
+              All of the following:
+                  # Walljump and Morph
+                  Mid-Air Morph (Intermediate) and Walljump (Intermediate)
+
+* GoThroughVines:
+      Gravity and Damage Boost (Beginner)
+
+* DefeatGamma:
+      Missile ≥ 15 or SuperMissile ≥ 3
+
+* HighWallWithGrip:
+      Any of the following:
+          # Able to get over a high sized wall that requires powergrip
+          Spacejump or Walljump (Intermediate) or SpiderBall
+          All of the following:
+              Hijump
+              Power Grip or Walljump (Beginner)
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+
+* LargeWall:
+      Any of the following:
+          Spacejump or Walljump (Advanced) or SpiderBall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Bombs
+          Hijump and Walljump (Beginner)
+
+* LargeTunnelClimb:
+      All of the following:
+          Morphball
+          Any of the following:
+              # A way to get into the hole
+              Power Grip or SpiderBall
+              All of the following:
+                  # midair morph combo
+                  Mid-Air Morph (Intermediate)
+                  Hijump or Spacejump or Walljump (Intermediate)
+              Bombs and SpringBall
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Beginner) and Bombs
+
+* GiantTunnelClimb:
+      All of the following:
+          Morphball
+          Any of the following:
+              # A way to get into the hole
+              SpiderBall
+              Any of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Intermediate) or Bombs
+              Hijump and Power Grip
+              All of the following:
+                  # midair morph combo
+                  Power Grip or Mid-Air Morph (Intermediate)
+                  Spacejump or Walljump (Intermediate)
+
+* DefeatZeta:
+      Trivial
+
+* Destroy Ice Barrier:
+      All of the following:
+          Ice Beam
+          Missile or SuperMissile
+
+* SpaceJumpTunnelClimb:
+      All of the following:
+          Morphball
+          Any of the following:
+              # A way to get into the hole
+              SpiderBall
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Advanced) and Bombs
+              All of the following:
+                  # midair morph combo
+                  Power Grip or Mid-Air Morph (Intermediate)
+                  Spacejump or Walljump (Advanced)
+
+* FreezeAndDestroy:
+      All of the following:
+          Ice Beam
+          Missile or SuperMissile
+
+====================
+Dock Weaknesses
+
+> Door
+  * Normal Door
+      Open:
+          Trivial
+      No lock
+
+
+  * Missile Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Missile
+
+
+  * Super Missile Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          SuperMissile
+
+
+  * PowerBomb Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          PowerBomb
+
+
+  * After Tester Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          After Tester Defeated
+
+
+  * Tower Activated Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          After Tower Activated
+
+
+  * Back-Only Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Impossible
+
+
+  * Locked Door
+      Open:
+          Impossible
+      Lock type: FRONT_BLAST_BACK_IMPOSSIBLE
+          Trivial
+
+  > Dock Rando:
+      Unlocked: Normal Door
+      Locked: Locked Door
+      Change from:
+          Back-Only Door
+          Locked Door
+          Normal Door
+      Change to:
+          Back-Only Door
+          Locked Door
+          Normal Door
+
+
+> Tunnel
+  * Morph Ball Tunnel
+      Open:
+          Morphball
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Pipe
+  * Teleporter Pipe
+      Open:
+          Morphball
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Dock
+  * Open Passage
+      Open:
+          Trivial
+      No lock
+
+
+  * Back Only
+      Open:
+          Impossible
+      No lock
+
+
+  * Not Determined
+      Open:
+          Impossible
+      No lock
+
+  > Dock Rando: Disabled
+

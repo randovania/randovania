@@ -1,0 +1,1274 @@
+----------------
+rm_a0h01
+> Ship; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Dock to rm_a0h02
+      Trivial
+
+> Dock to rm_a0h02; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h02/Dock to rm_a0h01
+  > Ship
+      Trivial
+
+> Dock to rm_a7c05; Heals? False
+  * Layers: default
+  * Open Passage to rm_a7c05/node_149329
+
+----------------
+rm_a0h02
+> Dock to rm_a0h01; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h01/Dock to rm_a0h02
+  > Bottom
+      Trivial
+
+> Dock to rm_a0h02a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h02a/Dock to rm_a0h02
+  > Bottom
+      Morphball
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to rm_a0h01
+      Power Grip or HighWall
+  > Dock to rm_a0h02a
+      Morphball
+
+----------------
+rm_a0h02a
+> Dock to rm_a0h03; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h03/Dock to rm_a0h02a
+  > Dock to rm_a0h02
+      Power Grip or HighWall
+
+> Dock to rm_a0h02; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h02/Dock to rm_a0h02a
+  > Dock to rm_a0h03
+      Trivial
+
+----------------
+rm_a0h03
+> Dock to rm_a0h02a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h02a/Dock to rm_a0h03
+  > Dock to rm_a0h03a
+      Trivial
+  > Dock to rm_a0h03b
+      Trivial
+
+> Dock to rm_a0h03a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h03a/Dock to rm_a0h03
+  > Dock to rm_a0h02a
+      Trivial
+
+> Dock to rm_a0h03b; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h03b/Dock to rm_a0h03
+  > Dock to rm_a0h02a
+      Trivial
+
+----------------
+rm_a0h03a
+> SaveStation; Heals? True
+  * Layers: default
+  > Dock to rm_a0h06
+      Trivial
+  > Dock to rm_a0h03
+      Trivial
+
+> Dock to rm_a0h06; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h06/Dock to rm_a0h03a
+  > SaveStation
+      Trivial
+
+> Dock to rm_a0h03; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h03/Dock to rm_a0h03a
+  > SaveStation
+      Trivial
+
+----------------
+rm_a0h03b
+> Dock to rm_a0h04; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h04/Dock to rm_a0h03b
+  > Dock to rm_a0h03
+      Trivial
+
+> Dock to rm_a0h03; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h03/Dock to rm_a0h03b
+  > Dock to rm_a0h04
+      Trivial
+
+----------------
+rm_a0h04
+> Dock to rm_a0h04b; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h04b/Dock to rm_a0h04
+  > Dock to rm_a0h03b
+      Trivial
+
+> Dock to rm_a0h03b; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h03b/Dock to rm_a0h04
+  > Dock to rm_a0h04b
+      Trivial
+
+----------------
+rm_a0h04b
+> Dock to rm_a0h04; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h04/Dock to rm_a0h04b
+  > Door to rm_a0h04c
+      Trivial
+
+> Door to rm_a0h04c; Heals? False
+  * Layers: default
+  * Missile Door to rm_a0h04c/Door to rm_a0h04b
+  > Dock to rm_a0h04
+      Trivial
+
+----------------
+rm_a0h04c
+> Save Station; Heals? True
+  * Layers: default
+  > Door to rm_a0h04b
+      Trivial
+  > Dock to rm_a0h04d
+      Trivial
+
+> Door to rm_a0h04b; Heals? False
+  * Layers: default
+  * Normal Door to rm_a0h04b/Door to rm_a0h04c
+  > Save Station
+      Trivial
+
+> Dock to rm_a0h04d; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h04d/Dock to rm_a0h04c
+  > Save Station
+      Trivial
+
+----------------
+rm_a0h04d
+> Dock to rm_a0h05; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h05/Dock to rm_a0h04d
+  > Bottom
+      Trivial
+
+> Dock to rm_a0h04c; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h04c/Dock to rm_a0h04d
+  > Bottom
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to rm_a0h05
+      MidWall
+  > Dock to rm_a0h04c
+      MidWall
+
+----------------
+rm_a0h05
+> Dock to rm_a0h04d; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h04d/Dock to rm_a0h05
+  > Event - Alpha
+      Defat Alpha
+
+> Event - Alpha; Heals? False
+  * Layers: default
+  * Event Alpha1
+  > Dock to rm_a0h04d
+      Trivial
+
+----------------
+rm_a0h06
+> Dock to rm_a0h03a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h03a/Dock to rm_a0h06
+  > Dock to rm_a0h07
+      Trivial
+
+> Dock to rm_a0h07; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h07/Dock to rm_a0h06
+  > Dock to rm_a0h03a
+      Trivial
+
+----------------
+rm_a0h07
+> Dock to rm_a0h06; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h06/Dock to rm_a0h07
+  > Dock to rm_a0h08
+      Trivial
+  > Middle
+      Trivial
+
+> Dock to rm_a0h08; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h08/Dock to rm_a0h07
+  > Dock to rm_a0h06
+      Trivial
+
+> Tunnel to rm_a0h09; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to rm_a0h09/Tunnel to rm_a0h07
+  > Dock to rm_a2h01
+      Morphball
+
+> Dock to rm_a2h01; Heals? False
+  * Layers: default
+  * Open Passage to rm_a2h01/Dock to rm_a0h07
+  > Tunnel to rm_a0h09
+      Any of the following:
+          TunnelClimb
+          Morphball and Mid-Air Morph (Intermediate)
+
+> Tunnel to rm_a0h07A; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to rm_a0h07A/Tunnel to rm_a0h07
+  > Dock to rm_a0h09
+      AnyBombs
+
+> Dock to rm_a0h09; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h09/Dock to rm_a0h07
+  > Middle
+      Speedbooster or MidWall
+
+> Middle; Heals? False
+  * Layers: default
+  > Dock to rm_a0h06
+      Trivial
+  > Tunnel to rm_a0h07A
+      All of the following:
+          AnyBombs
+          Any of the following:
+              # Being able to get into the hole
+              Power Grip or Mid-Air Morph (Intermediate)
+  > Dock to rm_a0h09
+      Trivial
+
+----------------
+rm_a0h07A
+> Tunnel to rm_a0h07; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to rm_a0h07/Tunnel to rm_a0h07A
+  > Bottom
+      Morphball
+
+> Pickup (Top Missile); Heals? False
+  * Layers: default
+  * Pickup 53; Category? Minor
+  > Bottom
+      Morphball
+
+> Pickup (Bottom Missile); Heals? False
+  * Layers: default
+  * Pickup 52; Category? Minor
+  > Bottom
+      AnyBombs
+
+> Bottom; Heals? False
+  * Layers: default
+  > Tunnel to rm_a0h07
+      All of the following:
+          Morphball
+          Power Grip or Mid-Air Morph (Beginner)
+  > Pickup (Top Missile)
+      All of the following:
+          Morphball
+          Any of the following:
+              # A way to get up to the item
+              Spacejump or Walljump (Hypermode)
+              All of the following:
+                  # IBJ up
+                  Infinite Bomb Jumping (Advanced) and Bombs
+              All of the following:
+                  # Intended spider ball way
+                  Bombs and SpiderBall
+              All of the following:
+                  # Shinespark up
+                  Speedbooster and Shinesparking Tricks (Intermediate)
+  > Pickup (Bottom Missile)
+      AnyBombs
+
+----------------
+rm_a0h08
+> Dock to Security Check; Heals? False
+  * Layers: default
+  * Open Passage to Security Check/Dock to rm_a0h08
+  > Dock to rm_a0h07
+      Trivial
+
+> Dock to rm_a0h07; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h07/Dock to rm_a0h08
+  > Dock to Security Check
+      Trivial
+
+----------------
+rm_a0h09
+> Tunnel to rm_a0h07; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to rm_a0h07/Tunnel to rm_a0h09
+  > Top rock
+      Morphball
+
+> Dock to rm_a0h10; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h10/Dock to rm_a0h09
+  > Dock to rm_a0h11
+      Trivial
+
+> Dock to rm_a0h11; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h11/Dock to rm_a0h09
+  > Dock to rm_a0h10
+      Trivial
+
+> Tunnel to rm_a0h09A; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to rm_a0h09A/Dock to rm_a0h09
+  > Top rock
+      AnyBombs
+
+> Dock to rm_a0h07; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h07/Dock to rm_a0h09
+  > Top rock
+      Trivial
+
+> Tunnel to rm_a0h11; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to rm_a0h11/Tunnel to rm_a0h09
+  > Top rock
+      MidWall
+
+> Top rock; Heals? False
+  * Layers: default
+  > Tunnel to rm_a0h07
+      Morphball
+  > Tunnel to rm_a0h09A
+      All of the following:
+          AnyBombs
+          Any of the following:
+              AnyBombs
+              Speedbooster and Mid-Air Morph (Intermediate)
+  > Dock to rm_a0h07
+      Trivial
+  > Tunnel to rm_a0h11
+      Trivial
+
+----------------
+rm_a0h09A
+> Dock to rm_a0h09; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h09/Tunnel to rm_a0h09A
+  > Near Spikes
+      Morphball
+
+> Near Spikes; Heals? False
+  * Layers: default
+  > Dock to rm_a0h09
+      Morphball
+  > Pickup (Missile)
+      Any of the following:
+          Spacejump
+          Movement (Intermediate) and HighWall
+          Infinite Bomb Jumping (Intermediate) and SpiderBall
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 57; Category? Minor
+  > Near Spikes
+      Any of the following:
+          Damage Boost (Beginner) or SpiderBall
+          Movement (Intermediate) and HighWall
+
+----------------
+rm_a0h10
+> Dock to rm_a0h10a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h10a/Dock to rm_a0h10
+  > Middle Pit
+      Morphball and TunnelClimb
+
+> Dock to rm_a0h09; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h09/Dock to rm_a0h10
+  > Top Pit
+      Morphball
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 210; Category? Minor
+  > Middle Pit
+      Morphball
+
+> Top Pit; Heals? False
+  * Layers: default
+  > Dock to rm_a0h09
+      Morphball and MidWall
+  > Middle Pit
+      Morphball
+
+> Middle Pit; Heals? False
+  * Layers: default
+  > Dock to rm_a0h10a
+      Morphball
+  > Pickup (Missile)
+      HighTunnelClimb
+  > Top Pit
+      All of the following:
+          Morphball
+          Damage Boost (Beginner) or HighTunnelClimb
+
+----------------
+rm_a0h10a
+> Dock to rm_a0h10; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h10/Dock to rm_a0h10a
+  > Middle
+      Trivial
+
+> Dock to rm_a0h16; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h16/Dock to rm_a0h10a
+  > Bottom
+      After Mines Entrance Crystal
+  > Event - Crystal
+      SuperMissile
+
+> Dock to rm_a3h01; Heals? False
+  * Layers: default
+  * Open Passage to rm_a3h01/Dock to rm_a0h10a
+  > Middle
+      Trivial
+
+> Dock to rm_a0h10b; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h10b/Dock to rm_a0h10a
+
+> Middle; Heals? False
+  * Layers: default
+  > Dock to rm_a0h10
+      Trivial
+  > Dock to rm_a3h01
+      MidWall
+  > Bottom
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to rm_a0h16
+      After Mines Entrance Crystal
+  > Dock to rm_a0h10b
+      Speedbooster and Knowledge (Intermediate)
+  > Middle
+      HighWall
+  > Event - Crystal
+      SuperMissile
+
+> Event - Crystal; Heals? False
+  * Layers: default
+  * Event Mines Entrance Crystal
+  > Bottom
+      Trivial
+
+----------------
+rm_a0h10b
+> Dock to rm_a0h10a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h10a/Dock to rm_a0h10b
+  > Dock to rm_a0h11
+      Trivial
+
+> Dock to rm_a0h11; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h11/Dock to rm_a0h10b
+  > Dock to rm_a0h10a
+      Trivial
+
+----------------
+rm_a0h11
+> Dock to rm_a0h09; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h09/Dock to rm_a0h11
+  > Tunnel to rm_a0h09
+      Morphball and HighWall
+  > Septogg
+      Morphball
+
+> Dock to rm_a0h12; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h12/Dock to rm_a0h11
+  > Dock to rm_a0h24
+      Trivial
+  > Septogg
+      Trivial
+
+> Dock to rm_a0h10b; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h10b/Dock to rm_a0h11
+  > Septogg
+      Morphball
+
+> Dock to rm_a0h24; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h24/Dock to rm_a0h11
+  > Dock to rm_a0h12
+      MidWall
+
+> Tunnel to rm_a0h09; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to rm_a0h09/Tunnel to rm_a0h11
+  > Dock to rm_a0h09
+      Morphball
+
+> Septogg; Heals? False
+  * Layers: default
+  > Dock to rm_a0h09
+      All of the following:
+          MidWall and TunnelClimb
+          Enabled Septogg or HighWallWithGrip
+  > Dock to rm_a0h12
+      Trivial
+
+----------------
+rm_a0h24
+> Dock to rm_a0h11; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h11/Dock to rm_a0h24
+  > Middle 
+      Trivial
+
+> Dock to rm_a0h25; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h25/Dock to rm_a0h24
+  > Pickup (Missile)
+      Speedbooster and Shinesparking Tricks (Beginner)
+  > Middle 
+      LargeWall
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 54; Category? Minor
+  > Dock to rm_a0h25
+      Trivial
+
+> Middle ; Heals? False
+  * Layers: default
+  > Dock to rm_a0h11
+      HighWall
+  > Dock to rm_a0h25
+      Trivial
+
+----------------
+rm_a0h25
+> Dock to rm_a0h24; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h24/Dock to rm_a0h25
+  > Top
+      Trivial
+
+> Dock to rm_a0h26; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h26/Dock to rm_a0h25
+  > Dock to rm_a0h27
+      Trivial
+  > Bottom
+      Any of the following:
+          Spacejump or SpiderBall
+          All of the following:
+              # Septogg
+              Enabled Septogg and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Bombs
+
+> Dock to rm_a0h27; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h27/Dock to rm_a0h25
+  > Dock to rm_a0h26
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to rm_a0h26
+      Trivial
+  > Top
+      MidWall
+
+> Top; Heals? False
+  * Layers: default
+  > Dock to rm_a0h24
+      Any of the following:
+          Spacejump or Enabled Septogg or SpiderBall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Bombs
+  > Bottom
+      Trivial
+
+----------------
+rm_a0h26
+> Save Station; Heals? True
+  * Layers: default
+  > Dock to rm_a0h25
+      Trivial
+
+> Dock to rm_a0h25; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h25/Dock to rm_a0h26
+  > Save Station
+      Trivial
+
+----------------
+rm_a0h27
+> Dock to rm_a0h25; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h25/Dock to rm_a0h27
+  > After Tunnel
+      Trivial
+
+> Dock to rm_a0h28; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h28/Dock to rm_a0h27
+  > After Tunnel
+      All of the following:
+          MidWall
+          Any of the following:
+              TunnelClimb
+              Morphball and Mid-Air Morph (Intermediate)
+
+> After Tunnel; Heals? False
+  * Layers: default
+  > Dock to rm_a0h25
+      HighWall
+  > Dock to rm_a0h28
+      TunnelClimb
+
+----------------
+rm_a0h28
+> Dock to rm_a0h27; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h27/Dock to rm_a0h28
+  > Dock to rm_a0h29
+      Trivial
+
+> Dock to rm_a0h29; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h29/Dock to rm_a0h28
+  > Dock to rm_a0h27
+      Any of the following:
+          Enabled Septogg
+          Any of the following:
+              # LargeWall with hypermode WJ
+              Spacejump or Walljump (Hypermode) or SpiderBall
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Expert) and Bombs
+
+----------------
+rm_a0h29
+> Dock to rm_a0h28; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h28/Dock to rm_a0h29
+  > Dock to rm_a0h30
+      Trivial
+  > Pickup (Missile)
+      Speedbooster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+
+> Dock to rm_a0h30; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h30/Dock to rm_a0h29
+  > Dock to rm_a0h28
+      Any of the following:
+          Any of the following:
+              # HighWallWithGrip without walljump
+              Spacejump or SpiderBall
+              Hijump and Power Grip
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Intermediate) and Bombs
+          All of the following:
+              # Septogg
+              Enabled Septogg and MidWall
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 55; Category? Major
+  > Dock to rm_a0h30
+      Trivial
+
+----------------
+rm_a0h30
+> Dock to rm_a0h30a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h30a/Dock to rm_a0h30
+  > Dock to rm_a0h29
+      Trivial
+  > Near hidden wall
+      TunnelClimb
+
+> Dock to rm_a0h29; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h29/Dock to rm_a0h30
+  > Dock to rm_a0h30a
+      Trivial
+
+> Dock to rm_a0h31; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h31/Dock to rm_a0h30
+  > Near hidden wall
+      Any of the following:
+          MidWall and PowerBombs
+          SuperMissile ≥ 2 and LargeTunnelClimb and LargeWall
+
+> Near hidden wall; Heals? False
+  * Layers: default
+  > Dock to rm_a0h30a
+      HighTunnelClimb
+  > Dock to rm_a0h31
+      Any of the following:
+          PowerBombs
+          All of the following:
+              SuperMissile ≥ 2 and Knowledge (Advanced)
+              Any of the following:
+                  TunnelClimb
+                  Morphball and Mid-Air Morph (Beginner)
+
+----------------
+rm_a0h30a
+> Dock to rm_a4h01; Heals? False
+  * Layers: default
+  * Open Passage to rm_a4h01/Dock to rm_a0h30a
+  > Dock to rm_a0h30
+      After A4 Rock Entrance and MidWall
+  > Event - A4RockEntrance
+      Missile or Speedbooster or SuperMissile or AnyBombs
+
+> Dock to rm_a0h30; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h30/Dock to rm_a0h30a
+  > Dock to rm_a4h01
+      After A4 Rock Entrance
+  > Event - A4RockEntrance
+      Missile or Speedbooster or SuperMissile or AnyBombs
+
+> Event - A4RockEntrance; Heals? False
+  * Layers: default
+  * Event A4 Rock Entrance
+  > Dock to rm_a4h01
+      Trivial
+  > Dock to rm_a0h30
+      Trivial
+
+----------------
+rm_a0h31
+> Dock to rm_a0h30; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h30/Dock to rm_a0h31
+  > Dock to rm_a5h01
+      MidWall
+  > Dock to rm_a0h32
+      After Alpha1
+
+> Dock to rm_a5h01; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5h01/Dock to rm_a0h31
+  * TODO: all metroids
+
+
+  > Dock to rm_a0h30
+      Movement (Intermediate) or MidWall
+
+> Dock to rm_a0h32; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h32/Dock to rm_a0h31
+  > Dock to rm_a0h30
+      LargeWall
+
+----------------
+rm_a0h32
+> Dock to rm_a0h31; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h31/Dock to rm_a0h32
+  > After First Screw
+      All of the following:
+          Destroy Ice Barrier
+          ScrewAttack or AnyBombs
+
+> Dock to rm_a0h33; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h33/Dock to rm_a0h32
+  > Middle
+      All of the following:
+          GiantTunnelClimb
+          Any of the following:
+              All of the following:
+                  # Left way
+                  ScrewAttack and AnyBombs and HighWall
+              All of the following:
+                  # Right way
+                  LargeTunnelClimb and MidWall and PowerBombs
+                  Mid-Air Morph (Beginner) or TunnelClimb
+
+> After First Screw; Heals? False
+  * Layers: default
+  > Dock to rm_a0h31
+      All of the following:
+          Destroy Ice Barrier
+          Any of the following:
+              AnyBombs
+              ScrewAttack and HighWall
+  > Middle
+      Trivial
+
+> Middle; Heals? False
+  * Layers: default
+  > Dock to rm_a0h33
+      Any of the following:
+          ScrewAttack and Bombs
+          All of the following:
+              PowerBombs
+              Mid-Air Morph (Beginner) or TunnelClimb
+  > After First Screw
+      Any of the following:
+          Spacejump or Walljump (Expert) or SpiderBall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Bombs
+          All of the following:
+              Walljump (Beginner)
+              Hijump or Movement (Beginner)
+
+----------------
+rm_a0h33
+> Save Station; Heals? True
+  * Layers: default
+  > Dock to rm_a0h32
+      Trivial
+  > Dock to rm_a0h34
+      Trivial
+
+> Dock to rm_a0h32; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h32/Dock to rm_a0h33
+  > Save Station
+      Trivial
+
+> Dock to rm_a0h34; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h34/Dock to rm_a0h33
+  > Save Station
+      Trivial
+
+----------------
+rm_a0h34
+> Dock to rm_a0h33; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h33/Dock to rm_a0h34
+  > Dock to rm_a0h35
+      Trivial
+
+> Dock to rm_a0h35; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h35/Dock to rm_a0h34
+  > Dock to rm_a0h33
+      Trivial
+
+----------------
+rm_a0h35
+> Dock to rm_a6a01; Heals? False
+  * Layers: default
+  * Open Passage to rm_a6a01/node_136920
+  > Right side of morph ball tunnel
+      Morphball
+  > Pickup (Missile)
+      Gravity and Speedbooster and Shinesparking Tricks (Intermediate) and SpringBall
+
+> Dock to rm_a0h34; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h34/Dock to rm_a0h35
+  > Right side of morph ball tunnel
+      Trivial
+
+> Right side of morph ball tunnel; Heals? False
+  * Layers: default
+  > Dock to rm_a6a01
+      Morphball
+  > Dock to rm_a0h34
+      MidWall
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 56; Category? Minor
+  > Dock to rm_a6a01
+      Trivial
+
+----------------
+rm_a0h12
+> Dock to rm_a0h11; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h11/Dock to rm_a0h12
+  > Dock to rm_a0h13
+      Any of the following:
+          Spacejump
+          All of the following:
+              # Lava
+              Gravity or Damage Boost (Intermediate)
+              Movement (Beginner) or MidWall
+
+> Dock to rm_a0h13; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h13/Dock to rm_a0h12
+  > Dock to rm_a0h11
+      Any of the following:
+          # Above
+          Spacejump
+          All of the following:
+              MidWall
+              Gravity or Damage Boost (Intermediate) or Movement (Intermediate)
+
+----------------
+rm_a0h13
+> Dock to rm_a0h12; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h12/Dock to rm_a0h13
+  > Dock to rm_a0h14
+      HighWall
+
+> Dock to rm_a0h14; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h14/Dock to rm_a0h13
+  > Dock to rm_a0h12
+      Trivial
+  > Dock to rm_a8h00
+      After Thoth Power Bomb Entrance
+  > Event - ThothPBEntrance
+      PowerBombs
+
+> Dock to rm_a8h00; Heals? False
+  * Layers: default
+  * Open Passage to rm_a8h00/Dock to rm_a0h13
+  > Dock to rm_a0h14
+      After Thoth Power Bomb Entrance
+
+> Event - ThothPBEntrance; Heals? False
+  * Layers: default
+  * Event Thoth Power Bomb Entrance
+  > Dock to rm_a0h14
+      Trivial
+
+----------------
+rm_a0h14
+> Dock to rm_a0h15; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h15/Dock to rm_a0h14
+  > Dock to rm_a0h13
+      Trivial
+  > Event - LeftDualAlpha
+      After Dual Alphas Trigger Activated and Defat Alpha
+  > Event - RightDualAlpha
+      After Dual Alphas Trigger Activated and Defat Alpha
+
+> Dock to rm_a0h13; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h13/Dock to rm_a0h14
+  > Dock to rm_a0h15
+      Trivial
+
+> Event - LeftDualAlpha; Heals? False
+  * Layers: default
+  * Event Alpha1
+  > Dock to rm_a0h15
+      Trivial
+
+> Event - RightDualAlpha; Heals? False
+  * Layers: default
+  * Event Alpha1
+  > Dock to rm_a0h15
+      Trivial
+
+----------------
+rm_a0h15
+> Dock to rm_a0h14; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h14/Dock to rm_a0h15
+  > Event - DualAlphasTrigger
+      Trivial
+
+> Pickup (SuperMissile); Heals? False
+  * Layers: default
+  * Pickup 215; Category? Minor
+  > Event - DualAlphasTrigger
+      Trivial
+
+> Event - DualAlphasTrigger; Heals? False
+  * Layers: default
+  * Event Dual Alphas Trigger Activated
+  > Dock to rm_a0h14
+      Trivial
+  > Pickup (SuperMissile)
+      Trivial
+
+----------------
+rm_a0h16
+> Dock to rm_a0h10a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h10a/Dock to rm_a0h16
+  > Dock to rm_a0h17
+      Trivial
+
+> Dock to rm_a0h17; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17/Dock to rm_a0h16
+  > Dock to rm_a0h10a
+      MidWall
+
+----------------
+rm_a0h17
+> Dock to rm_a0h16; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h16/Dock to rm_a0h17
+  > Dock to rm_a0h17a
+      Trivial
+
+> Dock to rm_a0h17a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17a/Dock to rm_a0h17
+  > Dock to rm_a0h16
+      All of the following:
+          LargeWall
+          Any of the following:
+              Spacejump or SpiderBall
+              Enabled Septogg and HighWall
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Advanced) and Bombs
+
+----------------
+rm_a0h17a
+> Dock to rm_a0h17; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17/Dock to rm_a0h17a
+  > Dock to rm_a0h17b
+      Trivial
+
+> Dock to rm_a0h17b; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17b/Dock to rm_a0h17a
+  > Dock to rm_a0h17
+      Trivial
+
+----------------
+rm_a0h17b
+> Dock to rm_a0h17a; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17a/Dock to rm_a0h17b
+  > Dock to rm_a0h17c
+      Trivial
+
+> Dock to rm_a0h17c; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17c/Dock to rm_a0h17b
+  > Dock to rm_a0h17a
+      HighWallWithGrip
+
+----------------
+rm_a0h17c
+> Dock to rm_a0h17d; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17d/Dock to rm_a0h17c
+  > Dock to rm_a0h17b
+      Trivial
+
+> Dock to rm_a0h17b; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17b/Dock to rm_a0h17c
+  > Dock to rm_a0h17d
+      Trivial
+
+----------------
+rm_a0h17d
+> Dock to rm_a0h17c; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17c/Dock to rm_a0h17d
+  > Dock to rm_a0h17e
+      Trivial
+
+> Dock to rm_a0h17e; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17e/Dock to rm_a0h17d
+  > Dock to rm_a0h17c
+      MidWall
+
+----------------
+rm_a0h17e
+> Dock to rm_a0h18; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h18/Dock to rm_a0h17e
+  > After Drill Sequence
+      Trivial
+
+> Dock to rm_a0h17d; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17d/Dock to rm_a0h17e
+  > After Drill Sequence
+      After Mines Entrance Crystal
+  > Event - DrillCrystal
+      SuperMissile and AnyBombs and TunnelClimb
+
+> After Drill Sequence; Heals? False
+  * Layers: default
+  > Dock to rm_a0h18
+      Any of the following:
+          LargeWall
+          All of the following:
+              # Shinespark
+              Speedbooster and Shinesparking Tricks (Beginner)
+  > Dock to rm_a0h17d
+      After Mines Entrance Crystal
+
+> Event - DrillCrystal; Heals? False
+  * Layers: default
+  * Event Drill Mines Crystal
+  > Dock to rm_a0h17d
+      AnyBombs and TunnelClimb
+
+----------------
+rm_a0h18
+> Dock to rm_a0h17e; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h17e/Dock to rm_a0h18
+  > Dock to rm_a0h19
+      Movement (Beginner)
+
+> Dock to rm_a0h19; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h19/Dock to rm_a0h18
+  > Dock to rm_a0h17e
+      Movement (Beginner)
+  > Dock to rm_a0h20
+      Trivial
+
+> Dock to rm_a0h20; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h20/Dock to rm_a0h18
+  > Dock to rm_a0h19
+      HighWallWithGrip
+  > Dock to rm_a0h22
+      Trivial
+
+> Dock to rm_a0h22; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h22/Dock to rm_a0h18
+  > Dock to rm_a0h20
+      Trivial
+
+----------------
+rm_a0h19
+> Save Station; Heals? True
+  * Layers: default
+  > Dock to rm_a0h18
+      Trivial
+
+> Dock to rm_a0h18; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h18/Dock to rm_a0h19
+  > Save Station
+      Trivial
+
+----------------
+rm_a0h20
+> Dock to rm_a0h18; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h18/Dock to rm_a0h20
+  > Dock to rm_a0h21
+      Any of the following:
+          Spacejump
+          All of the following:
+              # Lava
+              MidWall
+              Gravity or Damage Boost (Intermediate)
+
+> Dock to rm_a0h21; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h21/Dock to rm_a0h20
+  > Dock to rm_a0h18
+      Any of the following:
+          Spacejump
+          Any of the following:
+              # Lava
+              Gravity or Damage Boost (Intermediate)
+
+----------------
+rm_a0h21
+> Dock to rm_a0h20; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h20/Dock to rm_a0h21
+  > Event - Alpha
+      Defat Alpha
+
+> Event - Alpha; Heals? False
+  * Layers: default
+  * Event Alpha1
+  > Dock to rm_a0h20
+      Any of the following:
+          Spacejump or SpiderBall
+          All of the following:
+              # Shinespark
+              Gravity and Speedbooster and Shinesparking Tricks (Intermediate)
+          All of the following:
+              # Septogg
+              No Hijump and No Speedbooster and Enabled Septogg
+          All of the following:
+              # IBJ
+              After Alpha1 and Infinite Bomb Jumping (Advanced) and Bombs
+
+----------------
+rm_a0h22
+> Dock to rm_a0h18; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h18/Dock to rm_a0h22
+  > Dock to rm_a0h23
+      Gravity or Spacejump or Damage Boost (Intermediate)
+
+> Dock to rm_a0h23; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h23/Dock to rm_a0h22
+  > Dock to rm_a0h18
+      Gravity or Spacejump or Damage Boost (Intermediate)
+
+----------------
+rm_a0h23
+> Dock to rm_a0h22; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h22/Dock to rm_a0h23
+  > Event - Gamma
+      DefeatGamma
+
+> Event - Gamma; Heals? False
+  * Layers: default
+  * Event Alpha1
+  > Dock to rm_a0h22
+      Any of the following:
+          Spacejump or SpiderBall
+          No Hijump and No Speedbooster and Enabled Septogg
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Bombs
+

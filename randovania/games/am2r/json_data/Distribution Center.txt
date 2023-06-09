@@ -1,0 +1,1612 @@
+----------------
+rm_a5h01
+> Dock to rm_a0h31; Heals? False
+  * Layers: default
+  * Open Passage to rm_a0h31/Dock to rm_a5h01
+  > Dock to rm_a5h02
+      Trivial
+
+> Dock to rm_a5h02; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5h02/Dock to rm_a5h01
+  > Dock to rm_a0h31
+      Trivial
+
+----------------
+rm_a5h02
+> Dock to rm_a5h01; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5h01/Dock to rm_a5h02
+  > Dock to rm_a5h03
+      Trivial
+
+> Dock to rm_a5h03; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5h03/Dock to rm_a5h02
+  > Dock to rm_a5h01
+      Destroy Ice Barrier and HighWall
+
+----------------
+rm_a5h03
+> Dock to rm_a5h02; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5h02/Dock to rm_a5h03
+  > Dock to rm_a5h04
+      Trivial
+
+> Dock to rm_a5h04; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5h04/Dock to rm_a5h03
+  > Dock to rm_a5h02
+      LargeWall
+
+----------------
+rm_a5h04
+> Door to rm_a5b21; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b21/Door to rm_a5h04
+  > Dock to rm_a5h03
+      Trivial
+  > Door to rm_a5c01
+      Any of the following:
+          Power Grip or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+  > Door to rm_a5c15
+      Gravity and Speedbooster and Shinesparking Tricks (Beginner)
+  > Pickup (Missile)
+      Gravity and Speedbooster and Shinesparking Tricks (Beginner)
+
+> Dock to rm_a5h03; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5h03/Dock to rm_a5h04
+  > Door to rm_a5b21
+      Trivial
+
+> Door to rm_a5c01; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c01/Door to rm_a5h04
+  > Door to rm_a5b21
+      Trivial
+  > Door to rm_a5c15
+      LargeWall
+
+> Door to rm_a5c15; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c15/Door to rm_a5h04
+  * TODO: check how to handle event
+
+
+  > Door to rm_a5c01
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 309; Category? Minor
+  > Door to rm_a5b21
+      Trivial
+
+----------------
+rm_a5h05
+> Door to rm_a5c33; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c33/Door to rm_a5h05
+  > Door to rm_a5b09
+      Trivial
+  > Pickup (PowerBomb)
+      LargeWall and PowerBombs
+
+> Door to rm_a5b09; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b09/Door to rm_a5h05
+  > Door to rm_a5c33
+      Any of the following:
+          All of the following:
+              # with gravity
+              Gravity
+              Any of the following:
+                  # midwall with walljump hypermode
+                  Spacejump or Walljump (Hypermode) or SpiderBall
+                  All of the following:
+                      # IBJ
+                      Infinite Bomb Jumping (Expert) and Bombs
+          All of the following:
+              # w/o gravity
+              Morph Glide (Intermediate)
+              Any of the following:
+                  Walljump (Hypermode)
+                  Hijump and Walljump (Advanced)
+
+> Pickup (PowerBomb); Heals? False
+  * Layers: default
+  * Pickup 302; Category? Minor
+  > Door to rm_a5c33
+      Trivial
+
+----------------
+rm_a5c01
+> Door to rm_a5c02; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c02/Door to rm_a5c01
+  > Door to rm_a5h04
+      Any of the following:
+          TunnelClimb
+          Morphball and Mid-Air Morph (Beginner)
+
+> Door to rm_a5h04; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5h04/Door to rm_a5c01
+  > Door to rm_a5c02
+      Any of the following:
+          TunnelClimb
+          Morphball and Mid-Air Morph (Beginner)
+
+----------------
+rm_a5c02
+> Door to rm_a5c03; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c03/Door to rm_a5c02
+  > Door to rm_a5c01
+      LargeWall
+
+> Door to rm_a5c01; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c01/Door to rm_a5c02
+  > Door to rm_a5c03
+      LargeWall
+
+----------------
+rm_a5c03
+> Save Station; Heals? True
+  * Layers: default
+  > Door to rm_a5c04
+      Trivial
+  > Door to rm_a5c02
+      Trivial
+
+> Door to rm_a5c04; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c04/Door to rm_a5c03
+
+> Door to rm_a5c02; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c02/Door to rm_a5c03
+  > Save Station
+      Trivial
+
+----------------
+rm_a5c04
+> Door to rm_a5c03; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c03/Door to rm_a5c04
+  > Door to rm_a5c05
+      Any of the following:
+          HighWallWithGrip
+          Movement (Advanced) and HighWall
+  > Door to rm_a5c11
+      Trivial
+
+> Door to rm_a5c05; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c05/Door to rm_a5c04
+  > Door to rm_a5c03
+      Trivial
+
+> Door to rm_a5c11; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c11/Door to rm_a5c04
+  * TODO: door lock
+
+
+  > Door to rm_a5c03
+      Trivial
+
+----------------
+rm_a5c05
+> Door to rm_a5c06; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c06/Door to rm_a5c05
+  > Door to rm_a5c04
+      All of the following:
+          AnyBombs
+          Morphball or ScrewAttack
+
+> Door to rm_a5c04; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c04/Door to rm_a5c05
+  > Door to rm_a5c06
+      All of the following:
+          AnyBombs
+          Morphball or ScrewAttack
+
+----------------
+rm_a5c06
+> Door to rm_a5c05; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c05/Door to rm_a5c06
+  > Door to rm_a5c07
+      LargeWall
+
+> Door to rm_a5c07; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c07/Door to rm_a5c06
+  > Door to rm_a5c05
+      Trivial
+
+----------------
+rm_a5c07
+> Door to rm_a5c06; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c06/Door to rm_a5c07
+  * TODO: door lock
+
+
+  > Event - EMP Activation Statue
+      Morphball
+
+> Door to rm_a5c08; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c08/Door to rm_a5c07
+  * TODO: door lock
+
+
+  > Event - EMP Activation Statue
+      Trivial
+
+> Event - EMP Activation Statue; Heals? False
+  * Layers: default
+  * Event EMP Activated
+  > Door to rm_a5c06
+      Trivial
+  > Door to rm_a5c08
+      Any of the following:
+          LargeWall
+          Speedbooster and Shinesparking Tricks (Beginner)
+
+----------------
+rm_a5c08
+> Door to rm_a5c07; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c07/Door to rm_a5c08
+  > Door to rm_a5c09
+      Speedbooster
+
+> Door to rm_a5c09; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c09/Door to rm_a5c08
+  > Pickup (SuperMissile)
+      ScrewAttack
+
+> Pickup (SuperMissile); Heals? False
+  * Layers: default
+  * Pickup 300; Category? Minor
+  > Door to rm_a5c07
+      Speedbooster and Shinesparking Tricks (Intermediate)
+  > Door to rm_a5c09
+      ScrewAttack
+
+----------------
+rm_a5c09
+> Door to rm_a5c10; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c10/Door to rm_a5c09
+  * TODO: how to handle event
+
+
+  > Event - EMPPuzzle
+      Trivial
+
+> Door to rm_a5c08; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c08/Door to rm_a5c09
+  > Event - EMPPuzzle
+      AnyBombs
+
+> Event - EMPPuzzle; Heals? False
+  * Layers: default
+  * Event NearA5EMPActivationStatueEMP
+  > Door to rm_a5c10
+      Trivial
+  > Door to rm_a5c08
+      AnyBombs and SpaceJumpTunnelClimb
+
+----------------
+rm_a5c10
+> Door to rm_a5c11; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c11/Door to rm_a5c10
+  * TODO: how to handle event
+
+
+  > Event - EMPPuzzle
+      Trivial
+
+> Door to rm_a5c09; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c09/Door to rm_a5c10
+  * TODO: how to handle event
+
+
+  > Event - EMPPuzzle
+      Trivial
+
+> Event - EMPPuzzle; Heals? False
+  * Layers: default
+  * Event A5RobotsEMP
+  * TODO
+
+
+  > Door to rm_a5c11
+      Trivial
+  > Door to rm_a5c09
+      Trivial
+
+----------------
+rm_a5c11
+> Door to rm_a5c04; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c04/Door to rm_a5c11
+  * TODO: event
+
+
+  > Event - EMP Puzzle
+      Trivial
+
+> Door to rm_a5c10; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c10/Door to rm_a5c11
+  > Event - EMP Puzzle
+      Any of the following:
+          Bombs
+          Missile ≥ 10 and PowerBombs
+
+> Door to rm_a5c12; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c12/Door to rm_a5c11
+  * TODO: event
+
+
+  > Event - EMP Puzzle
+      Trivial
+
+> Event - EMP Puzzle; Heals? False
+  * Layers: default
+  * Event NearA5SaveEMP
+  * TODO: crumble blocks is some sort of event, as they perma dissapear. also event
+
+
+  > Door to rm_a5c04
+      Trivial
+  > Door to rm_a5c10
+      All of the following:
+          PowerBombs
+          Any of the following:
+              Spacejump or SpiderBall
+              Hijump and Power Grip
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Intermediate) and Bombs
+  > Door to rm_a5c12
+      Trivial
+
+----------------
+rm_a5c12
+> Door to rm_a5c13; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c13/Door to rm_a5c12
+  > Middle
+      AnyBombs and MidWall
+
+> Door to rm_a5c11; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c11/Door to rm_a5c12
+  > Middle
+      AnyBombs and MidWall
+
+> Event - Zeta; Heals? False
+  * Layers: default
+  * Event Alpha1
+  > Middle
+      Trivial
+
+> Middle; Heals? False
+  * Layers: default
+  > Door to rm_a5c13
+      All of the following:
+          MidWall
+          Any of the following:
+              PowerBombs
+              All of the following:
+                  Mid-Air Morph (Intermediate)
+                  Hijump or Spacejump or Walljump (Beginner) or SpiderBall
+  > Door to rm_a5c11
+      All of the following:
+          MidWall
+          Any of the following:
+              PowerBombs
+              All of the following:
+                  Mid-Air Morph (Intermediate)
+                  Hijump or Spacejump or Walljump (Beginner) or SpiderBall
+  > Event - Zeta
+      DefeatZeta
+
+----------------
+rm_a5c13
+> Door to rm_a5c12; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c12/Door to rm_a5c13
+  > Pipe to rm_a5c17 (Bottom)
+      Morphball
+  > Near Middle Pipe
+      All of the following:
+          ScrewAttack
+          Any of the following:
+              LargeWall
+              Movement (Beginner) and MidWall
+
+> Door to rm_a5c16; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c16/Door to rm_a5c13
+  > Near Middle Pipe
+      ScrewAttack
+  > Pillar
+      LargeWall
+
+> Door to rm_a5c14; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c14/Door to rm_a5c13
+  > Pillar
+      ScrewAttack
+
+> Pipe to rm_a5c17 (Bottom); Heals? False
+  * Layers: default
+  * Teleporter Pipe to rm_a5c17/Pipe to rm_a5c13 (Bottom)
+  > Door to rm_a5c12
+      Morphball
+
+> Near Middle Pipe; Heals? False
+  * Layers: default
+  > Door to rm_a5c12
+      ScrewAttack
+  > Pipe to rm_a5c17 (Middle)
+      Morphball and MidWall
+  > Pillar
+      Any of the following:
+          Spacejump or SpiderBall
+          All of the following:
+              # Septogg
+              Walljump (Advanced) and Enabled Septogg
+          Hijump and Walljump (Intermediate)
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Bombs
+
+> Pipe to rm_a5c17 (Middle); Heals? False
+  * Layers: default
+  * Teleporter Pipe to rm_a5c17/Pipe to rm_a5c13 (Top)
+  > Near Middle Pipe
+      Morphball
+
+> Pillar; Heals? False
+  * Layers: default
+  > Door to rm_a5c16
+      Trivial
+  > Door to rm_a5c14
+      All of the following:
+          ScrewAttack
+          Movement (Expert) or MidWall
+  > Near Middle Pipe
+      Trivial
+
+----------------
+rm_a5c14
+> Door to rm_a5c13; Heals? False; Default Node
+  * Layers: default
+  * Normal Door to rm_a5c13/Door to rm_a5c14
+  > Door to rm_a5c15
+      Trivial
+  > Pipe to rm_a5a01
+      All of the following:
+          Morphball
+          Any of the following:
+              Mid-Air Morph (Beginner) or MidWall
+              Speedbooster and Shinesparking Tricks (Beginner)
+  > A3Pipe
+      All of the following:
+          Morphball
+          Any of the following:
+              Mid-Air Morph (Beginner) or MidWall
+              Speedbooster and Shinesparking Tricks (Beginner)
+  > A1Pipe
+      All of the following:
+          Morphball
+          Any of the following:
+              Mid-Air Morph (Beginner) or MidWall
+              Speedbooster and Shinesparking Tricks (Beginner)
+
+> Door to rm_a5c15; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c15/Door to rm_a5c14
+  > Door to rm_a5c13
+      Trivial
+
+> Pipe to rm_a5a01; Heals? False
+  * Layers: default
+  * Teleporter Pipe to rm_a5a01/Pipe to rm_a5c14
+  > Door to rm_a5c13
+      Morphball
+
+> A4Pipe; Heals? False
+  * Layers: default
+  * Teleporter to The Tower - rm_a4a14
+  > A3Pipe
+      Trivial
+
+> A3Pipe; Heals? False
+  * Layers: default
+  * Teleporter to Industrial Complex - rm_a3a27
+  > Door to rm_a5c13
+      Morphball
+  > A4Pipe
+      Any of the following:
+          Enabled Septogg or HighWall
+          Speedbooster and Shinesparking Tricks (Beginner)
+
+> A1Pipe; Heals? False
+  * Layers: default
+  * Teleporter to Golden Temple - Pipe to Distribution Center Pipe Hub
+  > Door to rm_a5c13
+      Morphball
+
+----------------
+rm_a5c15
+> Door to rm_a5c14; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c14/Door to rm_a5c15
+  > Door to rm_a5h04
+      Trivial
+  > Event - NearLeftOutsideEMP
+      Trivial
+
+> Door to rm_a5h04; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5h04/Door to rm_a5c15
+  * TODO
+
+
+  > Door to rm_a5c14
+      Trivial
+
+> Event - NearLeftOutsideEMP; Heals? False
+  * Layers: default
+  * Event A4 Rock Entrance
+  * TODO:
+
+
+  > Door to rm_a5c14
+      Trivial
+
+----------------
+rm_a5c16
+> Door to rm_a5c13; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c13/Door to rm_a5c16
+  > Door to rm_a5c17
+      All of the following:
+          MidWall
+          Any of the following:
+              PowerBombs
+              All of the following:
+                  Bombs
+                  Infinite Bomb Jumping (Beginner) or Mid-Air Morph (Intermediate)
+
+> Door to rm_a5c17; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c17/Door to rm_a5c16
+  > Door to rm_a5c13
+      All of the following:
+          Movement (Advanced) or MidWall
+          Any of the following:
+              PowerBombs
+              All of the following:
+                  Bombs
+                  Infinite Bomb Jumping (Beginner) or Mid-Air Morph (Intermediate)
+
+----------------
+rm_a5c17
+> Door to rm_a5c16; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c16/Door to rm_a5c17
+  > Door to rm_a5c19
+      Power Grip or Spacejump or Morph Glide (Intermediate) or Movement (Advanced) or Walljump (Advanced) or SpiderBall
+  > Pipe to rm_a5c25
+      Trivial
+
+> Door to rm_a5c19; Heals? False
+  * Layers: default
+  * Missile Door to rm_a5c19/Door to rm_a5c17
+  > Door to rm_a5c16
+      Power Grip or Spacejump or Morph Glide (Intermediate) or Movement (Advanced) or Walljump (Advanced) or SpiderBall
+  > Pipe to rm_a5c25
+      Trivial
+
+> Door to rm_a5c18; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c18/Door to rm_a5c17
+  > Pipe to rm_a5c13 (Top)
+      ScrewAttack
+  > Pipe to rm_a5c25
+      LargeWall
+
+> Pipe to rm_a5c13 (Bottom); Heals? False
+  * Layers: default
+  * Teleporter Pipe to rm_a5c13/Pipe to rm_a5c17 (Bottom)
+  > Pipe to rm_a5c13 (Top)
+      Any of the following:
+          Spacejump or Walljump (Expert) or SpiderBall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Bombs
+          Morph Glide (Intermediate) and Walljump (Advanced)
+
+> Pipe to rm_a5c13 (Top); Heals? False
+  * Layers: default
+  * Teleporter Pipe to rm_a5c13/Pipe to rm_a5c17 (Middle)
+  > Door to rm_a5c18
+      All of the following:
+          ScrewAttack
+          Movement (Expert) or HighWall
+  > Pipe to rm_a5c13 (Bottom)
+      Trivial
+
+> Pipe to rm_a5c25; Heals? False
+  * Layers: default
+  * Teleporter Pipe to rm_a5c25/Pipe to rm_a5c17
+  > Door to rm_a5c19
+      Any of the following:
+          Spacejump or SpiderBall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Bombs
+          All of the following:
+              Hijump
+              Any of the following:
+                  Walljump (Beginner)
+                  Power Grip and Enabled Septogg
+          Walljump (Beginner) and Enabled Septogg
+  > Door to rm_a5c18
+      Trivial
+
+----------------
+rm_a5c18
+> Door to rm_a5c17; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c17/Door to rm_a5c18
+  > Bottom
+      Trivial
+
+> Right Bottom Alpha; Heals? False
+  * Layers: default
+  > Bottom
+      Trivial
+
+> Right Top Alpha; Heals? False
+  * Layers: default
+  > Bottom
+      Trivial
+
+> Left Bottom Alpha; Heals? False
+  * Layers: default
+  > Bottom
+      Trivial
+
+> Left Middle Alpha; Heals? False
+  * Layers: default
+  > Bottom
+      Trivial
+
+> Left Top Alpha; Heals? False
+  * Layers: default
+  > Bottom
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
+  > Door to rm_a5c17
+      Any of the following:
+          Spacejump or Enabled Septogg or SpiderBall
+          Morph Glide (Advanced) and Walljump (Expert)
+          Speedbooster and Shinesparking Tricks (Beginner)
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Bombs
+  > Right Bottom Alpha
+      Defat Alpha
+  > Right Top Alpha
+      Defat Alpha
+  > Left Bottom Alpha
+      Defat Alpha
+  > Left Middle Alpha
+      Defat Alpha
+  > Left Top Alpha
+      Defat Alpha
+
+----------------
+rm_a5c19
+> Save Station; Heals? True
+  * Layers: default
+  > Door to rm_a5c17
+      Trivial
+  > Door to rm_a5c20
+      Trivial
+
+> Door to rm_a5c17; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c17/Door to rm_a5c19
+  > Save Station
+      Trivial
+
+> Door to rm_a5c20; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c20/Door to rm_a5c19
+  > Save Station
+      Trivial
+
+----------------
+rm_a5c20
+> Door to rm_a5c19; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c19/Door to rm_a5c20
+  > Door to rm_a5c33
+      Trivial
+
+> Door to rm_a5c21; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c21/Door to rm_a5c20
+  > Door to rm_a5c33
+      Trivial
+
+> Door to rm_a5c33; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c33/Door to rm_a5c20
+  * TODO: event
+
+
+  > Door to rm_a5c19
+      LargeWall
+  > Door to rm_a5c21
+      Trivial
+
+----------------
+rm_a5c21
+> Door to rm_a5c20; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c20/Door to rm_a5c21
+  > Door to rm_a5c22
+      Trivial
+
+> Door to rm_a5c22; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c22/Door to rm_a5c21
+  * TODO: check how to handle event
+
+
+  > Door to rm_a5c20
+      Any of the following:
+          Spacejump or Enabled Septogg Helpers or SpiderBall
+          Speedbooster and Shinesparking Tricks (Beginner)
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Expert) and Bombs
+  > Event - BeforeScrewEMP
+      Trivial
+
+> Event - BeforeScrewEMP; Heals? False
+  * Layers: default
+  * Event NearScrewEMP
+  > Door to rm_a5c22
+      Any of the following:
+          Spacejump or Walljump (Expert) or SpiderBall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Bombs
+          All of the following:
+              Walljump (Beginner)
+              Hijump or Enabled Septogg
+
+----------------
+rm_a5c22
+> Door to rm_a5c21; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c21/Door to rm_a5c22
+  > Door to rm_a5c23
+      Trivial
+
+> Door to rm_a5c23; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c23/Door to rm_a5c22
+  > Door to rm_a5c21
+      PowerBomb and LargeWall
+
+----------------
+rm_a5c23
+> Door to rm_a5c22; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c22/Door to rm_a5c23
+  > Door to rm_a5c24
+      Any of the following:
+          LargeWall
+          Movement (Beginner) and HighWall
+
+> Door to rm_a5c24; Heals? False
+  * Layers: default
+  * Missile Door to rm_a5c24/Door to rm_a5c23
+  > Door to rm_a5c22
+      Trivial
+
+----------------
+rm_a5c24
+> Door to rm_a5c23; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c23/Door to rm_a5c24
+  > Pickup (ScrewAttack)
+      Trivial
+
+> Pickup (ScrewAttack); Heals? False
+  * Layers: default
+  * Pickup 8; Category? Major
+  > Door to rm_a5c23
+      Trivial
+
+----------------
+rm_a5c25
+> Pipe to rm_a5c17; Heals? False
+  * Layers: default
+  * Teleporter Pipe to rm_a5c17/Pipe to rm_a5c25
+  > Pipe to rm_a5c26
+      All of the following:
+          Any of the following:
+              # Get near pipe
+              Destroy Ice Barrier
+              HighTunnelClimb and TunnelClimb
+          All of the following:
+              # Get into pipe
+              Morphball
+              Any of the following:
+                  Mid-Air Morph (Intermediate) or MidWall
+                  Speedbooster and Shinesparking Tricks (Beginner)
+
+> Pipe to rm_a5c26; Heals? False
+  * Layers: default
+  * Teleporter Pipe to rm_a5c26/Pipe to rm_a5c25
+  > Pipe to rm_a5c17
+      All of the following:
+          Any of the following:
+              # Get near pipe
+              Destroy Ice Barrier
+              HighTunnelClimb and TunnelClimb
+          All of the following:
+              # Get into pipe
+              Morphball
+              Any of the following:
+                  Mid-Air Morph (Intermediate) or MidWall
+                  Speedbooster and Shinesparking Tricks (Beginner)
+  > Pickup (PowerBomb)
+      Speedbooster and MidWall and PowerBombs
+
+> Pickup (PowerBomb); Heals? False
+  * Layers: default
+  * Pickup 301; Category? Minor
+  > Pipe to rm_a5c26
+      MidWall
+
+----------------
+rm_a5c26
+> Door to rm_a5c27; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c27/Door to rm_a5c26
+  > Pipe to rm_a5c25
+      Any of the following:
+          Power Grip or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+
+> Pipe to rm_a5c25; Heals? False
+  * Layers: default
+  * Teleporter Pipe to rm_a5c25/Pipe to rm_a5c26
+  > Door to rm_a5c27
+      Any of the following:
+          Power Grip or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+
+----------------
+rm_a5c27
+> Door to rm_a5c28; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c28/Door to rm_a5c27
+  > Door to rm_a5c26
+      Any of the following:
+          Ice Beam or Damage Boost (Intermediate)
+          Gravity and Speedbooster
+
+> Door to rm_a5c26; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c26/Door to rm_a5c27
+  > Door to rm_a5c28
+      Any of the following:
+          Ice Beam or Damage Boost (Intermediate)
+          Gravity and Speedbooster
+
+----------------
+rm_a5c28
+> Door to rm_a5c29; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c29/Door to rm_a5c28
+  > Save Station
+      Trivial
+
+> Save Station; Heals? True
+  * Layers: default
+  > Door to rm_a5c29
+      Trivial
+  > Door to rm_a5c27
+      Trivial
+
+> Door to rm_a5c27; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c27/Door to rm_a5c28
+  > Save Station
+      Trivial
+
+----------------
+rm_a5c29
+> Door to rm_a5c28; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c28/Door to rm_a5c29
+  > Door to rm_a5c30
+      Trivial
+
+> Dock to rm_a5b01; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b01/Dock to rm_a5c29
+  > Door to rm_a5c30
+      Trivial
+
+> Door to rm_a5c30; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c30/Door to rm_a5c29
+  > Door to rm_a5c28
+      Any of the following:
+          Power Grip or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+  > Dock to rm_a5b01
+      Trivial
+
+----------------
+rm_a5c30
+> Door to rm_a5c29; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c29/Door to rm_a5c30
+  > Event - Left Gamma
+      DefeatGamma
+  > Event - Right Gamma
+      DefeatGamma
+
+> Event - Left Gamma; Heals? False
+  * Layers: default
+  * Event Alpha1
+  > Door to rm_a5c29
+      Trivial
+
+> Event - Right Gamma; Heals? False
+  * Layers: default
+  * Event Arachnus
+  > Door to rm_a5c29
+      Trivial
+
+----------------
+rm_a5c31
+> Door to rm_a5c32; Heals? False
+  * Layers: default
+  * Missile Door to rm_a5c32/Door to rm_a5c31
+  > Teleporter Pipe
+      All of the following:
+          Morphball and Destroy Ice Barrier
+          Mid-Air Morph (Beginner) or MidWall
+
+> Teleporter Pipe; Heals? False; Default Node
+  * Layers: default
+  * Teleporter to Distribution Center - rm_a5b03
+  > Door to rm_a5c32
+      Destroy Ice Barrier or GiantTunnelClimb
+
+----------------
+rm_a5c32
+> Door to rm_a5c31; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c31/Door to rm_a5c32
+  > Pickup (Ice Beam)
+      Trivial
+
+> Pickup (Ice Beam); Heals? False
+  * Layers: default
+  * Pickup 11; Category? Major
+  > Event - Ice Beam Item collected
+      Trivial
+
+> Event - Ice Beam Item collected; Heals? False
+  * Layers: default
+  * Event Item at Ice location
+  > Door to rm_a5c31
+      Trivial
+
+----------------
+rm_a5c33
+> Door to rm_a5h05; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5h05/Door to rm_a5c33
+  > Door to rm_a5c20
+      AnyBombs
+
+> Door to rm_a5c20; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5c20/Door to rm_a5c33
+  * TODO
+
+
+  > Door to rm_a5h05
+      AnyBombs
+
+> Event - NearRightOutsideEMP; Heals? False
+  * Layers: default
+  * Event A4 Rock Entrance
+  * TODO
+
+
+
+----------------
+rm_a5b01
+> Dock to rm_a5b02; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b02/Dock to rm_a5b01
+  > Dock to rm_a5c29
+      Any of the following:
+          Knowledge (Advanced)
+          Gravity and Speedbooster
+
+> Dock to rm_a5c29; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5c29/Dock to rm_a5b01
+  > Dock to rm_a5b02
+      Any of the following:
+          Gravity and Speedbooster and Disabled Entrance Rando
+          All of the following:
+              SuperMissile and Knowledge (Advanced)
+              Any of the following:
+                  TunnelClimb
+                  Morphball and Mid-Air Morph (Intermediate)
+
+----------------
+rm_a5b02
+> Dock to rm_a5b05; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b05/Dock to rm_a5b02
+  > Door to rm_a5b03a
+      Any of the following:
+          Power Grip or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+  > Dock to rm_a5b04
+      Trivial
+
+> Door to rm_a5b03a; Heals? False
+  * Layers: default
+  * Missile Door to rm_a5b03a/Door to rm_a5b02
+  > Dock to rm_a5b05
+      Trivial
+  > Dock to rm_a5b01
+      Any of the following:
+          Power Grip or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+
+> Dock to rm_a5b01; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b01/Dock to rm_a5b02
+  > Door to rm_a5b03a
+      Trivial
+
+> Dock to rm_a5b04; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b04/Dock to rm_a5b02
+  > Dock to rm_a5b05
+      Trivial
+
+----------------
+rm_a5b03a
+> Door to rm_a5b02; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b02/Door to rm_a5b03a
+  > Door to rm_a5b03
+      Trivial
+
+> Door to rm_a5b03; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b03/Door to rm_a5b03a
+  * TODO: door lock?
+
+
+  > Door to rm_a5b02
+      Before Item at Ice location or After Serris Defeated
+
+> Event - Serris; Heals? False
+  * Layers: default
+  * Event Serris Defeated
+  * TODO
+
+
+
+----------------
+rm_a5b03
+> Door to rm_a5b03a; Heals? False; Default Node
+  * Layers: default
+  * Normal Door to rm_a5b03a/Door to rm_a5b03
+  > Teleporter Pipe
+      Morphball
+
+> Teleporter Pipe; Heals? False
+  * Layers: default
+  * Teleporter to Distribution Center - rm_a5c31
+  > Door to rm_a5b03a
+      Trivial
+
+----------------
+rm_a5b04
+> Dock to rm_a5b02; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b02/Dock to rm_a5b04
+  > Dock to rm_a5b07
+      Trivial
+
+> Dock to rm_a5b07; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b07/Dock to rm_a5b04
+  > Dock to rm_a5b02
+      Trivial
+
+----------------
+rm_a5b05
+> Dock to rm_a5b02; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b02/Dock to rm_a5b05
+  > Tunnel to rm_a5b06
+      Any of the following:
+          All of the following:
+              Morphball and Mid-Air Morph (Advanced)
+              Any of the following:
+                  All of the following:
+                      Walljump (Intermediate)
+                      Power Grip or Mid-Air Morph (Expert)
+                  All of the following:
+                      # IBJ
+                      Infinite Bomb Jumping (Advanced) and Bombs
+          Gravity and SpiderBall
+
+> Tunnel to rm_a5b06; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to rm_a5b06/Tunnel to rm_a5b05
+  > Dock to rm_a5b02
+      Trivial
+
+----------------
+rm_a5b06
+> Tunnel to rm_a5b05; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to rm_a5b05/Tunnel to rm_a5b06
+  > Pickup (Missile)
+      AnyBombs
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 303; Category? Minor
+  > Tunnel to rm_a5b05
+      Any of the following:
+          TunnelClimb
+          Morphball and Mid-Air Morph (Intermediate)
+
+----------------
+rm_a5b07
+> Dock to rm_a5b20; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b20/Dock to rm_a5b07
+  > Dock to rm_a5b04
+      Trivial
+
+> Door to rm_a5b22; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b22/Door to rm_a5b07
+  > Dock to rm_a5b04
+      Any of the following:
+          Power Grip or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+  > Dock to rm_a5b15
+      Trivial
+
+> Dock to rm_a5b04; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b04/Dock to rm_a5b07
+  > Dock to rm_a5b20
+      Gravity and Speedbooster and Shinesparking Tricks (Beginner)
+  > Door to rm_a5b22
+      Trivial
+
+> Dock to rm_a5b15; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b15/Dock to rm_a5b07
+  > Door to rm_a5b22
+      Trivial
+
+----------------
+rm_a5b08
+> Door to rm_a5b09; Heals? False; Default Node
+  * Layers: default
+  * Normal Door to rm_a5b09/Door to rm_a5b08
+  > Teleporter Pipe
+      Morphball
+
+> Teleporter Pipe; Heals? False
+  * Layers: default
+  * Teleporter to Distribution Center - rm_a5c31
+  > Door to rm_a5b09
+      Morphball
+
+----------------
+rm_a5b09
+> Door to rm_a5h05; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5h05/Door to rm_a5b09
+  > Door to rm_a5b08
+      Any of the following:
+          Gravity and Spacejump
+          Damage Boost (Intermediate) and Walljump (Advanced)
+
+> Door to rm_a5b08; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b08/Door to rm_a5b09
+  > Door to rm_a5h05
+      Any of the following:
+          Gravity and Spacejump
+          Damage Boost (Intermediate) and Walljump (Advanced)
+
+----------------
+rm_a5b15
+> Dock to rm_a5b07; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b07/Dock to rm_a5b15
+  > Dock to rm_a5b16
+      Gravity and Speedbooster and Shinesparking Tricks (Beginner)
+  > Pickup (Missile)
+      Any of the following:
+          Power Grip or Movement (Beginner) or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+
+> Dock to rm_a5b16; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b16/Dock to rm_a5b15
+  > Pickup (Missile)
+      Gravity and Speedbooster
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 304; Category? Minor
+  > Dock to rm_a5b07
+      Any of the following:
+          Power Grip or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+
+----------------
+rm_a5b16
+> Dock to rm_a5b17; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b17/Dock to rm_a5b16
+  > Dock to rm_a5b15
+      All of the following:
+          Gravity
+          Any of the following:
+              Spacejump
+              Damage Boost (Advanced) and Short Charge (Advanced)
+
+> Dock to rm_a5b15; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b15/Dock to rm_a5b16
+  > Dock to rm_a5b17
+      All of the following:
+          Gravity
+          Any of the following:
+              Spacejump
+              Damage Boost (Advanced) and Walljump (Advanced)
+  > Pickup (Super Missile)
+      Gravity or Speedbooster or Shinesparking Tricks (Beginner)
+
+> Pickup (Super Missile); Heals? False
+  * Layers: default
+  * Pickup 305; Category? Minor
+  > Dock to rm_a5b15
+      Trivial
+
+----------------
+rm_a5b17
+> Dock to rm_a5b16; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b16/Dock to rm_a5b17
+  > Pickup (Etank)
+      MidWall
+
+> Pickup (Etank); Heals? False
+  * Layers: default
+  * Pickup 306; Category? Minor
+  > Dock to rm_a5b16
+      Any of the following:
+          Walljump (Advanced)
+          Gravity and LargeWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Expert) and Bombs
+
+----------------
+rm_a5b20
+> Dock to rm_a5b07; Heals? False
+  * Layers: default
+  * Open Passage to rm_a5b07/Dock to rm_a5b20
+  > Door to rm_a5b21
+      All of the following:
+          Gravity and Speedbooster
+          Spacejump or Shinesparking Tricks (Beginner)
+
+> Door to rm_a5b21; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b21/Door to rm_a5b20
+  > Dock to rm_a5b07
+      All of the following:
+          Gravity and Speedbooster
+          Spacejump or Shinesparking Tricks (Beginner)
+  > Pickup (Missile)
+      Gravity and Speedbooster
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 307; Category? Minor
+  > Door to rm_a5b21
+      Trivial
+
+----------------
+rm_a5b21
+> Door to rm_a5b20; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b20/Door to rm_a5b21
+  > Door to rm_a5b22
+      Trivial
+  > Door to rm_a5h04
+      Gravity
+
+> Door to rm_a5b22; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b22/Door to rm_a5b21
+  > Door to rm_a5b20
+      Any of the following:
+          Power Grip or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+  > Door to rm_a5h04
+      Any of the following:
+          Power Grip or Walljump (Beginner)
+          Gravity and MidWall
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Bombs
+
+> Door to rm_a5h04; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5h04/Door to rm_a5b21
+  > Door to rm_a5b20
+      Gravity
+  > Door to rm_a5b22
+      Trivial
+
+----------------
+rm_a5b22
+> Door to rm_a5b07; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b07/Door to rm_a5b22
+  > Door to rm_a5b21
+      Destroy Ice Barrier
+
+> Door to rm_a5b21; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5b21/Door to rm_a5b22
+  > Door to rm_a5b07
+      Destroy Ice Barrier
+
+----------------
+rm_a5a01
+> Door to rm_a5a02; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a02/Door to rm_a5a01
+  > Pipe to rm_a5c14
+      All of the following:
+          Morphball
+          Mid-Air Morph (Beginner) or MidWall
+
+> Pipe to rm_a5c14; Heals? False
+  * Layers: default
+  * Teleporter Pipe to rm_a5c14/Pipe to rm_a5a01
+  > Door to rm_a5a02
+      Morphball
+
+----------------
+rm_a5a02
+> Door to rm_a5a03; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a03/Door to rm_a5a02
+  > Door to rm_a5a01
+      Trivial
+
+> Door to rm_a5a01; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a01/Door to rm_a5a02
+  > Door to rm_a5a03
+      Trivial
+
+----------------
+rm_a5a03
+> Door to rm_a5a04; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a04/Door to rm_a5a03
+
+> Door to rm_a5a02; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a02/Door to rm_a5a03
+  > Door to rm_a5a04
+      Trivial
+
+----------------
+rm_a5a04
+> Door to rm_a5a03; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a03/Door to rm_a5a04
+  > Middle
+      MidWall
+
+> Door to rm_a5a05; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a05/Door to rm_a5a04
+  > Middle
+      MidWall
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 308; Category? Minor
+  > Middle
+      Trivial
+
+> Middle; Heals? False
+  * Layers: default
+  > Door to rm_a5a03
+      MidWall
+  > Door to rm_a5a05
+      MidWall
+  > Pickup (Missile)
+      Any of the following:
+          PowerBombs
+          Gravity and Bombs
+
+----------------
+rm_a5a05
+> Door to rm_a5a04; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a04/Door to rm_a5a05
+  > Door to rm_a5a06
+      Trivial
+
+> Door to rm_a5a06; Heals? False
+  * Layers: default
+  * Missile Door to rm_a5a06/Door to rm_a5a05
+  > Door to rm_a5a04
+      No Varia and Walljump (Intermediate) and Enabled Septogg
+  > Door to rm_a5a08
+      Any of the following:
+          LargeWall
+          Speedbooster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+          Varia and Enabled Septogg
+
+> Door to rm_a5a08; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a08/Door to rm_a5a05
+  > Door to rm_a5a04
+      Trivial
+
+----------------
+rm_a5a06
+> Door to rm_a5a07; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a07/Door to rm_a5a06
+  > Door to rm_a5a05
+      Any of the following:
+          PowerBombs
+          Gravity and Bombs
+
+> Door to rm_a5a05; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a05/Door to rm_a5a06
+  > Door to rm_a5a07
+      Any of the following:
+          PowerBombs
+          Bombs and GiantTunnelClimb
+
+----------------
+rm_a5a07
+> Door to rm_a5a06; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a06/Door to rm_a5a07
+  > Pickup (Gravity)
+      Trivial
+
+> Pickup (Gravity); Heals? False
+  * Layers: default
+  * Pickup 9; Category? Major
+  > Door to rm_a5a06
+      Trivial
+
+----------------
+rm_a5a08
+> Door to rm_a5a05; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a05/Door to rm_a5a08
+  > Door to rm_a5a09
+      Gravity and LargeWall
+
+> Door to rm_a5a09; Heals? False
+  * Layers: default
+  * Normal Door to rm_a5a09/Door to rm_a5a08
+  > Door to rm_a5a05
+      Gravity and LargeWall
+
+----------------
+rm_a5a09
+> Door to rm_a5a08; Heals? False; Default Node
+  * Layers: default
+  * Normal Door to rm_a5a08/Door to rm_a5a09
+  > Teleporter Pipe
+      Morphball
+
+> Teleporter Pipe; Heals? False
+  * Layers: default
+  * Teleporter to Distribution Center - rm_a5b08
+  > Door to rm_a5a08
+      Morphball
+

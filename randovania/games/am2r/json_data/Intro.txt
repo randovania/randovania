@@ -1,0 +1,213 @@
+----------------
+Starting Area
+> Spawn Point; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  > Pickup (Weapon)
+      Trivial
+  > Door to Boss Arena
+      Missile and Weapon
+  > Pickup (Missile Expansion)
+      Trivial
+  > Door to Explosive Depot
+      Trivial
+  > Door to Back-Only Lock Room
+      Trivial
+  > Door to Blue Key Room (Exit)
+      Trivial
+  > Door to Blue Key Room (Entrance)
+      Trivial
+  > Second Spawn Point
+      Trivial
+
+> Pickup (Weapon); Heals? False
+  * Layers: default
+  * Pickup 0; Category? Major
+  > Spawn Point
+      Trivial
+
+> Door to Boss Arena; Heals? False
+  * Layers: default
+  * Explosive Door to Boss Arena/Door to Starting Area
+  > Spawn Point
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Layers: default
+  * Pickup 1; Category? Minor
+  > Spawn Point
+      Trivial
+
+> Door to Explosive Depot; Heals? False
+  * Layers: default
+  * Normal Door to Explosive Depot/Door to Starting Area
+  > Spawn Point
+      Trivial
+
+> Door to Back-Only Lock Room; Heals? False
+  * Layers: default
+  * Normal Door to Back-Only Lock Room/Door to Starting Area
+  > Spawn Point
+      Trivial
+
+> Door to Blue Key Room (Exit); Heals? False
+  * Layers: default
+  * Normal Door to Blue Key Room/Door to Starting Area (Exit)
+  > Spawn Point
+      Trivial
+
+> Door to Blue Key Room (Entrance); Heals? False
+  * Layers: default
+  * Normal Door to Blue Key Room/Door to Starting Area (Entrance)
+  > Spawn Point
+      Trivial
+
+> Second Spawn Point; Heals? False; Spawn Point
+  * Layers: default
+  > Spawn Point
+      Trivial
+
+----------------
+Boss Arena
+> Door to Starting Area; Heals? False
+  * Layers: default
+  * Normal Door to Starting Area/Door to Boss Arena
+  > Event - Boss
+      All of the following:
+          Weapon
+          Any of the following:
+              Missile ≥ 4
+              Missile ≥ 2 and Combat (Beginner)
+  > Pickup (Free Loot)
+      Trivial
+
+> Event - Boss; Heals? False
+  * Layers: default
+  * Event First Boss Killed
+  > Door to Starting Area
+      Trivial
+
+> Pickup (Free Loot); Heals? False
+  * Layers: extra_pickups
+  * Pickup 5; Category? Minor
+  > Door to Starting Area
+      Trivial
+
+----------------
+Explosive Depot
+> Door to Starting Area; Heals? False
+  * Layers: default
+  * Normal Door to Starting Area/Door to Explosive Depot
+  > Pickup (Explosive)
+      Trivial
+  > Door to Hint Room
+      Trivial
+
+> Pickup (Explosive); Heals? False
+  * Layers: default
+  * Pickup 2; Category? Major
+  > Door to Starting Area
+      Trivial
+
+> Door to Hint Room; Heals? False
+  * Layers: default
+  * Normal Door to Hint Room/Door to Explosive Depot
+  > Door to Starting Area
+      Trivial
+
+----------------
+Back-Only Lock Room
+Extra - total_boundings: {'x1': 1.0, 'x2': 390.0, 'y1': 20.0, 'y2': 500.0}
+Extra - polygon: [[1.0, 390.0], [20.0, 390.0], [20.0, 500.0], [1.0, 500.0]]
+> Door to Starting Area; Heals? False
+  * Layers: default
+  * Back-Only Door to Starting Area/Door to Back-Only Lock Room
+  > Event - Key Switch 1
+      Trivial
+
+> Event - Key Switch 1; Heals? False
+  * Layers: default
+  * Event Key Switch 1
+  > Middle Node
+      Trivial
+
+> Pickup (Extra Key); Heals? False
+  * Layers: default
+  * Pickup 6; Category? Major
+  > Door to Starting Area
+      Missile and Blue Key and Explosive and Weapon
+
+> Middle Node; Heals? False
+  * Layers: default
+  * Just so the event+pickup don't become an EventPickup node
+
+
+  > Pickup (Extra Key)
+      Trivial
+
+----------------
+Blue Key Room
+> Door to Starting Area (Exit); Heals? False
+  * Layers: default
+  * Blue Key Door to Starting Area/Door to Blue Key Room (Exit)
+  > Spawn Point
+      Trivial
+
+> Door to Starting Area (Entrance); Heals? False
+  * Layers: default
+  * Normal Door to Starting Area/Door to Blue Key Room (Entrance)
+  > Spawn Point
+      Trivial
+
+> Event - Key Switch 2; Heals? False
+  * Layers: default
+  * Event Key Switch 2
+  > Spawn Point
+      Trivial
+
+> Pickup (Blue Key); Heals? False
+  * Layers: default
+  * Pickup 4; Category? Major
+  > Spawn Point
+      Trivial
+
+> Spawn Point; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  > Door to Starting Area (Exit)
+      Trivial
+  > Event - Key Switch 2
+      Trivial
+  > Pickup (Blue Key)
+      Trivial
+
+----------------
+Hint Room
+> Door to Explosive Depot; Heals? False
+  * Layers: default
+  * Normal Door to Explosive Depot/Door to Hint Room
+  > Hint with Translator
+      Trivial
+  > Hint no Translator
+      Trivial
+
+> Hint with Translator; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - translator: BlueKey
+  * Extra - string_asset_id: 0
+  > Door to Explosive Depot
+      Trivial
+
+> Hint no Translator; Heals? False
+  * Layers: default
+  * Hint
+  * Extra - string_asset_id: 1
+  > Door to Explosive Depot
+      Trivial
+
+----------------
+rm_a0h02
+> sdf; Heals? False
+  * Layers: default
+
+----------------
+Empty Area
