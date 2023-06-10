@@ -11,12 +11,12 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 
 
 class A(Enum):
-    foo = "foo"
-    bar = "bar"
+    Foo = "foo"
+    Bar = "bar"
 
 
 def test_encode_enum():
-    data = A.bar.value
+    data = A.Bar.value
 
     con = construct_dataclass.construct_for_type(A)
     encoded = con.build(data)

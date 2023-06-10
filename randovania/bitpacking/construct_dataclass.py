@@ -84,7 +84,7 @@ def construct_for_type(type_: type) -> construct.Construct:
 
     if issubclass(type_, Enum):
         return construct.Enum(construct.VarInt, **{
-            value.name: i
+            value.value: i
             for i, value in enumerate(type_)
         })
 
