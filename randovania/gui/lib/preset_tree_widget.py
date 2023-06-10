@@ -5,14 +5,14 @@ from PySide6 import QtWidgets, QtGui
 from PySide6.QtCore import Qt
 
 from randovania.games.game import RandovaniaGame
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.options import Options
+from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.versioned_preset import VersionedPreset
 
 
 class PresetTreeWidget(QtWidgets.QTreeWidget):
     game: RandovaniaGame
-    window_manager: WindowManager
+    preset_manager: PresetManager
     options: Options
     preset_to_item: dict[uuid.UUID, QtWidgets.QTreeWidgetItem]
     expanded_connected: bool = False
@@ -58,7 +58,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         return event.setDropAction(Qt.IgnoreAction)
 
     def preset_for_item(self, item: QtWidgets.QTreeWidgetItem) -> VersionedPreset | None:
-        return self.window_manager.preset_manager.preset_for_uuid(item.data(0, Qt.UserRole))
+        return self.preset_manager.preset_for_uuid(item.data(0, Qt.UserRole))
 
     @property
     def current_preset_data(self) -> VersionedPreset | None:
@@ -88,7 +88,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             return it
 
         # Included presets
-        for preset in self.window_manager.preset_manager.included_presets.values():
+        for preset in self.preset_manager.included_presets.values():
             if preset.game != self.game:
                 continue
 
@@ -106,7 +106,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         }
         ordered_custom_presets = [
             preset
-            for preset in self.window_manager.preset_manager.custom_presets.values()
+            for preset in self.preset_manager.custom_presets.values()
             if preset.game == self.game
         ]
         ordered_custom_presets.sort(
