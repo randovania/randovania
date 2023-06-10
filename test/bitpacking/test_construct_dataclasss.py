@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import dataclasses
 import datetime
-from typing import NamedTuple
 import uuid
 from enum import Enum
+from typing import NamedTuple
 
 from randovania.bitpacking import construct_dataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -96,8 +96,8 @@ def test_encode_jsondataclass():
     )
 
     encoded = construct_dataclass.encode_json_dataclass(reference)
-    assert encoded == (b"\x14\x00\x01$00000000-0000-1111-0000-000000000001\x192020-01-30T14:20:00+00:00"
-                       b"\x01\x03foo\x01\xc6%\x01")
+    assert encoded == (b"\x14\x00\x0100000000-0000-1111-0000-000000000001\x192020-01-30T14:20:00+00:0"
+                       b"0\x01\x03foo\x01\xc6%\x01")
 
     decoded = construct_dataclass.decode_json_dataclass(encoded, J)
     assert decoded == reference

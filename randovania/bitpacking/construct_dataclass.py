@@ -61,7 +61,7 @@ _direct_mapping = {
     bool: construct.Flag,
     int: construct.ZigZag,
     str: BinStr,
-    uuid.UUID: BinStr,
+    uuid.UUID: construct.PaddedString(36, "ascii"),
     datetime.datetime: BinStr,
 }
 
