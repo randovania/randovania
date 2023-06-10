@@ -77,7 +77,7 @@ def test_list_game_sessions(clean_database, limit):
     assert result == expected
 
 
-def test_create_game_session(clean_database, preset_manager):
+def test_create_game_session(clean_database, preset_manager, default_game_list):
     # Setup
     user = database.User.create(id=1234, discord_id=5678, name="The Name")
     sio = MagicMock()
@@ -98,12 +98,12 @@ def test_create_game_session(clean_database, preset_manager):
         'presets': [json.dumps(preset_manager.default_preset.as_json)],
         'game_details': None,
         'generation_in_progress': None,
-        'allowed_games': ['prime1', 'prime2'],
+        'allowed_games': default_game_list,
     }
 
 
 def test_join_game_session(mock_emit_session_update: MagicMock,
-                           clean_database):
+                           clean_database, default_game_list):
     # Setup
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other Name")
@@ -133,7 +133,7 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
         'presets': ["{}"],
         'game_details': None,
         'generation_in_progress': None,
-        'allowed_games': ['prime1', 'prime2'],
+        'allowed_games': default_game_list,
     }
 
 
@@ -382,7 +382,7 @@ def test_game_session_admin_player_include_in_session(clean_database, flask_app,
     mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
 
 
-def test_game_session_admin_kick_last(clean_database, flask_app, mocker, mock_audit):
+def test_game_session_admin_kick_last(clean_database, flask_app, mocker, mock_audit, default_game_list):
     mock_emit = mocker.patch("flask_socketio.emit")
 
     user = database.User.create(id=1234, discord_id=5678, name="The Name")
@@ -407,7 +407,7 @@ def test_game_session_admin_kick_last(clean_database, flask_app, mocker, mock_au
         "game_session_meta_update",
         BinaryGameSessionEntry.build({'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [],
                                       'game_details': None, 'generation_in_progress': None,
-                                      'allowed_games': ['prime1', 'prime2'], }),
+                                      'allowed_games': default_game_list, }),
         room='game-session-1',
         namespace='/',
     )
@@ -949,7 +949,7 @@ def session_update_fixture(clean_database, mocker):
     return session
 
 
-def test_emit_session_meta_update(session_update, flask_app, mocker):
+def test_emit_session_meta_update(session_update, flask_app, mocker, default_game_list):
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
 
     session_json = {
@@ -979,7 +979,7 @@ def test_emit_session_meta_update(session_update, flask_app, mocker):
             "seed_hash": "ABCDEFG",
         },
         "generation_in_progress": None,
-        'allowed_games': ['prime1', 'prime2'],
+        'allowed_games': default_game_list,
     }
 
     # Run
