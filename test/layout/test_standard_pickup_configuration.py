@@ -1,5 +1,4 @@
 import copy
-import json
 
 import pytest
 
@@ -7,13 +6,10 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
-from randovania.lib import json_lib
 
 
-def _create_config_for(game: RandovaniaGame, replace: dict):
-    default_data = json_lib.read_path(
-        game.data_path.joinpath("pickup_database", "default_state", "standard-pickups.json")
-    )
+def _create_config_for(test_files_dir, game: RandovaniaGame, replace: dict):
+    default_data = test_files_dir.read_json("pickup_database", f"{game.value}_default_state", "standard-pickups.json")
 
     default_data["minimum_random_starting_pickups"] = 0
     default_data["maximum_random_starting_pickups"] = 0
@@ -44,10 +40,10 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
         }},
     ],
     name="prime2_data")
-def _prime2_data(request):
+def _prime2_data(request, test_files_dir):
     return (
         request.param["encoded"],
-        *_create_config_for(RandovaniaGame.METROID_PRIME_ECHOES, request.param["replace"])
+        *_create_config_for(test_files_dir, RandovaniaGame.METROID_PRIME_ECHOES, request.param["replace"])
     )
 
 
@@ -56,10 +52,10 @@ def _prime2_data(request):
         {"encoded": b'\x00\x00', "replace": {}},
     ],
     name="prime3_data")
-def _prime3_data(request):
+def _prime3_data(request, test_files_dir):
     return (
         request.param["encoded"],
-        *_create_config_for(RandovaniaGame.METROID_PRIME_CORRUPTION, request.param["replace"]))
+        *_create_config_for(test_files_dir, RandovaniaGame.METROID_PRIME_CORRUPTION, request.param["replace"]))
 
 
 def test_decode_prime2(prime2_data):
