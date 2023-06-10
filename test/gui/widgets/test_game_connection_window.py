@@ -146,7 +146,7 @@ async def test_prompt_for_text(window: GameConnectionWindow, mocker, result):
 ])
 async def test_prompt_for_game(window: GameConnectionWindow, mocker, result):
     def side_effect(dialog: QtWidgets.QInputDialog):
-        dialog.setTextValue(RandovaniaGame.BLANK.value)
+        dialog.setTextValue(RandovaniaGame.BLANK.long_name)
         return result
 
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,

@@ -4,7 +4,7 @@ from random import Random
 
 import pytest
 
-from randovania.game_description import derived_nodes
+from randovania.game_description import derived_nodes, default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -38,20 +38,31 @@ from randovania.layout.preset import Preset
 from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 
-def run_bootstrap(preset: Preset):
-    game = filtered_database.game_description_for_layout(preset.configuration).get_mutable()
+def run_bootstrap(preset: Preset, include_tricks: set[tuple[str, LayoutTrickLevel]]):
+
+    game_description = default_database.game_description_for(preset.game)
+    configuration = preset.configuration
+    for trick in include_tricks:
+        trick_override = game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, trick[0])
+
+        configuration = dataclasses.replace(
+            configuration,
+            trick_level=configuration.trick_level.set_level_for_trick(trick_override, trick[1]),
+        )
+
+    game = filtered_database.game_description_for_layout(configuration).get_mutable()
     generator = game.game.generator
 
-    game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database,
-                                                                         preset.configuration)
+    game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database, configuration)
+
     permalink = GeneratorParameters(
         seed_number=15000,
         spoiler=True,
         presets=[preset],
     )
-    patches = generator.base_patches_factory.create_base_patches(preset.configuration, Random(15000),
+    patches = generator.base_patches_factory.create_base_patches(configuration, Random(15000),
                                                                  game, False, player_index=0)
-    _, state = generator.bootstrap.logic_bootstrap(preset.configuration, game, patches)
+    _, state = generator.bootstrap.logic_bootstrap(configuration, game, patches)
 
     return game, state, permalink
 
@@ -105,19 +116,29 @@ _ignore_pickups_for_game = {
     RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
 }
 
+_include_tricks_for_game = {
+    # Some items require shinesparking to reach in vanilla, which due to varying difficulty has been made into a trick
+    RandovaniaGame.AM2R: {
+        ("Shinesparking", LayoutTrickLevel.ADVANCED)
+    }
+}
+
 
 @pytest.mark.skip_resolver_tests
-@pytest.mark.parametrize(("game_enum", "ignore_events", "ignore_pickups"), [
+@pytest.mark.parametrize(("game_enum", "ignore_events", "ignore_pickups", "include_tricks"), [
     pytest.param(
         game, _ignore_events_for_game.get(game, set()), _ignore_pickups_for_game.get(game, set()),
+        _include_tricks_for_game.get(game, set()),
         id=game.value,
     )
     for game in RandovaniaGame
 ])
 def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
-                              ignore_events: set[str], ignore_pickups: set[int]):
+                              ignore_events: set[str], ignore_pickups: set[int],
+                              include_tricks: set[tuple[str, LayoutTrickLevel]]):
     game, initial_state, permalink = run_bootstrap(
-        preset_manager.default_preset_for_game(game_enum).get_preset())
+        preset_manager.default_preset_for_game(game_enum).get_preset(), include_tricks)
+
     all_pickups = set(reach_lib.filter_pickup_nodes(game.region_list.iterate_nodes()))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration, game)
 

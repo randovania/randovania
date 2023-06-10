@@ -213,8 +213,8 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
 def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_pickup_category,
                        default_generator_params):
     data = (
-        "h^WxYK%Bzb%4P&bZe?<3c~o*?ZgXa3a!qe!b!=sZ&dS`%<kH75DmyE4E0aqZ0!yPSX#yJyqboamlgnXlAeaHwx"
-        "y`|qjis5Tm5_m@(Ur7@&dS`%<kH75DmyE4E0aqZ0!yPSX#yJyqboamlgnXlAeaHwxy`|qjis5Tm5_m@(Ur6Sum"
+        "h^WxYK%Bzb$}<8Yw=%giys9}cw>h&ixhA)=I<_*yXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+"
+        "~(lQ#?s8v%E&;{=*rqdXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+~(lQ#?s8v%E&;{=*rpvSO"
     )
     expected_pickup = PickupEntry(
         name="The Name",

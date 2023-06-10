@@ -44,7 +44,7 @@ def test_decode(mocker, invalid):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "DQYwMTIzAkwMABlW"
+    encoded = "DVwwMTIzAp44AFZd"
 
     expected = Permalink(
         parameters=parameters,
@@ -66,7 +66,7 @@ def test_decode(mocker, invalid):
         link = Permalink.from_str(encoded)
 
     # Assert
-    mock_from_bytes.assert_called_once_with(b'F\x00')
+    mock_from_bytes.assert_called_once_with(b'B\x80')
     if invalid:
         assert exp.value.games == games
     else:

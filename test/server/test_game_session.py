@@ -221,8 +221,8 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
             "game": "prime2",
             "pickups": [{
                 'provider_name': 'Other Name',
-                'pickup': ('C?+ZkYioLIdm}4kHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhL'
-                           'E{v_DHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhLE{v_A0t)~')
+                'pickup': ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+                           'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fdzm')
             }]
         },
         room=f"game-session-1-1234"
