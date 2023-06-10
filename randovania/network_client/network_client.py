@@ -438,7 +438,7 @@ class NetworkClient:
         if result is None:
             return None
 
-        possible_error = error.decode_error(result)
+        possible_error = error.BaseNetworkError.from_json(result)
         if possible_error is None:
             return result["result"]
         else:
