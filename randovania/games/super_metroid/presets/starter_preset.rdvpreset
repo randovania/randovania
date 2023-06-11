@@ -1,5 +1,5 @@
 {
-    "schema_version": 44,
+    "schema_version": 53,
     "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "d3ece985-f0aa-46aa-ae30-a0c794b6560c",
@@ -12,16 +12,17 @@
         },
         "starting_location": [
             {
-                "world_name": "Crateria",
-                "area_name": "Landing Site"
+                "region": "Crateria",
+                "area": "Landing Site",
+                "node": "Landing Site Save Station"
             }
         ],
         "available_locations": {
             "randomization_mode": "full",
             "excluded_indices": []
         },
-        "major_items_configuration": {
-            "items_state": {
+        "standard_pickup_configuration": {
+            "pickups_state": {
                 "Charge Beam": {
                     "num_shuffled_pickups": 1
                 },
@@ -95,32 +96,32 @@
                     "num_shuffled_pickups": 4
                 }
             },
-            "default_items": {},
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
         },
-        "ammo_configuration": {
-            "items_state": {
+        "ammo_pickup_configuration": {
+            "pickups_state": {
                 "Missile Expansion": {
                     "ammo_count": [
                         5
                     ],
                     "pickup_count": 45,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Super Missile Expansion": {
                     "ammo_count": [
                         5
                     ],
                     "pickup_count": 9,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Power Bomb Expansion": {
                     "ammo_count": [
                         5
                     ],
                     "pickup_count": 9,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 }
             }
         },

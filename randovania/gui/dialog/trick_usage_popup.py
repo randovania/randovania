@@ -10,8 +10,8 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.dock_node import DockNode
 from randovania.gui.generated.trick_usage_popup_ui import Ui_TrickUsagePopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.window_manager import WindowManager
@@ -106,13 +106,13 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
 
         lines = []
 
-        for world in sorted(self._game_description.world_list.worlds, key=lambda it: it.name):
-            for area in sorted(world.areas, key=lambda it: it.name):
+        for region in sorted(self._game_description.region_list.regions, key=lambda it: it.name):
+            for area in sorted(region.areas, key=lambda it: it.name):
                 used_tricks = _check_used_tricks(area, trick_resources, database)
                 if used_tricks:
                     lines.append(
-                        f'<p><a href="data-editor://{world.correct_name(area.in_dark_aether)}/{area.name}">'
-                        f'{world.correct_name(area.in_dark_aether)} - {area.name}</a>'
+                        f'<p><a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">'
+                        f'{region.correct_name(area.in_dark_aether)} - {area.name}</a>'
                         f'<br />{"<br />".join(used_tricks)}</p>'
                     )
 
@@ -124,5 +124,5 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
     def _on_click_link_to_data_editor(self, link: str):
         info = re.match(r"^data-editor://([^)]+)/([^)]+)$", link)
         if info:
-            world_name, area_name = info.group(1, 2)
-            self._window_manager.open_data_visualizer_at(world_name, area_name, game=self._game_description.game)
+            region_name, area_name = info.group(1, 2)
+            self._window_manager.open_data_visualizer_at(region_name, area_name, game=self._game_description.game)

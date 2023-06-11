@@ -12,26 +12,26 @@ from randovania.game_description.hint import Hint
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.world_list import WorldList
-from randovania.generator.item_pool import pool_creator, PoolResults
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region_list import RegionList
+from randovania.generator.pickup_pool import pool_creator, PoolResults
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 _ETM_NAME = "Energy Transfer Module"
 
 
-def _pickup_assignment_to_item_locations(world_list: WorldList,
+def _pickup_assignment_to_item_locations(region_list: RegionList,
                                          pickup_assignment: PickupAssignment,
                                          num_players: int,
                                          ) -> dict[str, dict[str, str]]:
     items_locations: DefaultDict[str, dict[str, str]] = collections.defaultdict(dict)
 
-    for world, area, node in world_list.all_worlds_areas_nodes:
+    for region, area, node in region_list.all_regions_areas_nodes:
         if not node.is_resource_node or not isinstance(node, PickupNode):
             continue
 
@@ -44,20 +44,19 @@ def _pickup_assignment_to_item_locations(world_list: WorldList,
         else:
             item_name = _ETM_NAME
 
-        world_name = world.dark_name if area.in_dark_aether else world.name
-        items_locations[world_name][world_list.node_name(node)] = item_name
+        items_locations[region.correct_name(area.in_dark_aether)][region_list.node_name(node)] = item_name
 
     return {
-        world: {
+        region: {
             area: item
-            for area, item in sorted(items_locations[world].items())
+            for area, item in sorted(items_locations[region].items())
         }
-        for world in sorted(items_locations.keys())
+        for region in sorted(items_locations.keys())
     }
 
 
-def _find_area_with_teleporter(world_list: WorldList, teleporter: NodeIdentifier) -> Area:
-    return world_list.area_by_area_location(teleporter.area_location)
+def _find_area_with_teleporter(region_list: RegionList, teleporter: NodeIdentifier) -> Area:
+    return region_list.area_by_area_location(teleporter.area_location)
 
 
 def serialize_single(player_index: int, num_players: int, patches: GamePatches) -> dict:
@@ -69,7 +68,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
     :return:
     """
     game = filtered_database.game_description_for_layout(patches.configuration)
-    world_list = game.world_list
+    region_list = game.region_list
 
     dock_weakness_to_type = {}
     for dock_type, weaknesses in game.dock_weakness_database.weaknesses.items():
@@ -117,7 +116,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
         },
         "locations": {
             key: value
-            for key, value in _pickup_assignment_to_item_locations(world_list,
+            for key, value in _pickup_assignment_to_item_locations(region_list,
                                                                    patches.pickup_assignment,
                                                                    num_players).items()
         },
@@ -129,13 +128,13 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
     return result
 
 
-def _area_name_to_area_location(world_list: WorldList, area_name: str) -> AreaIdentifier:
-    world_name, area_name = re.match("([^/]+)/([^/]+)", area_name).group(1, 2)
+def _area_name_to_area_location(region_list: RegionList, area_name: str) -> AreaIdentifier:
+    region_name, area_name = re.match("([^/]+)/([^/]+)", area_name).group(1, 2)
 
-    # Filter out dark world names
-    world_name = world_list.world_with_name(world_name).name
+    # Filter out dark db names
+    region_name = region_list.region_with_name(region_name).name
 
-    return AreaIdentifier(world_name, area_name)
+    return AreaIdentifier(region_name, area_name)
 
 
 def _find_pickup_with_name(item_pool: list[PickupEntry], pickup_name: str) -> PickupEntry:
@@ -164,7 +163,7 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     :param configuration:
     :return:
     """
-    world_list = game.world_list
+    region_list = game.region_list
     weakness_db = game.dock_weakness_database
 
     if game_modifications["game"] != game.game.value:
@@ -193,14 +192,14 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
 
     # Elevators
     elevator_connection = [
-        (world_list.get_teleporter_node(NodeIdentifier.from_string(source_name)),
+        (region_list.get_teleporter_node(NodeIdentifier.from_string(source_name)),
          AreaIdentifier.from_string(target_name))
         for source_name, target_name in game_modifications["teleporters"].items()
     ]
 
     # Dock Connection
     def get_dock(ni: NodeIdentifier):
-        result = game.world_list.node_by_identifier(ni)
+        result = game.region_list.node_by_identifier(ni)
         assert isinstance(result, DockNode)
         return result
 
@@ -245,7 +244,7 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
                 target_player = 0
 
             node_identifier = NodeIdentifier.create(world_name, *area_node_name.split("/", 1))
-            node = world_list.node_by_identifier(node_identifier)
+            node = region_list.node_by_identifier(node_identifier)
             assert isinstance(node, PickupNode)
             if node.pickup_index in initial_pickup_assignment:
                 pickup = initial_pickup_assignment[node.pickup_index]

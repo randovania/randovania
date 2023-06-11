@@ -1,5 +1,5 @@
 {
-    "schema_version": 44,
+    "schema_version": 53,
     "base_preset_uuid": null,
     "name": "Fewest Changes",
     "uuid": "bba48268-0710-4ac5-baae-dcd5fcd31d80",
@@ -12,21 +12,22 @@
         },
         "starting_location": [
             {
-                "world_name": "Temple Grounds",
-                "area_name": "Landing Site"
+                "region": "Temple Grounds",
+                "area": "Landing Site",
+                "node": "Save Station"
             }
         ],
         "available_locations": {
             "randomization_mode": "full",
             "excluded_indices": []
         },
-        "major_items_configuration": {
-            "items_state": {
+        "standard_pickup_configuration": {
+            "pickups_state": {
                 "Combat Visor": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Scan Visor": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Dark Visor": {
                     "num_shuffled_pickups": 1
@@ -35,7 +36,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Varia Suit": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Dark Suit": {
                     "num_shuffled_pickups": 1
@@ -46,10 +47,10 @@
                 "Progressive Suit": {},
                 "Double Damage": {},
                 "Power Beam": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Charge Beam": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Dark Beam": {
                     "num_shuffled_pickups": 1,
@@ -72,7 +73,7 @@
                 },
                 "Unlimited Beam Ammo": {},
                 "Morph Ball": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Morph Ball Bomb": {
                     "num_shuffled_pickups": 1
@@ -144,42 +145,42 @@
                     "num_shuffled_pickups": 14
                 }
             },
-            "default_items": {
+            "default_pickups": {
                 "visor": "Combat Visor",
                 "beam": "Power Beam"
             },
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
         },
-        "ammo_configuration": {
-            "items_state": {
+        "ammo_pickup_configuration": {
+            "pickups_state": {
                 "Missile Expansion": {
                     "ammo_count": [
                         5
                     ],
                     "pickup_count": 49,
-                    "requires_major_item": false
+                    "requires_main_item": false
                 },
                 "Power Bomb Expansion": {
                     "ammo_count": [
                         1
                     ],
                     "pickup_count": 8,
-                    "requires_major_item": false
+                    "requires_main_item": false
                 },
                 "Dark Ammo Expansion": {
                     "ammo_count": [
                         200
                     ],
                     "pickup_count": 0,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Light Ammo Expansion": {
                     "ammo_count": [
                         200
                     ],
                     "pickup_count": 0,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Beam Ammo Expansion": {
                     "ammo_count": [
@@ -187,7 +188,7 @@
                         50
                     ],
                     "pickup_count": 4,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 }
             }
         },
@@ -225,24 +226,24 @@
             "mode": "vanilla",
             "excluded_teleporters": [
                 {
-                    "world_name": "Great Temple",
-                    "area_name": "Sky Temple Energy Controller",
-                    "node_name": "Teleport to Temple Grounds - Sky Temple Gateway"
+                    "region": "Great Temple",
+                    "area": "Sky Temple Energy Controller",
+                    "node": "Teleport to Temple Grounds - Sky Temple Gateway"
                 },
                 {
-                    "world_name": "Sanctuary Fortress",
-                    "area_name": "Aerie",
-                    "node_name": "Elevator to Sanctuary Fortress - Aerie Transport Station"
+                    "region": "Sanctuary Fortress",
+                    "area": "Aerie",
+                    "node": "Elevator to Sanctuary Fortress - Aerie Transport Station"
                 },
                 {
-                    "world_name": "Sanctuary Fortress",
-                    "area_name": "Aerie Transport Station",
-                    "node_name": "Elevator to Sanctuary Fortress - Aerie"
+                    "region": "Sanctuary Fortress",
+                    "area": "Aerie Transport Station",
+                    "node": "Elevator to Sanctuary Fortress - Aerie"
                 },
                 {
-                    "world_name": "Temple Grounds",
-                    "area_name": "Sky Temple Gateway",
-                    "node_name": "Teleport to Great Temple - Sky Temple Energy Controller"
+                    "region": "Temple Grounds",
+                    "area": "Sky Temple Gateway",
+                    "node": "Teleport to Great Temple - Sky Temple Energy Controller"
                 }
             ],
             "excluded_targets": [],
@@ -326,6 +327,7 @@
         "dangerous_energy_tank": false,
         "use_new_patcher": false,
         "inverted_mode": false,
+        "portal_rando": false,
         "allow_jumping_on_dark_water": false,
         "allow_vanilla_dark_beam": true,
         "allow_vanilla_light_beam": true,

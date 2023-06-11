@@ -1,15 +1,15 @@
 import dataclasses
 import datetime
 import json
+import uuid
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.game_connection.connection_base import InventoryItem
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib.construct_lib import convert_to_raw_python
-from randovania.network_common.binary_formats import BinaryGameSessionEntry
 from randovania.network_common.session_state import GameSessionState
 
 
@@ -106,6 +106,7 @@ class GameSessionEntry:
 
     @classmethod
     def from_json(cls, data) -> "GameSessionEntry":
+        from randovania.network_common.binary_formats import BinaryGameSessionEntry
         data = convert_to_raw_python(BinaryGameSessionEntry.parse(data))
 
         player_entries = [
@@ -134,6 +135,7 @@ class GameSessionActions:
 
 @dataclasses.dataclass(frozen=True)
 class GameSessionPickups:
+    id: uuid.UUID
     game: RandovaniaGame
     pickups: tuple[tuple[str, PickupEntry], ...]
 

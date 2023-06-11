@@ -18,7 +18,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo, Re
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world.node import NodeContext
+from randovania.game_description.db.node import NodeContext
 from randovania.games.game import RandovaniaGame
 
 
@@ -41,8 +41,6 @@ def _database() -> ResourceDatabase:
         requirement_template={},
         damage_reductions={},
         energy_tank_item_index="",
-        item_percentage_index=None,
-        multiworld_magic_item_index=None,
     )
 
 
@@ -652,8 +650,8 @@ def test_requirement_set_constructor(echoes_resource_database):
 
 def test_node_resource_info_as_requirement(blank_game_description):
     db = blank_game_description.resource_database
-    node = blank_game_description.world_list.all_nodes[0]
-    context = NodeContext(None, None, db, blank_game_description.world_list)
+    node = blank_game_description.region_list.all_nodes[0]
+    context = NodeContext(None, None, db, blank_game_description.region_list)
 
     nri = NodeResourceInfo.from_node
     req = ResourceRequirement.simple(nri(node, context))
@@ -710,11 +708,11 @@ def test_set_hash(echoes_resource_database):
 
 def test_sort_resource_requirement(blank_game_description):
     db = blank_game_description.resource_database
-    node = blank_game_description.world_list.all_nodes[0]
+    node = blank_game_description.region_list.all_nodes[0]
     assert node is not None
 
     resources = [
-        NodeResourceInfo.from_node(node, NodeContext(None, None, db, blank_game_description.world_list)),
+        NodeResourceInfo.from_node(node, NodeContext(None, None, db, blank_game_description.region_list)),
         SimpleResourceInfo(1, "Resource", "Resource", ResourceType.MISC),
         TrickResourceInfo(2, "Trick", "Trick", "Long Description"),
         ItemResourceInfo(3, "Item", "Item", 1),

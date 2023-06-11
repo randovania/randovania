@@ -16,7 +16,7 @@ Once the GameData has been created, the following steps are required:
 
 
 3. Add the new database file to `json_data/{game-id}.json` or `json_data/header.json` in your game folder.
-The latter must have the world list split into multiple files. 
+The latter must have the region list split into multiple files. 
 **TODO**: list minimum requirements for the database file (areas, docks?, etc.) 
 
 
@@ -32,10 +32,10 @@ database is saved as the split format, as well as the human-readable version.
    5. Ensure your GameData includes an entry for this default preset.
 
 
-6. Create the folder `item_database` in your game folder with the following content:
-   1. `item-database.json`, with content `{"item_categories": {}, "items": {}, "ammo": {}, "default_items": {}}`.
-   2. `default_state/ammo.json`, with content `{"maximum_ammo": {}, "items_state": {}}`.
-   3. `default_state/major-items.json`, with content  `{"items_state": {}}`.
+6. Create the folder `pickup_database` in your game folder with the following content:
+   1. `pickup-database.json`, with content `{"pickup_categories": {}, "standard_pickups": {}, "ammo_pickups": {}, "default_pickups": {}}`.
+   2. `default_state/ammo-pickups.json`, with content `{"maximum_ammo": {}, "pickups_state": {}}`.
+   3. `default_state/standard-pickups.json`, with content  `{"pickups_state": {}}`.
 
 
 7. Run the unit tests. If some tests don't pass, one of the steps above have incorrect data.

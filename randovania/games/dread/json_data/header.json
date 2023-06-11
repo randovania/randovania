@@ -1,5 +1,5 @@
 {
-    "schema_version": 15,
+    "schema_version": 19,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -326,6 +326,20 @@
                 "max_capacity": 1,
                 "extra": {
                     "item_id": "ITEM_RANDO_ARTIFACT_12"
+                }
+            },
+            "FlashUpgrade": {
+                "long_name": "Flash Shift Upgrade",
+                "max_capacity": 999,
+                "extra": {
+                    "item_id": "ITEM_UPGRADE_FLASH_SHIFT_CHAIN"
+                }
+            },
+            "SpeedBoostUpgrade": {
+                "long_name": "Speed Booster Upgrade",
+                "max_capacity": 5,
+                "extra": {
+                    "item_id": "ITEM_UPGRADE_SPEED_BOOST_CHARGE"
                 }
             }
         },
@@ -759,7 +773,7 @@
                 "extra": {}
             },
             "s080_shipyard:default:grapplepulloff1x2": {
-                "long_name": "Hanubia - Speedbooster Puzzle Room Grapple Block",
+                "long_name": "Hanubia - Speed Booster Puzzle Room Grapple Block",
                 "extra": {}
             },
             "Corpius": {
@@ -1007,11 +1021,11 @@
                 "extra": {}
             },
             "BureniaPrepareSpeedSave": {
-                "long_name": "Burenia - Prepare Speedboost in Save Station",
+                "long_name": "Burenia - Prepare Speed Boost in Save Station",
                 "extra": {}
             },
             "ArtariaMapSpeed": {
-                "long_name": "Artaria - Prepare Speedboost in Map Station",
+                "long_name": "Artaria - Prepare Speed Booster in Map Station",
                 "extra": {}
             },
             "DaironFreezerSpeedBlocks": {
@@ -1044,6 +1058,10 @@
             },
             "DaironYellowSpeedBlocks": {
                 "long_name": "Dairon - Yellow Introduction Speed Blocks Destroyed",
+                "extra": {}
+            },
+            "BureniaGravitySuitRoomStoreSpeed": {
+                "long_name": "Burenia - Gravity Suit Room Store Shinespark",
                 "extra": {}
             }
         },
@@ -1094,12 +1112,12 @@
                 "extra": {}
             },
             "Speedbooster": {
-                "long_name": "Speedbooster Conservation",
+                "long_name": "Speed Booster Conservation",
                 "description": "Maintaining and chaining speedbooster through complex and otherwise unintended situations will be necessary",
                 "extra": {}
             },
             "Walljump": {
-                "long_name": "Walljump",
+                "long_name": "Wall Jump",
                 "description": "Basic movement ability which can be abused in unintended ways.",
                 "extra": {}
             },
@@ -1425,6 +1443,36 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        }
+                    ]
+                }
+            },
+            "Shoot Storm Missile": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileAmmo",
+                                "amount": 3,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Storm",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Shoot Missile"
                         }
                     ]
                 }
@@ -1850,7 +1898,7 @@
             "Destroy Central Unit": {
                 "type": "and",
                 "data": {
-                    "comment": "TODO: Not enough space for speedbooster without short charges - account for this",
+                    "comment": "TODO: Not enough space for Speed Booster without short charges - account for this",
                     "items": [
                         {
                             "type": "or",
@@ -4690,17 +4738,15 @@
                 ]
             }
         ],
-        "energy_tank_item_index": "ETank",
-        "item_percentage_index": null,
-        "multiworld_magic_item_index": null
+        "energy_tank_item_index": "ETank"
     },
     "layers": [
         "default"
     ],
     "starting_location": {
-        "world_name": "Artaria",
-        "area_name": "Intro Room",
-        "node_name": "Start Point"
+        "region": "Artaria",
+        "area": "Intro Room",
+        "node": "Start Point"
     },
     "initial_states": {},
     "minimal_logic": null,
@@ -4772,16 +4818,7 @@
                                 "items": []
                             }
                         },
-                        "lock": {
-                            "lock_type": "front-blast-back-impossible",
-                            "requirement": {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": []
-                                }
-                            }
-                        }
+                        "lock": null
                     },
                     "Power Beam Door": {
                         "extra": {
@@ -5104,6 +5141,82 @@
                                 "data": "Shoot Diffusion Beam"
                             }
                         }
+                    },
+                    "Storm Missile Door": {
+                        "extra": {
+                            "type": "storm_missile"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Storm Missile"
+                            }
+                        }
+                    },
+                    "Bomb Door": {
+                        "extra": {
+                            "type": "bomb"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Lay Bomb"
+                            }
+                        }
+                    },
+                    "Cross Bomb Door": {
+                        "extra": {
+                            "type": "cross_bomb"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Lay Cross Bomb"
+                            }
+                        }
+                    },
+                    "Power Bomb Door": {
+                        "extra": {
+                            "type": "power_bomb"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Lay Power Bomb"
+                            }
+                        }
                     }
                 },
                 "dock_rando": {
@@ -5122,13 +5235,17 @@
                         "Wide Beam Door"
                     ],
                     "change_to": [
+                        "Bomb Door",
                         "Charge Beam Door",
+                        "Cross Bomb Door",
                         "Diffusion Beam Door",
                         "Grapple Beam Door",
                         "Ice Missile Door",
                         "Missile Door",
                         "Plasma Beam Door",
                         "Power Beam Door",
+                        "Power Bomb Door",
+                        "Storm Missile Door",
                         "Super Missile Door",
                         "Wave Beam Door",
                         "Wide Beam Door"
@@ -5358,13 +5475,12 @@
             "name": "Not Determined"
         },
         "dock_rando": {
-            "enable_one_way": false,
             "force_change_two_way": true,
             "resolver_attempts": 250,
             "to_shuffle_proportion": 0.6
         }
     },
-    "worlds": [
+    "regions": [
         "Artaria.json",
         "Cataris.json",
         "Dairon.json",

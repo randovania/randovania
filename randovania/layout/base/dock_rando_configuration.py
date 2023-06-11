@@ -1,40 +1,37 @@
 import copy
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator
+from typing import Iterator, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.world.dock import DockType, DockWeakness, DockWeaknessDatabase
+from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
 from randovania.games.game import RandovaniaGame
+from randovania.lib import enum_lib
 
 
 class DockRandoMode(BitPackEnum, Enum):
+    long_name: str
+    description: str
+
     VANILLA = "vanilla"
-    TWO_WAY = "two-way"
-    ONE_WAY = "one-way"
+    DOCKS = "docks"
+    WEAKNESSES = "weaknesses"
 
-    @property
-    def long_name(self) -> str:
-        if self == DockRandoMode.VANILLA:
-            return "Vanilla"
-        if self == DockRandoMode.TWO_WAY:
-            return "Two-way"
-        if self == DockRandoMode.ONE_WAY:
-            return "One-way"
-        raise ValueError(f"Unknown value: {self}")
 
-    @property
-    def description(self) -> str:
-        if self == DockRandoMode.VANILLA:
-            return "Original door locks."
-        if self == DockRandoMode.TWO_WAY:
-            return "Random door locks; same lock on both sides."
-        if self == DockRandoMode.ONE_WAY:
-            return "Random door locks; each side is separate."
-        raise ValueError(f"Unknown value: {self}")
+enum_lib.add_long_name(DockRandoMode, {
+    DockRandoMode.VANILLA: "Vanilla",
+    DockRandoMode.DOCKS: "Doors",
+    DockRandoMode.WEAKNESSES: "Types",
+})
+
+enum_lib.add_per_enum_field(DockRandoMode, "description", {
+    DockRandoMode.VANILLA: "Original door locks",
+    DockRandoMode.DOCKS: "Randomize the type of each door individually",
+    DockRandoMode.WEAKNESSES: "Randomizes all doors by type, turning all of one type into another",
+})
 
 
 @dataclass(frozen=True)
@@ -122,15 +119,6 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
     def possible_change_to(self) -> Iterator[DockWeakness]:
         yield from self._possible_change_to(self.game, self.dock_type_name)
 
-    @classmethod
-    def default_state(cls, game: RandovaniaGame, dock_type_name: str):
-        return cls(
-            game=game,
-            dock_type_name=dock_type_name,
-            can_change_from=set(cls._possible_change_from(game, dock_type_name)),
-            can_change_to=set(cls._possible_change_to(game, dock_type_name)),
-        )
-
 
 @dataclass(frozen=True)
 class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
@@ -157,7 +145,7 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
         }
 
     @classmethod
-    def from_json(cls, value: dict, game: RandovaniaGame) -> "DockRandoConfiguration":
+    def from_json(cls, value: dict, game: RandovaniaGame) -> Self:
         weakness_database = cls._get_weakness_database(game)
         return cls(
             game=game,
@@ -182,7 +170,7 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
             yield from self.types_state[dock_type].bit_pack_encode({"reference": reference.types_state[dock_type]})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "DockRandoConfiguration":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> Self:
         reference: DockRandoConfiguration = metadata["reference"]
 
         mode = DockRandoMode.bit_pack_unpack(decoder, None)
@@ -205,6 +193,6 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
 
     def settings_incompatible_with_multiworld(self) -> list[str]:
         danger = []
-        if self.is_enabled():
-            danger.append("Door Lock randomizer")
+        if self.mode == DockRandoMode.DOCKS:
+            danger.append(f"{self.mode.long_name}: {self.mode.description}")
         return danger

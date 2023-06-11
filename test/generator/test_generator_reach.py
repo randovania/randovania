@@ -4,27 +4,27 @@ from random import Random
 
 import pytest
 
-from randovania.game_description import derived_nodes
+from randovania.game_description import derived_nodes, default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.dock import DockWeaknessDatabase
-from randovania.game_description.world.node import GenericNode, Node
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.resource_node import ResourceNode
-from randovania.game_description.world.world import World
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock import DockWeaknessDatabase
+from randovania.game_description.db.node import GenericNode, Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import reach_lib
 from randovania.generator.generator_reach import (
     GeneratorReach
 )
-from randovania.generator.item_pool import pool_creator
+from randovania.generator.pickup_pool import pool_creator
 from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.reach_lib import (
     advance_reach_with_possible_unsafe_resources
@@ -38,20 +38,31 @@ from randovania.layout.preset import Preset
 from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 
-def run_bootstrap(preset: Preset):
-    game = filtered_database.game_description_for_layout(preset.configuration).get_mutable()
+def run_bootstrap(preset: Preset, include_tricks: set[tuple[str, LayoutTrickLevel]]):
+
+    game_description = default_database.game_description_for(preset.game)
+    configuration = preset.configuration
+    for trick in include_tricks:
+        trick_override = game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, trick[0])
+
+        configuration = dataclasses.replace(
+            configuration,
+            trick_level=configuration.trick_level.set_level_for_trick(trick_override, trick[1]),
+        )
+
+    game = filtered_database.game_description_for_layout(configuration).get_mutable()
     generator = game.game.generator
 
-    game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database,
-                                                                         preset.configuration)
+    game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database, configuration)
+
     permalink = GeneratorParameters(
         seed_number=15000,
         spoiler=True,
         presets=[preset],
     )
-    patches = generator.base_patches_factory.create_base_patches(preset.configuration, Random(15000),
+    patches = generator.base_patches_factory.create_base_patches(configuration, Random(15000),
                                                                  game, False, player_index=0)
-    _, state = generator.bootstrap.logic_bootstrap(preset.configuration, game, patches)
+    _, state = generator.bootstrap.logic_bootstrap(configuration, game, patches)
 
     return game, state, permalink
 
@@ -105,20 +116,30 @@ _ignore_pickups_for_game = {
     RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
 }
 
+_include_tricks_for_game = {
+    # Some items require shinesparking to reach in vanilla, which due to varying difficulty has been made into a trick
+    RandovaniaGame.AM2R: {
+        ("Shinesparking", LayoutTrickLevel.ADVANCED)
+    }
+}
+
 
 @pytest.mark.skip_resolver_tests
-@pytest.mark.parametrize(("game_enum", "ignore_events", "ignore_pickups"), [
+@pytest.mark.parametrize(("game_enum", "ignore_events", "ignore_pickups", "include_tricks"), [
     pytest.param(
         game, _ignore_events_for_game.get(game, set()), _ignore_pickups_for_game.get(game, set()),
+        _include_tricks_for_game.get(game, set()),
         id=game.value,
     )
     for game in RandovaniaGame
 ])
 def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
-                              ignore_events: set[str], ignore_pickups: set[int]):
+                              ignore_events: set[str], ignore_pickups: set[int],
+                              include_tricks: set[tuple[str, LayoutTrickLevel]]):
     game, initial_state, permalink = run_bootstrap(
-        preset_manager.default_preset_for_game(game_enum).get_preset())
-    all_pickups = set(reach_lib.filter_pickup_nodes(game.world_list.iterate_nodes()))
+        preset_manager.default_preset_for_game(game_enum).get_preset(), include_tricks)
+
+    all_pickups = set(reach_lib.filter_pickup_nodes(game.region_list.iterate_nodes()))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration, game)
 
     for pickup in pool_results.starting + pool_results.to_place:
@@ -138,15 +159,15 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
         reach = advance_reach_with_possible_unsafe_resources(reach)
 
     # print("\nCurrent reach:")
-    # print(game.world_list.node_name(reach.state.node, with_world=True))
-    # for world in game.world_list.worlds:
-    #     print(f"\n>> {world.name}")
-    #     for node in world.all_nodes:
+    # print(game.region_list.node_name(reach.state.node, with_region=True))
+    # for region in game.region_list.regions:
+    #     print(f"\n>> {region.name}")
+    #     for node in region.all_nodes:
     #         print("[{!s:>5}, {!s:>5}, {!s:>5}] {}".format(
     #             reach.is_reachable_node(node), reach.is_safe_node(node),
-    #             reach.state.resources.get(node.resource(), 0) > 0
+    #             reach.state.resources.has_resource(node.resource(reach.node_context()))
     #             if isinstance(node, ResourceNode) else "",
-    #             game.world_list.node_name(node, with_world=True)))
+    #             game.region_list.node_name(node, with_region=True)))
 
     collected_indices = set(reach.state.collected_pickup_indices)
     collected_events = {
@@ -171,8 +192,8 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     translator_node = ConfigurableNode(translator_identif := nc("Translator Gate"),
                                        3, True, None, "", ("default",), {}, False)
 
-    world_list = WorldList([
-        World("Test World", [
+    region_list = RegionList([
+        Region("Test World", [
             Area("Test Area A", None, [node_a, node_b, node_c, translator_node],
                  {
                      node_a: {
@@ -196,7 +217,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     ])
     game = GameDescription(RandovaniaGame.METROID_PRIME_ECHOES, DockWeaknessDatabase([], {}, {}, (None, None), None),
                            echoes_resource_database, ("default",), Requirement.impossible(),
-                           None, {}, None, world_list)
+                           None, {}, None, region_list)
 
     patches = echoes_game_patches.assign_node_configuration([
         (translator_identif, ResourceRequirement.simple(scan_visor)),
@@ -204,7 +225,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     initial_state = State(
         ResourceCollection.from_dict(echoes_resource_database, {scan_visor: 1 if has_translator else 0}),
         (), 99, node_a, patches, None,
-        StateGameData(echoes_resource_database, game.world_list, 100, 99),
+        StateGameData(echoes_resource_database, game.region_list, 100, 99),
     )
 
     # Run
@@ -242,7 +263,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
             return n.node_index
 
         result = [
-            game.world_list.node_by_identifier(ni(*name.split("/")))
+            game.region_list.node_by_identifier(ni(*name.split("/")))
             for name in names
         ]
         result.sort(key=get_index)

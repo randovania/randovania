@@ -1,6 +1,6 @@
 import dataclasses
-import json
 from unittest.mock import PropertyMock, MagicMock
+from pathlib import Path
 
 import pytest
 
@@ -10,15 +10,16 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.dread.exporter.patch_data_factory import DreadPatchDataFactory, DreadAcquiredMemo, \
     get_resources_for_details
-from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
+from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.ammo_state import AmmoState
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.ammo_pickup_state import AmmoPickupState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
+from randovania.lib import json_lib
 
 
 def test_create_patch_data(test_files_dir, mocker):
@@ -36,21 +37,20 @@ def test_create_patch_data(test_files_dir, mocker):
     data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    with test_files_dir.joinpath("patcher_data", "dread", "starter_preset.json").open("r") as file:
-        expected_data = json.load(file)
+    expected_data = json_lib.read_path(test_files_dir.joinpath("patcher_data", "dread", "starter_preset.json"))
 
     assert data == expected_data
 
 
 def _preset_with_locked_pb(preset: Preset, locked: bool):
-    item_database = default_database.item_database_for_game(RandovaniaGame.METROID_DREAD)
+    pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
     preset = dataclasses.replace(
         preset,
         configuration=dataclasses.replace(
             preset.configuration,
-            ammo_configuration=preset.configuration.ammo_configuration.replace_state_for_ammo(
-                item_database.ammo["Power Bomb Tank"],
-                AmmoState(requires_major_item=locked),
+            ammo_configuration=preset.configuration.ammo_pickup_configuration.replace_state_for_ammo(
+                pickup_database.ammo_pickups["Power Bomb Tank"],
+                AmmoPickupState(requires_main_item=locked),
             )
         )
     )
@@ -59,12 +59,12 @@ def _preset_with_locked_pb(preset: Preset, locked: bool):
 
 @pytest.mark.parametrize("locked", [False, True])
 def test_pickup_data_for_pb_expansion(locked, dread_game_description, preset_manager):
-    item_database = default_database.item_database_for_game(RandovaniaGame.METROID_DREAD)
+    pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
     resource_db = dread_game_description.resource_database
 
     # Setup
-    pickup = pickup_creator.create_ammo_expansion(
-        item_database.ammo["Power Bomb Tank"],
+    pickup = pickup_creator.create_ammo_pickup(
+        pickup_database.ammo_pickups["Power Bomb Tank"],
         [2],
         locked,
         resource_db,
@@ -78,27 +78,28 @@ def test_pickup_data_for_pb_expansion(locked, dread_game_description, preset_man
 
     # Assert
     assert result == [
-        {
-            "item_id": "ITEM_WEAPON_POWER_BOMB_MAX" if locked else "ITEM_WEAPON_POWER_BOMB",
-            "quantity": 2
-        }
+        [
+            { "item_id": "ITEM_WEAPON_POWER_BOMB_MAX", "quantity": 2 },
+        ]
+        if locked else
+        [
+            { "item_id": "ITEM_WEAPON_POWER_BOMB_MAX", "quantity": 2 },
+            { "item_id": "ITEM_WEAPON_POWER_BOMB", "quantity": 1 },
+        ]
     ]
 
 
 @pytest.mark.parametrize("locked", [False, True])
 def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager):
-    item_database = default_database.item_database_for_game(RandovaniaGame.METROID_DREAD)
+    pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
     resource_db = dread_game_description.resource_database
 
     # Setup
-    pickup = pickup_creator.create_major_item(
-        item_database.major_items["Power Bomb"],
-        MajorItemState(included_ammo=(3,)),
-        include_percentage=False,
-        resource_database=resource_db,
-        ammo=item_database.ammo["Power Bomb Tank"],
-        ammo_requires_major_item=locked,
-    )
+    pickup = pickup_creator.create_standard_pickup(pickup_database.standard_pickups["Power Bomb"],
+                                                   StandardPickupState(included_ammo=(3,)),
+                                                   resource_database=resource_db,
+                                                   ammo=pickup_database.ammo_pickups["Power Bomb Tank"],
+                                                   ammo_requires_main_item=locked)
 
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())
 
@@ -108,15 +109,66 @@ def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager)
 
     # Assert
     assert result == [
-        {
-            "item_id": "ITEM_WEAPON_POWER_BOMB",
-            "quantity": 3
-        }
+        [
+            { "item_id": "ITEM_WEAPON_POWER_BOMB", "quantity": 1 },
+            { "item_id": "ITEM_WEAPON_POWER_BOMB_MAX", "quantity": 3 },
+        ]
     ]
 
+def test_pickup_data_for_recolored_missiles(dread_game_description, preset_manager):
+    pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
+    resource_db = dread_game_description.resource_database
+
+    preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_DREAD).get_preset()
+    description = MagicMock(spec=LayoutDescription)
+    description.all_patches = {0: MagicMock()}
+    description.get_preset.return_value = preset
+    description.get_seed_for_player.return_value = 1000
+    cosmetics = DreadCosmeticPatches(missile_cosmetic=DreadMissileCosmeticType.PRIDE)
+
+    # Setup
+    pickup = pickup_creator.create_ammo_pickup(pickup_database.ammo_pickups["Missile Tank"],
+                                               (2,),
+                                               False, 
+                                               resource_database=resource_db)
+
+    factory = DreadPatchDataFactory(description, PlayersConfiguration(0, {0: "Dread"}), cosmetics)
+    creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())
+
+    # Run
+    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
+    result = factory._pickup_detail_for_target(details)
+
+    # Assert
+    assert result == {
+        "pickup_type": "actor",
+        "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
+        "resources": [
+            [
+                {
+                    "item_id": "ITEM_WEAPON_MISSILE_MAX",
+                    "quantity": 2
+                }
+            ]
+        ],
+        "pickup_actor": {
+            "scenario": "s010_cave",
+            "layer": "default",
+            "actor": "ItemSphere_ChargeBeam"
+        },
+        "model": [
+            "item_missiletank_green"
+        ],
+        "map_icon": {
+            "icon_id": "item_missiletank",
+            'original_actor': {'actor': 'powerup_chargebeam',
+                               'layer': 'default',
+                               'scenario': 's010_cave'}
+        }
+    }
 
 def test_pickup_data_for_a_major(dread_game_description, preset_manager):
-    item_database = default_database.item_database_for_game(RandovaniaGame.METROID_DREAD)
+    pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
     resource_db = dread_game_description.resource_database
 
     preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_DREAD).get_preset()
@@ -126,14 +178,9 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
     description.get_seed_for_player.return_value = 1000
 
     # Setup
-    pickup = pickup_creator.create_major_item(
-        item_database.major_items["Speed Booster"],
-        MajorItemState(),
-        include_percentage=False,
-        resource_database=resource_db,
-        ammo=None,
-        ammo_requires_major_item=False,
-    )
+    pickup = pickup_creator.create_standard_pickup(pickup_database.standard_pickups["Speed Booster"],
+                                                   StandardPickupState(), resource_database=resource_db, ammo=None,
+                                                   ammo_requires_main_item=False)
 
     factory = DreadPatchDataFactory(description, PlayersConfiguration(0, {0: "Dread"}), MagicMock())
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())
@@ -147,10 +194,12 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
         "pickup_type": "actor",
         "caption": "Speed Booster acquired.",
         "resources": [
-            {
-                "item_id": "ITEM_SPEED_BOOSTER",
-                "quantity": 1
-            }
+            [
+                {
+                    "item_id": "ITEM_SPEED_BOOSTER",
+                    "quantity": 1
+                }
+            ]
         ],
         "pickup_actor": {
             "scenario": "s010_cave",
@@ -174,8 +223,8 @@ def setup_and_teardown_for_wrong_custom_spawn():
     # modify the default start to have no collision_camera (asset_id) and no vanilla
     # actor name for a start point
     game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
-    world = game_desc.world_list.world_with_name("Artaria")
-    area = world.area_by_name("Intro Room")
+    region = game_desc.region_list.region_with_name("Artaria")
+    area = region.area_by_name("Intro Room")
     node = area.node_with_name("Start Point")
     modified_node = dataclasses.replace(node, extra={})
     area.nodes.remove(node)
@@ -210,8 +259,8 @@ def test_create_patch_with_wrong_custom_spawn(test_files_dir, mocker, setup_and_
 def setup_and_teardown_for_custom_spawn():
     # modify a node to be a valid start point without a vanilla spawn
     game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
-    world = game_desc.world_list.world_with_name("Artaria")
-    area = world.area_by_name("Charge Tutorial")
+    region = game_desc.region_list.region_with_name("Artaria")
+    area = region.area_by_name("Charge Tutorial")
     node = area.node_with_name("Start Point")
     modified_node = dataclasses.replace(node, valid_starting_location=True)
     area.nodes.remove(node)
@@ -235,7 +284,59 @@ def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardo
     data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    with test_files_dir.joinpath("patcher_data", "dread", "custom_start.json").open("r") as file:
-        expected_data = json.load(file)
+    expected_data = test_files_dir.read_json("patcher_data", "dread", "custom_start.json")
 
     assert data == expected_data
+
+
+def test_create_patch_with_crazy_settings(test_files_dir, mocker):
+    # test for various uncommon or unusual preset settings
+    file = test_files_dir.joinpath("log_files", "dread", "crazy_settings.rdvgame")
+    description = LayoutDescription.from_file(file)
+    players_config = PlayersConfiguration(0, {0: "Dread"})
+    cosmetic_patches = DreadCosmeticPatches()
+    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
+                 new_callable=PropertyMock, return_value="Words Hash")
+    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_hash",
+                 new_callable=PropertyMock, return_value="$$$$$")
+
+    data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
+
+    # Expected Result
+    expected_data = test_files_dir.read_json("patcher_data", "dread", "crazy_settings.json")
+
+    assert data == expected_data
+
+
+def _test_preset(rdvgame_file: Path, expected_results_file: Path):
+    # Setup
+    description = LayoutDescription.from_file(rdvgame_file)
+    players_config = PlayersConfiguration(0, {0: "Player 1", 1: "Player 2"})
+    cosmetic_patches = DreadCosmeticPatches()
+
+    # Run
+    data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
+
+    # Expected Result
+    expected_data = json_lib.read_path(expected_results_file)
+
+    # Uncomment to easily view diff of failed test
+    # json_lib.write_path(expected_results_file, data)
+
+    # remove part which has the randovania version in it
+    data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"] = data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"].split("|")[1]
+    expected_data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"] = expected_data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"].split("|")[1]
+
+    assert data == expected_data
+
+@pytest.mark.parametrize(
+    ("rdvgame_filename", "expected_results_filename"),
+    [
+        ("dread_dread_multiworld.rdvgame", "dread_dread_multiworld_expected.json"),    # dread-dread multi
+        ("dread_prime1_multiworld.rdvgame", "dread_prime1_multiworld_expected.json"),  # dread-prime1 multi
+    ]
+)
+def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename):
+    rdvgame = test_files_dir.joinpath("log_files", "dread", rdvgame_filename)
+    expected_results = test_files_dir.joinpath("patcher_data", "dread", expected_results_filename)
+    _test_preset(rdvgame, expected_results)

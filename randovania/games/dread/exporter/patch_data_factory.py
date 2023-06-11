@@ -1,4 +1,5 @@
 import os
+from typing import Iterator
 
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
@@ -6,19 +7,19 @@ from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.area import Area
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.hint_node import HintNode
-from randovania.game_description.world.node import Node
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
+from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pickup_creator
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.generator.pickup_pool import pickup_creator
 
 _ALTERNATIVE_MODELS = {
     "Nothing": ["itemsphere"],
@@ -35,7 +36,6 @@ _ALTERNATIVE_MODELS = {
     "PROGRESSIVE_SPIN": ["powerup_doublejump", "powerup_spacejump"],
 }
 
-
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
@@ -45,31 +45,38 @@ def get_item_id_for_item(item: ItemResourceInfo) -> str:
         raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
-def convert_conditional_resource(respects_lock: bool, res: ConditionalResources) -> dict:
+def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
     if not res.resources:
-        return {"item_id": "ITEM_NONE", "quantity": 0}
+        yield {"item_id": "ITEM_NONE", "quantity": 0}
+        return
 
-    item_id = get_item_id_for_item(res.resources[0][0])
-    quantity = res.resources[0][1]
+    for resource in reversed(res.resources):
+        item_id = get_item_id_for_item(resource[0])
+        quantity = resource[1]
 
-    # only main pbs have 2 elements in res.resources, everything else is just 1
-    if len(res.resources) != 1:
-        item_id = get_item_id_for_item(res.resources[1][0])
-        assert item_id == "ITEM_WEAPON_POWER_BOMB"
-        assert len(res.resources) == 2
-
-    # non-required mains
-    if item_id == "ITEM_WEAPON_POWER_BOMB_MAX" and not respects_lock:
-        item_id = "ITEM_WEAPON_POWER_BOMB"
-
-    return {"item_id": item_id, "quantity": quantity}
+        yield {"item_id": item_id, "quantity": quantity}
 
 
-def get_resources_for_details(detail: ExportedPickupDetails) -> list[dict]:
-    return [
-        convert_conditional_resource(detail.original_pickup.respects_lock, res)
-        for res in detail.conditional_resources
+def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]:
+    pickup = detail.original_pickup
+    resources = [
+        list(convert_conditional_resource(conditional_resource))
+        for conditional_resource in detail.conditional_resources
     ]
+
+    # don't add more resources for multiworld items
+    if detail.other_player:
+        return resources
+
+    if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
+        # Add the lock resource into the pickup in addition to the expansion's resources
+        assert len(resources) == 1
+        resources[0].append({
+            "item_id": get_item_id_for_item(pickup.resource_lock.locked_by),
+            "quantity": 1,
+        })
+
+    return resources
 
 
 class DreadPatchDataFactory(BasePatchDataFactory):
@@ -110,26 +117,26 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _node_for(self, identifier: AreaIdentifier | NodeIdentifier) -> Node:
         if isinstance(identifier, NodeIdentifier):
-            return self.game.world_list.node_by_identifier(identifier)
+            return self.game.region_list.node_by_identifier(identifier)
         else:
-            area = self.game.world_list.area_by_area_location(identifier)
+            area = self.game.region_list.area_by_area_location(identifier)
             node = area.node_with_name(area.default_node)
             assert node is not None
             return node
 
     def _key_error_for_node(self, node: Node, err: KeyError):
-        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has no extra {err}")
-    
+        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
+
     def _key_error_for_start_node(self, node: Node):
-        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has neither a " + 
+        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has neither a " +
                         "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
-    
+
     def _get_or_create_spawn_point(self, node: Node, level_name: str):
         if node in self.new_spawn_points:
             return self.new_spawn_points[node]["new_actor"]["actor"]
         else:
             try:
-                area = self.game.world_list.area_by_area_location(node.identifier.area_identifier)
+                area = self.game.region_list.area_by_area_location(node.identifier.area_identifier)
                 collision_camera_name = area.extra["asset_id"]
                 new_spawnpoint_name = f"{self.spawnpoint_name_prefix}{len(self.new_spawn_points):03d}"
                 self.new_spawn_points[node] = {
@@ -148,10 +155,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             except KeyError:
                 raise self._key_error_for_start_node(node)
 
-
     def _start_point_ref_for(self, node: Node) -> dict:
-        world = self.game.world_list.nodes_to_world(node)
-        level_name: str = os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
+        region = self.game.region_list.nodes_to_region(node)
+        level_name: str = os.path.splitext(os.path.split(region.extra["asset_id"])[1])[0]
 
         if "start_point_actor_name" in node.extra:
             return {
@@ -164,10 +170,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "actor": self._get_or_create_spawn_point(node, level_name),
             }
 
-
     def _level_name_for(self, node: Node) -> str:
-        world = self.game.world_list.nodes_to_world(node)
-        return os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
+        region = self.game.region_list.nodes_to_region(node)
+        return os.path.splitext(os.path.split(region.extra["asset_id"])[1])[0]
 
     def _teleporter_ref_for(self, node: Node, actor_key: str = "actor_name") -> dict:
         try:
@@ -210,7 +215,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         resources = get_resources_for_details(detail)
 
-        pickup_node = self.game.world_list.node_from_pickup_index(detail.index)
+        pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
 
         hud_text = detail.collection_text[0]
@@ -225,6 +230,12 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         if pickup_type == "actor":
             pickup_actor = self._teleporter_ref_for(pickup_node)
+
+            if self.cosmetic_patches.missile_cosmetic != DreadMissileCosmeticType.NONE:
+                if model_names[0] == "item_missiletank":
+                    colors = self.cosmetic_patches.missile_cosmetic.colors
+                    new_model = colors[self.rng.randint(0, len(colors)-1)].value
+                    model_names = [new_model]
 
             # Progressive models currently crash when placed in Hanubia.
             # See https://github.com/randovania/open-dread-rando/issues/141
@@ -259,11 +270,11 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "hint_id": logbook_node.extra["hint_id"],
                 "text": exporter.create_message_for_hint(
-                    self.patches.hints[self.game.world_list.identifier_for_node(logbook_node)],
+                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
                     self.description.all_patches, self.players_config, True
                 ),
             }
-            for logbook_node in self.game.world_list.iterate_nodes()
+            for logbook_node in self.game.region_list.iterate_nodes()
             if isinstance(logbook_node, HintNode)
         ]
 
@@ -297,27 +308,47 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _credits_spoiler(self) -> dict[str, str]:
         return credits_spoiler.generic_credits(
-            self.configuration.major_items_configuration,
+            self.configuration.standard_pickup_configuration,
             self.description.all_patches,
             self.players_config,
             DreadHintNamer(self.description.all_patches, self.players_config),
         )
 
+    def _static_room_name_fixes(self, scenario_name: str, area: Area):
+        # static fixes for some rooms
+        cc_name = area.extra["asset_id"]
+        area_name = area.name
+        if scenario_name == "s040_aqua":
+            if cc_name == "collision_camera_010":
+                return cc_name, "Burenia Main Hub"
+            if cc_name == "collision_camera_023_B":
+                return "collision_camera_023", area_name
+            
+        if scenario_name == "s050_forest":
+            if cc_name == "collision_camera_024":
+                return cc_name, "Golzuna Tower"
+
+        if scenario_name == "s060_quarantine":
+            if cc_name == "collision_camera_MBL_B":
+                return "collision_camera_MBL", area.name
+
+        if scenario_name == "s070_basesanc":
+            if cc_name == "collision_camera_038_A":
+                return "collision_camera_038", area.name
+            
+        return cc_name, area.name
+
     def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
         # generate a 2D dictionary of (scenario, collision camera) => room name
         all_dict: dict = {}
-        for world in self.game.world_list.worlds:
-            scenario = world.extra["scenario_id"]
-            world_dict: dict = {}
+        for region in self.game.region_list.regions:
+            scenario = region.extra["scenario_id"]
+            region_dict: dict = {}
 
-            for area in world.areas:
-                world_dict[area.extra["asset_id"]] = area.name
-            
-            all_dict[scenario] = world_dict
-        
-        # fix Burenia Main Tower and Golzuna Tower
-        all_dict["s040_aqua"]["collision_camera_010"] = "Burenia Main Hub"
-        all_dict["s050_forest"]["collision_camera_024"] = "Golzuna Tower"
+            for area in region.areas:
+                cc_name, area_name = self._static_room_name_fixes(scenario, area)
+                region_dict[cc_name] = area_name
+            all_dict[scenario] = region_dict
 
         return all_dict
 
@@ -342,7 +373,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         }
 
     def _door_patches(self):
-        wl = self.game.world_list
+        wl = self.game.region_list
 
         result = []
         used_actors = {}
@@ -398,7 +429,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _tilegroup_patches(self):
         return [
-            # beam blocks -> speedboost blocks in Artaria EMMI zone speedbooster puzzle to prevent softlock
+            # beam blocks -> speedboost blocks in Artaria EMMI zone Speed Booster puzzle to prevent softlock
             dict(
                 actor=dict(scenario="s010_cave",layer="breakables",actor="breakabletilegroup_060"),
                 tiletype="SPEEDBOOST"
@@ -416,11 +447,11 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
             useless_target,
-            self.game.world_list,
+            self.game.region_list,
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(self.game, self.memo_data, self.players_config),
+            exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config),
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
@@ -456,12 +487,12 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "lava": self.configuration.constant_lava_damage,
             },
             "game_patches": {
-                "raven_beak_damage_table_handling": "consistent_low",
+                "raven_beak_damage_table_handling": self.configuration.raven_beak_damage_table_handling.value,
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,
             },
-            "show_shields_on_minimap": self.configuration.dock_rando.mode == DockRandoMode.VANILLA,
+            "show_shields_on_minimap": not self.configuration.dock_rando.is_enabled(),
             "door_patches": self._door_patches(),
             "tile_group_patches": self._tilegroup_patches(),
             "new_spawn_points": list(self.new_spawn_points.values()),

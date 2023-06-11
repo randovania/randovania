@@ -12,8 +12,8 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node import NodeContext
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
@@ -168,12 +168,12 @@ def increment_considered_count(locations_weighted: WeightedLocations):
 
 def _print_header(player_states: list[PlayerState]):
     def _name_for_index(state: PlayerState, index: PickupIndex):
-        return state.game.world_list.node_name(
-            state.game.world_list.node_from_pickup_index(index),
-            with_world=True,
+        return state.game.region_list.node_name(
+            state.game.region_list.node_from_pickup_index(index),
+            with_region=True,
         )
 
-    debug.debug_print("{}\nRetcon filler started with major items:\n{}".format(
+    debug.debug_print("{}\nRetcon filler started with standard pickups:\n{}".format(
         "*" * 100,
         "\n".join(
             "Player {}: {}".format(
@@ -274,8 +274,23 @@ def debug_print_weighted_locations(all_locations_weighted: WeightedLocations):
     print("==> Weighted Locations")
     for (owner, index), weight in all_locations_weighted.items():
         print("[Player {}] {} - {}".format(
-            owner.index, owner.game.world_list.node_name(owner.game.world_list.node_from_pickup_index(index)), weight,
+            owner.index, owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index)), weight,
         ))
+
+
+def should_be_starting_pickup(player: PlayerState, locations: WeightedLocations) -> bool:
+    cur_starting_pickups = player.num_starting_pickups_placed
+    minimum_starting_pickups = player.configuration.minimum_random_starting_pickups
+    maximum_starting_pickups = player.configuration.maximum_random_starting_pickups
+
+    result = cur_starting_pickups < minimum_starting_pickups or not locations
+
+    # Prefer a starting pickup over off-db locations.
+    # This simulates how in solo games, you get more starting pickups if you start in weird places
+    if player.count_self_locations(locations) == 0 and cur_starting_pickups < maximum_starting_pickups:
+        result = True
+
+    return result
 
 
 def _assign_pickup_somewhere(action: PickupEntry,
@@ -296,9 +311,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
 
     locations_weighted = current_player.filter_usable_locations(all_locations_weighted, action)
 
-    if locations_weighted and (current_player.num_random_starting_items_placed
-                               >= current_player.configuration.minimum_random_starting_items):
-
+    if not should_be_starting_pickup(current_player, locations_weighted):
         if debug.debug_level() > 2:
             debug_print_weighted_locations(all_locations_weighted)
 
@@ -333,9 +346,9 @@ def _assign_pickup_somewhere(action: PickupEntry,
                                                        len(player_states) > 1, index_owner_state.reach.node_context())
 
     else:
-        current_player.num_random_starting_items_placed += 1
-        if (current_player.num_random_starting_items_placed
-                > current_player.configuration.maximum_random_starting_items):
+        current_player.num_starting_pickups_placed += 1
+        if (current_player.num_starting_pickups_placed
+                > current_player.configuration.maximum_random_starting_pickups):
             raise UnableToGenerate("Attempting to place more extra starting items than the number allowed.")
 
         spoiler_entry = f"{action.name} as starting item"
@@ -368,7 +381,7 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
             all_weights[(player_state, pickup_index)] = weight * player_weight
 
     # for (player_state, pickup_index), weight in all_weights.items():
-    #     wl = player_state.game.world_list
+    #     wl = player_state.game.region_list
     #     print(f"> {player_state.index} - {wl.node_name(wl.node_from_pickup_index(pickup_index))}: {weight}")
     # print("============================================")
 
@@ -421,18 +434,18 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
 def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: GameDescription,
                                    pickup_index: PickupIndex, hint_identifier: NodeIdentifier | None,
                                    player_index: int, add_indices: bool, node_context: NodeContext) -> str:
-    world_list = game.world_list
+    region_list = game.region_list
     if hint_identifier is not None:
         hint_string = " with hint at {}".format(
-            world_list.node_name(world_list.node_by_identifier(hint_identifier),
-                                 with_world=True, distinguish_dark_aether=True))
+            region_list.node_name(region_list.node_by_identifier(hint_identifier),
+                                 with_region=True, distinguish_dark_aether=True))
     else:
         hint_string = ""
 
-    pickup_node = world_list.node_from_pickup_index(pickup_index)
+    pickup_node = region_list.node_from_pickup_index(pickup_index)
     return "{4}{0} at {3}{1}{2}".format(
         action.name,
-        world_list.node_name(pickup_node, with_world=True, distinguish_dark_aether=True),
+        region_list.node_name(pickup_node, with_region=True, distinguish_dark_aether=True),
         hint_string,
         f"player {player_index + 1}'s " if add_indices else "",
         f"Player {owner_index + 1}'s " if add_indices else "",

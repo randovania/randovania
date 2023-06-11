@@ -1,8 +1,10 @@
+import copy
 import dataclasses
 from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import player_state
 from randovania.generator.filler.filler_configuration import FillerConfiguration
@@ -14,8 +16,8 @@ from randovania.layout.base.logical_resource_action import LayoutLogicalResource
 def _default_filler_config() -> FillerConfiguration:
     return FillerConfiguration(
         randomization_mode=RandomizationMode.FULL,
-        minimum_random_starting_items=0,
-        maximum_random_starting_items=0,
+        minimum_random_starting_pickups=0,
+        maximum_random_starting_pickups=0,
         indices_to_exclude=frozenset(),
         logical_resource_action=LayoutLogicalResourceAction.RANDOMLY,
         first_progression_must_be_local=False,
@@ -63,24 +65,38 @@ def test_current_state_report(state_for_blank):
     )
 
 
+@pytest.mark.parametrize("randomization_mode", [RandomizationMode.FULL, RandomizationMode.MAJOR_MINOR_SPLIT])
 @pytest.mark.parametrize("must_be_local", [False, True])
 @pytest.mark.parametrize("num_assigned_pickups", [0, 1])
-def test_filter_usable_locations(state_for_blank, must_be_local, num_assigned_pickups):
+def test_filter_usable_locations(state_for_blank, must_be_local, num_assigned_pickups,
+                                 randomization_mode, blank_pickup):
+    blank_wl = state_for_blank.game.region_list
     state_for_blank.configuration = dataclasses.replace(state_for_blank.configuration,
+                                                        randomization_mode=randomization_mode,
                                                         first_progression_must_be_local=must_be_local)
     state_for_blank.num_assigned_pickups = num_assigned_pickups
+    second_state = MagicMock()
+    second_state.game.region_list.node_from_pickup_index.return_value.location_category = LocationCategory.MAJOR
 
     locations_weighted = {
         (state_for_blank, PickupIndex(0)): 1,
-        (MagicMock(), PickupIndex(0)): 1,
+        (state_for_blank, PickupIndex(1)): 1,
+        (second_state, PickupIndex(0)): 1,
     }
+    assert blank_wl.node_from_pickup_index(PickupIndex(0)).location_category == LocationCategory.MAJOR
+    assert blank_wl.node_from_pickup_index(PickupIndex(1)).location_category == LocationCategory.MINOR
 
     # Run
-    filtered = state_for_blank.filter_usable_locations(locations_weighted)
+    filtered = state_for_blank.filter_usable_locations(locations_weighted, blank_pickup)
 
     # Assert
+    expected = copy.copy(locations_weighted)
+
     if must_be_local and num_assigned_pickups == 0:
-        assert filtered == {(state_for_blank, PickupIndex(0)): 1}
-    else:
-        assert filtered == locations_weighted
+        del expected[(second_state, PickupIndex(0))]
+
+    if randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT:
+        del expected[(state_for_blank, PickupIndex(1))]
+
+    assert filtered == expected
 

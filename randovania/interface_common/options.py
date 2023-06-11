@@ -6,9 +6,10 @@ from enum import Enum
 from pathlib import Path
 from typing import TypeVar, Callable, Any
 
-from randovania.game_connection.memory_executor_choice import ConnectorBuilderChoice
+from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
+from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common import persistence, update_checker, persisted_options
+from randovania.interface_common import update_checker, persisted_options
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import migration_lib
 
@@ -51,14 +52,27 @@ def serialize_uuid_set(elements: set[uuid.UUID]) -> list[str]:
     return sorted(str(a) for a in elements)
 
 
-def decode_uuid_set(data: list[str]):
-    result = set()
+def serialize_uuid_list(elements: list[uuid.UUID]) -> list[str]:
+    return [str(a) for a in elements]
+
+
+def decode_uuid_container(data: list[str], add_item: Callable[[uuid.UUID], None]) -> None:
     for item in data:
         try:
-            result.add(uuid.UUID(item))
+            add_item(uuid.UUID(item))
         except ValueError:
             continue
 
+
+def decode_uuid_set(data: list[str]) -> set[uuid.UUID]:
+    result = set()
+    decode_uuid_container(data, result.add)
+    return result
+
+
+def decode_uuid_list(data: list[str]) -> list[uuid.UUID]:
+    result = list()
+    decode_uuid_container(data, result.append)
     return result
 
 
@@ -116,9 +130,16 @@ _SERIALIZER_FOR_FIELD = {
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "hidden_preset_uuids": Serializer(serialize_uuid_set, decode_uuid_set),
     "game_backend": Serializer(lambda it: it.value, ConnectorBuilderChoice),
-    "nintendont_ip": Serializer(identity, str),
-    "selected_tracker": Serializer(identity, str),
     "parent_for_presets": Serializer(serialize_uuid_dict, decode_uuid_dict),
+    "connector_builders": Serializer(lambda obj: [it.as_json for it in obj],
+                                     lambda obj: [ConnectorBuilderOption.from_json(it) for it in obj]),
+}
+
+_PER_GAME_SERIALIZERS = {
+    "is_game_expanded": Serializer(identity, bool),
+    "selected_preset_uuid": Serializer(str, uuid.UUID),
+    "selected_tracker": Serializer(identity, str),
+    "preset_order": Serializer(serialize_uuid_list, decode_uuid_list),
 }
 
 
@@ -131,8 +152,8 @@ def add_per_game_serializer():
             lambda it: it.as_json,
             make_decoder(game),
         )
-        _SERIALIZER_FOR_FIELD[f"is_game_expanded_{game.value}"] = Serializer(identity, bool)
-        _SERIALIZER_FOR_FIELD[f"selected_preset_uuid_{game.value}"] = Serializer(str, uuid.UUID)
+        for key, serializer in _PER_GAME_SERIALIZERS.items():
+            _SERIALIZER_FOR_FIELD[f"{key}_{game.value}"] = serializer
 
 
 add_per_game_serializer()
@@ -172,8 +193,7 @@ class Options:
     _hidden_preset_uuids: set[uuid.UUID] | None = None
     _parent_for_presets: dict[uuid.UUID, uuid.UUID] | None = None
     _game_backend: ConnectorBuilderChoice | None = None
-    _nintendont_ip: str | None = None
-    _selected_tracker: str | None = None
+    _connector_builders: list[ConnectorBuilderOption] | None = None
 
     def __init__(self, data_dir: Path, user_dir: Path | None = None):
         self._data_dir = data_dir
@@ -182,18 +202,21 @@ class Options:
 
         for game in RandovaniaGame.all_games():
             self._set_field(f"game_{game.value}", None)
-            self._set_field(f"is_game_expanded_{game.value}", None)
-            self._set_field(f"selected_preset_uuid_{game.value}", None)
+            for key in _PER_GAME_SERIALIZERS.keys():
+                self._set_field(f"{key}_{game.value}", None)
 
     def __getattr__(self, item):
         if isinstance(item, str):
+            game_name = None
             if item.startswith("game_"):
                 game_name = item[len("game_"):]
-            elif item.startswith("is_game_expanded_"):
-                game_name = item[len("is_game_expanded_"):]
-            elif item.startswith("selected_preset_uuid_"):
-                game_name = item[len("selected_preset_uuid_"):]
             else:
+                for key in _PER_GAME_SERIALIZERS.keys():
+                    field_name = f"{key}_"
+                    if item.startswith(field_name):
+                        game_name = item[len(field_name):]
+                        break
+            if game_name is None:
                 raise AttributeError(item)
 
             try:
@@ -210,10 +233,6 @@ class Options:
             return result
 
         raise AttributeError(item)
-
-    @classmethod
-    def with_default_data_dir(cls) -> "Options":
-        return cls(persistence.local_data_dir(), persistence.roaming_data_dir())
 
     def _set_field(self, field_name: str, value):
         setattr(self, "_" + field_name, value)
@@ -391,28 +410,26 @@ class Options:
     def game_backend(self, value: ConnectorBuilderChoice):
         self._edit_field("game_backend", value)
 
-    @property
-    def nintendont_ip(self) -> str | None:
-        return self._nintendont_ip
+    def selected_tracker_for(self, game: RandovaniaGame) -> str:
+        return getattr(self, f"selected_tracker_{game.value}")
 
-    @nintendont_ip.setter
-    def nintendont_ip(self, value: str | None):
-        self._edit_field("nintendont_ip", value)
+    def set_selected_tracker_for(self, game: RandovaniaGame, value: str):
+        self._edit_field(f"selected_tracker_{game.value}", value)
 
     @property
-    def selected_tracker(self) -> str:
-        return self._selected_tracker
+    def connector_builders(self) -> list[ConnectorBuilderOption]:
+        return self._connector_builders or []
 
-    @selected_tracker.setter
-    def selected_tracker(self, value: str):
-        self._edit_field("selected_tracker", value)
+    @connector_builders.setter
+    def connector_builders(self, value: list[ConnectorBuilderOption]):
+        self._edit_field("connector_builders", value)
 
     @property
-    def displayed_alerts(self):
+    def displayed_alerts(self) -> set[InfoAlert]:
         return _return_with_default(self._displayed_alerts, set)
 
     @displayed_alerts.setter
-    def displayed_alerts(self, value):
+    def displayed_alerts(self, value: set[InfoAlert]):
         self._edit_field("displayed_alerts", value)
 
     def is_alert_displayed(self, value: InfoAlert):
@@ -457,6 +474,12 @@ class Options:
     def hidden_preset_uuids(self, value):
         self._edit_field("hidden_preset_uuids", value)
 
+    def get_preset_order_for(self, game: RandovaniaGame) -> list[uuid.UUID]:
+        return list(_return_with_default(getattr(self, f"preset_order_{game.value}"), list))
+
+    def set_preset_order_for(self, game: RandovaniaGame, value: list[uuid.UUID]):
+        self._edit_field(f"preset_order_{game.value}", value)
+
     def is_preset_uuid_hidden(self, the_uuid: uuid.UUID) -> bool:
         return the_uuid in self.hidden_preset_uuids
 
@@ -484,13 +507,16 @@ class Options:
     def get_parent_for_preset(self, preset: uuid.UUID) -> uuid.UUID | None:
         return self.parent_for_presets.get(preset)
 
-    def set_parent_for_preset(self, preset: uuid.UUID, parent: uuid.UUID):
+    def set_parent_for_preset(self, preset: uuid.UUID, parent: uuid.UUID | None):
         current_dict = self.parent_for_presets
 
         if current_dict.get(preset) != parent:
             # Create a copy, so we don't modify the existing field
             new_dict = dict(current_dict)
-            new_dict[preset] = parent
+            if parent is None:
+                new_dict.pop(preset)
+            else:
+                new_dict[preset] = parent
             with self:
                 self.parent_for_presets = new_dict
 

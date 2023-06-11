@@ -18,10 +18,10 @@ def bulk_move_node_logic(args):
 
     # Make the changes
     editor = Editor(gd)
-    world = gd.world_list.world_with_name(args.world)
+    region = gd.region_list.region_with_name(args.region)
 
-    source_area = world.area_by_name(args.source_area)
-    target_area = world.area_by_name(args.target_area)
+    source_area = region.area_by_name(args.source_area)
+    target_area = region.area_by_name(args.target_area)
 
     node_names = args.node_names
 
@@ -63,7 +63,7 @@ def bulk_move_node_logic(args):
 
 def bulk_move_node_command():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--world", required=True)
+    parser.add_argument("--db", required=True)
     parser.add_argument("--source-area", required=True)
     parser.add_argument("--target-area", required=True)
     parser.add_argument("node_names", nargs="+")

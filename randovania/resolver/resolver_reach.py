@@ -8,8 +8,8 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.world.node import Node
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
@@ -24,7 +24,7 @@ class ResolverReach:
 
     @property
     def nodes(self) -> Iterator[Node]:
-        all_nodes = self._logic.game.world_list.all_nodes
+        all_nodes = self._logic.game.region_list.all_nodes
         for index in self._node_indices:
             yield all_nodes[index]
 
@@ -33,7 +33,7 @@ class ResolverReach:
         return self._satisfiable_requirements
 
     def path_to_node(self, node: Node) -> tuple[Node, ...]:
-        all_nodes = self._logic.game.world_list.all_nodes
+        all_nodes = self._logic.game.region_list.all_nodes
         return tuple(
             all_nodes[part]
             for part in self._path_to_node[node.node_index]
@@ -59,7 +59,7 @@ class ResolverReach:
                         logic: Logic,
                         initial_state: State) -> "ResolverReach":
 
-        all_nodes = logic.game.world_list.all_nodes
+        all_nodes = logic.game.region_list.all_nodes
         checked_nodes: dict[int, int] = {}
         database = initial_state.resource_database
         context = initial_state.node_context()
@@ -91,11 +91,11 @@ class ResolverReach:
 
             requirement_to_leave = node.requirement_to_leave(context)
 
-            for target_node, requirement in logic.game.world_list.potential_nodes_from(node, context):
+            for target_node, requirement in logic.game.region_list.potential_nodes_from(node, context):
                 target_node_index = target_node.node_index
 
-                if checked_nodes.get(target_node_index, math.inf) <= energy or nodes_to_check.get(target_node_index,
-                                                                                                  math.inf) <= energy:
+                if checked_nodes.get(target_node_index, -math.inf) >= energy or nodes_to_check.get(target_node_index,
+                                                                                                   -math.inf) >= energy:
                     continue
 
                 if requirement_to_leave != Requirement.trivial():

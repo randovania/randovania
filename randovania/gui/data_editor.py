@@ -1,15 +1,25 @@
 import dataclasses
-import json
 import re
 from pathlib import Path
+from typing import Self
 
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QRadioButton, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
 
-from randovania.game_description import data_reader, data_writer, pretty_print, integrity_check, \
+from randovania.game_description import (
+    data_reader, data_writer, pretty_print, integrity_check,
     derived_nodes, default_database
+)
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.node import Node, GenericNode, NodeLocation
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.editor import Editor
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -17,14 +27,6 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.node import Node, GenericNode, NodeLocation
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world import World
-from randovania.game_description.world.world_list import WorldList
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
@@ -34,10 +36,11 @@ from randovania.gui.docks.resource_database_editor import ResourceDatabaseEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib import async_dialog, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
+from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer, create_tree_items_for_requirement
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
+from randovania.lib import json_lib
 
-SHOW_WORLD_MIN_MAX_SPINNER = False
+SHOW_REGION_MIN_MAX_SPINNER = False
 
 
 def _simplify_trivial_and_impossible(requirement: Requirement) -> Requirement:
@@ -62,7 +65,7 @@ def _simplify_trivial_and_impossible(requirement: Requirement) -> Requirement:
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     game_description: GameDescription
     editor: Editor
-    world_list: WorldList
+    region_list: RegionList
 
     edit_mode: bool
     selected_node_button: QRadioButton = None
@@ -91,12 +94,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.splitDockWidget(self.points_of_interest_dock, self.area_view_dock, Qt.Horizontal)
         self.splitDockWidget(self.area_view_dock, self.node_info_dock, Qt.Horizontal)
 
-        if SHOW_WORLD_MIN_MAX_SPINNER:
+        if SHOW_REGION_MIN_MAX_SPINNER:
             area_border_body = QtWidgets.QWidget()
 
             area_border_dock = QtWidgets.QDockWidget(self)
             area_border_dock.setWidget(area_border_body)
-            area_border_dock.setWindowTitle("World min/max for image")
+            area_border_dock.setWindowTitle("Region min/max for image")
 
             layout = QtWidgets.QVBoxLayout(area_border_body)
             self.spin_min_x = QtWidgets.QSpinBox(area_border_body)
@@ -114,7 +117,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
             self.tabifyDockWidget(self.points_of_interest_dock, area_border_dock)
 
-        self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
+        self.region_selector_box.currentIndexChanged.connect(self.on_select_region)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
         self.node_details_label.linkActivated.connect(self._on_click_link_to_other_node)
         self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
@@ -145,19 +148,20 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.zoom_slider.valueChanged.connect(self._on_slider_changed)
         self.points_of_interest_layout.setAlignment(Qt.AlignTop)
         self.nodes_scroll_layout.setAlignment(Qt.AlignTop)
-        self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
-        world_reader, self.original_game_description = data_reader.decode_data_with_world_reader(data)
+        _, self.original_game_description = data_reader.decode_data_with_region_reader(data)
         self.resource_database = self.original_game_description.resource_database
 
         self.update_game(self.original_game_description)
 
         self.resource_editor = ResourceDatabaseEditor(self, self.resource_database)
-        self.resource_editor.setFeatures(self.resource_editor.features() & ~QtWidgets.QDockWidget.DockWidgetClosable)
+        self.resource_editor.setFeatures(self.resource_editor.features() &
+                                         ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable)
         self.tabifyDockWidget(self.points_of_interest_dock, self.resource_editor)
 
         self.layers_editor = ConnectionLayerWidget(self, self.original_game_description)
-        self.layers_editor.setFeatures(self.layers_editor.features() & ~QtWidgets.QDockWidget.DockWidgetClosable)
+        self.layers_editor.setFeatures(self.layers_editor.features() &
+                                       ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable)
         self.tabifyDockWidget(self.points_of_interest_dock, self.layers_editor)
 
         self.points_of_interest_dock.raise_()
@@ -178,23 +182,23 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self._warning_dialogs_disabled = value
 
     def update_game(self, game: GameDescription):
-        current_world = self.current_world
+        current_region = self.current_region
         current_area = self.current_area
         current_node = self.current_node
         current_connection = self.current_connection_node
 
         self.game_description = game
         self.editor = Editor(self.game_description)
-        self.world_list = self.game_description.world_list
+        self.region_list = self.game_description.region_list
         self.area_view_canvas.select_game(self.game_description.game)
 
-        self.world_selector_box.clear()
-        for world in sorted(self.world_list.worlds, key=lambda x: x.name):
-            name = "{0.name} ({0.dark_name})".format(world) if world.dark_name else world.name
-            self.world_selector_box.addItem(name, userData=world)
+        self.region_selector_box.clear()
+        for region in sorted(self.region_list.regions, key=lambda x: x.name):
+            name = "{0.name} ({0.dark_name})".format(region) if region.dark_name else region.name
+            self.region_selector_box.addItem(name, userData=region)
 
-        if current_world:
-            self.focus_on_world_by_name(current_world.name)
+        if current_region:
+            self.focus_on_region_by_name(current_region.name)
         if current_area:
             self.focus_on_area_by_name(current_area.name)
         if current_node:
@@ -203,7 +207,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.focus_on_connection(current_connection)
 
     @classmethod
-    def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> "DataEditorWindow":
+    def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> Self:
         default_data.read_json_then_binary.cache_clear()
         path, data = default_data.read_json_then_binary(game)
         if path.suffix == ".bin":
@@ -228,47 +232,47 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         user_response = QMessageBox.warning(self, "Unsaved changes",
                                             "You have unsaved changes. Do you want to close and discard?",
-                                            QMessageBox.Yes | QMessageBox.No,
-                                            QMessageBox.No)
-        return user_response == QMessageBox.Yes
+                                            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                                            QMessageBox.StandardButton.No)
+        return user_response == QMessageBox.StandardButton.Yes
 
-    def on_select_world(self):
+    def on_select_region(self):
         self.area_selector_box.clear()
-        world = self.current_world
-        if world is None:
+        region = self.current_region
+        if region is None:
             return
 
-        for area in sorted(world.areas, key=lambda x: x.name):
+        for area in sorted(region.areas, key=lambda x: x.name):
             if area.name.startswith("!!"):
                 continue
             self.area_selector_box.addItem(area.name, userData=area)
         self.area_selector_box.setEnabled(True)
 
-        self.area_view_canvas.select_world(world)
+        self.area_view_canvas.select_region(region)
 
         self.on_select_area()
 
-        if SHOW_WORLD_MIN_MAX_SPINNER:
+        if SHOW_REGION_MIN_MAX_SPINNER:
             for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
                 it.valueChanged.disconnect(self._on_image_spin_update)
 
-            self.spin_min_x.setValue(world.extra["map_min_x"])
-            self.spin_min_y.setValue(world.extra["map_min_y"])
-            self.spin_max_x.setValue(world.extra["map_max_x"])
-            self.spin_max_y.setValue(world.extra["map_max_y"])
+            self.spin_min_x.setValue(region.extra["map_min_x"])
+            self.spin_min_y.setValue(region.extra["map_min_y"])
+            self.spin_max_x.setValue(region.extra["map_max_x"])
+            self.spin_max_y.setValue(region.extra["map_max_y"])
 
             for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
                 it.valueChanged.connect(self._on_image_spin_update)
 
     def _on_image_spin_update(self):
-        w = self.current_world
+        w = self.current_region
         if type(w.extra) != dict:
             object.__setattr__(w, "extra", dict(w.extra))
         w.extra["map_min_x"] = self.spin_min_x.value()
         w.extra["map_min_y"] = self.spin_min_y.value()
         w.extra["map_max_x"] = self.spin_max_x.value()
         w.extra["map_max_y"] = self.spin_max_y.value()
-        self.area_view_canvas.select_world(w)
+        self.area_view_canvas.select_region(w)
 
     def on_select_area(self, select_node: Node | None = None):
         for node in self.radio_button_to_node.keys():
@@ -308,12 +312,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.selected_node_button = self.sender()
             self.update_selected_node()
 
-    def focus_on_world_by_name(self, world_name: str):
-        world = self.world_list.world_with_name(world_name)
-        self.focus_on_world(world)
+    def focus_on_region_by_name(self, name: str):
+        region = self.region_list.region_with_name(name)
+        self.focus_on_region(region)
 
-    def focus_on_world(self, world: World):
-        signal_handling.set_combo_with_value(self.world_selector_box, world)
+    def focus_on_region(self, region: Region):
+        signal_handling.set_combo_with_value(self.region_selector_box, region)
 
     def focus_on_area_by_name(self, area_name: str):
         self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
@@ -331,17 +335,17 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         signal_handling.set_combo_with_value(self.other_node_connection_combo, other)
 
     def _on_click_link_to_other_node(self, link: str):
-        world_name, area_name, node_name = None, None, None
+        region_name, area_name, node_name = None, None, None
 
         info = re.match(r"^node://([^/]+)/([^/]+)/(.+)$", link)
         if info:
-            world_name, area_name, node_name = info.group(1, 2, 3)
+            region_name, area_name, node_name = info.group(1, 2, 3)
         else:
             info = re.match(r"^area://([^/]+)/([^/]+)$", link)
-            world_name, area_name = info.group(1, 2)
+            region_name, area_name = info.group(1, 2)
 
-        if world_name is not None and area_name is not None:
-            self.focus_on_world_by_name(world_name)
+        if region_name is not None and area_name is not None:
+            self.focus_on_region_by_name(region_name)
             self.focus_on_area_by_name(area_name)
             if node_name is None:
                 node_name = self.current_area.default_node
@@ -445,7 +449,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_view_canvas.highlight_node(node)
 
         try:
-            msg = pretty_print.pretty_print_node_type(node, self.world_list)
+            msg = pretty_print.pretty_print_node_type(node, self.region_list)
         except Exception as e:
             msg = f"Unable to describe node: {e}"
 
@@ -458,8 +462,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         elif isinstance(node, TeleporterNode):
             try:
-                other = self.world_list.area_by_area_location(node.default_connection)
-                name = self.world_list.area_name(other, separator="/", distinguish_dark_aether=False)
+                other = self.region_list.area_by_area_location(node.default_connection)
+                name = self.region_list.area_name(other, separator="/", distinguish_dark_aether=False)
                 pretty_name = msg.replace("Teleporter to ", "")
                 msg = f'Teleporter to <a href="area://{name}">{pretty_name}</a>'
             except Exception as e:
@@ -552,13 +556,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 self.game_description.resource_database,
             ))
 
-        self._connections_visualizer = ConnectionsVisualizer(
-            self.other_node_alternatives_contents,
-            self.alternatives_grid_layout,
-            self.resource_database,
-            requirement,
-            False
-        )
+        self.other_node_alternatives_contents.clear()
+        create_tree_items_for_requirement(self.other_node_alternatives_contents,
+                                          self.other_node_alternatives_contents,
+                                          requirement)
 
     def _swap_selected_connection(self):
         self.focus_on_node(self.current_connection_node)
@@ -622,8 +623,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             path.with_suffix("").mkdir(exist_ok=True)
             data_writer.write_as_split_files(data, path.with_suffix(""))
         else:
-            with path.open("w") as open_file:
-                json.dump(data, open_file, indent=4)
+            json_lib.write_path(path, data)
         self._last_data = data
         return True
 
@@ -643,7 +643,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         else:
             node_index = None
         self.editor.rename_area(self.current_area, new_name)
-        self.on_select_world()
+        self.on_select_region()
         self.focus_on_area_by_name(new_name)
         if node_index is not None:
             self.focus_on_node(self.current_area.nodes[node_index])
@@ -677,7 +677,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         return self._create_new_node(None)
 
     def _create_identifier(self, node_name: str):
-        return NodeIdentifier.create(self.current_world.name, self.current_area.name, node_name)
+        return NodeIdentifier.create(self.current_region.name, self.current_area.name, node_name)
 
     def _do_create_node(self, node_name: str, location: NodeLocation | None):
         new_node = GenericNode(self._create_identifier(node_name), self.editor.new_node_index(),
@@ -687,8 +687,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _create_new_dock(self, location: NodeLocation, target_area: Area):
         current_area = self.current_area
-        target_identifier = self.world_list.identifier_for_area(target_area)
-        source_identifier = self.world_list.identifier_for_area(current_area)
+        target_identifier = self.region_list.identifier_for_area(target_area)
+        source_identifier = self.region_list.identifier_for_area(current_area)
 
         dock_weakness = self.game_description.dock_weakness_database.default_weakness
         source_name_base = integrity_check.base_dock_name_raw(dock_weakness[0], dock_weakness[1], target_identifier)
@@ -706,8 +706,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             source_name = source_name_base
             target_name = target_name_base
 
-        new_node_this_area_identifier = NodeIdentifier(self.world_list.identifier_for_area(current_area), source_name)
-        new_node_other_area_identifier = NodeIdentifier(self.world_list.identifier_for_area(target_area), target_name)
+        new_node_this_area_identifier = NodeIdentifier(self.region_list.identifier_for_area(current_area), source_name)
+        new_node_other_area_identifier = NodeIdentifier(self.region_list.identifier_for_area(target_area), target_name)
 
         new_node_this_area = DockNode(
             identifier=new_node_this_area_identifier,
@@ -716,7 +716,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             dock_type=dock_weakness[0],
             default_connection=new_node_other_area_identifier,
             default_dock_weakness=dock_weakness[1],
+            exclude_from_dock_rando=False,
             override_default_open_requirement=None, override_default_lock_requirement=None,
+            incompatible_dock_weaknesses=tuple(),
         )
 
         new_node_other_area = DockNode(
@@ -726,7 +728,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             dock_type=dock_weakness[0],
             default_connection=new_node_this_area_identifier,
             default_dock_weakness=dock_weakness[1],
+            exclude_from_dock_rando=False,
             override_default_open_requirement=None, override_default_lock_requirement=None,
+            incompatible_dock_weaknesses=tuple(),
         )
 
         self.editor.add_node(current_area, new_node_this_area)
@@ -775,7 +779,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _on_resource_changed(self, resource: ResourceInfo):
         if resource.resource_type == ResourceType.EVENT:
-            for area in self.game_description.world_list.all_areas:
+            for area in self.game_description.region_list.all_areas:
                 for i in range(len(area.nodes)):
                     node = area.nodes[i]
                     if not isinstance(node, EventNode):
@@ -808,7 +812,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def update_slider(self, zoom_in):
         # update slider on wheel event
         current_val = self.zoom_slider.value()
-        if zoom_in:     
+        if zoom_in:
             self.zoom_slider.setValue(current_val + self.zoom_slider.tickInterval())
         else:
             self.zoom_slider.setValue(current_val - self.zoom_slider.tickInterval())
@@ -833,8 +837,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         )
 
     @property
-    def current_world(self) -> World:
-        return self.world_selector_box.currentData()
+    def current_region(self) -> Region:
+        return self.region_selector_box.currentData()
 
     @property
     def current_area(self) -> Area:

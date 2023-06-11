@@ -1,8 +1,11 @@
+import collections
+import itertools
 import json
 import logging
 import traceback
 
-from PySide6 import QtWidgets
+from PySide6 import QtWidgets, QtCore
+from PySide6.QtCore import Qt
 from qasync import asyncSlot
 
 from randovania.game_description import integrity_check
@@ -10,28 +13,87 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.hint_node import HintNodeKind, HintNode
-from randovania.game_description.world.node import Node, GenericNode, NodeLocation
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world import World
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock import DockWeakness, DockWeaknessDatabase, DockType
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.hint_node import HintNodeKind, HintNode
+from randovania.game_description.db.node import Node, GenericNode, NodeLocation
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
+from randovania.game_description.db.teleporter_node import TeleporterNode
+from randovania.game_description.db.region import Region
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
 from randovania.gui.lib import common_qt_lib, async_dialog, signal_handling
-from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
+from randovania.gui.lib.signal_handling import set_combo_with_value
+from randovania.gui.widgets.combo_box_item_delegate import ComboBoxItemDelegate
 from randovania.lib import enum_lib, frozen_lib
 
 
 def refresh_if_needed(combo: QtWidgets.QComboBox, func):
     if combo.currentIndex() == 0:
         func(0)
+
+
+class DockWeaknessListModel(QtCore.QAbstractListModel):
+    items: list[DockWeakness]
+    delegate: ComboBoxItemDelegate
+    type: DockType
+
+    def __init__(self, db: DockWeaknessDatabase):
+        super().__init__()
+        self.db = db
+        self.delegate = ComboBoxItemDelegate()
+        self.change_type(db.dock_types[0])
+
+    def change_type(self, new_type: DockType):
+        self.type = new_type
+        self.items = []
+        self.delegate.items = [
+            it for it in self.db.weaknesses[self.type].keys()
+        ]
+
+    def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
+        return len(self.items) + 1
+
+    def data(self, index: QtCore.QModelIndex, role: int = ...) -> str | None:
+        if role not in {Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole}:
+            return None
+
+        if index.row() < len(self.items):
+            return self.items[index.row()].name
+
+        elif role == Qt.ItemDataRole.DisplayRole:
+            return "New..."
+
+        return ""
+
+    def setData(self, index: QtCore.QModelIndex, value: str, role: int = ...) -> bool:
+        if role == Qt.ItemDataRole.EditRole:
+            new_weak = self.db.weaknesses[self.type][value]
+            if index.row() < len(self.items):
+                self.items[index.row()] = new_weak
+                self.dataChanged.emit(index, index, [QtCore.Qt.ItemDataRole.DisplayRole])
+            else:
+                row = self.rowCount()
+                self.beginInsertRows(QtCore.QModelIndex(), row + 1, row + 1)
+                self.items.append(new_weak)
+                self.endInsertRows()
+            return True
+        return False
+
+    def removeRows(self, row: int, count: int, parent: QtCore.QModelIndex = ...) -> bool:
+        self.beginRemoveRows(QtCore.QModelIndex(), row, row + count - 1)
+        del self.items[row:row + count]
+        self.endRemoveRows()
+        return True
+
+    def flags(self, index: QtCore.QModelIndex) -> Qt.ItemFlag:
+        return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEditable
 
 
 class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
@@ -69,16 +131,19 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for layer in game.layers:
             self.layers_combo.addItem(layer)
 
+        self.dock_incompatible_model = DockWeaknessListModel(self.game.dock_weakness_database)
+        self.dock_incompatible_list.setItemDelegate(self.dock_incompatible_model.delegate)
+        self.dock_incompatible_list.setModel(self.dock_incompatible_model)
         self.dock_type_combo.clear()
         for i, dock_type in enumerate(game.dock_weakness_database.dock_types):
             self.dock_type_combo.addItem(dock_type.long_name, userData=dock_type)
         refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
 
-        for world in sorted(game.world_list.worlds, key=lambda x: x.name):
-            self.dock_connection_world_combo.addItem(world.name, userData=world)
-            self.teleporter_destination_world_combo.addItem(world.name, userData=world)
-        refresh_if_needed(self.teleporter_destination_world_combo, self.on_dock_connection_world_combo)
-        refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
+        for region in sorted(game.region_list.regions, key=lambda x: x.name):
+            self.dock_connection_region_combo.addItem(region.name, userData=region)
+            self.teleporter_destination_region_combo.addItem(region.name, userData=region)
+        refresh_if_needed(self.teleporter_destination_region_combo, self.on_dock_connection_region_combo)
+        refresh_if_needed(self.teleporter_destination_region_combo, self.on_teleporter_destination_region_combo)
 
         for event in sorted(game.resource_database.event, key=lambda it: it.long_name):
             self.event_resource_combo.addItem(event.long_name, event)
@@ -101,11 +166,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.button_box.rejected.connect(self.reject)
         self.name_edit.textEdited.connect(self.on_name_edit)
         self.node_type_combo.currentIndexChanged.connect(self.on_node_type_combo)
-        self.dock_connection_world_combo.currentIndexChanged.connect(self.on_dock_connection_world_combo)
+        self.dock_connection_region_combo.currentIndexChanged.connect(self.on_dock_connection_region_combo)
         self.dock_connection_area_combo.currentIndexChanged.connect(self.on_dock_connection_area_combo)
         self.dock_type_combo.currentIndexChanged.connect(self.on_dock_type_combo)
         self.dock_update_name_button.clicked.connect(self.on_dock_update_name_button)
-        self.teleporter_destination_world_combo.currentIndexChanged.connect(self.on_teleporter_destination_world_combo)
+        self.dock_incompatible_button.clicked.connect(self.on_dock_incompatible_delete_selected)
+        self.pickup_index_button.clicked.connect(self.on_pickup_index_button)
+        self.teleporter_destination_region_combo.currentIndexChanged.connect(self.on_teleporter_destination_region_combo)
         self.hint_requirement_to_collect_button.clicked.connect(self.on_hint_requirement_to_collect_button)
         self.teleporter_network_unlocked_button.clicked.connect(self.on_teleporter_network_unlocked_button)
         self.teleporter_network_activate_button.clicked.connect(self.on_teleporter_network_activated_button)
@@ -171,12 +238,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     def fill_for_dock(self, node: DockNode):
         # Connection
-        other_node = self.game.world_list.node_by_identifier(node.default_connection)
-        area = self.game.world_list.nodes_to_area(other_node)
-        world = self.game.world_list.nodes_to_world(other_node)
+        other_node = self.game.region_list.node_by_identifier(node.default_connection)
+        area = self.game.region_list.nodes_to_area(other_node)
+        region = self.game.region_list.nodes_to_region(other_node)
 
-        signal_handling.set_combo_with_value(self.dock_connection_world_combo, world)
-        refresh_if_needed(self.dock_connection_world_combo, self.on_dock_connection_world_combo)
+        signal_handling.set_combo_with_value(self.dock_connection_region_combo, region)
+        refresh_if_needed(self.dock_connection_region_combo, self.on_dock_connection_region_combo)
         signal_handling.set_combo_with_value(self.dock_connection_area_combo, area)
         refresh_if_needed(self.dock_connection_area_combo, self.on_dock_connection_area_combo)
         signal_handling.set_combo_with_value(self.dock_connection_node_combo, other_node)
@@ -185,20 +252,22 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         signal_handling.set_combo_with_value(self.dock_type_combo, node.dock_type)
         refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
         signal_handling.set_combo_with_value(self.dock_weakness_combo, node.default_dock_weakness)
+        self.dock_incompatible_model.items = list(node.incompatible_dock_weaknesses)
+        self.dock_exclude_lock_rando_check.setChecked(node.exclude_from_dock_rando)
 
     def fill_for_pickup(self, node: PickupNode):
         self.pickup_index_spin.setValue(node.pickup_index.index)
         signal_handling.set_combo_with_value(self.location_category_combo, node.location_category)
 
     def fill_for_teleporter(self, node: TeleporterNode):
-        world = self.game.world_list.world_by_area_location(node.default_connection)
+        region = self.game.region_list.region_by_area_location(node.default_connection)
         try:
-            area = self.game.world_list.area_by_area_location(node.default_connection)
+            area = self.game.region_list.area_by_area_location(node.default_connection)
         except KeyError:
             area = None
 
-        signal_handling.set_combo_with_value(self.teleporter_destination_world_combo, world)
-        refresh_if_needed(self.teleporter_destination_world_combo, self.on_teleporter_destination_world_combo)
+        signal_handling.set_combo_with_value(self.teleporter_destination_region_combo, region)
+        refresh_if_needed(self.teleporter_destination_region_combo, self.on_teleporter_destination_region_combo)
         signal_handling.set_combo_with_value(self.teleporter_destination_area_combo, area)
         self.teleporter_editable_check.setChecked(node.editable)
         self.teleporter_vanilla_name_edit.setChecked(node.keep_name_when_vanilla)
@@ -248,13 +317,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         if parent in self._connections_visualizers:
             self._connections_visualizers.pop(parent).deleteLater()
 
-        self._connections_visualizers[parent] = ConnectionsVisualizer(
-            parent,
-            layout,
-            self.game.resource_database,
-            requirement,
-            False
-        )
+        self._connections_visualizers[parent] = ConnectionsVisualizer(parent, layout, requirement)
 
     # Signals
     def on_name_edit(self, value: str):
@@ -266,7 +329,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             new_node = None
 
         if isinstance(new_node, DockNode):
-            area = self.game.world_list.nodes_to_area(self.node)
+            area = self.game.region_list.nodes_to_area(self.node)
             has_error = not integrity_check.dock_has_correct_name(area, new_node)[0]
 
         common_qt_lib.set_error_border_stylesheet(self.name_edit, has_error)
@@ -274,11 +337,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     def on_node_type_combo(self, _):
         self.tab_widget.setCurrentWidget(self._type_to_tab[self.node_type_combo.currentData()])
 
-    def on_dock_connection_world_combo(self, _):
-        world: World = self.dock_connection_world_combo.currentData()
+    def on_dock_connection_region_combo(self, _):
+        region: Region = self.dock_connection_region_combo.currentData()
 
         self.dock_connection_area_combo.clear()
-        for area in sorted(world.areas, key=lambda x: x.name):
+        for area in sorted(region.areas, key=lambda x: x.name):
             self.dock_connection_area_combo.addItem(area.name, userData=area)
 
     def on_dock_connection_area_combo(self, _):
@@ -296,8 +359,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     def on_dock_type_combo(self, _):
         self.dock_weakness_combo.clear()
+        current_type: DockType = self.dock_type_combo.currentData()
 
-        for weakness in self.game.dock_weakness_database.get_by_type(self.dock_type_combo.currentData()):
+        self.dock_incompatible_model.change_type(current_type)
+        self.dock_incompatible_list.reset()
+
+        for weakness in self.game.dock_weakness_database.get_by_type(current_type):
             self.dock_weakness_combo.addItem(weakness.name, weakness)
 
     def on_dock_update_name_button(self):
@@ -307,11 +374,36 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.name_edit.setText(expected_name)
         self.on_name_edit(self.name_edit.text())
 
-    def on_teleporter_destination_world_combo(self, _):
-        world: World = self.teleporter_destination_world_combo.currentData()
+    def on_dock_incompatible_delete_selected(self):
+        indices = [
+            selection.row()
+            for selection in self.dock_incompatible_list.selectedIndexes()
+        ]
+        if indices:
+            assert len(indices) == 1
+            self.dock_incompatible_model.removeRow(indices[0])
+
+    # Pickup
+
+    def on_pickup_index_button(self):
+        used_indices: dict[int, int] = collections.defaultdict(lambda: 0)
+        for node in self.game.region_list.iterate_nodes():
+            if isinstance(node, PickupNode):
+                used_indices[node.pickup_index.index] += 1
+
+        if isinstance(self.node, PickupNode):
+            used_indices[self.node.pickup_index.index] -= 1
+
+        for new_index in itertools.count(0):
+            if used_indices[new_index] == 0:
+                self.pickup_index_spin.setValue(new_index)
+                return
+
+    def on_teleporter_destination_region_combo(self, _):
+        region: Region = self.teleporter_destination_region_combo.currentData()
 
         self.teleporter_destination_area_combo.clear()
-        for area in sorted(world.areas, key=lambda x: x.name):
+        for area in sorted(region.areas, key=lambda x: x.name):
             self.teleporter_destination_area_combo.addItem(area.name, userData=area)
 
     @asyncSlot()
@@ -356,7 +448,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             location = NodeLocation(self.location_x_spin.value(),
                                     self.location_y_spin.value(),
                                     self.location_z_spin.value())
-        description = self.description_edit.toMarkdown()
+        description = self.description_edit.toMarkdown().strip()
         extra = json.loads(self.extra_edit.toPlainText())
         layers = (self.layers_combo.currentText(),)
 
@@ -371,9 +463,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             return DockNode(
                 identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
                 self.dock_type_combo.currentData(),
-                self.game.world_list.identifier_for_node(connection_node),
+                self.game.region_list.identifier_for_node(connection_node),
                 self.dock_weakness_combo.currentData(),
                 None, None,
+                self.dock_exclude_lock_rando_check.isChecked(),
+                tuple(self.dock_incompatible_model.items),
             )
 
         elif node_type == PickupNode:
@@ -384,13 +478,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             )
 
         elif node_type == TeleporterNode:
-            dest_world: World = self.teleporter_destination_world_combo.currentData()
+            dest_region: Region = self.teleporter_destination_region_combo.currentData()
             dest_area: Area = self.teleporter_destination_area_combo.currentData()
 
             return TeleporterNode(
                 identifier, node_index, heal, location, description, layers, extra, valid_starting_location,
                 AreaIdentifier(
-                    world_name=dest_world.name,
+                    region_name=dest_region.name,
                     area_name=dest_area.name,
                 ),
                 self.teleporter_vanilla_name_edit.isChecked(),

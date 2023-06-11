@@ -1,9 +1,13 @@
 from pathlib import Path
+import platform
 from unittest.mock import MagicMock, call, ANY
+
+import pytest
 
 from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
 
 
+@pytest.mark.skipif(platform.system() == "Darwin", reason="ftpserver fails on macOS")
 def test_upload(ftpserver, tmp_path):
     progress_update = MagicMock()
 

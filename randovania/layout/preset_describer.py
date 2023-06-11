@@ -1,76 +1,76 @@
 import collections
-from typing import Iterable, Sequence
+from collections.abc import Iterable, Sequence
 
 from randovania.game_description import default_database
-from randovania.game_description.item.major_item import MajorItem
-from randovania.generator.item_pool import pool_creator
-from randovania.layout.base.ammo_configuration import AmmoConfiguration
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.generator.pickup_pool import pool_creator
+from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
-from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
-
-
-def _bool_to_str(b: bool) -> str:
-    if b:
-        return "Yes"
-    else:
-        return "No"
 
 
 PresetDescription = tuple[str, list[str]]
 
 
 class GamePresetDescriber:
-    def _calculate_starting_items(self, configuration: BaseConfiguration) -> list[str]:
-        expected_count = self.expected_starting_item_count(configuration)
-        starting_items = []
+    def _calculate_pickup_pool(self, configuration: BaseConfiguration) -> list[str]:
+        expected_starting_count = self.expected_starting_item_count(configuration)
+        expected_shuffled_count = self.expected_shuffled_pickup_count(configuration)
+        shuffled_list = []
+        starting_list = []
+        is_vanilla_starting = True
+        excluded_list = []
 
-        for major_item, item_state in configuration.major_items_configuration.items_state.items():
-            if major_item.hide_from_gui:
+        for standard_pickup, pickup_state in configuration.standard_pickup_configuration.pickups_state.items():
+            if standard_pickup.hide_from_gui:
                 continue
 
-            count = item_state.num_included_in_starting_items
-            if count != expected_count[major_item]:
-                if count > 1:
-                    starting_items.append(f"{count}x {major_item.name}")
-                elif count == 1:
-                    starting_items.append(major_item.name)
+            starting_count = pickup_state.num_included_in_starting_pickups
+            shuffled_count = pickup_state.num_shuffled_pickups + int(pickup_state.include_copy_in_original_location)
+
+            if starting_count != expected_starting_count[standard_pickup]:
+                if starting_count > 1:
+                    starting_list.append(f"{starting_count}x {standard_pickup.name}")
+                elif starting_count == 1:
+                    starting_list.append(standard_pickup.name)
                 else:
-                    starting_items.append(f"No {major_item.name}")
+                    is_vanilla_starting = False
+                    if shuffled_count == 0:
+                        excluded_list.append(standard_pickup.name)
 
-        if starting_items:
-            return starting_items
-        else:
-            # If an expected item is missing, it's added as "No X". So empty starting_items means it's precisely vanilla
-            return ["Vanilla"]
+            if shuffled_count != expected_shuffled_count[standard_pickup]:
+                if shuffled_count > 1:
+                    shuffled_list.append(f"{shuffled_count}x {standard_pickup.name}")
+                elif shuffled_count == 1:
+                    shuffled_list.append(standard_pickup.name)
+                elif starting_count == 0:
+                    excluded_list.append(standard_pickup.name)
 
-    def _calculate_item_pool(self, configuration: BaseConfiguration) -> list[str]:
-        expected_count = self.expected_shuffled_item_count(configuration)
-        item_pool = []
+        result = []
 
-        for major_item, item_state in configuration.major_items_configuration.items_state.items():
-            if major_item.hide_from_gui:
-                continue
+        if starting_list:
+            result.append("Starts with " + ", ".join(starting_list))
+        elif is_vanilla_starting:
+            result.append("Vanilla starting items")
 
-            count = item_state.num_shuffled_pickups + int(item_state.include_copy_in_original_location)
-            if count != expected_count[major_item]:
-                if count > 1:
-                    item_pool.append(f"{count}x {major_item.name}")
-                elif count == 1:
-                    item_pool.append(major_item.name)
-                else:
-                    item_pool.append(f"No {major_item.name}")
+        if excluded_list:
+            result.append("Excludes " + ", ".join(excluded_list))
 
-        return item_pool
+        if shuffled_list:
+            result.append("Shuffles " + ", ".join(shuffled_list))
+
+        return result
 
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         """Function providing any game-specific information to display in presets such as the goal."""
 
         game_description = default_database.game_description_for(configuration.game)
-        major_items = configuration.major_items_configuration
+        standard_pickups = configuration.standard_pickup_configuration
 
         template_strings = collections.defaultdict(list)
 
@@ -84,17 +84,20 @@ class GamePresetDescriber:
         # Item Placement
         randomization_mode = configuration.available_locations.randomization_mode
 
-        if major_items.minimum_random_starting_items == major_items.maximum_random_starting_items:
-            random_starting_items = f"{major_items.minimum_random_starting_items}"
+        if standard_pickups.minimum_random_starting_pickups == standard_pickups.maximum_random_starting_pickups:
+            random_starting_pickups = f"{standard_pickups.minimum_random_starting_pickups}"
         else:
-            random_starting_items = "{} to {}".format(
-                major_items.minimum_random_starting_items,
-                major_items.maximum_random_starting_items,
+            random_starting_pickups = "{} to {}".format(
+                standard_pickups.minimum_random_starting_pickups,
+                standard_pickups.maximum_random_starting_pickups,
             )
 
         template_strings["Logic Settings"].append(configuration.trick_level.pretty_description(game_description))
-        template_strings["Logic Settings"].append(
-            f"Dangerous Actions: {configuration.logical_resource_action.long_name}")
+
+        if not configuration.logical_resource_action.is_default():
+            template_strings["Logic Settings"].append(
+                f"{configuration.logical_resource_action.long_name} dangerous actions"
+            )
 
         if configuration.single_set_for_pickups_that_solve:
             template_strings["Logic Settings"].append("Experimental potential actions")
@@ -102,26 +105,28 @@ class GamePresetDescriber:
         if configuration.staggered_multi_pickup_placement:
             template_strings["Logic Settings"].append("Experimental staggered pickups")
 
-        if randomization_mode != RandomizationMode.FULL:
-            template_strings["Item Placement"].append(f"Randomization Mode: {randomization_mode.value}")
-
-        # Starting Items
-        if random_starting_items != "0":
-            template_strings["Starting Items"].append(f"Random Starting Items: {random_starting_items}")
-        template_strings["Starting Items"].extend(self._calculate_starting_items(configuration))
+        if randomization_mode != RandomizationMode.default():
+            template_strings["Item Pool"].append(randomization_mode.description)
 
         # Item Pool
-        item_pool = self._calculate_item_pool(configuration)
+        per_category_pool = pool_creator.calculate_pool_pickup_count(configuration)
+        if configuration.available_locations.randomization_mode is RandomizationMode.FULL:
+            pool_items, maximum_size = pool_creator.get_total_pickup_count(per_category_pool)
+            template_strings["Item Pool"].append(f"Size: {pool_items} of {maximum_size}")
+        else:
+            for category, (count, num_nodes) in per_category_pool.items():
+                if isinstance(category, LocationCategory):
+                    template_strings["Item Pool"].append(f"{category.long_name}: {count}/{num_nodes}")
 
-        template_strings["Item Pool"].append(
-            "Size: {} of {}".format(*pool_creator.calculate_pool_item_count(configuration))
-        )
-        if item_pool:
-            template_strings["Item Pool"].append(", ".join(item_pool))
+        if random_starting_pickups != "0":
+            template_strings["Item Pool"].append(f"{random_starting_pickups} random starting items")
+
+        template_strings["Item Pool"].extend(self._calculate_pickup_pool(configuration))
 
         # Difficulty
-        template_strings["Difficulty"].append(
-            f"Damage Strictness: {configuration.damage_strictness.long_name}"
+        if configuration.damage_strictness != LayoutDamageStrictness.MEDIUM:
+            template_strings["Difficulty"].append(
+                f"{configuration.damage_strictness.long_name} damage strictness"
         )
         if configuration.pickup_model_style != PickupModelStyle.ALL_VISIBLE:
             template_strings["Difficulty"].append(f"Pickup: {configuration.pickup_model_style.long_name} "
@@ -130,64 +135,63 @@ class GamePresetDescriber:
         # Gameplay
         starting_locations = configuration.starting_location.locations
         if len(starting_locations) == 1:
-            area = game_description.world_list.area_by_area_location(starting_locations[0])
-            starting_location = game_description.world_list.area_name(area)
+            area = game_description.region_list.area_by_area_location(starting_locations[0])
+            starting_location = f"Starts at {game_description.region_list.area_name(area)}"
         else:
-            starting_location = f"{len(starting_locations)} locations"
-
-        template_strings["Gameplay"].append(f"Starting Location: {starting_location}")
+            starting_location = f"{len(starting_locations)} starting locations"
+        template_strings["Gameplay"].append(starting_location)
 
         # Dock Locks
-        dock_mode = configuration.dock_rando.mode
-        if dock_mode != DockRandoMode.VANILLA:
-            template_strings["Door Locks"].append(f"Mode: {dock_mode.long_name} ({dock_mode.description})")
+        dock_rando = configuration.dock_rando
+        if dock_rando.is_enabled():
+            template_strings["Gameplay"].append(dock_rando.mode.description)
 
         return template_strings
 
-    def expected_starting_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
+    def expected_starting_item_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         """Lists what are the expected starting item count.
         The configuration so it can vary based on progressive settings, as example."""
         return {
             major: major.default_starting_count
-            for major in configuration.major_items_configuration.items_state.keys()
+            for major in configuration.standard_pickup_configuration.pickups_state.keys()
         }
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
+    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
         """Lists what are the expected shuffled item count.
         The configuration so it can vary based on progressive settings, as example."""
         return {
             major: major.default_shuffled_count
-            for major in configuration.major_items_configuration.items_state.keys()
+            for major in configuration.standard_pickup_configuration.pickups_state.keys()
         }
 
 
-def _require_majors_check(ammo_configuration: AmmoConfiguration, ammo_names: list[str]) -> list[bool]:
+def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_names: list[str]) -> list[bool]:
     result = [False] * len(ammo_names)
 
     name_index_mapping = {name: i for i, name in enumerate(ammo_names)}
 
-    for ammo, state in ammo_configuration.items_state.items():
+    for ammo, state in ammo_configuration.pickups_state.items():
         if ammo.name in name_index_mapping:
-            result[name_index_mapping[ammo.name]] = state.requires_major_item
+            result[name_index_mapping[ammo.name]] = state.requires_main_item
 
     return result
 
 
-def message_for_required_mains(ammo_configuration: AmmoConfiguration, message_to_item: dict[str, str]):
+def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]):
     item_names = [item for item in message_to_item.values()]
     main_required = _require_majors_check(ammo_configuration, item_names)
     return dict(zip(message_to_item.keys(), main_required))
 
 
-def has_shuffled_item(configuration: MajorItemsConfiguration, item_name: str) -> bool:
-    for item, state in configuration.items_state.items():
+def has_shuffled_item(configuration: StandardPickupConfiguration, item_name: str) -> bool:
+    for item, state in configuration.pickups_state.items():
         if item.name == item_name:
             return (state.num_shuffled_pickups + int(state.include_copy_in_original_location)) > 0
     return False
 
 
-def has_vanilla_item(configuration: MajorItemsConfiguration, item_name: str) -> bool:
-    for item, state in configuration.items_state.items():
+def has_vanilla_item(configuration: StandardPickupConfiguration, item_name: str) -> bool:
+    for item, state in configuration.pickups_state.items():
         if item.name == item_name:
             return state.include_copy_in_original_location
     return False
@@ -221,10 +225,11 @@ def merge_categories(categories: Iterable[PresetDescription]) -> str:
     )
 
 
-def handle_progressive_expected_counts(counts: dict[MajorItem, int], configuration: MajorItemsConfiguration,
+def handle_progressive_expected_counts(counts: dict[StandardPickupDefinition, int],
+                                       configuration: StandardPickupConfiguration,
                                        progressive: str, non_progressive: Sequence[str]) -> None:
-    progressive_item = configuration.get_item_with_name(progressive)
-    non_progressive_items = [configuration.get_item_with_name(name) for name in non_progressive]
+    progressive_item = configuration.get_pickup_with_name(progressive)
+    non_progressive_items = [configuration.get_pickup_with_name(name) for name in non_progressive]
 
     if has_shuffled_item(configuration, progressive):
         counts[progressive_item] = len(non_progressive)

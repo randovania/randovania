@@ -1,4 +1,4 @@
-from randovania.game_description.item.major_item import MajorItem
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
@@ -11,19 +11,19 @@ class MSRPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, MSRConfiguration)
 
-        major_items = configuration.major_items_configuration
+        standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
         extra_message_tree = {
             "Difficulty": [
                 {
-                    f"Energy Tank: {configuration.energy_per_tank} energy": configuration.energy_per_tank != 100
+                    f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100
                 },
             ],
             "Item Pool": [
                 {
-                    "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
-                    "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit"),
+                    "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
+                    "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
                 }
             ],
             "Gameplay": [
@@ -31,7 +31,7 @@ class MSRPresetDescriber(GamePresetDescriber):
             ],
             "Game Changes": [
                 message_for_required_mains(
-                    configuration.ammo_configuration,
+                    configuration.ammo_pickup_configuration,
                     {
                         "Super Missile needs Launcher": "Super Missile Tank",
                         "Power Bomb needs Main": "Power Bomb Tank",
@@ -43,11 +43,11 @@ class MSRPresetDescriber(GamePresetDescriber):
 
         return template_strings
 
-    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
-        count = super().expected_shuffled_item_count(configuration)
-        majors = configuration.major_items_configuration
+    def expected_shuffled_pickup_count(self, configuration: BaseConfiguration) -> dict[StandardPickupDefinition, int]:
+        count = super().expected_shuffled_pickup_count(configuration)
+        majors = configuration.standard_pickup_configuration
 
-        from randovania.games.samus_returns.item_database import progressive_items
+        from randovania.games.samus_returns.pickup_database import progressive_items
         for (progressive_item_name, non_progressive_items) in progressive_items.tuples():
             handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
 

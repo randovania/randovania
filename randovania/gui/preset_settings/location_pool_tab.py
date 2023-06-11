@@ -7,10 +7,10 @@ from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpac
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
-from randovania.gui.lib.node_list_helper import NodeListHelper, dark_world_flags
+from randovania.gui.lib.node_list_helper import NodeListHelper, dark_name_flags
 from randovania.gui.lib.foldable import Foldable
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
@@ -21,7 +21,7 @@ from randovania.layout.preset import Preset
 
 
 class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
-    _starting_location_for_world: dict[str, QtWidgets.QCheckBox]
+    _starting_location_for_region: dict[str, QtWidgets.QCheckBox]
     _starting_location_for_area: dict[int, QtWidgets.QCheckBox]
     _row_widget_for_node: dict[PickupNode, LocationPoolRowWidget]
     _during_batch_update: bool
@@ -34,33 +34,33 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
 
         self._row_widget_for_node = {}
 
-        world_list = self.game_description.world_list
+        region_list = self.game_description.region_list
 
-        nodes_by_world: dict[str, list[PickupNode]] = collections.defaultdict(list)
+        nodes_by_region: dict[str, list[PickupNode]] = collections.defaultdict(list)
         node_names = {}
         pickup_match = re.compile(r"Pickup \(([^\)]+)\)")
 
-        for world in world_list.worlds:
-            for is_dark_world in dark_world_flags(world):
-                for area in world.areas:
-                    if area.in_dark_aether != is_dark_world:
+        for region in region_list.regions:
+            for use_dark_name in dark_name_flags(region):
+                for area in region.areas:
+                    if area.in_dark_aether != use_dark_name:
                         continue
                     for node in area.nodes:
                         if isinstance(node, PickupNode):
-                            nodes_by_world[world.correct_name(is_dark_world)].append(node)
+                            nodes_by_region[region.correct_name(use_dark_name)].append(node)
                             match = pickup_match.match(node.name)
                             if match is not None:
                                 node_name = match.group(1)
                             else:
                                 node_name = node.name
-                            node_names[node] = f"{world_list.nodes_to_area(node).name} ({node_name})"
+                            node_names[node] = f"{region_list.nodes_to_area(node).name} ({node_name})"
 
-        for world_name in sorted(nodes_by_world.keys()):
-            spoiler = Foldable(world_name)
+        for region_name in sorted(nodes_by_region.keys()):
+            spoiler = Foldable(region_name)
             vbox_layout = QtWidgets.QVBoxLayout()
 
             first_node = True
-            for node in sorted(nodes_by_world[world_name], key=node_names.get):
+            for node in sorted(nodes_by_region[region_name], key=node_names.get):
                 if not first_node:
                     separator_line = QFrame()
                     separator_line.setFrameShape(QFrame.HLine)

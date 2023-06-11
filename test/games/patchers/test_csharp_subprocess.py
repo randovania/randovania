@@ -48,7 +48,7 @@ def test_process_command_no_thread(echo_tool, mock_is_windows, mocker, monkeypat
             sys.executable,
             str(echo_tool)
         ],
-        "hello\r\nthis is a nice world\r\n\r\nWe some crazy stuff.",
+        "hello\r\nthis is a nice db\r\n\r\nWe some crazy stuff.",
         read_callback,
         add_mono_if_needed=False,
     )
@@ -56,7 +56,7 @@ def test_process_command_no_thread(echo_tool, mock_is_windows, mocker, monkeypat
     # Assert
     read_callback.assert_has_calls([
         call("hello"),
-        call("this is a nice world"),
+        call("this is a nice db"),
         call("We some crazy stuff."),
     ])
     if mock_is_windows:

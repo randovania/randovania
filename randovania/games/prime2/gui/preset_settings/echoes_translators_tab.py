@@ -5,8 +5,8 @@ from PySide6.QtWidgets import QComboBox
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.game_exporter import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -35,8 +35,8 @@ def gate_data():
         for gate in randomizer_data["TranslatorLocationData"]
     }
     identifier_to_gate = {
-        db.world_list.identifier_for_node(node): node.extra["gate_index"]
-        for node in db.world_list.iterate_nodes()
+        db.region_list.identifier_for_node(node): node.extra["gate_index"]
+        for node in db.region_list.iterate_nodes()
         if isinstance(node, ConfigurableNode)
     }
     return gate_index_to_name, identifier_to_gate

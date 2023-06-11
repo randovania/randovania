@@ -9,10 +9,10 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.resource_node import ResourceNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.db.teleporter_node import TeleporterNode
+from randovania.game_description.db.region_list import RegionList
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
@@ -38,7 +38,7 @@ class PlayerState:
     hint_seen_count: DefaultDict[NodeIdentifier, int]
     hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
     _unfiltered_potential_actions: tuple[PickupCombinations, tuple[ResourceNode, ...]]
-    num_random_starting_items_placed: int
+    num_starting_pickups_placed: int
     num_assigned_pickups: int
 
     def __init__(self,
@@ -60,10 +60,10 @@ class PlayerState:
         self.hint_seen_count = collections.defaultdict(int)
         self.event_seen_count = collections.defaultdict(int)
         self.hint_initial_pickups = {}
-        self.num_random_starting_items_placed = 0
+        self.num_starting_pickups_placed = 0
         self.num_assigned_pickups = 0
         self.num_actions = 0
-        self.indices_groups, self.all_indices = build_available_indices(game.world_list, configuration)
+        self.indices_groups, self.all_indices = build_available_indices(game.region_list, configuration)
 
     def __repr__(self):
         return f"Player {self.index + 1}"
@@ -110,8 +110,8 @@ class PlayerState:
 
     def potential_actions(self, locations_weighted: WeightedLocations) -> list[Action]:
         num_available_indices = len(self.filter_usable_locations(locations_weighted))
-        num_available_indices += (self.configuration.maximum_random_starting_items
-                                  - self.num_random_starting_items_placed)
+        num_available_indices += (self.configuration.maximum_random_starting_pickups
+                                  - self.num_starting_pickups_placed)
 
         pickups, uncollected_resource_nodes = self._unfiltered_potential_actions
         result: list[Action] = [Action(pickup_tuple) for pickup_tuple in pickups
@@ -150,7 +150,7 @@ class PlayerState:
                        for resource in interesting_resources_for_reach(self.reach)
                        if resource.resource_type == ResourceType.ITEM}
 
-        wl = self.reach.game.world_list
+        wl = self.reach.game.region_list
         s = self.reach.state
 
         paths_to_be_opened = set()
@@ -162,7 +162,7 @@ class PlayerState:
                     continue
 
                 paths_to_be_opened.add("* {}: {}".format(
-                    wl.node_name(node, with_world=True),
+                    wl.node_name(node, with_region=True),
                     " and ".join(sorted(
                         r.pretty_text for r in alternative.values()
                         if not r.satisfied(s.resources, s.energy, self.game.resource_database)
@@ -183,7 +183,7 @@ class PlayerState:
                 ))
 
         accessible_nodes = [
-            wl.node_name(n, with_world=True) for n in self.reach.iterate_nodes if self.reach.is_reachable_node(n)
+            wl.node_name(n, with_region=True) for n in self.reach.iterate_nodes if self.reach.is_reachable_node(n)
         ]
 
         return (
@@ -194,7 +194,7 @@ class PlayerState:
             "Accessible teleporters:\n{9}\n\n"
             "Reachable nodes:\n{6}"
         ).format(
-            self.game.world_list.node_name(self.reach.state.node, with_world=True, distinguish_dark_aether=True),
+            self.game.region_list.node_name(self.reach.state.node, with_region=True, distinguish_dark_aether=True),
             self.num_actions,
             self.num_assigned_pickups,
             len(state.indices),
@@ -222,8 +222,8 @@ class PlayerState:
             weighted = {
                 loc: weight
                 for loc, weight in weighted.items()
-                if (loc[0].game.world_list.node_from_pickup_index(loc[1]).location_category !=
-                    action.generator_params.prefered_location_category)
+                if (loc[0].game.region_list.node_from_pickup_index(loc[1]).location_category ==
+                    action.generator_params.preferred_location_category)
             }
 
         return weighted
@@ -231,7 +231,7 @@ class PlayerState:
     def should_have_hint(self, pickup: PickupEntry, current_uncollected: UncollectedState,
                          all_locations_weighted: WeightedLocations) -> bool:
 
-        if not pickup.item_category.hinted_as_major:
+        if not pickup.pickup_category.hinted_as_major:
             return False
 
         config = self.configuration
@@ -248,15 +248,18 @@ class PlayerState:
 
         return can_hint
 
+    def count_self_locations(self, locations: WeightedLocations) -> int:
+        return sum(1 for player, _ in locations.keys() if player == self)
 
-def build_available_indices(world_list: WorldList, configuration: FillerConfiguration,
+
+def build_available_indices(region_list: RegionList, configuration: FillerConfiguration,
                             ) -> tuple[list[set[PickupIndex]], set[PickupIndex]]:
     """
     Groups indices into separated groups, so each group can be weighted separately.
     """
     indices_groups = [
-        set(world.pickup_indices) - configuration.indices_to_exclude
-        for world in world_list.worlds
+        set(region.pickup_indices) - configuration.indices_to_exclude
+        for region in region_list.regions
     ]
     all_indices = set().union(*indices_groups)
 

@@ -1,68 +1,176 @@
-import copy
-from typing import Any
+import asyncio
+import dataclasses
+import functools
+import logging
+import uuid
+from enum import Enum
 
-from PySide6.QtCore import QTimer, Signal, QObject
-from qasync import asyncSlot
+from PySide6.QtCore import Signal, QObject
+
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
+from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
+from randovania.game_connection.connector.remote_connector import RemoteConnector
+from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+from randovania.game_description.resources.item_resource_info import Inventory
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.region import Region
+from randovania.interface_common.options import Options
+from randovania.lib.infinite_timer import InfiniteTimer
 
-from randovania.game_connection.connection_backend import ConnectionBackend
-from randovania.game_connection.connection_base import LocationListener
-from randovania.game_description.resources.pickup_entry import PickupEntry
+
+class GameConnectionStatus(Enum):
+    Disconnected = "disconnected"
+    UnknownGame = "unknown-game"
+    WrongGame = "wrong-game"
+    WrongHash = "wrong-hash"
+    TitleScreen = "title-screen"
+    TrackerOnly = "tracker-only"
+    InGame = "in-game"
+
+    @property
+    def pretty_text(self) -> str:
+        return _pretty_connection_status[self]
 
 
-class GameConnection(QObject, ConnectionBackend):
-    Updated = Signal()
+_pretty_connection_status = {
+    GameConnectionStatus.Disconnected: "Disconnected",
+    GameConnectionStatus.UnknownGame: "Unknown game",
+    GameConnectionStatus.WrongGame: "Wrong game",
+    GameConnectionStatus.WrongHash: "Correct game, wrong seed hash",
+    GameConnectionStatus.TitleScreen: "Title screen",
+    GameConnectionStatus.TrackerOnly: "Tracker only",
+    GameConnectionStatus.InGame: "In-game",
+}
 
+
+@dataclasses.dataclass()
+class ConnectedGameState:
+    id: uuid.UUID
+    source: RemoteConnector
+    status: GameConnectionStatus = GameConnectionStatus.Disconnected
+    current_inventory: Inventory = dataclasses.field(default_factory=dict)
+    collected_indices: set[PickupIndex] = dataclasses.field(default_factory=set)
+
+
+class GameConnection(QObject):
+    BuildersChanged = Signal()
+    BuildersUpdated = Signal()
+    GameStateUpdated = Signal(ConnectedGameState)
+
+    connection_builders: list[ConnectorBuilder]
+    remote_connectors: dict[ConnectorBuilder, RemoteConnector]
+    connected_states: dict[RemoteConnector, ConnectedGameState]
     _dt: float = 2.5
-    _last_status: Any = None
-    _permanent_pickups: list[tuple[str, PickupEntry]]
 
-    def __init__(self, connector_builder: ConnectorBuilder):
+    def __init__(self, options: Options):
         super().__init__()
-        ConnectionBackend.__init__(self, connector_builder)
-        self._permanent_pickups = []
+        self.logger = logging.getLogger(type(self).__name__)
+        self._options = options
+        self.connection_builders = []
+        self.remote_connectors = {}
+        self.connected_states = {}
+        self.uuid_for_unknown = uuid.UUID("00000000-0000-1111-0000-000000000000")
 
-        self._timer = QTimer(self)
-        self._timer.timeout.connect(self._auto_update)
-        self._timer.setInterval(self._dt * 1000)
-        self._timer.setSingleShot(True)
-        self._notify_status()
+        for builder_param in options.connector_builders:
+            self.add_connection_builder(builder_param.create_builder())
+
+        self._timer = InfiniteTimer(self._auto_update, self._dt)
 
     async def start(self):
         self._timer.start()
 
     async def stop(self):
+        for builder, connector in list(self.remote_connectors.items()):
+            await connector.force_finish()
+            if connector.is_disconnected():
+                del self.remote_connectors[builder]
+                self.connected_states.pop(connector, None)
+
         self._timer.stop()
 
-    @asyncSlot()
     async def _auto_update(self):
-        try:
-            await self.update(self._dt)
-            self._notify_status()
-        finally:
-            self._timer.start()
+        for builder, connector in list(self.remote_connectors.items()):
+            if builder not in self.connection_builders:
+                await connector.force_finish()
 
-    def _notify_status(self):
-        new_status = self.current_status
-        inventory = self.get_current_inventory()
+            if connector.is_disconnected():
+                await connector.force_finish()
+                del self.remote_connectors[builder]
 
-        if self._last_status != (new_status, self.connector_builder, inventory):
-            self._last_status = (new_status, self.connector_builder, copy.copy(inventory))
-            self.Updated.emit()
+        async def try_build_connector(build: ConnectorBuilder):
+            c = await build.build_connector()
+            if c is not None:
+                self.remote_connectors[build] = c
+                self._handle_new_connector(c)
 
-    @property
-    def pretty_current_status(self) -> str:
-        return f"{self.connector_builder_choice.pretty_text}: {self.current_status.pretty_text}"
+        await asyncio.gather(*[
+            try_build_connector(builder)
+            for builder in list(self.connection_builders)
+            if builder not in self.remote_connectors
+        ])
 
-    @property
-    def current_game_name(self) -> str | None:
-        if self.connector is not None:
-            return self.connector.game_enum.long_name
+    def add_connection_builder(self, builder: ConnectorBuilder):
+        self.connection_builders.append(builder)
+        builder.StatusUpdate.connect(self._on_builder_status_update)
+        self._on_builders_changed()
 
-    @property
-    def name(self) -> str:
-        raise ValueError("bleh")
+    def remove_connection_builder(self, builder: ConnectorBuilder):
+        assert builder in self.connection_builders
+        builder.StatusUpdate.disconnect(self._on_builder_status_update)
+        self.connection_builders.remove(builder)
+        self._on_builders_changed()
 
-    def set_location_collected_listener(self, listener: LocationListener | None):
-        super(ConnectionBackend, self).set_location_collected_listener(listener)
-        self.checking_for_collected_index = listener is not None
+    def get_connector_for_builder(self, builder: ConnectorBuilder) -> RemoteConnector | None:
+        return self.remote_connectors.get(builder)
+
+    def _on_builders_changed(self):
+        with self._options as options:
+            options.connector_builders = [
+                ConnectorBuilderOption(
+                    builder.connector_builder_choice,
+                    builder.configuration_params(),
+                )
+                for builder in self.connection_builders
+            ]
+        self.BuildersChanged.emit()
+
+    def _on_builder_status_update(self):
+        self.BuildersUpdated.emit()
+
+    def _handle_new_connector(self, connector: RemoteConnector):
+        connector.PlayerLocationChanged.connect(functools.partial(self._on_player_location_changed, connector))
+        connector.PickupIndexCollected.connect(functools.partial(self._on_pickup_index_collected, connector))
+        connector.InventoryUpdated.connect(functools.partial(self._on_inventory_updated, connector))
+        self._ensure_connected_state_exists(connector)
+
+    def _ensure_connected_state_exists(self, connector: RemoteConnector) -> ConnectedGameState:
+        the_id = connector.layout_uuid or self.uuid_for_unknown
+        if connector not in self.connected_states:
+            self.connected_states[connector] = ConnectedGameState(the_id, connector)
+        return self.connected_states[connector]
+
+    def _on_player_location_changed(self, connector: RemoteConnector, location: tuple[Region | None, Area | None]):
+        connected_state = self._ensure_connected_state_exists(connector)
+        world, area = location
+        if world is None:
+            connected_state.status = GameConnectionStatus.TitleScreen
+        else:
+            connected_state.status = GameConnectionStatus.InGame
+        self.GameStateUpdated.emit(connected_state)
+
+    def _on_pickup_index_collected(self, connector: RemoteConnector, index: PickupIndex):
+        connected_state = self._ensure_connected_state_exists(connector)
+        connected_state.collected_indices.add(index)
+        self.GameStateUpdated.emit(connected_state)
+
+    def _on_inventory_updated(self, connector: RemoteConnector, inventory: Inventory):
+        connected_state = self._ensure_connected_state_exists(connector)
+        connected_state.current_inventory = inventory
+        self.GameStateUpdated.emit(connected_state)
+
+    def get_backend_choice_for_state(self, state: ConnectedGameState) -> ConnectorBuilderChoice:
+        for builder, connector in self.remote_connectors.items():
+            if connector == state.source:
+                return builder.connector_builder_choice
+        raise KeyError("Unknown state")

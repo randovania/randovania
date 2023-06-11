@@ -3,9 +3,9 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
-from randovania.game_description.world.hint_node import HintNode
-from randovania.game_description.world.node import NodeContext
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.node_identifier import NodeIdentifier
 
 
 @pytest.fixture(
@@ -15,7 +15,7 @@ def _logbook_node(request, blank_game_description):
     has_translator = request.param
     translator = blank_game_description.resource_database.get_item("BlueKey")
 
-    node = blank_game_description.world_list.node_by_identifier(NodeIdentifier.create(
+    node = blank_game_description.region_list.node_by_identifier(NodeIdentifier.create(
         "Intro", "Hint Room", "Hint with Translator" if has_translator else "Hint no Translator",
     ))
     assert isinstance(node, HintNode)
@@ -30,7 +30,7 @@ def test_logbook_node_requirements_to_leave(logbook_node,
     db = empty_patches.game.resource_database
 
     def ctx(resources):
-        return NodeContext(empty_patches, resources, db, empty_patches.game.world_list)
+        return NodeContext(empty_patches, resources, db, empty_patches.game.region_list)
 
     # Run
     to_leave = node.requirement_to_leave(ctx({}))

@@ -3,7 +3,6 @@ from __future__ import annotations
 import asyncio
 import base64
 import functools
-import json
 import logging
 import os
 import re
@@ -30,13 +29,14 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib import enum_lib
+from randovania.lib import enum_lib, json_lib
 from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
     from randovania.layout.permalink import Permalink
     from randovania.layout.preset import Preset
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+    from randovania.gui.widgets.game_connection_window import GameConnectionWindow
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -67,6 +67,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
+    game_connection_window: GameConnectionWindow | None = None
 
     GameDetailsSignal = Signal(LayoutDescription)
     RequestOpenLayoutSignal = Signal(Path)
@@ -315,6 +316,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         logging.info("Creating OnlineInteractions...")
         self.online_interactions = OnlineInteractions(self, self.preset_manager, self.network_client, self,
                                                       self._options)
+        self.game_connection_button.clicked.connect(self.open_game_connection_window)
 
         logging.info("Will update for modified options")
         with self._options:
@@ -444,6 +446,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         QtGui.QDesktopServices.openUrl(QUrl(self._current_version_url))
 
+    def open_game_connection_window(self):
+        from randovania.gui.widgets.game_connection_window import GameConnectionWindow
+        if self.game_connection_window is None:
+            self.game_connection_window = GameConnectionWindow(common_qt_lib.get_game_connection())
+
+        self.game_connection_window.show()
+        self.game_connection_window.raise_()
+
     # Options
     def on_options_changed(self):
         self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
@@ -460,7 +470,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.open_data_visualizer_at(None, None, game)
 
     def open_data_visualizer_at(self,
-                                world_name: str | None,
+                                region_name: str | None,
                                 area_name: str | None,
                                 game: RandovaniaGame,
                                 trick_levels: TrickLevelConfiguration | None = None,
@@ -469,8 +479,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         data_visualizer = DataEditorWindow.open_internal_data(game, False)
         self._data_visualizer = data_visualizer
 
-        if world_name is not None:
-            data_visualizer.focus_on_world_by_name(world_name)
+        if region_name is not None:
+            data_visualizer.focus_on_region_by_name(region_name)
 
         if area_name is not None:
             data_visualizer.focus_on_area_by_name(area_name)
@@ -492,9 +502,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if database_path is None:
             return
 
-        with database_path.open("r") as database_file:
-            self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
-            self._data_editor.show()
+        self._data_editor = DataEditorWindow(json_lib.read_path(database_path), database_path, False, True)
+        self._data_editor.show()
 
     async def open_map_tracker(self, configuration: Preset):
         from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
@@ -604,7 +613,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
-        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self._options)
+        self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self, self._options)
         self.auto_tracker_window.show()
 
     def _on_menu_action_previously_generated_games(self):

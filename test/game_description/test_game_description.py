@@ -4,9 +4,9 @@ import pytest
 
 from randovania.game_description import game_description
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.world import World
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
 
 
 @pytest.mark.parametrize(["danger_a", "danger_b", "expected_result"], [
@@ -52,8 +52,8 @@ def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
         },
         {}
     )
-    world = World("W", [area_a, area_b], {})
-    wl = WorldList([world])
+    region = Region("W", [area_a, area_b], {})
+    wl = RegionList([region])
 
     # Run
     result = game_description._calculate_dangerous_resources_in_areas(wl, None)

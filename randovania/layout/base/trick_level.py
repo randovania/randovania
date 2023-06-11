@@ -1,9 +1,13 @@
 from enum import Enum
+from typing import Self
 
 from randovania.bitpacking.bitpacking import BitPackEnum
+from randovania.lib import enum_lib
 
 
 class LayoutTrickLevel(BitPackEnum, Enum):
+    long_name: str
+
     DISABLED = "disabled"
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
@@ -12,15 +16,15 @@ class LayoutTrickLevel(BitPackEnum, Enum):
     HYPERMODE = "hypermode"
 
     @classmethod
-    def default(cls) -> "LayoutTrickLevel":
+    def default(cls) -> Self:
         return cls.DISABLED
 
     @classmethod
-    def maximum(cls) -> "LayoutTrickLevel":
+    def maximum(cls) -> Self:
         return _TRICK_LEVEL_ORDER[-1]
 
     @classmethod
-    def from_number(cls, number: int) -> "LayoutTrickLevel":
+    def from_number(cls, number: int) -> Self:
         return _TRICK_LEVEL_ORDER[number]
 
     @property
@@ -28,20 +32,16 @@ class LayoutTrickLevel(BitPackEnum, Enum):
         return _TRICK_LEVEL_ORDER.index(self)
 
     @property
-    def long_name(self) -> str:
-        return _PRETTY_TRICK_LEVEL_NAME[self]
-
-    @property
     def is_enabled(self) -> bool:
         return self.as_number > LayoutTrickLevel.DISABLED.as_number
 
 
 _TRICK_LEVEL_ORDER: list[LayoutTrickLevel] = list(LayoutTrickLevel)
-_PRETTY_TRICK_LEVEL_NAME = {
+enum_lib.add_long_name(LayoutTrickLevel, {
     LayoutTrickLevel.DISABLED: "Disabled",
     LayoutTrickLevel.BEGINNER: "Beginner",
     LayoutTrickLevel.INTERMEDIATE: "Intermediate",
     LayoutTrickLevel.ADVANCED: "Advanced",
     LayoutTrickLevel.EXPERT: "Expert",
     LayoutTrickLevel.HYPERMODE: "Hypermode",
-}
+})

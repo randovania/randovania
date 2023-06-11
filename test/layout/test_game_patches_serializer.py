@@ -16,14 +16,14 @@ from randovania.game_description.resources.pickup_entry import (
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
-from randovania.generator.item_pool import pickup_creator, pool_creator
+from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.layout import game_patches_serializer
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
@@ -47,7 +47,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
             "target": 50}]},
     ],
     name="patches_with_data")
-def _patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_item_database):
+def _patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_pickup_database):
     game = echoes_game_description
     db = game.resource_database
 
@@ -88,23 +88,22 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
     patches = dataclasses.replace(echoes_game_patches, player_index=0)
 
     locations = collections.defaultdict(dict)
-    for world, area, node in game.world_list.all_worlds_areas_nodes:
+    for region, area, node in game.region_list.all_regions_areas_nodes:
         if node.is_resource_node and isinstance(node, PickupNode):
-            world_name = world.dark_name if area.in_dark_aether else world.name
-            locations[world_name][game.world_list.node_name(node)] = game_patches_serializer._ETM_NAME
+            world_name = region.dark_name if area.in_dark_aether else region.name
+            locations[world_name][game.region_list.node_name(node)] = game_patches_serializer._ETM_NAME
 
     data["locations"] = {
-        world: {
+        region: {
             area: item
-            for area, item in sorted(locations[world].items())
+            for area, item in sorted(locations[region].items())
         }
-        for world in sorted(locations.keys())
+        for region in sorted(locations.keys())
     }
 
     def create_pickup(name, percentage=True):
-        return pickup_creator.create_major_item(echoes_item_database.major_items[name],
-                                                MajorItemState(), percentage, game.resource_database,
-                                                None, False)
+        return pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups[name],
+                                                     StandardPickupState(), game.resource_database, None, False)
 
     if request.param.get("starting_pickup"):
         item_name = request.param.get("starting_pickup")
@@ -116,7 +115,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
     if request.param.get("elevator"):
         teleporter: NodeIdentifier = request.param.get("elevator")
         patches = patches.assign_elevators([
-            (game.world_list.get_teleporter_node(teleporter),
+            (game.region_list.get_teleporter_node(teleporter),
              # TODO: Starting Locations are now NodeIdentifier not AreaIdentifier => was modified but can be refactored back if teleporter also uses Node instead of Area a.k.a default_node is removed
              game.starting_location.area_identifier),
         ])
@@ -173,7 +172,7 @@ def test_decode(patches_with_data, default_echoes_configuration):
 
 
 @pytest.mark.parametrize("has_convert", [False, True])
-def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, generic_item_category,
+def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, generic_pickup_category,
                                default_generator_params):
     # Setup
     name = "Some Random Name"
@@ -192,8 +191,8 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, gene
             game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             name="HyperMissile",
         ),
-        item_category=generic_item_category,
-        broad_category=generic_item_category,
+        pickup_category=generic_pickup_category,
+        broad_category=generic_pickup_category,
         progression=(
             (find_resource_info_with_long_name(echoes_resource_database.item, "Morph Ball"), 1),
             (find_resource_info_with_long_name(echoes_resource_database.item, "Grapple Beam"), 1),

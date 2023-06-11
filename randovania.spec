@@ -8,13 +8,12 @@ block_cipher = None
 
 icon_path = "randovania/data/icons/executable_icon.ico"
 
-item_databases = [(f'randovania/games/{game.value}/item_database', f'games/{game.value}/item_database') for game in RandovaniaGame]
+pickup_databases = [(f'randovania/games/{game.value}/pickup_database', f'games/{game.value}/pickup_database') for game in RandovaniaGame]
 presets = [(f'randovania/games/{game.value}/presets', f'games/{game.value}/presets') for game in RandovaniaGame]
 game_assets = [(f'randovania/games/{game.value}/assets', f'games/{game.value}/assets') for game in RandovaniaGame if game.data_path.joinpath("assets").exists()]
 
 datas=[
     ("randovania/data/configuration.json", "data/"),
-    ("randovania/data/migration_data.json", "data/"),
     ("randovania/data/binary_data", "data/binary_data"),
     ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
     ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),
@@ -22,7 +21,7 @@ datas=[
     ("randovania/data/hash_words", "data/hash_words"),
     ("randovania/data/icons", "data/icons"),
     ("randovania/data/nintendont", "data/nintendont"),
-    *item_databases,
+    *pickup_databases,
     *presets,
     *game_assets,
     ("README.md", "data/")

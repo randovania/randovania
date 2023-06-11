@@ -62,11 +62,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Teleport to Artaria",
-                        "node_name": "Door to Save Station East"
+                        "region": "Dairon",
+                        "area": "Teleport to Artaria",
+                        "node": "Door to Save Station East"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -109,11 +111,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Hub Access",
-                        "node_name": "Door to Save Station East"
+                        "region": "Dairon",
+                        "area": "Hub Access",
+                        "node": "Door to Save Station East"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -210,11 +214,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Save Station East",
-                        "node_name": "Door to Teleport to Artaria"
+                        "region": "Dairon",
+                        "area": "Save Station East",
+                        "node": "Door to Teleport to Artaria"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -336,11 +342,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Transport to Cataris",
-                        "node_name": "Door to Teleport to Artaria"
+                        "region": "Dairon",
+                        "area": "Transport to Cataris",
+                        "node": "Door to Teleport to Artaria"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -496,6 +504,88 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Speed Booster blocks Destroyed": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Regular speed charge possible with 1.0 second charge time",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBoostUpgrade",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "DaironTeleportToArtariaSpeedBlocksDestroyed",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Short boost speed charge possible with 1.25 second charge time",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Short Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShortBoost",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBoostUpgrade",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "DaironTeleportToArtariaSpeedBlocksDestroyed",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -550,8 +640,8 @@
                     },
                     "valid_starting_location": false,
                     "destination": {
-                        "world_name": "Artaria",
-                        "area_name": "Teleport to Dairon"
+                        "region": "Artaria",
+                        "area": "Teleport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -1029,11 +1119,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Save Station East",
-                        "node_name": "Door to Hub Access"
+                        "region": "Dairon",
+                        "area": "Save Station East",
+                        "node": "Door to Hub Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1120,11 +1212,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit East",
-                        "node_name": "Dock to Hub Access"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit East",
+                        "node": "Dock to Hub Access"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1188,11 +1282,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Big Hub",
-                        "node_name": "Dock to Hub Access"
+                        "region": "Dairon",
+                        "area": "Big Hub",
+                        "node": "Dock to Hub Access"
                     },
                     "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -1213,11 +1309,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Big Hub",
-                        "node_name": "Tunnel to Hub Access"
+                        "region": "Dairon",
+                        "area": "Big Hub",
+                        "node": "Tunnel to Hub Access"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1280,11 +1378,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Transport to Artaria",
-                        "node_name": "Tunnel to Hub Access"
+                        "region": "Dairon",
+                        "area": "Transport to Artaria",
+                        "node": "Tunnel to Hub Access"
                     },
                     "default_dock_weakness": "Blocked Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1348,11 +1448,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit East",
-                        "node_name": "Dock to East Transport to Ferenia"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit East",
+                        "node": "Dock to East Transport to Ferenia"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1398,8 +1500,8 @@
                     },
                     "valid_starting_location": false,
                     "destination": {
-                        "world_name": "Ferenia",
-                        "area_name": "East Transport to Darion"
+                        "region": "Ferenia",
+                        "area": "East Transport to Darion"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -1495,11 +1597,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Yellow EMMI Introduction",
-                        "node_name": "Dock to Big Hub"
+                        "region": "Dairon",
+                        "area": "Yellow EMMI Introduction",
+                        "node": "Dock to Big Hub"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1640,11 +1744,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Wide Beam Room",
-                        "node_name": "Door to Big Hub"
+                        "region": "Dairon",
+                        "area": "Wide Beam Room",
+                        "node": "Door to Big Hub"
                     },
                     "default_dock_weakness": "Wide Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1705,17 +1811,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Total Recharge Station East",
-                        "node_name": "Door to Big Hub"
+                        "region": "Dairon",
+                        "area": "Total Recharge Station East",
+                        "node": "Door to Big Hub"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1863,11 +1970,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Hub Access",
-                        "node_name": "Dock to Big Hub"
+                        "region": "Dairon",
+                        "area": "Hub Access",
+                        "node": "Dock to Big Hub"
                     },
                     "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2005,11 +2114,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Hub Access",
-                        "node_name": "Tunnel to Big Hub"
+                        "region": "Dairon",
+                        "area": "Hub Access",
+                        "node": "Tunnel to Big Hub"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2124,11 +2235,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Hub Access",
-                        "node_name": "Dock to EMMI Zone Exit East"
+                        "region": "Dairon",
+                        "area": "Hub Access",
+                        "node": "Dock to EMMI Zone Exit East"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2169,11 +2282,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "East Transport to Ferenia",
-                        "node_name": "Dock to EMMI Zone Exit East"
+                        "region": "Dairon",
+                        "area": "East Transport to Ferenia",
+                        "node": "Dock to EMMI Zone Exit East"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2211,11 +2326,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Yellow EMMI Introduction",
-                        "node_name": "Door to EMMI Zone Exit East"
+                        "region": "Dairon",
+                        "area": "Yellow EMMI Introduction",
+                        "node": "Door to EMMI Zone Exit East"
                     },
                     "default_dock_weakness": "Access Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2308,11 +2425,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Big Hub",
-                        "node_name": "Door to Wide Beam Room"
+                        "region": "Dairon",
+                        "area": "Big Hub",
+                        "node": "Door to Wide Beam Room"
                     },
                     "default_dock_weakness": "Wide Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2373,17 +2492,18 @@
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000",
                         "left_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad",
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Teleport to Cataris",
-                        "node_name": "Door to Wide Beam Room"
+                        "region": "Dairon",
+                        "area": "Teleport to Cataris",
+                        "node": "Door to Wide Beam Room"
                     },
                     "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2503,17 +2623,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Teleport to Cataris",
-                        "node_name": "Door to Power Switch 1"
+                        "region": "Dairon",
+                        "area": "Teleport to Cataris",
+                        "node": "Door to Power Switch 1"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2617,11 +2738,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Teleport to Cataris",
-                        "node_name": "Tunnel to Power Switch 1"
+                        "region": "Dairon",
+                        "area": "Teleport to Cataris",
+                        "node": "Tunnel to Power Switch 1"
                     },
                     "default_dock_weakness": "Slide Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2684,17 +2807,18 @@
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_001",
                         "left_shield_def": "actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad",
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Early Grapple Access",
-                        "node_name": "Door to Teleport to Cataris"
+                        "region": "Dairon",
+                        "area": "Early Grapple Access",
+                        "node": "Door to Teleport to Cataris"
                     },
                     "default_dock_weakness": "Wide Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2727,17 +2851,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Total Recharge Station East",
-                        "node_name": "Door to Teleport to Cataris"
+                        "region": "Dairon",
+                        "area": "Total Recharge Station East",
+                        "node": "Door to Teleport to Cataris"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2802,17 +2927,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Power Switch 1",
-                        "node_name": "Door to Teleport to Cataris"
+                        "region": "Dairon",
+                        "area": "Power Switch 1",
+                        "node": "Door to Teleport to Cataris"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2843,17 +2969,18 @@
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000",
                         "left_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad",
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Wide Beam Room",
-                        "node_name": "Door to Teleport to Cataris"
+                        "region": "Dairon",
+                        "area": "Wide Beam Room",
+                        "node": "Door to Teleport to Cataris"
                     },
                     "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2916,8 +3043,8 @@
                     },
                     "valid_starting_location": false,
                     "destination": {
-                        "world_name": "Cataris",
-                        "area_name": "Teleport to Dairon"
+                        "region": "Cataris",
+                        "area": "Teleport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -2953,11 +3080,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Power Switch 1",
-                        "node_name": "Tunnel to Teleport to Cataris"
+                        "region": "Dairon",
+                        "area": "Power Switch 1",
+                        "node": "Tunnel to Teleport to Cataris"
                     },
                     "default_dock_weakness": "Slide Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -3198,17 +3327,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Teleport to Cataris",
-                        "node_name": "Door to Total Recharge Station East"
+                        "region": "Dairon",
+                        "area": "Teleport to Cataris",
+                        "node": "Door to Total Recharge Station East"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -3239,17 +3369,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Big Hub",
-                        "node_name": "Door to Total Recharge Station East"
+                        "region": "Dairon",
+                        "area": "Big Hub",
+                        "node": "Door to Total Recharge Station East"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -3348,17 +3479,18 @@
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_b1_001",
                         "left_shield_def": "actordef:actors/props/db_hdoor_b1_001/charclasses/db_hdoor_b1_001.bmsad",
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Early Grapple Room",
-                        "node_name": "Door to Early Grapple Access"
+                        "region": "Dairon",
+                        "area": "Early Grapple Room",
+                        "node": "Door to Early Grapple Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -3408,17 +3540,18 @@
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_001",
                         "left_shield_def": "actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad",
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Teleport to Cataris",
-                        "node_name": "Door to Early Grapple Access"
+                        "region": "Dairon",
+                        "area": "Teleport to Cataris",
+                        "node": "Door to Early Grapple Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -3649,11 +3782,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Heated Room West",
-                        "node_name": "Door to Early Grapple Access"
+                        "region": "Dairon",
+                        "area": "Heated Room West",
+                        "node": "Door to Early Grapple Access"
                     },
                     "default_dock_weakness": "Charge Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -4553,11 +4688,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Early Grapple Room",
-                        "node_name": "Door to Transport to Artaria"
+                        "region": "Dairon",
+                        "area": "Early Grapple Room",
+                        "node": "Door to Transport to Artaria"
                     },
                     "default_dock_weakness": "Access Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -4900,8 +5037,8 @@
                     },
                     "valid_starting_location": false,
                     "destination": {
-                        "world_name": "Artaria",
-                        "area_name": "Transport to Dairon"
+                        "region": "Artaria",
+                        "area": "Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -5216,11 +5353,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Hub Access",
-                        "node_name": "Dock from Transport to Artaria"
+                        "region": "Dairon",
+                        "area": "Hub Access",
+                        "node": "Dock from Transport to Artaria"
                     },
                     "default_dock_weakness": "Morph Ball Launcher",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -5384,17 +5523,18 @@
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_b1_001",
                         "left_shield_def": "actordef:actors/props/db_hdoor_b1_001/charclasses/db_hdoor_b1_001.bmsad",
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Early Grapple Access",
-                        "node_name": "Door to Early Grapple Room"
+                        "region": "Dairon",
+                        "area": "Early Grapple Access",
+                        "node": "Door to Early Grapple Room"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -5750,11 +5890,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Transport to Artaria",
-                        "node_name": "Door to Early Grapple Room"
+                        "region": "Dairon",
+                        "area": "Transport to Artaria",
+                        "node": "Door to Early Grapple Room"
                     },
                     "default_dock_weakness": "Charge Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6667,11 +6809,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Navigation Station South",
-                        "node_name": "Door to Heated Room West"
+                        "region": "Dairon",
+                        "area": "Navigation Station South",
+                        "node": "Door to Heated Room West"
                     },
                     "default_dock_weakness": "Charge Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6743,11 +6887,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Early Grapple Access",
-                        "node_name": "Door to Heated Room West"
+                        "region": "Dairon",
+                        "area": "Early Grapple Access",
+                        "node": "Door to Heated Room West"
                     },
                     "default_dock_weakness": "Charge Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6914,11 +7060,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Energy Recharge Station Middle",
-                        "node_name": "Door to Navigation Station South"
+                        "region": "Dairon",
+                        "area": "Energy Recharge Station Middle",
+                        "node": "Door to Navigation Station South"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6954,11 +7102,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Heated Room West",
-                        "node_name": "Door to Navigation Station South"
+                        "region": "Dairon",
+                        "area": "Heated Room West",
+                        "node": "Door to Navigation Station South"
                     },
                     "default_dock_weakness": "Charge Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7068,11 +7218,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Shinespark Tutorial",
-                        "node_name": "Dock to Energy Recharge Station Middle"
+                        "region": "Dairon",
+                        "area": "Shinespark Tutorial",
+                        "node": "Dock to Energy Recharge Station Middle"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7119,11 +7271,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Navigation Station South",
-                        "node_name": "Door to Energy Recharge Station Middle"
+                        "region": "Dairon",
+                        "area": "Navigation Station South",
+                        "node": "Door to Energy Recharge Station Middle"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7280,11 +7434,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Test Chamber Access",
-                        "node_name": "Dock to Shinespark Tutorial"
+                        "region": "Dairon",
+                        "area": "Test Chamber Access",
+                        "node": "Dock to Shinespark Tutorial"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7323,11 +7479,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Energy Recharge Station Middle",
-                        "node_name": "Dock to Shinespark Tutorial"
+                        "region": "Dairon",
+                        "area": "Energy Recharge Station Middle",
+                        "node": "Dock to Shinespark Tutorial"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7368,11 +7526,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Storm Missile Gate Room",
-                        "node_name": "Dock to Shinespark Tutorial"
+                        "region": "Dairon",
+                        "area": "Storm Missile Gate Room",
+                        "node": "Dock to Shinespark Tutorial"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7410,11 +7570,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit North",
-                        "node_name": "Door to Shinespark Tutorial"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit North",
+                        "node": "Door to Shinespark Tutorial"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7495,11 +7657,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit Northwest",
-                        "node_name": "Door to Shinespark Tutorial"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit Northwest",
+                        "node": "Door to Shinespark Tutorial"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7563,11 +7727,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "West Transport to Ferenia",
-                        "node_name": "Dock to EMMI Zone Exit North"
+                        "region": "Dairon",
+                        "area": "West Transport to Ferenia",
+                        "node": "Dock to EMMI Zone Exit North"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7628,11 +7794,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Cross Bomb Puzzle Room",
-                        "node_name": "Dock to EMMI Zone Exit North"
+                        "region": "Dairon",
+                        "area": "Cross Bomb Puzzle Room",
+                        "node": "Dock to EMMI Zone Exit North"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7672,11 +7840,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Shinespark Tutorial",
-                        "node_name": "Door to EMMI Zone Exit North"
+                        "region": "Dairon",
+                        "area": "Shinespark Tutorial",
+                        "node": "Door to EMMI Zone Exit North"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7731,7 +7901,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Use a walljump to get up from the ledge",
+                                            "comment": "Use a Wall Jump to get up from the ledge",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7850,11 +8020,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Yellow EMMI Introduction",
-                        "node_name": "Dock to EMMI Zone Exit North"
+                        "region": "Dairon",
+                        "area": "Yellow EMMI Introduction",
+                        "node": "Dock to EMMI Zone Exit North"
                     },
                     "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7885,11 +8057,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Yellow EMMI Introduction",
-                        "node_name": "Tunnel to EMMI Zone Exit North"
+                        "region": "Dairon",
+                        "area": "Yellow EMMI Introduction",
+                        "node": "Tunnel to EMMI Zone Exit North"
                     },
                     "default_dock_weakness": "Dairon EMMI Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8029,11 +8203,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Big Hub",
-                        "node_name": "Dock to Yellow EMMI Introduction"
+                        "region": "Dairon",
+                        "area": "Big Hub",
+                        "node": "Dock to Yellow EMMI Introduction"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8078,11 +8254,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit East",
-                        "node_name": "Door to Yellow EMMI Introduction"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit East",
+                        "node": "Door to Yellow EMMI Introduction"
                     },
                     "default_dock_weakness": "Charge Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8270,11 +8448,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit North",
-                        "node_name": "Dock to Yellow EMMI Introduction"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit North",
+                        "node": "Dock to Yellow EMMI Introduction"
                     },
                     "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8347,11 +8527,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit North",
-                        "node_name": "Tunnel to Yellow EMMI Introduction"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit North",
+                        "node": "Tunnel to Yellow EMMI Introduction"
                     },
                     "default_dock_weakness": "Dairon EMMI Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8440,11 +8622,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit North",
-                        "node_name": "Dock to West Transport to Ferenia"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit North",
+                        "node": "Dock to West Transport to Ferenia"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8521,11 +8705,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Navigation Station North",
-                        "node_name": "Door to West Transport to Ferenia (Lower)"
+                        "region": "Dairon",
+                        "area": "Navigation Station North",
+                        "node": "Door to West Transport to Ferenia (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8596,11 +8782,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Navigation Station North",
-                        "node_name": "Door to West Transport to Ferenia (Upper)"
+                        "region": "Dairon",
+                        "area": "Navigation Station North",
+                        "node": "Door to West Transport to Ferenia (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8635,8 +8823,8 @@
                     },
                     "valid_starting_location": false,
                     "destination": {
-                        "world_name": "Ferenia",
-                        "area_name": "Transport to Dairon"
+                        "region": "Ferenia",
+                        "area": "Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -8726,11 +8914,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit North",
-                        "node_name": "Dock to Cross Bomb Puzzle Room"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit North",
+                        "node": "Dock to Cross Bomb Puzzle Room"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8763,17 +8953,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Total Recharge Station West",
-                        "node_name": "Door to Cross Bomb Puzzle Room"
+                        "region": "Dairon",
+                        "area": "Total Recharge Station West",
+                        "node": "Door to Cross Bomb Puzzle Room"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9142,17 +9333,18 @@
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001",
                         "left_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad",
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Total Recharge Station West",
-                        "node_name": "Door to Bomb Room"
+                        "region": "Dairon",
+                        "area": "Total Recharge Station West",
+                        "node": "Door to Bomb Room"
                     },
                     "default_dock_weakness": "Access Closed",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9287,11 +9479,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Total Recharge Station West",
-                        "node_name": "Dock from Bomb Room"
+                        "region": "Dairon",
+                        "area": "Total Recharge Station West",
+                        "node": "Dock from Bomb Room"
                     },
                     "default_dock_weakness": "Morph Ball Launcher",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -9346,17 +9540,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Cross Bomb Puzzle Room",
-                        "node_name": "Door to Total Recharge Station West"
+                        "region": "Dairon",
+                        "area": "Cross Bomb Puzzle Room",
+                        "node": "Door to Total Recharge Station West"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9396,17 +9591,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Test Chamber Access",
-                        "node_name": "Door to Total Recharge Station West"
+                        "region": "Dairon",
+                        "area": "Test Chamber Access",
+                        "node": "Door to Total Recharge Station West"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9437,17 +9633,18 @@
                         "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001",
                         "left_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad",
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Bomb Room",
-                        "node_name": "Door from Total Recharge Station West"
+                        "region": "Dairon",
+                        "area": "Bomb Room",
+                        "node": "Door from Total Recharge Station West"
                     },
                     "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9480,17 +9677,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Map Station",
-                        "node_name": "Door to Total Recharge Station West"
+                        "region": "Dairon",
+                        "area": "Map Station",
+                        "node": "Door to Total Recharge Station West"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9604,11 +9802,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Power Switch 2",
-                        "node_name": "Tunnel to Total Recharge Station West"
+                        "region": "Dairon",
+                        "area": "Power Switch 2",
+                        "node": "Tunnel to Total Recharge Station West"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9637,11 +9837,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Bomb Room",
-                        "node_name": "Tunnel to Total Recharge Station West"
+                        "region": "Dairon",
+                        "area": "Bomb Room",
+                        "node": "Tunnel to Total Recharge Station West"
                     },
                     "default_dock_weakness": "Blocked Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9704,17 +9906,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Total Recharge Station West",
-                        "node_name": "Door to Map Station"
+                        "region": "Dairon",
+                        "area": "Total Recharge Station West",
+                        "node": "Door to Map Station"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9754,17 +9957,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Freezer",
-                        "node_name": "Door to Map Station"
+                        "region": "Dairon",
+                        "area": "Freezer",
+                        "node": "Door to Map Station"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9856,17 +10060,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Freezer",
-                        "node_name": "Door to Power Switch 2"
+                        "region": "Dairon",
+                        "area": "Freezer",
+                        "node": "Door to Power Switch 2"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10014,11 +10219,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Total Recharge Station West",
-                        "node_name": "Tunnel to Power Switch 2"
+                        "region": "Dairon",
+                        "area": "Total Recharge Station West",
+                        "node": "Tunnel to Power Switch 2"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10100,17 +10307,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Map Station",
-                        "node_name": "Door to Freezer"
+                        "region": "Dairon",
+                        "area": "Map Station",
+                        "node": "Door to Freezer"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10353,17 +10561,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Power Switch 2",
-                        "node_name": "Door to Freezer"
+                        "region": "Dairon",
+                        "area": "Power Switch 2",
+                        "node": "Door to Freezer"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10508,17 +10717,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Energy Recharge Station West",
-                        "node_name": "Door to Freezer (Upper)"
+                        "region": "Dairon",
+                        "area": "Energy Recharge Station West",
+                        "node": "Door to Freezer (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10549,17 +10759,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Energy Recharge Station West",
-                        "node_name": "Door to Freezer (Lower)"
+                        "region": "Dairon",
+                        "area": "Energy Recharge Station West",
+                        "node": "Door to Freezer (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -12437,11 +12648,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Shinespark Tutorial",
-                        "node_name": "Dock to Test Chamber Access"
+                        "region": "Dairon",
+                        "area": "Shinespark Tutorial",
+                        "node": "Dock to Test Chamber Access"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -12500,17 +12713,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Total Recharge Station West",
-                        "node_name": "Door to Test Chamber Access"
+                        "region": "Dairon",
+                        "area": "Total Recharge Station West",
+                        "node": "Door to Test Chamber Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -12619,11 +12833,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Experiment Z-57 Test Chamber",
-                        "node_name": "Dock from Test Chamber Access"
+                        "region": "Dairon",
+                        "area": "Experiment Z-57 Test Chamber",
+                        "node": "Dock from Test Chamber Access"
                     },
                     "default_dock_weakness": "Morph Ball Launcher",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -12712,11 +12928,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Experiment Z-57 Test Chamber",
-                        "node_name": "Dock to EMMI Zone Exit Northwest"
+                        "region": "Dairon",
+                        "area": "Experiment Z-57 Test Chamber",
+                        "node": "Dock to EMMI Zone Exit Northwest"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -12759,11 +12977,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit West",
-                        "node_name": "Door to EMMI Zone Exit Northwest"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit West",
+                        "node": "Door to EMMI Zone Exit Northwest"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -12837,11 +13057,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Shinespark Tutorial",
-                        "node_name": "Door to EMMI Zone Exit Northwest"
+                        "region": "Dairon",
+                        "area": "Shinespark Tutorial",
+                        "node": "Door to EMMI Zone Exit Northwest"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -12870,11 +13092,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit West",
-                        "node_name": "Dock to EMMI Zone Exit Northwest"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit West",
+                        "node": "Dock to EMMI Zone Exit Northwest"
                     },
                     "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -12905,11 +13129,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit West",
-                        "node_name": "Tunnel to EMMI Zone Exit Northwest"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit West",
+                        "node": "Tunnel to EMMI Zone Exit Northwest"
                     },
                     "default_dock_weakness": "Dairon EMMI Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -12973,11 +13199,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit Northwest",
-                        "node_name": "Dock to Experiment Z-57 Test Chamber"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit Northwest",
+                        "node": "Dock to Experiment Z-57 Test Chamber"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13013,11 +13241,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Hidden Grapple Shortcut Room",
-                        "node_name": "Door to Experiment Z-57 Test Chamber"
+                        "region": "Dairon",
+                        "area": "Hidden Grapple Shortcut Room",
+                        "node": "Door to Experiment Z-57 Test Chamber"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13046,11 +13276,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Test Chamber Access",
-                        "node_name": "Tunnel to Experiment Z-57 Test Chamber"
+                        "region": "Dairon",
+                        "area": "Test Chamber Access",
+                        "node": "Tunnel to Experiment Z-57 Test Chamber"
                     },
                     "default_dock_weakness": "Blocked Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13118,11 +13350,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit Northwest",
-                        "node_name": "Door to EMMI Zone Exit West"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit Northwest",
+                        "node": "Door to EMMI Zone Exit West"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13151,11 +13385,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Hidden Grapple Shortcut Room",
-                        "node_name": "Dock to EMMI Zone Exit West"
+                        "region": "Dairon",
+                        "area": "Hidden Grapple Shortcut Room",
+                        "node": "Dock to EMMI Zone Exit West"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13198,11 +13434,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit Southwest",
-                        "node_name": "Door to EMMI Zone Exit West"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit Southwest",
+                        "node": "Door to EMMI Zone Exit West"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13231,11 +13469,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit Northwest",
-                        "node_name": "Dock to EMMI Zone Exit West"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit Northwest",
+                        "node": "Dock to EMMI Zone Exit West"
                     },
                     "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13261,11 +13501,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit Northwest",
-                        "node_name": "Tunnel to EMMI Zone Exit West"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit Northwest",
+                        "node": "Tunnel to EMMI Zone Exit West"
                     },
                     "default_dock_weakness": "Dairon EMMI Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13329,11 +13571,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit West",
-                        "node_name": "Dock to Hidden Grapple Shortcut Room"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit West",
+                        "node": "Dock to Hidden Grapple Shortcut Room"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13378,11 +13622,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Experiment Z-57 Test Chamber",
-                        "node_name": "Door to Hidden Grapple Shortcut Room"
+                        "region": "Dairon",
+                        "area": "Experiment Z-57 Test Chamber",
+                        "node": "Door to Hidden Grapple Shortcut Room"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13529,11 +13775,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Save Station West Tunnels",
-                        "node_name": "Tunnel to Hidden Grapple Shortcut Room (Bottom)"
+                        "region": "Dairon",
+                        "area": "Save Station West Tunnels",
+                        "node": "Tunnel to Hidden Grapple Shortcut Room (Bottom)"
                     },
                     "default_dock_weakness": "Morph Ball Launcher",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13562,11 +13810,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Save Station West Tunnels",
-                        "node_name": "Tunnel to Hidden Grapple Shortcut Room (Top)"
+                        "region": "Dairon",
+                        "area": "Save Station West Tunnels",
+                        "node": "Tunnel to Hidden Grapple Shortcut Room (Top)"
                     },
                     "default_dock_weakness": "Morph Ball Launcher",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13629,17 +13879,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Save Station West",
-                        "node_name": "Door to Save Station West Tunnels"
+                        "region": "Dairon",
+                        "area": "Save Station West",
+                        "node": "Door to Save Station West Tunnels"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13729,11 +13980,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Hidden Grapple Shortcut Room",
-                        "node_name": "Tunnel to Save Station West Tunnels (Bottom)"
+                        "region": "Dairon",
+                        "area": "Hidden Grapple Shortcut Room",
+                        "node": "Tunnel to Save Station West Tunnels (Bottom)"
                     },
                     "default_dock_weakness": "Morph Ball Launcher",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13762,11 +14015,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Hidden Grapple Shortcut Room",
-                        "node_name": "Tunnel to Save Station West Tunnels (Top)"
+                        "region": "Dairon",
+                        "area": "Hidden Grapple Shortcut Room",
+                        "node": "Tunnel to Save Station West Tunnels (Top)"
                     },
                     "default_dock_weakness": "Morph Ball Launcher",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13829,17 +14084,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Save Station West Tunnels",
-                        "node_name": "Door to Save Station West"
+                        "region": "Dairon",
+                        "area": "Save Station West Tunnels",
+                        "node": "Door to Save Station West"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13932,11 +14188,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Shinespark Tutorial",
-                        "node_name": "Dock to Storm Missile Gate Room"
+                        "region": "Dairon",
+                        "area": "Shinespark Tutorial",
+                        "node": "Dock to Storm Missile Gate Room"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13981,11 +14239,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Ammo Recharge Station",
-                        "node_name": "Door to Storm Missile Gate Room"
+                        "region": "Dairon",
+                        "area": "Ammo Recharge Station",
+                        "node": "Door to Storm Missile Gate Room"
                     },
                     "default_dock_weakness": "Access Locked",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -14064,11 +14324,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Lake Puzzle Room",
-                        "node_name": "Dock to Storm Missile Gate Room"
+                        "region": "Dairon",
+                        "area": "Lake Puzzle Room",
+                        "node": "Dock to Storm Missile Gate Room"
                     },
                     "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -14099,11 +14361,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Ammo Recharge Station",
-                        "node_name": "Tunnel to Storm Missile Gate Room"
+                        "region": "Dairon",
+                        "area": "Ammo Recharge Station",
+                        "node": "Tunnel to Storm Missile Gate Room"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -14422,11 +14686,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit South",
-                        "node_name": "Dock to Ammo Recharge Station"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit South",
+                        "node": "Dock to Ammo Recharge Station"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -14469,11 +14735,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Storm Missile Gate Room",
-                        "node_name": "Door to Ammo Recharge Station"
+                        "region": "Dairon",
+                        "area": "Storm Missile Gate Room",
+                        "node": "Door to Ammo Recharge Station"
                     },
                     "default_dock_weakness": "Charge Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -14552,11 +14820,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Storm Missile Gate Room",
-                        "node_name": "Tunnel to Ammo Recharge Station"
+                        "region": "Dairon",
+                        "area": "Storm Missile Gate Room",
+                        "node": "Tunnel to Ammo Recharge Station"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -14766,11 +15036,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Storm Missile Gate Room",
-                        "node_name": "Dock to Lake Puzzle Room"
+                        "region": "Dairon",
+                        "area": "Storm Missile Gate Room",
+                        "node": "Dock to Lake Puzzle Room"
                     },
                     "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15026,11 +15298,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Burenia Upper Transport Access",
-                        "node_name": "Dock to EMMI Zone Exit Southwest"
+                        "region": "Dairon",
+                        "area": "Burenia Upper Transport Access",
+                        "node": "Dock to EMMI Zone Exit Southwest"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15063,11 +15337,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit West",
-                        "node_name": "Door to EMMI Zone Exit Southwest"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit West",
+                        "node": "Door to EMMI Zone Exit Southwest"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15100,11 +15376,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Central Unit Access",
-                        "node_name": "Tunnel to EMMI Zone Exit Southwest"
+                        "region": "Dairon",
+                        "area": "Central Unit Access",
+                        "node": "Tunnel to EMMI Zone Exit Southwest"
                     },
                     "default_dock_weakness": "Dairon EMMI Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15168,11 +15446,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Ammo Recharge Station",
-                        "node_name": "Dock to EMMI Zone Exit South"
+                        "region": "Dairon",
+                        "area": "Ammo Recharge Station",
+                        "node": "Dock to EMMI Zone Exit South"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15206,11 +15486,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Burenia Lower Transport Access",
-                        "node_name": "Dock to EMMI Zone Exit South"
+                        "region": "Dairon",
+                        "area": "Burenia Lower Transport Access",
+                        "node": "Dock to EMMI Zone Exit South"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15272,11 +15554,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Central Unit Access",
-                        "node_name": "Door to EMMI Zone Exit South (Charge)"
+                        "region": "Dairon",
+                        "area": "Central Unit Access",
+                        "node": "Door to EMMI Zone Exit South (Charge)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15328,17 +15612,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Central Unit Access",
-                        "node_name": "Door to EMMI Zone Exit South (Open)"
+                        "region": "Dairon",
+                        "area": "Central Unit Access",
+                        "node": "Door to EMMI Zone Exit South (Open)"
                     },
                     "default_dock_weakness": "Access Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15517,11 +15802,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Central Unit Access",
-                        "node_name": "Tunnel to EMMI Zone Exit South"
+                        "region": "Dairon",
+                        "area": "Central Unit Access",
+                        "node": "Tunnel to EMMI Zone Exit South"
                     },
                     "default_dock_weakness": "Dairon EMMI Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15637,11 +15924,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Central Unit Access",
-                        "node_name": "Door to Central Unit"
+                        "region": "Dairon",
+                        "area": "Central Unit Access",
+                        "node": "Door to Central Unit"
                     },
                     "default_dock_weakness": "Access Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15727,11 +16016,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit Southwest",
-                        "node_name": "Dock to Burenia Upper Transport Access"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit Southwest",
+                        "node": "Dock to Burenia Upper Transport Access"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15769,11 +16060,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Upper Transport to Burenia",
-                        "node_name": "Door to Burenia Upper Transport Access"
+                        "region": "Dairon",
+                        "area": "Upper Transport to Burenia",
+                        "node": "Door to Burenia Upper Transport Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15838,11 +16131,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit South",
-                        "node_name": "Door to Central Unit Access (Charge)"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit South",
+                        "node": "Door to Central Unit Access (Charge)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -15913,17 +16208,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit South",
-                        "node_name": "Door to Central Unit Access (Open)"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit South",
+                        "node": "Door to Central Unit Access (Open)"
                     },
                     "default_dock_weakness": "Access Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16048,11 +16344,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Central Unit",
-                        "node_name": "Door to Central Unit Access"
+                        "region": "Dairon",
+                        "area": "Central Unit",
+                        "node": "Door to Central Unit Access"
                     },
                     "default_dock_weakness": "Access Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16147,11 +16445,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit South",
-                        "node_name": "Tunnel to Central Unit Access"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit South",
+                        "node": "Tunnel to Central Unit Access"
                     },
                     "default_dock_weakness": "Dairon EMMI Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16180,11 +16480,13 @@
                     "valid_starting_location": false,
                     "dock_type": "tunnel",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit Southwest",
-                        "node_name": "Tunnel to Central Unit Access"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit Southwest",
+                        "node": "Tunnel to Central Unit Access"
                     },
                     "default_dock_weakness": "Dairon EMMI Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16260,11 +16562,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "EMMI Zone Exit South",
-                        "node_name": "Dock to Burenia Lower Transport Access"
+                        "region": "Dairon",
+                        "area": "EMMI Zone Exit South",
+                        "node": "Dock to Burenia Lower Transport Access"
                     },
                     "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16297,11 +16601,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Lower Transport to Burenia",
-                        "node_name": "Door to Burenia Lower Transport Access"
+                        "region": "Dairon",
+                        "area": "Lower Transport to Burenia",
+                        "node": "Door to Burenia Lower Transport Access"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16361,17 +16667,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Freezer",
-                        "node_name": "Door to Energy Recharge Station West (Upper)"
+                        "region": "Dairon",
+                        "area": "Freezer",
+                        "node": "Door to Energy Recharge Station West (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16409,17 +16716,18 @@
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null,
-                        "exclude_from_dock_rando": true
+                        "right_shield_def": null
                     },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Freezer",
-                        "node_name": "Door to Energy Recharge Station West (Lower)"
+                        "region": "Dairon",
+                        "area": "Freezer",
+                        "node": "Door to Energy Recharge Station West (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16512,11 +16820,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Transport to Ghavoran",
-                        "node_name": "Dock to Energy Recharge Station West"
+                        "region": "Dairon",
+                        "area": "Transport to Ghavoran",
+                        "node": "Dock to Energy Recharge Station West"
                     },
                     "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16612,11 +16922,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Teleport to Artaria",
-                        "node_name": "Door to Transport to Cataris"
+                        "region": "Dairon",
+                        "area": "Teleport to Artaria",
+                        "node": "Door to Transport to Cataris"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16651,8 +16963,8 @@
                     },
                     "valid_starting_location": false,
                     "destination": {
-                        "world_name": "Cataris",
-                        "area_name": "Transport to Dairon"
+                        "region": "Cataris",
+                        "area": "Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -16721,11 +17033,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "West Transport to Ferenia",
-                        "node_name": "Door to Navigation Station North (Lower)"
+                        "region": "Dairon",
+                        "area": "West Transport to Ferenia",
+                        "node": "Door to Navigation Station North (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16768,11 +17082,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "West Transport to Ferenia",
-                        "node_name": "Door to Navigation Station North (Upper)"
+                        "region": "Dairon",
+                        "area": "West Transport to Ferenia",
+                        "node": "Door to Navigation Station North (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16879,11 +17195,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Burenia Lower Transport Access",
-                        "node_name": "Door to Lower Transport to Burenia"
+                        "region": "Dairon",
+                        "area": "Burenia Lower Transport Access",
+                        "node": "Door to Lower Transport to Burenia"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -16918,8 +17236,8 @@
                     },
                     "valid_starting_location": false,
                     "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "Lower Transport to Dairon"
+                        "region": "Burenia",
+                        "area": "Lower Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -16988,11 +17306,13 @@
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Burenia Upper Transport Access",
-                        "node_name": "Door to Upper Transport to Burenia"
+                        "region": "Dairon",
+                        "area": "Burenia Upper Transport Access",
+                        "node": "Door to Upper Transport to Burenia"
                     },
                     "default_dock_weakness": "Power Beam Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -17027,8 +17347,8 @@
                     },
                     "valid_starting_location": false,
                     "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "Upper Transport to Dairon"
+                        "region": "Burenia",
+                        "area": "Upper Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -17096,8 +17416,8 @@
                     },
                     "valid_starting_location": false,
                     "destination": {
-                        "world_name": "Ghavoran",
-                        "area_name": "Transport to Dairon"
+                        "region": "Ghavoran",
+                        "area": "Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -17127,11 +17447,13 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "world_name": "Dairon",
-                        "area_name": "Energy Recharge Station West",
-                        "node_name": "Dock to Transport to Ghavoran"
+                        "region": "Dairon",
+                        "area": "Energy Recharge Station West",
+                        "node": "Dock to Transport to Ghavoran"
                     },
                     "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {

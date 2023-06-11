@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import typing
 
-from PySide6.QtWidgets import QMainWindow
-
+from PySide6 import QtWidgets
 
 if typing.TYPE_CHECKING:
     from randovania.games.game import RandovaniaGame
@@ -14,7 +13,7 @@ if typing.TYPE_CHECKING:
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
-class WindowManager(QMainWindow):
+class WindowManager(QtWidgets.QMainWindow):
     tracked_windows: list[CloseEventWidget]
 
     def __init__(self):
@@ -28,18 +27,21 @@ class WindowManager(QMainWindow):
     async def open_map_tracker(self, configuration: Preset):
         raise NotImplementedError()
 
-    def open_data_visualizer_at(self, world_name: str | None, area_name: str | None, game: RandovaniaGame,
+    def open_data_visualizer_at(self, region_name: str | None, area_name: str | None, game: RandovaniaGame,
                                 trick_levels: TrickLevelConfiguration | None = None):
         raise NotImplementedError()
 
     def open_game_details(self, layout: LayoutDescription):
         raise NotImplementedError()
 
+    def open_game_connection_window(self):
+        raise NotImplementedError()
+
     def set_games_selector_visible(self, visible: bool):
         raise NotImplementedError()
 
     @property
-    def main_window(self) -> QMainWindow:
+    def main_window(self) -> QtWidgets.QMainWindow:
         raise NotImplementedError()
 
     @property
@@ -52,3 +54,7 @@ class WindowManager(QMainWindow):
 
         window.CloseEvent.connect(remove_window)
         self.tracked_windows.append(window)
+
+
+def get_global_window_manager() -> WindowManager:
+    return QtWidgets.QApplication.instance().main_window

@@ -1,5 +1,5 @@
 {
-    "schema_version": 44,
+    "schema_version": 53,
     "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "955aaac1-7ab4-4414-83db-45cfc35e68d7",
@@ -12,23 +12,24 @@
         },
         "starting_location": [
             {
-                "world_name": "Mimiga Village",
-                "area_name": "Start Point"
+                "region": "Mimiga Village",
+                "area": "Start Point",
+                "node": "Room Spawn"
             }
         ],
         "available_locations": {
             "randomization_mode": "full",
             "excluded_indices": []
         },
-        "major_items_configuration": {
-            "items_state": {
+        "standard_pickup_configuration": {
+            "pickups_state": {
                 "Polar Star": {},
                 "Spur": {},
                 "Progressive Polar Star": {
                     "num_shuffled_pickups": 2
                 },
                 "Base Missiles": {
-                    "num_included_in_starting_items": 1,
+                    "num_included_in_starting_pickups": 1,
                     "included_ammo": [
                         5
                     ]
@@ -57,7 +58,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Map System": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Silver Locket": {
                     "num_shuffled_pickups": 1
@@ -143,7 +144,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Nikumaru Counter": {
-                    "num_included_in_starting_items": 1
+                    "num_included_in_starting_pickups": 1
                 },
                 "Teleporter Room Key": {
                     "num_shuffled_pickups": 1
@@ -197,25 +198,25 @@
                     ]
                 }
             },
-            "default_items": {},
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
         },
-        "ammo_configuration": {
-            "items_state": {
+        "ammo_pickup_configuration": {
+            "pickups_state": {
                 "Missile Expansion": {
                     "ammo_count": [
                         5
                     ],
                     "pickup_count": 4,
-                    "requires_major_item": false
+                    "requires_main_item": false
                 },
                 "Large Missile Expansion": {
                     "ammo_count": [
                         24
                     ],
                     "pickup_count": 1,
-                    "requires_major_item": false
+                    "requires_main_item": false
                 }
             }
         },

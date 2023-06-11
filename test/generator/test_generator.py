@@ -73,5 +73,5 @@ def test_distribute_remaining_items_no_locations_left(echoes_game_description, e
 
     # Run
     with pytest.raises(InvalidConfiguration,
-                       match=r"Received 1000 remaining pickups, but there's only \d+ unassigned locations."):
+                       match=r"Received 881 remaining pickups, but there's only \d+ unassigned locations."):
         generator._distribute_remaining_items(rng, filler_results, [default_echoes_preset])

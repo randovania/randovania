@@ -3,9 +3,9 @@ import collections
 from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description import default_database
-from randovania.game_description.world.hint_node import HintNode
+from randovania.game_description.db.hint_node import HintNode
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 
 
 def prime1_hint_text():
@@ -14,7 +14,7 @@ def prime1_hint_text():
 
     result = [(
         "Artifact",
-        artifact.item_category,
+        artifact.pickup_category,
         artifact.broad_category,
     )]
     return result
@@ -29,14 +29,14 @@ def prime2_hint_text():
         key = pickup_creator.create_dark_temple_key(0, temple, db)
         result.append((
             key.name.replace(" 1", "").strip(),
-            key.item_category,
+            key.pickup_category,
             key.broad_category,
         ))
 
     key = pickup_creator.create_sky_temple_key(0, db)
     result.append((
         "Sky Temple Key",
-        key.item_category,
+        key.pickup_category,
         key.broad_category,
     ))
 
@@ -49,7 +49,7 @@ def prime3_hint_text():
 
     result = [(
         "Energy Cell",
-        cell.item_category,
+        cell.pickup_category,
         cell.broad_category,
     )]
     return result
@@ -65,31 +65,31 @@ _GAME_SPECIFIC = {
 def update_hints_text(game: RandovaniaGame,
                       hint_item_names_tree_widget: QtWidgets.QTableWidget,
                       ):
-    item_database = default_database.item_database_for_game(game)
+    pickup_database = default_database.pickup_database_for_game(game)
 
     rows = []
 
-    for item in item_database.major_items.values():
+    for item in pickup_database.standard_pickups.values():
         rows.append((
             item.name,
-            item.item_category.hint_details[1],
-            item.item_category.general_details[1],
+            item.pickup_category.hint_details[1],
+            item.pickup_category.general_details[1],
             item.broad_category.hint_details[1],
         ))
 
-    for name, item_category, broad_category in _GAME_SPECIFIC.get(game, lambda: [])():
+    for name, pickup_category, broad_category in _GAME_SPECIFIC.get(game, lambda: [])():
         rows.append((
             name,
-            item_category.hint_details[1],
-            item_category.general_details[1],
+            pickup_category.hint_details[1],
+            pickup_category.general_details[1],
             broad_category.hint_details[1],
         ))
 
-    for ammo in item_database.ammo.values():
+    for ammo in pickup_database.ammo_pickups.values():
         rows.append((
             ammo.name,
-            ammo.item_category.hint_details[1],
-            ammo.item_category.general_details[1],
+            ammo.pickup_category.hint_details[1],
+            ammo.pickup_category.general_details[1],
             ammo.broad_category.hint_details[1],
         ))
 
@@ -118,8 +118,8 @@ def update_hint_locations(game: RandovaniaGame,
 
     # First figure out which areas uses what hints.
     # This lets us use detect which hint types are used
-    for world in game_description.world_list.worlds:
-        for area in world.areas:
+    for region in game_description.region_list.regions:
+        for area in region.areas:
             hint_types = {}
 
             for node in area.nodes:
@@ -131,20 +131,20 @@ def update_hint_locations(game: RandovaniaGame,
                         hint_types[node.kind] = "✓"
 
             if hint_types:
-                hint_type_tree[world.correct_name(area.in_dark_aether)][area.name] = hint_types
+                hint_type_tree[region.correct_name(area.in_dark_aether)][area.name] = hint_types
 
     number_for_hint_type = {
         hint_type: i + 1
         for i, hint_type in enumerate(sorted(used_hint_kind, key=lambda it: it.long_name))
     }
 
-    for world_name, area_hints in hint_type_tree.items():
-        world_item = QtWidgets.QTreeWidgetItem(hint_tree_widget)
-        world_item.setText(0, world_name)
-        world_item.setExpanded(True)
+    for region_name, area_hints in hint_type_tree.items():
+        region_item = QtWidgets.QTreeWidgetItem(hint_tree_widget)
+        region_item.setText(0, region_name)
+        region_item.setExpanded(True)
 
         for area_name, hint_types in area_hints.items():
-            area_item = QtWidgets.QTreeWidgetItem(world_item)
+            area_item = QtWidgets.QTreeWidgetItem(region_item)
             area_item.setText(0, area_name)
 
             for hint_type, text in hint_types.items():

@@ -1,5 +1,4 @@
 import collections
-import json
 import logging
 import pprint
 import shutil
@@ -123,7 +122,7 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
         for asset in randomizer_data_additions
     }
 
-    wl = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES).world_list
+    wl = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES).region_list
     pickup_index_to_mrea_asset_id = {
         location["Index"]: wl.nodes_to_area(wl.node_from_pickup_index(PickupIndex(location["Index"]))).extra["asset_id"]
         for location in randomizer_data["LocationData"]
@@ -292,8 +291,7 @@ def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: 
             "Assets": dependencies
         })
     meta_dict["data"] = randomizer_data_additions
-    with open(output_path.joinpath("meta.json"), "w") as data_additions_file:
-        json.dump(meta_dict, data_additions_file, indent=4)
+    json_lib.write_path(output_path.joinpath("meta.json"), meta_dict)
 
     time.time()
     # logging.debug(f"Time took: {end - start}")
@@ -327,14 +325,12 @@ def _read_prime1_from_cache(assets_path: Path, updaters):
 def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: ProgressUpdateCallable):
     metafile = output_path.joinpath("meta.json")
     if get_asset_cache_version(output_path) >= ECHOES_MODELS_VERSION:
-        with open(metafile) as md:
-            return json.load(md)
+        return json_lib.read_path(metafile)
 
     delete_converted_assets(output_path)
 
     randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
-    with randomizer_data_path.open() as randomizer_data_file:
-        randomizer_data = json.load(randomizer_data_file)
+    randomizer_data = json_lib.read_path(randomizer_data_path)
 
     next_id = 0xFFFF0000
 
@@ -422,7 +418,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
                             if depb.type == "EVNT":
                                 if depb.id not in unique_evnt:
                                     unique_evnt.append(depb.id)
-                                    converted_dependencies[ancs.id].remove(depb)
+                                    converted_dependencies[ancs.id].button(depb)
                                     converted_dependencies[ancs.id].add(Dependency("EVNT", unique_anim[anim.id]))
                                 else:
                                     dont_delete.append(depb.id)
@@ -439,33 +435,31 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     for id in deleted_evnts:
         converter.converted_assets.pop(id)
 
-    output_path.mkdir(exist_ok=True, parents=True)
-    with output_path.joinpath("meta.json").open("w") as meta_out:
-        metadata = {
-            "version": ECHOES_MODELS_VERSION,
-            "items": {
-                name: {
-                    "ancs": asset.ancs,
-                    "cmdl": asset.cmdl,
-                    "character": asset.character,
-                    "scale": asset.scale,
-                }
-                for name, asset in result.items()
-            },
-            "new_assets": [
-                {
-                    "old_id": new_id_to_old.get(asset.id),
-                    "new_id": asset.id,
-                    "type": asset.type,
-                    "dependencies": [
-                        {"type": dep.type, "id": dep.id}
-                        for dep in converted_dependencies[asset.id]
-                    ]
-                }
-                for asset in converter.converted_assets.values()
-            ],
-        }
-        json.dump(metadata, meta_out, indent=4)
+    metadata = {
+        "version": ECHOES_MODELS_VERSION,
+        "items": {
+            name: {
+                "ancs": asset.ancs,
+                "cmdl": asset.cmdl,
+                "character": asset.character,
+                "scale": asset.scale,
+            }
+            for name, asset in result.items()
+        },
+        "new_assets": [
+            {
+                "old_id": new_id_to_old.get(asset.id),
+                "new_id": asset.id,
+                "type": asset.type,
+                "dependencies": [
+                    {"type": dep.type, "id": dep.id}
+                    for dep in converted_dependencies[asset.id]
+                ]
+            }
+            for asset in converter.converted_assets.values()
+        ],
+    }
+    json_lib.write_path(output_path.joinpath("meta.json"), metadata)
 
     for asset in converter.converted_assets.values():
         assetdata = format_for(asset.type).build(asset.resource, target_game=Game.PRIME)
@@ -478,17 +472,3 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     logging.info(f"Time took to write files: {time.time() - start}")
     status_update(f"Finished writing the converted assets in {end - start:.3f}.", 1.0)
     return metadata
-
-
-def _debug_main():
-    import randovania
-    randovania.setup_logging("DEBUG", None)
-
-    from randovania.interface_common.options import Options
-    options = Options.with_default_data_dir()
-    convert_prime2_pickups(options.internal_copies_path.joinpath("prime2", "contents"),
-                           Path("converted"), print)
-
-
-if __name__ == '__main__':
-    _debug_main()

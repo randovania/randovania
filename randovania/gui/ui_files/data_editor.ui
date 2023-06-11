@@ -42,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="world_selector_box"/>
+      <widget class="QComboBox" name="region_selector_box"/>
      </item>
      <item>
       <widget class="QComboBox" name="area_selector_box">
@@ -86,8 +86,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>156</width>
-          <height>193</height>
+          <width>164</width>
+          <height>262</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="nodes_scroll_layout">
@@ -237,24 +237,24 @@
          </widget>
         </item>
         <item row="1" column="0" colspan="3">
-         <widget class="QScrollArea" name="other_node_alternatives_scroll_area">
-          <property name="lineWidth">
-           <number>4</number>
-          </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <widget class="QWidget" name="other_node_alternatives_contents">
+         <widget class="QTreeWidget" name="other_node_alternatives_contents">
            <property name="geometry">
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>229</width>
-             <height>145</height>
+             <width>256</width>
+             <height>210</height>
             </rect>
            </property>
+           <attribute name="headerVisible">
+            <bool>false</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string notr="true">1</string>
+            </property>
+           </column>
           </widget>
-         </widget>
         </item>
         <item row="0" column="1">
          <widget class="QPushButton" name="other_node_connection_swap_button">

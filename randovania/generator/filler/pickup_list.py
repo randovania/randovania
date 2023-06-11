@@ -7,7 +7,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver import debug
 from randovania.resolver.state import State
@@ -114,7 +114,7 @@ def pickups_to_solve_list(pickup_pool: list[PickupEntry],
     pickups_for_this = list(pickup_pool)
 
     # Check pickups that give less items in total first
-    # This means we test for expansions before the major items, in case both give the same resource
+    # This means we test for expansions before the standard pickups, in case both give the same resource
     # Useful to get Dark Beam Ammo Expansion instead of Dark Beam.
     pickups_for_this.sort(
         key=lambda p: sum(1 for _ in p.resource_gain(resources, force_lock=True))

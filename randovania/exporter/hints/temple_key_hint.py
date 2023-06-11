@@ -22,7 +22,7 @@ def create_temple_key_hint(all_patches: dict[int, GamePatches],
     :param with_color:
     :return:
     """
-    all_world_names = {}
+    all_region_names = {}
 
     _TEMPLE_NAMES = ["Dark Agon Temple", "Dark Torvus Temple", "Hive Temple"]
     temple_index = [HintDarkTemple.AGON_WASTES, HintDarkTemple.TORVUS_BOG,
@@ -35,12 +35,12 @@ def create_temple_key_hint(all_patches: dict[int, GamePatches],
 
     for options in locations_for_items.values():
         for player, location in options:
-            all_world_names[namer.format_world(location, with_color=False)] = (player, location)
+            all_region_names[namer.format_region(location, with_color=False)] = (player, location)
             break
 
     temple_name = namer.format_temple_name(_TEMPLE_NAMES[temple_index], with_color=with_color)
-    names_sorted = [namer.format_world(location, with_color=with_color)
-                    for name, (_, location) in sorted(all_world_names.items(), key=lambda it: it[0])]
+    names_sorted = [namer.format_region(location, with_color=with_color)
+                    for name, (_, location) in sorted(all_region_names.items(), key=lambda it: it[0])]
     if len(names_sorted) == 0:
         return f"The keys to {temple_name} are nowhere to be found."
     elif len(names_sorted) == 1:

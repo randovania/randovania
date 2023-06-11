@@ -13,11 +13,11 @@ from randovania.game_description.hint import (
 )
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.hint_node import HintNodeKind, HintNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.hint_node import HintNodeKind, HintNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region_list import RegionList
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
@@ -50,8 +50,8 @@ class HintDistributor(ABC):
 
     def get_generic_logbook_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
         return [
-            prefill.game.world_list.identifier_for_node(node)
-            for node in prefill.game.world_list.iterate_nodes()
+            prefill.game.region_list.identifier_for_node(node)
+            for node in prefill.game.region_list.iterate_nodes()
             if isinstance(node, HintNode) and node.kind == HintNodeKind.GENERIC
         ]
 
@@ -66,7 +66,7 @@ class HintDistributor(ABC):
         default_precision = PrecisionPair(HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY,
                                           include_owner=True)
 
-        wl = prefill.game.world_list
+        wl = prefill.game.region_list
         for node in wl.iterate_nodes():
             if isinstance(node, HintNode) and node.kind == HintNodeKind.SPECIFIC_PICKUP:
                 identifier = wl.identifier_for_node(node)
@@ -137,7 +137,7 @@ class HintDistributor(ABC):
                                        ) -> GamePatches:
         # Since we haven't added expansions yet, these hints will always be for items added by the filler.
         full_hints_patches = self.fill_unassigned_hints(
-            patches, player_state.game.world_list, rng,
+            patches, player_state.game.region_list, rng,
             player_state.hint_initial_pickups,
         )
         return await self.assign_precision_to_hints(full_hints_patches, rng, player_pool, player_state)
@@ -155,10 +155,10 @@ class HintDistributor(ABC):
         raise NotImplementedError()
 
     def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
-        return pickup.item_category.hinted_as_major
+        return pickup.pickup_category.hinted_as_major
 
     def fill_unassigned_hints(self, patches: GamePatches,
-                              world_list: WorldList,
+                              region_list: RegionList,
                               rng: Random,
                               hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
                               ) -> GamePatches:
@@ -168,10 +168,10 @@ class HintDistributor(ABC):
             len(hint_initial_pickups)
         ))
 
-        # Get all LogbookAssets from the WorldList
+        # Get all LogbookAssets from the RegionList
         potential_hint_locations: set[NodeIdentifier] = {
-            world_list.identifier_for_node(node)
-            for node in world_list.iterate_nodes()
+            region_list.identifier_for_node(node)
+            for node in region_list.iterate_nodes()
             if isinstance(node, HintNode)
         }
         for logbook in potential_hint_locations:
@@ -203,7 +203,7 @@ class HintDistributor(ABC):
 
         all_pickup_indices = [
             node.pickup_index
-            for node in world_list.iterate_nodes()
+            for node in region_list.iterate_nodes()
             if isinstance(node, PickupNode)
         ]
         rng.shuffle(all_pickup_indices)
@@ -261,7 +261,7 @@ class HintDistributor(ABC):
 
             new_hints[logbook] = Hint(HintType.LOCATION, None, new_index)
             debug.debug_print(f"Added hint at {logbook} for item at "
-                              f"{world_list.node_name(world_list.node_from_pickup_index(new_index))}")
+                              f"{region_list.node_name(region_list.node_from_pickup_index(new_index))}")
 
         return dataclasses.replace(patches, hints=new_hints)
 
@@ -286,7 +286,7 @@ class HintDistributor(ABC):
     def precision_pair_weighted_list(self) -> list[PrecisionPair]:
         raise NotImplementedError()
 
-    def add_relative_hint(self, world_list: WorldList,
+    def add_relative_hint(self, region_list: RegionList,
                           patches: GamePatches,
                           rng: Random,
                           target: PickupIndex,
@@ -300,16 +300,16 @@ class HintDistributor(ABC):
         Creates a relative hint.
         :return: Might be None, if no hint could be created.
         """
-        target_node = node_search.pickup_index_to_node(world_list, target)
-        target_area = world_list.nodes_to_area(target_node)
-        distances = node_search.distances_to_node(world_list, target_node, patches=patches, cutoff=max_distance)
+        target_node = node_search.pickup_index_to_node(region_list, target)
+        target_area = region_list.nodes_to_area(target_node)
+        distances = node_search.distances_to_node(region_list, target_node, patches=patches, cutoff=max_distance)
 
         def _major_pickups(area: Area) -> Iterator[PickupIndex]:
             for index in area.pickup_indices:
                 t = patches.pickup_assignment.get(index)
                 # FIXME: None should be ok, but this must be called after junk has been filled
                 if t is not None:
-                    cat = t.pickup.item_category
+                    cat = t.pickup.pickup_category
                     if cat.hinted_as_major or (not cat.is_expansion and target_precision == HintItemPrecision.DETAILED):
                         yield index
 
@@ -330,7 +330,7 @@ class HintDistributor(ABC):
             distance_offset = max_distance - distances[area]
 
         if relative_type == HintLocationPrecision.RELATIVE_TO_AREA:
-            relative = RelativeDataArea(distance_offset, world_list.identifier_for_area(area),
+            relative = RelativeDataArea(distance_offset, region_list.identifier_for_area(area),
                                         precision)
         elif relative_type == HintLocationPrecision.RELATIVE_TO_INDEX:
             relative = RelativeDataItem(distance_offset, rng.choice(list(_major_pickups(area))), precision)
@@ -347,7 +347,7 @@ class HintDistributor(ABC):
                   max_distance: int,
                   ) -> HintProvider:
         def _wrapper(player_state: PlayerState, patches: GamePatches, rng: Random, target: PickupIndex):
-            return self.add_relative_hint(player_state.game.world_list, patches, rng, target,
+            return self.add_relative_hint(player_state.game.region_list, patches, rng, target,
                                           HintItemPrecision.DETAILED, relative_type,
                                           precise_distance, precision, max_distance)
 

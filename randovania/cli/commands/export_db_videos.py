@@ -1,7 +1,14 @@
 import datetime
-import os
+from pathlib import Path
+from typing import Iterable
 
-from randovania.games import default_data
+from randovania.game_description import default_database
+from randovania.game_description.requirements.array_base import RequirementArrayBase
+from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
@@ -70,46 +77,42 @@ def get_date():
     return str(datetime.datetime.now()).split('.')[0].split(" ")[0]
 
 
-def get_difficulty(item):
-    data = item["data"]
-
+def get_difficulty(req: Requirement) -> int | None:
     # if, trick, return max(this_diff, curr_diff)
-    if item["type"] == "resource" and data["type"] == "tricks":
-        return data["amount"]
+    if isinstance(req, ResourceRequirement) and req.resource.resource_type == ResourceType.TRICK:
+        return req.amount
 
     # return the highest diff of all "and" paths
-    if item["type"] == "and":
+    if isinstance(req, RequirementAnd):
         max_diff = 0
-        for i in data["items"]:
-            diff = get_difficulty(i)
-            if diff is not None and diff > max_diff:
+        for element in req.items:
+            if (diff := get_difficulty(element)) is not None and diff > max_diff:
                 max_diff = diff
+
         return max_diff
+
     # return the lowest diff of all "or" paths
-    elif item["type"] == "or":
+    elif isinstance(req, RequirementOr):
         min_diff = None
-        for i in data["items"]:
-            diff = get_difficulty(i)
-            if diff is not None and (min_diff is None or diff < min_diff):
+        for element in req.items:
+            if (diff := get_difficulty(element)) is not None and (min_diff is None or diff < min_diff):
                 min_diff = diff
+
         return min_diff
+
     return None
 
 
-def get_yt_ids(item, ids, highest_diff):
-    if item["type"] != "and" and item["type"] != "or":
+def get_yt_ids(req: Requirement, highest_diff: int) -> Iterable[tuple[str, int, int]]:
+    if not isinstance(req, RequirementArrayBase):
         return
 
-    diff = get_difficulty(item)
-    if diff is not None and diff > highest_diff:
+    if (diff := get_difficulty(req)) is not None and diff > highest_diff:
         highest_diff = diff
 
-    data = item["data"]
-
-    if data["comment"] is not None:
-        comment = data["comment"]
-        if "youtu" in comment:
-            for word in comment.split(" "):
+    if req.comment is not None:
+        if "youtu" in req.comment:
+            for word in req.comment.split(" "):
                 if "youtu" not in word:
                     continue
 
@@ -120,39 +123,41 @@ def get_yt_ids(item, ids, highest_diff):
                     start_time = int(video_id.split("?t=")[-1])
                 video_id = video_id.split("?t=")[0]
 
-                ids.append((video_id, start_time, highest_diff))
+                yield video_id, start_time, highest_diff
 
-    for i in data["items"]:
-        get_yt_ids(i, ids, highest_diff)
-
-
-def collect_game_info(game: RandovaniaGame):
-    data = default_data.read_json_then_binary(game)[1]
-    worlds = dict()
-    for world in data["worlds"]:
-        areas = dict()
-        for area_name in world["areas"]:
-            area = world["areas"][area_name]
-            nodes = dict()
-            for node_name in area["nodes"]:
-                node = area["nodes"][node_name]
-                connections = dict()
-                for connection_name in node["connections"]:
-                    connection = node["connections"][connection_name]
-                    yt_ids = list()
-                    get_yt_ids(connection, yt_ids, 0)
-                    if len(yt_ids) > 0:
-                        connections[connection_name] = yt_ids
-                if len(connections) > 0:
-                    nodes[node_name] = connections
-            if len(nodes) > 0:
-                areas[area_name] = nodes
-        if len(areas) > 0:
-            worlds[world["name"]] = areas
-    return worlds
+    for i in req.items:
+        yield from get_yt_ids(i, highest_diff)
 
 
-def generate_world_html(name, areas):
+def collect_game_info(game: RandovaniaGame) -> dict[str, dict[str, dict[str, dict[str, list[tuple[str, int, int]]]]]]:
+    db = default_database.game_description_for(game)
+
+    regions = {}
+    for region in db.region_list.regions:
+        areas = {}
+        for area in region.areas:
+            nodes = {}
+            for node in area.nodes:
+                connections = {}
+
+                for target, requirement in area.connections.get(node, {}).items():
+                    yt_ids = list(get_yt_ids(requirement, 0))
+                    if yt_ids:
+                        connections[target.name] = yt_ids
+
+                if connections:
+                    nodes[node.name] = connections
+
+            if nodes:
+                areas[area.name] = nodes
+
+        if areas:
+            regions[region.name] = areas
+
+    return regions
+
+
+def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tuple[str, int, int]]]]]) -> str:
     body = ""
     toc = """
     <div id="toc_container">
@@ -171,7 +176,7 @@ def generate_world_html(name, areas):
                 <li><a href="#%s">%s</a></li>\n
     '''
 
-    for area in sorted(areas):
+    for area in sorted(areas.keys()):
         area_body = HTML_AREA_FORMAT % (area, area)
         nodes = areas[area]
         toc_connections = ""
@@ -207,23 +212,17 @@ def filename_friendly_game_name(game: RandovaniaGame):
     )
 
 
-def export_videos(game: RandovaniaGame, out_dir):
-    worlds = collect_game_info(game)
-    if len(worlds) == 0:
+def export_videos(game: RandovaniaGame, out_dir: Path):
+    regions = collect_game_info(game)
+    if not regions:
         return  # no youtube videos in this game's database
 
-    if not os.path.exists(out_dir):
-        os.makedirs(out_dir)
+    out_dir_game = out_dir.joinpath(filename_friendly_game_name(game))
+    out_dir_game.mkdir(exist_ok=True, parents=True)
 
-    out_dir_game = os.path.join(out_dir, filename_friendly_game_name(game))
-    if not os.path.exists(out_dir_game):
-        os.makedirs(out_dir_game)
-
-    for world in worlds:
-        html = generate_world_html(world, worlds[world])
-        file = open(os.path.join(out_dir_game, world + ".html"), "w")
-        file.write(html)
-        file.close()
+    for region_name, area in regions.items():
+        html = generate_region_html(region_name, area)
+        out_dir_game.joinpath(region_name + ".html").write_text(html)
 
     full_name = game.long_name
     html = HTML_HEADER_FORMAT % ("Index - " + full_name, full_name, get_date())
@@ -233,12 +232,12 @@ def export_videos(game: RandovaniaGame, out_dir):
         <ul>
     """
 
-    TOC_WORLD_FORMAT = '''
+    toc_region_format = '''
         <li><a href="%s">%s</a>\n
     '''
 
-    for world in sorted(worlds):
-        toc += TOC_WORLD_FORMAT % (world + ".html", world)
+    for region_name in sorted(regions):
+        toc += toc_region_format % (region_name + ".html", region_name)
 
     toc += """
         </ul>
@@ -246,9 +245,5 @@ def export_videos(game: RandovaniaGame, out_dir):
     """
 
     html += toc
-
     html += HTML_FOOTER
-
-    file = open(os.path.join(out_dir_game, "index.html"), "w")
-    file.write(html)
-    file.close()
+    out_dir_game.joinpath("index.html").write_text(html)

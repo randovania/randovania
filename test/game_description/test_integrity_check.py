@@ -5,13 +5,12 @@ from randovania.games.game import RandovaniaGame
 from randovania.lib.enum_lib import iterate_enum
 
 _acceptable_database_errors = {
-    RandovaniaGame.METROID_DREAD: False,
+    RandovaniaGame.SUPER_METROID: True,
 }
 
 
 @pytest.mark.parametrize("game_enum", [
-    pytest.param(g, marks=pytest.mark.xfail if _acceptable_database_errors.get(
-        g, not g.data.development_state.is_stable) else [])
+    pytest.param(g, marks=[pytest.mark.xfail] if _acceptable_database_errors.get(g, False) else [])
     for g in iterate_enum(RandovaniaGame)
 ])
 def test_find_database_errors(game_enum: RandovaniaGame):
@@ -268,15 +267,18 @@ def test_invalid_db():
         "World - Area 1 - 'Event - Foo' is not an Event Node, but naming suggests it is",
         "World - Area 1 - Node 'Event - Foo' has a connection to itself",
         "World - Area 1 - 'Door to Area 2 (Generic)' should be named 'Other to Area 2 (...)'",
-        "World - Area 1 - 'Door to Area 2 (Generic)' connects to 'world World/area Area 2/node Generic Node'"
-        " which is not a DockNode",
+        "World - Area 1 - 'Door to Area 2 (Generic)' connects to "
+        "'region World/area Area 2/node Generic Node' which is not a DockNode",
+
         "World - Area 1 - 'Door to Area 2 (Dock)' should be named 'Other to Area 2 (...)'",
-        "World - Area 1 - 'Door to Area 2 (Dock)' connects to 'world World/area Area 2/node Door to Area 1',"
-        " but that dock connects to 'world World/area Area 1/node Door to Area 2 (Generic)' instead.",
+        "World - Area 1 - 'Door to Area 2 (Dock)' connects to 'region World/area Area 2/node Door to Area 1',"
+        " but that dock connects to 'region World/area Area 1/node Door to Area 2 (Generic)' instead.",
         "World - Area 2 - 'Door to Area 1' should be named 'Other to Area 1'",
-        "World - Area 2 - 'Door to Area 1' connects to 'world World/area Area 1/node Door to Area 2 (Generic)',"
-        " but that dock connects to 'world World/area Area 2/node Generic Node' instead.",
-        "World - Area 2 has multiple valid start nodes ['Generic Node', 'Door to Area 1'], but is not allowed for Metroid Prime 2: Echoes",
+        "World - Area 2 - 'Door to Area 1' connects to 'region World/area Area 1/node Door to Area 2 (Generic)',"
+        " but that dock connects to 'region World/area Area 2/node Generic Node' instead.",
+
+        "World - Area 2 has multiple valid start nodes ['Generic Node', 'Door to Area 1'],"
+        " but is not allowed for Metroid Prime 2: Echoes",
 
         "Unknown strongly connected component detected containing 1 nodes:\n"
         "['World/Area 1/Event - Foo']",

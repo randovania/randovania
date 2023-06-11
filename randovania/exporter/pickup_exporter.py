@@ -3,15 +3,13 @@ from random import Random
 
 from randovania.exporter import item_names
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.game_description import GameDescription
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import (PickupEntry, ConditionalResources, PickupModel,
                                                                 ResourceConversion)
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceGainTuple
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.world_list import WorldList
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 
@@ -57,7 +55,7 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalRe
 
 
 def _pickup_description(pickup: PickupEntry) -> str:
-    if not pickup.item_category.is_expansion:
+    if not pickup.pickup_category.is_expansion:
         if len(pickup.progression) > 1:
             return "Provides the following in order: {}.".format(
                 ", ".join(conditional.name for conditional in pickup.conditional_resources)
@@ -200,10 +198,8 @@ class PickupExporterSolo(PickupExporter):
 
 
 class PickupExporterMulti(PickupExporter):
-    def __init__(self, solo_creator: PickupExporter, multiworld_item: ItemResourceInfo,
-                 players_config: PlayersConfiguration):
+    def __init__(self, solo_creator: PickupExporter, players_config: PlayersConfiguration):
         self.solo_creator = solo_creator
-        self.multiworld_item = multiworld_item
         self.players_config = players_config
 
     def create_details(self,
@@ -220,10 +216,6 @@ class PickupExporterMulti(PickupExporter):
             return dataclasses.replace(details, name=f"Your {details.name}")
         else:
             other_name = self.players_config.player_names[pickup_target.player]
-            if self.multiworld_item is not None:
-                resources = ((self.multiworld_item, original_index.index + 1),)
-            else:
-                resources = tuple()
 
             return ExportedPickupDetails(
                 index=original_index,
@@ -233,7 +225,7 @@ class PickupExporterMulti(PickupExporter):
                 conditional_resources=[ConditionalResources(
                     name=None,
                     item=None,
-                    resources=resources,
+                    resources=tuple(),
                 )],
                 conversion=[],
                 model=model,
@@ -259,7 +251,7 @@ def _get_visual_model(original_index: int,
 
 def export_all_indices(patches: GamePatches,
                        useless_target: PickupTarget,
-                       world_list: WorldList,
+                       region_list: RegionList,
                        rng: Random,
                        model_style: PickupModelStyle,
                        data_source: PickupModelDataSource,
@@ -270,7 +262,7 @@ def export_all_indices(patches: GamePatches,
     Creates the patcher data for all pickups in the game
     :param patches:
     :param useless_target:
-    :param world_list:
+    :param region_list:
     :param rng:
     :param model_style:
     :param data_source:
@@ -285,7 +277,7 @@ def export_all_indices(patches: GamePatches,
 
     indices = sorted(
         node.pickup_index
-        for node in world_list.iterate_nodes()
+        for node in region_list.iterate_nodes()
         if isinstance(node, PickupNode)
     )
 
@@ -306,9 +298,8 @@ class GenericAcquiredMemo(dict):
         return f"{key} acquired!"
 
 
-def create_pickup_exporter(game: GameDescription, memo_data: dict, players_config: PlayersConfiguration):
+def create_pickup_exporter(memo_data: dict, players_config: PlayersConfiguration):
     exporter = PickupExporterSolo(memo_data)
     if players_config.is_multiworld:
-        exporter = PickupExporterMulti(exporter, game.resource_database.multiworld_magic_item,
-                                       players_config)
+        exporter = PickupExporterMulti(exporter, players_config)
     return exporter

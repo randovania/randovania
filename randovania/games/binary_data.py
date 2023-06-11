@@ -7,7 +7,7 @@ from construct import (Struct, Int32ub, Const, Byte, Float32b, Flag,
                        Short, PrefixedArray, Switch, VarInt, Float64b, Compressed)
 
 from randovania.game_description import game_migration
-from randovania.game_description.world.hint_node import HintNodeKind
+from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.games.game import RandovaniaGame
 from randovania.lib.construct_lib import String, convert_to_raw_python, OptionalValue, ConstructDict, JsonEncodedValue
 
@@ -23,7 +23,7 @@ _EXPECTED_FIELDS = [
     "minimal_logic",
     "victory_condition",
     "dock_weakness_database",
-    "worlds",
+    "regions",
 ]
 
 
@@ -59,14 +59,14 @@ def _build_resource_info(**kwargs):
 
 
 ConstructAreaIdentifier = construct.Struct(
-    world_name=String,
-    area_name=String,
+    region=String,
+    area=String,
 )
 
 ConstructNodeIdentifier = construct.Struct(
-    world_name=String,
-    area_name=String,
-    node_name=String,
+    region=String,
+    area=String,
+    node=String,
 )
 
 ConstructResourceInfo = _build_resource_info()
@@ -134,8 +134,6 @@ ConstructResourceDatabase = Struct(
     requirement_template=ConstructDict(ConstructRequirement),
     damage_reductions=PrefixedArray(VarInt, ConstructDamageReductions),
     energy_tank_item_index=String,
-    item_percentage_index=OptionalValue(String),
-    multiworld_magic_item_index=OptionalValue(String),
 )
 
 ConstructResourceGain = Struct(
@@ -192,6 +190,8 @@ ConstructNode = NodeAdapter(Struct(
                 dock_type=String,
                 default_connection=ConstructNodeIdentifier,
                 default_dock_weakness=String,
+                exclude_from_dock_rando=Flag,
+                incompatible_dock_weaknesses=PrefixedArray(VarInt, String),
                 override_default_open_requirement=OptionalValue(ConstructRequirement),
                 override_default_lock_requirement=OptionalValue(ConstructRequirement),
             ),
@@ -233,7 +233,7 @@ ConstructArea = Struct(
     nodes=ConstructDict(ConstructNode),
 )
 
-ConstructWorld = Struct(
+ConstructRegion = Struct(
     name=String,
     extra=JsonEncodedValue,
     areas=ConstructDict(ConstructArea),
@@ -274,7 +274,6 @@ ConstructDockWeaknessDatabase = Struct(
         name=String,
     ),
     dock_rando=Struct(
-        enable_one_way=Flag,
         force_change_two_way=Flag,
         resolver_attempts=VarInt,
         to_shuffle_proportion=Float64b,
@@ -296,6 +295,6 @@ ConstructGame = Struct(
         victory_condition=ConstructRequirement,
 
         dock_weakness_database=ConstructDockWeaknessDatabase,
-        worlds=PrefixedArray(VarInt, ConstructWorld),
+        regions=PrefixedArray(VarInt, ConstructRegion),
     ), "lzma")
 )

@@ -5,10 +5,10 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceGain, ResourceCollection
-from randovania.game_description.world.node import NodeContext
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver.state import State, StateGameData
@@ -48,18 +48,19 @@ class Bootstrap:
 
     def _add_minimal_logic_initial_resources(self, resources: ResourceCollection,
                                              game: GameDescription,
-                                             major_items: MajorItemsConfiguration,
+                                             standard_pickups: StandardPickupConfiguration,
                                              ) -> None:
         resource_database = game.resource_database
 
         if game.minimal_logic is None:
             raise ValueError(f"Minimal logic enabled, but {game.game} doesn't have support for it.")
 
-        item_db = default_database.item_database_for_game(game.game)
+        item_db = default_database.pickup_database_for_game(game.game)
+        pickups_state = standard_pickups.pickups_state
 
         items_to_skip = set()
         for it in game.minimal_logic.items_to_exclude:
-            if it.reason is None or major_items.items_state[item_db.major_items[it.reason]].num_shuffled_pickups != 0:
+            if it.reason is None or pickups_state[item_db.standard_pickups[it.reason]].num_shuffled_pickups != 0:
                 items_to_skip.add(it.name)
 
         custom_item_count = game.minimal_logic.custom_item_amount
@@ -82,7 +83,7 @@ class Bootstrap:
 
     def calculate_starting_state(self, game: GameDescription, patches: GamePatches,
                                  configuration: BaseConfiguration) -> "State":
-        starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
+        starting_node = game.region_list.resolve_teleporter_connection(patches.starting_location)
         initial_resources = patches.starting_resources()
 
         starting_energy, energy_per_tank = self.energy_config(configuration)
@@ -92,7 +93,7 @@ class Bootstrap:
             initial_resources.add_resource_gain(
                 starting_node.resource_gain_on_collect(NodeContext(
                     patches, initial_resources,
-                    game.resource_database, game.world_list,
+                    game.resource_database, game.region_list,
                 )),
             )
 
@@ -109,7 +110,7 @@ class Bootstrap:
             None,
             StateGameData(
                 game.resource_database,
-                game.world_list,
+                game.region_list,
                 energy_per_tank,
                 starting_energy
             )
@@ -174,13 +175,13 @@ class Bootstrap:
         if not game.mutable:
             raise ValueError("Running logic_bootstrap with non-mutable game")
 
-        game.world_list.ensure_has_node_cache()
+        game.region_list.ensure_has_node_cache()
         starting_state = self.calculate_starting_state(game, patches, configuration)
 
         if configuration.trick_level.minimal_logic:
             self._add_minimal_logic_initial_resources(starting_state.resources,
                                                       game,
-                                                      configuration.major_items_configuration)
+                                                      configuration.standard_pickup_configuration)
 
         static_resources = ResourceCollection.with_database(game.resource_database)
         static_resources.add_resource_gain(

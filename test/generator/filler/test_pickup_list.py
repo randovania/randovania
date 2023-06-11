@@ -9,12 +9,12 @@ from randovania.game_description.requirements.requirement_set import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.generator import generator, reach_lib
 from randovania.generator.filler import pickup_list
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.base_configuration import StartingLocationList
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.resolver.state import State, StateGameData
 
 
@@ -132,11 +132,11 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     assert result == tuple()
 
 
-def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_item_database, echoes_game_patches):
+def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_database, echoes_game_patches):
     # Setup
     db = echoes_game_description.resource_database
-    missile_expansion = pickup_creator.create_ammo_expansion(
-        echoes_item_database.ammo["Missile Expansion"],
+    missile_expansion = pickup_creator.create_ammo_pickup(
+        echoes_pickup_database.ammo_pickups["Missile Expansion"],
         [5],
         False,
         db,
@@ -152,7 +152,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_item_dat
     resources.set_resource(db.get_item("Missile"), 5)
 
     state = State(resources, (), 99, None, echoes_game_patches, None, StateGameData(
-        db, echoes_game_description.world_list, 100, 99,
+        db, echoes_game_description.region_list, 100, 99,
     ))
 
     # Run
@@ -163,7 +163,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_item_dat
 
 
 @pytest.mark.parametrize("has_light_beam", [False, True])
-async def test_get_pickups_that_solves_unreachable_quad(small_echoes_game_description, echoes_item_database,
+async def test_get_pickups_that_solves_unreachable_quad(small_echoes_game_description, echoes_pickup_database,
                                                         default_echoes_preset, mocker, has_light_beam):
     # Setup
     mocker.patch("randovania.game_description.default_database.game_description_for",
@@ -175,10 +175,10 @@ async def test_get_pickups_that_solves_unreachable_quad(small_echoes_game_descri
         starting_location=StartingLocationList.with_elements([
             NodeIdentifier.create("Temple Grounds", "Fake Quad Arena", "Before Quadraxis")
         ], small_echoes_game_description.game),
-        major_items_configuration=config.major_items_configuration.replace_state_for_item(
-            config.major_items_configuration.get_item_with_name("Missile Launcher"),
-            MajorItemState(
-                num_included_in_starting_items=1,
+        standard_pickup_configuration=config.standard_pickup_configuration.replace_state_for_pickup(
+            config.standard_pickup_configuration.get_pickup_with_name("Missile Launcher"),
+            StandardPickupState(
+                num_included_in_starting_pickups=1,
                 included_ammo=(5,),
             ),
         ),

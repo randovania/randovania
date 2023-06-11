@@ -7,27 +7,28 @@ import pytest
 from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.item.ammo import AMMO_ITEM_CATEGORY
-from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
+from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY
+from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
     ConditionalResources, ResourceConversion, PickupGeneratorParams
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 
 
-def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resource_database):
+def test_get_single_hud_text_all_standard_pickups(echoes_pickup_database, echoes_resource_database):
     memo_data = default_database.default_prime2_memo_data()
 
     # Run
-    for item in echoes_item_database.major_items.values():
-        pickup = pickup_creator.create_major_item(item, MajorItemState(), False, echoes_resource_database, None, False)
+    for item in echoes_pickup_database.standard_pickups.values():
+        pickup = pickup_creator.create_standard_pickup(item, StandardPickupState(), echoes_resource_database, None,
+                                                       False)
 
         result = pickup_exporter._get_all_hud_text(pickup_exporter._conditional_resources_for_pickup(pickup),
                                                    memo_data)
@@ -44,23 +45,23 @@ def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resour
     ("Y", "X"),
     ("Y", "Z"),
 ])
-def test_calculate_hud_text(order: tuple[str, str], generic_item_category, default_generator_params):
+def test_calculate_hud_text(order: tuple[str, str], generic_pickup_category, default_generator_params):
     # Setup
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
 
-    pickup_x = PickupEntry("A", 1, generic_item_category, generic_item_category,
+    pickup_x = PickupEntry("A", 1, generic_pickup_category, generic_pickup_category,
                            progression=(
                                ((resource_a, 1),)
                            ),
                            generator_params=default_generator_params)
-    pickup_y = PickupEntry("Y", 2, generic_item_category, generic_item_category,
+    pickup_y = PickupEntry("Y", 2, generic_pickup_category, generic_pickup_category,
                            progression=(
                                (resource_b, 1),
                                (resource_a, 5),
                            ),
                            generator_params=default_generator_params)
-    pickup_z = PickupEntry("Z", 2, generic_item_category, generic_item_category,
+    pickup_z = PickupEntry("Z", 2, generic_pickup_category, generic_pickup_category,
                            progression=(
                                (resource_a, 1),
                                (resource_b, 5),
@@ -91,7 +92,7 @@ def test_calculate_hud_text(order: tuple[str, str], generic_item_category, defau
 
 
 @pytest.mark.parametrize("model_style", PickupModelStyle)
-def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generic_item_category,
+def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generic_pickup_category,
                             blank_resource_db, default_generator_params):
     # Setup
     has_scan_text = model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}
@@ -109,22 +110,22 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     useless_resource = ItemResourceInfo(0, "Useless", "Useless", 10)
     resource_a = ItemResourceInfo(1, "A", "A", 10)
     resource_b = ItemResourceInfo(2, "B", "B", 10)
-    pickup_a = PickupEntry("P-A", model_1, generic_item_category, generic_item_category,
+    pickup_a = PickupEntry("P-A", model_1, generic_pickup_category, generic_pickup_category,
                            progression=((resource_a, 1),),
                            generator_params=default_generator_params,
                            )
-    pickup_b = PickupEntry("P-B", model_2, generic_item_category, generic_item_category,
+    pickup_b = PickupEntry("P-B", model_2, generic_pickup_category, generic_pickup_category,
                            progression=((resource_b, 1),
                                         (resource_a, 5)),
                            generator_params=default_generator_params, )
-    pickup_c = PickupEntry("P-C", model_2, AMMO_ITEM_CATEGORY, generic_item_category,
+    pickup_c = PickupEntry("P-C", model_2, AMMO_PICKUP_CATEGORY, generic_pickup_category,
                            progression=tuple(),
                            extra_resources=((resource_b, 2), (resource_a, 1)),
                            unlocks_resource=True,
                            resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
                            generator_params=default_generator_params, )
 
-    useless_pickup = PickupEntry("P-Useless", model_0, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY,
+    useless_pickup = PickupEntry("P-Useless", model_0, USELESS_PICKUP_CATEGORY, USELESS_PICKUP_CATEGORY,
                                  progression=((useless_resource, 1),),
                                  generator_params=default_generator_params, )
     patches = patches.assign_new_pickups([
@@ -135,8 +136,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     ])
     creator = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
 
-    world_list = MagicMock()
-    world_list.iterate_nodes.return_value = [
+    region_list = MagicMock()
+    region_list.iterate_nodes.return_value = [
         PickupNode(NodeIdentifier.create("World", "Area", f"Name {i}"),
                    i, False, None, "", ("default",), {}, False, PickupIndex(i), False)
         for i in range(5)
@@ -146,7 +147,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     result = pickup_exporter.export_all_indices(
         patches,
         PickupTarget(useless_pickup, 0),
-        world_list,
+        region_list,
         rng,
         model_style,
         PickupModelDataSource.ETM,
@@ -221,7 +222,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
 
 
 @pytest.mark.parametrize("has_memo_data", [False, True])
-def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patches, generic_item_category,
+def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patches, generic_pickup_category,
                                                default_generator_params):
     # Setup
     rng = Random(5000)
@@ -231,16 +232,16 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     model_2 = MagicMock(spec=PickupModel)
     useless_model = PickupModel(game=RandovaniaGame.METROID_PRIME_CORRUPTION, name="Useless")
 
-    pickup_a = PickupEntry("A", model_1, generic_item_category, generic_item_category,
+    pickup_a = PickupEntry("A", model_1, generic_pickup_category, generic_pickup_category,
                            progression=tuple(),
                            generator_params=default_generator_params, )
-    pickup_b = PickupEntry("B", model_2, generic_item_category, generic_item_category,
+    pickup_b = PickupEntry("B", model_2, generic_pickup_category, generic_pickup_category,
                            progression=((resource_b, 1), (resource_b, 1)),
                            generator_params=default_generator_params, )
-    pickup_c = PickupEntry("C", model_2, generic_item_category, generic_item_category,
+    pickup_c = PickupEntry("C", model_2, generic_pickup_category, generic_pickup_category,
                            progression=tuple(),
                            generator_params=default_generator_params, )
-    useless_pickup = PickupEntry("Useless", useless_model, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY,
+    useless_pickup = PickupEntry("Useless", useless_model, USELESS_PICKUP_CATEGORY, USELESS_PICKUP_CATEGORY,
                                  progression=tuple(),
                                  generator_params=default_generator_params, )
 
@@ -267,8 +268,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 
     creator = pickup_exporter.PickupExporterSolo(memo_data)
 
-    world_list = MagicMock()
-    world_list.iterate_nodes.return_value = [
+    region_list = MagicMock()
+    region_list.iterate_nodes.return_value = [
         PickupNode(NodeIdentifier.create("W", "A", f"Name {i}"),
                    i, False, None, "", ("default",), {}, False, PickupIndex(i), False)
         for i in range(5)
@@ -278,7 +279,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     result = pickup_exporter.export_all_indices(
         patches,
         PickupTarget(useless_pickup, 0),
-        world_list,
+        region_list,
         rng,
         PickupModelStyle.HIDE_ALL,
         PickupModelDataSource.RANDOM,
@@ -348,11 +349,11 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     )
 
 
-def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_database):
+def test_pickup_scan_for_progressive_suit(echoes_pickup_database, echoes_resource_database):
     # Setup
-    progressive_suit = echoes_item_database.major_items["Progressive Suit"]
-    pickup = pickup_creator.create_major_item(progressive_suit, MajorItemState(), False, echoes_resource_database,
-                                              None, False)
+    progressive_suit = echoes_pickup_database.standard_pickups["Progressive Suit"]
+    pickup = pickup_creator.create_standard_pickup(progressive_suit, StandardPickupState(), echoes_resource_database,
+                                                   None, False)
 
     # Run
     result = pickup_exporter._pickup_description(pickup)
@@ -365,10 +366,10 @@ def test_pickup_scan_for_progressive_suit(echoes_item_database, echoes_resource_
     ("Beam Ammo Expansion", [4, 20], "Beam Ammo Expansion. Provides 4 Dark Ammo, 20 Light Ammo and 1 Item Percentage"),
     ("Missile Expansion", [4], "Missile Expansion. Provides 4 Missiles and 1 Item Percentage"),
 ])
-def test_pickup_scan_for_ammo_expansion(echoes_item_database, echoes_resource_database, item, ammo, result):
+def test_pickup_scan_for_ammo_expansion(echoes_pickup_database, echoes_resource_database, item, ammo, result):
     # Setup
-    expansion = echoes_item_database.ammo[item]
-    pickup = pickup_creator.create_ammo_expansion(expansion, ammo, False, echoes_resource_database)
+    expansion = echoes_pickup_database.ammo_pickups[item]
+    pickup = pickup_creator.create_ammo_pickup(expansion, ammo, False, echoes_resource_database)
 
     # Run
     result = pickup_exporter._pickup_description(pickup)
@@ -378,10 +379,10 @@ def test_pickup_scan_for_ammo_expansion(echoes_item_database, echoes_resource_da
 
 
 @pytest.fixture(name="pickup_for_create_pickup_data")
-def _create_pickup_data(generic_item_category, default_generator_params):
+def _create_pickup_data(generic_pickup_category, default_generator_params):
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
-    return PickupEntry("Cake", 1, generic_item_category, generic_item_category,
+    return PickupEntry("Cake", 1, generic_pickup_category, generic_pickup_category,
                        progression=(
                            (resource_a, 1),
                            (resource_b, 1),
@@ -422,7 +423,7 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
 def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
     # Setup
     solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
-    creator = pickup_exporter.PickupExporterMulti(solo, MagicMock(), PlayersConfiguration(0, {0: "You", 1: "Someone"}))
+    creator = pickup_exporter.PickupExporterMulti(solo, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
@@ -451,9 +452,8 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
 
 def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
     # Setup
-    multi = ItemResourceInfo("Multiworld", "Multiworld", 30, None)
     solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
-    creator = pickup_exporter.PickupExporterMulti(solo, multi, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
+    creator = pickup_exporter.PickupExporterMulti(solo, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
 
     # Run
@@ -468,7 +468,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
         description="Scan Text",
         collection_text=['Sent The Name to Someone!'],
         conditional_resources=[
-            ConditionalResources(None, None, ((multi, 11),)),
+            ConditionalResources(None, None, tuple()),
         ],
         conversion=[],
         model=model,

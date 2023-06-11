@@ -61,15 +61,15 @@ def set_artifact_layer_active_patch(addresses: Prime1DolVersion, layer_id: int, 
     ]
 
     result.extend([
-        # Get the LayerState of current world. We'll overwrite if it's another world, it's just 1 instruction bigger
+        # Get the LayerState of current db. We'll overwrite if it's another db, it's just 1 instruction bigger
         lwz(r3, 0x8c8, r31),  # mgr->worldLayerState
 
         # Tallon Overworld asset id
         custom_ppc.load_unsigned_32bit(r4, 0x39f2de28),
 
         # Load current asset id in r5
-        lwz(r5, 0x850, r31),  # mgr->world
-        lwz(r5, 0x8, r5),  # world->mlvlId
+        lwz(r5, 0x850, r31),  # mgr->db
+        lwz(r5, 0x8, r5),  # db->mlvlId
 
         cmpw(0, r4, r5),  # compare asset ids
         beq(4 + assembler.byte_count(for_another_world), relative=True),

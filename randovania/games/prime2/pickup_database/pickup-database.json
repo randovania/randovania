@@ -1,0 +1,789 @@
+{
+    "schema_version": 6,
+    "pickup_categories": {
+        "visor": {
+            "long_name": "Visors",
+            "hint_details": [
+                "a ",
+                "visor"
+            ],
+            "hinted_as_major": true
+        },
+        "suit": {
+            "long_name": "Suits",
+            "hint_details": [
+                "a ",
+                "suit"
+            ],
+            "hinted_as_major": true
+        },
+        "beam": {
+            "long_name": "Beams",
+            "hint_details": [
+                "a ",
+                "beam"
+            ],
+            "hinted_as_major": true
+        },
+        "morph_ball": {
+            "long_name": "Morph Ball",
+            "hint_details": [
+                "a ",
+                "morph ball system"
+            ],
+            "hinted_as_major": true
+        },
+        "movement": {
+            "long_name": "Movement",
+            "hint_details": [
+                "a ",
+                "movement system"
+            ],
+            "hinted_as_major": true
+        },
+        "missile": {
+            "long_name": "Missile",
+            "hint_details": [
+                "a ",
+                "missile system"
+            ],
+            "hinted_as_major": true
+        },
+        "charge_combo": {
+            "long_name": "Charge Combos",
+            "hint_details": [
+                "a ",
+                "charge combo"
+            ],
+            "hinted_as_major": true
+        },
+        "translator": {
+            "long_name": "Translators",
+            "hint_details": [
+                "a ",
+                "translator"
+            ],
+            "hinted_as_major": true
+        },
+        "energy_tank": {
+            "long_name": "Energy Tanks",
+            "hint_details": [
+                "an ",
+                "Energy Tank"
+            ],
+            "hinted_as_major": false
+        },
+        "missile_related": {
+            "long_name": "Missile Related",
+            "hint_details": [
+                "a ",
+                "missile-related upgrade"
+            ],
+            "hinted_as_major": false
+        },
+        "morph_ball_related": {
+            "long_name": "Morph Ball Related",
+            "hint_details": [
+                "a ",
+                "morph ball-related upgrade"
+            ],
+            "hinted_as_major": false
+        },
+        "beam_related": {
+            "long_name": "Beam Related",
+            "hint_details": [
+                "a ",
+                "beam-related upgrade"
+            ],
+            "hinted_as_major": false
+        },
+        "life_support": {
+            "long_name": "Life Support",
+            "hint_details": [
+                "a ",
+                "life support system"
+            ],
+            "hinted_as_major": false
+        },
+        "hud": {
+            "long_name": "HUD System",
+            "hint_details": [
+                "a ",
+                "HUD system"
+            ],
+            "hinted_as_major": false
+        }
+    },
+    "standard_pickups": {
+        "Combat Visor": {
+            "pickup_category": "visor",
+            "broad_category": "hud",
+            "model_name": "ScanVisor INCOMPLETE",
+            "progression": [
+                "Combat"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            }
+        },
+        "Scan Visor": {
+            "pickup_category": "visor",
+            "broad_category": "hud",
+            "model_name": "ScanVisor INCOMPLETE",
+            "progression": [
+                "Scan"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            }
+        },
+        "Dark Visor": {
+            "pickup_category": "visor",
+            "broad_category": "hud",
+            "model_name": "DarkVisor",
+            "progression": [
+                "DarkVisor"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 79
+        },
+        "Echo Visor": {
+            "pickup_category": "visor",
+            "broad_category": "hud",
+            "model_name": "EchoVisor",
+            "progression": [
+                "Echo"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 118
+        },
+        "Varia Suit": {
+            "pickup_category": "suit",
+            "broad_category": "life_support",
+            "model_name": "VariaSuit INCOMPLETE",
+            "progression": [
+                "Varia"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "hide_from_gui": true,
+            "must_be_starting": true
+        },
+        "Dark Suit": {
+            "pickup_category": "suit",
+            "broad_category": "life_support",
+            "model_name": "DarkSuit",
+            "progression": [
+                "DarkSuit"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 43
+        },
+        "Light Suit": {
+            "pickup_category": "suit",
+            "broad_category": "life_support",
+            "model_name": "LightSuit",
+            "progression": [
+                "LightSuit"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 24,
+            "probability_offset": -1
+        },
+        "Progressive Suit": {
+            "pickup_category": "suit",
+            "broad_category": "life_support",
+            "model_name": "VariaSuit INCOMPLETE",
+            "progression": [
+                "DarkSuit",
+                "LightSuit"
+            ],
+            "default_shuffled_count": 2,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            }
+        },
+        "Double Damage": {
+            "pickup_category": "suit",
+            "broad_category": "beam_related",
+            "model_name": "UnlimitedBeamAmmo",
+            "progression": [
+                "DoubleDamage"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "description": "Doubles all damage dealt by Samus.\nThis uses a big un-split Beam Ammo Expansion model in-game."
+        },
+        "Power Beam": {
+            "pickup_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "EnergyTransferModule",
+            "progression": [
+                "Power"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "description": "This uses the Energy Transfer Module model in-game."
+        },
+        "Charge Beam": {
+            "pickup_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "ChargeBeam INCOMPLETE",
+            "progression": [
+                "Charge"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            }
+        },
+        "Dark Beam": {
+            "pickup_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "DarkBeam",
+            "progression": [
+                "Dark"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "ammo": [
+                "DarkAmmo"
+            ],
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 52
+        },
+        "Light Beam": {
+            "pickup_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "LightBeam",
+            "progression": [
+                "Light"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "ammo": [
+                "LightAmmo"
+            ],
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 57
+        },
+        "Annihilator Beam": {
+            "pickup_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "AnnihilatorBeam",
+            "progression": [
+                "Annihilator"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "ammo": [
+                "DarkAmmo",
+                "LightAmmo"
+            ],
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 115
+        },
+        "Unlimited Beam Ammo": {
+            "pickup_category": "beam",
+            "broad_category": "beam_related",
+            "model_name": "UnlimitedBeamAmmo",
+            "progression": [
+                "UnlimitedBeamAmmo"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "description": "This uses a big un-split Beam Ammo Expansion model in-game."
+        },
+        "Morph Ball": {
+            "pickup_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "EnergyTransferModule",
+            "progression": [
+                "MorphBall"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "description": "This uses the Energy Transfer Module model in-game."
+        },
+        "Morph Ball Bomb": {
+            "pickup_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "MorphBallBomb",
+            "progression": [
+                "Bombs"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 38
+        },
+        "Boost Ball": {
+            "pickup_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "BoostBall",
+            "progression": [
+                "Boost"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 75
+        },
+        "Spider Ball": {
+            "pickup_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "SpiderBall",
+            "progression": [
+                "Spider"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 102
+        },
+        "Power Bomb": {
+            "pickup_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "PowerBomb",
+            "progression": [],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "ammo": [
+                "PowerBomb"
+            ],
+            "unlocks_ammo": true,
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 88,
+            "probability_multiplier": 0.5
+        },
+        "Cannon Ball": {
+            "pickup_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "BoostBall",
+            "progression": [
+                "CannonBall"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "description": "Collecting this pickup will provide you with the Cannon Ball state until you die, quit the game or use a Kinetic Orb Cannon. It's possible to softlock while doing certain Morph Ball puzzles with Cannon Ball enabled. \nThis uses Boost Ball model in-game."
+        },
+        "Space Jump Boots": {
+            "pickup_category": "movement",
+            "broad_category": "movement",
+            "model_name": "SpaceJumpBoots",
+            "progression": [
+                "SpaceJump"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 37
+        },
+        "Gravity Boost": {
+            "pickup_category": "movement",
+            "broad_category": "movement",
+            "model_name": "GravityBoost",
+            "progression": [
+                "Gravity"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 92
+        },
+        "Grapple Beam": {
+            "pickup_category": "movement",
+            "broad_category": "movement",
+            "model_name": "GrappleBeam",
+            "progression": [
+                "Grapple"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 86
+        },
+        "Screw Attack": {
+            "pickup_category": "movement",
+            "broad_category": "movement",
+            "model_name": "ScrewAttack",
+            "progression": [
+                "ScrewAttack"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 112
+        },
+        "Progressive Grapple": {
+            "pickup_category": "movement",
+            "broad_category": "movement",
+            "model_name": "GrappleBeam",
+            "progression": [
+                "Grapple",
+                "ScrewAttack"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "probability_offset": 0.5
+        },
+        "Missile Launcher": {
+            "pickup_category": "missile",
+            "broad_category": "missile_related",
+            "model_name": "MissileLauncher",
+            "progression": [
+                "MissileLauncher"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "ammo": [
+                "Missile"
+            ],
+            "unlocks_ammo": true,
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 13
+        },
+        "Seeker Launcher": {
+            "pickup_category": "missile",
+            "broad_category": "missile_related",
+            "model_name": "SeekerLauncher",
+            "progression": [
+                "Seekers"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "ammo": [
+                "Missile"
+            ],
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 1
+        },
+        "Unlimited Missiles": {
+            "pickup_category": "missile",
+            "broad_category": "missile_related",
+            "model_name": "UnlimitedMissiles",
+            "progression": [
+                "UnlimitedMissiles"
+            ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "description": "This uses a big Missile Launcher model in-game."
+        },
+        "Super Missile": {
+            "pickup_category": "charge_combo",
+            "broad_category": "beam_related",
+            "model_name": "SuperMissile",
+            "progression": [
+                "Supers"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 74
+        },
+        "Sunburst": {
+            "pickup_category": "charge_combo",
+            "broad_category": "beam_related",
+            "model_name": "Sunburst",
+            "progression": [
+                "Sunburst"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 7
+        },
+        "Darkburst": {
+            "pickup_category": "charge_combo",
+            "broad_category": "beam_related",
+            "model_name": "Darkburst",
+            "progression": [
+                "Darkburst"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 27
+        },
+        "Sonic Boom": {
+            "pickup_category": "charge_combo",
+            "broad_category": "beam_related",
+            "model_name": "SonicBoom",
+            "progression": [
+                "SonicBoom"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 59
+        },
+        "Violet Translator": {
+            "pickup_category": "translator",
+            "broad_category": "hud",
+            "model_name": "VioletTranslator",
+            "progression": [
+                "Violet"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 23
+        },
+        "Amber Translator": {
+            "pickup_category": "translator",
+            "broad_category": "hud",
+            "model_name": "AmberTranslator",
+            "progression": [
+                "Amber"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 46
+        },
+        "Emerald Translator": {
+            "pickup_category": "translator",
+            "broad_category": "hud",
+            "model_name": "EmeraldTranslator",
+            "progression": [
+                "Emerald"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 82
+        },
+        "Cobalt Translator": {
+            "pickup_category": "translator",
+            "broad_category": "hud",
+            "model_name": "CobaltTranslator",
+            "progression": [
+                "Cobalt"
+            ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "original_location": 116
+        },
+        "Energy Tank": {
+            "pickup_category": "energy_tank",
+            "broad_category": "life_support",
+            "model_name": "EnergyTank",
+            "progression": [
+                "EnergyTank"
+            ],
+            "default_shuffled_count": 14,
+            "default_starting_count": 0,
+            "preferred_location_category": "major",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "probability_offset": 1,
+            "probability_multiplier": 2
+        }
+    },
+    "ammo_pickups": {
+        "Missile Expansion": {
+            "broad_category": "missile_related",
+            "model_name": "MissileExpansion",
+            "items": [
+                "Missile"
+            ],
+            "preferred_location_category": "minor",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "unlocked_by": "MissileLauncher",
+            "temporary": "Temporary1",
+            "allows_negative": true
+        },
+        "Power Bomb Expansion": {
+            "broad_category": "morph_ball_related",
+            "model_name": "PowerBombExpansion",
+            "items": [
+                "PowerBomb"
+            ],
+            "preferred_location_category": "minor",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "unlocked_by": "PowerBomb",
+            "temporary": "Temporary2",
+            "allows_negative": true
+        },
+        "Dark Ammo Expansion": {
+            "broad_category": "beam_related",
+            "model_name": "DarkBeamAmmoExpansion",
+            "items": [
+                "DarkAmmo"
+            ],
+            "preferred_location_category": "minor",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "allows_negative": true
+        },
+        "Light Ammo Expansion": {
+            "broad_category": "beam_related",
+            "model_name": "LightBeamAmmoExpansion",
+            "items": [
+                "LightAmmo"
+            ],
+            "preferred_location_category": "minor",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "allows_negative": true
+        },
+        "Beam Ammo Expansion": {
+            "broad_category": "beam_related",
+            "model_name": "BeamAmmoExpansion",
+            "items": [
+                "DarkAmmo",
+                "LightAmmo"
+            ],
+            "preferred_location_category": "minor",
+            "additional_resources": {
+                "Percent": 1
+            },
+            "allows_negative": true
+        }
+    },
+    "default_pickups": {
+        "visor": [
+            "Combat Visor",
+            "Echo Visor"
+        ],
+        "beam": [
+            "Power Beam",
+            "Dark Beam",
+            "Light Beam",
+            "Annihilator Beam"
+        ]
+    }
+}

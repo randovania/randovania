@@ -1,11 +1,10 @@
 import struct
 
-from randovania.game_connection.connection_base import Inventory
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector, DolRemotePatch
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.world.world import World
+from randovania.game_description.db.region import Region
 from randovania.games.prime3.patcher.corruption_dol_patches import CorruptionDolVersion
 from randovania.patching.prime import (all_prime_dol_patches)
 
@@ -34,13 +33,17 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
     def __init__(self, version: CorruptionDolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
 
-
     def _asset_id_format(self):
         return ">Q"
 
-    async def current_game_status(self) -> tuple[bool, World | None]:
+    @property
+    def multiworld_magic_item(self) -> ItemResourceInfo:
+        # TODO
+        return None
+
+    async def current_game_status(self) -> tuple[bool, Region | None]:
         """
-        Fetches the world the player's currently at, or None if they're not in-game.
+        Fetches the region the player's currently at, or None if they're not in-game.
         :return: bool indicating if there's a pending `execute_remote_patches` operation.
         """
 
@@ -107,5 +110,5 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         # Not yet implemented
         return
 
-    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: list[DolRemotePatch]) -> None:
+    async def execute_remote_patches(self, patches: list[DolRemotePatch]) -> None:
         raise RuntimeError("Unable to execute remote patches in Corruption")

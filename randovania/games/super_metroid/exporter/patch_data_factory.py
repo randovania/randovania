@@ -8,7 +8,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches, MusicMode
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 
 _multiplier_for_item = {
     "Energy Tank": 100, "Reserve Tank": 100,
@@ -102,12 +102,11 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
             useless_target,
-            db.world_list,
+            db.region_list,
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(db, pickup_exporter.GenericAcquiredMemo(),
-                                                            self.players_config),
+            exporter=pickup_exporter.create_pickup_exporter(pickup_exporter.GenericAcquiredMemo(), self.players_config),
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
@@ -126,12 +125,12 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
 
         starting_point = self.patches.starting_location
 
-        starting_area = db.world_list.area_by_area_location(starting_point)
+        starting_area = db.region_list.area_by_area_location(starting_point)
 
         starting_save_index = starting_area.extra["save_index"]
 
         starting_location_info = {
-            "starting_region": starting_point.world_name,
+            "starting_region": starting_point.region_name,
             "starting_save_station_index": starting_save_index,
         }
 

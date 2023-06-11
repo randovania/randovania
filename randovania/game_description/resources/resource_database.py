@@ -39,8 +39,6 @@ class ResourceDatabase:
     requirement_template: dict[str, Requirement]
     damage_reductions: dict[SimpleResourceInfo, list[DamageReduction]]
     energy_tank_item_index: str
-    item_percentage_index: str | None
-    multiworld_magic_item_index: str | None
     base_damage_reduction: Callable[[ResourceDatabase, ResourceCollection], float] = default_base_damage_reduction
     resource_by_index: list[ResourceInfo | None] = dataclasses.field(default_factory=list)
 
@@ -90,18 +88,8 @@ class ResourceDatabase:
         return search.find_resource_info_with_long_name(self.item, name)
 
     @property
-    def item_percentage(self) -> ItemResourceInfo | None:
-        if self.item_percentage_index is not None:
-            return self.get_by_type_and_index(ResourceType.ITEM, self.item_percentage_index)
-
-    @property
     def energy_tank(self) -> ItemResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, self.energy_tank_item_index)
-
-    @property
-    def multiworld_magic_item(self) -> ItemResourceInfo | None:
-        if self.multiworld_magic_item_index is not None:
-            return self.get_item(self.multiworld_magic_item_index)
 
     def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection):
         cached_result = current_resources.get_damage_reduction_cache(resource)

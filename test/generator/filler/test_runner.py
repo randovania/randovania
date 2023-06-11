@@ -6,12 +6,12 @@ import pytest
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     RelativeDataArea, RelativeDataItem
-from randovania.game_description.item.item_category import ItemCategory
+from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.hint_node import HintNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.filler import runner
@@ -27,8 +27,8 @@ async def test_run_filler(echoes_game_description,
     rng = Random(5000)
     status_update = MagicMock()
 
-    hint_identifiers = [echoes_game_description.world_list.identifier_for_node(node)
-                        for node in echoes_game_description.world_list.iterate_nodes() if isinstance(node, HintNode)]
+    hint_identifiers = [echoes_game_description.region_list.identifier_for_node(node)
+                        for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)]
 
     player_pools = [
         await create_player_pool(rng, default_echoes_configuration, 0, 1),
@@ -67,14 +67,14 @@ async def test_run_filler(echoes_game_description,
 def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_game_patches):
     # Setup
     rng = Random(5000)
-    expected_logbooks = sum(1 for node in echoes_game_description.world_list.iterate_nodes()
+    expected_logbooks = sum(1 for node in echoes_game_description.region_list.iterate_nodes()
                             if isinstance(node, HintNode))
     hint_distributor = echoes_game_description.game.generator.hint_distributor
 
     # Run
     result = hint_distributor.fill_unassigned_hints(
         echoes_game_patches,
-        echoes_game_description.world_list,
+        echoes_game_description.region_list,
         rng, {},
     )
 
@@ -115,7 +115,7 @@ def test_add_hints_precision(empty_patches):
                                                                  HintItemPrecision.DETAILED,
                                                                  include_owner=False),
                                 PickupIndex(1)),
-        nc("w", "a", "1"): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.WORLD_ONLY,
+        nc("w", "a", "1"): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.REGION_ONLY,
                                                                  HintItemPrecision.PRECISE_CATEGORY,
                                                                  include_owner=True),
                                 PickupIndex(2)),
@@ -123,15 +123,15 @@ def test_add_hints_precision(empty_patches):
     }
 
 
-def _make_pickup(item_category: ItemCategory, generator_params: PickupGeneratorParams):
+def _make_pickup(pickup_category: PickupCategory, generator_params: PickupGeneratorParams):
     return PickupEntry(
         name="Pickup",
         model=PickupModel(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        item_category=item_category,
-        broad_category=item_category,
+        pickup_category=pickup_category,
+        broad_category=pickup_category,
         progression=tuple(),
         generator_params=generator_params,
     )
@@ -141,13 +141,13 @@ def _make_pickup(item_category: ItemCategory, generator_params: PickupGeneratorP
 @pytest.mark.parametrize("location_precision", [HintLocationPrecision.RELATIVE_TO_AREA,
                                                 HintLocationPrecision.RELATIVE_TO_INDEX])
 def test_add_relative_hint(echoes_game_description, echoes_game_patches, precise_distance, location_precision,
-                           echoes_item_database, default_generator_params):
+                           echoes_pickup_database, default_generator_params):
     # Setup
     rng = Random(5000)
     target_precision = MagicMock(spec=HintItemPrecision)
     precision = MagicMock(spec=HintItemPrecision)
     patches = echoes_game_patches.assign_new_pickups([
-        (PickupIndex(8), PickupTarget(_make_pickup(echoes_item_database.item_categories["movement"],
+        (PickupIndex(8), PickupTarget(_make_pickup(echoes_pickup_database.pickup_categories["movement"],
                                                    default_generator_params), 0)),
     ])
     hint_distributor = EchoesHintDistributor()
@@ -170,7 +170,7 @@ def test_add_relative_hint(echoes_game_description, echoes_game_patches, precise
 
     # Run
     result = hint_distributor.add_relative_hint(
-        echoes_game_description.world_list,
+        echoes_game_description.region_list,
         patches,
         rng,
         PickupIndex(1),

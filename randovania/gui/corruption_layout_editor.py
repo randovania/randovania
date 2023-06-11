@@ -1,18 +1,18 @@
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
-from randovania.game_description.item.item_database import ItemDatabase
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime3.patcher.gollop_corruption_patcher import layout_string_for_items
 from randovania.gui.generated.corruption_layout_editor_ui import Ui_CorruptionLayoutEditor
 from randovania.gui.lib import common_qt_lib
 
 
-def _fill_combo(item_database: ItemDatabase, combo: QtWidgets.QComboBox):
+def _fill_combo(pickup_database: PickupDatabase, combo: QtWidgets.QComboBox):
     items = []
-    items.extend(item.name for item in item_database.major_items.values())
-    items.extend(item.name for item in item_database.ammo.values())
+    items.extend(item.name for item in pickup_database.standard_pickups.values())
+    items.extend(item.name for item in pickup_database.ammo_pickups.values())
     items.extend(f"Energy Cell {i}" for i in range(1, 10))
 
     for item in sorted(items):
@@ -26,8 +26,8 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
         common_qt_lib.set_default_window_icon(self)
 
         self.game_description = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
-        item_database = default_database.item_database_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION)
-        world_list = self.game_description.world_list
+        pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION)
+        region_list = self.game_description.region_list
         self._index_to_combo = {}
 
         columns = []
@@ -42,41 +42,41 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
                         ]
         nodes_to_merge = []
 
-        world_count = 0
-        for i, world in enumerate(world_list.worlds):
-            if world.extra['asset_id'] in ids_to_merge:
+        region_count = 0
+        for i, region in enumerate(region_list.regions):
+            if region.extra['asset_id'] in ids_to_merge:
                 nodes_to_merge.extend(
                     node
-                    for area in world.areas
+                    for area in region.areas
                     for node in area.nodes
                     if isinstance(node, PickupNode)
                 )
                 continue
 
             group = QtWidgets.QGroupBox(self.scroll_area_contents)
-            group.setTitle(world.name)
+            group.setTitle(region.name)
 
             layout = QtWidgets.QGridLayout(group)
 
             area_count = 0
-            for area in world.areas:
+            for area in region.areas:
                 for node in area.nodes:
                     if not isinstance(node, PickupNode):
                         continue
 
-                    node_label = QtWidgets.QLabel(world_list.node_name(node), group)
+                    node_label = QtWidgets.QLabel(region_list.node_name(node), group)
                     layout.addWidget(node_label, area_count, 0)
 
                     node_combo = QtWidgets.QComboBox(group)
-                    _fill_combo(item_database, node_combo)
+                    _fill_combo(pickup_database, node_combo)
                     node_combo.currentIndexChanged.connect(self.update_layout_string)
                     layout.addWidget(node_combo, area_count, 1)
 
                     self._index_to_combo[node.pickup_index] = node_combo
                     area_count += 1
 
-            columns[world_count % len(columns)].addWidget(group)
-            world_count += 1
+            columns[region_count % len(columns)].addWidget(group)
+            region_count += 1
 
         group = QtWidgets.QGroupBox(self.scroll_area_contents)
         group.setTitle("Seeds")
@@ -87,11 +87,11 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
             if not isinstance(node, PickupNode):
                 continue
 
-            node_label = QtWidgets.QLabel(world_list.node_name(node), group)
+            node_label = QtWidgets.QLabel(region_list.node_name(node), group)
             layout.addWidget(node_label, area_count, 0)
 
             node_combo = QtWidgets.QComboBox(group)
-            _fill_combo(item_database, node_combo)
+            _fill_combo(pickup_database, node_combo)
             node_combo.currentIndexChanged.connect(self.update_layout_string)
             layout.addWidget(node_combo, area_count, 1)
 
@@ -99,7 +99,7 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
             area_count += 1
 
         columns[0].addWidget(group)
-        # world_count += 1
+        # region_count += 1
         self.update_layout_string()
 
     def update_layout_string(self):

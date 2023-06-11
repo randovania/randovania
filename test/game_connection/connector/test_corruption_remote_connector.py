@@ -21,7 +21,7 @@ def corruption_remote_connector():
 async def test_fetch_game_status(connector: CorruptionRemoteConnector, has_world, has_pending_op,
                                  has_cplayer, correct_vtable):
     # Setup
-    expected_world = connector.game.world_list.worlds[1]
+    expected_world = connector.game.region_list.regions[1]
 
     cplayer_address = 0x8099FFAA
 

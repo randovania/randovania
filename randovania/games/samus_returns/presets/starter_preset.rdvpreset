@@ -1,5 +1,5 @@
 {
-    "schema_version": 44,
+    "schema_version": 53,
     "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "b400da54-584e-496b-a6c9-140b847d40d9",
@@ -12,16 +12,17 @@
         },
         "starting_location": [
             {
-                "world_name": "Surface - East",
-                "area_name": "Landing Site"
+                "region": "Surface - East",
+                "area": "Landing Site",
+                "node": "Ship"
             }
         ],
         "available_locations": {
             "randomization_mode": "full",
             "excluded_indices": []
         },
-        "major_items_configuration": {
-            "items_state": {
+        "standard_pickup_configuration": {
+            "pickups_state": {
                 "Wave Beam": {},
                 "Spazer Beam": {},
                 "Plasma Beam": {},
@@ -38,7 +39,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Missile": {
-                    "num_included_in_starting_items": 1,
+                    "num_included_in_starting_pickups": 1,
                     "included_ammo": [
                         24
                     ]
@@ -50,7 +51,7 @@
                     ]
                 },
                 "Scan Pulse": {
-                    "num_included_in_starting_items": 1,
+                    "num_included_in_starting_pickups": 1,
                     "included_ammo": [
                         1000
                     ]
@@ -112,39 +113,39 @@
                     "num_shuffled_pickups": 1
                 }
             },
-            "default_items": {},
-            "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
         },
-        "ammo_configuration": {
-            "items_state": {
+        "ammo_pickup_configuration": {
+            "pickups_state": {
                 "Missile Tank": {
                     "ammo_count": [
                         3
                     ],
                     "pickup_count": 80,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Super Missile Tank": {
                     "ammo_count": [
                         1
                     ],
                     "pickup_count": 30,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Power Bomb Tank": {
                     "ammo_count": [
                         1
                     ],
                     "pickup_count": 15,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 },
                 "Aeion Tank": {
                     "ammo_count": [
                         50
                     ],
                     "pickup_count": 15,
-                    "requires_major_item": true
+                    "requires_main_item": true
                 }
             }
         },

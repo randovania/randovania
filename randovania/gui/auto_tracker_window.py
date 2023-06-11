@@ -1,42 +1,46 @@
-import json
-import logging
+import collections
+import functools
 from pathlib import Path
 
-from PySide6 import QtWidgets, QtGui, QtCore
-from qasync import asyncSlot
+from PySide6 import QtWidgets, QtGui
 
 from randovania import get_data_path
-from randovania.game_connection.connection_base import GameConnectionStatus
-from randovania.game_connection.game_connection import GameConnection
+from randovania.game_connection.builder.connector_builder import ConnectorBuilder
+from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.game_connection_setup import GameConnectionSetup
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.interface_common.options import Options
+from randovania.lib import json_lib
 
 
 def load_trackers_configuration() -> dict[RandovaniaGame, dict[str, Path]]:
-    with get_data_path().joinpath("gui_assets/tracker/trackers.json").open("r") as trackers_file:
-        data = json.load(trackers_file)["trackers"]
+    data = json_lib.read_path(
+        get_data_path().joinpath("gui_assets/tracker/trackers.json")
+    )
 
     return {
         RandovaniaGame(game): {
             name: get_data_path().joinpath("gui_assets/tracker", file_name)
             for name, file_name in trackers.items()
         }
-        for game, trackers in data.items()
+        for game, trackers in data["trackers"].items()
     }
 
 
 class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
     trackers: dict[RandovaniaGame, dict[str, Path]]
+    _tracker_actions: dict[RandovaniaGame, list[QtGui.QAction]]
     _full_name_to_path: dict[str, Path]
-    _current_tracker_game: RandovaniaGame = None
-    _current_tracker_name: str = None
-    _item_tracker: ItemTrackerWidget
+    _connected_game: RandovaniaGame | None = None
+    _current_tracker_game: RandovaniaGame | None = None
+    _current_tracker_name: str = "undefined"
+    item_tracker: ItemTrackerWidget | None = None
+    _dummy_tracker: QtWidgets.QWidget | None = None
 
-    def __init__(self, game_connection: GameConnection, options: Options):
+    def __init__(self, game_connection: GameConnection, window_manager: WindowManager | None, options: Options):
         super().__init__()
         self.setupUi(self)
         self.game_connection = game_connection
@@ -44,10 +48,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         common_qt_lib.set_default_window_icon(self)
 
         self.trackers = load_trackers_configuration()
-
-        self._action_to_name = {}
-        self._full_name_to_path = {}
-        theme_group = QtGui.QActionGroup(self)
+        self._tracker_actions = collections.defaultdict(list)
 
         for game in sorted(self.trackers.keys(), key=lambda k: k.long_name):
             game_menu = QtWidgets.QMenu(self.menu_tracker)
@@ -57,102 +58,100 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
                 action = QtGui.QAction(game_menu)
                 action.setText(name)
                 action.setCheckable(True)
-                full_name = f"{game.long_name} - {name}"
-                action.setChecked(full_name == options.selected_tracker)
-                action.triggered.connect(self._on_action_select_tracker)
+                action.setChecked(name == options.selected_tracker_for(game))
+                action.triggered.connect(functools.partial(self._on_action_select_tracker, game, name))
                 game_menu.addAction(action)
-                self._action_to_name[action] = full_name
-                self._full_name_to_path[full_name] = self.trackers[game][name]
-                theme_group.addAction(action)
+                self._tracker_actions[game].append(action)
 
-        self.create_tracker()
+        if window_manager is None:
+            self.select_game_button.setVisible(False)
+        else:
+            self.select_game_button.clicked.connect(window_manager.open_game_connection_window)
+        self.select_game_combo.currentIndexChanged.connect(self.create_tracker)
+        self.game_connection.BuildersChanged.connect(self.update_sources_combo)
+        self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
+        self.update_sources_combo()
 
-        self.game_connection_setup = GameConnectionSetup(self, self.connection_status_label,
-                                                         self.game_connection, options)
-        self.game_connection_setup.create_backend_entries(self.menu_backend)
-        self.game_connection_setup.create_upload_nintendont_action(self.menu_options)
-        self.game_connection_setup.refresh_backend()
+    def selected_tracker_for(self, game: RandovaniaGame) -> str:
+        actions = [action for action in self._tracker_actions[game] if action.isChecked()]
+        if not actions:
+            actions = self._tracker_actions[game]
 
-        self.action_force_update.triggered.connect(self.on_force_update_button)
+        return actions[0].text()
 
-        self._update_timer = QtCore.QTimer(self)
-        self._update_timer.setInterval(100)
-        self._update_timer.timeout.connect(self._on_timer_update)
-        self._update_timer.setSingleShot(True)
-
-    def showEvent(self, event: QtGui.QShowEvent):
-        self._update_timer.start()
-        super().showEvent(event)
-
-    def hideEvent(self, event: QtGui.QHideEvent):
-        self._update_timer.stop()
-        super().hideEvent(event)
-
-    @property
-    def selected_tracker(self) -> str | None:
-        for action, name in self._action_to_name.items():
-            if action.isChecked():
-                return name
-
-    def _on_action_select_tracker(self):
+    def _on_action_select_tracker(self, game: RandovaniaGame, name: str):
         with self.options as options:
-            options.selected_tracker = self.selected_tracker
+            options.set_selected_tracker_for(game, name)
         self.create_tracker()
-
-    @asyncSlot()
-    async def _on_timer_update(self):
-        await self._on_timer_update_raw()
-
-    async def _on_timer_update_raw(self):
-        try:
-            current_status = self.game_connection.current_status
-            if current_status not in {GameConnectionStatus.Disconnected, GameConnectionStatus.UnknownGame,
-                                      GameConnectionStatus.WrongGame}:
-                self.action_force_update.setEnabled(True)
-            else:
-                self.action_force_update.setEnabled(False)
-
-            if current_status == GameConnectionStatus.InGame or current_status == GameConnectionStatus.TrackerOnly:
-                if self.game_connection.connector.game_enum == self._current_tracker_game:
-                    inventory = self.game_connection.get_current_inventory()
-                    self.item_tracker.update_state(inventory)
-                    self.game_connection_setup.on_game_connection_updated()
-                else:
-                    self.connection_status_label.setText("{}: Wrong Game ({})".format(
-                        self.game_connection.connector_builder_choice.pretty_text,
-                        self.game_connection.current_game_name,
-                    ))
-        finally:
-            self._update_timer.start()
 
     def delete_tracker(self):
-        self.item_tracker.deleteLater()
-        self.item_tracker = None
+        if self.item_tracker is not None:
+            self.item_tracker.deleteLater()
+            self.item_tracker = None
+
+        if self._dummy_tracker is not None:
+            self._dummy_tracker.deleteLater()
+            self._dummy_tracker = None
 
     def create_tracker(self):
-        tracker_name = self.selected_tracker
-        if tracker_name == self._current_tracker_name or tracker_name is None:
+        connector = self.game_connection.get_connector_for_builder(self.selected_builder())
+        tracker_name = None
+        target_game = None
+
+        if connector is not None:
+            target_game = connector.game_enum
+            tracker_name = self.selected_tracker_for(target_game)
+
+        if tracker_name == self._current_tracker_name and target_game == self._current_tracker_game:
             return
 
         self.delete_tracker()
 
-        with self._full_name_to_path[tracker_name].open("r") as tracker_details_file:
-            tracker_details = json.load(tracker_details_file)
+        if target_game is None:
+            self._dummy_tracker = QtWidgets.QLabel(
+                "Not currently connected to any games",
+                self
+            )
+            self.gridLayout.addWidget(self._dummy_tracker, 0, 0, 1, 1)
+        else:
+            tracker_details = json_lib.read_path(self.trackers[target_game][tracker_name])
 
-        game_enum = RandovaniaGame(tracker_details["game"])
-        self.item_tracker = ItemTrackerWidget(tracker_details)
-        self.gridLayout.addWidget(self.item_tracker, 0, 0, 1, 1)
+            self.item_tracker = ItemTrackerWidget(tracker_details)
+            self.gridLayout.addWidget(self.item_tracker, 0, 0, 1, 1)
+            state = self.game_connection.connected_states.get(connector)
+            if state is not None:
+                self.item_tracker.update_state(state.current_inventory)
 
-        self._current_tracker_game = game_enum
-        self.item_tracker.update_state({})
-
+        self._current_tracker_game = target_game
         self._current_tracker_name = tracker_name
 
-    @asyncSlot()
-    async def on_force_update_button(self):
-        await self.game_connection.update_current_inventory()
-        inventory = self.game_connection.get_current_inventory()
-        logging.info("Inventory:" + "\n".join(
-            f"{item.long_name}: {inv_item.amount}/{inv_item.capacity}"
-            for item, inv_item in sorted(inventory.items(), key=lambda it: it[0].long_name)
-        ))
+    def update_sources_combo(self):
+        old_builder = self.selected_builder()
+        self.select_game_combo.clear()
+
+        index_to_select = None
+        for i, builder in enumerate(self.game_connection.connection_builders):
+            if builder == old_builder:
+                index_to_select = i
+            self.select_game_combo.addItem(
+                builder.pretty_text,
+                builder,
+            )
+
+        if not self.game_connection.connection_builders:
+            self.select_game_combo.addItem(
+                "No sources available"
+            )
+        if index_to_select is not None:
+            self.select_game_combo.setCurrentIndex(index_to_select)
+
+        self.create_tracker()
+
+    def selected_builder(self) -> ConnectorBuilder | None:
+        return self.select_game_combo.currentData()
+
+    def on_game_state_updated(self, state: ConnectedGameState):
+        self.create_tracker()
+        expected_connector = self.game_connection.get_connector_for_builder(self.selected_builder())
+        if expected_connector == state.source:
+            self.item_tracker.update_state(state.current_inventory)

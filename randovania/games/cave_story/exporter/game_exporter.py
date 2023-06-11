@@ -1,11 +1,10 @@
 import dataclasses
-import json
 from pathlib import Path
 
 from caver import patcher as caver_patcher
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.lib import status_update_lib
+from randovania.lib import status_update_lib, json_lib
 
 
 @dataclasses.dataclass(frozen=True)
@@ -43,4 +42,4 @@ class CSGameExporter(GameExporter):
         try:
             caver_patcher.patch_files(patch_data, export_params.output_path, progress_update)
         finally:
-            json.dump(patch_data, export_params.output_path.joinpath("data", "patcher_data.json").open("w"))
+            json_lib.write_path(export_params.output_path.joinpath("data", "patcher_data.json"), patch_data)

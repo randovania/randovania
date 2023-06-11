@@ -96,7 +96,7 @@ class PrimePresetDescriber(GamePresetDescriber):
         extra_message_tree = {
             "Difficulty": [
                 {f"Heat Damage: {configuration.heat_damage:.2f} dmg/s": configuration.heat_damage != 10.0},
-                {f"Energy Tank: {configuration.energy_per_tank} energy": configuration.energy_per_tank != 100},
+                {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
             ],
             "Gameplay": [
                 {f"Elevators: {configuration.elevators.description()}": not configuration.elevators.is_vanilla},
@@ -112,7 +112,7 @@ class PrimePresetDescriber(GamePresetDescriber):
             ],
             "Game Changes": [
                 message_for_required_mains(
-                    configuration.ammo_configuration,
+                    configuration.ammo_pickup_configuration,
                     {
                         "Missiles needs Launcher": "Missile Expansion",
                         "Power Bomb needs Main": "Power Bomb Expansion",

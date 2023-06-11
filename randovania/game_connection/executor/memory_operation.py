@@ -2,7 +2,6 @@ import dataclasses
 import logging
 
 
-
 class MemoryOperationException(Exception):
     pass
 
@@ -41,15 +40,12 @@ class MemoryOperation:
 
         return f"At {address_text}, {' and '.join(operation_pretty)}"
 
-class OperationExecutor:
+
+class MemoryOperationExecutor:
     def __init__(self):
         self.logger = logging.getLogger(type(self).__name__)
 
-    @property
-    def lock_identifier(self) -> str | None:
-        raise NotImplementedError()
-
-    async def connect(self) -> bool:
+    async def connect(self) -> str | None:
         raise NotImplementedError()
 
     def disconnect(self):
@@ -58,7 +54,6 @@ class OperationExecutor:
     def is_connected(self) -> bool:
         raise NotImplementedError()
 
-class MemoryOperationExecutor(OperationExecutor):
     async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
         raise NotImplementedError()
 

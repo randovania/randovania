@@ -1,5 +1,5 @@
 {
-    "schema_version": 15,
+    "schema_version": 19,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -44,17 +44,15 @@
         "misc": {},
         "requirement_template": {},
         "damage_reductions": [],
-        "energy_tank_item_index": "EnergyTank",
-        "item_percentage_index": "Percent",
-        "multiworld_magic_item_index": "Multiworld"
+        "energy_tank_item_index": "EnergyTank"
     },
     "layers": [
         "default"
     ],
     "starting_location": {
-        "world_name": "Temple Grounds",
-        "area_name": "Landing Site",
-        "node_name": "Save Station"
+        "region": "Temple Grounds",
+        "area": "Landing Site",
+        "node": "Save Station"
     },
     "initial_states": {
         "Default": [
@@ -238,13 +236,12 @@
             "name": "Not Determined"
         },
         "dock_rando": {
-            "enable_one_way": false,
             "force_change_two_way": false,
             "resolver_attempts": 125,
             "to_shuffle_proportion": 1.0
         }
     },
-    "worlds": [
+    "regions": [
         {
             "name": "Temple Grounds",
             "extra": {
@@ -328,11 +325,13 @@
                             "valid_starting_location": false,
                             "dock_type": "door",
                             "default_connection": {
-                                "world_name": "Temple Grounds",
-                                "area_name": "Service Access",
-                                "node_name": "Door to Landing Site"
+                                "region": "Temple Grounds",
+                                "area": "Service Access",
+                                "node": "Door to Landing Site"
                             },
                             "default_dock_weakness": "Normal Door",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
                             "override_default_open_requirement": null,
                             "override_default_lock_requirement": null,
                             "connections": {
@@ -376,11 +375,13 @@
                             "valid_starting_location": true,
                             "dock_type": "door",
                             "default_connection": {
-                                "world_name": "Temple Grounds",
-                                "area_name": "Landing Site",
-                                "node_name": "Door to Service Access"
+                                "region": "Temple Grounds",
+                                "area": "Landing Site",
+                                "node": "Door to Service Access"
                             },
                             "default_dock_weakness": "Normal Door",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
                             "override_default_open_requirement": null,
                             "override_default_lock_requirement": null,
                             "connections": {}
