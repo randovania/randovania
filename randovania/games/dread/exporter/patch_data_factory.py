@@ -321,7 +321,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         return all_dict
 
-
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
         return {
@@ -457,7 +456,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "lava": self.configuration.constant_lava_damage,
             },
             "game_patches": {
-                "consistent_raven_beak_damage_table": True,
+                "raven_beak_damage_table_handling": "consistent_low",
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,

@@ -32,7 +32,7 @@ from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 from randovania.gui.docks.connection_layer_widget import ConnectionLayerWidget
 from randovania.gui.docks.resource_database_editor import ResourceDatabaseEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
-from randovania.gui.lib import async_dialog
+from randovania.gui.lib import async_dialog, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
@@ -313,13 +313,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.focus_on_world(world)
 
     def focus_on_world(self, world: World):
-        self.world_selector_box.setCurrentIndex(self.world_selector_box.findData(world))
+        signal_handling.set_combo_with_value(self.world_selector_box, world)
 
     def focus_on_area_by_name(self, area_name: str):
         self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
 
     def focus_on_area(self, area: Area):
-        self.area_selector_box.setCurrentIndex(self.area_selector_box.findData(area))
+        signal_handling.set_combo_with_value(self.area_selector_box, area)
 
     def focus_on_node(self, node: Node):
         for radio, other_node in self.radio_button_to_node.items():
@@ -328,7 +328,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.update_selected_node()
 
     def focus_on_connection(self, other: Node):
-        self.other_node_connection_combo.setCurrentIndex(self.other_node_connection_combo.findData(other))
+        signal_handling.set_combo_with_value(self.other_node_connection_combo, other)
 
     def _on_click_link_to_other_node(self, link: str):
         world_name, area_name, node_name = None, None, None

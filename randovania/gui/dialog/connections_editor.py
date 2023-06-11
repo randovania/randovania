@@ -17,6 +17,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
+from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -124,7 +125,7 @@ class ResourceRequirementEditor:
         self.amount_combo = ScrollProtectedComboBox(parent)
         for trick_level in iterate_enum(LayoutTrickLevel):
             self.amount_combo.addItem(trick_level.long_name, userData=trick_level.as_number)
-        self.amount_combo.setCurrentIndex(self.amount_combo.findData(item.amount))
+        signal_handling.set_combo_with_value(self.amount_combo, item.amount)
 
         for widget in self._all_widgets:
             self.layout.addWidget(widget)
@@ -338,7 +339,7 @@ class RequirementEditor:
             requirement_type = ResourceRequirement
         else:
             requirement_type = type(requirement)
-        self.requirement_type_combo.setCurrentIndex(self.requirement_type_combo.findData(requirement_type))
+        signal_handling.set_combo_with_value(self.requirement_type_combo, requirement_type)
 
         if isinstance(requirement, ResourceRequirement):
             self._editor = ResourceRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)

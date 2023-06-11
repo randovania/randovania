@@ -9,6 +9,7 @@ from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeti
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences, SoundMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
+from randovania.gui.lib.signal_handling import set_combo_with_value
 
 
 def update_label_with_slider(label: QLabel, slider: QSlider):
@@ -82,7 +83,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         self.custom_hud_color.setChecked(patches.use_hud_color)
 
     def on_new_user_preferences(self, user_preferences: EchoesUserPreferences):
-        self.sound_mode_combo.setCurrentIndex(self.sound_mode_combo.findData(user_preferences.sound_mode))
+        set_combo_with_value(self.sound_mode_combo, user_preferences.sound_mode)
 
         for field in dataclasses.fields(user_preferences):
             if field.name in self.field_to_slider_mapping:

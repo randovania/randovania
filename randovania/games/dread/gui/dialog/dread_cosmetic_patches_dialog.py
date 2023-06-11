@@ -5,6 +5,7 @@ from PySide6.QtWidgets import QWidget
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadRoomGuiType
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.dread_cosmetic_patches_dialog_ui import Ui_DreadCosmeticPatchesDialog
+from randovania.gui.lib.signal_handling import set_combo_with_value
 
 
 class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatchesDialog):
@@ -37,7 +38,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
         self.show_enemy_damage.setChecked(patches.show_enemy_damage)
         self.show_player_damage.setChecked(patches.show_player_damage)
         self.show_death_counter.setChecked(patches.show_death_counter)
-        self.room_names_dropdown.setCurrentIndex(self.room_names_dropdown.findData(patches.show_room_names))
+        set_combo_with_value(self.room_names_dropdown, patches.show_room_names)
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):
