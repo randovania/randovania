@@ -48,7 +48,7 @@ _pretty_connection_status = {
 class ConnectedGameState:
     id: uuid.UUID
     source: RemoteConnector
-    status: GameConnectionStatus = GameConnectionStatus.Disconnected
+    status: GameConnectionStatus
     current_inventory: Inventory = dataclasses.field(default_factory=dict)
     collected_indices: set[PickupIndex] = dataclasses.field(default_factory=set)
 
@@ -96,6 +96,7 @@ class GameConnection(QObject):
             if connector.is_disconnected():
                 await connector.force_finish()
                 del self.remote_connectors[builder]
+                self._handle_connector_removed(connector)
 
         async def try_build_connector(build: ConnectorBuilder):
             c = await build.build_connector()
@@ -141,11 +142,18 @@ class GameConnection(QObject):
         connector.PlayerLocationChanged.connect(functools.partial(self._on_player_location_changed, connector))
         connector.PickupIndexCollected.connect(functools.partial(self._on_pickup_index_collected, connector))
         connector.InventoryUpdated.connect(functools.partial(self._on_inventory_updated, connector))
-        self._ensure_connected_state_exists(connector)
+        self.GameStateUpdated.emit(self._ensure_connected_state_exists(connector))
+
+    def _handle_connector_removed(self, connector: RemoteConnector):
+        state = self.connected_states.pop(connector, None)
+        if state is not None:
+            state.status = GameConnectionStatus.Disconnected
+            self.GameStateUpdated.emit(state)
 
     def _ensure_connected_state_exists(self, connector: RemoteConnector) -> ConnectedGameState:
         if connector not in self.connected_states:
-            self.connected_states[connector] = ConnectedGameState(connector.layout_uuid, connector)
+            self.connected_states[connector] = ConnectedGameState(connector.layout_uuid, connector,
+                                                                  GameConnectionStatus.TitleScreen)
         return self.connected_states[connector]
 
     def _on_player_location_changed(self, connector: RemoteConnector, location: tuple[Region | None, Area | None]):

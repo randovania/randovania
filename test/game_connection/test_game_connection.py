@@ -156,11 +156,14 @@ async def test_connector_state_update(connection, qapp):
     def make(status: GameConnectionStatus, inv: dict, indices: set):
         return ConnectedGameState(debug_connector_uuid, connector, status, inv, indices)
 
-    assert connection.get_backend_choice_for_state(ConnectedGameState(debug_connector_uuid, connector)
+    assert connection.get_backend_choice_for_state(ConnectedGameState(debug_connector_uuid, connector,
+                                                                      GameConnectionStatus.TitleScreen)
                                                    ) == ConnectorBuilderChoice.DEBUG
 
+    game_state_updated.assert_called_once_with(make(GameConnectionStatus.TitleScreen, {}, set()))
+
     connector.PickupIndexCollected.emit(PickupIndex(1))
-    game_state_updated.assert_called_once_with(make(GameConnectionStatus.Disconnected, {}, {PickupIndex(1)}))
+    game_state_updated.assert_called_with(make(GameConnectionStatus.TitleScreen, {}, {PickupIndex(1)}))
 
     connector.PlayerLocationChanged.emit(PlayerLocationEvent(None, None))
     game_state_updated.assert_called_with(make(GameConnectionStatus.TitleScreen, {}, {PickupIndex(1)}))
@@ -170,5 +173,6 @@ async def test_connector_state_update(connection, qapp):
 
     connector.InventoryUpdated.emit({"foo": 5})
     game_state_updated.assert_called_with(make(GameConnectionStatus.InGame, {"foo": 5}, {PickupIndex(1)}))
+
 
 
