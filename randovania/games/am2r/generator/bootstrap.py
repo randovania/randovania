@@ -20,23 +20,17 @@ class AM2RBootstrap(MetroidBootstrap):
         }
 
         for name, index in logical_patches.items():
-                if getattr(configuration, name):
-                    enabled_resources.add(index)
+            if getattr(configuration, name):
+                enabled_resources.add(index)
 
         return enabled_resources
 
     def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
         num_suits = sum(current_resources[db.get_item_by_name(suit)]
                         for suit in ["Varia Suit", "Gravity Suit"])
-        if num_suits == 2:
-            return 0.25
-        elif num_suits == 1:
-            return 0.5
-        else:
-            return 1
+        return 2 ** (-num_suits)
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
-        base_damage_reduction = db.base_damage_reduction
         base_damage_reduction = self._damage_reduction
 
         return dataclasses.replace(db, base_damage_reduction=base_damage_reduction)
