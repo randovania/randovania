@@ -7,9 +7,9 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.world.node import Node
-from randovania.game_description.world.node_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.node_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
@@ -78,19 +78,19 @@ class MSRPatchDataFactory(BasePatchDataFactory):
 
     def _node_for(self, identifier: AreaIdentifier | NodeIdentifier) -> Node:
         if isinstance(identifier, NodeIdentifier):
-            return self.game.world_list.node_by_identifier(identifier)
+            return self.game.region_list.node_by_identifier(identifier)
         else:
-            area = self.game.world_list.area_by_area_location(identifier)
+            area = self.game.region_list.area_by_area_location(identifier)
             node = area.node_with_name(area.default_node)
             assert node is not None
             return node
 
     def _key_error_for_node(self, node: Node, err: KeyError):
-        return KeyError(f"{self.game.world_list.node_name(node, with_world=True)} has no extra {err}")
+        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
 
     def _start_point_ref_for(self, node: Node) -> dict:
-        world = self.game.world_list.nodes_to_world(node)
-        level_name: str = os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
+        region = self.game.region_list.nodes_to_region(node)
+        level_name: str = os.path.splitext(os.path.split(region.extra["asset_id"])[1])[0]
 
         try:
             return {
@@ -110,7 +110,7 @@ class MSRPatchDataFactory(BasePatchDataFactory):
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
             useless_target,
-            self.game.world_list,
+            self.game.region_list,
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
