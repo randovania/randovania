@@ -15,7 +15,8 @@ _FIELDS = [
     "septogg_helpers",
     "change_level_design",
     "respawn_bomb_blocks",
-    "skip_cutscenes"
+    "skip_cutscenes",
+    "remove_grave_grotto_blocks"
 ]
 
 
