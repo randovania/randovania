@@ -12,7 +12,7 @@ from randovania.game_description.db.node_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
 from randovania.games.game import RandovaniaGame
-from randovania.generator.item_pool import pickup_creator
+from randovania.generator.pickup_pool import pickup_creator
 
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
