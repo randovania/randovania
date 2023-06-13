@@ -133,7 +133,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self.game = game
 
         self.create_preset_tree.game = game
-        self.create_preset_tree.window_manager = self._window_manager
+        self.create_preset_tree.preset_manager = self._window_manager.preset_manager
         self.create_preset_tree.options = self._options
 
         # Progress

@@ -13,9 +13,11 @@ async def patcher_data_command_logic_async(args):
     from randovania.layout.layout_description import LayoutDescription
 
     layout_description = LayoutDescription.from_file(args.layout_file)
-    players_config = PlayersConfiguration(args.player_index,
-                                          {i: f"Player {i + 1}"
-                                           for i in range(layout_description.player_count)})
+    players_config = PlayersConfiguration(
+        args.player_index,
+        {i: f"Player {i + 1}"
+         for i in range(layout_description.player_count)},
+    )
     preset = layout_description.get_preset(players_config.player_index)
 
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.default()

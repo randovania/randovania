@@ -497,6 +497,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "tile_group_patches": self._tilegroup_patches(),
             "new_spawn_points": list(self.new_spawn_points.values()),
             "objective": self._objective_patches(),
+            "layout_uuid": str(self.players_config.get_own_uuid()),
         }
 
 

@@ -197,9 +197,9 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
         connector._multiworld_interaction.assert_not_awaited()
 
     if 0 < depth:
-        assert connector._world is not None
+        assert connector._last_emitted_region is not None
     else:
-        assert connector._world is None
+        assert connector._last_emitted_region is None
 
     if should_disconnect:
         connector.executor.disconnect.assert_called_once_with()

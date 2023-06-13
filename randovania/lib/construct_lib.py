@@ -8,13 +8,13 @@ String = CString("utf-8")
 
 
 def convert_to_raw_python(value) -> Any:
-    if isinstance(value, construct.ListContainer):
+    if isinstance(value, list):
         return [
             convert_to_raw_python(item)
             for item in value
         ]
 
-    if isinstance(value, construct.Container):
+    if isinstance(value, dict):
         return {
             key: convert_to_raw_python(item)
             for key, item in value.items()

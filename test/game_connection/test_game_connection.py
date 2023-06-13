@@ -1,3 +1,4 @@
+import uuid
 from unittest.mock import AsyncMock, call, ANY
 from unittest.mock import MagicMock
 
@@ -142,6 +143,7 @@ async def test_connector_state_update(connection, qapp):
     # Setup
     builder = DebugConnectorBuilder(RandovaniaGame.BLANK.value)
     connection.add_connection_builder(builder)
+    debug_connector_uuid = uuid.UUID("00000000-0000-1111-0000-000000000000")
 
     game_state_updated = MagicMock()
     connection.GameStateUpdated.connect(game_state_updated)
@@ -152,13 +154,16 @@ async def test_connector_state_update(connection, qapp):
     assert isinstance(connector, DebugRemoteConnector)
 
     def make(status: GameConnectionStatus, inv: dict, indices: set):
-        return ConnectedGameState(connection.uuid_for_unknown, connector, status, inv, indices)
+        return ConnectedGameState(debug_connector_uuid, connector, status, inv, indices)
 
-    assert connection.get_backend_choice_for_state(ConnectedGameState(connection.uuid_for_unknown, connector)
+    assert connection.get_backend_choice_for_state(ConnectedGameState(debug_connector_uuid, connector,
+                                                                      GameConnectionStatus.TitleScreen)
                                                    ) == ConnectorBuilderChoice.DEBUG
 
+    game_state_updated.assert_called_once_with(make(GameConnectionStatus.TitleScreen, {}, set()))
+
     connector.PickupIndexCollected.emit(PickupIndex(1))
-    game_state_updated.assert_called_once_with(make(GameConnectionStatus.Disconnected, {}, {PickupIndex(1)}))
+    game_state_updated.assert_called_with(make(GameConnectionStatus.TitleScreen, {}, {PickupIndex(1)}))
 
     connector.PlayerLocationChanged.emit(PlayerLocationEvent(None, None))
     game_state_updated.assert_called_with(make(GameConnectionStatus.TitleScreen, {}, {PickupIndex(1)}))
@@ -168,5 +173,6 @@ async def test_connector_state_update(connection, qapp):
 
     connector.InventoryUpdated.emit({"foo": 5})
     game_state_updated.assert_called_with(make(GameConnectionStatus.InGame, {"foo": 5}, {PickupIndex(1)}))
+
 
 

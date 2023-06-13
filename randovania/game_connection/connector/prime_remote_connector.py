@@ -34,7 +34,7 @@ class PrimeRemoteConnector(RemoteConnector):
     version: all_prime_dol_patches.BasePrimeDolVersion
     game: GameDescription
     _last_message_size: int = 0
-    _world: Region | None = None
+    _last_emitted_region: Region | None = None
     executor: MemoryOperationExecutor
     remote_pickups: tuple[PickupEntryWithOwner, ...]
     message_cooldown: float = 0.0
@@ -274,9 +274,9 @@ class PrimeRemoteConnector(RemoteConnector):
         try:
             self.logger.debug("Start update")
             has_pending_op, region = await self.current_game_status()
-            if region != self._world:
+            if region != self._last_emitted_region:
                 self.PlayerLocationChanged.emit(PlayerLocationEvent(region, None))
-            self._world = region
+            self._last_emitted_region = region
             if region is not None:
                 await self.update_current_inventory()
                 if not has_pending_op:
