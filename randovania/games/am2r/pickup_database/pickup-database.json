@@ -287,12 +287,14 @@
         "Missile Launcher": {
             "pickup_category": "missile",
             "broad_category": "missile_related",
-            "model_name": "Missile",
-            "progression": [],
+            "model_name": "Missiles",
+            "progression": [
+                "Missile Launcher"
+            ],
             "default_shuffled_count": 0,
             "default_starting_count": 1,
             "ammo": [
-                "Missile"
+                "Missiles"
             ],
             "unlocks_ammo": true,
             "preferred_location_category": "major"
@@ -300,12 +302,14 @@
         "Super Missile Launcher": {
             "pickup_category": "missile",
             "broad_category": "missile_related",
-            "model_name": "SuperMissile",
-            "progression": [],
+            "model_name": "Super Missiles",
+            "progression": [
+                "Super Missile Launcher"
+            ],
             "default_shuffled_count": 1,
             "default_starting_count": 0,
             "ammo": [
-                "SuperMissile"
+                "Super Missiles"
             ],
             "unlocks_ammo": true,
             "preferred_location_category": "major"
@@ -314,7 +318,9 @@
             "pickup_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "Power Bomb Launcher",
-            "progression": [],
+            "progression": [
+                "Power Bomb Launcher"
+            ],
             "default_shuffled_count": 1,
             "default_starting_count": 0,
             "ammo": [
@@ -337,18 +343,22 @@
     },
     "ammo_pickups": {
         "Missile Expansion": {
-            "model_name": "Missile",
+            "model_name": "Missiles",
             "items": [
-                "Missile"
+                "Missiles"
             ],
+            "unlocked_by": "Missile Launcher",
+            "temporary": "Missiles",
             "preferred_location_category": "minor",
             "broad_category": "missile_related"
         },
         "Super Missile Expansion": {
-            "model_name": "SuperMissile",
+            "model_name": "Super Missiles",
             "items": [
-                "SuperMissile"
+                "Super Missiles"
             ],
+            "unlocked_by": "Super Missile Launcher",
+            "temporary": "Super Missiles",
             "preferred_location_category": "minor",
             "broad_category": "missile_related"
         },
@@ -357,6 +367,8 @@
             "items": [
                 "Power Bombs"
             ],
+            "unlocked_by": "Power Bomb Launcher",
+            "temporary": "Power Bombs",
             "preferred_location_category": "minor",
             "broad_category": "morph_ball_related"
         }
