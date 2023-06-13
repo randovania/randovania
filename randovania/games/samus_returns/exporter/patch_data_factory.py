@@ -139,7 +139,10 @@ class MSRAcquiredMemo(dict):
     def with_expansion_text(cls):
         result = cls()
         result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missile}."
-        result["Super Missile Tank"] = "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}."
+        result["Super Missile Tank"] = (
+            "Super Missile Tank acquired."
+            "\nSuper Missile capacity increased by {Super Missile}."
+        )
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
         result["Aeion Tank"] = "Aeion Tank acquired.\nAeion capacity increased by {Aeion}."
