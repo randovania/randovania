@@ -19,7 +19,7 @@ async def test_connect(executor, mocker):
     writer.drain = AsyncMock()
     reader.read = AsyncMock()
     handshake_answer = [b'\x01', b'\x00']
-    api_request_answer = [b'\x03', b'\x01', b'\x01\x0a\x00\x00', b'1,4096,nil']
+    api_request_answer = [b'\x03', b'\x01', b'\x01\x0a\x00\x00', b'1,4096,nil,00000000-0000-1111-0000-000000000000']
     bootstrap_1 = [b'\x03', b'\x02', b'\x01\x03\x00\x00', b'nil']
     bootstrap_2 = [b'\x03', b'\x03', b'\x01\x03\x00\x00', b'nil']
     bootstrap_3 = [b'\x03', b'\x04', b'\x01\x03\x00\x00', b'nil']
@@ -47,7 +47,7 @@ async def test_connect_fail_lua_error(executor, mocker):
     writer.drain = AsyncMock()
     reader.read = AsyncMock()
     handshake_answer = [b'\x01', b'\x00']
-    api_request_answer = [b'\x03', b'\x01', b'\x01\x0a\x00\x00', b'1,4096,nil']
+    api_request_answer = [b'\x03', b'\x01', b'\x01\x0a\x00\x00', b'1,4096,nil,00000000-0000-1111-0000-000000000000']
     bootstrap_1 = [b'\x03', b'\x02', b'\x00\x03\x00\x00', b'nil']
     reader.read.side_effect = handshake_answer + api_request_answer + bootstrap_1
 
@@ -69,7 +69,7 @@ async def test_malformed(executor):
     executor._socket.reader = reader
 
     with pytest.raises(DreadLuaException):
-        await executor._parse_packet([PacketType.PACKET_MALFORMED])
+        await executor._parse_packet(PacketType.PACKET_MALFORMED)
 
 
 async def test_disconnect(executor, mocker):
@@ -145,14 +145,14 @@ async def test_packet_types_with_signals(executor):
     # PACKET_LOG_MESSAGE
     answer = [b'\x02\x00\x00\x00', b'{}']
     reader.read.side_effect = answer
-    await executor._parse_packet([PacketType.PACKET_LOG_MESSAGE])
+    await executor._parse_packet(PacketType.PACKET_LOG_MESSAGE)
 
     # PACKET_NEW_INVENTORY
     executor.signals.new_inventory = MagicMock()
     executor.signals.new_inventory.emit = MagicMock()
     answer = [b'\x05\x00\x00\x00', b'{INVENTORY}']
     reader.read.side_effect = answer
-    await executor._parse_packet([PacketType.PACKET_NEW_INVENTORY])
+    await executor._parse_packet(PacketType.PACKET_NEW_INVENTORY)
     executor.signals.new_inventory.emit.assert_called_with("{INVENTORY}")
 
     # PACKET_COLLECTED_INDICES
@@ -160,7 +160,7 @@ async def test_packet_types_with_signals(executor):
     executor.signals.new_collected_locations.emit = MagicMock()
     answer = [b'\x06\x00\x00\x00', b'{INDICES}']
     reader.read.side_effect = answer
-    await executor._parse_packet([PacketType.PACKET_COLLECTED_INDICES])
+    await executor._parse_packet(PacketType.PACKET_COLLECTED_INDICES)
     executor.signals.new_collected_locations.emit.assert_called_with(b'{INDICES}')
 
     # PACKET_RECEIVED_PICKUPS
@@ -168,7 +168,7 @@ async def test_packet_types_with_signals(executor):
     executor.signals.new_received_pickups.emit = MagicMock()
     answer = [b'\x07\x00\x00\x00', b'{PICKUPS}']
     reader.read.side_effect = answer
-    await executor._parse_packet([PacketType.PACKET_RECEIVED_PICKUPS])
+    await executor._parse_packet(PacketType.PACKET_RECEIVED_PICKUPS)
     executor.signals.new_received_pickups.emit.assert_called_with("{PICKUPS}")
 
     # PACKET_GAME_STATE
@@ -176,7 +176,22 @@ async def test_packet_types_with_signals(executor):
     executor.signals.new_player_location.emit = MagicMock()
     answer = [b'\x08\x00\x00\x00', b'{GAME_STATE}']
     reader.read.side_effect = answer
-    await executor._parse_packet([PacketType.PACKET_GAME_STATE])
+    await executor._parse_packet(PacketType.PACKET_GAME_STATE)
     executor.signals.new_player_location.emit.assert_called_with("{GAME_STATE}")
 
-   
+async def test_code_greater_than_buffer(executor):
+    executor._socket = MagicMock()
+    executor._socket.buffer_size = 5
+    executor.get_bootstrapper_for = MagicMock(return_value="Lorem ipsum")
+
+    with pytest.raises(ValueError):
+        await executor.bootstrap()
+
+async def test_code_in_multiple_buffer(executor):
+    executor.run_lua_code = AsyncMock()
+    executor._read_response = AsyncMock()
+    executor._socket = MagicMock()
+    executor._socket.buffer_size = 200
+
+    await executor.bootstrap()
+    assert executor.run_lua_code.call_count == 7

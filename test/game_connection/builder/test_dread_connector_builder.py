@@ -1,3 +1,4 @@
+import uuid
 from mock import AsyncMock
 from mock import patch
 import pytest
@@ -18,6 +19,7 @@ async def test_create(depth: int):
         self.signals = DreadExecutorToConnectorSignals()
         self._ip = ip
         self.connect = AsyncMock(return_value=(None if depth == 0 else True))
+        self.layout_uuid = uuid.UUID('00000000-0000-1111-0000-000000000000')
 
     builder = DreadConnectorBuilder("localhost")
 

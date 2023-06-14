@@ -142,15 +142,15 @@ class DreadExecutor():
 
             # Send API details request
             self.logger.info("Requesting API details.")
-            await self.run_lua_code("return string.format('%d,%d,%s', RL.Version, RL.BufferSize,"
-                                     "tostring(RL.Bootstrap))")
+            await self.run_lua_code("return string.format('%d,%d,%s,%s', RL.Version, RL.BufferSize,"
+                                     "tostring(RL.Bootstrap), Init.sLayoutUUID)")
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.info("Waiting for API details response.")
             response = await self._read_response()
-            api_version, buffer_size, bootstrap = response.decode("ascii").split(",")
-            self.logger.info(f"Remote replied with API level {api_version}, buffer_size {buffer_size}" 
-                             f" and bootstrap {bootstrap}, connection successful.")
+            api_version, buffer_size, bootstrap, self.layout_uuid = response.decode("ascii").split(",")
+            self.logger.info(f"Remote replied with API level {api_version}, buffer_size {buffer_size}, " 
+                             f"bootstrap {bootstrap} and layout_uuid {self.layout_uuid}, connection successful.")
             self._socket.api_version = int(api_version)
             self._socket.buffer_size = int(buffer_size)
 
@@ -195,18 +195,15 @@ class DreadExecutor():
             retBytes.extend(msg)
         return retBytes
 
-    async def _read_packet_type(self, timeout):
-        return await asyncio.wait_for(self._socket.reader.read(1), timeout)
-
     async def _read_response(self) -> bytes | None:
-        packet_type: bytes = await self._read_packet_type(None)
+        packet_type: bytes =  await asyncio.wait_for(self._socket.reader.read(1), None)
         if len(packet_type) == 0:
             raise OSError()
-        return await self._parse_packet(packet_type)
+        return await self._parse_packet(packet_type[0])
 
-    async def _parse_packet(self, packet_type):
+    async def _parse_packet(self, packet_type: int) -> bytes | None:
         response = None
-        match packet_type[0]:
+        match packet_type:
             case PacketType.PACKET_MALFORMED:
                 # ouch! Whatever happend, just disconnect!
                 response = await asyncio.wait_for(self._socket.reader.read(9), timeout=15)
@@ -242,15 +239,15 @@ class DreadExecutor():
                 length_data = response[0:4]
                 length = struct.unpack("<l", length_data)[0]
                 response = await asyncio.wait_for(self._socket.reader.read(length), timeout=15)
-                if packet_type[0] == PacketType.PACKET_NEW_INVENTORY:
+                if packet_type == PacketType.PACKET_NEW_INVENTORY:
                     self.signals.new_inventory.emit(response.decode("utf-8"))
-                elif packet_type[0] == PacketType.PACKET_COLLECTED_INDICES:
+                elif packet_type == PacketType.PACKET_COLLECTED_INDICES:
                     self.signals.new_collected_locations.emit(response)
-                elif packet_type[0] == PacketType.PACKET_RECEIVED_PICKUPS:
+                elif packet_type == PacketType.PACKET_RECEIVED_PICKUPS:
                     self.signals.new_received_pickups.emit(response.decode("utf-8"))
-                elif packet_type[0] == PacketType.PACKET_GAME_STATE:
+                elif packet_type == PacketType.PACKET_GAME_STATE:
                     self.signals.new_player_location.emit(response.decode("utf-8"))
-                elif packet_type[0] == PacketType.PACKET_LOG_MESSAGE:
+                elif packet_type == PacketType.PACKET_LOG_MESSAGE:
                     self.logger.debug(response.decode("utf-8"))
         return response
 

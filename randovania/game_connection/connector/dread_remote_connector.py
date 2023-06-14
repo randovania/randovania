@@ -1,6 +1,5 @@
 import json
 import logging
-import uuid
 
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent, RemoteConnector
 from randovania.game_connection.executor.dread_executor import DreadExecutor
@@ -14,8 +13,7 @@ class DreadRemoteConnector(RemoteConnector):
 
     def __init__(self, executor: DreadExecutor):
         super().__init__()
-        # TODO: Replace dummy layout_uuid in multiworld branch
-        self._layout_uuid = uuid.UUID("00000000-0000-1111-0000-000000000000")
+        self._layout_uuid = executor.layout_uuid
         self.logger = logging.getLogger(type(self).__name__)
         self.executor = executor
         self.game = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
