@@ -36,9 +36,8 @@ def does_requirement_contain_resource(requirement, resource, db):
             return True
         return False
     for subreq in requirement.items:
-        temp_result = does_requirement_contain_resource(subreq, resource, db)
-        if temp_result:
-            return temp_result
+        if does_requirement_contain_resource(subreq, resource, db):
+            return True
     return False
 
 
