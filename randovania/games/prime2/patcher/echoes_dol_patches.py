@@ -14,6 +14,7 @@ from randovania.patching.prime.all_prime_dol_patches import (
     BasePrimeDolVersion, HealthCapacityAddresses,
     DangerousEnergyTankAddresses
 )
+from open_prime_rando.echoes.dock_lock_rando.map_icons import DoorMapIcon
 
 
 class IsDoorAddr(NamedTuple):
@@ -433,7 +434,7 @@ def freeze_player():
 
 
 def apply_map_door_changes(door_symbols: MapDoorTypeAddresses, dol_file: DolFile):
-    DOOR_MIN, DOOR_MAX = -4, 15
+    DOOR_MIN, DOOR_MAX = DoorMapIcon.get_door_index_bounds()
 
     num_door_colors = 1 + DOOR_MAX - DOOR_MIN
     assert num_door_colors <= 32, "There's only enough space for 32 colors in the table!"
@@ -467,35 +468,6 @@ def apply_map_door_changes(door_symbols: MapDoorTypeAddresses, dol_file: DolFile
         blr()
     ])
     
-    door_icon_colors = [
-        0xff00ffff,
-        0x00ffffff,
-        0xed94d4ff,
-        0x9300ffff,
-        0x3379bfff, # Blue
-        0xd63333ff, # Missile
-        0x000000ff, # Dark
-        0x4b4b4bff, # Annihilator
-        0xffffffff, # Light
-        0x50a148ff, # Super Missile
-        0x794f77ff, # Seeker Missile
-        0xeae50bff, # Power Bomb
-        0xffff00ff,
-        0xff00ffff,
-        0x00ffffff,
-        0xff0000ff,
-        0x00ff00ff,
-        0x0000ffff,
-        0x9300ffff,
-        0xed94d4ff,
-    ]
-    door_icon_colors_patch = struct.pack(">"+("L"*num_door_colors), *door_icon_colors)
+    
     dol_file.symbols["CTweakAutoMapper::GetDoorColor::DoorColorArray"] = door_color_array
-    dol_file.write("CTweakAutoMapper::GetDoorColor::DoorColorArray", door_icon_colors_patch)
-
-    # shift elevator and save station icons to ids 18 and 19
-    # dol_file.symbols["CMappableObject::Draw::JumpTable"] = door_symbols.map_icon_jumptable
-    # elevator_save_cases = dol_file.read("CMappableObject::Draw::JumpTable", 8)
-    # dol_file.write("CMappableObject::Draw::JumpTable", elevator_save_cases + elevator_save_cases)
-
-
+    dol_file.write("CTweakAutoMapper::GetDoorColor::DoorColorArray", DoorMapIcon.get_surface_colors_as_bytes())

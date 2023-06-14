@@ -2032,7 +2032,9 @@
                 "extra": {},
                 "items": {
                     "Normal Door": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Normal"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -2043,7 +2045,9 @@
                         "lock": null
                     },
                     "Dark Door": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Dark"
+                        },
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Dark Beam"
@@ -2051,7 +2055,9 @@
                         "lock": null
                     },
                     "Light Door": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Light"
+                        },
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Light Beam"
@@ -2059,7 +2065,9 @@
                         "lock": null
                     },
                     "Annihilator Door": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Annihilator"
+                        },
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Annihilator Beam"
@@ -2067,7 +2075,9 @@
                         "lock": null
                     },
                     "Missile Blast Shield": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Missile"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -2089,7 +2099,9 @@
                         }
                     },
                     "Super Missile Blast Shield": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "SuperMissile"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -2287,7 +2299,9 @@
                         }
                     },
                     "Power Bomb Blast Shield": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "PowerBomb"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -2326,7 +2340,9 @@
                         }
                     },
                     "Permanently Locked": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Disabled"
+                        },
                         "requirement": {
                             "type": "or",
                             "data": {
@@ -2976,10 +2992,24 @@
                     }
                 },
                 "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
+                    "unlocked": "Normal Door",
+                    "locked": "Permanently Locked",
+                    "change_from": [
+                        "Normal Door",
+                        "Dark Door",
+                        "Light Door",
+                        "Annihilator Door",
+                        "Missile Blast Shield",
+                        "Super Missile Blast Shield",
+                        "Power Bomb Blast Shield"
+                    ],
+                    "change_to": [
+                        "Normal Door",
+                        "Dark Door",
+                        "Light Door",
+                        "Annihilator Door",
+                        "Permanently Locked"
+                    ]
                 }
             },
             "portal": {
@@ -3136,7 +3166,7 @@
         "dock_rando": {
             "force_change_two_way": false,
             "resolver_attempts": 125,
-            "to_shuffle_proportion": 1.0
+            "to_shuffle_proportion": 0.5
         }
     },
     "regions": [
