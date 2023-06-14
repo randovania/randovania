@@ -1,21 +1,11 @@
 import pytest
-from randovania.game_description import derived_nodes, default_database
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockWeaknessDatabase
-from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description import default_database
 from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.db.teleporter_node import TeleporterNode
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceCollection
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.game import RandovaniaGame
 
 resource_list = [
