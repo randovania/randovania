@@ -91,8 +91,8 @@ class DolEditor:
     def _seek_and_write(self, seek: int, data: bytes):
         raise NotImplementedError()
 
-    def read(self, address: int, size: int) -> bytes:
-        offset = self.offset_for_address(address)
+    def read(self, address_or_symbol: Symbol, size: int) -> bytes:
+        offset = self.offset_for_address(self.resolve_symbol(address_or_symbol))
         return self._seek_and_read(offset, size)
 
     def write(self, address_or_symbol: Symbol, code_points: Iterable[int]):

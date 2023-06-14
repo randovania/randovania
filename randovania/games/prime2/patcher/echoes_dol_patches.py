@@ -1,6 +1,7 @@
 import dataclasses
 import struct
 from enum import Enum
+from typing import NamedTuple
 
 from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *   # noqa: F403
@@ -13,6 +14,28 @@ from randovania.patching.prime.all_prime_dol_patches import (
     BasePrimeDolVersion, HealthCapacityAddresses,
     DangerousEnergyTankAddresses
 )
+
+
+class IsDoorAddr(NamedTuple):
+    low: int
+    high: int
+    register_num: int
+
+    @property
+    def register(self) -> Register:
+        return Register(self.register_num)
+
+
+@dataclasses.dataclass(frozen=True)
+class MapDoorTypeAddresses:
+    get_correct_transform: IsDoorAddr
+    map_obj_draw: IsDoorAddr
+    is_visible_to_automapper: IsDoorAddr
+    map_world_draw_areas: IsDoorAddr
+    map_area_commit_resources1: IsDoorAddr
+    map_area_commit_resources2: IsDoorAddr
+    get_door_color: int
+    map_icon_jumptable: int
 
 
 @dataclasses.dataclass(frozen=True)
@@ -352,6 +375,7 @@ class EchoesDolVersion(BasePrimeDolVersion):
     unvisited_room_names_address: int
     cworldtransmanager_sfxstart: int
     powerup_should_persist: int
+    map_door_types: MapDoorTypeAddresses
 
 
 def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
@@ -406,3 +430,72 @@ def freeze_player():
         li(r7, -0x1),  # iceTextureId
         bl("CPlayer::Freeze"),
     ]
+
+
+def apply_map_door_changes(door_symbols: MapDoorTypeAddresses, dol_file: DolFile):
+    DOOR_MIN, DOOR_MAX = -4, 15
+
+    num_door_colors = 1 + DOOR_MAX - DOOR_MIN
+    assert num_door_colors <= 32, "There's only enough space for 32 colors in the table!"
+
+    is_door_symbols = [
+        door_symbols.get_correct_transform,
+        door_symbols.map_obj_draw,
+        door_symbols.is_visible_to_automapper,
+        door_symbols.map_world_draw_areas,
+        door_symbols.map_area_commit_resources1,
+        door_symbols.map_area_commit_resources2,
+    ]
+    for symbol in is_door_symbols:
+        dol_file.write_instructions(symbol.low, [cmpwi(symbol.register, DOOR_MIN)])
+        dol_file.write_instructions(symbol.high, [cmpwi(symbol.register, DOOR_MAX)])
+    
+    # TODO: add colors to GetDoorColor
+    dol_file.symbols["CTweakAutoMapper::GetDoorColor"] = door_symbols.get_door_color
+    door_color_array = door_symbols.get_door_color + 32
+
+    _colors = r6
+    _type = r5
+    _out_color = r3
+
+    dol_file.write_instructions("CTweakAutoMapper::GetDoorColor", [
+        custom_ppc.load_unsigned_32bit(_colors, door_color_array),
+        addi(_type, _type, -DOOR_MIN),
+        mulli(_type, _type, 4),
+        lwzx(r0, _colors, _type),
+        stw(r0, 0, _out_color),
+        blr()
+    ])
+    
+    door_icon_colors = [
+        0xff00ffff,
+        0x00ffffff,
+        0xed94d4ff,
+        0x9300ffff,
+        0x3379bfff, # Blue
+        0xd63333ff, # Missile
+        0x000000ff, # Dark
+        0x4b4b4bff, # Annihilator
+        0xffffffff, # Light
+        0x50a148ff, # Super Missile
+        0x794f77ff, # Seeker Missile
+        0xeae50bff, # Power Bomb
+        0xffff00ff,
+        0xff00ffff,
+        0x00ffffff,
+        0xff0000ff,
+        0x00ff00ff,
+        0x0000ffff,
+        0x9300ffff,
+        0xed94d4ff,
+    ]
+    door_icon_colors_patch = struct.pack(">"+("L"*num_door_colors), *door_icon_colors)
+    dol_file.symbols["CTweakAutoMapper::GetDoorColor::DoorColorArray"] = door_color_array
+    dol_file.write("CTweakAutoMapper::GetDoorColor::DoorColorArray", door_icon_colors_patch)
+
+    # shift elevator and save station icons to ids 18 and 19
+    # dol_file.symbols["CMappableObject::Draw::JumpTable"] = door_symbols.map_icon_jumptable
+    # elevator_save_cases = dol_file.read("CMappableObject::Draw::JumpTable", 8)
+    # dol_file.write("CMappableObject::Draw::JumpTable", elevator_save_cases + elevator_save_cases)
+
+
