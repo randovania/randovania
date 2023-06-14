@@ -35,6 +35,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
         self.show_enemy_damage.stateChanged.connect(self._persist_option_then_notify("show_enemy_damage"))
         self.show_player_damage.stateChanged.connect(self._persist_option_then_notify("show_player_damage"))
         self.show_death_counter.stateChanged.connect(self._persist_option_then_notify("show_death_counter"))
+        self.enable_auto_tracker.stateChanged.connect(self._persist_option_then_notify("enable_auto_tracker"))
         self.room_names_dropdown.currentIndexChanged.connect(self._on_room_name_mode_update)
         self.missile_cosmetic_dropdown.currentIndexChanged.connect(self._on_missile_cosmetic_update)
 
@@ -44,6 +45,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
         self.show_enemy_damage.setChecked(patches.show_enemy_damage)
         self.show_player_damage.setChecked(patches.show_player_damage)
         self.show_death_counter.setChecked(patches.show_death_counter)
+        self.enable_auto_tracker.setChecked(patches.enable_auto_tracker)
         set_combo_with_value(self.room_names_dropdown, patches.show_room_names)
         set_combo_with_value(self.missile_cosmetic_dropdown, patches.missile_cosmetic)
 

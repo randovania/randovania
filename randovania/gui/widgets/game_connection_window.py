@@ -125,6 +125,16 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
                 return
             args["ip"] = new_ip
 
+        if choice == ConnectorBuilderChoice.DREAD:
+            new_ip = await self._prompt_for_text(
+                "Enter Ryujinx's/Switch's IP",
+                "Enter the IP address of your Switch or use \"localhost\" for Ryujinx."
+                "You can check the IP address in the system settings."
+            )
+            if new_ip is None:
+                return
+            args["ip"] = new_ip
+
         if choice == ConnectorBuilderChoice.DEBUG:
             new_game = await self._prompt_for_game(
                 "Choose Game",

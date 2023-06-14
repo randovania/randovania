@@ -5,12 +5,14 @@ from randovania.game_connection.builder.connector_builder import ConnectorBuilde
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
+from randovania.game_connection.builder.dread_connector_builder import DreadConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 
 _CHOICE_TO_BUILDER = {
     ConnectorBuilderChoice.DEBUG: DebugConnectorBuilder,
     ConnectorBuilderChoice.DOLPHIN: DolphinConnectorBuilder,
     ConnectorBuilderChoice.NINTENDONT: NintendontConnectorBuilder,
+    ConnectorBuilderChoice.DREAD: DreadConnectorBuilder,
 }
 
 
