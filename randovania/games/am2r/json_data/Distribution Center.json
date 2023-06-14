@@ -3282,7 +3282,7 @@
                                 ]
                             }
                         },
-                        "A3Pipe": {
+                        "Pipe to Industrial Complex": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3346,7 +3346,7 @@
                                 ]
                             }
                         },
-                        "A1Pipe": {
+                        "Pipe to Golden Temple": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3492,8 +3492,8 @@
                         }
                     }
                 },
-                "A4Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to The Tower": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 802.73,
@@ -3504,16 +3504,24 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "The Tower",
-                        "area": "Pipe To Distribution Center Pipe Hub"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "The Tower",
+                        "area": "Pipe To Distribution Center Pipe Hub",
+                        "node": "Pipe to Distribution Center"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
-                        "A3Pipe": {
+                        "Pipe to Industrial Complex": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3522,8 +3530,8 @@
                         }
                     }
                 },
-                "A3Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Industrial Complex": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1114.3,
@@ -3534,14 +3542,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Industrial Complex",
-                        "area": "Pipe To Distribution Center Pipe Hub"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Industrial Complex",
+                        "area": "Pipe To Distribution Center Pipe Hub",
+                        "node": "Pipe to Distribution Center"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Distribution Facility Tower West": {
                             "type": "or",
@@ -3560,7 +3576,7 @@
                                 ]
                             }
                         },
-                        "A4Pipe": {
+                        "Pipe to The Tower": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3609,8 +3625,8 @@
                         }
                     }
                 },
-                "A1Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Golden Temple": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 471.12,
@@ -3621,14 +3637,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Golden Temple",
-                        "area": "Pipe to Distribution Center Pipe Hub"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Golden Temple",
+                        "area": "Pipe to Distribution Center Pipe Hub",
+                        "node": "Pipe to Distribution Center"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Distribution Facility Tower West": {
                             "type": "and",
@@ -6807,7 +6831,7 @@
             }
         },
         "Ice Beam Chamber Access": {
-            "default_node": "Teleporter Pipe",
+            "default_node": "Pipe to Serris Arena Pipe",
             "extra": {
                 "map_name": "rm_a5c31"
             },
@@ -6838,7 +6862,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Serris Arena Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6882,8 +6906,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Serris Arena Pipe": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 70.51,
@@ -6894,14 +6918,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Distribution Center",
-                        "area": "Serris Arena Pipe"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distribution Center",
+                        "area": "Serris Arena Pipe",
+                        "node": "Pipe to Ice Beam Chamber Access"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Ice Beam Chamber": {
                             "type": "or",
@@ -7915,7 +7947,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Ice Beam Chamber Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7934,8 +7966,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Ice Beam Chamber Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 72.61,
@@ -7946,14 +7978,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Distribution Center",
-                        "area": "Ice Beam Chamber Access"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distribution Center",
+                        "area": "Ice Beam Chamber Access",
+                        "node": "Pipe to Serris Arena Pipe"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Serris Arena": {
                             "type": "and",
@@ -8632,7 +8672,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Gravity Area Blockade Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8651,8 +8691,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Gravity Area Blockade Pipe": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 74.82,
@@ -8663,14 +8703,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Distribution Center",
-                        "area": "Ice Beam Chamber Access"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distribution Center",
+                        "area": "Gravity Area Blockade Pipe",
+                        "node": "Pipe to Facility Storage Spiked Path Pipe"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Facility Storage Spiked Path": {
                             "type": "and",
@@ -11142,7 +11190,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Facility Storage Spiked Path Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11161,8 +11209,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Facility Storage Spiked Path Pipe": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 73.67,
@@ -11173,14 +11221,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Distribution Center",
-                        "area": "Facility Storage Spiked Path Pipe"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distribution Center",
+                        "area": "Facility Storage Spiked Path Pipe",
+                        "node": "Pipe to Gravity Area Blockade Pipe"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gravity Area Blockade": {
                             "type": "and",
