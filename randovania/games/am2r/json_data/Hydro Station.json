@@ -5383,7 +5383,7 @@
                                 "items": []
                             }
                         },
-                        "Teleporter Pipe": {
+                        "Pipe to The Tower": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5457,8 +5457,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to The Tower": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 200.96,
@@ -5469,14 +5469,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "The Tower",
-                        "area": "Pipe To Hydro Station"
+                    "extra": {
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "The Tower",
+                        "area": "Pipe To Hydro Station",
+                        "node": "Pipe to Hydro Station"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Lower Hydro Station Hub": {
                             "type": "and",
@@ -5531,7 +5539,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Genetics Laboratory": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5550,8 +5558,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Genetics Laboratory": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 150.43,
@@ -5562,14 +5570,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Genetics Laboratory",
-                        "area": "Pipe To Hydro Station"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Genetics Laboratory",
+                        "area": "Pipe To Hydro Station",
+                        "node": "Pipe to Hydro Station"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Water Turbine Station": {
                             "type": "and",

@@ -5344,7 +5344,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Distribution Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5363,8 +5363,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Distribution Center": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 161.69,
@@ -5375,14 +5375,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Distribution Center",
-                        "area": "Pipe Hub"
+                    "extra": {
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distribution Center",
+                        "area": "Pipe Hub",
+                        "node": "Pipe to Golden Temple"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Inner Temple East Hall": {
                             "type": "and",
