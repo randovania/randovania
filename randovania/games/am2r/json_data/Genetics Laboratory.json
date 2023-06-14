@@ -1378,7 +1378,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Hydro Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1415,8 +1415,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Hydro Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 492.05,
@@ -1427,14 +1427,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Hydro Station",
-                        "area": "Pipe To Genetics Laboratory"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Hydro Station",
+                        "area": "Pipe To Genetics Laboratory",
+                        "node": "Pipe to Genetics Laboratory"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Laboratory Entrance": {
                             "type": "and",
@@ -2244,12 +2252,29 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MorphGlide",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MorphGlide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph Ball",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]

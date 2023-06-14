@@ -415,7 +415,7 @@ jobs:
 
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2.6.0
+        uses: docker/setup-buildx-action@v2.7.0
 
       -
         name: Login to DockerHub
@@ -428,7 +428,7 @@ jobs:
       -
         name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v4.1.0
+        uses: docker/build-push-action@v4.1.1
         with:
           context: .
           file: ./Dockerfile.server
