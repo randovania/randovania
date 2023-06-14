@@ -1,5 +1,6 @@
 import json
 import logging
+import uuid
 
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent, RemoteConnector
 from randovania.game_connection.executor.dread_executor import DreadExecutor
@@ -13,7 +14,7 @@ class DreadRemoteConnector(RemoteConnector):
 
     def __init__(self, executor: DreadExecutor):
         super().__init__()
-        self._layout_uuid = executor.layout_uuid
+        self._layout_uuid = uuid.UUID(executor.layout_uuid_str)
         self.logger = logging.getLogger(type(self).__name__)
         self.executor = executor
         self.game = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
@@ -60,8 +61,8 @@ class DreadRemoteConnector(RemoteConnector):
             self.reset_values()
             self.current_region = None
         else:
-            self.current_region = next((region for region in self.game.region_list.regions \
-                                       if region.extra["scenario_id"] == state_or_region), \
+            self.current_region = next((region for region in self.game.region_list.regions
+                                       if region.extra["scenario_id"] == state_or_region),
                                         None)
         self.PlayerLocationChanged.emit(PlayerLocationEvent(self.current_region, None))
 

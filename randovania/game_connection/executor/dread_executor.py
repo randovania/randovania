@@ -148,9 +148,9 @@ class DreadExecutor():
 
             self.logger.info("Waiting for API details response.")
             response = await self._read_response()
-            api_version, buffer_size, bootstrap, self.layout_uuid = response.decode("ascii").split(",")
+            api_version, buffer_size, bootstrap, self.layout_uuid_str = response.decode("ascii").split(",")
             self.logger.info(f"Remote replied with API level {api_version}, buffer_size {buffer_size}, " 
-                             f"bootstrap {bootstrap} and layout_uuid {self.layout_uuid}, connection successful.")
+                             f"bootstrap {bootstrap} and layout_uuid {self.layout_uuid_str}, connection successful.")
             self._socket.api_version = int(api_version)
             self._socket.buffer_size = int(buffer_size)
 

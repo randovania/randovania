@@ -148,6 +148,9 @@ def _convert_v24(options: dict) -> dict:
     # added Dread's missile pack recolor
     return options
 
+def _convert_v25(options: dict) -> dict:
+    # added Dread's auto tracker
+    return options
 
 _CONVERTER_FOR_VERSION = [
     None,
