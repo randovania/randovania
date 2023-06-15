@@ -690,9 +690,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         target_identifier = self.region_list.identifier_for_area(target_area)
         source_identifier = self.region_list.identifier_for_area(current_area)
 
-        dock_weakness = self.game_description.dock_weakness_database.default_weakness
-        source_name_base = integrity_check.base_dock_name_raw(dock_weakness[0], dock_weakness[1], target_identifier)
-        target_name_base = integrity_check.base_dock_name_raw(dock_weakness[0], dock_weakness[1], source_identifier)
+        dock_type, dock_weakness = self.game_description.dock_weakness_database.default_weakness
+        source_name_base = next(integrity_check.raw_expected_dock_names(
+            dock_type, dock_weakness, target_identifier, source_identifier.region_name
+        ))
+        target_name_base = next(integrity_check.raw_expected_dock_names(
+            dock_type, dock_weakness, source_identifier, target_identifier.region_name
+        ))
 
         source_count = len(integrity_check.docks_with_same_base_name(current_area, source_name_base))
         if source_count != len(integrity_check.docks_with_same_base_name(target_area, target_name_base)):
@@ -713,9 +717,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             identifier=new_node_this_area_identifier,
             node_index=self.editor.new_node_index(),
             heal=False, location=location, description="", layers=("default",), extra={}, valid_starting_location=False,
-            dock_type=dock_weakness[0],
+            dock_type=dock_type,
             default_connection=new_node_other_area_identifier,
-            default_dock_weakness=dock_weakness[1],
+            default_dock_weakness=dock_weakness,
             exclude_from_dock_rando=False,
             override_default_open_requirement=None, override_default_lock_requirement=None,
             incompatible_dock_weaknesses=tuple(),
@@ -725,9 +729,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             identifier=new_node_other_area_identifier,
             node_index=self.editor.new_node_index(),
             heal=False, location=location, description="", layers=("default",), extra={}, valid_starting_location=False,
-            dock_type=dock_weakness[0],
+            dock_type=dock_type,
             default_connection=new_node_this_area_identifier,
-            default_dock_weakness=dock_weakness[1],
+            default_dock_weakness=dock_weakness,
             exclude_from_dock_rando=False,
             override_default_open_requirement=None, override_default_lock_requirement=None,
             incompatible_dock_weaknesses=tuple(),
