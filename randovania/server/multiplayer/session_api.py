@@ -56,7 +56,7 @@ def request_session_update(sio: ServerApp, session_id: int):
     session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
 
     session_common.emit_session_meta_update(session)
-    if session.layout_description_json is not None:
+    if session.has_layout_description():
         session_common.emit_session_actions_update(session)
 
     session_common.emit_session_audit_update(session)

@@ -4,6 +4,7 @@ import datetime
 import enum
 import json
 import uuid
+import zlib
 from typing import Any, Self, Iterable
 
 import cachetools
@@ -14,6 +15,7 @@ from sentry_sdk.tracing_utils import record_sql_queries
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import multiplayer_session
 from randovania.network_common.multiplayer_session import MultiplayerUser, GameDetails, \
     MultiplayerWorld, MultiplayerSessionListEntry, MultiplayerSessionAuditLog, \
@@ -101,8 +103,13 @@ class UserAccessToken(BaseModel):
 
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
-def _decode_layout_description(s):
-    return LayoutDescription.from_json_dict(json.loads(s))
+def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> LayoutDescription:
+    decoded = json.loads(zlib.decompress(layout).decode("utf-8"))
+    decoded["info"]["presets"] = [
+        VersionedPreset.from_str(preset).as_json
+        for preset in presets
+    ]
+    return LayoutDescription.from_json_dict(decoded)
 
 
 class MultiplayerSession(BaseModel):
@@ -111,8 +118,8 @@ class MultiplayerSession(BaseModel):
     password: str | None = peewee.CharField(null=True)
     state: MultiplayerSessionState = EnumField(choices=MultiplayerSessionState,
                                                default=MultiplayerSessionState.SETUP)
-    layout_description_json: str | None = peewee.TextField(null=True)
-    seed_hash: str | None = peewee.CharField(null=True)
+    layout_description_json: bytes | None = peewee.BlobField(null=True)
+    game_details_json: str | None = peewee.CharField(null=True)
     creator: User = peewee.ForeignKeyField(User)
     creation_date = peewee.DateTimeField(default=_datetime_now)
     generation_in_progress: User | None = peewee.ForeignKeyField(User, null=True)
@@ -129,17 +136,35 @@ class MultiplayerSession(BaseModel):
     def get_by_id(cls, pk) -> Self:
         return cls.get(cls._meta.primary_key == pk)
 
+    def has_layout_description(self) -> bool:
+        return self.layout_description_json is not None
+
     @property
     def layout_description(self) -> LayoutDescription | None:
-        # FIXME: a server can have an invalid layout description. Likely from an old version!
-        return _decode_layout_description(self.layout_description_json) if self.layout_description_json else None
+        if self.layout_description_json is not None:
+            return _decode_layout_description(
+                self.layout_description_json,
+                tuple(world.preset for world in self.get_ordered_worlds())
+            )
+        else:
+            return None
 
     @layout_description.setter
     def layout_description(self, description: LayoutDescription | None):
         if description is not None:
-            self.layout_description_json = json.dumps(description.as_json(force_spoiler=True))
+            encoded = description.as_json(force_spoiler=True)
+            encoded["info"].pop("presets")
+            self.layout_description_json = zlib.compress(
+                json.dumps(encoded, separators=(',', ':')).encode("utf-8")
+            )
+            self.game_details_json = json.dumps(GameDetails(
+                spoiler=description.has_spoiler,
+                word_hash=description.shareable_word_hash,
+                seed_hash=description.shareable_hash,
+            ).as_json)
         else:
             self.layout_description_json = None
+            self.game_details_json = None
 
     @property
     def creation_datetime(self) -> datetime.datetime:
@@ -169,6 +194,9 @@ class MultiplayerSession(BaseModel):
                                          ).order_by(World.order.asc()))
 
     def describe_actions(self):
+        if not self.has_layout_description():
+            return multiplayer_session.MultiplayerWorldActions(self.id, [])
+
         description: LayoutDescription = self.layout_description
 
         worlds = self.get_ordered_worlds()
@@ -200,15 +228,9 @@ class MultiplayerSession(BaseModel):
         )
 
     def create_session_entry(self) -> multiplayer_session.MultiplayerSessionEntry:
-        description = self.layout_description
-
         game_details = None
-        if description is not None:
-            game_details = GameDetails(
-                spoiler=description.has_spoiler,
-                word_hash=description.shareable_word_hash,
-                seed_hash=description.shareable_hash,
-            )
+        if self.game_details_json is not None:
+            game_details = GameDetails.from_json(json.loads(self.game_details_json))
 
         return multiplayer_session.MultiplayerSessionEntry(
             id=self.id,
@@ -251,10 +273,6 @@ class MultiplayerSession(BaseModel):
             ]
         )
 
-    def reset_layout_description(self):
-        self.layout_description_json = None
-        self.save()
-
 
 class World(BaseModel):
     id: int
@@ -276,6 +294,19 @@ class World(BaseModel):
         return cls.get(
             World.session == session_id,
             World.order == order,
+        )
+
+    @classmethod
+    def create_for(cls, session: MultiplayerSession, name: str, preset: VersionedPreset, *,
+                   uid: "uuid.UUID | None" = None, order: int | None = None) -> Self:
+        if uid is None:
+            uid = uuid.uuid4()
+        return cls().create(
+            session=session,
+            uuid=uid,
+            name=name,
+            preset=json.dumps(preset.as_json, separators=(',', ':')),
+            order=order,
         )
 
 

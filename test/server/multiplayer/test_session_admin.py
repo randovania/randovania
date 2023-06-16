@@ -391,12 +391,12 @@ def test_admin_session_change_layout_description(clean_database, preset_manager,
     mock_from_json_dict: MagicMock = mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.from_json_dict")
 
-    preset_as_json = json.dumps(preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json)
+    preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
                                                  generation_in_progress=user1)
-    database.World.create(session=session, name="W1", preset=preset_as_json, order=0)
-    database.World.create(session=session, name="W2", preset=preset_as_json, order=1)
+    database.World.create_for(session=session, name="W1", preset=preset, order=0)
+    database.World.create_for(session=session, name="W2", preset=preset, order=1)
     database.MultiplayerMembership.create(user=user1, session=session, row=None, admin=True)
 
     new_preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).get_preset()

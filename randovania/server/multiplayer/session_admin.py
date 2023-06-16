@@ -112,8 +112,7 @@ def _create_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[str, d
 
     logger().info(f"{session_common.describe_session(session)}: Creating world {name}.")
 
-    world = World.create(session=session, name=name,
-                         preset=json.dumps(preset.as_json))
+    world = World.create_for(session=session, name=name, preset=preset)
     session_common.add_audit_entry(sio, session, f"Created new world {world.name}")
     return world
 
@@ -272,14 +271,16 @@ def _download_layout_description(sio: ServerApp, session: MultiplayerSession):
     except peewee.DoesNotExist:
         raise NotAuthorizedForAction()
 
-    if session.layout_description_json is None:
+    if session.has_layout_description():
         raise InvalidAction("Session does not contain a game")
 
-    if not session.layout_description.has_spoiler:
+    description = session.layout_description
+
+    if not description.has_spoiler:
         raise InvalidAction("Session does not contain a spoiler")
 
     session_common.add_audit_entry(sio, session, "Requested the spoiler log")
-    return session.layout_description_json
+    return json.dumps(description.as_json())
 
 
 def _start_session(sio: ServerApp, session: MultiplayerSession):
@@ -336,7 +337,7 @@ def _duplicate_session(sio: ServerApp, session: MultiplayerSession, new_title: s
             password=session.password,
             creator=current_user,
             layout_description_json=session.layout_description_json,
-            seed_hash=session.seed_hash,
+            game_details_json=session.game_details_json,
             dev_features=session.dev_features,
         )
         for world in session.worlds:
@@ -361,8 +362,11 @@ def _duplicate_session(sio: ServerApp, session: MultiplayerSession, new_title: s
 
 def _get_permalink(sio: ServerApp, session: MultiplayerSession) -> str:
     verify_has_admin(sio, session.id, None)
-    session_common.add_audit_entry(sio, session, "Requested permalink")
 
+    if session.has_layout_description():
+        raise InvalidAction("Session does not contain a game")
+
+    session_common.add_audit_entry(sio, session, "Requested permalink")
     return session.layout_description.permalink.as_base64_str
 
 
