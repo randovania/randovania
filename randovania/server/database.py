@@ -51,6 +51,10 @@ class BaseModel(peewee.Model):
     def get(cls, *query, **filters) -> Self:
         return super().get(*query, **filters)
 
+    @classmethod
+    def get_by_id(cls, pk) -> Self:
+        return super().get_by_id(pk)
+
 
 class EnumField(peewee.CharField):
     """

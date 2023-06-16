@@ -187,7 +187,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                                 window_manager: WindowManager, options: Options,
                                 ) -> Self:
 
-        logger.debug("Creating GameSessionWindow")
+        logger.debug("Creating MultiplayerSessionWindow")
 
         game_session_api = MultiplayerSessionApi(network_client, session_entry)
         window = cls(game_session_api, window_manager, options)
@@ -197,7 +197,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         await game_session_api.request_session_update()
         # await window.on_game_state_updated()
 
-        logger.debug("Finished creating GameSessionWindow")
+        logger.debug("Finished creating MultiplayerSessionWindow")
 
         return window
 
@@ -558,7 +558,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             return
 
         if await self._should_overwrite_presets(layout.generator_parameters, permalink_source=False):
-
             await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, self._get_world_order())
             try:
                 await self._upload_layout_description(layout)

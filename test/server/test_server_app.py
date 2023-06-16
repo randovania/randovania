@@ -1,29 +1,11 @@
-from unittest.mock import MagicMock, call
+from unittest.mock import MagicMock
 
 import flask
 import pytest
 
 from randovania.network_common.error import NotLoggedIn, ServerError, InvalidSession
 from randovania.server import database
-from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp, EnforceDiscordRole
-
-
-@pytest.fixture(name="server_app")
-def server_app_fixture(flask_app):
-    pytest.importorskip("engineio.async_drivers.threading")
-
-    flask_app.config['SECRET_KEY'] = "key"
-    flask_app.config["DISCORD_CLIENT_ID"] = 1234
-    flask_app.config["DISCORD_CLIENT_SECRET"] = 5678
-    flask_app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"
-    flask_app.config["FERNET_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
-    flask_app.config["GUEST_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
-    flask_app.config["ENFORCE_ROLE"] = None
-    server = ServerApp(flask_app)
-    server.metrics.summary = MagicMock()
-    server.metrics.summary.return_value.side_effect = lambda x: x
-    return server
 
 
 def test_session(server_app):
@@ -116,6 +98,43 @@ def test_on_success_exception(server_app):
     # Assert
     custom.assert_called_once_with(server_app)
     assert result == ServerError().as_json
+
+
+def test_store_world_in_session(server_app):
+    session = {}
+    server_app.session = MagicMock()
+    server_app.session.return_value.__enter__.return_value = session
+
+    world = MagicMock()
+    world.id = 1234
+
+    # Run
+    server_app.store_world_in_session(world)
+
+    # Assert
+    assert session == {
+        "worlds": [1234]
+    }
+
+
+def test_remove_world_from_session(server_app):
+    session = {
+        "worlds": [1234]
+    }
+    server_app.session = MagicMock()
+    server_app.session.return_value.__enter__.return_value = session
+
+    world = MagicMock()
+    world.id = 1234
+
+    # Run
+    server_app.remove_world_from_session(world)
+
+    # Assert
+    assert session == {
+        "worlds": []
+    }
+
 
 
 @pytest.mark.parametrize("valid", [False, True])

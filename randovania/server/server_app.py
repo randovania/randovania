@@ -105,13 +105,18 @@ class ServerApp:
         except peewee.DoesNotExist:
             raise InvalidSession()
 
-    def store_worlds_in_session(self, world: World):
+    def store_world_in_session(self, world: World):
         with self.session() as sio_session:
             if "worlds" not in sio_session:
                 sio_session["worlds"] = []
 
             if world.id not in sio_session["worlds"]:
                 sio_session["worlds"].append(world.id)
+
+    def remove_world_from_session(self, world: World):
+        with self.session() as sio_session:
+            if "worlds" in sio_session and world.id in sio_session["worlds"]:
+                sio_session["worlds"].remove(world.id)
 
     def on(self, message: str, handler, namespace=None, *, with_header_check: bool = False):
         @functools.wraps(handler)

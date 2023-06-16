@@ -253,8 +253,8 @@ def _change_layout_description(sio: ServerApp, session: MultiplayerSession, desc
                 worlds_to_update.append(world)
 
     with database.db.atomic():
-        for preset_row in worlds_to_update:
-            preset_row.save()
+        for world in worlds_to_update:
+            world.save()
 
         session.generation_in_progress = None
         session.layout_description = description
@@ -271,7 +271,7 @@ def _download_layout_description(sio: ServerApp, session: MultiplayerSession):
     except peewee.DoesNotExist:
         raise NotAuthorizedForAction()
 
-    if session.has_layout_description():
+    if not session.has_layout_description():
         raise InvalidAction("Session does not contain a game")
 
     description = session.layout_description

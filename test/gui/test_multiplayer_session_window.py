@@ -1,13 +1,13 @@
 import datetime
 import json
 import uuid
-from unittest.mock import MagicMock, AsyncMock, ANY
+from unittest.mock import MagicMock, AsyncMock, ANY, call
 
 import pytest
 from PySide6 import QtWidgets
+from pytest_mock import MockerFixture
 
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -16,7 +16,7 @@ from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import NotAuthorizedForAction
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry, MultiplayerUser, User, MultiplayerWorldAction,
-    MultiplayerWorldActions, GameDetails, MultiplayerWorld,
+    MultiplayerWorldActions, GameDetails, MultiplayerWorld, MultiplayerSessionAuditLog, MultiplayerSessionAuditEntry,
 )
 from randovania.network_common.session_state import MultiplayerSessionState
 
@@ -223,15 +223,16 @@ async def test_update_logic_settings_window(window: MultiplayerSessionWindow, mo
         execute_dialog.assert_not_awaited()
 
 
+@pytest.mark.parametrize("accept", [QtWidgets.QDialog.DialogCode.Accepted, QtWidgets.QDialog.DialogCode.Rejected])
 @pytest.mark.parametrize(["action", "method_name"], [
     (SessionAdminGlobalAction.CHANGE_TITLE, "rename_session"),
     (SessionAdminGlobalAction.CHANGE_PASSWORD, "change_password"),
     (SessionAdminGlobalAction.DUPLICATE_SESSION, "duplicate_session"),
 ])
-async def test_change_password_title_or_duplicate(window, mocker, action, method_name):
+async def test_change_password_title_or_duplicate(window, mocker, action, method_name, accept):
     def set_text_value(dialog: QtWidgets.QInputDialog):
         dialog.setTextValue("magoo")
-        return QtWidgets.QDialog.DialogCode.Accepted
+        return accept
 
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                   side_effect=set_text_value)
@@ -242,7 +243,10 @@ async def test_change_password_title_or_duplicate(window, mocker, action, method
 
     # Assert
     execute_dialog.assert_awaited_once()
-    window._admin_global_action.assert_awaited_once_with(action, "magoo")
+    if accept == QtWidgets.QDialog.DialogCode.Accepted:
+        window._admin_global_action.assert_awaited_once_with(action, "magoo")
+    else:
+        window._admin_global_action.assert_not_awaited()
 
 
 async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_manager):
@@ -351,20 +355,28 @@ async def test_copy_permalink_not_admin(window: MultiplayerSessionWindow, mocker
     mock_set_clipboard.assert_not_called()
 
 
-async def test_import_permalink(window: MultiplayerSessionWindow, mocker):
+@pytest.mark.parametrize("end_state", ["reject", "wrong_count", "abort", "import"])
+async def test_import_permalink(window: MultiplayerSessionWindow, end_state, mocker: MockerFixture):
     mock_permalink_dialog = mocker.patch("randovania.gui.multiplayer_session_window.PermalinkDialog")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    execute_dialog.return_value = QtWidgets.QDialog.DialogCode.Accepted
+    execute_dialog.return_value = (
+        QtWidgets.QDialog.DialogCode.Rejected
+        if end_state == "reject" else
+        QtWidgets.QDialog.DialogCode.Accepted
+    )
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
-    mock_warning.return_value = QtWidgets.QMessageBox.StandardButton.Yes
+    mock_warning.return_value = (
+        QtWidgets.QMessageBox.StandardButton.No
+        if end_state == "abort" else
+        QtWidgets.QMessageBox.StandardButton.Yes
+    )
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
-    permalink.parameters.player_count = 2
+    permalink.parameters.player_count = 2 + (end_state == "wrong_count")
     permalink.parameters.presets = [MagicMock(), MagicMock()]
     permalink.parameters.presets[0].is_same_configuration.return_value = False
 
     session = MagicMock()
-    session.num_rows = 2
     session.worlds = [MagicMock(), MagicMock()]
 
     window._session = session
@@ -375,9 +387,67 @@ async def test_import_permalink(window: MultiplayerSessionWindow, mocker):
 
     # Assert
     execute_dialog.assert_awaited_once_with(mock_permalink_dialog.return_value)
-    mock_warning.assert_awaited_once_with(window, "Different presets", ANY, ANY,
-                                          QtWidgets.QMessageBox.StandardButton.No)
-    window.generate_game_with_permalink.assert_awaited_once_with(permalink, retries=None)
+
+    if end_state == "reject":
+        mock_warning.assert_not_awaited()
+        window.generate_game_with_permalink.assert_not_awaited()
+        return
+
+    if end_state == "wrong_count":
+        mock_warning.assert_awaited_once_with(window, "Incompatible permalink", ANY)
+    else:
+        mock_warning.assert_awaited_once_with(window, "Different presets", ANY, ANY,
+                                              QtWidgets.QMessageBox.StandardButton.No)
+
+    if end_state == "import":
+        window.generate_game_with_permalink.assert_awaited_once_with(permalink, retries=None)
+    else:
+        window.generate_game_with_permalink.assert_not_awaited()
+
+
+@pytest.mark.parametrize("end_state", ["reject", "wrong_count", "import"])
+async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker: MockerFixture):
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    mock_load_layout = mocker.patch("randovania.gui.lib.layout_loader.prompt_and_load_layout_description",
+                                    new_callable=AsyncMock)
+    layout = mock_load_layout.return_value
+    layout.as_json = MagicMock()
+    if end_state == "reject":
+        mock_load_layout.return_value = None
+
+    window._admin_global_action = AsyncMock()
+
+    preset = MagicMock()
+    preset.is_same_configuration.return_value = True
+    layout.generator_parameters.player_count = 2 + (end_state == "wrong_count")
+    layout.parameters.presets = [preset, preset]
+
+    session = MagicMock()
+    session.worlds = [MagicMock(), MagicMock()]
+    session.worlds[0].id = "uid1"
+    session.worlds[1].id = "uid2"
+    window._session = session
+    window.generate_game_with_permalink = AsyncMock()
+
+    # Run
+    await window.import_layout()
+
+    # Assert
+    mock_load_layout.assert_awaited_once_with(window)
+
+    if end_state == "wrong_count":
+        mock_warning.assert_awaited_once_with(window, "Incompatible permalink", ANY)
+    else:
+        mock_warning.assert_not_awaited()
+
+    if end_state == "import":
+        window._admin_global_action.assert_has_awaits([
+            call(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, ["uid1", "uid2"]),
+            call(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION, layout.as_json.return_value),
+            call(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, []),
+        ])
+    else:
+        window._admin_global_action.assert_not_awaited()
 
 
 @pytest.mark.parametrize("already_kicked", [True, False])
@@ -482,3 +552,26 @@ async def test_on_close_event(window: MultiplayerSessionWindow, mocker, is_membe
         window.network_client.leave_multiplayer_session.assert_awaited_once_with(window._session)
     else:
         window.network_client.leave_multiplayer_session.assert_not_awaited()
+
+
+def test_update_session_audit_log(window: MultiplayerSessionWindow):
+    window._session = MagicMock()
+    log = MultiplayerSessionAuditLog(
+        session_id=window._session.id,
+        entries=[
+            MultiplayerSessionAuditEntry("You", f"Did something for the {i}-th time.", datetime.datetime.now())
+            for i in range(50)
+        ]
+    )
+    scrollbar = window.tab_audit.verticalScrollBar()
+
+    # Run
+    window.update_session_audit_log(log)
+    assert scrollbar.value() == scrollbar.maximum()
+
+    assert window.tab_audit.item(0, 0).text() == "You"
+    assert window.tab_audit.item(0, 1).text() == "Did something for the 0-th time."
+
+    window.tab_audit.scrollToTop()
+    window.update_session_audit_log(log)
+    assert scrollbar.value() == scrollbar.minimum()

@@ -41,9 +41,12 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
     assert database.User.get_by_id(1234) == user
 
     mock_emit.assert_called_once_with(
-        "game_session_meta_update",
+        "multiplayer_session_meta_update",
         {'id': 1, 'name': 'Debug', 'state': 'in-progress', 'users_list': [], 'worlds': [],
-         'game_details': None, 'generation_in_progress': None,
+         'game_details': {'seed_hash': 'WAR56PWQ',
+                          'spoiler': True,
+                          'word_hash': 'Charge Sandcanyon Abyss'},
+         'generation_in_progress': None,
          'allowed_games': ANY, },
         room='game-session-1',
         namespace='/',
@@ -71,7 +74,7 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
     assert database.MultiplayerMembership.select().where(database.MultiplayerMembership.session == session).count() == 1
 
     mock_emit.assert_called_once_with(
-        "game_session_meta_update",
+        "multiplayer_session_meta_update",
         {'id': 1, 'name': 'Debug', 'state': 'in-progress',
          'users_list': [
              {'admin': True, 'id': 1234, 'name': 'The Name',
@@ -408,10 +411,12 @@ def test_admin_session_change_layout_description(clean_database, preset_manager,
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
-    layout_description.as_json.return_value = "some_json_string"
+    layout_description.as_json.return_value = {"info": {"presets": []}}
     layout_description.player_count = 2
     layout_description.all_presets = [new_preset, new_preset]
     layout_description.shareable_word_hash = "Hash Words"
+    layout_description.shareable_hash = "ASDF"
+    layout_description.has_spoiler = True
 
     # Run
     with flask_app.test_request_context():
@@ -422,8 +427,11 @@ def test_admin_session_change_layout_description(clean_database, preset_manager,
     mock_emit_session_update.assert_called_once_with(session)
     mock_audit.assert_called_once_with(sio, session, "Set game to Hash Words")
     mock_verify_no_layout_description.assert_called_once_with(session)
-    assert database.MultiplayerSession.get_by_id(1).layout_description_json == '"some_json_string"'
-    assert database.MultiplayerSession.get_by_id(1).generation_in_progress is None
+
+    session_mod = database.MultiplayerSession.get_by_id(1)
+    assert session_mod.layout_description_json == b'x\x9c\xabV\xca\xccK\xcbW\xb2\xaa\xae\xad\x05\x00\x17\xa7\x04\x1b'
+    assert session_mod.generation_in_progress is None
+    assert session_mod.game_details_json == '{"seed_hash": "ASDF", "word_hash": "Hash Words", "spoiler": true}'
 
     new_session = database.MultiplayerSession.get_by_id(1)
     new_json = json.dumps(VersionedPreset.with_preset(new_preset).as_json)
@@ -478,16 +486,11 @@ def test_admin_session_change_layout_description_invalid(mock_emit_session_updat
     assert database.MultiplayerSession.get_by_id(1).layout_description_json is None
 
 
-def test_admin_session_download_layout_description(flask_app, clean_database, mock_emit_session_update,
-                                                   mock_audit, mocker):
-    mock_layout_description: PropertyMock = mocker.patch(
-        "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock)
-    user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
-                                                 layout_description_json="layout_description_json")
-    database.MultiplayerMembership.create(user=user1, session=session, admin=False)
+def test_admin_session_download_layout_description(flask_app, solo_two_world_session, mock_emit_session_update,
+                                                   mock_audit):
+    session = database.MultiplayerSession.get_by_id(1)
     sio = MagicMock()
-    sio.get_current_user.return_value = user1
+    sio.get_current_user.return_value = database.User.get_by_id(1234)
 
     # Run
     with flask_app.test_request_context():
@@ -498,8 +501,7 @@ def test_admin_session_download_layout_description(flask_app, clean_database, mo
     # Assert
     mock_emit_session_update.assert_not_called()
     mock_audit.assert_called_once_with(sio, session, "Requested the spoiler log")
-    mock_layout_description.assert_called_once()
-    assert result == database.MultiplayerSession.get_by_id(1).layout_description_json
+    assert result == json.dumps(session.layout_description.as_json())
 
 
 def test_admin_session_download_layout_description_no_spoiler(clean_database, mock_emit_session_update,

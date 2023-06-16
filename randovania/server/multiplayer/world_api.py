@@ -105,9 +105,6 @@ def collect_locations(sio: ServerApp, source_world: World, pickup_locations: tup
         if target_world is not None:
             receiver_worlds.add(target_world)
 
-    if receiver_worlds:
-        session_common.emit_session_actions_update(session)
-
     return receiver_worlds
 
 
@@ -180,7 +177,7 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
             else:
                 flask_socketio.join_room(_get_world_room(world))
                 worlds_to_update.add(world)
-                sio.store_worlds_in_session(world)
+                sio.store_world_in_session(world)
 
             update_association(user, world, None, world_request.status.pretty_text)
 
@@ -200,8 +197,14 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
                 e = error.ServerError()
             failed_syncs[uid] = e
 
+    sessions_to_update = set()
+
     for world in worlds_to_update:
-        emit_game_session_pickups_update(sio, world)
+        emit_world_pickups_update(sio, world)
+        sessions_to_update.add(world.session)
+
+    for session in sessions_to_update:
+        session_common.emit_session_actions_update(session)
 
     return ServerSyncResponse(
         worlds=frozendict(world_details),
@@ -209,7 +212,7 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
     )
 
 
-def emit_game_session_pickups_update(sio: ServerApp, world: World):
+def emit_world_pickups_update(sio: ServerApp, world: World):
     session = world.session
 
     if session.state == MultiplayerSessionState.SETUP:

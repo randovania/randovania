@@ -57,18 +57,18 @@ def describe_session(session: MultiplayerSession, world: World | None = None) ->
 
 
 def emit_session_meta_update(session: MultiplayerSession):
-    logger().debug("game_session_meta_update for session %d (%s)", session.id, session.name)
+    logger().debug("multiplayer_session_meta_update for session %d (%s)", session.id, session.name)
     emit_session_global_event(session, signals.SESSION_META_UPDATE, session.create_session_entry().as_json)
 
 
 def emit_session_actions_update(session: MultiplayerSession):
-    logger().debug("game_session_actions_update for session %d (%s)", session.id, session.name)
+    logger().debug("multiplayer_session_actions_update for session %d (%s)", session.id, session.name)
     emit_session_global_event(session, signals.SESSION_ACTIONS_UPDATE,
                               construct_dataclass.encode_json_dataclass(session.describe_actions()))
 
 
 def emit_session_audit_update(session: MultiplayerSession):
-    logger().debug("game_session_audit_update for session %d (%s)", session.id, session.name)
+    logger().debug("multiplayer_session_audit_update for session %d (%s)", session.id, session.name)
     emit_session_global_event(session, signals.SESSION_AUDIT_UPDATE,
                               construct_dataclass.encode_json_dataclass(session.get_audit_log()))
 

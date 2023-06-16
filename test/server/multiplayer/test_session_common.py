@@ -56,7 +56,7 @@ def test_emit_session_meta_update(session_update, flask_app, mocker, default_gam
 
     # Assert
     mock_emit.assert_called_once_with(
-        "game_session_meta_update",
+        "multiplayer_session_meta_update",
         session_json,
         room=f"game-session-{session_update.id}",
         namespace='/',
@@ -83,7 +83,7 @@ def test_emit_session_actions_update(session_update, flask_app, mocker):
 
     # Assert
     mock_emit.assert_called_once_with(
-        "game_session_actions_update",
+        "multiplayer_session_actions_update",
         construct_dataclass.encode_json_dataclass(actions),
         room=f"game-session-{session_update.id}",
         namespace='/',
@@ -114,7 +114,7 @@ def test_emit_session_audit_update(session_update, flask_app, mocker):
 
     # Assert
     mock_emit.assert_called_once_with(
-        "game_session_audit_update",
+        "multiplayer_session_audit_update",
         construct_dataclass.encode_json_dataclass(audit_log),
         room=f"game-session-{session_update.id}",
         namespace='/',

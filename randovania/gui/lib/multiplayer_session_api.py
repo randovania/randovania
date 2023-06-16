@@ -131,6 +131,7 @@ class MultiplayerSessionApi(QtCore.QObject):
             str(world_uid)
         )
 
+    @handle_network_errors
     async def rename_world(self, world_uid: uuid.UUID, new_name: str):
         await self.session_admin_global(
             admin_actions.SessionAdminGlobalAction.RENAME_WORLD,
@@ -151,6 +152,7 @@ class MultiplayerSessionApi(QtCore.QObject):
             (name, preset.as_json)
         )
 
+    @handle_network_errors
     async def create_patcher_file(self, world_uid: uuid.UUID, cosmetic_patches: dict) -> dict:
         return await self.session_admin_global(
             admin_actions.SessionAdminGlobalAction.CREATE_PATCHER_FILE,
