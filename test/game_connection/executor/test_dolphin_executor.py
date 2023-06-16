@@ -1,3 +1,4 @@
+import platform
 from unittest.mock import MagicMock, call
 
 import pid
@@ -15,6 +16,18 @@ def dolphin_executor():
     return executor
 
 
+async def test_connect_not_darwin(executor: DolphinExecutor, mocker):
+    mocker.patch("platform.system", return_value="Darwin")
+
+    # Run
+    result = await executor.connect()
+
+    # Assert
+    assert result == "macOS is not supported"
+    executor.dolphin.hook.assert_not_called()
+
+
+@pytest.mark.skipif(platform.system() == "Darwin", reason="Dolphin is unsupported on macOS")
 async def test_connect_cant_hook(executor: DolphinExecutor):
     # Setup
     executor.dolphin.is_hooked.return_value = False
@@ -27,6 +40,7 @@ async def test_connect_cant_hook(executor: DolphinExecutor):
     executor.dolphin.hook.assert_called_once_with()
 
 
+@pytest.mark.skipif(platform.system() == "Darwin", reason="Dolphin is unsupported on macOS")
 async def test_connect_pid_fail(executor: DolphinExecutor):
     # Setup
     executor.dolphin.is_hooked.return_value = True
@@ -41,6 +55,7 @@ async def test_connect_pid_fail(executor: DolphinExecutor):
     executor.dolphin.hook.assert_not_called()
 
 
+@pytest.mark.skipif(platform.system() == "Darwin", reason="Dolphin is unsupported on macOS")
 async def test_connect_success(executor: DolphinExecutor):
     # Setup
     executor.dolphin.is_hooked.return_value = True
