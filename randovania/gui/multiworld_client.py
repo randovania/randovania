@@ -15,7 +15,7 @@ from randovania.lib import json_lib
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.multiplayer_session import MultiplayerPickups
+from randovania.network_common.multiplayer_session import MultiplayerWorldPickups
 from randovania.network_common.world_sync import ServerWorldSync, ServerSyncRequest
 
 
@@ -57,7 +57,7 @@ class MultiworldClient(QObject):
     _all_data: dict[uuid.UUID, Data]
     _persist_path: Path
     _sync_task: asyncio.Task | None = None
-    _remote_games: dict[uuid.UUID, MultiplayerPickups]
+    _remote_games: dict[uuid.UUID, MultiplayerWorldPickups]
 
     _last_reported_status: dict[uuid.UUID, GameConnectionStatus]
     _last_sync: ServerSyncRequest = ServerSyncRequest(worlds=frozendict({}))
@@ -85,7 +85,7 @@ class MultiworldClient(QObject):
             self._all_data[uid] = Data(f)
 
         self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
-        self.network_client.GameSessionPickupsUpdated.connect(self.on_network_game_updated)
+        self.network_client.WorldPickupsUpdated.connect(self.on_network_game_updated)
 
     async def start(self):
         self.logger.debug("start")
@@ -217,8 +217,8 @@ class MultiworldClient(QObject):
 
         self.start_server_sync_task()
 
-    @asyncSlot(MultiplayerPickups)
-    async def on_network_game_updated(self, pickups: MultiplayerPickups):
+    @asyncSlot(MultiplayerWorldPickups)
+    async def on_network_game_updated(self, pickups: MultiplayerWorldPickups):
         async with self._pickups_lock:
             self._remote_games[pickups.world_id] = pickups
 

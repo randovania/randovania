@@ -1,9 +1,12 @@
+import contextlib
 import datetime
 import uuid
 from unittest.mock import MagicMock
 
 import pytest
+from pytest_mock import MockerFixture
 
+from randovania.network_common import error
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.multiplayer import session_api
@@ -46,7 +49,7 @@ def test_create_session(clean_database, preset_manager, default_game_list, mocke
     sio = MagicMock()
     sio.get_current_user.return_value = user
 
-    mock_join: MagicMock = mocker.patch("randovania.server.multiplayer.session_common.join_multiplayer_session")
+    mock_join: MagicMock = mocker.patch("randovania.server.multiplayer.session_common.join_room")
 
     # Run
     result = session_api.create_session(sio, "My Room")
@@ -54,7 +57,7 @@ def test_create_session(clean_database, preset_manager, default_game_list, mocke
     # Assert
     session = database.MultiplayerSession.get(1)
 
-    mock_join.assert_called_once_with(sio, database.MultiplayerMembership.get_by_ids(user_id=user.id, session_id=1))
+    mock_join.assert_called_once_with(sio, session)
 
     assert session.name == "My Room"
     assert result == {
@@ -78,7 +81,7 @@ def test_join_session(mock_emit_session_update: MagicMock,
     sio.get_current_user.return_value = user1
 
     mock_join_multiplayer_session: MagicMock = mocker.patch(
-        "randovania.server.multiplayer.session_common.join_multiplayer_session")
+        "randovania.server.multiplayer.session_common.join_room")
 
     session = database.MultiplayerSession.create(name="The Session", password=None, creator=user1)
     database.World.create(session=session, name="World 1", preset="{}",
@@ -109,6 +112,40 @@ def test_join_session(mock_emit_session_update: MagicMock,
     mock_join_multiplayer_session.assert_called_once_with(
         sio, database.MultiplayerMembership.get_by_ids(session_id=session.id, user_id=1234)
     )
+
+
+@pytest.mark.parametrize("is_member", [False, True])
+@pytest.mark.parametrize("listen", [False, True])
+def test_listen_to_session(session_update, mocker: MockerFixture, flask_app, listen, is_member):
+    mock_join_room = mocker.patch("randovania.server.multiplayer.session_common.join_room", autospec=True)
+    mock_leave_room = mocker.patch("randovania.server.multiplayer.session_common.leave_room", autospec=True)
+
+    if is_member:
+        user = database.User.get_by_id(1234)
+        membership = database.MultiplayerMembership.get_by_ids(user_id=1234, session_id=session_update)
+        expectation = contextlib.nullcontext()
+    else:
+        user = database.User.create(name="Random")
+        expectation = pytest.raises(error.NotAuthorizedForAction)
+        membership = None
+
+    sio = MagicMock()
+    sio.get_current_user.return_value = user
+
+    # Run
+    with flask_app.test_request_context(), expectation:
+        session_api.listen_to_session(sio, 1, listen)
+
+    # Assert
+    if listen and is_member:
+        mock_join_room.assert_called_once_with(sio, membership.session)
+    else:
+        mock_join_room.assert_not_called()
+
+    if not listen and is_member:
+        mock_leave_room.assert_called_once_with(sio, membership.session)
+    else:
+        mock_leave_room.assert_not_called()
 
 
 def test_session_request_update(session_update, mocker, flask_app):

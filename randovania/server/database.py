@@ -199,7 +199,7 @@ class MultiplayerSession(BaseModel):
 
     def describe_actions(self):
         if not self.has_layout_description():
-            return multiplayer_session.MultiplayerWorldActions(self.id, [])
+            return multiplayer_session.MultiplayerSessionActions(self.id, [])
 
         description: LayoutDescription = self.layout_description
 
@@ -209,12 +209,12 @@ class MultiplayerSession(BaseModel):
             for world in worlds
         }
 
-        def _describe_action(action: WorldAction) -> multiplayer_session.MultiplayerWorldAction:
+        def _describe_action(action: WorldAction) -> multiplayer_session.MultiplayerSessionAction:
             provider_index = world_by_id[action.provider.uuid].order
             location_index = PickupIndex(action.location)
             target = description.all_patches[provider_index].pickup_assignment[location_index]
 
-            return multiplayer_session.MultiplayerWorldAction(
+            return multiplayer_session.MultiplayerSessionAction(
                 provider=action.provider.uuid,
                 receiver=action.receiver.uuid,
                 pickup=target.pickup.name,
@@ -222,7 +222,7 @@ class MultiplayerSession(BaseModel):
                 time=datetime.datetime.fromisoformat(action.time),
             )
 
-        return multiplayer_session.MultiplayerWorldActions(
+        return multiplayer_session.MultiplayerSessionActions(
             self.id,
             [
                 _describe_action(action)

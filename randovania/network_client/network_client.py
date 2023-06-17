@@ -25,8 +25,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.network_common import connection_headers, error, admin_actions, pickup_serializer, signals, \
     multiplayer_session
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionListEntry, MultiplayerSessionEntry, User, MultiplayerWorldActions,
-    MultiplayerPickups, MultiplayerSessionAuditLog,
+    MultiplayerSessionListEntry, MultiplayerSessionEntry, User, MultiplayerSessionActions,
+    MultiplayerWorldPickups, MultiplayerSessionAuditLog,
     WorldUserInventory
 )
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
@@ -108,9 +108,6 @@ class NetworkClient:
     _restore_session_task: asyncio.Task | None = None
     _connect_error: str | None = None
     _num_emit_failures: int = 0
-
-    # Game Session
-    _current_game_session_meta: MultiplayerSessionEntry | None = None
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
@@ -330,14 +327,13 @@ class NetworkClient:
         self.logger.info("name: %s, users: %d, game: %s, %s",
                          entry.name, len(entry.users), str(entry.game_details),
                          entry.state.user_friendly_name)
-        self._current_game_session_meta = entry
 
     async def _on_multiplayer_session_actions_update_raw(self, data: bytes):
         await self.on_multiplayer_session_actions_update(
-            construct_dataclass.decode_json_dataclass(data, multiplayer_session.MultiplayerWorldActions)
+            construct_dataclass.decode_json_dataclass(data, multiplayer_session.MultiplayerSessionActions)
         )
 
-    async def on_multiplayer_session_actions_update(self, actions: MultiplayerWorldActions):
+    async def on_multiplayer_session_actions_update(self, actions: MultiplayerSessionActions):
         self.logger.info("num actions: %d", len(actions.actions))
 
     async def _on_multiplayer_session_audit_update_raw(self, data: bytes):
@@ -353,7 +349,7 @@ class NetworkClient:
         game = RandovaniaGame(data["game"])
         resource_database = default_database.resource_database_for(game)
 
-        await self.on_world_pickups_update(MultiplayerPickups(
+        await self.on_world_pickups_update(MultiplayerWorldPickups(
             world_id=uuid.UUID(data["world"]),
             game=game,
             pickups=tuple(
@@ -362,7 +358,7 @@ class NetworkClient:
             ),
         ))
 
-    async def on_world_pickups_update(self, pickups: MultiplayerPickups):
+    async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups):
         self.logger.info("world %s, num pickups: %d", pickups.world_id, len(pickups.pickups))
 
     async def _on_world_user_inventory_raw(self, entry_id: str, raw_inventory: bytes):
@@ -396,7 +392,7 @@ class NetworkClient:
 
         self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
 
-    async def server_call(self, event: str, data=None, namespace=None, *, handle_invalid_session: bool = True):
+    async def server_call(self, event: str, data=None, *, namespace=None, handle_invalid_session: bool = True):
         if self.connection_state.is_disconnected:
             self.logger.debug(f"{event}, urgent connect start")
             await self.connect_to_server()
@@ -433,9 +429,6 @@ class NetworkClient:
 
             raise possible_error
 
-    async def game_session_request_update(self):
-        await self.server_call("game_session_request_update", self._current_game_session_meta.id)
-
     async def get_multiplayer_session_list(self, ignore_limit: bool) -> list[MultiplayerSessionListEntry]:
         return [
             MultiplayerSessionListEntry.from_json(item)
@@ -444,16 +437,14 @@ class NetworkClient:
 
     async def create_new_session(self, session_name: str) -> MultiplayerSessionEntry:
         result = await self.server_call("multiplayer_create_session", session_name)
-        self._current_game_session_meta = MultiplayerSessionEntry.from_json(result)
-        return self._current_game_session_meta
+        return MultiplayerSessionEntry.from_json(result)
 
     async def join_multiplayer_session(self, session: MultiplayerSessionListEntry, password: str | None):
         result = await self.server_call("multiplayer_join_session", (session.id, password))
-        self._current_game_session_meta = MultiplayerSessionEntry.from_json(result)
-        return self._current_game_session_meta
+        return MultiplayerSessionEntry.from_json(result)
 
-    async def leave_multiplayer_session(self, session: MultiplayerSessionEntry):
-        await self.session_admin_player(session, self._current_user.id, admin_actions.SessionAdminUserAction.KICK, None)
+    async def listen_to_session(self, session: MultiplayerSessionEntry, listen: bool):
+        return await self.server_call("multiplayer_listen_to_session", (session.id, listen))
 
     async def session_admin_global(self, session: MultiplayerSessionEntry,
                                    action: admin_actions.SessionAdminGlobalAction, arg):
@@ -465,9 +456,9 @@ class NetworkClient:
         return await self.server_call("multiplayer_admin_player",
                                       (session.id, user_id, action.value, arg))
 
-    async def session_track_inventory(self, row: int, enable: bool):
-        await self.server_call("game_session_watch_row_inventory",
-                               (self._current_game_session_meta.id, row, enable, True))
+    # async def session_track_inventory(self, row: int, enable: bool):
+    #     await self.server_call("game_session_watch_row_inventory",
+    #                            (self._current_game_session_meta.id, row, enable, True))
 
     async def perform_world_sync(self, request: ServerSyncRequest) -> ServerSyncResponse:
         return construct_dataclass.decode_json_dataclass(

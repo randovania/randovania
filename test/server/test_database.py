@@ -7,8 +7,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import multiplayer_session
-from randovania.network_common.multiplayer_session import GameDetails, MultiplayerWorld, MultiplayerWorldActions, \
-    MultiplayerWorldAction
+from randovania.network_common.multiplayer_session import GameDetails, MultiplayerWorld, MultiplayerSessionActions, \
+    MultiplayerSessionAction
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 
@@ -47,8 +47,8 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         )
         worlds.append(MultiplayerWorld(id=w1.uuid, name="Prime 1", preset_raw=w1.preset))
         worlds.append(MultiplayerWorld(id=w2.uuid, name="Prime 2", preset_raw=w2.preset))
-        actions.append(MultiplayerWorldAction(provider=w1.uuid, receiver=w2.uuid, pickup="Power Bomb Expansion",
-                                              location=34, time=dt))
+        actions.append(MultiplayerSessionAction(provider=w1.uuid, receiver=w2.uuid, pickup="Power Bomb Expansion",
+                                                location=34, time=dt))
 
     # Run
     session = database.MultiplayerSession.get_by_id(1)
@@ -66,7 +66,7 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         worlds=worlds,
         state=MultiplayerSessionState.SETUP,
     )
-    assert result_actions == MultiplayerWorldActions(session_id=1, actions=actions)
+    assert result_actions == MultiplayerSessionActions(session_id=1, actions=actions)
 
 
 def test_fun(clean_database):

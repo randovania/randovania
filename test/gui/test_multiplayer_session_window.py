@@ -15,8 +15,8 @@ from randovania.layout.permalink import Permalink
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import NotAuthorizedForAction
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, MultiplayerUser, User, MultiplayerWorldAction,
-    MultiplayerWorldActions, GameDetails, MultiplayerWorld, MultiplayerSessionAuditLog, MultiplayerSessionAuditEntry,
+    MultiplayerSessionEntry, MultiplayerUser, User, MultiplayerSessionAction,
+    MultiplayerSessionActions, GameDetails, MultiplayerWorld, MultiplayerSessionAuditLog, MultiplayerSessionAuditEntry,
 )
 from randovania.network_common.session_state import MultiplayerSessionState
 
@@ -114,10 +114,10 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
 
     # Run
     await window.on_actions_update(
-        MultiplayerWorldActions(
+        MultiplayerSessionActions(
             session_id=sample_session.id,
             actions=[
-                MultiplayerWorldAction(
+                MultiplayerSessionAction(
                     provider=sample_session.worlds[0].id,
                     receiver=sample_session.worlds[1].id,
                     pickup="Bombs",
@@ -454,7 +454,7 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
 async def test_on_kicked(skip_qtbot, window: MultiplayerSessionWindow, mocker, already_kicked):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
-    window.network_client.leave_multiplayer_session = AsyncMock()
+    window.network_client.listen_to_session = AsyncMock()
     window._session = MagicMock()
     window._already_kicked = already_kicked
     window.close = MagicMock(return_value=None)
@@ -466,11 +466,11 @@ async def test_on_kicked(skip_qtbot, window: MultiplayerSessionWindow, mocker, a
 
     # Assert
     if already_kicked:
-        window.network_client.leave_multiplayer_session.assert_not_awaited()
+        window.network_client.listen_to_session.assert_not_awaited()
         mock_warning.assert_not_awaited()
         window.close.assert_not_called()
     else:
-        window.network_client.leave_multiplayer_session.assert_awaited_once_with(window._session)
+        window.network_client.listen_to_session.assert_awaited_once_with(window._session)
         mock_warning.assert_awaited_once()
         window.close.assert_called_once_with()
 
@@ -540,7 +540,7 @@ async def test_on_close_event(window: MultiplayerSessionWindow, mocker, is_membe
     event = MagicMock()
     window._session = MagicMock()
     window._session.users = [window.network_client.current_user.id] if is_member else []
-    window.network_client.leave_multiplayer_session = AsyncMock()
+    window.network_client.listen_to_session = AsyncMock()
     window.network_client.connection_state.is_disconnected = False
 
     # Run
@@ -549,9 +549,9 @@ async def test_on_close_event(window: MultiplayerSessionWindow, mocker, is_membe
     super_close_event.assert_called_once_with(event)
 
     if is_member:
-        window.network_client.leave_multiplayer_session.assert_awaited_once_with(window._session)
+        window.network_client.listen_to_session.assert_awaited_once_with(window._session)
     else:
-        window.network_client.leave_multiplayer_session.assert_not_awaited()
+        window.network_client.listen_to_session.assert_not_awaited()
 
 
 def test_update_session_audit_log(window: MultiplayerSessionWindow):

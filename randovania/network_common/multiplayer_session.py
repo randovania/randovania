@@ -44,14 +44,14 @@ class MultiplayerWorld(JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
-class MultiplayerPickups:
+class MultiplayerWorldPickups:
     world_id: uuid.UUID
     game: RandovaniaGame
     pickups: tuple[tuple[str, PickupEntry], ...]
 
 
 @dataclasses.dataclass(frozen=True)
-class MultiplayerWorldAction(JsonDataclass):
+class MultiplayerSessionAction(JsonDataclass):
     provider: uuid.UUID
     receiver: uuid.UUID
     pickup: str
@@ -64,9 +64,9 @@ class MultiplayerWorldAction(JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
-class MultiplayerWorldActions(JsonDataclass):
+class MultiplayerSessionActions(JsonDataclass):
     session_id: int
-    actions: list[MultiplayerWorldAction]  # TODO: use tuple
+    actions: list[MultiplayerSessionAction]  # TODO: use tuple
 
 
 @dataclasses.dataclass(frozen=True)
@@ -149,5 +149,5 @@ class User:
 
 
 BinaryInventory = construct_dataclass.construct_for_type(WorldUserInventory)
-BinaryGameSessionActions = construct_dataclass.construct_for_type(MultiplayerWorldActions)
+BinaryGameSessionActions = construct_dataclass.construct_for_type(MultiplayerSessionActions)
 BinaryMultiplayerSessionAuditLog = construct_dataclass.construct_for_type(MultiplayerSessionAuditLog)

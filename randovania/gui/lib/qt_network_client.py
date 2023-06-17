@@ -13,8 +13,8 @@ from randovania.network_client.network_client import NetworkClient, ConnectionSt
 from randovania.network_common.error import (InvalidAction, NotAuthorizedForAction, ServerError, RequestTimeout,
                                              NotLoggedIn, UserNotAuthorized, UnsupportedClient)
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, User, MultiplayerWorldActions,
-    MultiplayerPickups, MultiplayerSessionAuditLog,
+    MultiplayerSessionEntry, User, MultiplayerSessionActions,
+    MultiplayerWorldPickups, MultiplayerSessionAuditLog,
     WorldUserInventory)
 
 
@@ -24,11 +24,13 @@ class QtNetworkClient(QWidget, NetworkClient):
     Disconnect = Signal()
     UserChanged = Signal(User)
     ConnectionStateUpdated = Signal(ConnectionState)
-    GameSessionMetaUpdated = Signal(MultiplayerSessionEntry)
-    GameSessionActionsUpdated = Signal(MultiplayerWorldActions)
-    GameSessionPickupsUpdated = Signal(MultiplayerPickups)
+
+    MultiplayerSessionMetaUpdated = Signal(MultiplayerSessionEntry)
+    MultiplayerSessionActionsUpdated = Signal(MultiplayerSessionActions)
     MultiplayerAuditLogUpdated = Signal(MultiplayerSessionAuditLog)
-    GameSessionInventoryUpdated = Signal(WorldUserInventory)
+
+    WorldPickupsUpdated = Signal(MultiplayerWorldPickups)
+    WorldUserInventoryUpdated = Signal(WorldUserInventory)
 
     discord: pypresence.AioClient | None = None
 
@@ -61,23 +63,23 @@ class QtNetworkClient(QWidget, NetworkClient):
 
     async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry):
         await super().on_multiplayer_session_meta_update(entry)
-        self.GameSessionMetaUpdated.emit(entry)
+        self.MultiplayerSessionMetaUpdated.emit(entry)
 
-    async def on_multiplayer_session_actions_update(self, actions: MultiplayerWorldActions):
+    async def on_multiplayer_session_actions_update(self, actions: MultiplayerSessionActions):
         await super().on_multiplayer_session_actions_update(actions)
-        self.GameSessionActionsUpdated.emit(actions)
-
-    async def on_world_pickups_update(self, pickups: MultiplayerPickups):
-        await super().on_world_pickups_update(pickups)
-        self.GameSessionPickupsUpdated.emit(pickups)
+        self.MultiplayerSessionActionsUpdated.emit(actions)
 
     async def on_multiplayer_session_audit_update(self, audit_log: MultiplayerSessionAuditLog):
         await super().on_multiplayer_session_audit_update(audit_log)
         self.MultiplayerAuditLogUpdated.emit(audit_log)
 
+    async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups):
+        await super().on_world_pickups_update(pickups)
+        self.WorldPickupsUpdated.emit(pickups)
+
     async def on_world_user_inventory(self, inventory: WorldUserInventory):
         await super().on_world_user_inventory(inventory)
-        self.GameSessionInventoryUpdated.emit(inventory)
+        self.WorldUserInventoryUpdated.emit(inventory)
 
     async def login_with_discord(self):
         if "discord_client_id" not in self.configuration:

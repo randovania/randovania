@@ -1,3 +1,6 @@
+import peewee
+
+from randovania.network_common import error
 from randovania.network_common.error import WrongPassword
 from randovania.server import database
 from randovania.server.database import MultiplayerSession, MultiplayerMembership
@@ -25,13 +28,13 @@ def create_session(sio: ServerApp, session_name: str):
             password=None,
             creator=current_user,
         )
-        membership = MultiplayerMembership.create(
+        MultiplayerMembership.create(
             user=sio.get_current_user(),
             session=new_session,
             admin=True,
         )
 
-    session_common.join_multiplayer_session(sio, membership)
+    session_common.join_room(sio, new_session)
     return new_session.create_session_entry().as_json
 
 
@@ -47,9 +50,22 @@ def join_session(sio: ServerApp, session_id: int, password: str | None):
     membership = MultiplayerMembership.get_or_create(user=sio.get_current_user(), session=session)[0]
 
     session_common.emit_session_meta_update(session)
-    session_common.join_multiplayer_session(sio, membership)
+    session_common.join_room(sio, membership)
 
     return session.create_session_entry().as_json
+
+
+def listen_to_session(sio: ServerApp, session_id: int, listen: bool):
+    try:
+        membership = MultiplayerMembership.get_by_ids(user_id=sio.get_current_user(), session_id=session_id)
+
+    except peewee.DoesNotExist:
+        raise error.NotAuthorizedForAction()
+
+    if listen:
+        session_common.join_room(sio, membership.session)
+    else:
+        session_common.leave_room(sio, membership.session)
 
 
 def request_session_update(sio: ServerApp, session_id: int):
@@ -66,6 +82,5 @@ def setup_app(sio: ServerApp):
     sio.on("multiplayer_list_sessions", list_sessions, with_header_check=True)
     sio.on("multiplayer_create_session", create_session, with_header_check=True)
     sio.on("multiplayer_join_session", join_session, with_header_check=True)
+    sio.on("multiplayer_listen_to_session", listen_to_session, with_header_check=True)
     sio.on("multiplayer_request_session_update", request_session_update)
-
-

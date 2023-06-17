@@ -30,7 +30,7 @@ async def test_start(client):
 
     # Assert
     game_connection.GameStateUpdated.connect.assert_called_once_with(client.on_game_state_updated)
-    client.network_client.GameSessionPickupsUpdated.connect.assert_called_once_with(client.on_network_game_updated)
+    client.network_client.WorldPickupsUpdated.connect.assert_called_once_with(client.on_network_game_updated)
 
 
 async def test_stop(client: MultiworldClient):

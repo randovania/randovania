@@ -11,7 +11,7 @@ from randovania.network_client.network_client import NetworkClient, ConnectionSt
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import InvalidSession, RequestTimeout, ServerError
-from randovania.network_common.multiplayer_session import MultiplayerPickups
+from randovania.network_common.multiplayer_session import MultiplayerWorldPickups
 
 
 @pytest.fixture(name="client")
@@ -119,15 +119,14 @@ async def test_leave_multiplayer_session(client: NetworkClient):
     client.server_call = AsyncMock()
     session_meta = MagicMock()
     session_meta.id = 1234
-    client._current_user = MagicMock()
-    client._current_user.id = 5678
+    listen = MagicMock()
 
     # Run
-    await client.leave_multiplayer_session(session_meta)
+    await client.listen_to_session(session_meta, listen)
 
     # Assert
     client.server_call.assert_awaited_once_with(
-        "multiplayer_admin_player", (1234, 5678, SessionAdminUserAction.KICK.value, None)
+        "multiplayer_listen_to_session", (1234, listen)
     )
 
 
@@ -194,7 +193,7 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
     await client._on_world_pickups_update_raw(data)
 
     # Assert
-    client.on_world_pickups_update.assert_awaited_once_with(MultiplayerPickups(
+    client.on_world_pickups_update.assert_awaited_once_with(MultiplayerWorldPickups(
         world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
         game=RandovaniaGame.METROID_PRIME_CORRUPTION,
         pickups=(

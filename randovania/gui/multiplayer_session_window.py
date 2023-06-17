@@ -1,10 +1,7 @@
 import asyncio
-import functools
 import json
 import logging
 import random
-import uuid
-from pathlib import Path
 from typing import Self
 
 from PySide6 import QtWidgets, QtGui, QtCore
@@ -23,7 +20,6 @@ from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
-from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
@@ -31,43 +27,42 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.lib import json_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, MultiplayerUser, MultiplayerWorldActions, MultiplayerSessionAuditLog, WorldUserInventory
+    MultiplayerSessionEntry, MultiplayerUser, MultiplayerSessionActions, MultiplayerSessionAuditLog
 )
 from randovania.network_common.session_state import MultiplayerSessionState
 
 logger = logging.getLogger(__name__)
 
 
-class ItemTrackerDock(QtWidgets.QDockWidget):
-    def __init__(self, parent: QtWidgets.QWidget, title: str, tracker_layout: dict,
-                 on_close):
-        super().__init__(parent)
-        self.on_close = on_close
-
-        self.setWindowTitle(title)
-        self.item_tracker = ItemTrackerWidget(tracker_layout)
-        self.item_tracker.update_state({})
-        self.setWidget(self.item_tracker)
-
-    def change_tracker_layout(self, tracker_layout: dict):
-        self.widget().deleteLater()
-        current_state = self.item_tracker.current_state
-        self.item_tracker = ItemTrackerWidget(tracker_layout)
-        self.item_tracker.update_state(current_state)
-        self.setWidget(self.item_tracker)
-
-    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
-        self.on_close()
-        return super().closeEvent(event)
+# class ItemTrackerDock(QtWidgets.QDockWidget):
+#     def __init__(self, parent: QtWidgets.QWidget, title: str, tracker_layout: dict,
+#                  on_close):
+#         super().__init__(parent)
+#         self.on_close = on_close
+#
+#         self.setWindowTitle(title)
+#         self.item_tracker = ItemTrackerWidget(tracker_layout)
+#         self.item_tracker.update_state({})
+#         self.setWidget(self.item_tracker)
+#
+#     def change_tracker_layout(self, tracker_layout: dict):
+#         self.widget().deleteLater()
+#         current_state = self.item_tracker.current_state
+#         self.item_tracker = ItemTrackerWidget(tracker_layout)
+#         self.item_tracker.update_state(current_state)
+#         self.setWidget(self.item_tracker)
+#
+#     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+#         self.on_close()
+#         return super().closeEvent(event)
 
 
 class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindow, BackgroundTaskMixin):
-    tracker_docks: dict[tuple[uuid.UUID, int], ItemTrackerDock]
+    # tracker_docks: dict[tuple[uuid.UUID, int], ItemTrackerDock]
     _session: MultiplayerSessionEntry
     has_closed = False
     _logic_settings_window: CustomizePresetDialog | None = None
@@ -170,10 +165,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.finish_session_action.triggered.connect(self.finish_session)
         self.reset_session_action.triggered.connect(self.reset_session)
 
-        self.network_client.GameSessionMetaUpdated.connect(self.on_meta_update)
-        self.network_client.GameSessionActionsUpdated.connect(self.on_actions_update)
+        self.network_client.MultiplayerSessionMetaUpdated.connect(self.on_meta_update)
+        self.network_client.MultiplayerSessionActionsUpdated.connect(self.on_actions_update)
         self.network_client.MultiplayerAuditLogUpdated.connect(self.on_audit_log_update)
-        self.network_client.GameSessionInventoryUpdated.connect(self.on_user_inventory_update)
+        # self.network_client.GameSessionInventoryUpdated.connect(self.on_user_inventory_update)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
 
     def _get_world_order(self) -> list[str]:
@@ -209,7 +204,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         is_kicked = self.network_client.current_user.id not in self._session.users
 
         try:
-            self.network_client.GameSessionMetaUpdated.disconnect(self.on_meta_update)
+            self.network_client.MultiplayerSessionMetaUpdated.disconnect(self.on_meta_update)
         except Exception as e:
             logging.exception(f"Unable to disconnect: {e}")
         try:
@@ -219,10 +214,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         try:
             if not is_kicked and not self.network_client.connection_state.is_disconnected:
-                await self.network_client.leave_multiplayer_session(self._session)
+                await self.network_client.listen_to_session(self._session, False)
         finally:
-            for d in list(self.tracker_docks.values()):
-                d.close()
+            # for d in list(self.tracker_docks.values()):
+            #     d.close()
             super().closeEvent(event)
         self.has_closed = True
 
@@ -244,8 +239,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.update_game_tab()
         await self.update_logic_settings_window()
 
-    @asyncSlot(MultiplayerWorldActions)
-    async def on_actions_update(self, actions: MultiplayerWorldActions):
+    @asyncSlot(MultiplayerSessionActions)
+    async def on_actions_update(self, actions: MultiplayerSessionActions):
         if actions.session_id == self._session.id:
             self.update_session_actions(actions)
 
@@ -254,21 +249,21 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if audit_log.session_id == self._session.id:
             self.update_session_audit_log(audit_log)
 
-    @asyncSlot(WorldUserInventory)
-    async def on_user_inventory_update(self, inventory: WorldUserInventory):
-        dock = self.tracker_docks.get((inventory.world_id, inventory.user_id))
-        if dock is not None:
-            tracker = dock.item_tracker
-            tracker.update_state({
-                tracker.resource_database.get_item(name): item
-                for name, item in inventory.inventory.items()
-            })
+    # @asyncSlot(WorldUserInventory)
+    # async def on_user_inventory_update(self, inventory: WorldUserInventory):
+    #     dock = self.tracker_docks.get((inventory.world_id, inventory.user_id))
+    #     if dock is not None:
+    #         tracker = dock.item_tracker
+    #         tracker.update_state({
+    #             tracker.resource_database.get_item(name): item
+    #             for name, item in inventory.inventory.items()
+    #         })
 
     async def _on_kicked(self):
         if self._already_kicked:
             return
         self._already_kicked = True
-        leave_session = self.network_client.leave_multiplayer_session(self._session)
+        leave_session = self.network_client.listen_to_session(self._session, False)
         if self._session.users:
             message = "Kicked", "You have been kicked out of the session."
         else:
@@ -319,7 +314,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             self_is_admin and session.state == MultiplayerSessionState.IN_PROGRESS)
         self.reset_session_action.setEnabled(self_is_admin and session.state != MultiplayerSessionState.SETUP)
 
-    def update_session_actions(self, actions: MultiplayerWorldActions):
+    def update_session_actions(self, actions: MultiplayerSessionActions):
         scrollbar = self.tab_history.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
         self.tab_history.horizontalHeader().setVisible(True)
@@ -711,57 +706,57 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             await async_dialog.execute_dialog(LoginPromptDialog(self.network_client))
         else:
             await self.network_client.connect_to_server()
-
-    def _on_close_item_tracker(self, row_id: int):
-        self.removeDockWidget(self.tracker_docks.pop(row_id))
-        asyncio.run_coroutine_threadsafe(
-            self.network_client.session_track_inventory(row_id, False),
-            asyncio.get_event_loop()
-        )
-
-    def _item_tracker_menu_requested(self, pos: QtCore.QPoint, row_id: int):
-        preset = self._session.worlds[row_id]
-
-        menu = QtWidgets.QMenu(self.tracker_docks[row_id])
-
-        for name in sorted(self._trackers[preset.game].keys()):
-            menu.addAction(name).setData(self._trackers[preset.game][name])
-
-        action = menu.exec(QtGui.QCursor.pos())
-        if action is None:
-            return
-        self.tracker_docks[row_id].change_tracker_layout(json_lib.read_path(action.data()))
-
-    @asyncSlot(int)
-    async def _selected_item_tracker_menu(self, row_id: int):
-        preset = self._session.worlds[row_id]
-
-        if row_id in self.tracker_docks:
-            return async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information,
-                                            "Tracker Open", "Tracker already open for this row.")
-        elif preset.game not in self._trackers:
-            return async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information,
-                                            "Unsupported Game", f"No tracker available for {preset.game.long_name}")
-
-        tracker_path: Path | None = None
-        for tracker_path in self._trackers[preset.game].values():
-            break
-        assert tracker_path is not None
-
-        item_tracker = ItemTrackerDock(
-            self, f"Tracker: {self.team_players[row_id].player.name}", json_lib.read_path(tracker_path),
-            lambda: self._on_close_item_tracker(row_id)
-        )
-        item_tracker.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.CustomContextMenu)
-        item_tracker.customContextMenuRequested.connect(functools.partial(
-            self._item_tracker_menu_requested,
-            row_id=row_id,
-        ))
-        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea, item_tracker)
-        item_tracker.setFloating(True)
-
-        self.tracker_docks[row_id] = item_tracker
-        asyncio.run_coroutine_threadsafe(
-            self.network_client.session_track_inventory(row_id, True),
-            asyncio.get_event_loop()
-        )
+    #
+    # def _on_close_item_tracker(self, row_id: int):
+    #     self.removeDockWidget(self.tracker_docks.pop(row_id))
+    #     asyncio.run_coroutine_threadsafe(
+    #         self.network_client.session_track_inventory(row_id, False),
+    #         asyncio.get_event_loop()
+    #     )
+    #
+    # def _item_tracker_menu_requested(self, pos: QtCore.QPoint, row_id: int):
+    #     preset = self._session.worlds[row_id]
+    #
+    #     menu = QtWidgets.QMenu(self.tracker_docks[row_id])
+    #
+    #     for name in sorted(self._trackers[preset.game].keys()):
+    #         menu.addAction(name).setData(self._trackers[preset.game][name])
+    #
+    #     action = menu.exec(QtGui.QCursor.pos())
+    #     if action is None:
+    #         return
+    #     self.tracker_docks[row_id].change_tracker_layout(json_lib.read_path(action.data()))
+    #
+    # @asyncSlot(int)
+    # async def _selected_item_tracker_menu(self, row_id: int):
+    #     preset = self._session.worlds[row_id]
+    #
+    #     if row_id in self.tracker_docks:
+    #         return async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information,
+    #                                         "Tracker Open", "Tracker already open for this row.")
+    #     elif preset.game not in self._trackers:
+    #         return async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information,
+    #                                         "Unsupported Game", f"No tracker available for {preset.game.long_name}")
+    #
+    #     tracker_path: Path | None = None
+    #     for tracker_path in self._trackers[preset.game].values():
+    #         break
+    #     assert tracker_path is not None
+    #
+    #     item_tracker = ItemTrackerDock(
+    #         self, f"Tracker: {self.team_players[row_id].player.name}", json_lib.read_path(tracker_path),
+    #         lambda: self._on_close_item_tracker(row_id)
+    #     )
+    #     item_tracker.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.CustomContextMenu)
+    #     item_tracker.customContextMenuRequested.connect(functools.partial(
+    #         self._item_tracker_menu_requested,
+    #         row_id=row_id,
+    #     ))
+    #     self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea, item_tracker)
+    #     item_tracker.setFloating(True)
+    #
+    #     self.tracker_docks[row_id] = item_tracker
+    #     asyncio.run_coroutine_threadsafe(
+    #         self.network_client.session_track_inventory(row_id, True),
+    #         asyncio.get_event_loop()
+    #     )

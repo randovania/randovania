@@ -10,7 +10,7 @@ from randovania.gui.lib import async_dialog
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, MultiplayerWorldActions,
+    MultiplayerSessionEntry, MultiplayerSessionActions,
     MultiplayerSessionAuditLog, WorldUserInventory
 )
 from randovania.network_client.network_client import UnableToConnect
@@ -78,7 +78,7 @@ def handle_network_errors(fn: typing.Callable[typing.Concatenate[MultiplayerSess
 
 class MultiplayerSessionApi(QtCore.QObject):
     MetaUpdated = QtCore.Signal(MultiplayerSessionEntry)
-    ActionsUpdated = QtCore.Signal(MultiplayerWorldActions)
+    ActionsUpdated = QtCore.Signal(MultiplayerSessionActions)
     AuditLogUpdated = QtCore.Signal(MultiplayerSessionAuditLog)
     InventoryUpdated = QtCore.Signal(WorldUserInventory)
 

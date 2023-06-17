@@ -192,7 +192,7 @@ def _emit_user_session_update(sio: ServerApp):
 
 
 def logout(sio: ServerApp):
-    session_common.leave_multiplayer_sessions(sio)
+    session_common.leave_all_rooms(sio)
     flask.session.pop("DISCORD_OAUTH2_TOKEN", None)
     with sio.session() as session:
         session.pop("discord-access-token", None)

@@ -86,22 +86,29 @@ def hash_password(password: str) -> str:
     return hashlib.blake2s(password.encode("utf-8")).hexdigest()
 
 
-def join_multiplayer_session(sio: ServerApp, membership: MultiplayerMembership):
-    flask_socketio.join_room(room_name_for(membership.session.id))
-    flask_socketio.join_room(f"game-session-{membership.session.id}-{membership.user.id}")
+def join_room(sio: ServerApp, session: MultiplayerSession):
+    flask_socketio.join_room(room_name_for(session.id))
+
     with sio.session() as sio_session:
         if "multiplayer_sessions" not in sio_session:
             sio_session["multiplayer_sessions"] = []
 
-        if membership.session.id not in sio_session["multiplayer_sessions"]:
-            sio_session["multiplayer_sessions"].append(membership.session.id)
+        if session.id not in sio_session["multiplayer_sessions"]:
+            sio_session["multiplayer_sessions"].append(session.id)
 
 
-def leave_multiplayer_sessions(sio: ServerApp):
+def leave_room(sio: ServerApp, session: MultiplayerSession):
+    flask_socketio.leave_room(room_name_for(session.id))
+
+    with sio.session() as sio_session:
+        if "multiplayer_sessions" in sio_session:
+            if session.id in sio_session["multiplayer_sessions"]:
+                sio_session["multiplayer_sessions"].remove(session.id)
+
+
+def leave_all_rooms(sio: ServerApp):
     with sio.session() as sio_session:
         multiplayer_sessions: list[int] = sio_session.pop("multiplayer_sessions", [])
 
-    user = sio.get_current_user()
     for session_id in multiplayer_sessions:
         flask_socketio.leave_room(room_name_for(session_id))
-        flask_socketio.leave_room(f"game-session-{session_id}-{user.id}")
