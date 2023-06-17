@@ -4294,15 +4294,6 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Shinesparking",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
                                         }
@@ -5486,7 +5477,20 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Top right": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Dock to Lower Factory Save Station": {
                     "node_type": "dock",
@@ -5903,11 +5907,11 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 1145.679012345679,
-                        "y": 365.6296296296296,
+                        "x": 1145.68,
+                        "y": 365.63,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "TODO: do the rest of connections from Top Right <-> Top Left. Speedboosting and\nmorph gliding come to mind here.",
                     "layers": [
                         "default"
                     ],
@@ -5963,6 +5967,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Dock to Lower Factory Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5982,6 +5993,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Dock to Lower Factory Intersection": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Lower Factory Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8679,6 +8697,13 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Dock to Breeding Grounds Fly Stadium Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Dock to Breeding Grounds Maze": {
                             "type": "and",
                             "data": {
