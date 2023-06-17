@@ -470,7 +470,7 @@ async def test_on_kicked(skip_qtbot, window: MultiplayerSessionWindow, mocker, a
         mock_warning.assert_not_awaited()
         window.close.assert_not_called()
     else:
-        window.network_client.listen_to_session.assert_awaited_once_with(window._session)
+        window.network_client.listen_to_session.assert_awaited_once_with(window._session, False)
         mock_warning.assert_awaited_once()
         window.close.assert_called_once_with()
 
@@ -549,7 +549,7 @@ async def test_on_close_event(window: MultiplayerSessionWindow, mocker, is_membe
     super_close_event.assert_called_once_with(event)
 
     if is_member:
-        window.network_client.listen_to_session.assert_awaited_once_with(window._session)
+        window.network_client.listen_to_session.assert_awaited_once_with(window._session, False)
     else:
         window.network_client.listen_to_session.assert_not_awaited()
 

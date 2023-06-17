@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, patch, ANY
 
 import flask
 import pytest
+from pytest_mock import MockerFixture
 
 from randovania.network_common.error import InvalidSession
 from randovania.server import user_session
@@ -114,11 +115,11 @@ def test_login_with_guest(flask_app, clean_database, mocker):
     assert result is mock_create_session.return_value
 
 
-def test_logout(flask_app, mocker):
-    mock_emit_user_session_update: MagicMock = mocker.patch(
+def test_logout(flask_app, mocker: MockerFixture):
+    mock_emit_user_session_update = mocker.patch(
         "randovania.server.user_session._emit_user_session_update", autospec=True)
-    mock_leave_multiplayer_sessions: MagicMock = mocker.patch(
-        "randovania.server.multiplayer.session_common.leave_multiplayer_sessions", autospec=True)
+    mock_leave_all_rooms = mocker.patch(
+        "randovania.server.multiplayer.session_common.leave_all_rooms", autospec=True)
 
     session = {
         "user-id": 1234,
@@ -133,7 +134,7 @@ def test_logout(flask_app, mocker):
 
     # Assert
     assert session == {}
-    mock_leave_multiplayer_sessions.assert_called_once_with(sio)
+    mock_leave_all_rooms.assert_called_once_with(sio)
     mock_emit_user_session_update.assert_not_called()
 
 
