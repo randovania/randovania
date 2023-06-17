@@ -96,6 +96,10 @@ def accumulate_results(game_modifications: dict,
             locations[area_name][item_name] += 1
 
 
+def sort_by_count(d: dict[str, int]) -> dict[str, int]:
+    return dict(sorted(d.items(), key=lambda t: t[1], reverse=True))
+
+
 def calculate_pickup_count(items: Dict[str, Dict[str, int]]) -> Dict[str, int]:
     return {
         name: sum(data.values())
@@ -159,6 +163,13 @@ def get_items_order(all_items: Iterable[str], item_order: List[str], major_progr
     return order, locations, no_key, progression_items
 
 
+def _region_only_starting_loc(locations: dict[str, int]) -> dict[str, int]:
+    result = collections.defaultdict(int)
+    for loc, count in locations.items():
+        result[loc.split("/")[0]] += count
+    return result
+
+
 def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_percentage: bool,
                   major_progression_items_only: bool):
     def item_creator():
@@ -174,6 +185,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     seed_count = 0
     pickup_count = None
     progression_items = None
+    starting_locations = []
 
     seed_files = list(Path(seeds_dir).glob(f"**/*.{LayoutDescription.file_extension()}"))
     seed_files.extend(Path(seeds_dir).glob("**/*.json"))
@@ -183,8 +195,13 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         except json.JSONDecodeError:
             continue
 
-        for game_modifications in seed_data["game_modifications"]:
-            accumulate_results(game_modifications, items, locations, major_progression_items_only)
+        for i, game_modification in enumerate(seed_data["game_modifications"]):
+            if len(starting_locations) <= i:
+                starting_locations.append(collections.defaultdict(int))
+
+            accumulate_results(game_modification, items, locations, major_progression_items_only)
+            starting_locations[i][game_modification["starting_location"]] += 1
+
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)
 
@@ -242,34 +259,27 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     items = sort_by_contents(items)
     locations = sort_by_contents(locations)
 
-    location_progression_count = {
-        location: value
-        for location, value in sorted(progression_count_for_location.items(), key=lambda t: t[1], reverse=True)
-    }
-
-    location_progression_no_key_count = {
-        location: value
-        for location, value in sorted(progression_no_key_count_for_location.items(),
-                                      key=lambda t: t[1], reverse=True)
-    }
+    location_progression_count = sort_by_count(progression_count_for_location)
+    location_progression_no_key_count = sort_by_count(progression_no_key_count_for_location)
 
     stddev_by_location = {
         location: stddev
         for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1] or math.inf, reverse=True)
     }
 
-    ## Average standardized deviances for all locations
+    # Average standardized deviances for all locations
     accumulated_stddev = 0
     stddev_count = 0
     for stddev in stddev_by_location.items():
         try:
             accumulated_stddev += stddev[1]
             stddev_count += 1
-        except:
+        except Exception:
             pass
-    accumulated_stddev /= stddev_count * 2  # div by 2 because +1 deviance at one location always implies +1 everywhere else
+    # div by 2 because +1 deviance at one location always implies +1 everywhere else
+    accumulated_stddev /= stddev_count * 2
 
-    ## Accumulate deviances for all locations
+    # Accumulate deviances for all locations
 
     # 100% unbiased logicless progression probablitity per location
     pure_median = (total_progression_item_count / seed_count) / len(locations)
@@ -281,6 +291,13 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
 
     # Scale and account for the fact that 1% deviance in one location always results for 1% elsewhere
     bias_index /= 2
+
+    #
+    starting_location_region_only = [
+        sort_by_count(_region_only_starting_loc(it))
+        for it in starting_locations
+    ]
+    starting_location_report = [sort_by_count(loc) for loc in starting_locations]
 
     for location in locations:
         if location not in location_progression_no_key_count.keys():
@@ -307,6 +324,14 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         for region in regions:
             regions[region] = regions[region] / total_progression_item_count
 
+        for loc in starting_location_report:
+            for it in loc:
+                loc[it] = loc[it] / seed_count
+
+        for loc in starting_location_region_only:
+            for it in loc:
+                loc[it] = loc[it] / seed_count
+
     final_results = {
         "seed_count": seed_count,
         "accumulated_stddev": accumulated_stddev,
@@ -318,6 +343,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         "locations": locations,
         "location_progression_count": location_progression_count,
         "location_progression_no_key_count": location_progression_no_key_count,
+        "starting_location": starting_location_report,
+        "starting_location_region_only": starting_location_region_only,
         "item_order": {
             "average": {
                 name: statistics.mean(orders)
