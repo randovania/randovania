@@ -12,6 +12,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.network_client.game_session import PlayerSessionEntry, GameDetails
 from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions, \
     BinaryGameSessionAuditLog
 from randovania.network_common.session_state import GameSessionState
@@ -189,18 +190,18 @@ class GameSession(BaseModel):
 
         game_details = None
         if description is not None:
-            game_details = {
+            game_details = GameDetails.from_json({
                 "spoiler": description.has_spoiler,
                 "word_hash": description.shareable_word_hash,
                 "seed_hash": description.shareable_hash,
-            }
+            })
 
         return BinaryGameSessionEntry.build({
             "id": self.id,
             "name": self.name,
             "state": self.state.value,
             "players": [
-                membership.as_json
+                PlayerSessionEntry.from_json(membership.as_json)
                 for membership in self.players
             ],
             "presets": [

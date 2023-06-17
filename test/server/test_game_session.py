@@ -16,6 +16,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib.construct_lib import convert_to_raw_python
+from randovania.network_client.game_session import PlayerSessionEntry, GameDetails
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions, \
     BinaryGameSessionAuditLog
@@ -93,8 +94,10 @@ def test_create_game_session(clean_database, preset_manager, default_game_list):
         'id': 1,
         'state': GameSessionState.SETUP.value,
         'name': 'My Room',
-        'players': [{'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0,
-                     'connection_state': 'Online, Unknown'}],
+        'players': [PlayerSessionEntry.from_json(
+            {'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0,
+             'connection_state': 'Online, Unknown'}
+        )],
         'presets': [json.dumps(preset_manager.default_preset.as_json)],
         'game_details': None,
         'generation_in_progress': None,
@@ -125,10 +128,14 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
         'state': GameSessionState.SETUP.value,
         'name': 'The Session',
         'players': [
-            {'admin': True, 'id': 1235, 'name': 'Other Name', 'row': 0,
-             'connection_state': 'Online, Badass'},
-            {'admin': False, 'id': 1234, 'name': 'The Name', 'row': None,
-             'connection_state': 'Online, Unknown'},
+            PlayerSessionEntry.from_json({
+                'admin': True, 'id': 1235, 'name': 'Other Name', 'row': 0,
+                'connection_state': 'Online, Badass'
+            }),
+            PlayerSessionEntry.from_json({
+                'admin': False, 'id': 1234, 'name': 'The Name', 'row': None,
+                'connection_state': 'Online, Unknown'
+            }),
         ],
         'presets': ["{}"],
         'game_details': None,
@@ -957,27 +964,27 @@ def test_emit_session_meta_update(session_update, flask_app, mocker, default_gam
         "name": "Debug",
         "state": GameSessionState.IN_PROGRESS.value,
         "players": [
-            {
+            PlayerSessionEntry.from_json({
                 "id": 1234,
                 "name": "The Name",
                 "row": 0,
                 "admin": True,
                 'connection_state': 'Something',
-            },
-            {
+            }),
+            PlayerSessionEntry.from_json({
                 "id": 1235,
                 "name": "Other",
                 "row": 1,
                 "admin": False,
                 'connection_state': 'Game',
-            },
+            }),
         ],
         "presets": [],
-        "game_details": {
+        "game_details": GameDetails.from_json({
             "spoiler": True,
             "word_hash": "Words of O-Lir",
             "seed_hash": "ABCDEFG",
-        },
+        }),
         "generation_in_progress": None,
         'allowed_games': default_game_list,
     }

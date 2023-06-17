@@ -4,6 +4,7 @@ from peewee import SqliteDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import construct_lib
+from randovania.network_client.game_session import GameDetails
 from randovania.network_common.binary_formats import BinaryGameSessionEntry
 from randovania.server import database
 
@@ -26,11 +27,11 @@ def test_GameSession_create_session_entry(clean_database, has_description, test_
     if has_description:
         s.layout_description = description
         s.save()
-        game_details = {
+        game_details = GameDetails.from_json({
             'seed_hash': 'VNBKJI3X',
             'spoiler': True,
             'word_hash': 'Dead Skiff Suit',
-        }
+        })
 
     # Run
     session = database.GameSession.get_by_id(1)

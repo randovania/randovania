@@ -6,7 +6,7 @@ from typing import NamedTuple, Optional
 
 import pytest
 
-from randovania.bitpacking.construct_dataclass import construct_for_type
+from randovania.bitpacking.construct_pack import construct_for_type
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 
@@ -114,15 +114,6 @@ def test_has_dict():
 
     assert HasDict.from_json(data) == value
     assert value.as_json == data
-
-
-def test_mix_with_construct(sample_values):
-    _, data = sample_values
-
-    con = construct_for_type(D2)
-    encoded = con.build(data)
-    decoded = con.parse(encoded)
-    assert decoded == data
 
 
 def test_generic_list_errors():
