@@ -108,7 +108,8 @@ def collect_locations(sio: ServerApp, source_world: World, pickup_locations: tup
     return receiver_worlds
 
 
-def update_association(user: User, world: World, inventory: bytes | None, game_connection_state: str):
+def update_association(user: User, world: World, inventory: bytes | None, game_connection_state: str,
+                       ) -> int | None:
     association = WorldUserAssociation.get_by_instances(world=world, user=user)
     session = association.world.session
 
@@ -124,12 +125,14 @@ def update_association(user: User, world: World, inventory: bytes | None, game_c
     if old_inventory != association.inventory and session.state == MultiplayerSessionState.IN_PROGRESS:
         session_common.emit_inventory_update(association)
 
-    if old_state != association.connection_state:
+    if old_state != game_connection_state:
         logger().info(
             "%s has new connection state: %s",
             session_common.describe_session(session, association.world), association.connection_state,
         )
-        session_common.emit_session_meta_update(session)
+        return session.id
+
+    return None
 
 
 def watch_inventory(sio: ServerApp, world_uid: uuid.UUID, user_id: int, watch: bool, binary: bool):
@@ -166,6 +169,8 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
     failed_syncs = {}
 
     worlds_to_update = set()
+    sessions_to_update_actions = set()
+    sessions_to_update_meta = set()
 
     for uid, world_request in request.worlds.items():
         try:
@@ -179,7 +184,9 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
                 worlds_to_update.add(world)
                 sio.store_world_in_session(world)
 
-            update_association(user, world, None, world_request.status.pretty_text)
+            session_id = update_association(user, world, None, world_request.status.pretty_text)
+            if session_id is not None:
+                sessions_to_update_meta.add(session_id)
 
             if world_request.request_details:
                 world_details[uid] = ServerWorldResponse(
@@ -197,14 +204,15 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
                 e = error.ServerError()
             failed_syncs[uid] = e
 
-    sessions_to_update = set()
-
     for world in worlds_to_update:
         emit_world_pickups_update(sio, world)
-        sessions_to_update.add(world.session)
+        sessions_to_update_actions.add(world.session.id)
 
-    for session in sessions_to_update:
-        session_common.emit_session_actions_update(session)
+    for session_id in sessions_to_update_meta:
+        session_common.emit_session_meta_update(MultiplayerSession.get_by_id(session_id))
+
+    for session_id in sessions_to_update_actions:
+        session_common.emit_session_actions_update(MultiplayerSession.get_by_id(session_id))
 
     return ServerSyncResponse(
         worlds=frozendict(world_details),
