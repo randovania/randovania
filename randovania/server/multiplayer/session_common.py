@@ -9,7 +9,7 @@ from randovania.lib.construct_lib import convert_to_raw_python
 from randovania.network_common import signals
 from randovania.network_common.multiplayer_session import BinaryInventory
 from randovania.server.database import (MultiplayerSession, MultiplayerAuditEntry,
-                                        WorldUserAssociation, World, MultiplayerMembership)
+                                        WorldUserAssociation, World)
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
