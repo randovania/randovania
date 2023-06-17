@@ -211,6 +211,15 @@ Extra - map_name: rm_a6a09
   * Event Area 6 - Last Alpha
   > Dock to Hideout Alpha Nest Access West
       Trivial
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 372; Category? Minor
+  * Extra - object_name: oItemDNA_372
+  > Event - Alpha
+      Trivial
 
 ----------------
 Hideout Omega Nest Access
@@ -250,6 +259,15 @@ Extra - map_name: rm_a6a09B
   * Layers: default
   * Event Area 6 - First Omega
   > Dock to Hideout Omega Nest Access
+      Trivial
+  > Pickup (Omega)
+      Trivial
+
+> Pickup (Omega); Heals? False
+  * Layers: default
+  * Pickup 392; Category? Major
+  * Extra - object_name: oItemDNA_392
+  > Event - Omega
       Trivial
 
 ----------------
@@ -403,7 +421,7 @@ Extra - map_name: rm_a6a14
 ----------------
 Omega Nest Entrance Save Station
 Extra - map_name: rm_a6a15
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 21
   > Dock to Skorp Lava Pool Access
@@ -608,7 +626,7 @@ Extra - map_name: rm_a6b05
 ----------------
 Depths Save Station
 Extra - map_name: rm_a6b06
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 22
   > Dock to Depths Hub
@@ -658,6 +676,15 @@ Extra - map_name: rm_a6b08
   * Event Area 6 - Nest Left Top Omega
   > Tunnel to Depths Omega Nest North West Access
       Power Grip Climb
+  > Pickup (Omega)
+      Trivial
+
+> Pickup (Omega); Heals? False
+  * Layers: default
+  * Pickup 394; Category? Major
+  * Extra - object_name: oItemDNA_394
+  > Event - Omega
+      Trivial
 
 ----------------
 Depths Omega Nest East Access
@@ -692,6 +719,15 @@ Extra - map_name: rm_a6b10
   * Event Area 6 - Nest Right Omega
   > Tunnel to Depths Omega Nest East Access
       Hijump Tunnel Climb
+  > Pickup (Omega)
+      Trivial
+
+> Pickup (Omega); Heals? False
+  * Layers: default
+  * Pickup 393; Category? Major
+  * Extra - object_name: oItemDNA_393
+  > Event - Omega
+      Trivial
 
 ----------------
 Depths Omega Nest South West Access
@@ -756,6 +792,15 @@ Extra - map_name: rm_a6b12
   * Event Area 6 - Nest Left Bottom Omega
   > Tunnel to Depths Omega Nest South West Access
       Hijump Tunnel Climb
+  > Pickup (Omega)
+      Trivial
+
+> Pickup (Omega); Heals? False
+  * Layers: default
+  * Pickup 395; Category? Major
+  * Extra - object_name: oItemDNA_395
+  > Event - Omega
+      Trivial
 
 ----------------
 Depths Curved Bubble Pillar
@@ -785,9 +830,7 @@ Extra - map_name: rm_a6b13
           Space Jump or Walljump (Intermediate) or Can Use Spider Ball
           Hi-Jump Boots and Power Grip
   > Above Bomb Blocks
-      All of the following:
-          # The 3 Nest Omegas
-          After Area 6 - Nest Left Bottom Omega and After Area 6 - Nest Left Top Omega and After Area 6 - Nest Right Omega
+      Trivial
 
 > Above Bomb Blocks; Heals? False
   * Layers: default
@@ -870,7 +913,7 @@ Extra - map_name: rm_a6b16
   > Save Station
       Trivial
 
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 23
   > Dock to Depths Skorp Snag
