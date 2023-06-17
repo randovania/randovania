@@ -9152,7 +9152,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Missile Tank)": {
+                        "Bottom": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9160,8 +9160,26 @@
                                     {
                                         "type": "resource",
                                         "data": {
+                                            "type": "items",
+                                            "name": "Power Grip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
                                             "type": "tricks",
                                             "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -9185,24 +9203,6 @@
                                                     "data": "Power Grip Wall"
                                                 }
                                             ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power Grip",
-                                            "amount": 1,
-                                            "negate": false
                                         }
                                     },
                                     {
@@ -9257,7 +9257,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9289,8 +9289,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 656.28,
-                        "y": 48.17,
+                        "x": 686.2194379187332,
+                        "y": 12.525885321500056,
                         "z": 0.0
                     },
                     "description": "",
@@ -9304,11 +9304,53 @@
                     "pickup_index": 304,
                     "location_category": "minor",
                     "connections": {
+                        "Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Bottom": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 603.2816982214572,
+                        "y": 70.4302925989673,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Dock to Facility Storage Tower East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Power Grip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
                                     {
                                         "type": "and",
                                         "data": {
@@ -9328,24 +9370,6 @@
                                                     "data": "Power Grip Wall"
                                                 }
                                             ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power Grip",
-                                            "amount": 1,
-                                            "negate": false
                                         }
                                     },
                                     {
@@ -9370,6 +9394,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -9454,7 +9485,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "ShortCharge",
+                                                                    "name": "Walljump",
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
