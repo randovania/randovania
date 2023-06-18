@@ -163,16 +163,6 @@ class NetworkClient:
     def has_previous_session(self) -> bool:
         return self.session_data_path.is_file()
 
-    async def connect_if_authenticated(self):
-        if self.session_data_path.is_file():
-            self.logger.debug("session data exists")
-            try:
-                return await self.connect_to_server()
-            except UnableToConnect:
-                pass
-        else:
-            self.logger.debug("no session data")
-
     async def _internal_connect_to_server(self):
         import aiohttp.client_exceptions
 
