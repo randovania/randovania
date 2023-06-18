@@ -91,7 +91,7 @@ def admin_session(user, session_id):
         rows.append([
             association.user.name,
             association.world.name,
-            association.connection_state,
+            association.connection_state.pretty_text,
             ", ".join(inventory),
         ])
 

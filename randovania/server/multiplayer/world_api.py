@@ -114,9 +114,7 @@ def update_association(user: User, world: World, inventory: bytes | None,
     association = WorldUserAssociation.get_by_instances(world=world, user=user)
     session = association.world.session
 
-    new_state = connection_state.pretty_text
-
-    association.connection_state = new_state
+    association.connection_state = connection_state
     if session.state == MultiplayerSessionState.IN_PROGRESS and inventory is not None:
         association.inventory = inventory
 
@@ -128,7 +126,7 @@ def update_association(user: User, world: World, inventory: bytes | None,
 
         logger().info(
             "%s has new connection state: %s",
-            session_common.describe_session(session, association.world), association.connection_state,
+            session_common.describe_session(session, association.world), connection_state.pretty_text,
         )
         return session.id
 
@@ -276,7 +274,7 @@ def report_disconnect(sio: ServerApp, session_dict: dict, log: logging.Logger):
             )
         except peewee.DoesNotExist:
             continue
-        association.connection_state = GameConnectionStatus.Disconnected.pretty_text
+        association.connection_state = GameConnectionStatus.Disconnected
         session = association.world.session
         sessions_to_update[session.id] = session
         association.save()

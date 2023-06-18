@@ -245,9 +245,9 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     )
 
     a1 = database.WorldUserAssociation.get_by_instances(world=w1, user=1234)
-    assert a1.connection_state == GameConnectionStatus.InGame.pretty_text
+    assert a1.connection_state == GameConnectionStatus.InGame
     a2 = database.WorldUserAssociation.get_by_instances(world=w2, user=1234)
-    assert a2.connection_state == GameConnectionStatus.Disconnected.pretty_text
+    assert a2.connection_state == GameConnectionStatus.Disconnected
 
     sio.store_world_in_session.assert_called_once_with(w1)
     mock_join_room.assert_called_once_with("world-1179c986-758a-4170-9b07-fe4541d78db0")
@@ -265,7 +265,7 @@ def test_report_disconnect(mock_emit_session_update, solo_two_world_session):
         "worlds": [1]
     }
     a1 = database.WorldUserAssociation.get_by_instances(world=1, user=1234)
-    a1.connection_state = "In-Game"
+    a1.connection_state = GameConnectionStatus.InGame
     a1.save()
 
     # Run
@@ -273,5 +273,5 @@ def test_report_disconnect(mock_emit_session_update, solo_two_world_session):
 
     # Assert
     a1 = database.WorldUserAssociation.get_by_instances(world=1, user=1234)
-    assert a1.connection_state == "Disconnected"
+    assert a1.connection_state == GameConnectionStatus.Disconnected
     mock_emit_session_update.assert_called_once_with(database.MultiplayerSession.get_by_id(1))

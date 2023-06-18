@@ -310,7 +310,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
             for world_uid, state in player.worlds.items():
                 used_worlds.add(world_uid)
-                _add_world(world_by_id[world_uid], item, player.id, state)
+                _add_world(world_by_id[world_uid], item, player.id, state.connection_state.pretty_text)
 
             if player.id != self.your_id and self.is_admin():
                 tool = make_tool("Administrate")

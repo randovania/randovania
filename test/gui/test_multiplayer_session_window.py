@@ -14,9 +14,11 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import NotAuthorizedForAction
+from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry, MultiplayerUser, User, MultiplayerSessionAction,
     MultiplayerSessionActions, GameDetails, MultiplayerWorld, MultiplayerSessionAuditLog, MultiplayerSessionAuditEntry,
+    UserWorldDetail,
 )
 from randovania.network_common.session_state import MultiplayerSessionState
 
@@ -50,7 +52,10 @@ def sample_session(preset_manager):
             ),
         ],
         users_list=[
-            MultiplayerUser(12, "Player A", True, worlds={u1: "Online"}),
+            MultiplayerUser(12, "Player A", True, worlds={
+                u1: UserWorldDetail(GameConnectionStatus.InGame,
+                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc))
+            }),
         ],
         game_details=None,
         state=MultiplayerSessionState.SETUP,

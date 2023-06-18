@@ -78,7 +78,9 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
         {'id': 1, 'name': 'Debug', 'state': 'in-progress',
          'users_list': [
              {'admin': True, 'id': 1234, 'name': 'The Name',
-              'worlds': {'1179c986-758a-4170-9b07-fe4541d78db0': 'Disconnected'}}
+              'worlds': {'1179c986-758a-4170-9b07-fe4541d78db0': {
+                  'connection_state': 'disconnected',
+                  'last_activity': '2021-09-01 10:20:00+00:00'}}}
          ],
          'worlds': [
              {'id': '1179c986-758a-4170-9b07-fe4541d78db0',

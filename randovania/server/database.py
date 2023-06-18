@@ -17,9 +17,10 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import multiplayer_session
+from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerUser, GameDetails, \
     MultiplayerWorld, MultiplayerSessionListEntry, MultiplayerSessionAuditLog, \
-    MultiplayerSessionAuditEntry
+    MultiplayerSessionAuditEntry, UserWorldDetail
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
@@ -250,7 +251,10 @@ class MultiplayerSession(BaseModel):
                     name=member.user.name,
                     admin=member.admin,
                     worlds={
-                        association.world.uuid: association.connection_state
+                        association.world.uuid: UserWorldDetail(
+                            connection_state=association.connection_state,
+                            last_activity=association.last_activity,
+                        )
                         for association in WorldUserAssociation.find_all_for_user_in_session(
                             member.user.id, self.id,
                         )
@@ -323,9 +327,11 @@ class WorldUserAssociation(BaseModel):
     world: World = peewee.ForeignKeyField(World, backref="associations")
     user: User = peewee.ForeignKeyField(User)
 
-    connection_state = peewee.TextField(default="Disconnected")
+    connection_state: GameConnectionStatus = EnumField(
+        choices=GameConnectionStatus, default=GameConnectionStatus.Disconnected
+    )
+    last_activity: datetime.datetime = peewee.DateTimeField(default=_datetime_now)
     inventory = peewee.BlobField(null=True)
-    last_activity = peewee.DateTimeField(default=_datetime_now)
 
     @classmethod
     def get_by_instances(cls, *, world: World | int, user: User | int) -> Self:

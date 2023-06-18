@@ -7,6 +7,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import multiplayer_session
+from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import GameDetails, MultiplayerWorld, MultiplayerSessionActions, \
     MultiplayerSessionAction
 from randovania.network_common.session_state import MultiplayerSessionState
@@ -78,10 +79,10 @@ def test_fun(clean_database):
     world2 = database.World.create(session=session1, name="World2", preset="{}")
     world3 = database.World.create(session=session1, name="World3", preset="{}")
     world4 = database.World.create(session=session2, name="World4", preset="{}")
-    a1 = database.WorldUserAssociation.create(world=world1, user=user1, connection_state="A")
-    a2 = database.WorldUserAssociation.create(world=world2, user=user1, connection_state="B")
-    database.WorldUserAssociation.create(world=world3, user=user2, connection_state="C")
-    database.WorldUserAssociation.create(world=world4, user=user1, connection_state="D")
+    a1 = database.WorldUserAssociation.create(world=world1, user=user1)
+    a2 = database.WorldUserAssociation.create(world=world2, user=user1)
+    database.WorldUserAssociation.create(world=world3, user=user2)
+    database.WorldUserAssociation.create(world=world4, user=user1)
 
     result = list(
         database.WorldUserAssociation.find_all_for_user_in_session(

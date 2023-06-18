@@ -42,8 +42,10 @@ def solo_two_world_session(clean_database, test_files_dir):
                                    uid=uuid.UUID('6b5ac1a1-d250-4f05-a5fb-ae37e8a92165'))
 
     database.MultiplayerMembership.create(user=user1, session=session, admin=False)
-    database.WorldUserAssociation.create(world=w1, user=user1)
-    database.WorldUserAssociation.create(world=w2, user=user1)
+    database.WorldUserAssociation.create(
+        world=w1, user=user1, last_activity=datetime.datetime(2021, 9, 1, 10, 20, tzinfo=datetime.timezone.utc))
+    database.WorldUserAssociation.create(
+        world=w2, user=user1, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.timezone.utc))
     database.WorldAction.create(provider=w2, location=0,
                                 receiver=w1, session=session)
 
@@ -64,8 +66,10 @@ def two_player_session(clean_database):
 
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     database.MultiplayerMembership.create(user=user2, session=session, admin=False)
-    database.WorldUserAssociation.create(world=w1, user=user1)
-    database.WorldUserAssociation.create(world=w2, user=user2)
+    database.WorldUserAssociation.create(
+        world=w1, user=user1, last_activity=datetime.datetime(2021, 9, 1, 10, 20, tzinfo=datetime.timezone.utc))
+    database.WorldUserAssociation.create(
+        world=w2, user=user2, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.timezone.utc))
     database.WorldAction.create(provider=w2, location=0,
                                 receiver=w1, session=session)
 

@@ -10,6 +10,7 @@ from randovania.game_description.resources.item_resource_info import InventoryIt
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
@@ -29,11 +30,17 @@ class MultiplayerSessionListEntry(JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
+class UserWorldDetail(JsonDataclass):
+    connection_state: GameConnectionStatus
+    last_activity: datetime.datetime
+
+
+@dataclasses.dataclass(frozen=True)
 class MultiplayerUser(JsonDataclass):
     id: int
     name: str
     admin: bool
-    worlds: dict[uuid.UUID, str]
+    worlds: dict[uuid.UUID, UserWorldDetail]
 
 
 @dataclasses.dataclass()
