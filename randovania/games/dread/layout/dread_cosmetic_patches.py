@@ -80,6 +80,7 @@ class DreadCosmeticPatches(BaseCosmeticPatches):
     show_enemy_damage: bool = False
     show_player_damage: bool = False
     show_death_counter: bool = False
+    enable_auto_tracker: bool = True
     show_room_names: DreadRoomGuiType = DreadRoomGuiType.NONE
     missile_cosmetic: DreadMissileCosmeticType = DreadMissileCosmeticType.NONE
 

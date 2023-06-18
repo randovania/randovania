@@ -166,6 +166,7 @@ Extra - map_name: rm_a7b01A
 > Door to Laboratory Save Station; Heals? False
   * Layers: default
   * Normal Door to Laboratory Save Station/Door to Laboratory Save Station Access
+  * Extra - instance_id: 146501
   > Dock to Waterfalls Exterior
       Trivial
 
@@ -174,6 +175,7 @@ Laboratory Save Station
 Extra - map_name: rm_a7b02A
 > Save Station; Heals? True
   * Layers: default
+  * Extra - save_room: 24
   > Door to Laboratory Entrance
       Trivial
   > Door to Laboratory Save Station Access
@@ -182,12 +184,14 @@ Extra - map_name: rm_a7b02A
 > Door to Laboratory Entrance; Heals? False
   * Layers: default
   * Normal Door to Laboratory Entrance/Door to Laboratory Save Station
+  * Extra - instance_id: 146514
   > Save Station
       Trivial
 
 > Door to Laboratory Save Station Access; Heals? False
   * Layers: default
   * Normal Door to Laboratory Save Station Access/Door to Laboratory Save Station
+  * Extra - instance_id: 146513
   > Save Station
       Trivial
 
@@ -197,18 +201,21 @@ Extra - map_name: rm_a7b03A
 > Door to Destroyed Chozo Memorial; Heals? False
   * Layers: default
   * Normal Door to Destroyed Chozo Memorial/Door to Laboratory Entrance
-  > Door to Pipe To Hydro Station
+  * Extra - instance_id: 146532
+  > Door to Laboratory Pipe
       Trivial
 
 > Door to Laboratory Save Station; Heals? False
   * Layers: default
   * Normal Door to Laboratory Save Station/Door to Laboratory Entrance
-  > Door to Pipe To Hydro Station
+  * Extra - instance_id: 146531
+  > Door to Laboratory Pipe
       Trivial
 
-> Door to Pipe To Hydro Station; Heals? False
+> Door to Laboratory Pipe; Heals? False
   * Layers: default
-  * Normal Door to Pipe To Hydro Station/Door to Laboratory Entrance
+  * Normal Door to Laboratory Pipe/Door to Laboratory Entrance
+  * Extra - instance_id: 146535
   > Door to Destroyed Chozo Memorial
       Any of the following:
           Hi-Jump Boots or Space Jump or Can Use Spider Ball
@@ -220,17 +227,20 @@ Extra - map_name: rm_a7b03A
       Trivial
 
 ----------------
-Pipe To Hydro Station
+Laboratory Pipe
 Extra - map_name: rm_a7b03B
 > Door to Laboratory Entrance; Heals? False; Default Node
   * Layers: default
-  * Normal Door to Laboratory Entrance/Door to Pipe To Hydro Station
-  > Teleporter Pipe
+  * Normal Door to Laboratory Entrance/Door to Laboratory Pipe
+  * Extra - instance_id: 146563
+  > Pipe to Hydro Station
       After Area 6 - Nest Left Bottom Omega and After Area 6 - Nest Left Top Omega and After Area 6 - Nest Right Omega
 
-> Teleporter Pipe; Heals? False
+> Pipe to Hydro Station; Heals? False
   * Layers: default
-  * Teleporter to Hydro Station - Pipe To Genetics Laboratory
+  * Teleporter to Water Turbine Station Pipe/Pipe to Genetics Laboratory
+  * Extra - keep_name_when_vanilla: True
+  * Extra - editable: True
   > Door to Laboratory Entrance
       All of the following:
           Morph Ball
@@ -244,12 +254,14 @@ Extra - map_name: rm_a7b04A
 > Door to Laboratory Entrance; Heals? False
   * Layers: default
   * Normal Door to Laboratory Entrance/Door to Destroyed Chozo Memorial
+  * Extra - instance_id: 146602
   > Door to Hatchling Room Underside
       Can Use Any Bombs
 
 > Door to Hatchling Room Underside; Heals? False
   * Layers: default
   * Normal Door to Hatchling Room Underside/Door to Destroyed Chozo Memorial
+  * Extra - instance_id: 146601
   > Door to Laboratory Entrance
       Can Use Any Bombs
 
@@ -259,6 +271,7 @@ Extra - map_name: rm_a7b04
 > Door to Destroyed Chozo Memorial; Heals? False
   * Layers: default
   * Normal Door to Destroyed Chozo Memorial/Door to Hatchling Room Underside
+  * Extra - instance_id: 146836
   > Tunnel to Laboratory Foyer
       All of the following:
           Hijump Tunnel Climb
@@ -289,7 +302,8 @@ Extra - map_name: rm_a7b05
 
 > Door to Laboratory Small Shaft East; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Small Shaft East/Door to Laboratory Foyer
+  * Normal Door to Laboratory Small Shaft East/Door to Laboratory Foyer; Excluded from Dock Lock Rando
+  * Extra - instance_id: 146900
   > Bottom
       Trivial
 
@@ -313,13 +327,15 @@ Laboratory Small Shaft East
 Extra - map_name: rm_a7b06
 > Door to Laboratory Foyer; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Foyer/Door to Laboratory Small Shaft East
+  * Normal Door to Laboratory Foyer/Door to Laboratory Small Shaft East; Excluded from Dock Lock Rando
+  * Extra - instance_id: 146934
   > Door to Laboratory Corridor
       Power Grip Wall
 
 > Door to Laboratory Corridor; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Corridor/Door to Laboratory Small Shaft East
+  * Normal Door to Laboratory Corridor/Door to Laboratory Small Shaft East; Excluded from Dock Lock Rando
+  * Extra - instance_id: 146935
   > Door to Laboratory Foyer
       Trivial
   > Event - Larva
@@ -336,13 +352,15 @@ Laboratory Corridor
 Extra - map_name: rm_a7b06A
 > Door to Laboratory Small Shaft East; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Small Shaft East/Door to Laboratory Corridor
+  * Normal Door to Laboratory Small Shaft East/Door to Laboratory Corridor; Excluded from Dock Lock Rando
+  * Extra - instance_id: 146959
   > Door to Laboratory Long Shaft
       Trivial
 
 > Door to Laboratory Long Shaft; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Long Shaft/Door to Laboratory Corridor
+  * Normal Door to Laboratory Long Shaft/Door to Laboratory Corridor; Excluded from Dock Lock Rando
+  * Extra - instance_id: 146956
   > Door to Laboratory Small Shaft East
       Trivial
 
@@ -351,7 +369,8 @@ Laboratory Long Shaft
 Extra - map_name: rm_a7b07
 > Door to Laboratory Corridor; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Corridor/Door to Laboratory Long Shaft
+  * Normal Door to Laboratory Corridor/Door to Laboratory Long Shaft; Excluded from Dock Lock Rando
+  * Extra - instance_id: 147000
   > Door to Laboratory Spiked Hall
       Any of the following:
           Space Jump or Walljump (Advanced) or Can Use Spider Ball
@@ -359,11 +378,12 @@ Extra - map_name: rm_a7b07
           All of the following:
               # IBJ
               Charged Bomb Jump (Intermediate) and Can Use Bombs
-          Morph Glide (Beginner) and Walljump (Intermediate)
+          Morph Ball and Morph Glide (Beginner) and Walljump (Intermediate)
 
 > Door to Laboratory Spiked Hall; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Spiked Hall/Door to Laboratory Long Shaft
+  * Normal Door to Laboratory Spiked Hall/Door to Laboratory Long Shaft; Excluded from Dock Lock Rando
+  * Extra - instance_id: 147001
   > Door to Laboratory Corridor
       Trivial
   > Event - Top Larva
@@ -388,7 +408,8 @@ Laboratory Spiked Hall
 Extra - map_name: rm_a7b08
 > Door to Laboratory Arena; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Arena/Door to Laboratory Spiked Hall
+  * Normal Door to Laboratory Arena/Door to Laboratory Spiked Hall; Excluded from Dock Lock Rando
+  * Extra - instance_id: 147042
   > Middle Platform
       Any of the following:
           Space Jump or Damage Boost (Intermediate) or Can Use Spider Ball
@@ -402,7 +423,8 @@ Extra - map_name: rm_a7b08
 
 > Door to Laboratory Long Shaft; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Long Shaft/Door to Laboratory Spiked Hall
+  * Normal Door to Laboratory Long Shaft/Door to Laboratory Spiked Hall; Excluded from Dock Lock Rando
+  * Extra - instance_id: 147043
   > Middle Platform
       Any of the following:
           Space Jump or Damage Boost (Intermediate) or Can Use Spider Ball
@@ -468,13 +490,15 @@ Laboratory Arena
 Extra - map_name: rm_a7b08A
 > Door to Laboratory Spiked Hall; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Spiked Hall/Door to Laboratory Arena
+  * Normal Door to Laboratory Spiked Hall/Door to Laboratory Arena; Excluded from Dock Lock Rando
+  * Extra - instance_id: 147081
   > Door to Laboratory Small Shaft West
       Can Use Any Bombs
 
 > Door to Laboratory Small Shaft West; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Small Shaft West/Door to Laboratory Arena
+  * Normal Door to Laboratory Small Shaft West/Door to Laboratory Arena; Excluded from Dock Lock Rando
+  * Extra - instance_id: 147287
   > Door to Laboratory Spiked Hall
       All of the following:
           Space Jump Wall
@@ -511,12 +535,14 @@ Extra - map_name: rm_a7b09
 > Door to Laboratory Arena; Heals? False
   * Layers: default
   * Normal Door to Laboratory Arena/Door to Laboratory Small Shaft West
+  * Extra - instance_id: 147404
   > Door to Queen Arena Access
       Trivial
 
 > Door to Queen Arena Access; Heals? False
   * Layers: default
   * Normal Door to Queen Arena Access/Door to Laboratory Small Shaft West
+  * Extra - instance_id: 147405
   > Door to Laboratory Arena
       Power Grip Wall
 
@@ -526,6 +552,7 @@ Extra - map_name: rm_a7b10
 > Door to Laboratory Small Shaft West; Heals? False
   * Layers: default
   * Normal Door to Laboratory Small Shaft West/Door to Queen Arena Access
+  * Extra - instance_id: 147656
   > Dock to Queen Arena
       Any of the following:
           Space Jump or Damage Boost (Intermediate)

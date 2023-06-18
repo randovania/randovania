@@ -1,8 +1,9 @@
 ----------------
 Outer Caverns Save Station
 Extra - map_name: rm_a3h01
-> Save Station; Heals? True; Spawn Point
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
+  * Extra - save_room: 9
   > Dock to Mines Access
       Trivial
   > Dock to Outer Caverns Crossroads
@@ -174,6 +175,7 @@ Extra - map_name: rm_a3h04
 > Door to Torizo Arena; Heals? False
   * Layers: default
   * Missile Door to Torizo Arena/Door to Industrial Complex Exterior
+  * Extra - instance_id: 114250
   > Dock to Upper Factory Save Station
       Any of the following:
           Space Jump or Enabled Septogg Helpers
@@ -189,6 +191,7 @@ Extra - map_name: rm_a3h04
 > Door to Exterior Puzzle Cavern; Heals? False
   * Layers: default
   * Super Missile Door to Exterior Puzzle Cavern/Door to Industrial Complex Exterior
+  * Extra - instance_id: 114721
   > Dock to Upper Factory Save Station
       Trivial
 
@@ -279,6 +282,7 @@ Extra - map_name: rm_a3h07
 > Door to Industrial Complex Exterior; Heals? False
   * Layers: default
   * Normal Door to Industrial Complex Exterior/Door to Exterior Puzzle Cavern
+  * Extra - instance_id: 115126
   > Pickup (Power Bomb Tank)
       Speed Booster and Shinesparking Tricks (Intermediate) and Disabled Entrance Rando and Can Use Power Bombs
 
@@ -307,6 +311,7 @@ Extra - map_name: rm_a3h08
 > Door to Storage Cavern; Heals? False
   * Layers: default
   * Industrial Complex EMP Activated Door to Storage Cavern/Door to EMP Sentry Cavern
+  * Extra - instance_id: 115149
   > Bottom
       Trivial
 
@@ -344,6 +349,7 @@ Extra - map_name: rm_a3h09
 > Door to EMP Sentry Cavern; Heals? False
   * Layers: default
   * Normal Door to EMP Sentry Cavern/Door to Storage Cavern
+  * Extra - instance_id: 115233
   > Pickup (Power Bomb Tank)
       Trivial
 
@@ -360,6 +366,7 @@ Extra - map_name: rm_a3a01
 > Door to Industrial Complex Exterior; Heals? False
   * Layers: default
   * Normal Door to Industrial Complex Exterior/Door to Torizo Arena
+  * Extra - instance_id: 115254
   > Pickup (Space Jump)
       Trivial
 
@@ -412,8 +419,9 @@ Extra - map_name: rm_a3a02
 
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
+  * Extra - save_room: 10
   > In Sand
-      Any of the following:
+      All of the following:
           Any of the following:
               # Get into tunnel
               Tunnel Climb
@@ -484,6 +492,7 @@ Extra - map_name: rm_a3a04
 > Door to Spazer Beam; Heals? False
   * Layers: default
   * Missile Door to Spazer Beam/Door to Spazer Beam Chamber Access
+  * Extra - instance_id: 116035
   > Dock to Upper Factory Intersection
       All of the following:
           # Speedboost
@@ -491,9 +500,9 @@ Extra - map_name: rm_a3a04
   > Bottom
       Trivial
 
-> Dock to Pipe To Distribution Center Pipe Hub; Heals? False
+> Dock to Upper Factory Pipe; Heals? False
   * Layers: default
-  * Open Passage to Pipe To Distribution Center Pipe Hub/Dock to Spazer Beam Chamber Access
+  * Open Passage to Upper Factory Pipe/Dock to Spazer Beam Chamber Access
   > Bottom
       Screw Attack
 
@@ -503,7 +512,7 @@ Extra - map_name: rm_a3a04
       Hijump Wall
   > Door to Spazer Beam
       Hijump Wall
-  > Dock to Pipe To Distribution Center Pipe Hub
+  > Dock to Upper Factory Pipe
       Screw Attack
 
 ----------------
@@ -512,6 +521,7 @@ Extra - map_name: rm_a3a05
 > Door to Spazer Beam Chamber Access; Heals? False
   * Layers: default
   * Normal Door to Spazer Beam Chamber Access/Door to Spazer Beam
+  * Extra - instance_id: 116073
   > Pickup (Spazer Beam)
       Trivial
 
@@ -614,6 +624,7 @@ Extra - map_name: rm_a3a09
 > Door to Speed Booster Chamber; Heals? False
   * Layers: default
   * Missile Door to Speed Booster Chamber/Door to Speed Booster Chamber Access
+  * Extra - instance_id: 116700
   > Dock to Upper Factory Autoad Fork
       Any of the following:
           Speed Booster
@@ -639,6 +650,7 @@ Extra - map_name: rm_a3a10
 > Door to Speed Booster Chamber Access; Heals? False
   * Layers: default
   * Normal Door to Speed Booster Chamber Access/Door to Speed Booster Chamber
+  * Extra - instance_id: 116779
   > Pickup (Speed Booster)
       Power Grip Wall
 
@@ -678,7 +690,7 @@ Extra - map_name: rm_a3a12
   * Open Passage to Spiky Shaft/Dock to Treadmill Room
   > Dock to Shirk Prisons
       All of the following:
-          Speed Booster and Shinesparking Tricks (Beginner)
+          Speed Booster
           Any of the following:
               # A way to climb the left
               Movement (Beginner) or Power Grip Wall
@@ -828,6 +840,7 @@ Lower Factory Save Station
 Extra - map_name: rm_a3a17
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
+  * Extra - save_room: 11
   > Dock to Lower Factory Entrance
       Trivial
   > Dock to Lower Factory Hub
@@ -872,6 +885,8 @@ Extra - map_name: rm_a3a19
 > Tunnel to Lower Factory Tunnel; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Lower Factory Tunnel/Tunnel to Lower Factory Hub
+  > Top right
+      Can Use Any Bombs
 
 > Dock to Lower Factory Save Station; Heals? False
   * Layers: default
@@ -919,16 +934,22 @@ Extra - map_name: rm_a3a19
 
 > Top right; Heals? False
   * Layers: default
+  * TODO: do the rest of connections from Top Right <-> Top Left. Speedboosting and
+morph gliding come to mind here.
   > Tunnel to Lower Factory Tunnel
       All of the following:
           Can Use Any Bombs
           Any of the following:
               Can Use Any Bombs
               Morph Ball and Mid-Air Morph (Beginner)
+  > Dock to Lower Factory Save Station
+      Trivial
 
 > Top left; Heals? False
   * Layers: default
   > Dock to Lower Factory Intersection
+      Trivial
+  > Dock to Lower Factory Save Station
       Trivial
   > Pickup (Missile Tank)
       Speed Booster and Shinesparking Tricks (Intermediate)
@@ -1117,17 +1138,19 @@ Extra - map_name: rm_a3a26
       Trivial
 
 ----------------
-Pipe To Distribution Center Pipe Hub
+Upper Factory Pipe
 Extra - map_name: rm_a3a27
 > Dock to Spazer Beam Chamber Access; Heals? False; Default Node
   * Layers: default
-  * Open Passage to Spazer Beam Chamber Access/Dock to Pipe To Distribution Center Pipe Hub
-  > Teleporter Pipe
+  * Open Passage to Spazer Beam Chamber Access/Dock to Upper Factory Pipe
+  > Pipe to Distribution Center
       Morph Ball and Power Grip Wall
 
-> Teleporter Pipe; Heals? False
+> Pipe to Distribution Center; Heals? False
   * Layers: default
-  * Teleporter to Distribution Center - Pipe Hub
+  * Teleporter to Pipe Hub/Pipe to Industrial Complex
+  * Extra - keep_name_when_vanilla: True
+  * Extra - editable: True
   > Dock to Spazer Beam Chamber Access
       Morph Ball
 
@@ -1361,6 +1384,8 @@ Extra - map_name: rm_a3b10
 
 > Top Near Pinchers; Heals? False
   * Layers: default
+  > Dock to Breeding Grounds Fly Stadium Access
+      Trivial
   > Dock to Breeding Grounds Maze
       Power Grip Wall
   > Pickup (Super Missile Tank)

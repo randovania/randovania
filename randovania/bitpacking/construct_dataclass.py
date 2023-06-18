@@ -1,6 +1,7 @@
 import dataclasses
 import datetime
 import functools
+import json
 import typing
 import uuid
 from enum import Enum
@@ -128,6 +129,13 @@ def construct_for_type(type_: type) -> construct.Construct:
 
     elif dataclasses.is_dataclass(type_):
         return _construct_for_dataclass(type_)
+
+    elif hasattr(type_, "as_json") and hasattr(type_, "from_json"):
+        return construct.ExprAdapter(
+            BinStr,
+            encoder=lambda obj, ctx: json.dumps(obj),
+            decoder=lambda obj, ctx: json.loads(obj),
+        )
 
     raise TypeError(f"Unsupported type: {type_}.")
 

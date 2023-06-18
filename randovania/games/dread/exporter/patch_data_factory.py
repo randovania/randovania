@@ -480,7 +480,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
-            "enable_remote_lua": False,
+            "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker,
             "constant_environment_damage": {
                 "heat": self.configuration.constant_heat_damage,
                 "cold": self.configuration.constant_cold_damage,
@@ -497,6 +497,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "tile_group_patches": self._tilegroup_patches(),
             "new_spawn_points": list(self.new_spawn_points.values()),
             "objective": self._objective_patches(),
+            "layout_uuid": str(self.players_config.get_own_uuid()),
         }
 
 

@@ -6,6 +6,7 @@ from PySide6 import QtWidgets
 
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
+from randovania.game_connection.builder.dread_connector_builder import DreadConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
@@ -102,6 +103,22 @@ async def test_add_connector_builder_debug(window: GameConnectionWindow, abort):
         assert isinstance(window.game_connection.add_connection_builder.call_args[0][0], DebugConnectorBuilder)
         assert window.game_connection.add_connection_builder.call_args[0][0].target_game == RandovaniaGame.BLANK
 
+@pytest.mark.parametrize("abort", [False, True])
+async def test_add_connector_builder_dread(window: GameConnectionWindow, abort):
+    # Setup
+    window.game_connection.add_connection_builder = MagicMock()
+    window._prompt_for_text = AsyncMock(return_value=None if abort else "my_ip")
+
+    # Run
+    await window._add_connector_builder(ConnectorBuilderChoice.DREAD)
+
+    # Assert
+    if abort:
+        window.game_connection.add_connection_builder.assert_not_called()
+    else:
+        window.game_connection.add_connection_builder.assert_called_once_with(ANY)
+        assert isinstance(window.game_connection.add_connection_builder.call_args[0][0], DreadConnectorBuilder)
+        assert window.game_connection.add_connection_builder.call_args[0][0].ip == "my_ip"
 
 def test_setup_builder_ui_all_builders(window: GameConnectionWindow):
     # Setup

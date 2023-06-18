@@ -13,6 +13,7 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
     ("show_enemy_damage", "show_enemy_damage"),
     ("show_player_damage", "show_player_damage"),
     ("show_death_counter", "show_death_counter"),
+    ("enable_auto_tracker", "enable_auto_tracker"),
 ])
 def test_certain_field(skip_qtbot, widget_field, field_name):
     cosmetic_patches = DreadCosmeticPatches(**{field_name: False})

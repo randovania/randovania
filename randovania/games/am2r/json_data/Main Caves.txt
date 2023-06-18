@@ -3,6 +3,7 @@ Landing Site
 Extra - map_name: rm_a0h01
 > Ship; Heals? True; Spawn Point; Default Node
   * Layers: default
+  * Extra - save_room: 0
   > Dock to Hornoad Hallway
       Trivial
   > Top
@@ -123,6 +124,7 @@ Surface Cave Save Station
 Extra - map_name: rm_a0h03a
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
+  * Extra - save_room: 1
   > Dock to Twisty Tunnel
       Trivial
   > Dock to Cavern Crossroads
@@ -182,6 +184,7 @@ Extra - map_name: rm_a0h04b
 > Door to Surface Pond Save Station; Heals? False
   * Layers: default
   * Missile Door to Surface Pond Save Station/Door to Surface Pond
+  * Extra - instance_id: 101612
   > Dock to Surface Pond Access
       Trivial
 
@@ -190,6 +193,7 @@ Surface Pond Save Station
 Extra - map_name: rm_a0h04c
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
+  * Extra - save_room: 2
   > Door to Surface Pond
       Trivial
   > Dock to Surface Lava Pond
@@ -198,6 +202,7 @@ Extra - map_name: rm_a0h04c
 > Door to Surface Pond; Heals? False
   * Layers: default
   * Normal Door to Surface Pond/Door to Surface Pond Save Station
+  * Extra - instance_id: 101657
   > Save Station
       Trivial
 
@@ -722,6 +727,7 @@ Western Cave Save Station
 Extra - map_name: rm_a0h26
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
+  * Extra - save_room: 13
   > Dock to Western Cave Shaft
       Trivial
 
@@ -926,8 +932,7 @@ Extra - map_name: rm_a0h32
                   Screw Attack and Can Use Any Bombs and Hijump Wall
               All of the following:
                   # Right way
-                  Can Use Power Bombs and Power Grip Climb and Power Grip Wall
-                  Mid-Air Morph (Beginner) or Tunnel Climb
+                  Can Use Power Bombs and Low Mid-Air Morph Tunnel Climb and Power Grip Climb and Power Grip Wall
 
 > After First Screw; Heals? False
   * Layers: default
@@ -945,9 +950,7 @@ Extra - map_name: rm_a0h32
   > Dock to Depths Save Station
       Any of the following:
           Screw Attack and Can Use Bombs
-          All of the following:
-              Can Use Power Bombs
-              Mid-Air Morph (Beginner) or Tunnel Climb
+          Can Use Power Bombs and Low Mid-Air Morph Tunnel Climb
   > After First Screw
       Any of the following:
           Space Jump or Walljump (Expert) or Can Use Spider Ball
@@ -963,6 +966,7 @@ Depths Save Station
 Extra - map_name: rm_a0h33
 > Save Station; Heals? True
   * Layers: default
+  * Extra - save_room: 20
   > Dock to Depths Shaft
       Trivial
   > Dock to Depths Halzyn Hallway
@@ -1281,7 +1285,7 @@ Extra - map_name: rm_a0h18
   * Layers: default
   * Open Passage to Mining Facility Save Station/Dock to Mines Intersection
   > Dock to Drill Excavation
-      Movement (Beginner)
+      Movement (Beginner) or Hijump Wall
   > Dock to Mines Alpha Nest Access
       Trivial
 
@@ -1304,6 +1308,7 @@ Mining Facility Save Station
 Extra - map_name: rm_a0h19
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
+  * Extra - save_room: 12
   > Dock to Mines Intersection
       Trivial
 

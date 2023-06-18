@@ -18,7 +18,7 @@ class PlayerLocationEvent(typing.NamedTuple):
 
 
 class RemoteConnector(QtCore.QObject):
-    _layout_uuid: uuid.UUID | None = None
+    _layout_uuid: uuid.UUID
 
     PlayerLocationChanged = QtCore.Signal(PlayerLocationEvent)
     PickupIndexCollected = QtCore.Signal(PickupIndex)
@@ -33,7 +33,7 @@ class RemoteConnector(QtCore.QObject):
         raise NotImplementedError()
 
     @property
-    def layout_uuid(self) -> uuid.UUID | None:
+    def layout_uuid(self) -> uuid.UUID:
         return self._layout_uuid
 
     async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):

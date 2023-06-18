@@ -268,7 +268,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 132495
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -476,7 +478,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 132468
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -523,7 +527,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 132467
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -594,7 +600,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 132574
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -645,7 +653,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 132575
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -845,7 +855,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 132428
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -911,7 +923,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 132427
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -985,7 +999,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133481
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1025,7 +1041,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133480
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1056,7 +1074,7 @@
             }
         },
         "Energy Distribution Entrance Save Station": {
-            "default_node": null,
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a5c03"
             },
@@ -1073,7 +1091,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 17
+                    },
                     "valid_starting_location": true,
                     "connections": {
                         "Door to Energy Distribution Tower West": {
@@ -1104,7 +1124,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133499
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1117,7 +1139,15 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Beam Bot Prison": {
                     "node_type": "dock",
@@ -1131,7 +1161,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133498
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1174,7 +1206,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133512
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1188,7 +1222,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Energy Distribution Beam Bot Guards": {
+                        "Door to Meat Boy Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1230,7 +1264,7 @@
                         }
                     }
                 },
-                "Door to Energy Distribution Beam Bot Guards": {
+                "Door to Meat Boy Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1242,12 +1276,14 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133514
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Energy Distribution Beam Bot Guards",
+                        "area": "Meat Boy Room",
                         "node": "Door to Energy Distribution Tower West"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1277,7 +1313,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133513
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1302,7 +1340,7 @@
                 }
             }
         },
-        "Energy Distribution Beam Bot Guards": {
+        "Meat Boy Room": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c05"
@@ -1320,13 +1358,15 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133616
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Energy Distribution Activation Shaft",
-                        "node": "Door to Energy Distribution Beam Bot Guards"
+                        "node": "Door to Meat Boy Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1386,13 +1426,15 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133615
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Energy Distribution Tower West",
-                        "node": "Door to Energy Distribution Beam Bot Guards"
+                        "node": "Door to Meat Boy Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1448,7 +1490,7 @@
                 "map_name": "rm_a5c06"
             },
             "nodes": {
-                "Door to Energy Distribution Beam Bot Guards": {
+                "Door to Meat Boy Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1460,12 +1502,14 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133682
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Energy Distribution Beam Bot Guards",
+                        "area": "Meat Boy Room",
                         "node": "Door to Energy Distribution Activation Shaft"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1500,7 +1544,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133681
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1514,7 +1560,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Energy Distribution Beam Bot Guards": {
+                        "Door to Meat Boy Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1543,7 +1589,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133732
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1588,7 +1636,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133731
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1694,7 +1744,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133805
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1739,7 +1791,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133806
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1864,7 +1918,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133836
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1899,7 +1955,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133841
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1988,7 +2046,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133903
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2023,7 +2083,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133904
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2050,7 +2112,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missile",
+                                            "name": "Missiles",
                                             "amount": 2,
                                             "negate": false
                                         }
@@ -2059,7 +2121,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2121,7 +2183,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133914
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2156,7 +2220,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133917
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2192,7 +2258,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Missile",
+                                                        "name": "Missiles",
                                                         "amount": 10,
                                                         "negate": false
                                                     }
@@ -2217,7 +2283,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133911
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2372,7 +2440,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133982
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2416,7 +2486,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 133981
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2682,7 +2754,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134067
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2777,7 +2851,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134068
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2834,7 +2910,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134069
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3195,7 +3273,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134402
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3280,7 +3360,7 @@
                                 ]
                             }
                         },
-                        "A3Pipe": {
+                        "Pipe to Industrial Complex": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3344,7 +3424,7 @@
                                 ]
                             }
                         },
-                        "A1Pipe": {
+                        "Pipe to Golden Temple": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3422,7 +3502,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134401
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3490,8 +3572,8 @@
                         }
                     }
                 },
-                "A4Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to The Tower": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 802.73,
@@ -3502,16 +3584,24 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "The Tower",
-                        "area": "Pipe To Distribution Center Pipe Hub"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "The Tower",
+                        "area": "Inner Tower Pipe",
+                        "node": "Pipe to Distribution Center"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
-                        "A3Pipe": {
+                        "Pipe to Industrial Complex": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3520,8 +3610,8 @@
                         }
                     }
                 },
-                "A3Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Industrial Complex": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1114.3,
@@ -3532,14 +3622,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Industrial Complex",
-                        "area": "Pipe To Distribution Center Pipe Hub"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Industrial Complex",
+                        "area": "Upper Factory Pipe",
+                        "node": "Pipe to Distribution Center"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Distribution Facility Tower West": {
                             "type": "or",
@@ -3558,7 +3656,7 @@
                                 ]
                             }
                         },
-                        "A4Pipe": {
+                        "Pipe to The Tower": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3607,8 +3705,8 @@
                         }
                     }
                 },
-                "A1Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Golden Temple": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 471.12,
@@ -3619,14 +3717,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Golden Temple",
-                        "area": "Pipe to Distribution Center Pipe Hub"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Golden Temple",
+                        "area": "Inner Temple Pipe",
+                        "node": "Pipe to Distribution Center"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Distribution Facility Tower West": {
                             "type": "and",
@@ -3667,7 +3773,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134427
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3701,7 +3809,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missile",
+                                            "name": "Missiles",
                                             "amount": 10,
                                             "negate": false
                                         }
@@ -3710,7 +3818,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 5,
                                             "negate": false
                                         }
@@ -3732,7 +3840,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134426
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3800,7 +3910,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134480
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3890,7 +4002,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134481
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -4005,7 +4119,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134495
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -4097,7 +4213,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134570
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -4189,7 +4307,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134563
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -4595,7 +4715,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134613
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -4926,7 +5048,7 @@
             }
         },
         "Distribution Facility Save Station": {
-            "default_node": null,
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a5c19"
             },
@@ -4943,8 +5065,10 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
+                    "extra": {
+                        "save_room": 18
+                    },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Distribution Facility Tower East": {
                             "type": "and",
@@ -4974,7 +5098,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134644
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -5009,7 +5135,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134645
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -5052,7 +5180,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134661
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -5075,7 +5205,7 @@
                         }
                     }
                 },
-                "Door to Meat Boy Room Access": {
+                "Door to Bullet Hell Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5087,12 +5217,14 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134662
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Meat Boy Room Access",
+                        "area": "Bullet Hell Room Access",
                         "node": "Door to Distribution Facility Intersection"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -5122,7 +5254,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134670
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -5148,7 +5282,7 @@
                                 ]
                             }
                         },
-                        "Door to Meat Boy Room Access": {
+                        "Door to Bullet Hell Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5159,7 +5293,7 @@
                 }
             }
         },
-        "Meat Boy Room Access": {
+        "Bullet Hell Room Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c21"
@@ -5177,13 +5311,15 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134710
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Distribution Facility Intersection",
-                        "node": "Door to Meat Boy Room Access"
+                        "node": "Door to Bullet Hell Room Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5191,7 +5327,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Meat Boy Room": {
+                        "Door to Bullet Hell Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5200,7 +5336,7 @@
                         }
                     }
                 },
-                "Door to Meat Boy Room": {
+                "Door to Bullet Hell Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5212,13 +5348,15 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134711
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Meat Boy Room",
-                        "node": "Door to Meat Boy Room Access"
+                        "area": "Bullet Hell Room",
+                        "node": "Door to Bullet Hell Room Access"
                     },
                     "default_dock_weakness": "A5 Near Screw EMP Door",
                     "exclude_from_dock_rando": false,
@@ -5328,7 +5466,7 @@
                     "valid_starting_location": false,
                     "event_name": "NearScrewEMP",
                     "connections": {
-                        "Door to Meat Boy Room": {
+                        "Door to Bullet Hell Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5435,13 +5573,13 @@
                 }
             }
         },
-        "Meat Boy Room": {
+        "Bullet Hell Room": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5c22"
             },
             "nodes": {
-                "Door to Meat Boy Room Access": {
+                "Door to Bullet Hell Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5453,13 +5591,15 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134883
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Meat Boy Room Access",
-                        "node": "Door to Meat Boy Room"
+                        "area": "Bullet Hell Room Access",
+                        "node": "Door to Bullet Hell Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5488,13 +5628,15 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134884
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Screw Attack Chamber Access",
-                        "node": "Door to Meat Boy Room"
+                        "node": "Door to Bullet Hell Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -5502,7 +5644,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Meat Boy Room Access": {
+                        "Door to Bullet Hell Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5533,7 +5675,7 @@
                 "map_name": "rm_a5c23"
             },
             "nodes": {
-                "Door to Meat Boy Room": {
+                "Door to Bullet Hell Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5545,12 +5687,14 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134899
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Meat Boy Room",
+                        "area": "Bullet Hell Room",
                         "node": "Door to Screw Attack Chamber Access"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -5606,7 +5750,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 134898
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -5620,7 +5766,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Meat Boy Room": {
+                        "Door to Bullet Hell Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5649,7 +5795,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135046
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -6042,7 +6190,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135119
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -6250,7 +6400,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135156
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -6330,7 +6482,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135157
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -6401,7 +6555,7 @@
             }
         },
         "Facility Storage Save Station": {
-            "default_node": null,
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a5c28"
             },
@@ -6418,7 +6572,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135204
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -6453,8 +6609,10 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
+                    "extra": {
+                        "save_room": 19
+                    },
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Facility Storage Intersection East": {
                             "type": "and",
@@ -6484,7 +6642,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135205
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -6527,7 +6687,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135221
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -6597,7 +6759,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135232
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -6708,7 +6872,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135253
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -6801,7 +6967,7 @@
             }
         },
         "Ice Beam Chamber Access": {
-            "default_node": "Teleporter Pipe",
+            "default_node": "Pipe to Serris Arena Pipe",
             "extra": {
                 "map_name": "rm_a5c31"
             },
@@ -6818,7 +6984,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135298
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -6832,7 +7000,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Serris Arena Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6876,8 +7044,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Serris Arena Pipe": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 70.51,
@@ -6888,14 +7056,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Distribution Center",
-                        "area": "Serris Arena Pipe"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distribution Center",
+                        "area": "Serris Arena Pipe",
+                        "node": "Pipe to Ice Beam Chamber Access"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Ice Beam Chamber": {
                             "type": "or",
@@ -6935,7 +7111,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135317
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -7031,7 +7209,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135329
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -7079,7 +7259,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Missile",
+                                                        "name": "Missiles",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -7088,7 +7268,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "SuperMissile",
+                                                        "name": "Super Missiles",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -7113,7 +7293,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135330
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -7320,7 +7502,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "SuperMissile",
+                                                        "name": "Super Missiles",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -7503,7 +7685,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135404
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -7684,7 +7868,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135449
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -7724,7 +7910,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135448
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -7895,7 +8083,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135598
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -7909,7 +8099,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Ice Beam Chamber Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7928,8 +8118,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Ice Beam Chamber Access": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 72.61,
@@ -7940,14 +8130,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Distribution Center",
-                        "area": "Ice Beam Chamber Access"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distribution Center",
+                        "area": "Ice Beam Chamber Access",
+                        "node": "Pipe to Serris Arena Pipe"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Serris Arena": {
                             "type": "and",
@@ -8396,7 +8594,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135756
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -8612,7 +8812,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135783
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -8626,7 +8828,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Gravity Area Blockade Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8645,8 +8847,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Gravity Area Blockade Pipe": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 74.82,
@@ -8657,14 +8859,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Distribution Center",
-                        "area": "Ice Beam Chamber Access"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distribution Center",
+                        "area": "Gravity Area Blockade Pipe",
+                        "node": "Pipe to Facility Storage Spiked Path Pipe"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Facility Storage Spiked Path": {
                             "type": "and",
@@ -8705,7 +8915,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135801
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -8793,7 +9005,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 135800
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -8938,7 +9152,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Missile Tank)": {
+                        "Bottom": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8946,8 +9160,26 @@
                                     {
                                         "type": "resource",
                                         "data": {
+                                            "type": "items",
+                                            "name": "Power Grip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
                                             "type": "tricks",
                                             "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -8971,24 +9203,6 @@
                                                     "data": "Power Grip Wall"
                                                 }
                                             ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power Grip",
-                                            "amount": 1,
-                                            "negate": false
                                         }
                                     },
                                     {
@@ -9043,7 +9257,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9075,8 +9289,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 656.28,
-                        "y": 48.17,
+                        "x": 686.2194379187332,
+                        "y": 12.525885321500056,
                         "z": 0.0
                     },
                     "description": "",
@@ -9090,11 +9304,53 @@
                     "pickup_index": 304,
                     "location_category": "minor",
                     "connections": {
+                        "Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Bottom": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 603.2816982214572,
+                        "y": 70.4302925989673,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Dock to Facility Storage Tower East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Power Grip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
                                     {
                                         "type": "and",
                                         "data": {
@@ -9114,24 +9370,6 @@
                                                     "data": "Power Grip Wall"
                                                 }
                                             ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power Grip",
-                                            "amount": 1,
-                                            "negate": false
                                         }
                                     },
                                     {
@@ -9156,6 +9394,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -9240,7 +9485,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "ShortCharge",
+                                                                    "name": "Walljump",
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
@@ -9635,7 +9880,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136376
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -9777,7 +10024,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136414
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -9829,7 +10078,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136415
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -9993,7 +10244,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136413
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10053,7 +10306,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136488
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10093,7 +10348,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136487
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10141,7 +10398,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136503
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10260,7 +10519,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136516
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10295,7 +10556,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136515
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10338,7 +10601,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136529
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10365,7 +10630,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136531
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10408,7 +10675,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136607
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10448,7 +10717,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136608
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10598,7 +10869,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136637
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10633,7 +10906,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136632
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10777,7 +11052,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136636
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10820,7 +11097,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136678
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10881,7 +11160,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136676
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -10945,7 +11226,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136689
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -11016,7 +11299,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136853
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -11065,7 +11350,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136854
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -11122,7 +11409,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 136869
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -11136,7 +11425,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Facility Storage Spiked Path Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11155,8 +11444,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Facility Storage Spiked Path Pipe": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 73.67,
@@ -11167,14 +11456,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Distribution Center",
-                        "area": "Facility Storage Spiked Path Pipe"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distribution Center",
+                        "area": "Facility Storage Spiked Path Pipe",
+                        "node": "Pipe to Gravity Area Blockade Pipe"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gravity Area Blockade": {
                             "type": "and",

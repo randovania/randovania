@@ -3,7 +3,7 @@
     "extra": {},
     "areas": {
         "Outer Caverns Save Station": {
-            "default_node": null,
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a3h01"
             },
@@ -20,7 +20,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 9
+                    },
                     "valid_starting_location": true,
                     "connections": {
                         "Dock to Mines Access": {
@@ -206,7 +208,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -348,7 +350,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -436,7 +438,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -481,7 +483,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1122,7 +1124,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 114250
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1235,7 +1239,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 114721
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1804,7 +1810,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 115126
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1982,7 +1990,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 115149
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2119,7 +2129,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missile",
+                                            "name": "Missiles",
                                             "amount": 10,
                                             "negate": false
                                         }
@@ -2174,7 +2184,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 115233
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2245,7 +2257,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 115254
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2585,11 +2599,13 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 10
+                    },
                     "valid_starting_location": true,
                     "connections": {
                         "In Sand": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -2644,7 +2660,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Missile",
+                                                        "name": "Missiles",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2653,7 +2669,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "SuperMissile",
+                                                        "name": "Super Missiles",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3032,7 +3048,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 116035
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3090,7 +3108,7 @@
                         }
                     }
                 },
-                "Dock to Pipe To Distribution Center Pipe Hub": {
+                "Dock to Upper Factory Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3107,7 +3125,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Industrial Complex",
-                        "area": "Pipe To Distribution Center Pipe Hub",
+                        "area": "Upper Factory Pipe",
                         "node": "Dock to Spazer Beam Chamber Access"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -3174,7 +3192,7 @@
                                 ]
                             }
                         },
-                        "Dock to Pipe To Distribution Center Pipe Hub": {
+                        "Dock to Upper Factory Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3213,7 +3231,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 116073
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3311,7 +3331,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missile",
+                                            "name": "Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3412,7 +3432,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "Missile",
+                                                                    "name": "Missiles",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -3819,7 +3839,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 116700
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -4001,7 +4023,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 116779
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -4163,7 +4187,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missile",
+                                            "name": "Missiles",
                                             "amount": 2,
                                             "negate": false
                                         }
@@ -4267,15 +4291,6 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Speed Booster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Shinesparking",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -5225,7 +5240,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 11
+                    },
                     "valid_starting_location": true,
                     "connections": {
                         "Dock to Lower Factory Entrance": {
@@ -5460,7 +5477,20 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Top right": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Dock to Lower Factory Save Station": {
                     "node_type": "dock",
@@ -5877,11 +5907,11 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 1145.679012345679,
-                        "y": 365.6296296296296,
+                        "x": 1145.68,
+                        "y": 365.63,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "TODO: do the rest of connections from Top Right <-> Top Left. Speedboosting and\nmorph gliding come to mind here.",
                     "layers": [
                         "default"
                     ],
@@ -5937,6 +5967,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Dock to Lower Factory Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5956,6 +5993,13 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Dock to Lower Factory Intersection": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Lower Factory Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5997,7 +6041,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6284,7 +6328,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "SuperMissile",
+                                                                    "name": "Super Missiles",
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
@@ -6614,7 +6658,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6700,7 +6744,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -7079,7 +7123,7 @@
                 }
             }
         },
-        "Pipe To Distribution Center Pipe Hub": {
+        "Upper Factory Pipe": {
             "default_node": "Dock to Spazer Beam Chamber Access",
             "extra": {
                 "map_name": "rm_a3a27"
@@ -7103,7 +7147,7 @@
                     "default_connection": {
                         "region": "Industrial Complex",
                         "area": "Spazer Beam Chamber Access",
-                        "node": "Dock to Pipe To Distribution Center Pipe Hub"
+                        "node": "Dock to Upper Factory Pipe"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7111,7 +7155,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Distribution Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7134,8 +7178,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Distribution Center": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 477.53,
@@ -7146,14 +7190,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Distribution Center",
-                        "area": "Pipe Hub"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Distribution Center",
+                        "area": "Pipe Hub",
+                        "node": "Pipe to Industrial Complex"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Spazer Beam Chamber Access": {
                             "type": "and",
@@ -8645,6 +8697,13 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Dock to Breeding Grounds Fly Stadium Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Dock to Breeding Grounds Maze": {
                             "type": "and",
                             "data": {
@@ -8666,7 +8725,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }

@@ -101,3 +101,38 @@ def test_encode_jsondataclass():
 
     decoded = construct_dataclass.decode_json_dataclass(encoded, J)
     assert decoded == reference
+
+
+class NonJsonThing:
+    a: int
+    b: str
+
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+    def __eq__(self, other):
+        return isinstance(other, NonJsonThing) and other.a == self.a and other.b == self.b
+
+    @property
+    def as_json(self) -> dict:
+        return {
+            "a": self.a,
+            "b": self.b,
+        }
+
+    @classmethod
+    def from_json(cls, data: dict):
+        return cls(data["a"], data["b"])
+
+
+def test_encode_non_jsondataclass():
+    x = NonJsonThing(5, "foo")
+
+    encoded = construct_dataclass.encode_json_dataclass(x)
+    decoded = construct_dataclass.decode_json_dataclass(encoded, NonJsonThing)
+
+    assert encoded == b'\x14{"a": 5, "b": "foo"}'
+    assert decoded == x
+
+    pass

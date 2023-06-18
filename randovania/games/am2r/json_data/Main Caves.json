@@ -20,7 +20,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 0
+                    },
                     "valid_starting_location": true,
                     "connections": {
                         "Dock to Hornoad Hallway": {
@@ -807,7 +809,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 1
+                    },
                     "valid_starting_location": true,
                     "connections": {
                         "Dock to Twisty Tunnel": {
@@ -1107,7 +1111,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 101612
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1142,15 +1148,17 @@
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 160.2258929831992,
-                        "y": 129.713398277566,
+                        "x": 160.23,
+                        "y": 129.71,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 2
+                    },
                     "valid_starting_location": true,
                     "connections": {
                         "Door to Surface Pond": {
@@ -1181,7 +1189,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 101657
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3413,7 +3423,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3607,7 +3617,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4549,7 +4559,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 13
+                    },
                     "valid_starting_location": true,
                     "connections": {
                         "Dock to Western Cave Shaft": {
@@ -5274,7 +5286,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "SuperMissile",
+                                                        "name": "Super Missiles",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -5340,7 +5352,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "SuperMissile",
+                                                        "name": "Super Missiles",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -5468,7 +5480,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missile",
+                                            "name": "Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5477,7 +5489,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5552,7 +5564,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missile",
+                                            "name": "Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -5561,7 +5573,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6238,25 +6250,8 @@
                                                                 "data": "Power Grip Climb"
                                                             },
                                                             {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Tunnel Climb"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "MidAirMorph",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Low Mid-Air Morph Tunnel Climb"
                                                             },
                                                             {
                                                                 "type": "template",
@@ -6393,25 +6388,8 @@
                                                     "data": "Can Use Power Bombs"
                                                 },
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Tunnel Climb"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MidAirMorph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Low Mid-Air Morph Tunnel Climb"
                                                 }
                                             ]
                                         }
@@ -6535,7 +6513,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 20
+                    },
                     "valid_starting_location": false,
                     "connections": {
                         "Dock to Depths Shaft": {
@@ -8228,7 +8208,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SuperMissile",
+                                            "name": "Super Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -8428,7 +8408,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Drill Excavation": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -8440,6 +8420,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Hijump Wall"
                                     }
                                 ]
                             }
@@ -8555,7 +8539,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 12
+                    },
                     "valid_starting_location": true,
                     "connections": {
                         "Dock to Mines Intersection": {

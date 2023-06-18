@@ -3,6 +3,7 @@ import flask
 import pytest
 from peewee import SqliteDatabase
 
+from randovania.games.game import RandovaniaGame
 from randovania.server import database
 
 
@@ -32,3 +33,9 @@ def flask_app():
 @pytest.fixture()
 def fernet():
     return cryptography.fernet.Fernet(b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=')
+
+
+@pytest.fixture()
+def default_game_list(is_dev_version):
+    return [g.value for g in RandovaniaGame.sorted_all_games()
+            if g.data.defaults_available_in_game_sessions]

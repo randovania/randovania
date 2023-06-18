@@ -1020,7 +1020,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146501
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1063,7 +1065,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "save_room": 24
+                    },
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Laboratory Entrance": {
@@ -1094,7 +1098,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146514
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1129,7 +1135,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146513
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1172,7 +1180,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146532
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1186,7 +1196,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pipe To Hydro Station": {
+                        "Door to Laboratory Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1207,7 +1217,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146531
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1221,7 +1233,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pipe To Hydro Station": {
+                        "Door to Laboratory Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1230,7 +1242,7 @@
                         }
                     }
                 },
-                "Door to Pipe To Hydro Station": {
+                "Door to Laboratory Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1242,12 +1254,14 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146535
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
-                        "area": "Pipe To Hydro Station",
+                        "area": "Laboratory Pipe",
                         "node": "Door to Laboratory Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1344,7 +1358,7 @@
                 }
             }
         },
-        "Pipe To Hydro Station": {
+        "Laboratory Pipe": {
             "default_node": "Door to Laboratory Entrance",
             "extra": {
                 "map_name": "rm_a7b03B"
@@ -1362,13 +1376,15 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146563
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Genetics Laboratory",
                         "area": "Laboratory Entrance",
-                        "node": "Door to Pipe To Hydro Station"
+                        "node": "Door to Laboratory Pipe"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1376,7 +1392,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter Pipe": {
+                        "Pipe to Hydro Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1413,8 +1429,8 @@
                         }
                     }
                 },
-                "Teleporter Pipe": {
-                    "node_type": "teleporter",
+                "Pipe to Hydro Station": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 492.05,
@@ -1425,14 +1441,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Hydro Station",
-                        "area": "Pipe To Genetics Laboratory"
+                    "extra": {
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Hydro Station",
+                        "area": "Water Turbine Station Pipe",
+                        "node": "Pipe to Genetics Laboratory"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Laboratory Entrance": {
                             "type": "and",
@@ -1508,7 +1532,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146602
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1548,7 +1574,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146601
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1596,7 +1624,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146836
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1820,7 +1850,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146900
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1829,7 +1861,7 @@
                         "node": "Door to Laboratory Foyer"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -1936,7 +1968,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146934
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1945,7 +1979,7 @@
                         "node": "Door to Laboratory Small Shaft East"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -1976,7 +2010,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146935
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -1985,7 +2021,7 @@
                         "node": "Door to Laboratory Small Shaft East"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -2056,7 +2092,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146959
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2065,7 +2103,7 @@
                         "node": "Door to Laboratory Corridor"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -2091,7 +2129,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 146956
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2100,7 +2140,7 @@
                         "node": "Door to Laboratory Corridor"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -2134,7 +2174,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 147000
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2143,7 +2185,7 @@
                         "node": "Door to Laboratory Long Shaft"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -2242,12 +2284,29 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MorphGlide",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MorphGlide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph Ball",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -2273,7 +2332,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 147001
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2282,7 +2343,7 @@
                         "node": "Door to Laboratory Long Shaft"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -2382,7 +2443,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 147042
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2391,7 +2454,7 @@
                         "node": "Door to Laboratory Spiked Hall"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -2517,7 +2580,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 147043
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -2526,7 +2591,7 @@
                         "node": "Door to Laboratory Spiked Hall"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -3099,7 +3164,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 147081
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3108,7 +3175,7 @@
                         "node": "Door to Laboratory Arena"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -3139,7 +3206,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 147287
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3148,7 +3217,7 @@
                         "node": "Door to Laboratory Arena"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -3366,7 +3435,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 147404
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3401,7 +3472,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 147405
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3449,7 +3522,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 147656
+                    },
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -3688,7 +3763,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Missile",
+                                                        "name": "Missiles",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3697,7 +3772,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "SuperMissile",
+                                                        "name": "Super Missiles",
                                                         "amount": 1,
                                                         "negate": false
                                                     }

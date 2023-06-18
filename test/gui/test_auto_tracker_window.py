@@ -5,7 +5,7 @@ import pytest
 
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
-from randovania.game_connection.game_connection import ConnectedGameState
+from randovania.game_connection.game_connection import ConnectedGameState, GameConnectionStatus
 from randovania.games.game import RandovaniaGame
 from randovania.gui.auto_tracker_window import AutoTrackerWindow
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
@@ -48,7 +48,8 @@ def test_create_tracker_valid(skip_qtbot, game, tracker_name):
     connector = connection.get_connector_for_builder.return_value
     connector.game_enum = game
     connection.connected_states = {
-        connector: ConnectedGameState(uuid.UUID(int=0), connector)
+        connector: ConnectedGameState(uuid.UUID(int=0), connector,
+                                      GameConnectionStatus.Disconnected)
     }
 
     # Run
@@ -119,6 +120,7 @@ def test_on_game_state_updated(skip_qtbot, mocker, correct_source):
     skip_qtbot.addWidget(window)
     window.on_game_state_updated(ConnectedGameState(
         uuid.UUID(int=0), connector if correct_source else MagicMock(),
+        status=GameConnectionStatus.TitleScreen,
         current_inventory=inventory,
     ))
 
