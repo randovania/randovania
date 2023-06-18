@@ -55,6 +55,10 @@ class BaseModel(peewee.Model):
     def get_by_id(cls, pk) -> Self:
         return super().get_by_id(pk)
 
+    @classmethod
+    def get_or_create(cls, **kwargs) -> tuple[Self, bool]:
+        return super().get_or_create(**kwargs)
+
 
 class EnumField(peewee.CharField):
     """

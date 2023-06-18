@@ -109,9 +109,7 @@ def test_join_session(mock_emit_session_update: MagicMock,
         'generation_in_progress': None,
         'allowed_games': default_game_list,
     }
-    mock_join_multiplayer_session.assert_called_once_with(
-        sio, database.MultiplayerMembership.get_by_ids(session_id=session.id, user_id=1234)
-    )
+    mock_join_multiplayer_session.assert_called_once_with(sio, session)
 
 
 @pytest.mark.parametrize("is_member", [False, True])

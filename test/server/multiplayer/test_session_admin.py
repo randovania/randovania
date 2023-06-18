@@ -48,7 +48,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
                           'word_hash': 'Charge Sandcanyon Abyss'},
          'generation_in_progress': None,
          'allowed_games': ANY, },
-        room='game-session-1',
+        room='multiplayer-session-1',
         namespace='/',
     )
     mock_audit.assert_called_once_with(sio, session, "Left session")
@@ -90,7 +90,7 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
          ],
          'game_details': None, 'generation_in_progress': None,
          'allowed_games': ANY, },
-        room='game-session-1',
+        room='multiplayer-session-1',
         namespace='/',
     )
     mock_audit.assert_called_once_with(sio, session, "Kicked Other Name")

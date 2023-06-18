@@ -15,7 +15,8 @@ from randovania.server.server_app import ServerApp
 
 
 def room_name_for(session_id: int) -> str:
-    return f"game-session-{session_id}"
+    assert isinstance(session_id, int)
+    return f"multiplayer-session-{session_id}"
 
 
 def emit_session_global_event(session: MultiplayerSession, name: str, data):
@@ -87,7 +88,8 @@ def hash_password(password: str) -> str:
 
 
 def join_room(sio: ServerApp, session: MultiplayerSession):
-    flask_socketio.join_room(room_name_for(session.id))
+    room_name = room_name_for(session.id)
+    flask_socketio.join_room(room_name)
 
     with sio.session() as sio_session:
         if "multiplayer_sessions" not in sio_session:

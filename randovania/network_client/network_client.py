@@ -138,8 +138,8 @@ class NetworkClient:
         self.sio.on('user_session_update', self.on_user_session_updated)
         self.sio.on(signals.SESSION_META_UPDATE, self._on_multiplayer_session_meta_update_raw)
         self.sio.on(signals.SESSION_ACTIONS_UPDATE, self._on_multiplayer_session_actions_update_raw)
-        self.sio.on(signals.WORLD_PICKUPS_UPDATE, self._on_world_pickups_update_raw)
         self.sio.on(signals.SESSION_AUDIT_UPDATE, self._on_multiplayer_session_audit_update_raw)
+        self.sio.on(signals.WORLD_PICKUPS_UPDATE, self._on_world_pickups_update_raw)
         self.sio.on(signals.WORLD_BINARY_INVENTORY, self._on_world_user_inventory_raw)
         self.sio.on(signals.WORLD_JSON_INVENTORY, print)
 
@@ -317,6 +317,8 @@ class NetworkClient:
     # Multiplayer Session Updated
 
     async def _on_multiplayer_session_meta_update_raw(self, data: dict):
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", data)
+
         entry = MultiplayerSessionEntry.from_json(data)
         self.logger.debug("%s: %s",
                           entry.id,
