@@ -647,20 +647,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Ridley Room": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega1",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Dock to Hideout Hub Access West": {
@@ -720,15 +710,6 @@
                                         "data": {
                                             "comment": "After killing omega",
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Omega1",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "or",
                                                     "data": {
@@ -799,27 +780,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Before killing omega",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Omega1",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Hijump Wall"
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -853,48 +813,6 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Hideout Hub Access East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Pre First Omega Scan": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Alpha23",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Event - Pre First Omega Scan": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 255.7,
-                        "y": 637.82,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "NestOmegaScan",
-                    "connections": {
-                        "Dock to Hideout Hub Access West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1111,15 +1029,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "NestOmegaScan",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
                                         "data": "Hijump With Power Grip Wall"
                                     }
@@ -1131,15 +1040,6 @@
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "NestOmegaScan",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
                                     {
                                         "type": "template",
                                         "data": "Defeat Alpha"
@@ -1211,59 +1111,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Hideout Alpha Nest Access West": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "NestOmegaScan",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Alpha23",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed Booster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Shinesparking",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Power Grip Wall"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1272,8 +1123,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 813.4833354401045,
-                        "y": 150.67290270930766,
+                        "x": 627.9745659228123,
+                        "y": 128.68942500887857,
                         "z": 0.0
                     },
                     "description": "",

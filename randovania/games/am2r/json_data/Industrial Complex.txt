@@ -1029,26 +1029,33 @@ Extra - map_name: rm_a3a22
 > Dock to Weapon Testing; Heals? False
   * Layers: default
   * Open Passage to Weapon Testing/Dock to Skippy Room
-  > Dock to Super Missile Chamber Access
+  > Event - Skippy
+      Morph Ball
+  > Past Super Blocks
       All of the following:
           Hijump With Power Grip Wall
           Any of the following:
-              # Break the super blocks
-              Morph Ball
-              Super Missiles ≥ 3 and Before Area 3 Skippy
-  > Event - Skippy
-      Morph Ball
+              # Get past super blocks
+              Missiles ≥ 3 or After Area 3 Skippy
 
 > Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
   * Open Passage to Super Missile Chamber Access/Dock to Skippy Room
-  > Dock to Weapon Testing
-      Space Jump Wall
+  > Past Super Blocks
+      Trivial
 
 > Event - Skippy; Heals? False
   * Layers: default
   * Event Area 3 Skippy
   > Dock to Weapon Testing
+      Trivial
+
+> Past Super Blocks; Heals? False
+  * Layers: default
+  * Event Area 3 Skippy
+  > Dock to Weapon Testing
+      Space Jump Wall
+  > Dock to Super Missile Chamber Access
       Trivial
 
 ----------------
@@ -1082,8 +1089,8 @@ Extra - map_name: rm_a3a23a
 > Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
   * Open Passage to Super Missile Chamber Access/Dock to Super Missile Chamber
-  > Before Super
-      After Area 3 Crystal before Super Missile or Power Grip Wall
+  > In Front Of Super
+      After Area 3 Super Missile Crystal or Power Grip Wall
   > Event - SuperCrystal
       Super Missiles
 
@@ -1091,13 +1098,13 @@ Extra - map_name: rm_a3a23a
   * Layers: default
   * Pickup 206; Category? Minor
   * Extra - object_name: oItemSM_206
-  > Before Super
+  > In Front Of Super
       Trivial
 
-> Before Super; Heals? False
+> In Front Of Super; Heals? False
   * Layers: default
   > Dock to Super Missile Chamber Access
-      After Area 3 Crystal before Super Missile
+      After Area 3 Super Missile Crystal
   > Pickup (Super Missile Tank)
       Trivial
   > Event - SuperCrystal
@@ -1105,10 +1112,10 @@ Extra - map_name: rm_a3a23a
 
 > Event - SuperCrystal; Heals? False
   * Layers: default
-  * Event Area 3 Crystal before Super Missile
+  * Event Area 3 Super Missile Crystal
   > Dock to Super Missile Chamber Access
       Trivial
-  > Before Super
+  > In Front Of Super
       Trivial
 
 ----------------
