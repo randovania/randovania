@@ -53,6 +53,8 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
             preferred += 46
         if self.prefer_bosses_check.isChecked():
             preferred += 6
+        if preferred > 46:
+            preferred = 46
         return preferred
 
     def _on_prefer_metroids(self, value: bool):
