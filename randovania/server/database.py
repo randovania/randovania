@@ -321,6 +321,7 @@ class WorldUserAssociation(BaseModel):
 
     connection_state = peewee.TextField(default="Disconnected")
     inventory = peewee.BlobField(null=True)
+    last_activity = peewee.DateTimeField(default=_datetime_now)
 
     @classmethod
     def get_by_instances(cls, *, world: World | int, user: User | int) -> Self:

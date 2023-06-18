@@ -1,4 +1,5 @@
 import base64
+import datetime
 import logging
 import uuid
 
@@ -108,24 +109,23 @@ def collect_locations(sio: ServerApp, source_world: World, pickup_locations: tup
     return receiver_worlds
 
 
-def update_association(user: User, world: World, inventory: bytes | None, game_connection_state: str,
-                       ) -> int | None:
+def update_association(user: User, world: World, inventory: bytes | None,
+                       connection_state: GameConnectionStatus, ) -> int | None:
     association = WorldUserAssociation.get_by_instances(world=world, user=user)
     session = association.world.session
 
-    old_state = association.connection_state
-    old_inventory = association.inventory
+    new_state = connection_state.pretty_text
 
-    association.connection_state = game_connection_state
+    association.connection_state = new_state
     if session.state == MultiplayerSessionState.IN_PROGRESS and inventory is not None:
         association.inventory = inventory
 
-    association.save()
+    if association.is_dirty():
+        association.last_activity = datetime.datetime.now(datetime.timezone.utc)
+        association.save()
+        if session.state == MultiplayerSessionState.IN_PROGRESS:
+            session_common.emit_inventory_update(association)
 
-    if old_inventory != association.inventory and session.state == MultiplayerSessionState.IN_PROGRESS:
-        session_common.emit_inventory_update(association)
-
-    if old_state != game_connection_state:
         logger().info(
             "%s has new connection state: %s",
             session_common.describe_session(session, association.world), association.connection_state,
@@ -184,7 +184,7 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
                 worlds_to_update.add(world)
                 sio.store_world_in_session(world)
 
-            session_id = update_association(user, world, None, world_request.status.pretty_text)
+            session_id = update_association(user, world, None, world_request.status)
             if session_id is not None:
                 sessions_to_update_meta.add(session_id)
 
