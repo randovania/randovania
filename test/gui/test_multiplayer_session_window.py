@@ -89,7 +89,10 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
             ),
         ],
         users_list=[
-            MultiplayerUser(12, "Player A", True, worlds={u1: "Online"}),
+            MultiplayerUser(12, "Player A", True, worlds={
+                u1: UserWorldDetail(GameConnectionStatus.InGame,
+                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc))
+            }),
             MultiplayerUser(24, "Player B", False, {}),
         ],
         game_details=GameDetails(
