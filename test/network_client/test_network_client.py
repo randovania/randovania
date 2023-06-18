@@ -2,14 +2,15 @@ import uuid
 from pathlib import Path
 from unittest.mock import MagicMock, AsyncMock, call
 
+import aiohttp.client_exceptions
 import pytest
 import socketio.exceptions
 
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.network_client.network_client import NetworkClient, ConnectionState, _decode_pickup
+from randovania.network_client.network_client import NetworkClient, ConnectionState, _decode_pickup, UnableToConnect
 from randovania.network_common import connection_headers
-from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
+from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import InvalidSession, RequestTimeout, ServerError
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups
 
@@ -78,10 +79,10 @@ async def test_on_connect_restore_timeout(client: NetworkClient):
     client.disconnect_from_server.assert_awaited_once_with()
 
 
-async def test_connect_to_server(tmpdir):
+async def test_connect_to_server(tmp_path):
     # Setup
-    client = NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000",
-                                          "socketio_path": "/path"})
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000",
+                                      "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
         client._waiting_for_on_connect.set_result(True)
@@ -99,6 +100,37 @@ async def test_connect_to_server(tmpdir):
                                                 socketio_path="/path",
                                                 transports=["websocket"],
                                                 headers=connection_headers())
+
+
+async def test_internal_connect_to_server_failure(tmp_path):
+    # Setup
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000",
+                                      "socketio_path": "/path"})
+
+    async def connect(*args, **kwargs):
+        raise (
+            aiohttp.client_exceptions.ContentTypeError(
+                MagicMock(), (), message="thing"
+            )
+        )
+
+    client.sio = MagicMock()
+    client.sio.disconnect = AsyncMock()
+    client.sio.connect = AsyncMock(side_effect=connect)
+    client.sio.connected = False
+
+    # Run
+    with pytest.raises(UnableToConnect):
+        await client._internal_connect_to_server()
+
+    # Assert
+    client.sio.disconnect.assert_awaited_once_with()
+
+
+async def test_disconnect_from_server(client: NetworkClient):
+    client.sio = AsyncMock()
+    await client.disconnect_from_server()
+    client.sio.disconnect.assert_awaited_once_with()
 
 
 async def test_session_admin_global(client):
@@ -233,3 +265,14 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
 
     # Assert
     assert pickup == expected_pickup
+
+
+async def test_on_disconnect(client: NetworkClient):
+    client._restore_session_task = MagicMock()
+
+    # Run
+    await client.on_disconnect()
+
+    # Assert
+    client._restore_session_task.cancel.assert_called_once_with()
+    assert client.connection_state == ConnectionState.Disconnected

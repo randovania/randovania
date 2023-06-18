@@ -200,9 +200,9 @@ class NetworkClient:
                 else:
                     message = str(e)
                 await self.on_connect_error(message)
-            error = self._connect_error
+            err = self._connect_error
             await self.sio.disconnect()
-            raise UnableToConnect(error)
+            raise UnableToConnect(err)
 
     def notify_on_connect(self, error_message: Exception | None):
         if self._waiting_for_on_connect is not None:
@@ -307,8 +307,6 @@ class NetworkClient:
     # Multiplayer Session Updated
 
     async def _on_multiplayer_session_meta_update_raw(self, data: dict):
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", data)
-
         entry = MultiplayerSessionEntry.from_json(data)
         self.logger.debug("%s: %s",
                           entry.id,
