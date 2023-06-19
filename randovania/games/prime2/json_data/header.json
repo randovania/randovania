@@ -2989,6 +2989,63 @@
                                 }
                             }
                         }
+                    },
+                    "Darkburst Blast Shield": {
+                        "extra": {
+                            "door_type": "Darkburst"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Darkburst"
+                            }
+                        }
+                    },
+                    "Sunburst Blast Shield": {
+                        "extra": {
+                            "door_type": "Sunburst"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Sunburst"
+                            }
+                        }
+                    },
+                    "Sonic Boom Blast Shield": {
+                        "extra": {
+                            "door_type": "SonicBoom"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Sonic Boom"
+                            }
+                        }
                     }
                 },
                 "dock_rando": {
@@ -3008,7 +3065,13 @@
                         "Dark Door",
                         "Light Door",
                         "Annihilator Door",
-                        "Permanently Locked"
+                        "Permanently Locked",
+                        "Missile Blast Shield",
+                        "Super Missile Blast Shield",
+                        "Power Bomb Blast Shield",
+                        "Darkburst Blast Shield",
+                        "Sunburst Blast Shield",
+                        "Sonic Boom Blast Shield"
                     ]
                 }
             },
@@ -3166,7 +3229,7 @@
         "dock_rando": {
             "force_change_two_way": false,
             "resolver_attempts": 125,
-            "to_shuffle_proportion": 0.5
+            "to_shuffle_proportion": 1.0
         }
     },
     "regions": [
