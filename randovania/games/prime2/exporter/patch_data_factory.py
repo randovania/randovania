@@ -608,6 +608,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         area_patch_data = regions_patch_data[region.name]["areas"][area.name]
 
+        area_patch_data["low_memory_mode"] = area.extra.get("low_memory_mode", False)
         area_patch_data["docks"] = area_patch_data.get("docks", {})
         area_patch_data["docks"][node.extra["dock_name"]] = area_patch_data["docks"].get(node.extra["dock_name"], {})
         return area_patch_data["docks"][node.extra["dock_name"]]
@@ -634,7 +635,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
                     "dock": target.extra["dock_name"],
                 }
             })
-    
+
     def add_dock_type_changes(self, regions_patch_data: dict):
         dock_changes = {
             dock: {
@@ -648,7 +649,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         for dock, changes in dock_changes.items():
             dock_patch_data = self._get_dock_patch_data(regions_patch_data, dock)
             dock_patch_data.update(changes)
-        
+
     def new_patcher_configuration(self):
         worlds_patch_data = {
             "Temple Grounds": {
