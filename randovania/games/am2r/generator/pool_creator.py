@@ -52,7 +52,7 @@ _METROID_INDICES = [
     # Alphas
     _c("Main Caves", "Surface Alpha Nest", "Pickup (Alpha)"),
     _c("Golden Temple", "Exterior Alpha Nest", "Pickup (Alpha)"),
-    _c("Golden Temple", "Breeding Grounds North West", "Pickup (Alpha)"),
+    _c("Golden Temple", "Breeding Grounds North East", "Pickup (Alpha)"),
     _c("Golden Temple", "Breeding Grounds South West", "Pickup (Alpha)"),
     _c("Golden Temple", "Breeding Grounds South East", "Pickup (Alpha)"),
     _c("Hydro Station", "Hydro Station Entrance", "Pickup (Alpha)"),
