@@ -1,8 +1,10 @@
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime2.patcher.echoes_dol_patches import BeamCostAddresses, IsDoorAddr, MapDoorTypeAddresses, SafeZoneAddresses, EchoesDolVersion, \
-    StartingBeamVisorAddresses
-from randovania.patching.prime.all_prime_dol_patches import StringDisplayPatchAddresses, HealthCapacityAddresses, \
-    DangerousEnergyTankAddresses, PowerupFunctionsAddresses
+from randovania.games.prime2.patcher.echoes_dol_patches import (
+    BeamCostAddresses, EchoesDolVersion, IsDoorAddr, MapDoorTypeAddresses,
+    SafeZoneAddresses, StartingBeamVisorAddresses)
+from randovania.patching.prime.all_prime_dol_patches import (
+    DangerousEnergyTankAddresses, HealthCapacityAddresses,
+    PowerupFunctionsAddresses, StringDisplayPatchAddresses)
 
 ALL_VERSIONS = [
     EchoesDolVersion(
