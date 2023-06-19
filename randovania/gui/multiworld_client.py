@@ -188,9 +188,9 @@ class MultiworldClient(QObject):
                         self.logger.warning(message)
                     else:
                         self.logger.exception(message)
-                await asyncio.sleep(5)
-            else:
-                return
+
+            # Wait a bit, and try sending a new request in case new data came while waiting for the server response
+            await asyncio.sleep(5)
 
     def start_server_sync_task(self):
         if self._sync_task is not None and not self._sync_task.done():

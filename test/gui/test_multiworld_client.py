@@ -195,6 +195,7 @@ async def test_server_sync(client, mocker: MockerFixture):
         request,
         request,  # the first perform_world_sync fails, so this is called again
         ServerSyncRequest(worlds=frozendict({})),  # Since the third world failed, the sync loop runs again.
+        ServerSyncRequest(worlds=frozendict({})),  # And a last time, to make sure there were no new requests
     ])
     client.network_client.perform_world_sync = AsyncMock(side_effect=[
         error.RequestTimeout,
@@ -223,6 +224,7 @@ async def test_server_sync(client, mocker: MockerFixture):
     mock_sleep.assert_has_awaits([
         call(5),  # first perform_world_sync call timed out
         call(5),  # the sync response had errors
+        call(5),  # the sync response was successful
     ])
     # TODO: test that the error handling
 
