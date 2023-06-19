@@ -144,6 +144,9 @@ class MultiworldClient(QObject):
 
     async def _server_sync(self):
         while True:
+            # Wait a bit, in case a RemoteConnector is sending multiple events in quick succession
+            await asyncio.sleep(1)
+
             request = self._create_new_sync_request()
             if request == self._last_sync:
                 self.logger.debug("Skipping server sync: no changes from last time")
@@ -190,7 +193,7 @@ class MultiworldClient(QObject):
                         self.logger.exception(message)
 
             # Wait a bit, and try sending a new request in case new data came while waiting for the server response
-            await asyncio.sleep(5)
+            await asyncio.sleep(4)
 
     def start_server_sync_task(self):
         if self._sync_task is not None and not self._sync_task.done():

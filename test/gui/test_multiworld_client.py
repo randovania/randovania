@@ -153,7 +153,8 @@ def test_create_new_sync_request(client, tmp_path, has_old_pending, has_last_sta
     )
 
 
-async def test_server_sync_identical(client):
+async def test_server_sync_identical(client, mocker: MockerFixture):
+    mock_sleep = mocker.patch("asyncio.sleep", new_callable=AsyncMock)
     client._create_new_sync_request = MagicMock(return_value=ServerSyncRequest(worlds=frozendict({})))
     client.network_client.perform_world_sync = AsyncMock()
 
@@ -162,6 +163,7 @@ async def test_server_sync_identical(client):
 
     # Assert
     client.network_client.perform_world_sync.assert_not_awaited()
+    mock_sleep.assert_called_once_with(1)
 
 
 async def test_server_sync(client, mocker: MockerFixture):
@@ -222,9 +224,20 @@ async def test_server_sync(client, mocker: MockerFixture):
         call(ServerSyncRequest(worlds=frozendict({}))),
     ])
     mock_sleep.assert_has_awaits([
-        call(5),  # first perform_world_sync call timed out
-        call(5),  # the sync response had errors
-        call(5),  # the sync response was successful
+        # First request
+        call(1),
+        call(5),  # perform_world_sync call timed out
+
+        # Second request
+        call(1),
+        call(4),  # the sync response had errors
+
+        # Third request
+        call(1),
+        call(4),  # the sync response was successful
+
+        # Fourth request
+        call(1),  # identical to last, ends
     ])
     # TODO: test that the error handling
 
