@@ -610,14 +610,18 @@ def _migrate_v31(preset: dict) -> dict:
     return preset
 
 
+def _update_default_dock_rando_for_game(preset: dict, game: RandovaniaGame) -> dict:
+    if preset["game"] == game.value:
+        preset["configuration"]["dock_rando"] = {
+            "mode": "vanilla",
+            "types_state": copy.deepcopy(migration_data.get_default_dock_lock_settings(game)),
+        }
+    return preset
+
+
 def _update_default_dock_rando(preset: dict) -> dict:
     game = RandovaniaGame(preset["game"])
-
-    preset["configuration"]["dock_rando"] = {
-        "mode": "vanilla",
-        "types_state": copy.deepcopy(migration_data.get_default_dock_lock_settings(game)),
-    }
-    return preset
+    return _update_default_dock_rando_for_game(preset, game)
 
 
 def _migrate_v32(preset: dict) -> dict:
@@ -833,6 +837,10 @@ def _migrate_v52(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v53(preset: dict) -> dict:
+    return _update_default_dock_rando_for_game(preset, RandovaniaGame.METROID_PRIME_ECHOES)
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -886,6 +894,7 @@ _MIGRATIONS = [
     _migrate_v50,
     _migrate_v51,
     _migrate_v52,
+    _migrate_v53,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
