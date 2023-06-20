@@ -2032,7 +2032,9 @@
                 "extra": {},
                 "items": {
                     "Normal Door": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Normal"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -2043,7 +2045,9 @@
                         "lock": null
                     },
                     "Dark Door": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Dark"
+                        },
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Dark Beam"
@@ -2051,7 +2055,9 @@
                         "lock": null
                     },
                     "Light Door": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Light"
+                        },
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Light Beam"
@@ -2059,7 +2065,9 @@
                         "lock": null
                     },
                     "Annihilator Door": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Annihilator"
+                        },
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Annihilator Beam"
@@ -2067,7 +2075,9 @@
                         "lock": null
                     },
                     "Missile Blast Shield": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Missile"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -2089,7 +2099,9 @@
                         }
                     },
                     "Super Missile Blast Shield": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "SuperMissile"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -2287,7 +2299,9 @@
                         }
                     },
                     "Power Bomb Blast Shield": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "PowerBomb"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -2326,7 +2340,9 @@
                         }
                     },
                     "Permanently Locked": {
-                        "extra": {},
+                        "extra": {
+                            "door_type": "Disabled"
+                        },
                         "requirement": {
                             "type": "or",
                             "data": {
@@ -2973,13 +2989,90 @@
                                 }
                             }
                         }
+                    },
+                    "Darkburst Blast Shield": {
+                        "extra": {
+                            "door_type": "Darkburst"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Darkburst"
+                            }
+                        }
+                    },
+                    "Sunburst Blast Shield": {
+                        "extra": {
+                            "door_type": "Sunburst"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Sunburst"
+                            }
+                        }
+                    },
+                    "Sonic Boom Blast Shield": {
+                        "extra": {
+                            "door_type": "SonicBoom"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Sonic Boom"
+                            }
+                        }
                     }
                 },
                 "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
+                    "unlocked": "Normal Door",
+                    "locked": "Permanently Locked",
+                    "change_from": [
+                        "Annihilator Door",
+                        "Dark Door",
+                        "Light Door",
+                        "Missile Blast Shield",
+                        "Normal Door",
+                        "Power Bomb Blast Shield",
+                        "Super Missile Blast Shield"
+                    ],
+                    "change_to": [
+                        "Annihilator Door",
+                        "Dark Door",
+                        "Darkburst Blast Shield",
+                        "Light Door",
+                        "Missile Blast Shield",
+                        "Normal Door",
+                        "Permanently Locked",
+                        "Power Bomb Blast Shield",
+                        "Sonic Boom Blast Shield",
+                        "Sunburst Blast Shield",
+                        "Super Missile Blast Shield"
+                    ]
                 }
             },
             "portal": {

@@ -571,3 +571,9 @@ def mfspr(output_register: GeneralRegister, special_register):
     https://www.ibm.com/support/knowledgecenter/ssw_aix_72/assembler/idalangref_mfspr_spr_instrs.html
     """
     return _special_register_op(output_register, special_register, 339, 31)
+
+def mulli(output_register: GeneralRegister, input_register: GeneralRegister, literal: int):
+    return Instruction.compose(((7, 6, False),
+                                (output_register.number, 5, False),
+                                (input_register.number, 5, False),
+                                (literal, 16, True)))
