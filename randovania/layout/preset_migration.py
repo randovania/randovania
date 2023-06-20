@@ -841,6 +841,12 @@ def _migrate_v53(preset: dict) -> dict:
     return _update_default_dock_rando_for_game(preset, RandovaniaGame.METROID_PRIME_ECHOES)
 
 
+def _migrate_v54(preset: dict) -> dict:
+    if preset["game"] == "prime2":
+        preset["configuration"]["blue_save_doors"] = False
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -895,6 +901,7 @@ _MIGRATIONS = [
     _migrate_v51,
     _migrate_v52,
     _migrate_v53,
+    _migrate_v54,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

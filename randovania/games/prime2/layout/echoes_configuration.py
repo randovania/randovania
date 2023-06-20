@@ -65,6 +65,8 @@ class EchoesConfiguration(BaseConfiguration):
     inverted_mode: bool
     portal_rando: bool
 
+    blue_save_doors: bool
+
     allow_jumping_on_dark_water: bool
     allow_vanilla_dark_beam: bool
     allow_vanilla_light_beam: bool

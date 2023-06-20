@@ -25,6 +25,7 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         self.new_patcher_check.stateChanged.connect(self._persist_option_then_notify("use_new_patcher"))
         self.portal_rando_check.stateChanged.connect(self._persist_option_then_notify("portal_rando"))
         self.inverted_check.stateChanged.connect(self._persist_option_then_notify("inverted_mode"))
+        self.save_doors_check.stateChanged.connect(self._persist_option_then_notify("blue_save_doors"))
 
     @classmethod
     def tab_title(cls) -> str:
@@ -45,3 +46,4 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         self.portal_rando_check.setChecked(config.portal_rando)
         self.inverted_check.setEnabled(config.use_new_patcher)
         self.inverted_check.setChecked(config.inverted_mode)
+        self.save_doors_check.setChecked(config.blue_save_doors)
