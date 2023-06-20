@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>466</width>
-    <height>464</height>
+    <height>552</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -104,6 +104,30 @@
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="save_doors_line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="save_doors_check">
+      <property name="text">
+       <string>Force all Save Station doors to be unlocked</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="save_doors_label">
+      <property name="text">
+       <string>This ensures you can easily access Save Stations, regardless of your inventory or of door lock randomization.</string>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
