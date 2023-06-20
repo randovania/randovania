@@ -1,4 +1,3 @@
-import dataclasses
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
