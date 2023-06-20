@@ -247,6 +247,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             combo = ScrollProtectedComboBox(parent)
             for pickup in possibilities:
                 combo.addItem(pickup.name, pickup)
+            combo.addItem("Random", None)
             combo.currentIndexChanged.connect(partial(self._on_default_pickup_updated, category, combo))
             layout.addWidget(combo, 0, 1)
 
@@ -257,17 +258,18 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             self._default_pickups[category] = combo
 
     def _on_default_pickup_updated(self, category: PickupCategory, combo: QtWidgets.QComboBox, _):
-        pickup: StandardPickupDefinition = combo.currentData()
+        pickup: StandardPickupDefinition | None = combo.currentData()
         with self._editor as editor:
             new_config = editor.standard_pickup_configuration
             new_config = new_config.replace_default_pickup(category, pickup)
-            new_config = new_config.replace_state_for_pickup(
-                pickup,
-                StandardPickupState(
-                    num_included_in_starting_pickups=1,
-                    included_ammo=new_config.pickups_state[pickup].included_ammo
-                ),
-            )
+            if pickup is not None:
+                new_config = new_config.replace_state_for_pickup(
+                    pickup,
+                    StandardPickupState(
+                        num_included_in_starting_pickups=1,
+                        included_ammo=new_config.pickups_state[pickup].included_ammo
+                    ),
+                )
             editor.standard_pickup_configuration = new_config
 
     def _create_standard_pickup_boxes(self, pickup_database: PickupDatabase, resource_database: ResourceDatabase):

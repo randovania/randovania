@@ -8,6 +8,7 @@ from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
@@ -509,6 +510,26 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             "hud_color": self.cosmetic_patches.hud_color if self.cosmetic_patches.use_hud_color else None,
         }
 
+    def _decide_default_items(self):
+        pickup_database = default_database.pickup_database_for_game(self.game_enum())
+        default_pickups = self.configuration.standard_pickup_configuration.default_pickups
+        default_items = {}
+
+        for category in ["visor", "beam"]:
+            pickup_category = [cat for cat in default_pickups.keys() if cat.name == category][0]
+            default = default_pickups[pickup_category]
+            if default is None:
+                valid_options: set[str] = {definition.name for definition in pickup_database.default_pickups[pickup_category]}
+                pickup_options = [pickup for pickup in self.patches.starting_equipment
+                                  if pickup.name in valid_options]
+                default_name = self.rng.choice(pickup_options).name
+            else:
+                default_name = default.name
+
+            default_items[category] = default_name
+
+        return default_items
+
     def create_data(self) -> dict:
 
         result = {}
@@ -528,10 +549,6 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             "&push;&main-color=#33ffd6;{}&pop;",
         )
 
-        default_pickups = self.configuration.standard_pickup_configuration.default_pickups
-        [pickup_category_visors] = [cat for cat in default_pickups.keys() if cat.name == "visor"]
-        [pickup_category_beams] = [cat for cat in default_pickups.keys() if cat.name == "beam"]
-
         result["menu_mod"] = self.configuration.menu_mod
         result["dol_patches"] = {
             "world_uuid": str(self.players_config.get_own_uuid()),
@@ -539,10 +556,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             "beam_configurations": [b.as_json for b in self.configuration.beam_configuration.all_beams],
             "safe_zone_heal_per_second": self.configuration.safe_zone.heal_per_second,
             "user_preferences": self.cosmetic_patches.user_preferences.as_json,
-            "default_items": {
-                "visor": default_pickups[pickup_category_visors].name,
-                "beam": default_pickups[pickup_category_beams].name,
-            },
+            "default_items": self._decide_default_items(),,
             "unvisited_room_names": (self.configuration.elevators.can_use_unvisited_room_names
                                      and self.cosmetic_patches.unvisited_room_names),
             "teleporter_sounds": should_keep_elevator_sounds(self.configuration),
