@@ -74,30 +74,35 @@ Dock Weaknesses
 
 > Door
   * Normal Door
+      Extra - door_type: Normal
       Open:
           Trivial
       No lock
 
 
   * Dark Door
+      Extra - door_type: Dark
       Open:
           Shoot Dark Beam
       No lock
 
 
   * Light Door
+      Extra - door_type: Light
       Open:
           Shoot Light Beam
       No lock
 
 
   * Annihilator Door
+      Extra - door_type: Annihilator
       Open:
           Shoot Annihilator Beam
       No lock
 
 
   * Missile Blast Shield
+      Extra - door_type: Missile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -105,6 +110,7 @@ Dock Weaknesses
 
 
   * Super Missile Blast Shield
+      Extra - door_type: SuperMissile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -126,6 +132,7 @@ Dock Weaknesses
 
 
   * Power Bomb Blast Shield
+      Extra - door_type: PowerBomb
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -133,6 +140,7 @@ Dock Weaknesses
 
 
   * Permanently Locked
+      Extra - door_type: Disabled
       Open:
           Impossible
       No lock
@@ -202,7 +210,53 @@ Dock Weaknesses
                       Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
               Missile ≥ 2 and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
 
-  > Dock Rando: Disabled
+
+  * Darkburst Blast Shield
+      Extra - door_type: Darkburst
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Shoot Darkburst
+
+
+  * Sunburst Blast Shield
+      Extra - door_type: Sunburst
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Shoot Sunburst
+
+
+  * Sonic Boom Blast Shield
+      Extra - door_type: SonicBoom
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Shoot Sonic Boom
+
+  > Dock Rando:
+      Unlocked: Normal Door
+      Locked: Permanently Locked
+      Change from:
+          Annihilator Door
+          Dark Door
+          Light Door
+          Missile Blast Shield
+          Normal Door
+          Power Bomb Blast Shield
+          Super Missile Blast Shield
+      Change to:
+          Annihilator Door
+          Dark Door
+          Darkburst Blast Shield
+          Light Door
+          Missile Blast Shield
+          Normal Door
+          Permanently Locked
+          Power Bomb Blast Shield
+          Sonic Boom Blast Shield
+          Sunburst Blast Shield
+          Super Missile Blast Shield
 
 
 > Portal

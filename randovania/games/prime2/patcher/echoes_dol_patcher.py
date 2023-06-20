@@ -52,6 +52,7 @@ def apply_patches(game_root: Path, patches_data: EchoesDolPatchesData):
                                                       patches_data.safe_zone_heal_per_second, dol_file)
         echoes_dol_patches.apply_starting_visor_patch(version.starting_beam_visor, patches_data.default_items,
                                                       dol_file)
+        echoes_dol_patches.apply_map_door_changes(version.map_door_types, dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:

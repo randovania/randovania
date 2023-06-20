@@ -5,6 +5,7 @@ from randovania.gui.generated.preset_echoes_patches_ui import Ui_PresetEchoesPat
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.preset import Preset
 
 
@@ -39,6 +40,7 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         self.warp_to_start_check.setChecked(config.warp_to_start)
         self.include_menu_mod_check.setChecked(config.menu_mod)
         self.new_patcher_check.setChecked(config.use_new_patcher)
+        self.new_patcher_check.setEnabled(config.dock_rando.mode == DockRandoMode.VANILLA)
         self.portal_rando_check.setEnabled(config.use_new_patcher)
         self.portal_rando_check.setChecked(config.portal_rando)
         self.inverted_check.setEnabled(config.use_new_patcher)

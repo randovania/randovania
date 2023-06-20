@@ -597,6 +597,22 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         return result
 
+    def _get_dock_patch_data(self, regions_patch_data: dict, node: DockNode) -> dict:
+        region = self.game.region_list.nodes_to_region(node)
+        if region.name not in regions_patch_data:
+            regions_patch_data[region.name] = {"areas": {}}
+
+        area = self.game.region_list.nodes_to_area(node)
+        if area.name not in regions_patch_data[region.name]["areas"]:
+            regions_patch_data[region.name]["areas"][area.name] = {}
+
+        area_patch_data = regions_patch_data[region.name]["areas"][area.name]
+
+        area_patch_data["low_memory_mode"] = area.extra.get("low_memory_mode", False)
+        area_patch_data["docks"] = area_patch_data.get("docks", {})
+        area_patch_data["docks"][node.extra["dock_name"]] = area_patch_data["docks"].get(node.extra["dock_name"], {})
+        return area_patch_data["docks"][node.extra["dock_name"]]
+
     def add_dock_connection_changes(self, regions_patch_data: dict):
         portal_changes: dict[DockNode, Node] = {
             source: target
@@ -612,22 +628,27 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             assert isinstance(source, DockNode)
             assert isinstance(target, DockNode)
 
-            region = self.game.region_list.nodes_to_region(source)
-            if region.name not in regions_patch_data:
-                regions_patch_data[region.name] = {"areas": {}}
-
-            source_area = self.game.region_list.nodes_to_area(source)
-            if source_area.name not in regions_patch_data[region.name]["areas"]:
-                regions_patch_data[region.name]["areas"][source_area.name] = {}
-
-            area_patch_data = regions_patch_data[region.name]["areas"][source_area.name]
-            area_patch_data["docks"] = area_patch_data.get("docks", {})
-            area_patch_data["docks"][source.extra["dock_name"]] = {
+            dock_patch_data = self._get_dock_patch_data(regions_patch_data, source)
+            dock_patch_data.update({
                 "connect_to": {
                     "area": self.game.region_list.nodes_to_area(target).name,
                     "dock": target.extra["dock_name"],
                 }
+            })
+
+    def add_dock_type_changes(self, regions_patch_data: dict):
+        dock_changes = {
+            dock: {
+                "old_door_type": dock.default_dock_weakness.extra["door_type"],
+                "new_door_type": weakness.extra["door_type"]
             }
+            for dock, weakness in self.patches.all_dock_weaknesses()
+            if dock.default_dock_weakness != weakness
+        }
+
+        for dock, changes in dock_changes.items():
+            dock_patch_data = self._get_dock_patch_data(regions_patch_data, dock)
+            dock_patch_data.update(changes)
 
     def new_patcher_configuration(self):
         worlds_patch_data = {
@@ -649,6 +670,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             }
         }
         self.add_dock_connection_changes(worlds_patch_data)
+        self.add_dock_type_changes(worlds_patch_data)
 
         return {
             "worlds": worlds_patch_data,
