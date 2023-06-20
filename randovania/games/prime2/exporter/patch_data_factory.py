@@ -147,6 +147,7 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
     :return:
     """
     region_list = game.region_list
+    assert isinstance(patches.configuration, EchoesConfiguration)
 
     elevator_fields = []
 
@@ -155,7 +156,10 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
             "instance_id": node.extra["teleporter_instance_id"],
             "origin_location": _area_identifier_to_json(game.region_list, node.identifier.area_location),
             "target_location": _area_identifier_to_json(game.region_list, connection),
-            "room_name": _pretty_name_for_elevator(game.game, region_list, node, connection)
+            "room_name": (
+                region_list.nodes_to_area(node).name if patches.configuration.use_new_patcher
+                else _pretty_name_for_elevator(game.game, region_list, node, connection)
+            )
         })
 
     num_teleporter_nodes = sum(1 for _ in _get_nodes_by_teleporter_id(region_list))
