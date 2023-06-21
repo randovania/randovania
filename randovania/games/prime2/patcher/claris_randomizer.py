@@ -133,10 +133,12 @@ def create_pak_backups(
         shutil.copy(files_folder.joinpath(pak), pak_folder.joinpath(pak))
 
 
-def _add_menu_mod_to_files(
+def add_menu_mod_to_files(
         game_root: Path,
-        status_update: Callable[[str], None],
+        progress_update: ProgressUpdateCallable,
 ):
+    status_update = status_update_lib.create_progress_update_from_successive_messages(
+        progress_update, 300)
     files_folder = game_root.joinpath("files")
     _run_with_args(
         [_get_menu_mod_path(), files_folder],
@@ -160,10 +162,8 @@ def apply_patcher_file(game_root: Path,
     :param progress_update:
     :return:
     """
-    menu_mod = patcher_data["menu_mod"]
-
     status_update = status_update_lib.create_progress_update_from_successive_messages(
-        progress_update, 200 if menu_mod else 100)
+        progress_update, 300)
 
     last_version = get_patch_version(game_root)
     if last_version > CURRENT_PATCH_VERSION:
@@ -180,5 +180,3 @@ def apply_patcher_file(game_root: Path,
                                      echoes_dol_patcher.EchoesDolPatchesData.from_json(patcher_data["dol_patches"]))
     write_patch_version(game_root, CURRENT_PATCH_VERSION)
 
-    if menu_mod:
-        _add_menu_mod_to_files(game_root, status_update)
