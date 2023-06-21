@@ -11,7 +11,14 @@ from randovania.games.prime2.exporter.game_exporter import EchoesGameExporter, E
 @pytest.mark.parametrize("use_prime_models", [False, True])
 @pytest.mark.parametrize("use_new_patcher", [False, True])
 @pytest.mark.parametrize("use_hud_color", [False, True])
-def test_do_export_game(mocker, tmp_path, has_input_iso, use_hud_color, use_new_patcher, use_prime_models):
+@pytest.mark.parametrize("use_menu_mod", [False, True])
+def test_do_export_game(mocker,
+                        tmp_path,
+                        has_input_iso,
+                        use_hud_color,
+                        use_new_patcher,
+                        use_prime_models,
+                        use_menu_mod):
     input_path = MagicMock() if has_input_iso else None
 
     mock_patch_banner: MagicMock = mocker.patch(
@@ -26,6 +33,7 @@ def test_do_export_game(mocker, tmp_path, has_input_iso, use_hud_color, use_new_
     mock_patch_paks: MagicMock = mocker.patch("open_prime_rando.echoes_patcher.patch_paks")
     mock_mp2hudcolor_c: MagicMock = mocker.patch("mp2hudcolor.mp2hudcolor_c")
     mock_convert_prime1: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime1_pickups")
+    mock_menu_mod: MagicMock = mocker.patch("randovania.games.prime2.patcher.claris_randomizer.add_menu_mod_to_files")
 
     exporter = EchoesGameExporter()
     new_patcher_data = {
@@ -35,7 +43,7 @@ def test_do_export_game(mocker, tmp_path, has_input_iso, use_hud_color, use_new_
         "shareable_hash": "asdf",
         "publisher_id": "ABCD",
         "pickups": [],
-        "menu_mod": False,
+        "menu_mod": use_menu_mod,
         "specific_patches": {
             "hud_color": [0, 255, 127] if use_hud_color else None,
         },
@@ -122,6 +130,14 @@ def test_do_export_game(mocker, tmp_path, has_input_iso, use_hud_color, use_new_
         )
     else:
         mock_mp2hudcolor_c.assert_not_called()
+
+    if use_menu_mod:
+        mock_menu_mod.assert_called_once_with(
+            export_params.contents_files_path,
+            ANY
+        )
+    else:
+        mock_menu_mod.assert_not_called()
 
     mock_pack_iso.assert_called_once_with(
         iso=export_params.output_path,
