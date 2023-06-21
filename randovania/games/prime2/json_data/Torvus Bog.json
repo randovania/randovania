@@ -30927,11 +30927,53 @@
                         "area": "Undertemple Access",
                         "node": "Door to Undertemple"
                     },
-                    "default_dock_weakness": "Power Bomb Blast Shield (destructible by Power Bomb Guardian)",
+                    "default_dock_weakness": "Power Bomb Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "MorphBall",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "PowerBomb",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "events",
+                                        "name": "Event92",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Before Power Bomb Guardian": {
                             "type": "resource",
