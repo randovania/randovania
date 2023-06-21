@@ -1,3 +1,4 @@
+import dataclasses
 import json
 from unittest.mock import MagicMock
 
@@ -589,13 +590,18 @@ def test_create_string_patches(
     assert result == expected_result
 
 
-def test_generate_patcher_data(test_files_dir):
+@pytest.mark.parametrize("use_new_patcher", [False, True])
+def test_generate_patcher_data(test_files_dir, use_new_patcher):
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     player_index = 0
     preset = description.get_preset(player_index)
     cosmetic_patches = EchoesCosmeticPatches()
     assert isinstance(preset.configuration, EchoesConfiguration)
+    configuration = dataclasses.replace(preset.configuration, use_new_patcher=use_new_patcher)
+    description.generator_parameters.presets[player_index] = dataclasses.replace(
+        preset, configuration=configuration
+    )
 
     # Run
     result = patch_data_factory.generate_patcher_data(description, PlayersConfiguration(player_index, {0: "you"}),
@@ -608,7 +614,17 @@ def test_generate_patcher_data(test_files_dir):
     assert len(result["pickups"]) == 119
 
     assert isinstance(result["elevators"], list)
-    assert len(result["elevators"]) == 22
+    num_claris_elevators = len(result["elevators"])
+    num_opr_elevators = sum(
+        len([area for area in world["areas"].values() if area["elevators"]])
+        for world in result.get("new_patcher", {"worlds": {}})["worlds"].values()
+    )
+    if use_new_patcher:
+        assert num_claris_elevators == 0
+        assert num_opr_elevators == 22
+    else:
+        assert num_claris_elevators == 22
+        assert num_opr_elevators == 0
 
     assert isinstance(result["translator_gates"], list)
     assert len(result["translator_gates"]) == 17
