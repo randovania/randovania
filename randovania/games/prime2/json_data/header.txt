@@ -69,6 +69,19 @@ Templates
 * Shoot Supers:
       Charge Beam and Missile ≥ 5 and Power Beam and Super Missile
 
+* Destroy Underwater Seeker Locks:
+      All of the following:
+          Missile ≥ 5 and Missile Launcher and Seeker Launcher
+          Combat Visor or Dark Visor
+
+* Destroy Seeker Locks:
+      All of the following:
+          Missile Launcher and Seeker Launcher
+          Combat Visor or Dark Visor
+          Any of the following:
+              Missile ≥ 5
+              Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
+
 ====================
 Dock Weaknesses
 
@@ -124,18 +137,21 @@ Dock Weaknesses
           Charge Beam and Missile ≥ 5 and Power Beam and Super Missile
 
 
-  * Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)
+  * Seeker Launcher Blast Shield
+      Extra - door_type: SeekerMissile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              All of the following:
-                  Seeker Launcher
-                  Combat Visor or Dark Visor
-                  Any of the following:
-                      Missile ≥ 5
-                      Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
-              Missile and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
+          Destroy Seeker Locks
+
+
+  * Seeker Launcher Blast Shield (patched)
+      Extra - door_type: SeekerMissile
+      Extra - display_name: Seeker Launcher Blast Shield
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Destroy Underwater Seeker Locks
 
 
   * Power Bomb Blast Shield
@@ -151,71 +167,6 @@ Dock Weaknesses
       Open:
           Impossible
       No lock
-
-
-  * Seeker Launcher Blast Shield (underwater; destructible by Screw Attack; Expert)
-      Open:
-          Trivial
-      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              All of the following:
-                  Seeker Launcher
-                  Combat Visor or Dark Visor
-                  Any of the following:
-                      Missile ≥ 5
-                      Missile ≥ 4 and Air Underwater (Advanced) and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
-              Missile and Air Underwater (Advanced) and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
-
-
-  * Power Bomb Blast Shield (destructible by Power Bomb Guardian)
-      Open:
-          Trivial
-      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              After Undertemple Blast Shield Destroyed by PB Guardian
-              Morph Ball and Power Bomb
-
-
-  * Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode)
-      Open:
-          Trivial
-      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              All of the following:
-                  Seeker Launcher
-                  Combat Visor or Dark Visor
-                  Any of the following:
-                      Missile ≥ 5
-                      Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
-              Missile ≥ 2 and Seeker Locks without Seeker Missiles (Hypermode) and Use Screw Attack (Space Jump)
-
-
-  * Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)
-      Open:
-          Trivial
-      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              All of the following:
-                  Seeker Launcher
-                  Combat Visor or Dark Visor
-                  Any of the following:
-                      Missile ≥ 5
-                      Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
-              Missile and Seeker Locks without Seeker Missiles (Advanced) and Use Screw Attack (Space Jump)
-
-
-  * Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles)
-      Open:
-          Trivial
-      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              All of the following:
-                  Seeker Launcher
-                  Combat Visor or Dark Visor
-                  Any of the following:
-                      Missile ≥ 5
-                      Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
-              Missile ≥ 2 and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
 
 
   * Darkburst Blast Shield
@@ -251,6 +202,7 @@ Dock Weaknesses
           Missile Blast Shield
           Normal Door
           Power Bomb Blast Shield
+          Seeker Launcher Blast Shield
           Super Missile Blast Shield
       Change to:
           Annihilator Door
@@ -261,6 +213,7 @@ Dock Weaknesses
           Normal Door
           Permanently Locked
           Power Bomb Blast Shield
+          Seeker Launcher Blast Shield (patched)
           Sonic Boom Blast Shield
           Sunburst Blast Shield
           Super Missile Blast Shield
