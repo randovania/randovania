@@ -381,7 +381,6 @@ def _create_string_patches(hint_config: HintConfiguration,
         ))
 
     # Elevator Scans
-    assert isinstance(patches.configuration, EchoesConfiguration)
     if not patches.configuration.use_new_patcher:
         string_patches.extend(_create_elevator_scan_port_patches(game.game, game.region_list,
                                                                 patches.get_elevator_connection_for))

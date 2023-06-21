@@ -39,9 +39,12 @@ def test_do_export_game(mocker, tmp_path, has_input_iso, use_hud_color, use_new_
         "specific_patches": {
             "hud_color": [0, 255, 127] if use_hud_color else None,
         },
-        "new_patcher": new_patcher_data if use_new_patcher else None,
     }
+
     patch_data_str = json.dumps(patch_data, indent=4)
+
+    if use_new_patcher:
+        patch_data["new_patcher"] = new_patcher_data
 
     export_params = EchoesGameExportParams(
         input_path=input_path,
@@ -107,6 +110,7 @@ def test_do_export_game(mocker, tmp_path, has_input_iso, use_hud_color, use_new_
             ANY,  # PathFileProvider(export_params.contents_files_path),
             export_params.contents_files_path,
             new_patcher_data,
+            ANY, # status update
         )
     else:
         mock_patch_paks.assert_not_called()
