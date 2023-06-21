@@ -3,6 +3,7 @@ from random import Random
 from typing import Iterator, Callable
 
 import randovania
+from randovania.game_description.db.area import Area
 import randovania.games.prime2.exporter.hints
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints import credits_spoiler
@@ -380,8 +381,10 @@ def _create_string_patches(hint_config: HintConfiguration,
         ))
 
     # Elevator Scans
-    string_patches.extend(_create_elevator_scan_port_patches(game.game, game.region_list,
-                                                             patches.get_elevator_connection_for))
+    assert isinstance(patches.configuration, EchoesConfiguration)
+    if not patches.configuration.use_new_patcher:
+        string_patches.extend(_create_elevator_scan_port_patches(game.game, game.region_list,
+                                                                patches.get_elevator_connection_for))
 
     string_patches.extend(_logbook_title_string_patches())
 
@@ -558,7 +561,10 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
                                                 self.players_config, self.rng)
 
         # Add the elevators
-        result["elevators"] = _create_elevators_field(self.patches, self.game)
+        if not self.configuration.use_new_patcher:
+            result["elevators"] = _create_elevators_field(self.patches, self.game)
+        else:
+            result["elevators"] = []
 
         # Add translators
         result["translator_gates"] = _create_translator_gates_field(self.game, self.patches.configurable_nodes)
@@ -597,19 +603,36 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         return result
 
-    def _get_dock_patch_data(self, regions_patch_data: dict, node: DockNode) -> dict:
-        region = self.game.region_list.nodes_to_region(node)
+    def _add_area_to_regions_patch(self,
+                                   regions_patch_data: dict,
+                                   area_or_node: Area | Node | AreaIdentifier | NodeIdentifier):
+        if isinstance(area_or_node, NodeIdentifier):
+            area_or_node = self.game.region_list.node_by_identifier(area_or_node)
+        if isinstance(area_or_node, Node):
+            area_or_node = self.game.region_list.nodes_to_area(area_or_node)
+        elif isinstance(area_or_node, AreaIdentifier):
+            area_or_node = self.game.region_list.area_by_area_location(area_or_node)
+        area = area_or_node
+
+        region = self.game.region_list.region_with_area(area)
         if region.name not in regions_patch_data:
             regions_patch_data[region.name] = {"areas": {}}
 
-        area = self.game.region_list.nodes_to_area(node)
         if area.name not in regions_patch_data[region.name]["areas"]:
-            regions_patch_data[region.name]["areas"][area.name] = {}
+            regions_patch_data[region.name]["areas"][area.name] = {
+                "elevators": [],
+                "docks": {},
+                "layers": {},
+            }
+
+        return region, area
+
+    def _get_dock_patch_data(self, regions_patch_data: dict, node: DockNode) -> dict:
+        region, area = self._add_area_to_regions_patch(regions_patch_data, node)
 
         area_patch_data = regions_patch_data[region.name]["areas"][area.name]
 
         area_patch_data["low_memory_mode"] = area.extra.get("low_memory_mode", False)
-        area_patch_data["docks"] = area_patch_data.get("docks", {})
         area_patch_data["docks"][node.extra["dock_name"]] = area_patch_data["docks"].get(node.extra["dock_name"], {})
         return area_patch_data["docks"][node.extra["dock_name"]]
 
@@ -650,30 +673,58 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             dock_patch_data = self._get_dock_patch_data(regions_patch_data, dock)
             dock_patch_data.update(changes)
 
-    def new_patcher_configuration(self):
-        worlds_patch_data = {
-            "Temple Grounds": {
-                "areas": {
-                    "Dynamo Chamber": {
-                        "layers": {
-                            "1st Pass Scripting": False,
-                            "2nd Pass Scripting": True,
-                        }
-                    },
-                    "Trooper Security Station": {
-                        "layers": {
-                            "1st Pass": False,
-                            "2nd Pass": True,
-                        }
-                    },
-                }
-            }
+    def add_new_patcher_elevators(self, regions_patch_data: dict):
+        for node, connection in self.patches.all_elevator_connections():
+            region, area = self._add_area_to_regions_patch(regions_patch_data, node)
+            area_patches = regions_patch_data[region.name]["areas"][area.name]
+            area_patches["elevators"].append({
+                "instance_id": node.extra["teleporter_instance_id"],
+                "target_assets": _area_identifier_to_json(
+                    self.game.region_list,
+                    connection
+                ),
+                "target_strg": node.extra["scan_asset_id"],
+                "target_name": elevators.get_elevator_or_area_name(
+                    self.game.game,
+                    self.game.region_list,
+                    connection,
+                    include_world_name=True
+                )
+            })
+
+            if "new_name" not in area_patches:
+                area_patches["new_name"] = _pretty_name_for_elevator(
+                    self.game.game, self.game.region_list, node, connection
+                )
+
+
+    def add_layer_patches(self, regions_patch_data: dict):
+        self._add_area_to_regions_patch(
+            regions_patch_data,
+            AreaIdentifier("Temple Grounds", "Dynamo Chamber")
+        )
+        self._add_area_to_regions_patch(
+            regions_patch_data,
+            AreaIdentifier("Temple Grounds", "Trooper Security Station")
+        )
+        regions_patch_data["Temple Grounds"]["areas"]["Dynamo Chamber"]["layers"] = {
+            "1st Pass Scripting": False,
+            "2nd Pass Scripting": True,
         }
-        self.add_dock_connection_changes(worlds_patch_data)
-        self.add_dock_type_changes(worlds_patch_data)
+        regions_patch_data["Temple Grounds"]["areas"]["Trooper Security Station"]["layers"] = {
+            "1st Pass": False,
+            "2nd Pass": True,
+        }
+
+    def new_patcher_configuration(self):
+        regions_patch_data = {}
+        self.add_layer_patches(regions_patch_data)
+        self.add_dock_connection_changes(regions_patch_data)
+        self.add_dock_type_changes(regions_patch_data)
+        self.add_new_patcher_elevators(regions_patch_data)
 
         return {
-            "worlds": worlds_patch_data,
+            "worlds": regions_patch_data,
             # "area_patches": {
             #     "torvus_temple": True
             # },
