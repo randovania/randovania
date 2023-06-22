@@ -1,3 +1,5 @@
+import itertools
+
 from randovania.lib import migration_lib
 
 
@@ -24,6 +26,7 @@ def _migrate_v3(data: dict) -> dict:
 
     return data
 
+
 def _migrate_v4(data: dict) -> dict:
     data["pickup_categories"] = data.pop("item_categories")
 
@@ -45,11 +48,27 @@ def _migrate_v4(data: dict) -> dict:
     return data
 
 
+def _migrate_v5(data: dict) -> dict:
+    is_prime2 = "Dark Visor" in data["standard_pickups"]
+    is_prime3 = "Nova Beam" in data["standard_pickups"]
+
+    if is_prime2 or is_prime3:
+        percentage = "Percent" if is_prime2 else "ItemPercentage"
+
+        for pickup in itertools.chain(data["standard_pickups"].values(), data["ammo_pickups"].values()):
+            pickup["additional_resources"] = {
+                percentage: 1
+            }
+
+    return data
+
+
 _MIGRATIONS = [
     None,
     _migrate_v2,
     _migrate_v3,
     _migrate_v4,
+    _migrate_v5,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

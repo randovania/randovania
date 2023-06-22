@@ -1,5 +1,5 @@
 {
-    "schema_version": 15,
+    "schema_version": 19,
     "game": "blank",
     "resource_database": {
         "items": {
@@ -75,18 +75,16 @@
         "misc": {},
         "requirement_template": {},
         "damage_reductions": [],
-        "energy_tank_item_index": "Health",
-        "item_percentage_index": null,
-        "multiworld_magic_item_index": null
+        "energy_tank_item_index": "Health"
     },
     "layers": [
         "default",
         "extra_pickups"
     ],
     "starting_location": {
-        "world_name": "Intro",
-        "area_name": "Starting Area",
-        "node_name": "Spawn Point"
+        "region": "Intro",
+        "area": "Starting Area",
+        "node": "Spawn Point"
     },
     "initial_states": {
         "Default": []
@@ -315,13 +313,12 @@
             "name": "Not Determined"
         },
         "dock_rando": {
-            "enable_one_way": false,
             "force_change_two_way": false,
             "resolver_attempts": 125,
             "to_shuffle_proportion": 1.0
         }
     },
-    "worlds": [
+    "regions": [
         "Intro.json"
     ]
 }

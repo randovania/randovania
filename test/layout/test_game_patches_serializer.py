@@ -16,9 +16,9 @@ from randovania.game_description.resources.pickup_entry import (
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
@@ -88,23 +88,22 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
     patches = dataclasses.replace(echoes_game_patches, player_index=0)
 
     locations = collections.defaultdict(dict)
-    for world, area, node in game.world_list.all_worlds_areas_nodes:
+    for region, area, node in game.region_list.all_regions_areas_nodes:
         if node.is_resource_node and isinstance(node, PickupNode):
-            world_name = world.dark_name if area.in_dark_aether else world.name
-            locations[world_name][game.world_list.node_name(node)] = game_patches_serializer._ETM_NAME
+            world_name = region.dark_name if area.in_dark_aether else region.name
+            locations[world_name][game.region_list.node_name(node)] = game_patches_serializer._ETM_NAME
 
     data["locations"] = {
-        world: {
+        region: {
             area: item
-            for area, item in sorted(locations[world].items())
+            for area, item in sorted(locations[region].items())
         }
-        for world in sorted(locations.keys())
+        for region in sorted(locations.keys())
     }
 
     def create_pickup(name, percentage=True):
         return pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups[name],
-                                                StandardPickupState(), percentage, game.resource_database,
-                                                None, False)
+                                                     StandardPickupState(), game.resource_database, None, False)
 
     if request.param.get("starting_pickup"):
         item_name = request.param.get("starting_pickup")
@@ -116,7 +115,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
     if request.param.get("elevator"):
         teleporter: NodeIdentifier = request.param.get("elevator")
         patches = patches.assign_elevators([
-            (game.world_list.get_teleporter_node(teleporter),
+            (game.region_list.get_teleporter_node(teleporter),
              # TODO: Starting Locations are now NodeIdentifier not AreaIdentifier => was modified but can be refactored back if teleporter also uses Node instead of Area a.k.a default_node is removed
              game.starting_location.area_identifier),
         ])

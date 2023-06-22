@@ -1,3 +1,4 @@
+import json
 import logging
 from pathlib import Path
 
@@ -11,6 +12,13 @@ from randovania.lib.migration_lib import UnsupportedVersion
 async def load_layout_description(parent: QtWidgets.QWidget | None, path: Path) -> LayoutDescription | None:
     try:
         return LayoutDescription.from_file(path)
+
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        await async_dialog.warning(
+            parent,
+            "Unable to load game file",
+            "File is not a Randovania game file.",
+        )
 
     except (InvalidLayoutDescription, UnsupportedVersion) as e:
         logging.info("Unable to load layout file: %s (%s)", str(e), type(e).__name__)

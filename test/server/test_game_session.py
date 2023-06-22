@@ -16,6 +16,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib.construct_lib import convert_to_raw_python
+from randovania.network_client.game_session import PlayerSessionEntry, GameDetails
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions, \
     BinaryGameSessionAuditLog
@@ -77,7 +78,7 @@ def test_list_game_sessions(clean_database, limit):
     assert result == expected
 
 
-def test_create_game_session(clean_database, preset_manager):
+def test_create_game_session(clean_database, preset_manager, default_game_list):
     # Setup
     user = database.User.create(id=1234, discord_id=5678, name="The Name")
     sio = MagicMock()
@@ -93,17 +94,19 @@ def test_create_game_session(clean_database, preset_manager):
         'id': 1,
         'state': GameSessionState.SETUP.value,
         'name': 'My Room',
-        'players': [{'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0,
-                     'connection_state': 'Online, Unknown'}],
+        'players': [PlayerSessionEntry.from_json(
+            {'admin': True, 'id': 1234, 'name': 'The Name', 'row': 0,
+             'connection_state': 'Online, Unknown'}
+        )],
         'presets': [json.dumps(preset_manager.default_preset.as_json)],
         'game_details': None,
         'generation_in_progress': None,
-        'allowed_games': ['prime1', 'prime2'],
+        'allowed_games': default_game_list,
     }
 
 
 def test_join_game_session(mock_emit_session_update: MagicMock,
-                           clean_database):
+                           clean_database, default_game_list):
     # Setup
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other Name")
@@ -125,15 +128,19 @@ def test_join_game_session(mock_emit_session_update: MagicMock,
         'state': GameSessionState.SETUP.value,
         'name': 'The Session',
         'players': [
-            {'admin': True, 'id': 1235, 'name': 'Other Name', 'row': 0,
-             'connection_state': 'Online, Badass'},
-            {'admin': False, 'id': 1234, 'name': 'The Name', 'row': None,
-             'connection_state': 'Online, Unknown'},
+            PlayerSessionEntry.from_json({
+                'admin': True, 'id': 1235, 'name': 'Other Name', 'row': 0,
+                'connection_state': 'Online, Badass'
+            }),
+            PlayerSessionEntry.from_json({
+                'admin': False, 'id': 1234, 'name': 'The Name', 'row': None,
+                'connection_state': 'Online, Unknown'
+            }),
         ],
         'presets': ["{}"],
         'game_details': None,
         'generation_in_progress': None,
-        'allowed_games': ['prime1', 'prime2'],
+        'allowed_games': default_game_list,
     }
 
 
@@ -221,8 +228,8 @@ def test_game_session_request_pickups_one_action(mock_session_description: Prope
             "game": "prime2",
             "pickups": [{
                 'provider_name': 'Other Name',
-                'pickup': ('C?+ZkYioLIdm}4kHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhL'
-                           'E{v_DHg;C#S0<J@fl=98nOvG!$P!%{TSyStT^U*1+@4ztaRk5)t<G)?tZgjKEUbhLE{v_A0t)~')
+                'pickup': ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+                           'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fdzm')
             }]
         },
         room=f"game-session-1-1234"
@@ -382,7 +389,7 @@ def test_game_session_admin_player_include_in_session(clean_database, flask_app,
     mock_emit_session_update.assert_called_once_with(database.GameSession.get(id=1))
 
 
-def test_game_session_admin_kick_last(clean_database, flask_app, mocker, mock_audit):
+def test_game_session_admin_kick_last(clean_database, flask_app, mocker, mock_audit, default_game_list):
     mock_emit = mocker.patch("flask_socketio.emit")
 
     user = database.User.create(id=1234, discord_id=5678, name="The Name")
@@ -407,7 +414,7 @@ def test_game_session_admin_kick_last(clean_database, flask_app, mocker, mock_au
         "game_session_meta_update",
         BinaryGameSessionEntry.build({'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [],
                                       'game_details': None, 'generation_in_progress': None,
-                                      'allowed_games': ['prime1', 'prime2'], }),
+                                      'allowed_games': default_game_list, }),
         room='game-session-1',
         namespace='/',
     )
@@ -949,7 +956,7 @@ def session_update_fixture(clean_database, mocker):
     return session
 
 
-def test_emit_session_meta_update(session_update, flask_app, mocker):
+def test_emit_session_meta_update(session_update, flask_app, mocker, default_game_list):
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
 
     session_json = {
@@ -957,29 +964,29 @@ def test_emit_session_meta_update(session_update, flask_app, mocker):
         "name": "Debug",
         "state": GameSessionState.IN_PROGRESS.value,
         "players": [
-            {
+            PlayerSessionEntry.from_json({
                 "id": 1234,
                 "name": "The Name",
                 "row": 0,
                 "admin": True,
                 'connection_state': 'Something',
-            },
-            {
+            }),
+            PlayerSessionEntry.from_json({
                 "id": 1235,
                 "name": "Other",
                 "row": 1,
                 "admin": False,
                 'connection_state': 'Game',
-            },
+            }),
         ],
         "presets": [],
-        "game_details": {
+        "game_details": GameDetails.from_json({
             "spoiler": True,
             "word_hash": "Words of O-Lir",
             "seed_hash": "ABCDEFG",
-        },
+        }),
         "generation_in_progress": None,
-        'allowed_games': ['prime1', 'prime2'],
+        'allowed_games': default_game_list,
     }
 
     # Run

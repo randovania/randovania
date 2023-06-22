@@ -2,11 +2,10 @@ from random import Random
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
 
 
 class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
@@ -24,13 +23,13 @@ class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         dock_weakness = []
 
         nic = NodeIdentifier.create
-        power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door")
+        power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
 
-        if configuration.main_plaza_door and configuration.dock_rando.mode == DockRandoMode.VANILLA:
+        if configuration.main_plaza_door and not configuration.dock_rando.is_enabled():
             dock_weakness.append(
                 (nic("Chozo Ruins", "Main Plaza", "Door from Plaza Access"), power_weak),
             )
-        
+
         if configuration.blue_save_doors:
             save_doors = [
                 nic("Chozo Ruins", "Save Station 1", "Door to Ruined Nursery"),
@@ -46,17 +45,17 @@ class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
                 nic("Phendrana Drifts", "Save Station D", "Door to Observatory"),
                 nic("Tallon Overworld", "Savestation", "Door to Reactor Access"),
             ]
-            save_doors = [game.world_list.node_by_identifier(identifier) for identifier in save_doors]
-            
+            save_doors = [game.region_list.node_by_identifier(identifier) for identifier in save_doors]
+
             # FIXME: including the dock connection may break when logical entrance rando is introduced
             save_doors.extend([parent.get_dock_connection_for(node) for node in save_doors])
-            
+
             dock_weakness.extend((
                 (node.identifier, power_weak)
                 for node in save_doors
             ))
 
         return parent.assign_dock_weakness((
-            (game.world_list.node_by_identifier(identifier), target)
+            (game.region_list.node_by_identifier(identifier), target)
             for identifier, target in dock_weakness
         ))

@@ -1,4 +1,4 @@
-"""Classes that describes the raw data of a game world."""
+"""Classes that describes the raw data of a game db."""
 import copy
 import dataclasses
 from typing import Iterator
@@ -8,33 +8,33 @@ from randovania.game_description.requirements.requirement_list import Satisfiabl
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceCollection
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockWeaknessDatabase
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock import DockWeaknessDatabase
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.teleporter_node import TeleporterNode
+from randovania.game_description.db.region_list import RegionList
 from randovania.games.game import RandovaniaGame
 
 
 def _calculate_dangerous_resources_in_db(
-        wl: WorldList,
+        rl: RegionList,
         db: DockWeaknessDatabase,
         database: ResourceDatabase,
 ) -> Iterator[ResourceInfo]:
     for dock_type in db.dock_types:
         for dock_weakness in db.weaknesses[dock_type].values():
-            yield from wl.open_requirement_for(dock_weakness).as_set(database).dangerous_resources
+            yield from rl.open_requirement_for(dock_weakness).as_set(database).dangerous_resources
             if dock_weakness.lock is not None:
-                yield from wl.lock_requirement_for(dock_weakness).as_set(database).dangerous_resources
+                yield from rl.lock_requirement_for(dock_weakness).as_set(database).dangerous_resources
 
 
 def _calculate_dangerous_resources_in_areas(
-        wl: WorldList,
+        rl: RegionList,
         database: ResourceDatabase,
 ) -> Iterator[ResourceInfo]:
-    for area in wl.all_areas:
+    for area in rl.all_areas:
         for node in area.nodes:
-            for _, requirement in wl.area_connections_from(node):
+            for _, requirement in rl.area_connections_from(node):
                 yield from requirement.as_set(database).dangerous_resources
 
 
@@ -63,7 +63,7 @@ class GameDescription:
     initial_states: dict[str, ResourceGainTuple]
     minimal_logic: MinimalLogicData | None
     _dangerous_resources: frozenset[ResourceInfo] | None = None
-    world_list: WorldList
+    region_list: RegionList
     mutable: bool = False
 
     def __deepcopy__(self, memodict):
@@ -72,7 +72,7 @@ class GameDescription:
             resource_database=self.resource_database,
             layers=self.layers,
             dock_weakness_database=self.dock_weakness_database,
-            world_list=copy.deepcopy(self.world_list, memodict),
+            region_list=copy.deepcopy(self.region_list, memodict),
             victory_condition=self.victory_condition,
             starting_location=self.starting_location,
             initial_states=copy.copy(self.initial_states),
@@ -88,10 +88,10 @@ class GameDescription:
                  resource_database: ResourceDatabase,
                  layers: tuple[str, ...],
                  victory_condition: Requirement,
-                 starting_location: AreaIdentifier,
+                 starting_location: NodeIdentifier,
                  initial_states: dict[str, ResourceGainTuple],
                  minimal_logic: MinimalLogicData | None,
-                 world_list: WorldList,
+                 region_list: RegionList,
                  ):
         self.game = game
         self.dock_weakness_database = dock_weakness_database
@@ -102,30 +102,30 @@ class GameDescription:
         self.starting_location = starting_location
         self.initial_states = initial_states
         self.minimal_logic = minimal_logic
-        self.world_list = world_list
+        self.region_list = region_list
 
     def patch_requirements(self, resources: ResourceCollection, damage_multiplier: float):
         if not self.mutable:
             raise ValueError("self is not mutable")
 
-        self.world_list.patch_requirements(resources, damage_multiplier, self.resource_database,
-                                           self.dock_weakness_database)
+        self.region_list.patch_requirements(resources, damage_multiplier, self.resource_database,
+                                            self.dock_weakness_database)
         self._dangerous_resources = None
 
     def get_default_elevator_connection(self) -> dict[NodeIdentifier, AreaIdentifier]:
         return {
-            self.world_list.identifier_for_node(node): node.default_connection
+            self.region_list.identifier_for_node(node): node.default_connection
 
-            for node in self.world_list.iterate_nodes()
+            for node in self.region_list.iterate_nodes()
             if isinstance(node, TeleporterNode) and node.editable
         }
 
     @property
     def dangerous_resources(self) -> frozenset[ResourceInfo]:
         if self._dangerous_resources is None:
-            first = _calculate_dangerous_resources_in_areas(self.world_list, self.resource_database)
+            first = _calculate_dangerous_resources_in_areas(self.region_list, self.resource_database)
             second = _calculate_dangerous_resources_in_db(
-                self.world_list, self.dock_weakness_database, self.resource_database
+                self.region_list, self.dock_weakness_database, self.resource_database
             )
             self._dangerous_resources = frozenset(first) | frozenset(second)
 
@@ -140,9 +140,9 @@ class GameDescription:
                 resource_database=self.resource_database,
                 layers=self.layers,
                 dock_weakness_database=self.dock_weakness_database,
-                world_list=WorldList([
-                    world.duplicate()
-                    for world in self.world_list.worlds
+                region_list=RegionList([
+                    region.duplicate()
+                    for region in self.region_list.regions
                 ]),
                 victory_condition=self.victory_condition,
                 starting_location=self.starting_location,

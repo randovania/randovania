@@ -7,8 +7,8 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -36,11 +36,11 @@ class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             "SPEEDBOOST": ResourceRequirement.simple(rsb.get_item("Speed")),
         }
 
-        for node in game.world_list.iterate_nodes():
+        for node in game.region_list.iterate_nodes():
             if not isinstance(node, ConfigurableNode):
                 continue
 
-            result.append((game.world_list.identifier_for_node(node), RequirementAnd([
+            result.append((game.region_list.identifier_for_node(node), RequirementAnd([
                 requirement_for_type[block_type]
                 for block_type in node.extra["tile_types"]
             ]).simplify()))
@@ -69,6 +69,6 @@ class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             ])
 
         return parent.assign_dock_weakness((
-            (game.world_list.node_by_identifier(identifier), target)
+            (game.region_list.node_by_identifier(identifier), target)
             for identifier, target in dock_weakness
         ))

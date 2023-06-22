@@ -47,7 +47,7 @@ class HintExporter:
             pickup_target = patches.pickup_assignment.get(hint.target)
             phint = pickup_hint.create_pickup_hint(
                 patches.pickup_assignment,
-                filtered_database.game_description_for_layout(configuration).world_list,
+                filtered_database.game_description_for_layout(configuration).region_list,
                 hint.precision.item,
                 pickup_target,
                 players_config,

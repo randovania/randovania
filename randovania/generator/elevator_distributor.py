@@ -4,10 +4,10 @@ from random import Random
 from typing import Optional
 
 from randovania.game_description.game_patches import ElevatorConnection
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.teleporter_node import TeleporterNode
+from randovania.game_description.db.region_list import RegionList
 
 
 class ElevatorHelper:
@@ -21,8 +21,8 @@ class ElevatorHelper:
         self.connected_elevator = None
 
     @property
-    def world_name(self):
-        return self.teleporter.area_location.world_name
+    def region_name(self):
+        return self.teleporter.area_location.region_name
 
     @property
     def area_name(self):
@@ -46,12 +46,12 @@ def try_randomize_elevators(rng: Random,
     assert len(elevator_database) % 2 == 0
 
     elevator_list = copy.copy(elevator_database)
-    elevators_by_world: dict[str, list[ElevatorHelper]] = defaultdict(list)
+    elevators_by_region: dict[str, list[ElevatorHelper]] = defaultdict(list)
     for elevator in elevator_list:
-        elevators_by_world[elevator.world_name].append(elevator)
+        elevators_by_region[elevator.region_name].append(elevator)
 
     while elevator_list:
-        source_elevators: list[ElevatorHelper] = max(elevators_by_world.values(), key=len)
+        source_elevators: list[ElevatorHelper] = max(elevators_by_region.values(), key=len)
         target_elevators: list[ElevatorHelper] = [
             elevator
             for elevator in elevator_list
@@ -62,8 +62,8 @@ def try_randomize_elevators(rng: Random,
 
         source_elevator.connect_to(target_elevator)
 
-        elevators_by_world[source_elevator.world_name].remove(source_elevator)
-        elevators_by_world[target_elevator.world_name].remove(target_elevator)
+        elevators_by_region[source_elevator.region_name].remove(source_elevator)
+        elevators_by_region[target_elevator.region_name].remove(target_elevator)
         elevator_list.remove(source_elevator)
         elevator_list.remove(target_elevator)
 
@@ -76,7 +76,7 @@ def try_randomize_elevators(rng: Random,
             index = 0
             while index < len(list3):
                 celevator2 = list3[index]
-                if (celevator2.world_name == celevator1.world_name
+                if (celevator2.region_name == celevator1.region_name
                         or celevator2.area_name == celevator1.destination.area_name):
                     celevator_list1.append(celevator2)
                     list3.remove(celevator2)
@@ -131,19 +131,19 @@ def one_way_elevator_connections(rng: Random,
     }
 
 
-def create_elevator_database(world_list: WorldList,
+def create_elevator_database(region_list: RegionList,
                              all_teleporters: list[NodeIdentifier],
                              ) -> tuple[ElevatorHelper, ...]:
     """
     Creates a tuple of Elevator objects, exclude those that belongs to one of the areas provided.
-    :param world_list:
+    :param region_list:
     :param all_teleporters: Set of teleporters to use
     :return:
     """
     all_helpers = [
-        ElevatorHelper(world_list.identifier_for_node(node), node.default_connection)
+        ElevatorHelper(region_list.identifier_for_node(node), node.default_connection)
 
-        for world, area, node in world_list.all_worlds_areas_nodes
+        for region, area, node in region_list.all_regions_areas_nodes
         if isinstance(node, TeleporterNode)
     ]
     return tuple(

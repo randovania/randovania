@@ -1,6 +1,5 @@
 import asyncio
 import dataclasses
-import json
 import uuid
 from pathlib import Path
 from unittest.mock import MagicMock
@@ -24,11 +23,25 @@ from randovania.games.prime2.exporter.game_exporter import decode_randomizer_dat
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
+from randovania.lib import json_lib
+
+
+class TestFilesDir:
+    def __init__(self, root: Path):
+        self.root = root
+
+    def joinpath(self, *paths) -> Path:
+        return self.root.joinpath(*paths)
+
+    def read_json(self, *paths) -> dict | list:
+        return json_lib.read_path(
+            self.joinpath(*paths)
+        )
 
 
 @pytest.fixture(scope="session")
-def test_files_dir() -> Path:
-    return Path(__file__).parent.joinpath("test_files")
+def test_files_dir() -> TestFilesDir:
+    return TestFilesDir(Path(__file__).parent.joinpath("test_files"))
 
 
 @pytest.fixture(scope="session")
@@ -227,8 +240,9 @@ def blank_pickup(echoes_pickup_database, default_generator_params) -> PickupEntr
 @pytest.fixture()
 def small_echoes_game_description(test_files_dir) -> GameDescription:
     from randovania.game_description import data_reader
-    with test_files_dir.joinpath("prime2_small.json").open("r") as small_game:
-        return data_reader.decode_data(json.load(small_game))
+    return data_reader.decode_data(
+        json_lib.read_path(test_files_dir.joinpath("prime2_small.json"))
+    )
 
 
 class DataclassTestLib:
@@ -245,6 +259,22 @@ def dataclass_test_lib() -> DataclassTestLib:
 def empty_patches(default_blank_configuration, blank_game_description) -> GamePatches:
     configuration = default_blank_configuration
     return GamePatches.create_from_game(blank_game_description, 0, configuration)
+
+
+@pytest.fixture()
+def obfuscator_test_secret(monkeypatch):
+    from randovania.lib import obfuscator
+    monkeypatch.setattr(obfuscator, "_secret", "cNGtDlTqCYF3BFCAQTaDSo5O7DQtzjsd3mS801MPM_M=")
+    yield None
+    obfuscator._encrypt = None
+
+
+@pytest.fixture()
+def obfuscator_no_secret(monkeypatch):
+    from randovania.lib import obfuscator
+    monkeypatch.setattr(obfuscator, "_secret", None)
+    yield None
+    obfuscator._encrypt = None
 
 
 def pytest_addoption(parser):

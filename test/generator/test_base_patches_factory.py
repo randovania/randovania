@@ -8,9 +8,9 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator import base_patches_factory
@@ -30,7 +30,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
         node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
                                            "Teleport to Great Temple - Sky Temple Energy Controller")
         expected = expected.assign_elevators([
-            (echoes_game_description.world_list.get_teleporter_node(node_ident),
+            (echoes_game_description.region_list.get_teleporter_node(node_ident),
              AreaIdentifier("Temple Grounds", "Credits")),
         ])
 
@@ -65,7 +65,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
         ),
     )
 
-    wl = echoes_game_description.world_list
+    wl = echoes_game_description.region_list
     elevator_connection: list[tuple[TeleporterNode, AreaIdentifier]] = []
 
     def ni(w: str, a: str, n: str, tw: str, ta: str):
@@ -219,7 +219,7 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
 def test_blue_save_doors(prime_game_description: GameDescription, default_prime_configuration):
     # Setup
     patches_factory = prime_game_description.game.generator.base_patches_factory
-    power_weak = prime_game_description.dock_weakness_database.get_by_weakness("door", "Normal Door")
+    power_weak = prime_game_description.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
 
     configuration = dataclasses.replace(
         default_prime_configuration,

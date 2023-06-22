@@ -1,5 +1,6 @@
 import dataclasses
 import typing
+import uuid
 from pathlib import Path
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -13,6 +14,7 @@ from randovania.patching.prime import all_prime_dol_patches
 
 @dataclasses.dataclass(frozen=True)
 class EchoesDolPatchesData(JsonDataclass):
+    world_uuid: uuid.UUID
     energy_per_tank: int
     beam_configuration: BeamConfiguration
     safe_zone_heal_per_second: float
@@ -30,6 +32,7 @@ def apply_patches(game_root: Path, patches_data: EchoesDolPatchesData):
 
     dol_file.set_editable(True)
     with dol_file:
+        all_prime_dol_patches.apply_build_info_patch(dol_file, patches_data.world_uuid, version)
         all_prime_dol_patches.apply_remote_execution_patch(version.game, version.string_display, dol_file)
         all_prime_dol_patches.apply_energy_tank_capacity_patch(version.health_capacity, patches_data.energy_per_tank,
                                                                dol_file)
@@ -49,6 +52,7 @@ def apply_patches(game_root: Path, patches_data: EchoesDolPatchesData):
                                                       patches_data.safe_zone_heal_per_second, dol_file)
         echoes_dol_patches.apply_starting_visor_patch(version.starting_beam_visor, patches_data.default_items,
                                                       dol_file)
+        echoes_dol_patches.apply_map_door_changes(version.map_door_types, dol_file)
 
 
 def _get_dol_path(game_root: Path) -> Path:

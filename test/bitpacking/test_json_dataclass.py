@@ -1,10 +1,14 @@
 import dataclasses
+import datetime
+import uuid
 from enum import Enum
-from typing import Optional
+from typing import NamedTuple, Optional
 
 import pytest
 
+from randovania.bitpacking.construct_pack import construct_for_type
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.games.game import RandovaniaGame
 
 
 class A(Enum):
@@ -23,6 +27,8 @@ class D1(JsonDataclass):
 class D2(JsonDataclass):
     a: A | None
     b: D1
+    c: uuid.UUID
+    d: tuple[int, ...]
 
 
 @dataclasses.dataclass()
@@ -31,16 +37,39 @@ class D2OldSyntax(JsonDataclass):
     b: D1
 
 
+class N(NamedTuple):
+    a: int
+    b: bool
+
+
+@dataclasses.dataclass()
+class HasDict(JsonDataclass):
+    a: int
+    b: dict[uuid.UUID, int]
+    c: list[RandovaniaGame]
+    d: list
+    e: dict
+    f: datetime.datetime
+    g: N
+    h: tuple[int, RandovaniaGame, str]
+
+
 @pytest.fixture(
     params=[
-        {"instance": D2(a=A.bar, b=D1(a=5, b='foo', c=1)),
-         "json": {'a': 'bar', 'b': {'a': 5, 'b': 'foo', 'c': 1}},
+        {"instance": D2(a=A.bar, b=D1(a=5, b='foo', c=1), c=uuid.UUID("00000000-0000-1111-0000-000000000000"),
+                        d=()),
+         "json": {'a': 'bar', 'b': {'a': 5, 'b': 'foo', 'c': 1}, 'c': "00000000-0000-1111-0000-000000000000",
+                  'd': []},
          },
-        {"instance": D2(a=None, b=D1(a=5, b='foo', c=2)),
-         "json": {'a': None, 'b': {'a': 5, 'b': 'foo', 'c': 2}},
+        {"instance": D2(a=None, b=D1(a=5, b='foo', c=2), c=uuid.UUID("00000000-0000-1111-0000-000000000000"),
+                        d=(10, 25, 20)),
+         "json": {'a': None, 'b': {'a': 5, 'b': 'foo', 'c': 2}, 'c': "00000000-0000-1111-0000-000000000000",
+                  'd': [10, 25, 20]},
          },
-        {"instance": D2(a=None, b=D1(a=5, b='foo')),
-         "json": {'a': None, 'b': {'a': 5, 'b': 'foo', 'c': 5}},
+        {"instance": D2(a=None, b=D1(a=5, b='foo'), c=uuid.UUID("00000000-0000-1111-0000-000000000000"),
+                        d=(50,)),
+         "json": {'a': None, 'b': {'a': 5, 'b': 'foo', 'c': 5}, 'c': "00000000-0000-1111-0000-000000000000",
+                  'd': [50]},
          }
     ],
     name="sample_values")
@@ -68,3 +97,25 @@ def test_from_json_missing_field_with_default():
     value = D1(2, "foo")
     data = {"a": 2, "b": "foo"}
     assert D1.from_json(data) == value
+
+
+def test_has_dict():
+    value = HasDict(10, {uuid.UUID("77000000-0000-1111-0000-000000000000"): 15},
+                    [RandovaniaGame.BLANK], [None], {},
+                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc),
+                    N(2403, True),
+                    (60, RandovaniaGame.METROID_PRIME_ECHOES, "foo"))
+    data = {
+        "a": 10, "b": {"77000000-0000-1111-0000-000000000000": 15},
+        "c": ["blank"], "d": [None], "e": {}, "f": "2019-01-03T02:50:00+00:00",
+        "g": {"a": 2403, "b": True},
+        "h": [60, "prime2", "foo"],
+    }
+
+    assert HasDict.from_json(data) == value
+    assert value.as_json == data
+
+
+def test_generic_list_errors():
+    with pytest.raises(TypeError):
+        construct_for_type(list)

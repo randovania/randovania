@@ -3,7 +3,6 @@ from __future__ import annotations
 import asyncio
 import base64
 import functools
-import json
 import logging
 import os
 import re
@@ -30,7 +29,7 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib import enum_lib
+from randovania.lib import enum_lib, json_lib
 from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
@@ -471,7 +470,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.open_data_visualizer_at(None, None, game)
 
     def open_data_visualizer_at(self,
-                                world_name: str | None,
+                                region_name: str | None,
                                 area_name: str | None,
                                 game: RandovaniaGame,
                                 trick_levels: TrickLevelConfiguration | None = None,
@@ -480,8 +479,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         data_visualizer = DataEditorWindow.open_internal_data(game, False)
         self._data_visualizer = data_visualizer
 
-        if world_name is not None:
-            data_visualizer.focus_on_world_by_name(world_name)
+        if region_name is not None:
+            data_visualizer.focus_on_region_by_name(region_name)
 
         if area_name is not None:
             data_visualizer.focus_on_area_by_name(area_name)
@@ -503,9 +502,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if database_path is None:
             return
 
-        with database_path.open("r") as database_file:
-            self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
-            self._data_editor.show()
+        self._data_editor = DataEditorWindow(json_lib.read_path(database_path), database_path, False, True)
+        self._data_editor.show()
 
     async def open_map_tracker(self, configuration: Preset):
         from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker

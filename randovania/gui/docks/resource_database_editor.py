@@ -17,8 +17,7 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.resource_database_editor_ui import Ui_ResourceDatabaseEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
-from randovania.gui.lib.foldable import Foldable
+from randovania.gui.lib.connections_visualizer import create_tree_items_for_requirement
 from randovania.lib import frozen_lib
 
 
@@ -128,14 +127,14 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         return True
 
     def flags(self, index: QtCore.QModelIndex) -> QtCore.Qt.ItemFlags:
-        result = QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+        result = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
         if self.allow_edits:
             if index.row() == len(self._get_items()):
                 if index.column() == 0:
-                    result |= QtCore.Qt.ItemIsEditable
+                    result |= Qt.ItemFlag.ItemIsEditable
             else:
                 if index.column() > 0:
-                    result |= QtCore.Qt.ItemIsEditable
+                    result |= Qt.ItemFlag.ItemIsEditable
         return result
 
 
@@ -171,28 +170,18 @@ class ResourceDatabaseTrickModel(ResourceDatabaseGenericModel):
 
 @dataclasses.dataclass()
 class TemplateEditor:
-    template_name: str
-    foldable: Foldable
-    edit_button: QtWidgets.QPushButton
-    template_layout: QtWidgets.QVBoxLayout
-    visualizer: ConnectionsVisualizer | None
-    connections_layout: QtWidgets.QGridLayout | None
+    edit_item: QtWidgets.QTreeWidgetItem
+    root_item: QtWidgets.QTreeWidgetItem
+    connections_item: QtWidgets.QTreeWidgetItem | None = None
 
-    def create_visualizer(self, db: ResourceDatabase):
-        for it in [self.connections_layout, self.visualizer]:
-            if it is not None:
-                it.deleteLater()
+    def create_connections(self, tree: QtWidgets.QTreeWidget, requirement: Requirement):
+        if self.connections_item is not None:
+            self.root_item.removeChild(self.connections_item)
 
-        self.connections_layout = QtWidgets.QGridLayout()
-        self.template_layout.addLayout(self.connections_layout)
-
-        self.connections_layout.setObjectName(f"connections_layout {self.template_name}")
-        self.visualizer = ConnectionsVisualizer(
-            self.foldable,
-            self.connections_layout,
-            db,
-            db.requirement_template[self.template_name],
-            False
+        self.connections_item = create_tree_items_for_requirement(
+            tree,
+            self.root_item,
+            requirement,
         )
 
 
@@ -217,14 +206,16 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         for tab in self._all_tabs:
             tab.model().dataChanged.connect(functools.partial(self._on_data_changed, tab.model()))
 
-        self.editor_for_template = {}
-        for name in db.requirement_template.keys():
-            self.create_template_editor(name)
-
+        self.tab_template.header().setVisible(False)
+        self.create_new_template_item = QtWidgets.QTreeWidgetItem(self.tab_template)
         self.create_new_template_button = QtWidgets.QPushButton()
         self.create_new_template_button.setText("Create new")
         self.create_new_template_button.clicked.connect(self.create_new_template)
-        self.tab_template_layout.addWidget(self.create_new_template_button)
+        self.tab_template.setItemWidget(self.create_new_template_item, 0, self.create_new_template_button)
+
+        self.editor_for_template = {}
+        for name in db.requirement_template.keys():
+            self.create_template_editor(name)
 
     @property
     def _all_tabs(self):
@@ -242,9 +233,9 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         for tab in self._all_tabs:
             tab.model().set_allow_edits(value)
 
-        self.create_new_template_button.setVisible(value)
+        self.create_new_template_item.setHidden(not value)
         for editor in self.editor_for_template.values():
-            editor.edit_button.setVisible(value)
+            editor.edit_item.setHidden(not value)
 
     def create_new_template(self):
         template_name, did_confirm = QtWidgets.QInputDialog.getText(self, "New Template", "Insert template name:")
@@ -252,38 +243,34 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
             return
 
         self.db.requirement_template[template_name] = Requirement.trivial()
-        self.create_template_editor(template_name)
-        self.tab_template_layout.removeWidget(self.create_new_template_button)
-        self.tab_template_layout.addWidget(self.create_new_template_button)
+        self.create_template_editor(template_name).setExpanded(True)
 
     def create_template_editor(self, name: str):
-        template_box = Foldable(name)
-        template_box.setObjectName(f"template_box {name}")
-        template_layout = QtWidgets.QVBoxLayout()
-        template_layout.setObjectName(f"template_layout {name}")
-        template_box.set_content_layout(template_layout)
+        item = QtWidgets.QTreeWidgetItem(self.tab_template)
+        item.setText(0, name)
 
+        edit_template_item = QtWidgets.QTreeWidgetItem(item)
         edit_template_button = QtWidgets.QPushButton()
         edit_template_button.setText("Edit")
         edit_template_button.clicked.connect(functools.partial(self.edit_template, name))
-        template_layout.addWidget(edit_template_button)
+        self.tab_template.setItemWidget(edit_template_item, 0, edit_template_button)
 
         self.editor_for_template[name] = TemplateEditor(
-            template_name=name,
-            foldable=template_box,
-            edit_button=edit_template_button,
-            template_layout=template_layout,
-            visualizer=None,
-            connections_layout=None,
+            edit_template_item,
+            item,
         )
-        self.editor_for_template[name].create_visualizer(self.db)
+        self.editor_for_template[name].create_connections(
+            self.tab_template, self.db.requirement_template[name],
+        )
 
-        self.tab_template_layout.addWidget(template_box)
+        return item
 
     def edit_template(self, name: str):
         requirement = self.db.requirement_template[name]
         editor = ConnectionsEditor(self, self.db, requirement)
         result = editor.exec_()
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             self.db.requirement_template[name] = editor.final_requirement
-            self.editor_for_template[name].create_visualizer(self.db)
+            self.editor_for_template[name].create_connections(
+                self.tab_template, self.db.requirement_template[name],
+            )

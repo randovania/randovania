@@ -1,5 +1,4 @@
 import copy
-import json
 
 import pytest
 
@@ -19,11 +18,10 @@ from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfigura
         {"game": RandovaniaGame.METROID_PRIME_CORRUPTION, "encoded": b'\x00', "pickups_state": {}},
     ],
     name="config_with_data")
-def _config_with_data(request):
+def _config_with_data(request, test_files_dir):
     game: RandovaniaGame = request.param["game"]
 
-    with game.data_path.joinpath("pickup_database", "default_state", "ammo-pickups.json").open() as open_file:
-        default_data = json.load(open_file)
+    default_data = test_files_dir.read_json("pickup_database", f"{game.value}_default_state", "ammo-pickups.json")
 
     default = AmmoPickupConfiguration.from_json(default_data, game)
     data = copy.deepcopy(default_data)

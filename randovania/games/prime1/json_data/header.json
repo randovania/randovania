@@ -1,5 +1,5 @@
 {
-    "schema_version": 15,
+    "schema_version": 19,
     "game": "prime1",
     "resource_database": {
         "items": {
@@ -1232,18 +1232,16 @@
                 ]
             }
         ],
-        "energy_tank_item_index": "EnergyTank",
-        "item_percentage_index": null,
-        "multiworld_magic_item_index": "Unknown1"
+        "energy_tank_item_index": "EnergyTank"
     },
     "layers": [
         "default",
         "items_every_room"
     ],
     "starting_location": {
-        "world_name": "Tallon Overworld",
-        "area_name": "Landing Site",
-        "node_name": "Ship"
+        "region": "Tallon Overworld",
+        "area": "Landing Site",
+        "node": "Ship"
     },
     "initial_states": {
         "Item Loss Disabled": []
@@ -1374,6 +1372,16 @@
                         },
                         "lock": null
                     },
+                    "Normal Door (Forced)": {
+                        "extra": {
+                            "shieldType": "Blue"
+                        },
+                        "requirement": {
+                            "type": "template",
+                            "data": "Open Normal Door"
+                        },
+                        "lock": null
+                    },
                     "Ice Door": {
                         "extra": {
                             "shieldType": "Ice"
@@ -1487,16 +1495,7 @@
                                 "items": []
                             }
                         },
-                        "lock": {
-                            "lock_type": "front-blast-back-impossible",
-                            "requirement": {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": []
-                                }
-                            }
-                        }
+                        "lock": null
                     },
                     "Circular Door": {
                         "extra": {},
@@ -1509,8 +1508,11 @@
                     "Square Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "template",
-                            "data": "Open Normal Door"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "lock": null
                     },
@@ -2069,13 +2071,12 @@
             "name": "Not Determined"
         },
         "dock_rando": {
-            "enable_one_way": false,
             "force_change_two_way": false,
             "resolver_attempts": 125,
             "to_shuffle_proportion": 1.0
         }
     },
-    "worlds": [
+    "regions": [
         "Impact Crater.json",
         "Phendrana Drifts.json",
         "Frigate Orpheon.json",

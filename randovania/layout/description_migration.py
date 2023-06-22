@@ -2,7 +2,6 @@ import re
 import typing
 
 from randovania.game_description import migration_data
-from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
@@ -274,9 +273,9 @@ def _migrate_v12(json_dict: dict) -> dict:
 
 def _migrate_v13(json_dict: dict) -> dict:
     for game in json_dict["game_modifications"]:
-        area_identifier = AreaIdentifier.from_string(game["starting_location"])
-        node_identifier = migration_data.get_new_start_loc_from_old_start_loc(game["game"], area_identifier)
-        game["starting_location"] = node_identifier.as_string
+        world_name, area_name = game["starting_location"].split("/", 1)
+        node_name = migration_data.get_node_name_for_area(game["game"], world_name, area_name)
+        game["starting_location"] = f"{game['starting_location']}/{node_name}"
 
     return json_dict
 
@@ -311,6 +310,22 @@ def _migrate_v16(json_dict: dict) -> dict:
     return json_dict
 
 
+def _migrate_v17(json_dict: dict) -> dict:
+    for game in json_dict["game_modifications"]:
+        for hint in game["hints"].values():
+            if (precision := hint.get("precision")) is not None:
+                if precision["location"] == "relative-to-area":
+                    old_loc = precision["relative"]["area_location"]
+                    precision["relative"]["area_location"] = {
+                        "region": old_loc["world_name"],
+                        "area": old_loc["area_name"],
+                    }
+                elif precision["location"] == "world-only":
+                    precision["location"] = "region-only"
+
+    return json_dict
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -328,6 +343,7 @@ _MIGRATIONS = [
     _migrate_v14,
     _migrate_v15,
     _migrate_v16,
+    _migrate_v17,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

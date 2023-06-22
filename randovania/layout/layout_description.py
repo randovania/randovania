@@ -17,6 +17,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib import obfuscator, json_lib
 
 
 class InvalidLayoutDescription(Exception):
@@ -25,11 +26,11 @@ class InvalidLayoutDescription(Exception):
 
 @lru_cache(maxsize=1)
 def _all_hash_words() -> dict[RandovaniaGame, list[str]]:
-    with (get_data_path() / "hash_words" / "hash_words.json").open() as hash_words_file:
-        return {
-            RandovaniaGame(key): words
-            for key, words in json.load(hash_words_file).items()
-        }
+    hash_words = json_lib.read_path(get_data_path() / "hash_words" / "hash_words.json")
+    return {
+        RandovaniaGame(key): words
+        for key, words in hash_words.items()
+    }
 
 
 def shareable_hash(hash_bytes: bytes) -> str:
@@ -56,6 +57,11 @@ def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
     return " ".join(selected_words)
 
 
+def _info_hash(data: dict) -> str:
+    bytes_representation = json.dumps(data).encode()
+    return hashlib.blake2b(bytes_representation).hexdigest()
+
+
 @dataclass(frozen=True)
 class LayoutDescription:
     randovania_version_text: str
@@ -76,7 +82,7 @@ class LayoutDescription:
                    generator_parameters: GeneratorParameters,
                    all_patches: dict[int, GamePatches],
                    item_order: tuple[str, ...],
-                   ) -> "LayoutDescription":
+                   ) -> typing.Self:
         return cls(
             randovania_version_text=randovania.VERSION,
             randovania_version_git=randovania.GIT_HASH,
@@ -86,8 +92,17 @@ class LayoutDescription:
         )
 
     @classmethod
-    def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
+    def from_json_dict(cls, json_dict: dict) -> typing.Self:
         json_dict = description_migration.convert_to_current_version(json_dict)
+
+        if "secret" in json_dict:
+            try:
+                secret = obfuscator.deobfuscate_json(json_dict["secret"])
+                if _info_hash(json_dict["info"]) == secret.pop("info_hash"):
+                    for key, value in secret.items():
+                        json_dict[key] = value
+            except (obfuscator.MissingSecret, obfuscator.InvalidSecret):
+                pass
 
         if "game_modifications" not in json_dict:
             raise InvalidLayoutDescription("Unable to read details of a race game file")
@@ -114,9 +129,8 @@ class LayoutDescription:
         )
 
     @classmethod
-    def from_file(cls, json_path: Path) -> "LayoutDescription":
-        with json_path.open("r") as open_file:
-            return cls.from_json_dict(json.load(open_file))
+    def from_file(cls, path: Path) -> typing.Self:
+        return cls.from_json_dict(json_lib.read_path(path))
 
     @property
     def permalink(self):
@@ -171,9 +185,19 @@ class LayoutDescription:
             }
         }
 
+        spoiler = {
+            "game_modifications": self._serialized_patches,
+            "item_order": self.item_order,
+        }
         if self.has_spoiler or force_spoiler:
-            result["game_modifications"] = self._serialized_patches
-            result["item_order"] = self.item_order
+            for k, v in spoiler.items():
+                result[k] = v
+        else:
+            spoiler["info_hash"] = _info_hash(result["info"])
+            try:
+                result["secret"] = obfuscator.obfuscate_json(spoiler)
+            except obfuscator.MissingSecret:
+                pass
 
         return result
 
@@ -202,5 +226,6 @@ class LayoutDescription:
         )
 
     def save_to_file(self, json_path: Path):
-        with json_path.open("w") as open_file:
-            json.dump(self.as_json(), open_file, indent=4, separators=(',', ': '))
+        json_lib.write_path(
+            json_path, self.as_json()
+        )

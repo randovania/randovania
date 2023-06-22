@@ -1,5 +1,5 @@
+from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -21,15 +21,17 @@ class TeleporterDetailsTab(BaseConnectionDetailsTab):
         assert isinstance(configuration, (PrimeConfiguration, EchoesConfiguration))
         return not configuration.elevators.is_vanilla
 
-    def _fill_per_world_connections(self,
-                                    per_world: dict[str, dict[str, str]],
-                                    world_list: WorldList,
-                                    patches: GamePatches,
-                                    ):
+    def _fill_per_region_connections(self,
+                                     per_region: dict[str, dict[str, str]],
+                                     region_list: RegionList,
+                                     patches: GamePatches,
+                                     ):
         for source, destination_loc in patches.all_elevator_connections():
-            source_world = world_list.world_by_area_location(source.identifier.area_identifier)
-            source_name = elevators.get_elevator_or_area_name(self.game_enum, world_list,
+            source_region = region_list.region_by_area_location(source.identifier.area_identifier)
+            source_name = elevators.get_elevator_or_area_name(self.game_enum, region_list,
                                                               source.identifier.area_identifier, True)
 
-            per_world[source_world.name][source_name] = elevators.get_elevator_or_area_name(self.game_enum, world_list,
-                                                                                            destination_loc, True)
+            per_region[source_region.name][source_name] = elevators.get_elevator_or_area_name(
+                self.game_enum, region_list,
+                destination_loc, True
+            )

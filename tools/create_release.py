@@ -1,5 +1,4 @@
 import asyncio
-import json
 import os
 import platform
 import shutil
@@ -18,6 +17,7 @@ from randovania import VERSION
 from randovania.cli import database
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
+from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
@@ -78,6 +78,16 @@ async def download_nintendont():
         final_dol_path.write_bytes(dol_bytes)
 
 
+def write_obfuscator_secret(path: Path, secret: bytes):
+    numbers = str([x for x in secret])
+    path.write_text(f"""# Generated file
+secret = b"".join(
+    bytes([x]) for x in
+    {numbers}
+)
+""")
+
+
 async def main():
     package_folder = Path("dist", "randovania")
     if package_folder.exists():
@@ -95,6 +105,12 @@ async def main():
     icon_path = randovania.get_icon_path()
     shutil.copyfile(icon_path, icon_path.with_name("executable_icon.ico"))
 
+    if (secret := os.environ.get("OBFUSCATOR_SECRET")) is not None:
+        write_obfuscator_secret(
+            _ROOT_FOLDER.joinpath("randovania", "lib", "obfuscator_secret.py"),
+            secret.encode("ascii"),
+        )
+
     if is_production():
         server_suffix = "randovania"
         client_id = 618134325921316864
@@ -107,8 +123,7 @@ async def main():
         "server_address": f"https://randovania.metroidprime.run/{server_suffix}",
         "socketio_path": f"/{server_suffix}/socket.io",
     }
-    with _ROOT_FOLDER.joinpath("randovania", "data", "configuration.json").open("w") as config_release:
-        json.dump(configuration, config_release)
+    json_lib.write_path(_ROOT_FOLDER.joinpath("randovania", "data", "configuration.json"), configuration)
 
     await download_nintendont()
 

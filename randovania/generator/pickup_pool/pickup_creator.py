@@ -17,14 +17,12 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 def create_standard_pickup(
         pickup: StandardPickupDefinition,
         state: StandardPickupState,
-        include_percentage: bool,
         resource_database: ResourceDatabase,
         ammo: AmmoPickupDefinition | None,
         ammo_requires_main_item: bool,
 ) -> PickupEntry:
     """
     Creates a Pickup for the given MajorItem
-    :param include_percentage:
     :param state:
     :param pickup:
     :param resource_database:
@@ -37,8 +35,10 @@ def create_standard_pickup(
         (resource_database.get_item(ammo_name), ammo_count)
         for ammo_name, ammo_count in zip(pickup.ammo, state.included_ammo)
     ]
-    if include_percentage and resource_database.item_percentage is not None:
-        extra_resources.append((resource_database.item_percentage, 1))
+    extra_resources.extend(
+        (resource_database.get_item(item), count)
+        for item, count in pickup.additional_resources.items()
+    )
 
     def _create_resources(base_resource: str | None) -> ResourceQuantity:
         # FIXME: hacky quantity for Hazard Shield
@@ -84,9 +84,10 @@ def create_ammo_pickup(ammo: AmmoPickupDefinition,
     """
     resources = [(resource_database.get_item(item), count)
                  for item, count in zip(ammo.items, ammo_count)]
-
-    if resource_database.item_percentage is not None:
-        resources.append((resource_database.item_percentage, 1))
+    resources.extend(
+        (resource_database.get_item(item), count)
+        for item, count in ammo.additional_resources.items()
+    )
 
     return PickupEntry(
         name=ammo.name,
@@ -220,7 +221,7 @@ def create_energy_cell(cell_index: int,
         ),
         extra_resources=(
             (resource_database.get_item(corruption_items.ENERGY_CELL_TOTAL_ITEM), 1),
-            (resource_database.item_percentage, 1),
+            (resource_database.get_item(corruption_items.PERCENTAGE), 1),
         ),
         model=PickupModel(
             game=resource_database.game_enum,

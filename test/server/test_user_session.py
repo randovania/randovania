@@ -15,8 +15,9 @@ def test_setup_app():
 
 
 @patch("requests_oauthlib.OAuth2Session.fetch_token", autospec=True)
+@pytest.mark.parametrize("has_global_name", [False, True])
 @pytest.mark.parametrize("existing", [False, True])
-def test_login_with_discord(mock_fetch_token: MagicMock, clean_database, flask_app, existing):
+def test_login_with_discord(mock_fetch_token: MagicMock, clean_database, flask_app, existing, has_global_name):
     # Setup
     sio = MagicMock()
     session = {}
@@ -28,6 +29,7 @@ def test_login_with_discord(mock_fetch_token: MagicMock, clean_database, flask_a
     discord_user = sio.discord.fetch_user.return_value
     discord_user.id = 1234
     discord_user.name = "A Name"
+    discord_user.to_json.return_value = {"global_name": "Global Name" if has_global_name else None}
 
     if existing:
         User.create(discord_id=discord_user.id, name="Someone else")
@@ -44,7 +46,10 @@ def test_login_with_discord(mock_fetch_token: MagicMock, clean_database, flask_a
         client_secret=sio.app.config["DISCORD_CLIENT_SECRET"],
     )
     user = User.get(User.discord_id == 1234)
-    assert user.name == "A Name"
+    if has_global_name:
+        assert user.name == "Global Name"
+    else:
+        assert user.name == "A Name"
 
     assert session == {
         "user-id": user.id,

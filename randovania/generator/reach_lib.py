@@ -2,9 +2,9 @@ import copy
 from typing import Iterator
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import Node, NodeContext
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.node import Node, NodeContext
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver.state import State
 

@@ -1,9 +1,10 @@
 from random import Random
+from typing import NamedTuple
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.ammo_pickup import add_ammo_pickups
@@ -38,12 +39,12 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
 
     # Adding standard pickups to the pool
     _extend_pool_results(base_results, add_standard_pickups(game.resource_database,
-                                                       layout_configuration.standard_pickup_configuration,
-                                                       layout_configuration.ammo_pickup_configuration))
+                                                            layout_configuration.standard_pickup_configuration,
+                                                            layout_configuration.ammo_pickup_configuration))
 
     # Adding ammo to the pool
     base_results.to_place.extend(add_ammo_pickups(game.resource_database,
-                                          layout_configuration.ammo_pickup_configuration))
+                                                  layout_configuration.ammo_pickup_configuration))
     try:
         layout_configuration.game.generator.item_pool_creator(
             base_results, layout_configuration, game, base_patches, rng,
@@ -55,7 +56,12 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     return base_results
 
 
-def calculate_pool_pickup_count(layout: BaseConfiguration) -> tuple[int, int]:
+class PoolCount(NamedTuple):
+    pickups: int
+    locations: int
+
+
+def calculate_pool_pickup_count(layout: BaseConfiguration) -> dict[LocationCategory | str, PoolCount]:
     """
     Calculate how many pickups are needed for given layout, with how many spots are there.
     :param layout:
@@ -63,35 +69,35 @@ def calculate_pool_pickup_count(layout: BaseConfiguration) -> tuple[int, int]:
     """
     game_description = filtered_database.game_description_for_layout(layout)
 
-    num_pickup_nodes = game_description.world_list.num_pickup_nodes
-    pool_results = calculate_pool_results(layout, game_description,
-                                          rng_required=False)
-    min_starting_pickups = layout.standard_pickup_configuration.minimum_random_starting_pickups
+    result = {
+        cat: [0, 0]
+        for cat in LocationCategory
+    }
 
-    pool_count = len(pool_results.to_place) + len(pool_results.assignment)
-    maximum_size = num_pickup_nodes + min_starting_pickups
-
-    return pool_count, maximum_size
-
-
-def calculate_split_pool_pickup_count(layout: BaseConfiguration) -> tuple[tuple[int, int], tuple[int, int]]:
-    """
-    Calculate how many pickups are needed for given layout, with how many spots are there. Split by major/minor.
-    :param layout:
-    :return:
-    """
-    game_description = filtered_database.game_description_for_layout(layout)
-
-    pickup_nodes = [node for node in game_description.world_list.iterate_nodes()
-                    if isinstance(node, PickupNode)]
-    num_major_nodes = sum(1 for node in pickup_nodes if node.location_category == LocationCategory.MAJOR)
-    num_minor_nodes = len(pickup_nodes) - num_major_nodes
+    for node in game_description.region_list.iterate_nodes():
+        if isinstance(node, PickupNode):
+            result[node.location_category][1] += 1
 
     pool_results = calculate_pool_results(layout, game_description,
                                           rng_required=False)
+    result["Starting"] = [0, layout.standard_pickup_configuration.minimum_random_starting_pickups]
+
     all_pickups = pool_results.to_place + list(pool_results.assignment.values())
-    minor_count = sum(1 for pickup in all_pickups
-                      if pickup.generator_params.preferred_location_category == LocationCategory.MINOR)
-    major_count = len(all_pickups) - minor_count
+    for pickup in all_pickups:
+        result[pickup.generator_params.preferred_location_category][0] += 1
 
-    return (major_count, num_major_nodes), (minor_count, num_minor_nodes)
+    return {
+        key: PoolCount(*value)
+        for key, value in result.items()
+    }
+
+
+def get_total_pickup_count(sizes: dict[LocationCategory | str, PoolCount]) -> PoolCount:
+    """
+    Merges the result of calculate_pool_pickup_count into a global count that doesn't care about the categories.
+    """
+    pickups, nodes = 0, 0
+    for a, b in sizes.values():
+        pickups += a
+        nodes += b
+    return PoolCount(pickups, nodes)

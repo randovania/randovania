@@ -1,5 +1,4 @@
 import io
-import json
 from pathlib import Path
 
 import pytest
@@ -16,8 +15,6 @@ sample_data = {
     "resource_database": {
         "items": {},
         "energy_tank_item_index": "",
-        "item_percentage_index": "",
-        "multiworld_magic_item_index": "",
         "events": {},
         "tricks": {},
         "damage": {},
@@ -33,9 +30,9 @@ sample_data = {
     },
     "layers": ["default"],
     "starting_location": {
-        "world_name": "Temple Grounds",
-        "area_name": "Landing Site",
-        "node_name": "Save Station"
+        "region": "Temple Grounds",
+        "area": "Landing Site",
+        "node": "Save Station"
     },
     "initial_states": {
         "Default": [
@@ -53,13 +50,12 @@ sample_data = {
             "name": "",
         },
         "dock_rando": {
-            "enable_one_way": False,
             "force_change_two_way": False,
             "resolver_attempts": 200,
             "to_shuffle_proportion": 1.0
         }
     },
-    "worlds": [],
+    "regions": [],
 }
 
 
@@ -74,9 +70,7 @@ def test_simple_round_trip():
 
 
 def test_complex_encode(test_files_dir):
-    with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
-        data = json.load(data_file)
-
+    data = test_files_dir.read_json("prime_data_as_json.json")
     data = game_migration.migrate_to_current(data)
 
     b = io.BytesIO()
@@ -95,8 +89,7 @@ def test_complex_decode(test_files_dir):
     decoded_data = binary_data.decode_file_path(Path(test_files_dir.joinpath("prime_data_as_binary.bin")))
 
     # Assert
-    with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
-        saved_data = json.load(data_file)
+    saved_data = test_files_dir.read_json("prime_data_as_json.json")
     saved_data = game_migration.migrate_to_current(saved_data)
 
     assert decoded_data == saved_data
@@ -171,4 +164,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x00\x01\x00\x01\x00'
+    assert encoded == b'\x00\x00\x00\x00\x00\x00\x01Foo\x00\x02\x00\x00\x00\x00'

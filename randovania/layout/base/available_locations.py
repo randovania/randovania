@@ -7,14 +7,14 @@ from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPa
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 
 
 def _all_indices(db: GameDescription) -> list[int]:
     return sorted(
         node.pickup_index.index
-        for node in db.world_list.iterate_nodes()
+        for node in db.region_list.iterate_nodes()
         if isinstance(node, PickupNode)
     )
 

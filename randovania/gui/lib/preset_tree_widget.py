@@ -1,42 +1,64 @@
+import math
 import uuid
 
 from PySide6 import QtWidgets, QtGui
 from PySide6.QtCore import Qt
 
 from randovania.games.game import RandovaniaGame
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.options import Options
+from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.versioned_preset import VersionedPreset
 
 
 class PresetTreeWidget(QtWidgets.QTreeWidget):
     game: RandovaniaGame
-    window_manager: WindowManager
+    preset_manager: PresetManager
     options: Options
     preset_to_item: dict[uuid.UUID, QtWidgets.QTreeWidgetItem]
     expanded_connected: bool = False
 
     def dropEvent(self, event: QtGui.QDropEvent) -> None:
-        item: QtWidgets.QTreeWidgetItem = self.itemAt(event.pos())
-        if not item:
-            return event.setDropAction(Qt.IgnoreAction)
-
         source = self.preset_for_item(self.currentItem())
-        target = self.preset_for_item(item)
-
-        if source is None or target is None:
+        if source is None:
             return event.setDropAction(Qt.IgnoreAction)
 
-        if source.game != target.game or source.is_included_preset:
+        if source.is_included_preset:
             return event.setDropAction(Qt.IgnoreAction)
+
+        new_order = self.options.get_preset_order_for(self.game)
+        try:
+            new_order.remove(source.uuid)
+        except ValueError:
+            # No order present, that's fine
+            pass
+
+        item: QtWidgets.QTreeWidgetItem | None = self.itemAt(event.pos())
+        if item is None:
+            target_uuid = None
+            new_order.append(source.uuid)
+        else:
+            target = self.preset_for_item(item)
+
+            if self.dropIndicatorPosition() != QtWidgets.QAbstractItemView.DropIndicatorPosition.OnItem:
+                target_uuid = self.options.get_parent_for_preset(target.uuid)
+
+                new_index = new_order.index(target.uuid)
+                if self.dropIndicatorPosition() != QtWidgets.QAbstractItemView.DropIndicatorPosition.AboveItem:
+                    new_index += 1
+                new_order.insert(new_index, source.uuid)
+
+            else:
+                target_uuid = target.uuid
 
         with self.options as options:
-            options.set_parent_for_preset(source.uuid, target.uuid)
+            options.set_parent_for_preset(source.uuid, target_uuid)
+            options.set_preset_order_for(self.game, new_order)
 
-        return super().dropEvent(event)
+        self.update_items()
+        return event.setDropAction(Qt.IgnoreAction)
 
     def preset_for_item(self, item: QtWidgets.QTreeWidgetItem) -> VersionedPreset | None:
-        return self.window_manager.preset_manager.preset_for_uuid(item.data(0, Qt.UserRole))
+        return self.preset_manager.preset_for_uuid(item.data(0, Qt.UserRole))
 
     @property
     def current_preset_data(self) -> VersionedPreset | None:
@@ -56,16 +78,21 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         default_parent = None
         root_parents = set()
 
+        def create_item(parent: QtWidgets.QTreeWidgetItem | QtWidgets.QTreeWidget,
+                        the_preset: VersionedPreset,
+                        ) -> QtWidgets.QTreeWidgetItem:
+            it = QtWidgets.QTreeWidgetItem(parent)
+            it.setText(0, the_preset.name)
+            it.setData(0, Qt.UserRole, the_preset.uuid)
+            self.preset_to_item[the_preset.uuid] = it
+            return it
+
         # Included presets
-        for preset in self.window_manager.preset_manager.included_presets.values():
+        for preset in self.preset_manager.included_presets.values():
             if preset.game != self.game:
                 continue
 
-            item = QtWidgets.QTreeWidgetItem(self)
-            item.setText(0, preset.name)
-            item.setData(0, Qt.UserRole, preset.uuid)
-            item.setExpanded(True)
-            self.preset_to_item[preset.uuid] = item
+            item = create_item(self, preset)
             root_parents.add(item)
 
             if default_parent is None:
@@ -73,17 +100,27 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
                 default_parent = item
 
         # Custom Presets
-        for preset in self.window_manager.preset_manager.custom_presets.values():
-            if preset.game != self.game:
-                continue
+        order_by_key = {
+            pid: i
+            for i, pid in enumerate(self.options.get_preset_order_for(self.game))
+        }
+        ordered_custom_presets = [
+            preset
+            for preset in self.preset_manager.custom_presets.values()
+            if preset.game == self.game
+        ]
+        ordered_custom_presets.sort(
+            key=lambda p: (order_by_key.get(p.uuid, math.inf), p.name.lower())
+        )
 
-            item = QtWidgets.QTreeWidgetItem(default_parent)
-            item.setText(0, preset.name)
-            item.setData(0, Qt.UserRole, preset.uuid)
-            self.preset_to_item[preset.uuid] = item
+        for preset in ordered_custom_presets:
+            preset_parent = self.options.get_parent_for_preset(preset.uuid)
+            item = create_item(self if preset_parent is None else default_parent, preset)
+            if preset_parent is None:
+                root_parents.add(item)
 
         # Set parents after, so don't have issues with order
-        for preset in sorted(self.window_manager.preset_manager.custom_presets.values(), key=lambda it: it.name):
+        for preset in ordered_custom_presets:
             preset_parent = self.options.get_parent_for_preset(preset.uuid)
             if preset_parent in self.preset_to_item:
                 self_item = self.preset_to_item[preset.uuid]
@@ -102,6 +139,14 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         for preset_uuid, item in self.preset_to_item.items():
             item.setExpanded(not self.options.is_preset_uuid_hidden(preset_uuid))
+
+        final_order = [
+            item.data(0, Qt.UserRole)
+            for item in self.findItems("", Qt.MatchFlag.MatchRecursive | Qt.MatchFlag.MatchStartsWith)
+        ]
+
+        with self.options as options:
+            options.set_preset_order_for(self.game, final_order)
 
         self.itemExpanded.connect(self.on_item_expanded)
         self.itemCollapsed.connect(self.on_item_collapsed)

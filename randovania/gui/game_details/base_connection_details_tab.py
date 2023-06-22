@@ -3,7 +3,7 @@ import collections
 from PySide6 import QtWidgets
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.db.region_list import RegionList
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -23,11 +23,11 @@ class BaseConnectionDetailsTab(GameDetailsTab):
     def tab_title(self) -> str:
         raise NotImplementedError()
 
-    def _fill_per_world_connections(self,
-                                    per_world: dict[str, dict[str, str | dict[str, str]]],
-                                    world_list: WorldList,
-                                    patches: GamePatches,
-                                    ):
+    def _fill_per_region_connections(self,
+                                     per_region: dict[str, dict[str, str | dict[str, str]]],
+                                     region_list: RegionList,
+                                     patches: GamePatches,
+                                     ):
         raise NotImplementedError()
 
     def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
@@ -36,18 +36,18 @@ class BaseConnectionDetailsTab(GameDetailsTab):
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Source", "Destination"])
 
-        world_list = filtered_database.game_description_for_layout(configuration).world_list
+        region_list = filtered_database.game_description_for_layout(configuration).region_list
         patches = all_patches[players.player_index]
 
-        per_world: dict[str, dict[str, str | dict[str, str]]] = collections.defaultdict(dict)
-        self._fill_per_world_connections(per_world, world_list, patches)
+        per_region: dict[str, dict[str, str | dict[str, str]]] = collections.defaultdict(dict)
+        self._fill_per_region_connections(per_region, region_list, patches)
 
-        for world_name, world_contents in iterate_key_sorted(per_world):
-            world_item = QtWidgets.QTreeWidgetItem(self.tree_widget)
-            world_item.setText(0, world_name)
-            world_item.setExpanded(True)
-            for source_name, destination in iterate_key_sorted(world_contents):
-                area_item = QtWidgets.QTreeWidgetItem(world_item)
+        for region_name, region_contents in iterate_key_sorted(per_region):
+            region_item = QtWidgets.QTreeWidgetItem(self.tree_widget)
+            region_item.setText(0, region_name)
+            region_item.setExpanded(True)
+            for source_name, destination in iterate_key_sorted(region_contents):
+                area_item = QtWidgets.QTreeWidgetItem(region_item)
                 area_item.setText(0, source_name)
 
                 if isinstance(destination, str):

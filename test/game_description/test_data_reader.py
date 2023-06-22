@@ -1,6 +1,6 @@
 import pytest
 
-from randovania.game_description.data_reader import WorldReader
+from randovania.game_description.data_reader import RegionReader
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.search import MissingResource
 from randovania.games.game import RandovaniaGame
@@ -8,8 +8,8 @@ from randovania.games.game import RandovaniaGame
 
 def test_invalid_node_type():
     # Setup
-    reader = WorldReader(None, None)
-    reader.current_world_name = "World"
+    reader = RegionReader(None, None)
+    reader.current_region_name = "World"
     reader.current_area_name = "Area"
 
     with pytest.raises(Exception) as e:
@@ -28,9 +28,10 @@ def test_invalid_node_type():
 
 def test_area_with_invalid_connections():
     # Setup
-    db = ResourceDatabase(RandovaniaGame.METROID_PRIME_ECHOES, [], [], [], [], [], [], {}, {}, 0, 0, 0)
-    reader = WorldReader(db, None)
-    reader.current_world_name = "World"
+    db = ResourceDatabase(RandovaniaGame.METROID_PRIME_ECHOES, [], [], [], [], [], [], {},
+                          damage_reductions={}, energy_tank_item_index="Energy")
+    reader = RegionReader(db, None)
+    reader.current_region_name = "World"
 
     with pytest.raises(MissingResource) as e:
         reader.read_area("Broken Area", {

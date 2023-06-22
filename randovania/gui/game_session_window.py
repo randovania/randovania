@@ -37,6 +37,7 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib
+from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
     GameSessionAuditLog, GameSessionInventory
@@ -574,11 +575,15 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         await self._do_import_preset(row_index, preset)
 
     async def _do_import_preset(self, row_index: int, preset: VersionedPreset):
-        message = "The following settings are incompatible with multiworld:\n"
-        incompatible = preset.get_preset().settings_incompatible_with_multiworld()
-        if not incompatible and not randovania.is_dev_version():
-            incompatible = preset.get_preset().configuration.unsupported_features()
-            message = "The following settings are unsupported:\n"
+        try:
+            message = "The following settings are incompatible with multiworld:\n"
+            incompatible = preset.get_preset().settings_incompatible_with_multiworld()
+            if not incompatible and not randovania.is_dev_version():
+                incompatible = preset.get_preset().configuration.unsupported_features()
+                message = "The following settings are unsupported:\n"
+        except UnsupportedVersion as e:
+            message = f"Unable to use this preset: {e}"
+            incompatible = []
 
         if incompatible:
             return await async_dialog.warning(
@@ -850,9 +855,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 preset = self._game_session.presets[action.provider_row]
                 game = default_database.game_description_for(preset.game)
                 try:
-                    location_node = game.world_list.node_from_pickup_index(action.location)
-                    location_name = game.world_list.node_name(location_node, with_world=True,
-                                                              distinguish_dark_aether=True)
+                    location_node = game.region_list.node_from_pickup_index(action.location)
+                    location_name = game.region_list.node_name(location_node, with_region=True,
+                                                               distinguish_dark_aether=True)
                 except KeyError as e:
                     logger.warning("Action %d has invalid location %d for game %s", i, action.location.index,
                                    preset.game.long_name)

@@ -2,16 +2,19 @@ import copy
 import dataclasses
 import functools
 from enum import Enum
-from typing import Iterator
+from typing import Iterator, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
+from randovania.lib import enum_lib
 
 
 class LayoutTranslatorRequirement(BitPackEnum, Enum):
+    long_name: str
+
     VIOLET = "violet"
     AMBER = "amber"
     EMERALD = "emerald"
@@ -21,7 +24,7 @@ class LayoutTranslatorRequirement(BitPackEnum, Enum):
     RANDOM_WITH_REMOVED = "random-removed"
 
     @classmethod
-    def from_item_short_name(cls, name: str) -> "LayoutTranslatorRequirement":
+    def from_item_short_name(cls, name: str) -> Self:
         for key, value in ITEM_NAMES.items():
             if value == name:
                 return key
@@ -33,10 +36,6 @@ class LayoutTranslatorRequirement(BitPackEnum, Enum):
             raise ValueError("The random Requirement shouldn't be used for item_index")
         return ITEM_NAMES[self]
 
-    @property
-    def long_name(self) -> str:
-        return LONG_NAMES[self]
-
 
 ITEM_NAMES = {
     LayoutTranslatorRequirement.VIOLET: "Violet",
@@ -45,8 +44,7 @@ ITEM_NAMES = {
     LayoutTranslatorRequirement.COBALT: "Cobalt",
     LayoutTranslatorRequirement.REMOVED: "Scan",
 }
-
-LONG_NAMES = {
+enum_lib.add_long_name(LayoutTranslatorRequirement, {
     LayoutTranslatorRequirement.VIOLET: "Violet Translator",
     LayoutTranslatorRequirement.AMBER: "Amber Translator",
     LayoutTranslatorRequirement.EMERALD: "Emerald Translator",
@@ -54,17 +52,17 @@ LONG_NAMES = {
     LayoutTranslatorRequirement.RANDOM: "Random",
     LayoutTranslatorRequirement.REMOVED: "Unlocked",
     LayoutTranslatorRequirement.RANDOM_WITH_REMOVED: "Random with Unlocked",
-}
+})
 
 
 def _get_vanilla_translator_configuration(extra_field: str) -> dict[NodeIdentifier, LayoutTranslatorRequirement]:
     from randovania.game_description import default_database
     game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     return {
-        game.world_list.identifier_for_node(node): LayoutTranslatorRequirement.from_item_short_name(
+        game.region_list.identifier_for_node(node): LayoutTranslatorRequirement.from_item_short_name(
             node.extra[extra_field]
         )
-        for node in game.world_list.iterate_nodes()
+        for node in game.region_list.iterate_nodes()
         if isinstance(node, ConfigurableNode)
     }
 
@@ -99,7 +97,7 @@ class TranslatorConfiguration(BitPackValue):
                 yield from translator.bit_pack_encode({})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "TranslatorConfiguration":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> Self:
         templates = [
             _get_vanilla_actual_translator_configurations(),
             _get_vanilla_colors_translator_configurations(),
@@ -126,7 +124,7 @@ class TranslatorConfiguration(BitPackValue):
         }
 
     @classmethod
-    def from_json(cls, value: dict) -> "TranslatorConfiguration":
+    def from_json(cls, value: dict) -> Self:
         default = cls.default()
 
         params = copy.copy(value)
@@ -138,22 +136,22 @@ class TranslatorConfiguration(BitPackValue):
         return cls(translator_requirement, **params)
 
     @classmethod
-    def default(cls) -> "TranslatorConfiguration":
+    def default(cls) -> Self:
         return cls(_get_vanilla_actual_translator_configurations())
 
-    def with_vanilla_actual(self):
+    def with_vanilla_actual(self) -> Self:
         return dataclasses.replace(
             self,
             translator_requirement=_get_vanilla_actual_translator_configurations(),
         )
 
-    def with_vanilla_colors(self) -> "TranslatorConfiguration":
+    def with_vanilla_colors(self) -> Self:
         return dataclasses.replace(
             self,
             translator_requirement=_get_vanilla_colors_translator_configurations(),
         )
 
-    def with_full_random(self) -> "TranslatorConfiguration":
+    def with_full_random(self) -> Self:
         return dataclasses.replace(
             self,
             translator_requirement={
@@ -161,7 +159,7 @@ class TranslatorConfiguration(BitPackValue):
                 for key in self.translator_requirement.keys()
             })
 
-    def with_full_random_with_unlocked(self) -> "TranslatorConfiguration":
+    def with_full_random_with_unlocked(self) -> Self:
         return dataclasses.replace(
             self,
             translator_requirement={
@@ -171,7 +169,7 @@ class TranslatorConfiguration(BitPackValue):
 
     def replace_requirement_for_gate(self, gate: NodeIdentifier,
                                      requirement: LayoutTranslatorRequirement,
-                                     ) -> "TranslatorConfiguration":
+                                     ) -> Self:
         """
         Replaces the requirement for the given gate. The gate must already have a requirement.
         :param gate:

@@ -162,7 +162,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
 
         pickup_names = []
-        for index in range(game.world_list.num_pickup_nodes):
+        for index in range(game.region_list.num_pickup_nodes):
             p_index = PickupIndex(index)
             if p_index in patches.pickup_assignment:
                 name = patches.pickup_assignment[p_index].pickup.name
@@ -228,7 +228,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler,
                                         list(layout.all_games))
         result = await async_dialog.execute_dialog(dialog)
-        if result != QtWidgets.QDialog.Accepted:
+        if result != QtWidgets.QDialog.DialogCode.Accepted:
             return
 
         dialog.save_options()
@@ -255,7 +255,8 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.layout_info_tab.show()
 
         self.setWindowTitle(f"Game Details: {description.shareable_word_hash}")
-        self.export_log_button.setEnabled(description.has_spoiler)
+        self.export_log_button.setText("Save Spoiler" if description.has_spoiler
+                                       else "Save to file")
 
         self._player_names = {
             i: f"Player {i + 1}"

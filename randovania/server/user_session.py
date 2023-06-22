@@ -52,10 +52,16 @@ def _create_client_side_session(sio: ServerApp, user: User | None) -> dict:
 
 
 def _create_user_from_discord(discord_user: flask_discord.models.User) -> User:
+    fields = discord_user.to_json()
+
+    discord_name = fields.get("global_name")
+    if discord_name is None:
+        discord_name = discord_user.name
+
     user: User = User.get_or_create(discord_id=discord_user.id,
-                                    defaults={"name": discord_user.name})[0]
-    if user.name != discord_user.name:
-        user.name = discord_user.name
+                                    defaults={"name": discord_name})[0]
+    if user.name != discord_name:
+        user.name = discord_name
         user.save()
 
     return user

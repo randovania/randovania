@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PresetAM2RPatches</class>
+ <widget class="QMainWindow" name="PresetAM2RPatches">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>770</width>
+    <height>660</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Other</string>
+  </property>
+  <widget class="QWidget" name="root_widget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>766</width>
+         <height>656</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <spacer name="top_spacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>8</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="room_group">
+          <property name="title">
+           <string>Room Design</string>
+          </property>
+          <layout class="QVBoxLayout" name="unlock_layout">
+           <item>
+            <widget class="QCheckBox" name="septogg_helpers_check">
+             <property name="text">
+              <string>Enable Septogg Helpers</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="septogg_helpers_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Septoggs will appear in certain rooms, helping you reach higher platforms if you don't have the means to reach them yourself. Due to SR-388's cave structure, this setting is &lt;b&gt;highly recommended&lt;/b&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="change_level_design_check">
+             <property name="text">
+              <string>Dynamically change room geometry</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="change_level_design_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dynamically changes the room geometry based on whether you have certain items collected. Certain bomb blocks will become shoot blocks, some crumble blocks will dissapear etc.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="respawn_bomb_blocks_check">
+             <property name="text">
+              <string>Respawn destructable bomb blocks</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="respawn_bomb_blocks_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes most destructable bomb blocks respawn. Disabling this will make certain rooms easier to traverse if you only have Power Bombs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="misc_group">
+          <property name="title">
+           <string>Miscellaneous</string>
+          </property>
+          <layout class="QVBoxLayout" name="raven_beak_damage_table_handling_layout">
+           <item>
+            <widget class="QCheckBox" name="skip_cutscenes_check">
+             <property name="text">
+              <string>Skip most cutscenes</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="skip_cutscenes_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enabling this will skip most cutscene related events, such as the Drill Sequence, the cutscenes you'll see when viewing a Metroid for the first time and similar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

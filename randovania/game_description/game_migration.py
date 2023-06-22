@@ -181,6 +181,50 @@ def _migrate_v14(data: dict) -> dict:
     return data
 
 
+def _migrate_v15(data: dict) -> dict:
+    del data["dock_weakness_database"]["dock_rando"]["enable_one_way"]
+    return data
+
+
+def _migrate_v16(data: dict) -> dict:
+    for world in data["worlds"]:
+        for area_name, area in world["areas"].items():
+            for node_name, node in area["nodes"].items():
+                if node["node_type"] == "dock":
+                    node["exclude_from_dock_rando"] = node["extra"].pop("exclude_from_dock_rando", False)
+                    node["incompatible_dock_weaknesses"] = node["extra"].pop("excluded_dock_weaknesses", [])
+
+    return data
+
+
+def _migrate_v17(data: dict) -> dict:
+    if "worlds" in data:
+        data["regions"] = data.pop("worlds")
+
+    def _fix(target):
+        target["region"] = target.pop("world_name")
+        target["area"] = target.pop("area_name")
+        if "node_name" in target:
+            target["node"] = target.pop("node_name")
+
+    _fix(data["starting_location"])
+    for world in data["regions"]:
+        for area_name, area in world["areas"].items():
+            for node_name, node in area["nodes"].items():
+                if node["node_type"] == "dock":
+                    _fix(node["default_connection"])
+                elif node["node_type"] == "teleporter":
+                    _fix(node["destination"])
+
+    return data
+
+
+def _migrate_v18(data: dict) -> dict:
+    data["resource_database"].pop("item_percentage_index")
+    data["resource_database"].pop("multiworld_magic_item_index")
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -196,6 +240,10 @@ _MIGRATIONS = [
     _migrate_v12,
     _migrate_v13,
     _migrate_v14,
+    _migrate_v15,
+    _migrate_v16,
+    _migrate_v17,
+    _migrate_v18,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -8,7 +8,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
 
 core_blank_json = {
-    "mode": "two-way",
+    "mode": "docks",
     "types_state": {
         "door": {
             "can_change_from": [
@@ -81,7 +81,7 @@ def test_encode(config_with_data):
 
 def test_prime_thing(default_prime_configuration):
     config = {
-        "mode": "two-way",
+        "mode": "docks",
         "types_state": {
             "door": {
                 "can_change_from": [

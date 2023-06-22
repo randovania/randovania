@@ -1,8 +1,10 @@
 import pytest
 from peewee import SqliteDatabase
 
+from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import construct_lib
+from randovania.network_client.game_session import GameDetails
 from randovania.network_common.binary_formats import BinaryGameSessionEntry
 from randovania.server import database
 
@@ -15,7 +17,8 @@ def test_init(tmpdir):
 
 
 @pytest.mark.parametrize("has_description", [False, True])
-def test_GameSession_create_session_entry(clean_database, has_description, test_files_dir, mocker):
+def test_GameSession_create_session_entry(clean_database, has_description, test_files_dir, mocker,
+                                          default_game_list):
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     someone = database.User.create(name="Someone")
@@ -24,11 +27,11 @@ def test_GameSession_create_session_entry(clean_database, has_description, test_
     if has_description:
         s.layout_description = description
         s.save()
-        game_details = {
-            'seed_hash': '3F3THHXD',
+        game_details = GameDetails.from_json({
+            'seed_hash': 'VNBKJI3X',
             'spoiler': True,
-            'word_hash': 'Production Phazon Head',
-        }
+            'word_hash': 'Dead Skiff Suit',
+        })
 
     # Run
     session = database.GameSession.get_by_id(1)
@@ -37,7 +40,7 @@ def test_GameSession_create_session_entry(clean_database, has_description, test_
 
     # Assert
     assert readable_result == {
-        'allowed_games': ['prime1', 'prime2'],
+        'allowed_games': default_game_list,
         'game_details': game_details,
         'generation_in_progress': None,
         'id': 1,

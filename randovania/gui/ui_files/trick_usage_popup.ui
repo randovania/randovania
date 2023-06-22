@@ -29,7 +29,13 @@
    <item>
     <widget class="QLabel" name="title_label">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup lists all occurences of tricks that are in logical use for this preset.&lt;/p&gt;&lt;p&gt;Enabled tricks:&lt;br/&gt;{trick_levels}&lt;/p&gt;&lt;p&gt;Click a room name to open it in the Data Visualizer for more details.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This popup lists all occurrences of tricks that are in logical use for this preset.&lt;/p&gt;&lt;p&gt;Enabled tricks:&lt;br/&gt;{trick_levels}&lt;/p&gt;&lt;p&gt;Click a room name to open it in the Data Visualizer for more details.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textInteractionFlags">
+           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+     </property>
+     <property name="cursor">
+      <cursorShape>IBeamCursor</cursorShape>
      </property>
      <property name="wordWrap">
       <bool>true</bool>

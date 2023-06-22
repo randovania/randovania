@@ -133,6 +133,25 @@ def _convert_v21(options: dict) -> dict:
     return options
 
 
+def _convert_v22(options: dict) -> dict:
+    # added preset order
+    return options
+
+
+def _convert_v23(options: dict) -> dict:
+    if "cosmetic_patches" in options.get("game_prime2", {}):
+        options["game_prime2"]["cosmetic_patches"].pop("teleporter_sounds", None)
+
+    return options
+
+def _convert_v24(options: dict) -> dict:
+    # added Dread's missile pack recolor
+    return options
+
+def _convert_v25(options: dict) -> dict:
+    # added Dread's auto tracker
+    return options
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -155,6 +174,10 @@ _CONVERTER_FOR_VERSION = [
     _convert_v19,
     _convert_v20,
     _convert_v21,
+    _convert_v22,
+    _convert_v23,
+    _convert_v24,
+    _convert_v25,
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

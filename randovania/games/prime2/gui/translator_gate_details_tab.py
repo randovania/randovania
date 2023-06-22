@@ -32,7 +32,7 @@ class TranslatorGateDetailsTab(GameDetailsTab):
         self.tree_widget.setHeaderLabels(["Gate", "Requirement"])
 
         game = filtered_database.game_description_for_layout(configuration)
-        world_list = game.world_list
+        region_list = game.region_list
         patches = all_patches[players.player_index]
 
         gate_index_to_name, identifier_to_gate = gate_data()
@@ -44,21 +44,21 @@ class TranslatorGateDetailsTab(GameDetailsTab):
             if "item_id" in item.extra
         }
 
-        per_world: dict[str, dict[str, str]] = collections.defaultdict(dict)
+        per_region: dict[str, dict[str, str]] = collections.defaultdict(dict)
 
         for source_loc, requirement in patches.configurable_nodes.items():
-            source_world = world_list.world_by_area_location(source_loc.area_identifier)
+            source_region = region_list.region_by_area_location(source_loc.area_identifier)
             source_name = gate_index_to_name[identifier_to_gate[source_loc]]
 
             index = patch_data_factory.translator_index_for_requirement(requirement)
-            per_world[source_world.name][source_name] = items_by_id[index]
+            per_region[source_region.name][source_name] = items_by_id[index]
 
-        for world_name, world_contents in iterate_key_sorted(per_world):
-            world_item = QtWidgets.QTreeWidgetItem(self.tree_widget)
-            world_item.setText(0, world_name)
-            world_item.setExpanded(True)
-            for source_name, destination in iterate_key_sorted(world_contents):
-                area_item = QtWidgets.QTreeWidgetItem(world_item)
+        for region_name, region_contents in iterate_key_sorted(per_region):
+            region_item = QtWidgets.QTreeWidgetItem(self.tree_widget)
+            region_item.setText(0, region_name)
+            region_item.setExpanded(True)
+            for source_name, destination in iterate_key_sorted(region_contents):
+                area_item = QtWidgets.QTreeWidgetItem(region_item)
                 area_item.setText(0, source_name)
                 area_item.setText(1, destination)
 

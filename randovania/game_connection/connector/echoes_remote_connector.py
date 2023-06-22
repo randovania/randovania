@@ -2,9 +2,11 @@ import struct
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
+from randovania.game_description.db.region import Region
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.world.world import World
+from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.games.prime2.patcher import echoes_items
 from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion
 from randovania.patching.prime import (all_prime_dol_patches)
 
@@ -38,9 +40,13 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
     def _asset_id_format(self):
         return ">I"
 
-    async def current_game_status(self) -> tuple[bool, World | None]:
+    @property
+    def multiworld_magic_item(self) -> ItemResourceInfo:
+        return self.game.resource_database.get_item(echoes_items.MULTIWORLD_ITEM)
+
+    async def current_game_status(self) -> tuple[bool, Region | None]:
         """
-        Fetches the world the player's currently at, or None if they're not in-game.
+        Fetches the region the player's currently at, or None if they're not in-game.
         :return: bool indicating if there's a pending `execute_remote_patches` operation.
         """
 
@@ -86,3 +92,12 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
             for item, delta in resources_to_give.as_resource_gain()
         ]
         return patches, format_received_item(item_name, provider_name)
+
+    def _resources_to_give_for_pickup(self, pickup: PickupEntry, inventory: Inventory,
+                                      ) -> tuple[str, ResourceCollection]:
+        item_name, resources_to_give = super()._resources_to_give_for_pickup(pickup, inventory)
+
+        # Ignore item% for received items
+        resources_to_give.remove_resource(self.game.resource_database.get_item("Percent"))
+
+        return item_name, resources_to_give

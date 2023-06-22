@@ -7,14 +7,14 @@ from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import QPointF, QRectF, QSizeF, Signal
 
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.node import GenericNode, Node, \
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.node import GenericNode, Node, \
     NodeLocation
-from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world import World
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.teleporter_node import TeleporterNode
+from randovania.game_description.db.region import Region
 from randovania.games.game import RandovaniaGame
 from randovania.resolver.state import State
 
@@ -57,12 +57,12 @@ def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str):
 
 class DataEditorCanvas(QtWidgets.QWidget):
     game: RandovaniaGame | None = None
-    world: World | None = None
+    region: Region | None = None
     area: Area | None = None
     highlighted_node: Node | None = None
     connected_node: Node | None = None
     _background_image: QtGui.QImage | None = None
-    world_bounds: BoundsFloat
+    region_bounds: BoundsFloat
     area_bounds: BoundsFloat
     area_size: QSizeF
     image_bounds: BoundsInt
@@ -114,32 +114,32 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def select_game(self, game: RandovaniaGame):
         self.game = game
 
-    def select_world(self, world: World):
-        self.world = world
+    def select_region(self, region: Region):
+        self.region = region
         image_path = self.game.data_path.joinpath("assets", "maps",
-                                                  f"{world.name}.png") if self.game is not None else None
+                                                  f"{region.name}.png") if self.game is not None else None
         if image_path is not None and image_path.exists():
             self._background_image = QtGui.QImage(os.fspath(image_path))
             self.image_bounds = BoundsInt(
-                min_x=world.extra.get("map_min_x", 0),
-                min_y=world.extra.get("map_min_y", 0),
-                max_x=self._background_image.width() - world.extra.get("map_max_x", 0),
-                max_y=self._background_image.height() - world.extra.get("map_max_y", 0),
+                min_x=region.extra.get("map_min_x", 0),
+                min_y=region.extra.get("map_min_y", 0),
+                max_x=self._background_image.width() - region.extra.get("map_max_x", 0),
+                max_y=self._background_image.height() - region.extra.get("map_max_y", 0),
             )
         else:
             self._background_image = None
 
-        self.update_world_bounds()
+        self.update_region_bounds()
         self.update()
 
-    def update_world_bounds(self):
-        if self.world is None:
+    def update_region_bounds(self):
+        if self.region is None:
             return
 
         min_x, min_y = math.inf, math.inf
         max_x, max_y = -math.inf, -math.inf
 
-        for area in self.world.areas:
+        for area in self.region.areas:
             total_boundings = area.extra.get("total_boundings")
             if total_boundings is None:
                 continue
@@ -148,7 +148,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             min_y = min(min_y, total_boundings["y1"], total_boundings["y2"])
             max_y = max(max_y, total_boundings["y1"], total_boundings["y2"])
 
-        self.world_bounds = BoundsFloat(
+        self.region_bounds = BoundsFloat(
             min_x=min_x,
             min_y=min_y,
             max_x=max_x,
@@ -187,9 +187,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
             max_x = self._background_image.width() - area.extra.get("map_max_x", 0)
             max_y = self._background_image.height() - area.extra.get("map_max_y", 0)
             self.image_bounds = BoundsInt(min_x, min_y, max_x, max_y)
-            self.world_bounds = BoundsFloat(min_x, min_y, max_x, max_y)
+            self.region_bounds = BoundsFloat(min_x, min_y, max_x, max_y)
         else:
-            self.update_world_bounds()
+            self.update_region_bounds()
 
         self.area_bounds = BoundsFloat(
             min_x=min_x,
@@ -250,7 +250,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def _other_areas_at_position(self, qt_local_position: QPointF):
         result = []
 
-        for area in self.world.areas:
+        for area in self.region.areas:
             if "total_boundings" not in area.extra or area == self.area:
                 continue
 
@@ -262,6 +262,16 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 result.append(area)
 
         return result
+
+    def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
+        local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
+        local_pos -= self.get_area_canvas_offset()
+
+        nodes_at_mouse = self._nodes_at_position(local_pos)
+        if nodes_at_mouse:
+            if len(nodes_at_mouse) == 1 and nodes_at_mouse[0] != self.highlighted_node:
+                self.SelectConnectionsRequest.emit(nodes_at_mouse[0])
+            return
 
     def mouseDoubleClickEvent(self, event: QtGui.QMouseEvent) -> None:
         local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
@@ -385,7 +395,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         )
 
     def paintEvent(self, event: QtGui.QPaintEvent) -> None:
-        if self.world is None or self.area is None:
+        if self.region is None or self.area is None:
             return
 
         self._update_scale_variables()
@@ -402,7 +412,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             scaled_border_x = 8 * self.border_x / self.scale
             scaled_border_y = 8 * self.border_y / self.scale
 
-            wbounds = self.world_bounds
+            wbounds = self.region_bounds
             abounds = self.area_bounds
 
             # Calculate the top-left corner and bottom-right of the background image

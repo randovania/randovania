@@ -176,13 +176,23 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         # Item pool count
         try:
-            pool_items, maximum_size = pool_creator.calculate_pool_pickup_count(layout)
+            per_category_pool = pool_creator.calculate_pool_pickup_count(layout)
+            pool_items, maximum_size = pool_creator.get_total_pickup_count(per_category_pool)
             message = f"Items in pool: {pool_items}/{maximum_size}"
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, pool_items > maximum_size)
-            if layout.available_locations.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
-                major_details, minor_details = pool_creator.calculate_split_pool_pickup_count(layout)
-                (major_count, num_major_nodes), (minor_count, num_minor_nodes) = major_details, minor_details
-                message += f"<br />Majors: {major_count}/{num_major_nodes} - Minors: {minor_count}/{num_minor_nodes}"
+
+            if layout.available_locations.randomization_mode is not RandomizationMode.FULL:
+
+                parts = []
+                for category, (count, num_nodes) in per_category_pool.items():
+                    if isinstance(category, str):
+                        if num_nodes > 0:
+                            parts.append(f"{category}: {num_nodes}")
+                    else:
+                        parts.append(f"{category.long_name}: {count}/{num_nodes}")
+
+                message += "<br />"
+                message += " - ".join(parts)
 
             self.item_pool_count_label.setText(message)
 

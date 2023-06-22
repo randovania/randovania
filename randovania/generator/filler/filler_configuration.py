@@ -8,8 +8,8 @@ from randovania.layout.base.logical_resource_action import LayoutLogicalResource
 @dataclasses.dataclass(frozen=True)
 class FillerConfiguration:
     randomization_mode: RandomizationMode
-    minimum_random_starting_items: int
-    maximum_random_starting_items: int
+    minimum_random_starting_pickups: int
+    maximum_random_starting_pickups: int
     indices_to_exclude: frozenset[PickupIndex]
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool

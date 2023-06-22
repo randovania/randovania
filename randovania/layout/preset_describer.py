@@ -3,12 +3,12 @@ from collections.abc import Iterable, Sequence
 
 from randovania.game_description import default_database
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
@@ -109,9 +109,14 @@ class GamePresetDescriber:
             template_strings["Item Pool"].append(randomization_mode.description)
 
         # Item Pool
-        template_strings["Item Pool"].append(
-            "Size: {} of {}".format(*pool_creator.calculate_pool_pickup_count(configuration))
-        )
+        per_category_pool = pool_creator.calculate_pool_pickup_count(configuration)
+        if configuration.available_locations.randomization_mode is RandomizationMode.FULL:
+            pool_items, maximum_size = pool_creator.get_total_pickup_count(per_category_pool)
+            template_strings["Item Pool"].append(f"Size: {pool_items} of {maximum_size}")
+        else:
+            for category, (count, num_nodes) in per_category_pool.items():
+                if isinstance(category, LocationCategory):
+                    template_strings["Item Pool"].append(f"{category.long_name}: {count}/{num_nodes}")
 
         if random_starting_pickups != "0":
             template_strings["Item Pool"].append(f"{random_starting_pickups} random starting items")
@@ -130,16 +135,16 @@ class GamePresetDescriber:
         # Gameplay
         starting_locations = configuration.starting_location.locations
         if len(starting_locations) == 1:
-            area = game_description.world_list.area_by_area_location(starting_locations[0])
-            starting_location = f"Starts at {game_description.world_list.area_name(area)}"
+            area = game_description.region_list.area_by_area_location(starting_locations[0])
+            starting_location = f"Starts at {game_description.region_list.area_name(area)}"
         else:
             starting_location = f"{len(starting_locations)} starting locations"
         template_strings["Gameplay"].append(starting_location)
 
         # Dock Locks
-        dock_mode = configuration.dock_rando.mode
-        if dock_mode != DockRandoMode.VANILLA:
-            template_strings["Gameplay"].append(dock_mode.description)
+        dock_rando = configuration.dock_rando
+        if dock_rando.is_enabled():
+            template_strings["Gameplay"].append(dock_rando.mode.description)
 
         return template_strings
 

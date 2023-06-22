@@ -1,11 +1,13 @@
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock, ANY
+from unittest.mock import AsyncMock, MagicMock, ANY, patch
 
 import pytest
 from PySide6 import QtWidgets
+from pytest_mock import MockerFixture
 
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
+from randovania.game_connection.builder.dread_connector_builder import DreadConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
@@ -103,20 +105,49 @@ async def test_add_connector_builder_debug(window: GameConnectionWindow, abort):
         assert window.game_connection.add_connection_builder.call_args[0][0].target_game == RandovaniaGame.BLANK
 
 
-def test_setup_builder_ui_all_builders(window: GameConnectionWindow):
+@pytest.mark.parametrize("abort", [False, True])
+async def test_add_connector_builder_dread(window: GameConnectionWindow, abort):
     # Setup
-    window.game_connection.connection_builders = [
+    window.game_connection.add_connection_builder = MagicMock()
+    window._prompt_for_text = AsyncMock(return_value=None if abort else "my_ip")
+
+    # Run
+    await window._add_connector_builder(ConnectorBuilderChoice.DREAD)
+
+    # Assert
+    if abort:
+        window.game_connection.add_connection_builder.assert_not_called()
+    else:
+        window.game_connection.add_connection_builder.assert_called_once_with(ANY)
+        assert isinstance(window.game_connection.add_connection_builder.call_args[0][0], DreadConnectorBuilder)
+        assert window.game_connection.add_connection_builder.call_args[0][0].ip == "my_ip"
+
+
+@pytest.mark.parametrize("system", ["Darwin", "Windows"])
+def test_setup_builder_ui_all_builders(skip_qtbot, system, mocker: MockerFixture, is_dev_version):
+    # Setup
+    mocker.patch("randovania.is_frozen", return_value=False)
+    mocker.patch("platform.system", return_value=system)
+
+    game_connection = MagicMock()
+    game_connection.connection_builders = [
         DolphinConnectorBuilder(),
         NintendontConnectorBuilder("the_ip"),
         DebugConnectorBuilder(RandovaniaGame.BLANK.value),
     ]
 
+    window = GameConnectionWindow(game_connection)
+    skip_qtbot.addWidget(window)
+
     # Run
     window.setup_builder_ui()
 
     # Assert
-    assert not window._builder_actions[ConnectorBuilderChoice.DOLPHIN].isEnabled()
-    assert len(window.ui_for_builder) == 3
+    if system == "Darwin":
+        assert len(window.ui_for_builder) == 1 + is_dev_version
+    else:
+        assert not window._builder_actions[ConnectorBuilderChoice.DOLPHIN].isEnabled()
+        assert len(window.ui_for_builder) == 2 + is_dev_version
 
 
 @pytest.mark.parametrize("result", [
@@ -146,7 +177,7 @@ async def test_prompt_for_text(window: GameConnectionWindow, mocker, result):
 ])
 async def test_prompt_for_game(window: GameConnectionWindow, mocker, result):
     def side_effect(dialog: QtWidgets.QInputDialog):
-        dialog.setTextValue(RandovaniaGame.BLANK.value)
+        dialog.setTextValue(RandovaniaGame.BLANK.long_name)
         return result
 
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,

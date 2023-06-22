@@ -7,7 +7,7 @@ from qasync import asyncSlot
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.gui.generated.debug_connector_window_ui import Ui_DebugConnectorWindow
 from randovania.gui.lib import common_qt_lib
 
@@ -61,8 +61,8 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
     def _setup_locations_combo(self):
         game = default_database.game_description_for(self.connector.game_enum)
         index_to_name = {
-            node.pickup_index.index: game.world_list.area_name(area)
-            for world, area, node in game.world_list.all_worlds_areas_nodes
+            node.pickup_index.index: game.region_list.area_name(area)
+            for region, area, node in game.region_list.all_regions_areas_nodes
             if isinstance(node, PickupNode)
         }
 

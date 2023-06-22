@@ -1,3 +1,4 @@
+import dataclasses
 import json
 from unittest.mock import MagicMock
 
@@ -8,27 +9,33 @@ import randovania
 from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.default_database import default_prime2_memo_data
-from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+
+
+@pytest.fixture()
+def multiworld_item(echoes_resource_database):
+    return echoes_resource_database.get_item(echoes_items.MULTIWORLD_ITEM)
 
 
 def test_create_starting_popup_empty(echoes_game_patches):
@@ -43,11 +50,11 @@ def test_create_starting_popup_items(echoes_game_patches, echoes_pickup_database
     db = echoes_game_patches.game.resource_database
 
     def create_major(n):
-        return pickup_creator.create_standard_pickup(echoes_pickup_database.get_pickup_with_name(n), StandardPickupState(), False, db,
-                                                None, False)
+        return pickup_creator.create_standard_pickup(echoes_pickup_database.get_pickup_with_name(n),
+                                                     StandardPickupState(), db, None, False)
 
     missile = pickup_creator.create_ammo_pickup(echoes_pickup_database.get_pickup_with_name("Missile Expansion"),
-                                                   [5], False, db)
+                                                [5], False, db)
     tank = create_major("Energy Tank")
 
     starting_pickups = [
@@ -118,12 +125,10 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
     # Setup
     resource_db = echoes_game_description.resource_database
 
-    morph = pickup_creator.create_standard_pickup(
-        echoes_pickup_database.get_pickup_with_name("Morph Ball"),
-        StandardPickupState(), False, resource_db, None, False,
-    )
+    morph = pickup_creator.create_standard_pickup(echoes_pickup_database.get_pickup_with_name("Morph Ball"),
+                                                  StandardPickupState(), resource_db, None, False)
 
-    loc = AreaIdentifier("Temple Grounds", "Hive Chamber B")
+    loc = NodeIdentifier.create("Temple Grounds", "Hive Chamber B", "Door to Hive Storage")
     patches = empty_patches.assign_starting_location(loc).assign_extra_starting_pickups([morph])
 
     capacities = [
@@ -160,12 +165,12 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
                                                      echoes_game_description,
                                                      echoes_game_patches):
     # Setup
-    wl = echoes_game_description.world_list
+    wl = echoes_game_description.region_list
     elevator_connection: list[tuple[TeleporterNode, AreaIdentifier]] = []
 
-    def add(world: str, area: str, node: str, target_world: str, target_area: str):
+    def add(region: str, area: str, node: str, target_world: str, target_area: str):
         elevator_connection.append((
-            wl.get_teleporter_node(NodeIdentifier.create(world, area, node)),
+            wl.get_teleporter_node(NodeIdentifier.create(region, area, node)),
             AreaIdentifier(target_world, target_area),
         ))
 
@@ -356,7 +361,7 @@ def test_get_single_hud_text_locked_pbs():
     assert result == "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
 
 
-def test_pickup_data_for_seeker_launcher(echoes_pickup_database, echoes_resource_database):
+def test_pickup_data_for_seeker_launcher(echoes_pickup_database, multiworld_item, echoes_resource_database):
     # Setup
     state = StandardPickupState(
         include_copy_in_original_location=False,
@@ -364,19 +369,14 @@ def test_pickup_data_for_seeker_launcher(echoes_pickup_database, echoes_resource
         num_included_in_starting_pickups=0,
         included_ammo=(5,),
     )
-    pickup = pickup_creator.create_standard_pickup(
-        echoes_pickup_database.standard_pickups["Seeker Launcher"],
-        state,
-        True,
-        echoes_resource_database,
-        echoes_pickup_database.ammo_pickups["Missile Expansion"],
-        True
-    )
+    pickup = pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups["Seeker Launcher"], state,
+                                                   echoes_resource_database,
+                                                   echoes_pickup_database.ammo_pickups["Missile Expansion"], True)
     creator = pickup_exporter.PickupExporterSolo(patch_data_factory._simplified_memo_data())
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = patch_data_factory.echoes_pickup_details_to_patcher(details, MagicMock())
+    result = patch_data_factory.echoes_pickup_details_to_patcher(details, multiworld_item, MagicMock())
 
     # Assert
     assert result == {
@@ -387,19 +387,22 @@ def test_pickup_data_for_seeker_launcher(echoes_pickup_database, echoes_resource
                      "Seeker Launcher acquired!"],
         'resources': [{'amount': 5, 'index': 71},
                       {'amount': 1, 'index': 47},
-                      {'amount': 1, 'index': 26}],
+                      {'amount': 1, 'index': 26},
+                      {'amount': 1, 'index': 74}],
         "conditional_resources": [
             {'item': 73,
              'resources': [{'amount': 5, 'index': 44},
                            {'amount': 1, 'index': 47},
-                           {'amount': 1, 'index': 26}]}
+                           {'amount': 1, 'index': 26},
+                           {'amount': 1, 'index': 74}]}
         ],
         "convert": [],
     }
 
 
 @pytest.mark.parametrize("simplified", [False, True])
-def test_pickup_data_for_pb_expansion_locked(simplified, echoes_pickup_database, echoes_resource_database):
+def test_pickup_data_for_pb_expansion_locked(simplified, echoes_pickup_database, multiworld_item,
+                                             echoes_resource_database):
     # Setup
     pickup = pickup_creator.create_ammo_pickup(
         echoes_pickup_database.ammo_pickups["Power Bomb Expansion"],
@@ -425,7 +428,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_pickup_database,
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = patch_data_factory.echoes_pickup_details_to_patcher(details, MagicMock())
+    result = patch_data_factory.echoes_pickup_details_to_patcher(details, multiworld_item, MagicMock())
 
     # Assert
     assert result == {
@@ -434,17 +437,19 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_pickup_database,
         "model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": hud_text,
         'resources': [{'amount': 2, 'index': 72},
-                      {'amount': 1, 'index': 47}],
+                      {'amount': 1, 'index': 47},
+                      {'amount': 1, 'index': 74}],
         "conditional_resources": [
             {'item': 43,
              'resources': [{'amount': 2, 'index': 43},
-                           {'amount': 1, 'index': 47}]}
+                           {'amount': 1, 'index': 47},
+                           {'amount': 1, 'index': 74}]}
         ],
         "convert": [],
     }
 
 
-def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, echoes_resource_database):
+def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, multiworld_item, echoes_resource_database):
     # Setup
     pickup = pickup_creator.create_ammo_pickup(
         echoes_pickup_database.ammo_pickups["Power Bomb Expansion"],
@@ -456,7 +461,7 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, echoes_re
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = patch_data_factory.echoes_pickup_details_to_patcher(details, MagicMock())
+    result = patch_data_factory.echoes_pickup_details_to_patcher(details, multiworld_item, MagicMock())
 
     # Assert
     assert result == {
@@ -465,7 +470,8 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, echoes_re
         "model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": ["Power Bomb Expansion acquired!"],
         'resources': [{'amount': 2, 'index': 43},
-                      {'amount': 1, 'index': 47}],
+                      {'amount': 1, 'index': 47},
+                      {'amount': 1, 'index': 74}],
         "conditional_resources": [],
         "convert": [],
     }
@@ -491,7 +497,7 @@ def test_create_pickup_all_from_pool(echoes_game_description,
             assert not hud_text.startswith("Locked")
 
 
-def test_run_validated_hud_text():
+def test_run_validated_hud_text(multiworld_item):
     # Setup
     rng = MagicMock()
     rng.randint.return_value = 0
@@ -513,7 +519,7 @@ def test_run_validated_hud_text():
     )
 
     # Run
-    data = patch_data_factory.echoes_pickup_details_to_patcher(details, rng)
+    data = patch_data_factory.echoes_pickup_details_to_patcher(details, multiworld_item, rng)
 
     # Assert
     assert data['hud_text'] == ['Run validated!']
@@ -525,7 +531,7 @@ def test_create_string_patches(
         mocker,
 ):
     # Setup
-    game = MagicMock()
+    game: GameDescription = MagicMock()
     all_patches = MagicMock()
     rng = MagicMock()
     player_config = PlayersConfiguration(0, {0: "you"})
@@ -566,7 +572,7 @@ def test_create_string_patches(
 
     # Assert
     expected_result = ["item", "hints"]
-    mock_item_create_hints.assert_called_once_with(all_patches, player_config, game.world_list, namer, rng)
+    mock_item_create_hints.assert_called_once_with(all_patches, player_config, game.region_list, namer, rng)
     mock_logbook_title_string_patches.assert_called_once_with()
     mock_akul_testament.assert_called_once_with(namer)
 
@@ -584,13 +590,18 @@ def test_create_string_patches(
     assert result == expected_result
 
 
-def test_generate_patcher_data(test_files_dir):
+@pytest.mark.parametrize("use_new_patcher", [False, True])
+def test_generate_patcher_data(test_files_dir, use_new_patcher):
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     player_index = 0
     preset = description.get_preset(player_index)
     cosmetic_patches = EchoesCosmeticPatches()
     assert isinstance(preset.configuration, EchoesConfiguration)
+    configuration = dataclasses.replace(preset.configuration, use_new_patcher=use_new_patcher)
+    description.generator_parameters.presets[player_index] = dataclasses.replace(
+        preset, configuration=configuration
+    )
 
     # Run
     result = patch_data_factory.generate_patcher_data(description, PlayersConfiguration(player_index, {0: "you"}),
@@ -603,7 +614,17 @@ def test_generate_patcher_data(test_files_dir):
     assert len(result["pickups"]) == 119
 
     assert isinstance(result["elevators"], list)
-    assert len(result["elevators"]) == 22
+    num_claris_elevators = len(result["elevators"])
+    num_opr_elevators = sum(
+        len([area for area in world["areas"].values() if area["elevators"]])
+        for world in result.get("new_patcher", {"worlds": {}})["worlds"].values()
+    )
+    if use_new_patcher:
+        assert num_claris_elevators == 0
+        assert num_opr_elevators == 22
+    else:
+        assert num_claris_elevators == 22
+        assert num_opr_elevators == 0
 
     assert isinstance(result["translator_gates"], list)
     assert len(result["translator_gates"]) == 17

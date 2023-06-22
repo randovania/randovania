@@ -1,5 +1,4 @@
 import dataclasses
-import json
 import shutil
 from enum import Enum
 from pathlib import Path
@@ -7,7 +6,7 @@ from typing import Callable
 
 import randovania
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.lib import status_update_lib
+from randovania.lib import status_update_lib, json_lib
 
 
 class DreadModPlatform(Enum):
@@ -65,8 +64,7 @@ class DreadGameExporter(GameExporter):
             f"Randovania {randovania.VERSION} - open-dread-rando {open_dread_rando_version}",
         )
 
-        with export_params.output_path.joinpath("patcher.json").open("w") as f:
-            json.dump(patch_data, f, indent=4)
+        json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
 
         if export_params.post_export is not None:
             patcher_update = status_update_lib.OffsetProgressUpdate(progress_update, 0, 0.75)

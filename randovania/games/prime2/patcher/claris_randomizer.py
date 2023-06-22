@@ -7,11 +7,11 @@ from typing import Callable
 from randovania import get_data_path
 from randovania.games.prime2.patcher import csharp_subprocess, echoes_dol_patcher
 from randovania.interface_common.game_workdir import validate_game_files_path
-from randovania.lib import status_update_lib
+from randovania.lib import status_update_lib, json_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patchers.exceptions import ExportFailure
 
-CURRENT_PATCH_VERSION = 2
+CURRENT_PATCH_VERSION = 3
 logger = logging.getLogger(__name__)
 
 
@@ -133,10 +133,12 @@ def create_pak_backups(
         shutil.copy(files_folder.joinpath(pak), pak_folder.joinpath(pak))
 
 
-def _add_menu_mod_to_files(
+def add_menu_mod_to_files(
         game_root: Path,
-        status_update: Callable[[str], None],
+        progress_update: ProgressUpdateCallable,
 ):
+    status_update = status_update_lib.create_progress_update_from_successive_messages(
+        progress_update, 300)
     files_folder = game_root.joinpath("files")
     _run_with_args(
         [_get_menu_mod_path(), files_folder],
@@ -145,12 +147,6 @@ def _add_menu_mod_to_files(
         status_update
     )
     files_folder.joinpath("menu_mod.txt").write_bytes(b"")
-
-
-def update_json_file(file: Path, content: dict):
-    file.parent.mkdir(parents=True, exist_ok=True)
-    with file.open("w") as data_file:
-        json.dump(content, data_file, indent=4)
 
 
 def apply_patcher_file(game_root: Path,
@@ -166,10 +162,8 @@ def apply_patcher_file(game_root: Path,
     :param progress_update:
     :return:
     """
-    menu_mod = patcher_data["menu_mod"]
-
     status_update = status_update_lib.create_progress_update_from_successive_messages(
-        progress_update, 200 if menu_mod else 100)
+        progress_update, 300)
 
     last_version = get_patch_version(game_root)
     if last_version > CURRENT_PATCH_VERSION:
@@ -177,7 +171,7 @@ def apply_patcher_file(game_root: Path,
                             f"which is above supported version {CURRENT_PATCH_VERSION}. "
                             f"\nPlease press 'Delete internal copy'.", None)
 
-    update_json_file(_get_custom_data_path(), randomizer_data)
+    json_lib.write_path(_get_custom_data_path(), randomizer_data)
     _run_with_args(_base_args(game_root),
                    json.dumps(patcher_data),
                    "Randomized!",
@@ -186,5 +180,3 @@ def apply_patcher_file(game_root: Path,
                                      echoes_dol_patcher.EchoesDolPatchesData.from_json(patcher_data["dol_patches"]))
     write_patch_version(game_root, CURRENT_PATCH_VERSION)
 
-    if menu_mod:
-        _add_menu_mod_to_files(game_root, status_update)

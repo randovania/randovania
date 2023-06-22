@@ -143,6 +143,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
                 {"Warp to start": configuration.warp_to_start,
                  "Menu Mod": configuration.menu_mod,
                  "Final bosses removed": configuration.elevators.skip_final_bosses,
+                 "Unlocked Save Station doors": configuration.blue_save_doors,
                  "Inverted Aether": configuration.inverted_mode},
                 {"New Patcher": configuration.use_new_patcher},
                 *create_beam_configuration_description(configuration.beam_configuration),

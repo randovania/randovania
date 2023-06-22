@@ -52,7 +52,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
                              extra,
                          ))
     inventory = {
-        db.multiworld_magic_item: InventoryItem(0, 0),
+        connector.multiworld_magic_item: InventoryItem(0, 0),
         db.energy_tank: InventoryItem(1, 1),
     }
 
@@ -84,7 +84,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
 @pytest.mark.parametrize("has_cooldown", [False, True])
 @pytest.mark.parametrize("has_patches", [False, True])
 async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool, has_patches: bool):
-    connector = PrimeRemoteConnector(ALL_VERSIONS[0], AsyncMock())
+    connector = Prime1RemoteConnector(ALL_VERSIONS[0], AsyncMock())
 
     # Setup
     if has_cooldown:
@@ -158,30 +158,30 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
     # Setup
     connector.message_cooldown = 0.0
     connector.executor.is_connected.return_value = True
+    connector.executor.disconnect = MagicMock()
 
     connector.get_inventory = AsyncMock()
     connector.current_game_status = AsyncMock(return_value=(
         depth <= 1,  # has pending op
-        MagicMock() if depth > 0 else None,  # world
+        MagicMock() if depth > 0 else None,  # db
     ))
 
-    expectation = contextlib.nullcontext()
+    should_disconnect = False
     if failure_at == 1:
         connector.get_inventory.side_effect = MemoryOperationException("error at _get_inventory")
-        expectation = pytest.raises(MemoryOperationException, match="error at _get_inventory")
+        should_disconnect = depth > 0
 
     connector._multiworld_interaction = AsyncMock()
     if failure_at == 2:
         connector._multiworld_interaction.side_effect = MemoryOperationException("error at _check_for_collected_index")
-        expectation = pytest.raises(MemoryOperationException, match="error at _check_for_collected_index")
+        should_disconnect = depth > 1
 
     expected_depth = min(depth, failure_at) if failure_at is not None else depth
-    if (failure_at or 999) > depth:
-        expectation = contextlib.nullcontext()
+    if (failure_at or 999) <= depth:
+        should_disconnect = True
 
     # Run
-    with expectation:
-        await connector.update()
+    await connector.update()
 
     # Assert
     connector.current_game_status.assert_awaited_once_with()
@@ -197,6 +197,11 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
         connector._multiworld_interaction.assert_not_awaited()
 
     if 0 < depth:
-        assert connector._world is not None
+        assert connector._last_emitted_region is not None
     else:
-        assert connector._world is None
+        assert connector._last_emitted_region is None
+
+    if should_disconnect:
+        connector.executor.disconnect.assert_called_once_with()
+    else:
+        connector.executor.disconnect.assert_not_called()

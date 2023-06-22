@@ -1,5 +1,5 @@
 {
-    "schema_version": 49,
+    "schema_version": 53,
     "base_preset_uuid": null,
     "name": "April Fools 2023",
     "uuid": "188c652e-9d76-4ce9-91e7-a40f3272feff",
@@ -12,9 +12,9 @@
         },
         "starting_location": [
             {
-                "world_name": "Artaria",
-                "area_name": "Intro Room",
-                "node_name": "Start Point"
+                "region": "Artaria",
+                "area": "Intro Room",
+                "node": "Start Point"
             }
         ],
         "available_locations": {
@@ -55,7 +55,10 @@
                     "num_shuffled_pickups": 1
                 },
                 "Flash Shift": {
-                    "num_shuffled_pickups": 1
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        2
+                    ]
                 },
                 "Pulse Radar": {
                     "num_shuffled_pickups": 30,
@@ -102,7 +105,8 @@
                 },
                 "Energy Part": {
                     "num_shuffled_pickups": 20
-                }
+                },
+                "Speed Booster Upgrade": {}
             },
             "default_pickups": {},
             "minimum_random_starting_pickups": 0,
@@ -130,6 +134,13 @@
                     ],
                     "pickup_count": 13,
                     "requires_main_item": true
+                },
+                "Flash Shift Upgrade": {
+                    "ammo_count": [
+                        1
+                    ],
+                    "pickup_count": 0,
+                    "requires_main_item": true
                 }
             }
         },
@@ -141,7 +152,7 @@
         "minimum_available_locations_for_hint_placement": 5,
         "minimum_location_weight_for_hint_placement": 0.1,
         "dock_rando": {
-            "mode": "two-way",
+            "mode": "docks",
             "types_state": {
                 "door": {
                     "can_change_from": [
@@ -191,6 +202,7 @@
         "hanubia_shortcut_no_grapple": true,
         "hanubia_easier_path_to_itorash": true,
         "x_starts_released": false,
+        "raven_beak_damage_table_handling": "consistent_low",
         "allow_highly_dangerous_logic": false,
         "april_fools_hints": true,
         "artifacts": {

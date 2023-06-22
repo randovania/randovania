@@ -1,43 +1,71 @@
 import dataclasses
 from enum import Enum
 
+import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
+from randovania.lib import enum_lib
 
 
 class TeleporterShuffleMode(BitPackEnum, Enum):
+    long_name: str
+    description: str
+
     VANILLA = "vanilla"
+    ECHOES_SHUFFLED = "echoes-shuffled"
     TWO_WAY_RANDOMIZED = "randomized"
     TWO_WAY_UNCHECKED = "two-way-unchecked"
     ONE_WAY_ELEVATOR = "one-way-elevator"
     ONE_WAY_ELEVATOR_REPLACEMENT = "one-way-elevator-replacement"
     ONE_WAY_ANYTHING = "one-way-anything"
 
-    @property
-    def long_name(self) -> str:
-        if self == TeleporterShuffleMode.VANILLA:
-            return "Original connections"
-        elif self == TeleporterShuffleMode.TWO_WAY_RANDOMIZED:
-            return "Two-way, between areas"
-        elif self == TeleporterShuffleMode.TWO_WAY_UNCHECKED:
-            return "Two-way, unchecked"
-        elif self == TeleporterShuffleMode.ONE_WAY_ELEVATOR:
-            return "One-way, elevator room with cycles"
-        elif self == TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT:
-            return "One-way, elevator room with replacement"
-        elif self == TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            return "One-way, anywhere"
+    def usable_by_game(self, game: RandovaniaGame):
+        if self != TeleporterShuffleMode.ECHOES_SHUFFLED:
+            return True
         else:
-            raise ValueError(f"Unknown value: {self}")
+            return game == RandovaniaGame.METROID_PRIME_ECHOES
+
+
+enum_lib.add_long_name(TeleporterShuffleMode, {
+    TeleporterShuffleMode.VANILLA: "Original connections",
+    TeleporterShuffleMode.ECHOES_SHUFFLED: "Shuffle regions",
+    TeleporterShuffleMode.TWO_WAY_RANDOMIZED: "Two-way, between regions",
+    TeleporterShuffleMode.TWO_WAY_UNCHECKED: "Two-way, unchecked",
+    TeleporterShuffleMode.ONE_WAY_ELEVATOR: "One-way, elevator room with cycles",
+    TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT: "One-way, elevator room with replacement",
+    TeleporterShuffleMode.ONE_WAY_ANYTHING: "One-way, anywhere",
+})
+
+enum_lib.add_per_enum_field(TeleporterShuffleMode, "description", {
+    TeleporterShuffleMode.VANILLA:
+        "all elevators are connected to where they do in the original game.",
+    TeleporterShuffleMode.ECHOES_SHUFFLED:
+        "keeps Temple Grounds in place, shuffling the locations of all other regions with each other."
+        f"<p><img src=\"{randovania.get_data_path()}/gui_assets/echoes_elevator_map.png\" width=450/></p>",
+    TeleporterShuffleMode.TWO_WAY_RANDOMIZED:
+        "after taking an elevator, the elevator in the room you are in will bring you back to where you were. "
+        "An elevator will never connect to another in the same region. "
+        "This is the only setting that guarantees all regions are reachable.",
+    TeleporterShuffleMode.TWO_WAY_UNCHECKED:
+        "after taking an elevator, the elevator in the room you are in will bring you back to where you were.",
+    TeleporterShuffleMode.ONE_WAY_ELEVATOR:
+        "all elevators bring you to an elevator room, but going backwards can go somewhere else. "
+        "All rooms are used as a destination exactly once, causing all elevators to be separated into loops.",
+    TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT:
+        "all elevators bring you to an elevator room, but going backwards can go somewhere else. "
+        "Rooms can be used as a destination multiple times, causing elevators which you can possibly not come back to.",
+    TeleporterShuffleMode.ONE_WAY_ANYTHING:
+        "elevators are connected to any room from the game.",
+})
 
 
 def _has_editable_teleporter(area: Area) -> bool:
@@ -51,12 +79,10 @@ def _has_editable_teleporter(area: Area) -> bool:
 class TeleporterList(location_list.LocationList):
     @classmethod
     def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
-        world_list = default_database.game_description_for(game).world_list
+        region_list = default_database.game_description_for(game).region_list
         nodes = [
-            world_list.identifier_for_node(node)
-            for world in world_list.worlds
-            for area in world.areas
-            for node in area.nodes
+            region_list.identifier_for_node(node)
+            for node in region_list.all_nodes
             if isinstance(node, TeleporterNode) and node.editable
         ]
         nodes.sort()
@@ -74,13 +100,13 @@ class TeleporterList(location_list.LocationList):
 
 
 def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
-    if (game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and 
+    if (game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and
             area.name == "Credits" and node.name == area.default_node):
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
-    return (area.has_start_node() and area.default_node is not None and 
-        area.default_node == node.name and not has_save_station)
+    return (area.has_start_node() and area.default_node is not None and
+            area.default_node == node.name and not has_save_station)
 
 
 class TeleporterTargetList(location_list.LocationList):
@@ -145,13 +171,13 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                     if location not in self.excluded_targets.locations]
 
         elif self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
-            world_list = default_database.game_description_for(self.game).world_list
+            region_list = default_database.game_description_for(self.game).region_list
             result = []
             for identifier in self.editable_teleporters:
-                node = world_list.node_by_identifier(identifier)
+                node = region_list.node_by_identifier(identifier)
                 if isinstance(node, TeleporterNode) and node.editable:
                     # Valid destinations must be valid starting areas
-                    area = world_list.nodes_to_area(node)
+                    area = region_list.nodes_to_area(node)
                     if area.has_start_node():
                         result.append(identifier.area_identifier)
                     # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
@@ -164,11 +190,12 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
 
     def description(self):
         result = []
-        if not self.is_vanilla and self.excluded_teleporters.locations:
-            result.append(f"{len(self.excluded_teleporters.locations)} teleporters")
+        if self.mode not in {TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.ECHOES_SHUFFLED}:
+            if not self.is_vanilla and self.excluded_teleporters.locations:
+                result.append(f"{len(self.excluded_teleporters.locations)} teleporters")
 
-        if self.has_shuffled_target and self.excluded_targets.locations:
-            result.append(f"{len(self.excluded_targets.locations)} targets")
+            if self.has_shuffled_target and self.excluded_targets.locations:
+                result.append(f"{len(self.excluded_targets.locations)} targets")
 
         if result:
             return f"{self.mode.long_name}; excluded {', '.join(result)}"

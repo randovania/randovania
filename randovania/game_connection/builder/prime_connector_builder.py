@@ -62,14 +62,14 @@ class PrimeConnectorBuilder(ConnectorBuilder):
             return None
 
         possible_connectors: list[PrimeRemoteConnector] = [
-            connectors
-            for connectors, read_op in zip(all_connectors, read_first_ops)
-            if first_ops_result.get(read_op) == connectors.version.build_string[:4]
+            connector
+            for connector, read_op in zip(all_connectors, read_first_ops)
+            if first_ops_result.get(read_op) == connector.version.build_string[:4]
         ]
 
         for connector in possible_connectors:
             try:
-                is_version = await connector.is_this_version()
+                is_version = await connector.check_for_world_uid()
             except (RuntimeError, MemoryOperationException) as e:
                 self._status_message(e)
                 executor.disconnect()

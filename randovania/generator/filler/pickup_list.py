@@ -7,7 +7,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver import debug
 from randovania.resolver.state import State

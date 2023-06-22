@@ -1,6 +1,7 @@
 import re
 import struct
 from unittest.mock import AsyncMock, MagicMock
+import uuid
 
 import pytest
 
@@ -29,13 +30,15 @@ def echoes_remote_connector(version: EchoesDolVersion):
     return connector
 
 
-async def test_is_this_version(connector: EchoesRemoteConnector):
+async def test_check_for_world_uid(connector: EchoesRemoteConnector):
     # Setup
-    build_info = b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32"
+    build_info = (b"!#$Met\xaa\xaa\xaa\xaa\xaa\xaa\x11\x11\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
+                  b"Build v1.028 10/18/2004 10:44:32")
     connector.executor.perform_single_memory_operation.return_value = build_info
 
     # Run
-    assert await connector.is_this_version()
+    assert await connector.check_for_world_uid()
+    assert connector.layout_uuid == uuid.UUID("AAAAAAAA-AAAA-1111-AAAA-AAAAAAAAAAAA")
 
 
 @pytest.mark.parametrize(["message_original", "message_encoded", "previous_size"], [
@@ -135,7 +138,7 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
     # Assert
     mock_item_patch.assert_called_once_with(version.powerup_functions,
                                             RandovaniaGame.METROID_PRIME_ECHOES,
-                                            connector.game.resource_database.multiworld_magic_item.extra["item_id"],
+                                            connector.multiworld_magic_item.extra["item_id"],
                                             -10)
 
     assert locations == {PickupIndex(9)}
@@ -144,7 +147,7 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
 
 async def test_receive_remote_pickups_nothing(connector: EchoesRemoteConnector):
     # Setup
-    inventory = {connector.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)}
+    inventory = {connector.multiworld_magic_item: InventoryItem(0, 0)}
     connector.execute_remote_patches = AsyncMock()
 
     # Run
@@ -154,7 +157,7 @@ async def test_receive_remote_pickups_nothing(connector: EchoesRemoteConnector):
 
 async def test_receive_remote_pickups_pending_location(connector: EchoesRemoteConnector):
     # Setup
-    inventory = {connector.game.resource_database.multiworld_magic_item: InventoryItem(5, 15)}
+    inventory = {connector.multiworld_magic_item: InventoryItem(5, 15)}
     connector.execute_remote_patches = AsyncMock()
 
     # Run
@@ -178,7 +181,7 @@ async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnect
     connector._write_string_to_game_buffer = MagicMock()
     connector._patches_for_pickup = AsyncMock(return_value=([pickup_patches, pickup_patches], "The Message"))
 
-    inventory = {connector.game.resource_database.multiworld_magic_item: InventoryItem(0, 0)}
+    inventory = {connector.multiworld_magic_item: InventoryItem(0, 0)}
     permanent_pickups = [
         ("A", MagicMock()),
         ("B", MagicMock()),
@@ -198,7 +201,7 @@ async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnect
 
     mock_item_patch.assert_called_once_with(version.powerup_functions,
                                             RandovaniaGame.METROID_PRIME_ECHOES,
-                                            connector.game.resource_database.multiworld_magic_item.extra["item_id"])
+                                            connector.multiworld_magic_item.extra["item_id"])
     connector._patches_for_pickup.assert_awaited_once_with(permanent_pickups[0][0], permanent_pickups[0][1], inventory)
     connector.execute_remote_patches.assert_awaited_once_with([
         DolRemotePatch([], pickup_patches),
@@ -225,7 +228,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
     item_percentage_resource = []
     if has_item_percentage:
         item_percentage_resource = [
-            (db.item_percentage, 1),
+            (db.get_item("Percent"), 1),
         ]
 
     pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=tuple(),
@@ -235,7 +238,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
                              *item_percentage_resource,
                          ))
     inventory = {
-        db.multiworld_magic_item: InventoryItem(0, 0),
+        connector.multiworld_magic_item: InventoryItem(0, 0),
         db.energy_tank: InventoryItem(1, 1),
     }
 
@@ -285,7 +288,7 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
 async def test_fetch_game_status(connector: EchoesRemoteConnector, version: EchoesDolVersion,
                                  has_world, has_pending_op, correct_vtable):
     # Setup
-    expected_world = connector.game.world_list.worlds[0]
+    expected_world = connector.game.region_list.regions[0]
 
     connector.executor.perform_memory_operations.side_effect = lambda ops: {
         ops[0]: expected_world.extra["asset_id"].to_bytes(4, "big") if has_world else b"DEAD",
@@ -306,20 +309,15 @@ async def test_fetch_game_status(connector: EchoesRemoteConnector, version: Echo
 
 async def test_receive_required_missile_launcher(connector: EchoesRemoteConnector,
                                                  echoes_pickup_database, echoes_resource_database):
-    pickup = pickup_creator.create_standard_pickup(
-        echoes_pickup_database.standard_pickups["Missile Launcher"],
-        StandardPickupState(included_ammo=(5,)),
-        True,
-        echoes_resource_database,
-        echoes_pickup_database.ammo_pickups["Missile Expansion"],
-        True,
-    )
+    pickup = pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups["Missile Launcher"],
+                                                   StandardPickupState(included_ammo=(5,)), echoes_resource_database,
+                                                   echoes_pickup_database.ammo_pickups["Missile Expansion"], True)
 
     connector.execute_remote_patches = AsyncMock()
     permanent_pickups = (("Received Missile Launcher from Someone Else", pickup),)
 
     inventory = {
-        echoes_resource_database.multiworld_magic_item: InventoryItem(0, 0),
+        connector.multiworld_magic_item: InventoryItem(0, 0),
     }
 
     # Run

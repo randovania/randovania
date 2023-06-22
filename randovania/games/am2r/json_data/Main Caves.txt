@@ -1,0 +1,1404 @@
+----------------
+Landing Site
+Extra - map_name: rm_a0h01
+> Ship; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Extra - save_room: 0
+  > Dock to Hornoad Hallway
+      Trivial
+  > Top
+      Any of the following:
+          Space Jump or Can Use Spider Ball
+          Hi-Jump Boots and Walljump (Intermediate)
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Expert) and Can Use Bombs
+          Charged Bomb Jump (Advanced) and Walljump (Expert) and Can Use Charged Bomb Jump
+  > Event - Victory
+      After Collected the Baby
+
+> Dock to Hornoad Hallway; Heals? False
+  * Layers: default
+  * Open Passage to Hornoad Hallway/Dock to Landing Site
+  > Ship
+      Trivial
+
+> Dock to Crystal Climb West; Heals? False
+  * Layers: default
+  * Open Passage to Crystal Climb West/Dock to Landing Site
+  > Next to Crystal Blocks
+      After Collected the Baby
+
+> Next to Crystal Blocks; Heals? False
+  * Layers: default
+  > Dock to Crystal Climb West
+      After Collected the Baby
+  > Top
+      Any of the following:
+          Space Jump or Can Use Spider Ball
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Expert) and Can Use Bombs
+          All of the following:
+              # Shinespark
+              Speed Booster and Shinesparking Tricks (Intermediate) and Power Grip Wall
+          Hi-Jump Boots and Walljump (Intermediate)
+
+> Top; Heals? False
+  * Layers: default
+  > Ship
+      Trivial
+  > Next to Crystal Blocks
+      Trivial
+
+> Event - Victory; Heals? False
+  * Layers: default
+  * Event Victory Event
+  > Ship
+      Trivial
+
+----------------
+Hornoad Hallway
+Extra - map_name: rm_a0h02
+> Dock to Landing Site; Heals? False
+  * Layers: default
+  * Open Passage to Landing Site/Dock to Hornoad Hallway
+  > Bottom
+      Trivial
+
+> Dock to Tsumuri Tunnel; Heals? False
+  * Layers: default
+  * Open Passage to Tsumuri Tunnel/Dock to Hornoad Hallway
+  > Bottom
+      Morph Ball
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to Landing Site
+      Power Grip Wall
+  > Dock to Tsumuri Tunnel
+      Morph Ball
+
+----------------
+Tsumuri Tunnel
+Extra - map_name: rm_a0h02a
+> Dock to Cavern Crossroads; Heals? False
+  * Layers: default
+  * Open Passage to Cavern Crossroads/Dock to Tsumuri Tunnel
+  > Dock to Hornoad Hallway
+      Any of the following:
+          Power Grip Wall
+          Speed Booster and Shinesparking Tricks (Intermediate) and Disabled Entrance Rando
+
+> Dock to Hornoad Hallway; Heals? False
+  * Layers: default
+  * Open Passage to Hornoad Hallway/Dock to Tsumuri Tunnel
+  > Dock to Cavern Crossroads
+      Trivial
+
+----------------
+Cavern Crossroads
+Extra - map_name: rm_a0h03
+> Dock to Tsumuri Tunnel; Heals? False
+  * Layers: default
+  * Open Passage to Tsumuri Tunnel/Dock to Cavern Crossroads
+  > Dock to Surface Cave Save Station
+      Trivial
+  > Dock to Rocky Stairs
+      Trivial
+
+> Dock to Surface Cave Save Station; Heals? False
+  * Layers: default
+  * Open Passage to Surface Cave Save Station/Dock to Cavern Crossroads
+  > Dock to Tsumuri Tunnel
+      Trivial
+
+> Dock to Rocky Stairs; Heals? False
+  * Layers: default
+  * Open Passage to Rocky Stairs/Dock to Cavern Crossroads
+  > Dock to Tsumuri Tunnel
+      Trivial
+
+----------------
+Surface Cave Save Station
+Extra - map_name: rm_a0h03a
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Extra - save_room: 1
+  > Dock to Twisty Tunnel
+      Trivial
+  > Dock to Cavern Crossroads
+      Trivial
+
+> Dock to Twisty Tunnel; Heals? False
+  * Layers: default
+  * Open Passage to Twisty Tunnel/Dock to Surface Cave Save Station
+  > Save Station
+      Trivial
+
+> Dock to Cavern Crossroads; Heals? False
+  * Layers: default
+  * Open Passage to Cavern Crossroads/Dock to Surface Cave Save Station
+  > Save Station
+      Trivial
+
+----------------
+Rocky Stairs
+Extra - map_name: rm_a0h03b
+> Dock to Surface Pond Access; Heals? False
+  * Layers: default
+  * Open Passage to Surface Pond Access/Dock to Rocky Stairs
+  > Dock to Cavern Crossroads
+      Trivial
+
+> Dock to Cavern Crossroads; Heals? False
+  * Layers: default
+  * Open Passage to Cavern Crossroads/Dock to Rocky Stairs
+  > Dock to Surface Pond Access
+      Trivial
+
+----------------
+Surface Pond Access
+Extra - map_name: rm_a0h04
+> Dock to Surface Pond; Heals? False
+  * Layers: default
+  * Open Passage to Surface Pond/Dock to Surface Pond Access
+  > Dock to Rocky Stairs
+      Trivial
+
+> Dock to Rocky Stairs; Heals? False
+  * Layers: default
+  * Open Passage to Rocky Stairs/Dock to Surface Pond Access
+  > Dock to Surface Pond
+      Trivial
+
+----------------
+Surface Pond
+Extra - map_name: rm_a0h04b
+> Dock to Surface Pond Access; Heals? False
+  * Layers: default
+  * Open Passage to Surface Pond Access/Dock to Surface Pond
+  > Door to Surface Pond Save Station
+      Trivial
+
+> Door to Surface Pond Save Station; Heals? False
+  * Layers: default
+  * Missile Door to Surface Pond Save Station/Door to Surface Pond
+  * Extra - instance_id: 101612
+  > Dock to Surface Pond Access
+      Trivial
+
+----------------
+Surface Pond Save Station
+Extra - map_name: rm_a0h04c
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Extra - save_room: 2
+  > Door to Surface Pond
+      Trivial
+  > Dock to Surface Lava Pond
+      Trivial
+
+> Door to Surface Pond; Heals? False
+  * Layers: default
+  * Normal Door to Surface Pond/Door to Surface Pond Save Station
+  * Extra - instance_id: 101657
+  > Save Station
+      Trivial
+
+> Dock to Surface Lava Pond; Heals? False
+  * Layers: default
+  * Open Passage to Surface Lava Pond/Dock to Surface Pond Save Station
+  > Save Station
+      Trivial
+
+----------------
+Surface Lava Pond
+Extra - map_name: rm_a0h04d
+> Dock to Surface Alpha Nest; Heals? False
+  * Layers: default
+  * Open Passage to Surface Alpha Nest/Dock to Surface Lava Pond
+  > Bottom
+      Trivial
+
+> Dock to Surface Pond Save Station; Heals? False
+  * Layers: default
+  * Open Passage to Surface Pond Save Station/Dock to Surface Lava Pond
+  > Bottom
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to Surface Alpha Nest
+      Power Grip Wall
+  > Dock to Surface Pond Save Station
+      Power Grip Wall
+
+----------------
+Surface Alpha Nest
+Extra - map_name: rm_a0h05
+> Dock to Surface Lava Pond; Heals? False
+  * Layers: default
+  * Open Passage to Surface Lava Pond/Dock to Surface Alpha Nest
+  > Event - Alpha
+      Defeat Alpha
+
+> Event - Alpha; Heals? False
+  * Layers: default
+  * Event Surface - Alpha Metroid
+  > Dock to Surface Lava Pond
+      Trivial
+
+----------------
+Twisty Tunnel
+Extra - map_name: rm_a0h06
+> Dock to Surface Cave Save Station; Heals? False
+  * Layers: default
+  * Open Passage to Surface Cave Save Station/Dock to Twisty Tunnel
+  > Dock to Grave Grotto
+      Trivial
+
+> Dock to Grave Grotto; Heals? False
+  * Layers: default
+  * Open Passage to Grave Grotto/Dock to Twisty Tunnel
+  > Dock to Surface Cave Save Station
+      Trivial
+
+----------------
+Grave Grotto
+Extra - map_name: rm_a0h07
+> Dock to Twisty Tunnel; Heals? False
+  * Layers: default
+  * Open Passage to Twisty Tunnel/Dock to Grave Grotto
+  > Dock to Mumbo Manor
+      Trivial
+  > Middle
+      Trivial
+
+> Dock to Mumbo Manor; Heals? False
+  * Layers: default
+  * Open Passage to Mumbo Manor/Dock to Grave Grotto
+  > Dock to Twisty Tunnel
+      Trivial
+
+> Tunnel to Surface Gunzoo Room; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Surface Gunzoo Room/Tunnel to Grave Grotto
+  > Dock to Hydro Station Entrance
+      Morph Ball
+
+> Dock to Hydro Station Entrance; Heals? False
+  * Layers: default
+  * Open Passage to Hydro Station Entrance/Dock to Grave Grotto
+  > Tunnel to Surface Gunzoo Room
+      Low Mid-Air Morph Tunnel Climb
+
+> Tunnel to Surface Spider Ball Challenge; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Surface Spider Ball Challenge/Tunnel to Grave Grotto
+  > Dock to Surface Gunzoo Room
+      Can Use Any Bombs
+
+> Dock to Surface Gunzoo Room; Heals? False
+  * Layers: default
+  * Open Passage to Surface Gunzoo Room/Dock to Grave Grotto
+  > Middle
+      All of the following:
+          Morph Ball and Power Grip Wall
+          Any of the following:
+              Power Grip Wall
+              Speed Booster and Shinesparking Tricks (Advanced)
+
+> Middle; Heals? False
+  * Layers: default
+  > Dock to Twisty Tunnel
+      Trivial
+  > Tunnel to Surface Spider Ball Challenge
+      Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
+  > Dock to Surface Gunzoo Room
+      Trivial
+
+----------------
+Surface Spider Ball Challenge
+Extra - map_name: rm_a0h07A
+> Tunnel to Grave Grotto; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Grave Grotto/Tunnel to Surface Spider Ball Challenge
+  > Bottom
+      Morph Ball
+
+> Pickup (Top Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 53; Category? Minor
+  * Extra - object_name: oItemM_53
+  > Bottom
+      Morph Ball
+
+> Pickup (Bottom Missile); Heals? False
+  * Layers: default
+  * Pickup 52; Category? Minor
+  * Extra - object_name: oItemM_52
+  > Bottom
+      Can Use Any Bombs
+
+> Bottom; Heals? False
+  * Layers: default
+  > Tunnel to Grave Grotto
+      Morph Ball and Low Mid-Air Morph Tunnel Climb
+  > Pickup (Top Missile Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              # A way to get up to the item
+              Space Jump or Walljump (Hypermode)
+              All of the following:
+                  # IBJ up
+                  Infinite Bomb Jumping (Advanced) and Can Use Bombs
+              All of the following:
+                  # Intended spider ball way
+                  Can Use Bombs and Can Use Spider Ball
+              All of the following:
+                  # Shinespark up
+                  Speed Booster and Shinesparking Tricks (Intermediate) and Disabled Entrance Rando
+              All of the following:
+                  Movement (Hypermode) and Walljump (Intermediate)
+                  All of the following:
+                      # Frame perfectly jump off of crumble blocks
+                      Damage Boost (Beginner) and Normal Damage ≥ 7
+                  Any of the following:
+                      All of the following:
+                          # Frame perfectly jump off of crumble blocks
+                          Damage Boost (Beginner) and Normal Damage ≥ 7
+                      All of the following:
+                          # Frame perfectly spring ball off of crumble blocks
+                          Can Use Spring Ball
+  > Pickup (Bottom Missile)
+      Can Use Any Bombs
+
+----------------
+Mumbo Manor
+Extra - map_name: rm_a0h08
+> Dock to Guardian Arena; Heals? False
+  * Layers: default
+  * Open Passage to Guardian Arena/Dock to Mumbo Manor
+  > Dock to Grave Grotto
+      Trivial
+
+> Dock to Grave Grotto; Heals? False
+  * Layers: default
+  * Open Passage to Grave Grotto/Dock to Mumbo Manor
+  > Dock to Guardian Arena
+      Trivial
+
+----------------
+Surface Gunzoo Room
+Extra - map_name: rm_a0h09
+> Tunnel to Grave Grotto; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Grave Grotto/Tunnel to Surface Gunzoo Room
+  > Top rock
+      Morph Ball
+
+> Dock to Spike Maze; Heals? False
+  * Layers: default
+  * Open Passage to Spike Maze/Dock to Surface Gunzoo Room
+  > Dock to Bend Chasm
+      Trivial
+
+> Dock to Bend Chasm; Heals? False
+  * Layers: default
+  * Open Passage to Bend Chasm/Dock to Surface Gunzoo Room
+  > Dock to Spike Maze
+      Trivial
+
+> Tunnel to Surface Space Jump Challenge; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Surface Space Jump Challenge/Tunnel to Surface Gunzoo Room
+  > Top rock
+      Can Use Any Bombs
+
+> Dock to Grave Grotto; Heals? False
+  * Layers: default
+  * Open Passage to Grave Grotto/Dock to Surface Gunzoo Room
+  > Top rock
+      Trivial
+
+> Tunnel to Bend Chasm; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Bend Chasm/Tunnel to Surface Gunzoo Room
+  > Top rock
+      Power Grip Wall
+
+> Top rock; Heals? False
+  * Layers: default
+  > Tunnel to Grave Grotto
+      Morph Ball
+  > Tunnel to Surface Space Jump Challenge
+      Any of the following:
+          Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
+          Speed Booster and Charged Bomb Jump (Advanced) and Mid-Air Morph (Advanced) and Shinesparking Tricks (Advanced) and Can Use Charged Bomb Jump
+  > Dock to Grave Grotto
+      Trivial
+  > Tunnel to Bend Chasm
+      Trivial
+
+----------------
+Surface Space Jump Challenge
+Extra - map_name: rm_a0h09A
+> Tunnel to Surface Gunzoo Room; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Surface Gunzoo Room/Tunnel to Surface Space Jump Challenge
+  > Near Spikes
+      Morph Ball
+
+> Near Spikes; Heals? False
+  * Layers: default
+  > Tunnel to Surface Gunzoo Room
+      Morph Ball
+  > Pickup (Missile Tank)
+      Any of the following:
+          Space Jump
+          All of the following:
+              Movement (Intermediate)
+              Any of the following:
+                  Hi-Jump Boots
+                  All of the following:
+                      # IBJ
+                      Infinite Bomb Jumping (Advanced) and Can Use Bombs
+                  All of the following:
+                      # Glide jump from crumble to crumble
+                      Morph Ball and Morph Glide (Advanced) and Walljump (Beginner)
+                      Power Grip or Walljump (Advanced)
+          All of the following:
+              # IBJ to ceiling + Spider
+              Infinite Bomb Jumping (Advanced) and Can Use Bombs and Can Use Spider Ball
+          All of the following:
+              # Diagonal IBJ
+              Diagonal Infinite Bomb Jumping (Advanced) and Can Use Bombs
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 57; Category? Minor
+  * Extra - object_name: oItemM_57
+  > Near Spikes
+      Any of the following:
+          Damage Boost (Beginner) or Can Use Spider Ball
+          Movement (Intermediate) and Hijump Wall
+          Morph Ball and Morph Glide (Beginner)
+
+----------------
+Spike Maze
+Extra - map_name: rm_a0h10
+> Dock to Mines Access; Heals? False
+  * Layers: default
+  * Open Passage to Mines Access/Dock to Spike Maze
+  > Middle Pit
+      Morph Ball and Tunnel Climb
+
+> Dock to Surface Gunzoo Room; Heals? False
+  * Layers: default
+  * Open Passage to Surface Gunzoo Room/Dock to Spike Maze
+  > Top Pit
+      Morph Ball
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 210; Category? Minor
+  * Extra - object_name: oItemM_210
+  > Middle Pit
+      Morph Ball
+
+> Top Pit; Heals? False
+  * Layers: default
+  > Dock to Surface Gunzoo Room
+      Morph Ball and Power Grip Wall
+  > Middle Pit
+      Morph Ball
+
+> Middle Pit; Heals? False
+  * Layers: default
+  > Dock to Mines Access
+      Morph Ball
+  > Pickup (Missile Tank)
+      High Mid-Air Morph Tunnel Climb
+  > Top Pit
+      All of the following:
+          Morph Ball
+          Damage Boost (Beginner) or High Mid-Air Morph Tunnel Climb
+
+----------------
+Mines Access
+Extra - map_name: rm_a0h10a
+> Dock to Spike Maze; Heals? False
+  * Layers: default
+  * Open Passage to Spike Maze/Dock to Mines Access
+  > Middle
+      Trivial
+
+> Dock to Mines 3-Shape Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Mines 3-Shape Shaft/Dock to Mines Access
+  > Bottom
+      After Mines Entrance Crystal
+  > Event - Crystal
+      Super Missiles
+
+> Dock to Outer Caverns Save Station; Heals? False
+  * Layers: default
+  * Open Passage to Outer Caverns Save Station/Dock to Mines Access
+  > Middle
+      Trivial
+
+> Dock to Hidden Mines Route; Heals? False
+  * Layers: default
+  * Open Passage to Hidden Mines Route/Dock to Mines Access
+
+> Middle; Heals? False
+  * Layers: default
+  > Dock to Spike Maze
+      Trivial
+  > Dock to Outer Caverns Save Station
+      Power Grip Wall
+  > Bottom
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to Mines 3-Shape Shaft
+      After Mines Entrance Crystal
+  > Dock to Hidden Mines Route
+      Speed Booster and Knowledge (Intermediate)
+  > Middle
+      Hijump Wall
+  > Event - Crystal
+      Super Missiles
+
+> Event - Crystal; Heals? False
+  * Layers: default
+  * Event Mines Entrance Crystal
+  > Bottom
+      Trivial
+
+----------------
+Hidden Mines Route
+Extra - map_name: rm_a0h10b
+> Dock to Mines Access; Heals? False
+  * Layers: default
+  * Open Passage to Mines Access/Dock to Hidden Mines Route
+  > Dock to Bend Chasm
+      Trivial
+
+> Dock to Bend Chasm; Heals? False
+  * Layers: default
+  * Open Passage to Bend Chasm/Dock to Hidden Mines Route
+  > Dock to Mines Access
+      Trivial
+
+----------------
+Bend Chasm
+Extra - map_name: rm_a0h11
+> Dock to Surface Gunzoo Room; Heals? False
+  * Layers: default
+  * Open Passage to Surface Gunzoo Room/Dock to Bend Chasm
+  > Tunnel to Surface Gunzoo Room
+      Morph Ball and Hijump Wall
+  > Septogg
+      Morph Ball
+
+> Dock to Octroll Lava Pool; Heals? False
+  * Layers: default
+  * Open Passage to Octroll Lava Pool/Dock to Bend Chasm
+  > Dock to Western Cave Entrance
+      Trivial
+  > Septogg
+      Trivial
+
+> Dock to Hidden Mines Route; Heals? False
+  * Layers: default
+  * Open Passage to Hidden Mines Route/Dock to Bend Chasm
+  > Septogg
+      Morph Ball
+
+> Dock to Western Cave Entrance; Heals? False
+  * Layers: default
+  * Open Passage to Western Cave Entrance/Dock to Bend Chasm
+  > Dock to Octroll Lava Pool
+      Power Grip Wall
+
+> Tunnel to Surface Gunzoo Room; Heals? False
+  * Layers: default
+  * Morph Ball Tunnel to Surface Gunzoo Room/Tunnel to Bend Chasm
+  > Dock to Surface Gunzoo Room
+      Morph Ball
+
+> Septogg; Heals? False
+  * Layers: default
+  > Dock to Surface Gunzoo Room
+      All of the following:
+          Power Grip Wall and Tunnel Climb
+          Enabled Septogg Helpers or Hijump With Power Grip Wall
+  > Dock to Octroll Lava Pool
+      Trivial
+
+----------------
+Western Cave Entrance
+Extra - map_name: rm_a0h24
+> Dock to Bend Chasm; Heals? False
+  * Layers: default
+  * Open Passage to Bend Chasm/Dock to Western Cave Entrance
+  > Middle 
+      Trivial
+
+> Dock to Western Cave Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Western Cave Shaft/Dock to Western Cave Entrance
+  > Pickup (Missile Tank)
+      Speed Booster and Shinesparking Tricks (Beginner)
+  > Middle 
+      Space Jump Wall
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 54; Category? Minor
+  * Extra - object_name: oItemM_54
+  > Dock to Western Cave Shaft
+      Trivial
+
+> Middle ; Heals? False
+  * Layers: default
+  > Dock to Bend Chasm
+      Hijump Wall
+  > Dock to Western Cave Shaft
+      Trivial
+
+----------------
+Western Cave Shaft
+Extra - map_name: rm_a0h25
+> Dock to Western Cave Entrance; Heals? False
+  * Layers: default
+  * Open Passage to Western Cave Entrance/Dock to Western Cave Shaft
+  > Top
+      Trivial
+
+> Dock to Western Cave Save Station; Heals? False
+  * Layers: default
+  * Open Passage to Western Cave Save Station/Dock to Western Cave Shaft
+  > Dock to Snaky Skorp Cavern
+      Trivial
+  > Bottom
+      Any of the following:
+          Space Jump
+          All of the following:
+              # Septogg
+              Enabled Septogg Helpers and Power Grip Wall
+          All of the following:
+              Can Use Spider Ball
+              Mid-Air Morph (Intermediate) or Disabled Entrance Rando or Can Use Bombs or Can Use Spring Ball
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+
+> Dock to Snaky Skorp Cavern; Heals? False
+  * Layers: default
+  * Open Passage to Snaky Skorp Cavern/Dock to Western Cave Shaft
+  > Dock to Western Cave Save Station
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
+  > Dock to Western Cave Save Station
+      Trivial
+  > Top
+      Power Grip Wall
+
+> Top; Heals? False
+  * Layers: default
+  > Dock to Western Cave Entrance
+      Any of the following:
+          Space Jump or Enabled Septogg Helpers or Can Use Spider Ball
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+  > Bottom
+      Trivial
+
+----------------
+Western Cave Save Station
+Extra - map_name: rm_a0h26
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Extra - save_room: 13
+  > Dock to Western Cave Shaft
+      Trivial
+
+> Dock to Western Cave Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Western Cave Shaft/Dock to Western Cave Save Station
+  > Save Station
+      Trivial
+
+----------------
+Snaky Skorp Cavern
+Extra - map_name: rm_a0h27
+> Dock to Western Cave Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Western Cave Shaft/Dock to Snaky Skorp Cavern
+  > After Tunnel
+      Trivial
+
+> Dock to The Pit; Heals? False
+  * Layers: default
+  * Open Passage to The Pit/Dock to Snaky Skorp Cavern
+  > After Tunnel
+      All of the following:
+          Power Grip Wall
+          Any of the following:
+              Tunnel Climb
+              Morph Ball and Mid-Air Morph (Intermediate)
+
+> After Tunnel; Heals? False
+  * Layers: default
+  > Dock to Western Cave Shaft
+      Hijump Wall
+  > Dock to The Pit
+      Tunnel Climb
+
+----------------
+The Pit
+Extra - map_name: rm_a0h28
+> Dock to Snaky Skorp Cavern; Heals? False
+  * Layers: default
+  * Open Passage to Snaky Skorp Cavern/Dock to The Pit
+  > Dock to Fat Crocomire Room
+      Trivial
+
+> Dock to Fat Crocomire Room; Heals? False
+  * Layers: default
+  * Open Passage to Fat Crocomire Room/Dock to The Pit
+  > Dock to Snaky Skorp Cavern
+      Any of the following:
+          Enabled Septogg Helpers
+          Any of the following:
+              # Space Jump Wall with hypermode WJ
+              Space Jump or Walljump (Hypermode) or Can Use Spider Ball
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Expert) and Can Use Bombs
+
+----------------
+Fat Crocomire Room
+Extra - map_name: rm_a0h29
+> Dock to The Pit; Heals? False
+  * Layers: default
+  * Open Passage to The Pit/Dock to Fat Crocomire Room
+  > Dock to Skreek Street
+      Trivial
+  > Pickup (Missile Tank)
+      Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+
+> Dock to Skreek Street; Heals? False
+  * Layers: default
+  * Open Passage to Skreek Street/Dock to Fat Crocomire Room
+  > Dock to The Pit
+      Any of the following:
+          Any of the following:
+              # Hijump With Power Grip Wall without walljump
+              Space Jump or Can Use Spider Ball
+              Hi-Jump Boots and Power Grip
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          All of the following:
+              # Septogg
+              Enabled Septogg Helpers and Power Grip Wall
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 55; Category? Major
+  * Extra - object_name: oItemM_55
+  > Dock to Skreek Street
+      Trivial
+
+----------------
+Skreek Street
+Extra - map_name: rm_a0h30
+> Dock to Tower Right Exterior Access; Heals? False
+  * Layers: default
+  * Open Passage to Tower Right Exterior Access/Dock to Skreek Street
+  > Dock to Fat Crocomire Room
+      Trivial
+  > Near hidden wall
+      Tunnel Climb
+
+> Dock to Fat Crocomire Room; Heals? False
+  * Layers: default
+  * Open Passage to Fat Crocomire Room/Dock to Skreek Street
+  > Dock to Tower Right Exterior Access
+      Trivial
+
+> Dock to The Descent; Heals? False
+  * Layers: default
+  * Open Passage to The Descent/Dock to Skreek Street
+  > Near hidden wall
+      Any of the following:
+          Can Use Power Bombs and Power Grip Wall
+          Super Missiles ≥ 2 and Power Grip Climb and Space Jump Wall
+
+> Near hidden wall; Heals? False
+  * Layers: default
+  > Dock to Tower Right Exterior Access
+      High Mid-Air Morph Tunnel Climb
+  > Dock to The Descent
+      Any of the following:
+          Can Use Power Bombs
+          All of the following:
+              Super Missiles ≥ 2 and Knowledge (Advanced)
+              Any of the following:
+                  Tunnel Climb
+                  Morph Ball and Mid-Air Morph (Beginner)
+
+----------------
+Tower Right Exterior Access
+Extra - map_name: rm_a0h30a
+> Dock to Tower Exterior South East; Heals? False
+  * Layers: default
+  * Open Passage to Tower Exterior South East/Dock to Tower Right Exterior Access
+  > Dock to Skreek Street
+      After Tower Rock Entrance and Power Grip Wall
+  > Event - A4RockEntrance
+      Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
+
+> Dock to Skreek Street; Heals? False
+  * Layers: default
+  * Open Passage to Skreek Street/Dock to Tower Right Exterior Access
+  > Dock to Tower Exterior South East
+      After Tower Rock Entrance
+  > Event - A4RockEntrance
+      Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
+
+> Event - A4RockEntrance; Heals? False
+  * Layers: default
+  * Event Tower Rock Entrance
+  > Dock to Tower Exterior South East
+      Trivial
+  > Dock to Skreek Street
+      Trivial
+
+----------------
+The Descent
+Extra - map_name: rm_a0h31
+> Dock to Skreek Street; Heals? False
+  * Layers: default
+  * Open Passage to Skreek Street/Dock to The Descent
+  > Dock to Distribution Entranceway
+      Power Grip Wall
+  > Dock to Depths Shaft
+      All of the following:
+          # All Metroid Events
+          After Surface - Alpha Metroid and After Area 2 - Breeding Grounds Upper Right Alpha and After Area 2 - Breeding Grounds Left Alpha and After Area 2 - Breeding Grounds Lower Right Alpha and After Area 3 - Interior Alpha and After Area 3 - Breeding Grounds Alpha and After Area 5 - Squad Right Bottom Alpha and After Area 5 - Squad Right Top Alpha and After Area 1 - Exterior Alpha and After Area 5 - Squad Left Bottom Alpha and After Area 5 - Squad Left Middle Alpha and After Area 5 - Squad Left Top Alpha and After Area 1 - Breeding Grounds Upper Right Alpha and After Area 1 - Breeding Grounds Lower Right Alpha and After Area 1 - Breeding Grounds Lower Left Alpha and After Area 2 - Entrance Alpha and After Area 2 - Exterior Alpha and After Area 2 - Interior Upper Alpha and After Area 2 - Interior Lower Alpha and After Area 2 - Breeding Grounds Gamma and After Area 4 - Left Gamma and After Area 4 - Right Bottom Gamma and After Area 4 - Right Top Gamma and After Area 5 - Dual Left Gamma and After Area 5 - Dual Right Gamma and After Area 3 - Exterior Gamma and After Area 3 - Interior Shaft Gamma and After Area 3 - Deep Factory Gamma and After Area 3 - Breeding Grounds Left Gamma and After Area 3 - Breeding Grounds Middle Bottom Gamma and After Area 3 - Breeding Grounds Middle Middle Gamma and After Area 3 - Breeding Grounds Middle Top Gamma and After Area 3 - Breeding Grounds Right Gamma and After Area 4 - Left Zeta and After Area 4 - Right Zeta and After Area 4 - Interior Zeta and After Area 5 - Interior Zeta
+
+> Dock to Distribution Entranceway; Heals? False
+  * Layers: default
+  * Open Passage to Distribution Entranceway/Dock to The Descent
+  > Dock to Skreek Street
+      Movement (Intermediate) or Power Grip Wall
+
+> Dock to Depths Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Depths Shaft/Dock to The Descent
+  > Dock to Skreek Street
+      Space Jump Wall
+
+----------------
+Depths Shaft
+Extra - map_name: rm_a0h32
+> Dock to The Descent; Heals? False
+  * Layers: default
+  * Open Passage to The Descent/Dock to Depths Shaft
+  > After First Screw
+      All of the following:
+          Destroy Ice Barrier
+          Screw Attack or Can Use Any Bombs
+
+> Dock to Depths Save Station; Heals? False
+  * Layers: default
+  * Open Passage to Depths Save Station/Dock to Depths Shaft
+  > Middle
+      All of the following:
+          Hijump Tunnel Climb
+          Any of the following:
+              All of the following:
+                  # Left way
+                  Screw Attack and Can Use Any Bombs and Hijump Wall
+              All of the following:
+                  # Right way
+                  Can Use Power Bombs and Low Mid-Air Morph Tunnel Climb and Power Grip Climb and Power Grip Wall
+
+> After First Screw; Heals? False
+  * Layers: default
+  > Dock to The Descent
+      All of the following:
+          Destroy Ice Barrier
+          Any of the following:
+              Can Use Any Bombs
+              Screw Attack and Hijump Wall
+  > Middle
+      Trivial
+
+> Middle; Heals? False
+  * Layers: default
+  > Dock to Depths Save Station
+      Any of the following:
+          Screw Attack and Can Use Bombs
+          Can Use Power Bombs and Low Mid-Air Morph Tunnel Climb
+  > After First Screw
+      Any of the following:
+          Space Jump or Walljump (Expert) or Can Use Spider Ball
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          All of the following:
+              Walljump (Beginner)
+              Hi-Jump Boots or Movement (Beginner)
+
+----------------
+Depths Save Station
+Extra - map_name: rm_a0h33
+> Save Station; Heals? True
+  * Layers: default
+  * Extra - save_room: 20
+  > Dock to Depths Shaft
+      Trivial
+  > Dock to Depths Halzyn Hallway
+      Trivial
+
+> Dock to Depths Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Depths Shaft/Dock to Depths Save Station
+  > Save Station
+      Trivial
+
+> Dock to Depths Halzyn Hallway; Heals? False
+  * Layers: default
+  * Open Passage to Depths Halzyn Hallway/Dock to Depths Save Station
+  > Save Station
+      Trivial
+
+----------------
+Depths Halzyn Hallway
+Extra - map_name: rm_a0h34
+> Dock to Depths Save Station; Heals? False
+  * Layers: default
+  * Open Passage to Depths Save Station/Dock to Depths Halzyn Hallway
+  > Dock to Depths Drivel Road
+      Trivial
+
+> Dock to Depths Drivel Road; Heals? False
+  * Layers: default
+  * Open Passage to Depths Drivel Road/Dock to Depths Halzyn Hallway
+  > Dock to Depths Save Station
+      Trivial
+
+----------------
+Depths Drivel Road
+Extra - map_name: rm_a0h35
+> Dock to Hideout Entrance; Heals? False
+  * Layers: default
+  * Open Passage to Hideout Entrance/Dock to Depths Drivel Road
+  > Right side of morph ball tunnel
+      Morph Ball
+  > Pickup (Missile Tank)
+      Gravity Suit and Speed Booster and Shinesparking Tricks (Intermediate) and Can Use Spring Ball
+
+> Dock to Depths Halzyn Hallway; Heals? False
+  * Layers: default
+  * Open Passage to Depths Halzyn Hallway/Dock to Depths Drivel Road
+  > Right side of morph ball tunnel
+      Trivial
+
+> Right side of morph ball tunnel; Heals? False
+  * Layers: default
+  > Dock to Hideout Entrance
+      Morph Ball
+  > Dock to Depths Halzyn Hallway
+      Power Grip Wall
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 56; Category? Minor
+  * Extra - object_name: oItemM_56
+  > Dock to Hideout Entrance
+      Trivial
+
+----------------
+Octroll Lava Pool
+Extra - map_name: rm_a0h12
+> Dock to Bend Chasm; Heals? False
+  * Layers: default
+  * Open Passage to Bend Chasm/Dock to Octroll Lava Pool
+  > Dock to Research Site Access
+      Any of the following:
+          Space Jump
+          All of the following:
+              # Lava
+              Gravity Suit or Damage Boost (Intermediate)
+              Movement (Beginner) or Power Grip Wall
+
+> Dock to Research Site Access; Heals? False
+  * Layers: default
+  * Open Passage to Research Site Access/Dock to Octroll Lava Pool
+  > Dock to Bend Chasm
+      Any of the following:
+          # Above
+          Space Jump
+          All of the following:
+              Power Grip Wall
+              Gravity Suit or Damage Boost (Intermediate) or Movement (Intermediate)
+
+----------------
+Research Site Access
+Extra - map_name: rm_a0h13
+> Dock to Octroll Lava Pool; Heals? False
+  * Layers: default
+  * Open Passage to Octroll Lava Pool/Dock to Research Site Access
+  > Dock to Research Site
+      Hijump Wall
+
+> Dock to Research Site; Heals? False
+  * Layers: default
+  * Open Passage to Research Site/Dock to Research Site Access
+  > Dock to Octroll Lava Pool
+      Trivial
+  > Dock to Elevator Shaft
+      After Thoth Power Bomb Entrance
+  > Event - ThothPBEntrance
+      Can Use Power Bombs
+
+> Dock to Elevator Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Elevator Shaft/Dock to Research Site Access
+  > Event - ThothPBEntrance
+      Trivial
+
+> Event - ThothPBEntrance; Heals? False
+  * Layers: default
+  * Event Thoth Power Bomb Entrance
+  > Dock to Research Site
+      Trivial
+
+----------------
+Research Site
+Extra - map_name: rm_a0h14
+> Dock to Research Site Storage; Heals? False
+  * Layers: default
+  * Open Passage to Research Site Storage/Dock to Research Site
+  > Dock to Research Site Access
+      Trivial
+  > Event - LeftDualAlpha
+      After Research Dual Alphas Trigger Activated and Defeat Alpha
+  > Event - RightDualAlpha
+      After Research Dual Alphas Trigger Activated and Defeat Alpha
+
+> Dock to Research Site Access; Heals? False
+  * Layers: default
+  * Open Passage to Research Site Access/Dock to Research Site
+  > Dock to Research Site Storage
+      Trivial
+
+> Event - LeftDualAlpha; Heals? False
+  * Layers: default
+  * Event Surface - Dual Alphas Left
+  > Dock to Research Site Storage
+      Trivial
+
+> Event - RightDualAlpha; Heals? False
+  * Layers: default
+  * Event Surface - Dual Alphas Right
+  > Dock to Research Site Storage
+      Trivial
+
+----------------
+Research Site Storage
+Extra - map_name: rm_a0h15
+> Dock to Research Site; Heals? False
+  * Layers: default
+  * Open Passage to Research Site/Dock to Research Site Storage
+  > Event - DualAlphasTrigger
+      Trivial
+
+> Pickup (Super Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 215; Category? Minor
+  * Extra - object_name: oItemSM_215
+  > Event - DualAlphasTrigger
+      Trivial
+
+> Event - DualAlphasTrigger; Heals? False
+  * Layers: default
+  * Event Research Dual Alphas Trigger Activated
+  > Dock to Research Site
+      Trivial
+  > Pickup (Super Missile Tank)
+      Trivial
+
+----------------
+Mines 3-Shape Shaft
+Extra - map_name: rm_a0h16
+> Dock to Mines Access; Heals? False
+  * Layers: default
+  * Open Passage to Mines Access/Dock to Mines 3-Shape Shaft
+  > Dock to Mines O-Shape Shaft
+      Trivial
+
+> Dock to Mines O-Shape Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Mines O-Shape Shaft/Dock to Mines 3-Shape Shaft
+  > Dock to Mines Access
+      Power Grip Wall
+
+----------------
+Mines O-Shape Shaft
+Extra - map_name: rm_a0h17
+> Dock to Mines 3-Shape Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Mines 3-Shape Shaft/Dock to Mines O-Shape Shaft
+  > Dock to Small Moto Corridor
+      Trivial
+
+> Dock to Small Moto Corridor; Heals? False
+  * Layers: default
+  * Open Passage to Small Moto Corridor/Dock to Mines O-Shape Shaft
+  > Dock to Mines 3-Shape Shaft
+      All of the following:
+          Space Jump Wall
+          Any of the following:
+              Space Jump or Can Use Spider Ball
+              Enabled Septogg Helpers and Hijump Wall
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Advanced) and Can Use Bombs
+
+----------------
+Small Moto Corridor
+Extra - map_name: rm_a0h17a
+> Dock to Mines O-Shape Shaft; Heals? False
+  * Layers: default
+  * Open Passage to Mines O-Shape Shaft/Dock to Small Moto Corridor
+  > Dock to Destroyed Drill Cavern
+      Trivial
+
+> Dock to Destroyed Drill Cavern; Heals? False
+  * Layers: default
+  * Open Passage to Destroyed Drill Cavern/Dock to Small Moto Corridor
+  > Dock to Mines O-Shape Shaft
+      Trivial
+
+----------------
+Destroyed Drill Cavern
+Extra - map_name: rm_a0h17b
+> Dock to Small Moto Corridor; Heals? False
+  * Layers: default
+  * Open Passage to Small Moto Corridor/Dock to Destroyed Drill Cavern
+  > Dock to Long Moto Corridor
+      Trivial
+
+> Dock to Long Moto Corridor; Heals? False
+  * Layers: default
+  * Open Passage to Long Moto Corridor/Dock to Destroyed Drill Cavern
+  > Dock to Small Moto Corridor
+      Hijump With Power Grip Wall
+
+----------------
+Long Moto Corridor
+Extra - map_name: rm_a0h17c
+> Dock to Drill Excavation Access; Heals? False
+  * Layers: default
+  * Open Passage to Drill Excavation Access/Dock to Long Moto Corridor
+  > Dock to Destroyed Drill Cavern
+      Trivial
+
+> Dock to Destroyed Drill Cavern; Heals? False
+  * Layers: default
+  * Open Passage to Destroyed Drill Cavern/Dock to Long Moto Corridor
+  > Dock to Drill Excavation Access
+      Trivial
+
+----------------
+Drill Excavation Access
+Extra - map_name: rm_a0h17d
+> Dock to Long Moto Corridor; Heals? False
+  * Layers: default
+  * Open Passage to Long Moto Corridor/Dock to Drill Excavation Access
+  > Dock to Drill Excavation
+      Trivial
+
+> Dock to Drill Excavation; Heals? False
+  * Layers: default
+  * Open Passage to Drill Excavation/Dock to Drill Excavation Access
+  > Dock to Long Moto Corridor
+      Power Grip Wall
+
+----------------
+Drill Excavation
+Extra - map_name: rm_a0h17e
+> Dock to Mines Intersection; Heals? False
+  * Layers: default
+  * Open Passage to Mines Intersection/Dock to Drill Excavation
+  > After Drill Sequence
+      Trivial
+
+> Dock to Drill Excavation Access; Heals? False
+  * Layers: default
+  * Open Passage to Drill Excavation Access/Dock to Drill Excavation
+  > After Drill Sequence
+      After Mines Drill Crystal
+  > Event - DrillCrystal
+      Super Missiles and Can Use Any Bombs and Tunnel Climb
+
+> After Drill Sequence; Heals? False
+  * Layers: default
+  > Dock to Mines Intersection
+      Any of the following:
+          Space Jump Wall
+          All of the following:
+              # Shinespark
+              Speed Booster and Shinesparking Tricks (Beginner)
+  > Dock to Drill Excavation Access
+      After Mines Drill Crystal
+
+> Event - DrillCrystal; Heals? False
+  * Layers: default
+  * Event Mines Drill Crystal
+  > Dock to Drill Excavation Access
+      Can Use Any Bombs and Tunnel Climb
+
+----------------
+Mines Intersection
+Extra - map_name: rm_a0h18
+> Dock to Drill Excavation; Heals? False
+  * Layers: default
+  * Open Passage to Drill Excavation/Dock to Mines Intersection
+  > Dock to Mining Facility Save Station
+      Movement (Beginner) or Power Grip Wall
+
+> Dock to Mining Facility Save Station; Heals? False
+  * Layers: default
+  * Open Passage to Mining Facility Save Station/Dock to Mines Intersection
+  > Dock to Drill Excavation
+      Movement (Beginner) or Hijump Wall
+  > Dock to Mines Alpha Nest Access
+      Trivial
+
+> Dock to Mines Alpha Nest Access; Heals? False
+  * Layers: default
+  * Open Passage to Mines Alpha Nest Access/Dock to Mines Intersection
+  > Dock to Mining Facility Save Station
+      Hijump With Power Grip Wall
+  > Dock to Mines Gamma Nest Access
+      Trivial
+
+> Dock to Mines Gamma Nest Access; Heals? False
+  * Layers: default
+  * Open Passage to Mines Gamma Nest Access/Dock to Mines Intersection
+  > Dock to Mines Alpha Nest Access
+      Trivial
+
+----------------
+Mining Facility Save Station
+Extra - map_name: rm_a0h19
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Extra - save_room: 12
+  > Dock to Mines Intersection
+      Trivial
+
+> Dock to Mines Intersection; Heals? False
+  * Layers: default
+  * Open Passage to Mines Intersection/Dock to Mining Facility Save Station
+  > Save Station
+      Trivial
+
+----------------
+Mines Alpha Nest Access
+Extra - map_name: rm_a0h20
+> Dock to Mines Intersection; Heals? False
+  * Layers: default
+  * Open Passage to Mines Intersection/Dock to Mines Alpha Nest Access
+  > Dock to Mines Alpha Nest
+      Any of the following:
+          Space Jump
+          All of the following:
+              # Lava
+              Power Grip Wall
+              Gravity Suit or Damage Boost (Intermediate)
+
+> Dock to Mines Alpha Nest; Heals? False
+  * Layers: default
+  * Open Passage to Mines Alpha Nest/Dock to Mines Alpha Nest Access
+  > Dock to Mines Intersection
+      Any of the following:
+          Space Jump
+          Any of the following:
+              # Lava
+              Gravity Suit or Damage Boost (Intermediate)
+
+----------------
+Mines Alpha Nest
+Extra - map_name: rm_a0h21
+> Dock to Mines Alpha Nest Access; Heals? False
+  * Layers: default
+  * Open Passage to Mines Alpha Nest Access/Dock to Mines Alpha Nest
+  > Event - Alpha
+      Defeat Alpha
+
+> Event - Alpha; Heals? False
+  * Layers: default
+  * Event Surface - Mines Alpha
+  > Dock to Mines Alpha Nest Access
+      Any of the following:
+          Space Jump or Can Use Spider Ball
+          All of the following:
+              # Shinespark
+              Gravity Suit and Speed Booster and Shinesparking Tricks (Intermediate)
+          All of the following:
+              # Septogg
+              No Hi-Jump Boots and No Speed Booster and Enabled Septogg Helpers
+          All of the following:
+              # IBJ
+              After Surface - Mines Alpha and Infinite Bomb Jumping (Advanced) and Can Use Bombs
+
+----------------
+Mines Gamma Nest Access
+Extra - map_name: rm_a0h22
+> Dock to Mines Intersection; Heals? False
+  * Layers: default
+  * Open Passage to Mines Intersection/Dock to Mines Gamma Nest Access
+  > Dock to Mines Gamma Nest
+      Gravity Suit or Space Jump or Damage Boost (Intermediate)
+
+> Dock to Mines Gamma Nest; Heals? False
+  * Layers: default
+  * Open Passage to Mines Gamma Nest/Dock to Mines Gamma Nest Access
+  > Dock to Mines Intersection
+      Gravity Suit or Space Jump or Damage Boost (Intermediate)
+
+----------------
+Mines Gamma Nest
+Extra - map_name: rm_a0h23
+> Dock to Mines Gamma Nest Access; Heals? False
+  * Layers: default
+  * Open Passage to Mines Gamma Nest Access/Dock to Mines Gamma Nest
+  > Event - Gamma
+      Defeat Gamma
+
+> Event - Gamma; Heals? False
+  * Layers: default
+  * Event Surface - Mines Gamma
+  > Dock to Mines Gamma Nest Access
+      Any of the following:
+          Space Jump or Can Use Spider Ball
+          No Hi-Jump Boots and No Speed Booster and Enabled Septogg Helpers
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+

@@ -1,3 +1,4 @@
+import randovania
 from randovania.games import game
 from randovania.games.blank import layout
 from randovania.layout.preset_describer import GamePresetDescriber
@@ -73,4 +74,6 @@ game_data: game.GameData = game.GameData(
     exporter=_exporter,
 
     multiple_start_nodes_per_area=True,
+
+    defaults_available_in_game_sessions=randovania.is_dev_version(),
 )

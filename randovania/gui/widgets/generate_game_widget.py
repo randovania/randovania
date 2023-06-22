@@ -4,6 +4,7 @@ import datetime
 import logging
 import random
 import uuid
+import markdown
 from pathlib import Path
 from typing import Callable
 
@@ -132,7 +133,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self.game = game
 
         self.create_preset_tree.game = game
-        self.create_preset_tree.window_manager = self._window_manager
+        self.create_preset_tree.preset_manager = self._window_manager.preset_manager
         self.create_preset_tree.options = self._options
 
         # Progress
@@ -176,8 +177,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
     def _add_new_preset(self, preset: VersionedPreset, *, parent: uuid.UUID | None):
         with self._options as options:
-            if parent is not None:
-                options.set_parent_for_preset(preset.uuid, parent)
+            options.set_parent_for_preset(preset.uuid, parent)
             options.set_selected_preset_uuid_for(self.game, preset.uuid)
 
         self._window_manager.preset_manager.add_new_preset(preset)
@@ -444,7 +444,8 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             try:
                 raw_preset = preset.get_preset()
                 can_generate = True
-                description = f"<p style='font-weight:600;'>{raw_preset.name}</p><p>{raw_preset.description}</p>"
+                formatted_description = markdown.markdown(raw_preset.description)
+                description = f"<p style='font-weight:600;'>{raw_preset.name}</p><p>{formatted_description}</p>"
                 description += preset_describer.merge_categories(preset_describer.describe(raw_preset))
 
             except InvalidPreset as e:

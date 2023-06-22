@@ -13,7 +13,7 @@ from randovania.generator.hint_distributor import HintDistributor
 class DreadHintDistributor(HintDistributor):
     def precision_pair_weighted_list(self) -> list[PrecisionPair]:
         return [
-            PrecisionPair(HintLocationPrecision.WORLD_ONLY, HintItemPrecision.DETAILED, True),
+            PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.DETAILED, True),
         ]
 
     def _get_relative_hint_providers(self):

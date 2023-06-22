@@ -9,19 +9,19 @@ from typing import Iterator
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt
 
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.world.area import Area
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.node import Node
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.resource_node import ResourceNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout import translator_configuration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -36,6 +36,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
+from randovania.lib import json_lib
 from randovania.patching.prime import elevators
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
@@ -64,8 +65,7 @@ def _load_previous_state(persistence_path: Path,
 
     previous_state_path = persistence_path.joinpath("state.json")
     try:
-        with previous_state_path.open() as previous_state_file:
-            return json.load(previous_state_file)
+        return json_lib.read_path(previous_state_path)
     except (FileNotFoundError, json.JSONDecodeError):
         return None
 
@@ -86,7 +86,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     _starting_nodes: set[ResourceNode]
 
     # UI tools
-    _world_name_to_item: dict[str, QtWidgets.QTreeWidgetItem]
+    _region_name_to_item: dict[str, QtWidgets.QTreeWidgetItem]
     _area_name_to_item: dict[tuple[str, str], QtWidgets.QTreeWidgetItem]
     _node_to_item: dict[Node, QtWidgets.QTreeWidgetItem]
     _widget_for_pickup: dict[PickupEntry, QtWidgets.QCheckBox | QtWidgets.QComboBox]
@@ -106,7 +106,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self._collected_pickups = {}
         self._widget_for_pickup = {}
         self._actions = []
-        self._world_name_to_item = {}
+        self._region_name_to_item = {}
         self._area_name_to_item = {}
         self._node_to_item = {}
         self.preset = preset
@@ -147,24 +147,24 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.setup_translator_gates()
 
         # Map
-        for world in sorted(self.game_description.world_list.worlds, key=lambda x: x.name):
-            self.map_world_combo.addItem(world.name, userData=world)
+        for region in sorted(self.game_description.region_list.regions, key=lambda x: x.name):
+            self.map_region_combo.addItem(region.name, userData=region)
 
-        self.on_map_world_combo(0)
-        self.map_world_combo.currentIndexChanged.connect(self.on_map_world_combo)
+        self.on_map_region_combo(0)
+        self.map_region_combo.currentIndexChanged.connect(self.on_map_region_combo)
         self.map_area_combo.currentIndexChanged.connect(self.on_map_area_combo)
         self.map_canvas.set_edit_mode(False)
         self.map_canvas.SelectAreaRequest.connect(self.focus_on_area)
 
         # Graph Map
         from randovania.gui.widgets.tracker_map import MatplotlibWidget
-        self.matplot_widget = MatplotlibWidget(self.tab_graph_map, self.game_description.world_list)
+        self.matplot_widget = MatplotlibWidget(self.tab_graph_map, self.game_description.region_list)
         self.tab_graph_map_layout.addWidget(self.matplot_widget)
         self.map_tab_widget.currentChanged.connect(self._on_tab_changed)
 
-        for world in self.game_description.world_list.worlds:
-            self.graph_map_world_combo.addItem(world.name, world)
-        self.graph_map_world_combo.currentIndexChanged.connect(self.on_graph_map_world_combo)
+        for region in self.game_description.region_list.regions:
+            self.graph_map_region_combo.addItem(region.name, region)
+        self.graph_map_region_combo.currentIndexChanged.connect(self.on_graph_map_region_combo)
 
         self.persistence_path.mkdir(parents=True, exist_ok=True)
         previous_state = _load_previous_state(self.persistence_path, self.preset.configuration)
@@ -192,7 +192,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 for pickup_name, quantity in previous_state["collected_pickups"].items()
             }
             previous_actions = [
-                self.game_description.world_list.node_by_identifier(
+                self.game_description.region_list.node_by_identifier(
                     NodeIdentifier.from_string(identifier)
                 )
                 for identifier in previous_state["actions"]
@@ -239,10 +239,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.bulk_change_quantity(quantity_to_change)
         self._add_new_actions(previous_actions)
 
-        world_list = self.game_description.world_list
+        region_list = self.game_description.region_list
         state = self.state_for_current_configuration()
-        self.focus_on_world(world_list.nodes_to_world(state.node))
-        self.focus_on_area(world_list.nodes_to_area(state.node))
+        self.focus_on_region(region_list.nodes_to_region(state.node))
+        self.focus_on_area(region_list.nodes_to_area(state.node))
 
         return True
 
@@ -284,8 +284,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         return self._starting_nodes | {action for action in self._actions if action.is_resource_node}
 
     def _pretty_node_name(self, node: Node) -> str:
-        world_list = self.game_description.world_list
-        return f"{world_list.area_name(world_list.nodes_to_area(node))} / {node.name}"
+        region_list = self.game_description.region_list
+        return f"{region_list.area_name(region_list.nodes_to_area(node))} / {node.name}"
 
     def _refresh_for_new_action(self):
         self.undo_last_action_button.setEnabled(len(self._actions) > 1)
@@ -324,10 +324,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             except KeyError:
                 path = []
 
-            wl = self.logic.game.world_list
+            wl = self.logic.game.region_list
             text = [f"<p><span style='font-weight:600;'>Path to {node.name}</span></p><ul>"]
             for p in path:
-                text.append(f"<li>{wl.node_name(p, with_world=True, distinguish_dark_aether=True)}</li>")
+                text.append(f"<li>{wl.node_name(p, with_region=True, distinguish_dark_aether=True)}</li>")
             text.append("</ul>")
 
             dialog = ScrollLabelDialog("".join(text), "Path to node", self)
@@ -338,13 +338,13 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     # Map
 
-    def on_map_world_combo(self, _):
-        world: World = self.map_world_combo.currentData()
+    def on_map_region_combo(self, _):
+        region: Region = self.map_region_combo.currentData()
         self.map_area_combo.clear()
-        for area in sorted(world.areas, key=lambda x: x.name):
+        for area in sorted(region.areas, key=lambda x: x.name):
             self.map_area_combo.addItem(area.name, userData=area)
 
-        self.map_canvas.select_world(world)
+        self.map_canvas.select_region(region)
         self.on_map_area_combo(0)
 
     def on_map_area_combo(self, _):
@@ -355,12 +355,12 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     def update_matplot_widget(self, nodes_in_reach: set[Node]):
         self.matplot_widget.update_for(
-            self.graph_map_world_combo.currentData(),
+            self.graph_map_region_combo.currentData(),
             self.state_for_current_configuration(),
             nodes_in_reach,
         )
 
-    def on_graph_map_world_combo(self):
+    def on_graph_map_region_combo(self):
         nodes_in_reach = self.current_nodes_in_reach(self.state_for_current_configuration())
         self.update_matplot_widget(nodes_in_reach)
 
@@ -375,7 +375,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     def _on_tab_changed(self):
         if self.map_tab_widget.currentWidget() == self.tab_graph_map:
-            self.on_graph_map_world_combo()
+            self.on_graph_map_region_combo()
 
     def update_locations_tree_for_reachable_nodes(self):
         state = self.state_for_current_configuration()
@@ -385,8 +385,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         if self.map_tab_widget.currentWidget() == self.tab_graph_map:
             self.update_matplot_widget(nodes_in_reach)
 
-        for world in self.game_description.world_list.worlds:
-            for area in world.areas:
+        for region in self.game_description.region_list.regions:
+            for area in region.areas:
                 area_is_visible = False
                 for node in area.nodes:
                     is_visible = node in nodes_in_reach
@@ -409,7 +409,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
                     node_item.setHidden(not is_visible)
                     area_is_visible = area_is_visible or is_visible
-                self._area_name_to_item[(world.name, area.name)].setHidden(not area_is_visible)
+                self._area_name_to_item[(region.name, area.name)].setHidden(not area_is_visible)
 
         self.map_canvas.set_state(state)
         self.map_canvas.set_visible_nodes({
@@ -422,38 +422,37 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.persist_current_state()
 
     def persist_current_state(self):
-        world_list = self.game_description.world_list
-        with self.persistence_path.joinpath("state.json").open("w") as state_file:
-            json.dump(
-                {
-                    "actions": [
-                        node.identifier.as_string
-                        for node in self._actions
-                    ],
-                    "collected_pickups": {
-                        pickup.name: quantity
-                        for pickup, quantity in self._collected_pickups.items()
-                    },
-                    "elevators": [
-                        {
-                            "teleporter": teleporter.as_json,
-                            "data": combo.currentData().as_json if combo.currentIndex() > 0 else None
-                        }
-                        for teleporter, combo in self._elevator_id_to_combo.items()
-                    ],
-                    "configurable_nodes": {
-                        gate.as_string: combo.currentData().value if combo.currentIndex() > 0 else None
-                        for gate, combo in self._translator_gate_to_combo.items()
-                    },
-                    "starting_location": world_list.identifier_for_node(self._initial_state.node
-                                                                        ).area_identifier.as_json,
+        region_list = self.game_description.region_list
+        json_lib.write_path(
+            self.persistence_path.joinpath("state.json"),
+            {
+                "actions": [
+                    node.identifier.as_string
+                    for node in self._actions
+                ],
+                "collected_pickups": {
+                    pickup.name: quantity
+                    for pickup, quantity in self._collected_pickups.items()
                 },
-                state_file
-            )
+                "elevators": [
+                    {
+                        "teleporter": teleporter.as_json,
+                        "data": combo.currentData().as_json if combo.currentIndex() > 0 else None
+                    }
+                    for teleporter, combo in self._elevator_id_to_combo.items()
+                ],
+                "configurable_nodes": {
+                    gate.as_string: combo.currentData().value if combo.currentIndex() > 0 else None
+                    for gate, combo in self._translator_gate_to_combo.items()
+                },
+                "starting_location": region_list.identifier_for_node(self._initial_state.node
+                                                                     ).area_identifier.as_json,
+            },
+        )
 
     def setup_possible_locations_tree(self):
         """
-        Creates the possible_locations_tree with all worlds, areas and nodes.
+        Creates the possible_locations_tree with all regions, areas and nodes.
         """
         self.action_show_path_to_here = QtGui.QAction("Show path to here")
         self.action_show_path_to_here.triggered.connect(self._on_show_path_to_here)
@@ -461,18 +460,18 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.possible_locations_tree.insertAction(None, self.action_show_path_to_here)
 
         # TODO: Dark World names
-        for world in self.game_description.world_list.worlds:
-            world_item = QtWidgets.QTreeWidgetItem(self.possible_locations_tree)
-            world_item.setText(0, world.name)
-            world_item.setExpanded(True)
-            self._world_name_to_item[world.name] = world_item
+        for region in self.game_description.region_list.regions:
+            region_item = QtWidgets.QTreeWidgetItem(self.possible_locations_tree)
+            region_item.setText(0, region.name)
+            region_item.setExpanded(True)
+            self._region_name_to_item[region.name] = region_item
 
-            for area in world.areas:
-                area_item = QtWidgets.QTreeWidgetItem(world_item)
+            for area in region.areas:
+                area_item = QtWidgets.QTreeWidgetItem(region_item)
                 area_item.area = area
                 area_item.setText(0, area.name)
                 area_item.setHidden(True)
-                self._area_name_to_item[(world.name, area.name)] = area_item
+                self._area_name_to_item[(region.name, area.name)] = area_item
 
                 for node in area.nodes:
                     node_item = QtWidgets.QTreeWidgetItem(area_item)
@@ -490,8 +489,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         elevators_config: TeleporterConfiguration = getattr(self.game_configuration, "elevators")
 
-        world_list = self.game_description.world_list
-        nodes_by_world: dict[str, list[TeleporterNode]] = collections.defaultdict(list)
+        region_list = self.game_description.region_list
+        nodes_by_region: dict[str, list[TeleporterNode]] = collections.defaultdict(list)
 
         areas_to_not_change = {
             "Sky Temple Gateway",
@@ -500,34 +499,34 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             "Aerie",
         }
         targets = {}
-        for world, area, node in world_list.all_worlds_areas_nodes:
+        for region, area, node in region_list.all_regions_areas_nodes:
             if isinstance(node, TeleporterNode) and node.editable and area.name not in areas_to_not_change:
-                name = world.correct_name(area.in_dark_aether)
-                nodes_by_world[name].append(node)
+                name = region.correct_name(area.in_dark_aether)
+                nodes_by_region[name].append(node)
 
-                location = AreaIdentifier(world.name, area.name)
-                targets[elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list, location,
+                location = AreaIdentifier(region.name, area.name)
+                targets[elevators.get_short_elevator_or_area_name(self.game_configuration.game, region_list, location,
                                                                   True)] = location
 
         if elevators_config.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
-            for world in world_list.worlds:
-                for area in world.areas:
-                    name = world.correct_name(area.in_dark_aether)
-                    targets[f"{name} - {area.name}"] = AreaIdentifier(world.name, area.name)
+            for region in region_list.regions:
+                for area in region.areas:
+                    name = region.correct_name(area.in_dark_aether)
+                    targets[f"{name} - {area.name}"] = AreaIdentifier(region.name, area.name)
 
         combo_targets = sorted(targets.items(), key=lambda it: it[0])
 
-        for world_name in sorted(nodes_by_world.keys()):
-            nodes = nodes_by_world[world_name]
-            nodes_locations = [world_list.identifier_for_node(node).area_location
+        for region_name in sorted(nodes_by_region.keys()):
+            nodes = nodes_by_region[region_name]
+            nodes_locations = [region_list.identifier_for_node(node).area_location
                                for node in nodes]
-            nodes_names = [elevators.get_short_elevator_or_area_name(self.game_configuration.game, world_list,
+            nodes_names = [elevators.get_short_elevator_or_area_name(self.game_configuration.game, region_list,
                                                                      location, False)
                            for location in nodes_locations]
 
             group = QtWidgets.QGroupBox(self.elevators_scroll_contents)
-            group.setTitle(world_name)
+            group.setTitle(region_name)
             self.elevators_scroll_layout.addWidget(group)
             layout = QtWidgets.QGridLayout(group)
 
@@ -550,11 +549,11 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
                 combo.setMinimumContentsLength(11)
                 combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
-                self._elevator_id_to_combo[world_list.identifier_for_node(node)] = combo
+                self._elevator_id_to_combo[region_list.identifier_for_node(node)] = combo
                 layout.addWidget(combo, i, 1)
 
     def setup_translator_gates(self):
-        world_list = self.game_description.world_list
+        region_list = self.game_description.region_list
         self._translator_gate_to_combo = {}
 
         if self.game_configuration.game != RandovaniaGame.METROID_PRIME_ECHOES:
@@ -564,8 +563,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         assert isinstance(configuration, EchoesConfiguration)
 
         gates = {
-            f"{area.name} ({node.name})": world_list.identifier_for_node(node)
-            for world, area, node in world_list.all_worlds_areas_nodes
+            f"{area.name} ({node.name})": region_list.identifier_for_node(node)
+            for region, area, node in region_list.all_regions_areas_nodes
             if isinstance(node, ConfigurableNode)
         }
         translator_requirement = configuration.translator_configuration.translator_requirement
@@ -592,20 +591,20 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             self.translator_gate_scroll_layout.addWidget(combo, i, 1)
 
     def setup_starting_location(self, area_location: AreaIdentifier | None):
-        world_list = self.game_description.world_list
+        region_list = self.game_description.region_list
 
         if len(self.game_configuration.starting_location.locations) > 1:
             if area_location is None:
                 area_locations = sorted(self.game_configuration.starting_location.locations,
-                                        key=lambda it: world_list.area_name(world_list.area_by_area_location(it)))
+                                        key=lambda it: region_list.area_name(region_list.area_by_area_location(it)))
 
-                location_names = [world_list.area_name(world_list.area_by_area_location(it))
+                location_names = [region_list.area_name(region_list.area_by_area_location(it))
                                   for it in area_locations]
                 selected_name = QtWidgets.QInputDialog.getItem(self, "Starting Location", "Select starting location",
                                                                location_names, 0, False)
                 area_location = area_locations[location_names.index(selected_name[0])]
 
-            self._initial_state.node = world_list.resolve_teleporter_connection(area_location)
+            self._initial_state.node = region_list.resolve_teleporter_connection(area_location)
 
         def is_resource_node_present(node: Node, state: State):
             if node.is_resource_node:
@@ -619,7 +618,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         self._starting_nodes = {
             node
-            for node in world_list.iterate_nodes()
+            for node in region_list.iterate_nodes()
             if is_resource_node_present(node, self._initial_state)
         }
 
@@ -755,7 +754,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             state.node = self._actions[-1]
 
         state.patches = state.patches.assign_elevators(
-            (state.world_list.get_teleporter_node(teleporter), combo.currentData())
+            (state.region_list.get_teleporter_node(teleporter), combo.currentData())
             for teleporter, combo in self._elevator_id_to_combo.items()
         )
 
@@ -786,10 +785,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         return state
 
     # View
-    def focus_on_world(self, world: World):
-        signal_handling.set_combo_with_value(self.map_world_combo, world)
-        signal_handling.set_combo_with_value(self.graph_map_world_combo, world)
-        self.on_map_world_combo(0)
+    def focus_on_region(self, region: Region):
+        signal_handling.set_combo_with_value(self.map_region_combo, region)
+        signal_handling.set_combo_with_value(self.graph_map_region_combo, region)
+        self.on_map_region_combo(0)
 
     def focus_on_area(self, area: Area):
         signal_handling.set_combo_with_value(self.map_area_combo, area)

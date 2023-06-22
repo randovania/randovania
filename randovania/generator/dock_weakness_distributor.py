@@ -1,22 +1,30 @@
 import asyncio
 import dataclasses
+import itertools
 import time
+from functools import lru_cache
 from random import Random
-from typing import Callable
+from typing import Callable, Self
+
+from frozendict import frozendict
 
 from randovania.game_description import default_database
+from randovania.game_description.db.dock import (DockLock, DockLockType,
+                                                 DockRandoParams, DockWeakness)
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node import NodeContext
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.world.dock import DockRandoParams, DockWeakness
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.node import NodeContext
+from randovania.game_description.requirements.resource_requirement import \
+    ResourceRequirement
+from randovania.game_description.resources.node_resource_info import \
+    NodeResourceInfo
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.runner import FillerResults
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
+from randovania.layout.base.dock_rando_configuration import (DockRandoMode,
+                                                             DockTypeState)
 from randovania.lib import random_lib
 from randovania.resolver import debug, resolver
 from randovania.resolver.logic import Logic
@@ -24,43 +32,110 @@ from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State
 
 
-def distribute_pre_fill_weaknesses(patches: GamePatches):
+def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
     dock_rando = patches.configuration.dock_rando
 
-    if dock_rando.mode == DockRandoMode.VANILLA:
+    if not dock_rando.is_enabled():
         return patches
 
     game = default_database.game_description_for(patches.configuration.game)
-    dock_nodes = [node for node in game.world_list.all_nodes if isinstance(node, DockNode)]
     weakness_database = game.dock_weakness_database
+    all_docks: dict[DockNode, DockNode] = {
+        node: game.region_list.node_by_identifier(node.default_connection)
+        for node in game.region_list.all_nodes
+        if isinstance(node, DockNode)
+    }
 
-    if dock_rando.mode == DockRandoMode.ONE_WAY and not weakness_database.dock_rando_config.enable_one_way:
-        raise ValueError(f"{game.game.long_name} does not support one-way door lock rando!")
-
-    docks_to_unlock = [
-        (node, weakness_database.dock_rando_params[node.dock_type].unlocked)
-        for node in dock_nodes
+    nodes_to_shuffle: list[DockNode] = [
+        node
+        for node in all_docks.keys()
         if (
                 patches.has_default_weakness(node)  # don't randomize anything that was already modified
                 and dock_rando.types_state[node.dock_type].can_shuffle
                 and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
-                and not node.extra.get("exclude_from_dock_rando", False)
+                and not node.exclude_from_dock_rando
         )
     ]
 
-    if weakness_database.dock_rando_config.force_change_two_way:
-        unlocked = [node for node, _ in docks_to_unlock]
-        docks_to_unlock.extend([
+    if dock_rando.mode == DockRandoMode.DOCKS:
+        docks_to_unlock = [
             (node, weakness_database.dock_rando_params[node.dock_type].unlocked)
-            for node in dock_nodes
-            if (
-                    node not in unlocked
-                    and game.world_list.node_by_identifier(node.default_connection) in unlocked
-            )
-        ])
+            for node in nodes_to_shuffle
+        ]
+        if weakness_database.dock_rando_config.force_change_two_way:
+            unlocked = [node for node, _ in docks_to_unlock]
+            docks_to_unlock.extend([
+                (node, weakness_database.dock_rando_params[node.dock_type].unlocked)
+                for node, target in all_docks.items()
+                if node not in unlocked and target in unlocked
+            ])
+        patches = patches.assign_weaknesses_to_shuffle([(node, True) for node, _ in docks_to_unlock])
+        return patches.assign_dock_weakness(docks_to_unlock)
 
-    patches = patches.assign_weaknesses_to_shuffle([(node, True) for node, _ in docks_to_unlock])
-    return patches.assign_dock_weakness(docks_to_unlock)
+    else:
+        assert dock_rando.mode == DockRandoMode.WEAKNESSES
+
+        weakness_priority = list(itertools.chain.from_iterable(
+            weaknesses.values()
+            for weaknesses in weakness_database.weaknesses.values()
+        ))
+        # weakness_priority.sort()  - sort by priority (TODO)
+
+        def priority_check(a: DockNode, b: DockNode):
+            return weakness_priority.index(a.default_dock_weakness) < weakness_priority.index(b.default_dock_weakness)
+
+        def compatible_weakness(dock: DockNode, weakness: DockWeakness):
+            if (weakness_database.dock_rando_config.force_change_two_way
+                    and weakness in all_docks[dock].incompatible_dock_weaknesses):
+                return False
+            return weakness not in dock.incompatible_dock_weaknesses
+
+        all_mapping: dict[DockWeakness, DockWeakness] = {}
+        for dock_type, type_state in dock_rando.types_state.items():
+            if not type_state.can_shuffle:
+                continue
+
+            source_weaknesses = sorted(type_state.can_change_from)
+            target_weaknesses = list(type_state.can_change_to)
+            while len(target_weaknesses) < len(source_weaknesses):
+                target_weaknesses.extend(type_state.can_change_to)
+            target_weaknesses.sort()
+
+            rng.shuffle(source_weaknesses)
+            rng.shuffle(target_weaknesses)
+            all_mapping.update(zip(source_weaknesses, target_weaknesses))
+
+        if weakness_database.dock_rando_config.force_change_two_way:
+            for source in list(nodes_to_shuffle):
+                target = all_docks[source]
+
+                if source not in nodes_to_shuffle or target not in nodes_to_shuffle:
+                    continue
+
+                if priority_check(target, source):
+                    source, target = target, source
+
+                nodes_to_shuffle.remove(target)
+
+        # a node's weakness is not present in mapping if it has been excluded from changing
+        # if the node's not compatible with the new weakness, change to unlocked instead
+        patches = patches.assign_dock_weakness(
+            (node,
+             weakness if compatible_weakness(node, weakness) else
+             weakness_database.dock_rando_params[node.dock_type].unlocked)
+            for node in nodes_to_shuffle
+            if (weakness := all_mapping.get(node.default_dock_weakness)) is not None
+        )
+
+        if weakness_database.dock_rando_config.force_change_two_way:
+            # if a dock is being changed, make sure to make the other side match
+            return patches.assign_dock_weakness(
+                (source, patches.get_dock_weakness_for(target))
+                for source, target in all_docks.items()
+                if target in nodes_to_shuffle
+            )
+        else:
+            return patches
 
 
 class DockRandoLogic(Logic):
@@ -71,15 +146,36 @@ class DockRandoLogic(Logic):
         self.dock = dock
 
     @classmethod
-    def from_logic(cls, logic: Logic, dock: DockNode) -> "DockRandoLogic":
+    def from_logic(cls, logic: Logic, dock: DockNode) -> Self:
         return cls(logic.game, logic.configuration, dock)
 
     @property
     def victory_condition(self) -> Requirement:
         context = NodeContext(
-            None, None, self.game.resource_database, self.game.world_list,
+            None, None, self.game.resource_database, self.game.region_list,
         )
         return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, context))
+
+    @staticmethod
+    @lru_cache
+    def special_locked_weakness() -> DockWeakness:
+        """
+        The resolver needs to pretend that the door it's changing:
+        1. is impassible
+        2. has a trivial lock on the front
+        The trivial lock is there to make the victory condition possible.
+        """
+
+        return DockWeakness(
+            weakness_index=None,
+            name="Locked",
+            extra=frozendict(),
+            requirement=Requirement.impossible(),
+            lock=DockLock(
+                lock_type=DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE,
+                requirement=Requirement.trivial(),
+            ),
+        )
 
 
 def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tuple[int, DockNode]]:
@@ -94,20 +190,15 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
         patches = results.patches
         player_docks: list[tuple[int, DockNode]] = []
 
-        if patches.configuration.dock_rando.mode == DockRandoMode.ONE_WAY:
-            player_docks.extend((player, node) for node in patches.all_weaknesses_to_shuffle())
-
-        if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
-            ctx = NodeContext(
-                patches,
-                patches.starting_resources(),
-                game.resource_database,
-                game.world_list
-            )
-
-            for dock in patches.all_weaknesses_to_shuffle():
-                if (player, dock.get_target_identifier(ctx)) not in player_docks:
-                    player_docks.append((player, dock))
+        ctx = NodeContext(
+            patches,
+            patches.starting_resources(),
+            game.resource_database,
+            game.region_list
+        )
+        for dock in patches.all_weaknesses_to_shuffle():
+            if (player, dock.get_target_node(ctx)) not in player_docks:
+                player_docks.append((player, dock))
 
         to_shuffle_proportion = game.dock_weakness_database.dock_rando_config.to_shuffle_proportion
 
@@ -132,15 +223,15 @@ async def _run_resolver(state: State, logic: Logic, max_attempts: int):
 
 async def _run_dock_resolver(dock: DockNode,
                              target: DockNode,
-                             dock_type_params: DockRandoParams,
                              setup: tuple[State, Logic]
                              ) -> tuple[State, Logic]:
     """
     Run the resolver with the objective of reaching the dock, assuming the dock is locked.
     """
-    locks = [(dock, dock_type_params.locked)]
-    if setup[0].patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
-        locks.append((target, dock_type_params.locked))
+    locks = [
+        (dock, DockRandoLogic.special_locked_weakness()),
+        (target, DockRandoLogic.special_locked_weakness()),  # Two Way
+    ]
 
     state = setup[0].copy()
     state.patches = state.patches.assign_dock_weakness(locks)
@@ -168,7 +259,6 @@ def _determine_valid_weaknesses(dock: DockNode,
                                 dock_type_state: DockTypeState,
                                 state: State,
                                 logic: Logic,
-                                mode: DockRandoMode,
                                 ) -> dict[DockWeakness, float]:
     """
     Determine the valid weaknesses to assign to the dock given a reach
@@ -180,17 +270,8 @@ def _determine_valid_weaknesses(dock: DockNode,
         reach = ResolverReach.calculate_reach(logic, state)
 
         exclusions = set()
-
-        def get_excluded_weakness(d: DockNode):
-            # TODO: make this a proper DockNode property rather than an extra field
-            return [
-                dock_type_state.weakness_database.get_by_weakness(dock_type_state.dock_type_name, weakness)
-                for weakness in d.extra.get("excluded_dock_weaknesses", [])
-            ]
-
-        exclusions.update(get_excluded_weakness(dock))
-        if mode == DockRandoMode.TWO_WAY:
-            exclusions.update(get_excluded_weakness(target))
+        exclusions.update(dock.incompatible_dock_weaknesses)
+        exclusions.update(target.incompatible_dock_weaknesses)  # two-way
 
         if dock_type_params.locked in dock_type_state.can_change_to.difference(exclusions) and target in reach.nodes:
             weighted_weaknesses[dock_type_params.locked] = 2.0
@@ -228,10 +309,10 @@ async def distribute_post_fill_weaknesses(rng: Random,
     start_time = time.perf_counter()
 
     for player, patches in new_patches.items():
-        if patches.configuration.dock_rando.mode == DockRandoMode.VANILLA:
+        if patches.configuration.dock_rando.mode != DockRandoMode.DOCKS:
             continue
 
-        status_update(f"Preparing dock randomizer for player {player + 1}.")
+        status_update(f"Preparing door lock randomizer for player {player + 1}.")
         state, logic = resolver.setup_resolver(patches.configuration, patches)
 
         try:
@@ -248,18 +329,18 @@ async def distribute_post_fill_weaknesses(rng: Random,
 
     while unassigned_docks:
         await asyncio.sleep(0)
-        status_update(f"{docks_placed}/{docks_to_place} docks placed")
+        status_update(f"{docks_placed}/{docks_to_place} door locks placed")
 
         player, dock = unassigned_docks.pop()
 
         game = filler_results.player_results[player].game
         patches = new_patches[player]
 
-        target = dock.get_target_identifier(NodeContext(
+        target = dock.get_target_node(NodeContext(
             patches,
             patches.starting_resources(),
             game.resource_database,
-            game.world_list,
+            game.region_list,
         ))
         assert isinstance(target, DockNode)
 
@@ -272,12 +353,11 @@ async def distribute_post_fill_weaknesses(rng: Random,
         else:
             # Determine the reach and possible weaknesses given that reach
             new_state, logic = await _run_dock_resolver(
-                dock, target, dock_type_params,
+                dock, target,
                 resolver.setup_resolver(patches.configuration, patches),
             )
             weighted_weaknesses = _determine_valid_weaknesses(
-                dock, target, dock_type_params, dock_type_state, new_state,
-                logic, patches.configuration.dock_rando.mode
+                dock, target, dock_type_params, dock_type_state, new_state, logic
             )
 
         # Assign the dock (and its target if desired/possible)
@@ -285,11 +365,8 @@ async def distribute_post_fill_weaknesses(rng: Random,
         new_assignment = [
             (dock, weakness),
         ]
-        if (
-                patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY
-                and (target.default_dock_weakness in dock_type_state.can_change_from
-                     or game.dock_weakness_database.dock_rando_config.force_change_two_way)
-        ):
+        if (target.default_dock_weakness in dock_type_state.can_change_from
+                or game.dock_weakness_database.dock_rando_config.force_change_two_way):
             new_assignment.append((target, weakness))
 
         docks_placed += 1

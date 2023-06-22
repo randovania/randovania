@@ -12,6 +12,7 @@ import slugify
 from randovania.games.game import RandovaniaGame
 from randovania.layout import preset_migration
 from randovania.layout.preset import Preset
+from randovania.lib import json_lib
 
 
 class InvalidPreset(Exception):
@@ -104,8 +105,7 @@ class VersionedPreset:
 
     @classmethod
     def from_file_sync(cls, path: Path) -> VersionedPreset:
-        with path.open() as f:
-            return VersionedPreset(json.load(f))
+        return VersionedPreset(json_lib.read_path(path))
 
     @classmethod
     def with_preset(cls, preset: Preset) -> "VersionedPreset":
@@ -114,9 +114,7 @@ class VersionedPreset:
         return result
 
     def save_to_file(self, path: Path):
-        path.parent.mkdir(exist_ok=True, parents=True)
-        with path.open("w") as preset_file:
-            json.dump(self.as_json, preset_file, indent=4)
+        json_lib.write_path(path, self.as_json)
 
     def save_to_io(self, data: io.BytesIO):
         data.write(

@@ -1,8 +1,10 @@
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime2.patcher.echoes_dol_patches import BeamCostAddresses, SafeZoneAddresses, EchoesDolVersion, \
-    StartingBeamVisorAddresses
-from randovania.patching.prime.all_prime_dol_patches import StringDisplayPatchAddresses, HealthCapacityAddresses, \
-    DangerousEnergyTankAddresses, PowerupFunctionsAddresses
+from randovania.games.prime2.patcher.echoes_dol_patches import (
+    BeamCostAddresses, EchoesDolVersion, IsDoorAddr, MapDoorTypeAddresses,
+    SafeZoneAddresses, StartingBeamVisorAddresses)
+from randovania.patching.prime.all_prime_dol_patches import (
+    DangerousEnergyTankAddresses, HealthCapacityAddresses,
+    PowerupFunctionsAddresses, StringDisplayPatchAddresses)
 
 ALL_VERSIONS = [
     EchoesDolVersion(
@@ -63,6 +65,16 @@ ALL_VERSIONS = [
         unvisited_room_names_address=0x8008b714,
         cworldtransmanager_sfxstart=0x80158e50,
         powerup_should_persist=0x803a743c,
+        map_door_types=MapDoorTypeAddresses(
+            get_correct_transform=IsDoorAddr(0x800bb4d8, 0x800bb4e0, 3),
+            map_obj_draw=IsDoorAddr(0x800bb960, 0x800bb96c, 7),
+            is_visible_to_automapper=IsDoorAddr(0x800bb600, 0x800bb608, 3),
+            map_world_draw_areas=IsDoorAddr(0x8009458c, 0x80094594, 0),
+            map_area_commit_resources1=IsDoorAddr(0x8007f3b4, 0x8007f3bc, 3),
+            map_area_commit_resources2=IsDoorAddr(0x8007fab0, 0x8007fab8, 3),
+            get_door_color=0x802175b4,
+            map_icon_jumptable=0x803b3638,
+        )
     ),
     EchoesDolVersion(
         game=RandovaniaGame.METROID_PRIME_ECHOES,
@@ -122,5 +134,15 @@ ALL_VERSIONS = [
         unvisited_room_names_address=0x8008b850,
         cworldtransmanager_sfxstart=0x801590a4,
         powerup_should_persist=0x803a7b94,
+        map_door_types=MapDoorTypeAddresses(
+            get_correct_transform=IsDoorAddr(0x800bb56c, 0x800bb574, 3),
+            map_obj_draw=IsDoorAddr(0x800bb9f0, 0x800bb9fc, 3),
+            is_visible_to_automapper=IsDoorAddr(0x800bb694, 0x800bb69c, 3),
+            map_world_draw_areas=IsDoorAddr(0x80094620, 0x80094628, 0),
+            map_area_commit_resources1=IsDoorAddr(0x8007f4f0, 0x8007f4f8, 3),
+            map_area_commit_resources2=IsDoorAddr(0x8007fbec, 0x8007fbf4, 3),
+            get_door_color=0x802178d4,
+            map_icon_jumptable=0x803b4a80,
+        )
     ),
 ]

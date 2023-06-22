@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>489</width>
-         <height>881</height>
+         <width>503</width>
+         <height>461</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="elevator_layout">
@@ -61,9 +61,15 @@
          <number>0</number>
         </property>
         <item>
+         <widget class="ScrollProtectedComboBox" name="elevators_combo"/>
+        </item>
+        <item>
          <widget class="QLabel" name="elevators_description_label">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls where each elevator connects to.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Original Connections&lt;/span&gt;: all elevators are connected to where they do in the original game.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, between areas&lt;/span&gt;: after taking an elevator, the elevator in the room you are in will bring you back to where you were. An elevator will never connect to another in the same area. This is the only setting that guarantees all areas are reachable.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way, unchecked&lt;/span&gt;: after taking an elevator, the elevator in the room you are in will bring you back to where you were.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, elevator room with cycles&lt;/span&gt;: all elevators bring you to an elevator room, but going backwards can go somewhere else. All rooms are used as a destination exactly once, causing all elevators to be separated into loops.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, elevator room with replacement&lt;/span&gt;: all elevators bring you to an elevator room, but going backwards can go somewhere else. Rooms can be used as a destination multiple times, causing elevators which you can possibly not come back to.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way, anywhere&lt;/span&gt;: elevators are connected to any room from the game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;description generated dynamically&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -71,15 +77,9 @@
          </widget>
         </item>
         <item>
-         <widget class="ScrollProtectedComboBox" name="elevators_combo"/>
-        </item>
-        <item>
          <widget class="QLabel" name="elevators_help_sound_bug_label">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The looping sound effect that plays during the elevator cutscene only stops playing during the cutscene of the elevator landing, which only exists on the rooms that have an elevator. This also includes Sky Temple Energy Controller when coming from somewhere other than Sky Temple Gateway and Aerie Transport Station before Dark Samus 2 is defeated.&lt;/p&gt;&lt;p&gt;This bug can be minimized by disabling &amp;quot;Keep Elevator/Teleporter transition sound effect&amp;quot; in the &amp;quot;Customize in-game settings&amp;quot; dialog.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
+           <string>These settings will cause the elevator cutscenes to be silent in order to avoid a different game bug.</string>
           </property>
          </widget>
         </item>
