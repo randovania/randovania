@@ -37,8 +37,9 @@ def test_do_export_game(mocker: pytest_mock.MockerFixture,
     mock_menu_mod = mocker.patch("randovania.games.prime2.patcher.claris_randomizer.add_menu_mod_to_files")
 
     mock_dol_file = mocker.patch("ppc_asm.dol_file.DolFile")
-    mock_apply_dol = mocker.patch("opr.echoes_dol_patcher.apply_patches")
-    mock_dol_patches_from_json = mocker.patch("opr.echoes_dol_patcher.EchoesDolPatchesData.from_json")
+    mock_apply_dol = mocker.patch("open_prime_rando.dol_patching.echoes.dol_patcher.apply_patches")
+    mock_dol_patches_from_json = mocker.patch(
+        "open_prime_rando.dol_patching.echoes.dol_patcher.EchoesDolPatchesData.from_json")
 
     exporter = EchoesGameExporter()
     new_patcher_data = {

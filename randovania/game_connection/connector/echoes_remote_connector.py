@@ -7,8 +7,8 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items
-from opr.echoes_dol_patches import EchoesDolVersion
-from opr import all_prime_dol_patches
+from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
+from open_prime_rando.dol_patching import all_prime_dol_patches
 
 
 def format_received_item(item_name: str, player_name: str) -> str:

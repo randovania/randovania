@@ -21,7 +21,7 @@ from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 from randovania.patching.prime import asset_conversion
-from opr import all_prime_dol_patches
+from open_prime_rando.dol_patching import all_prime_dol_patches
 
 
 @dataclasses.dataclass(frozen=True)

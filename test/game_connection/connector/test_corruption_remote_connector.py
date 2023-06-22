@@ -4,12 +4,12 @@ import pytest
 
 from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation
+from open_prime_rando.dol_patching.corruption import dol_versions
 
 
 @pytest.fixture(name="connector")
 def corruption_remote_connector():
-    from opr import corruption_dol_versions
-    connector = CorruptionRemoteConnector(corruption_dol_versions.ALL_VERSIONS[0], AsyncMock())
+    connector = CorruptionRemoteConnector(dol_versions.ALL_VERSIONS[0], AsyncMock())
     return connector
 
 

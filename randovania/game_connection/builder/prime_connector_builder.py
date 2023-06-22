@@ -9,7 +9,9 @@ from randovania.game_connection.connector.remote_connector import RemoteConnecto
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException, \
     MemoryOperationExecutor
-from opr import echoes_dol_versions, prime1_dol_versions, corruption_dol_versions
+from open_prime_rando.dol_patching.prime1 import dol_versions as prime1_dol_versions
+from open_prime_rando.dol_patching.corruption import dol_versions as corruption_dol_versions
+from open_prime_rando.dol_patching.echoes import dol_versions as echoes_dol_versions
 
 
 class PrimeConnectorBuilder(ConnectorBuilder):

@@ -1,6 +1,6 @@
 import dataclasses
 
-from opr.echoes_user_preferences import OprEchoesUserPreferences
+from open_prime_rando.dol_patching.echoes.user_preferences import OprEchoesUserPreferences
 from randovania.bitpacking.json_dataclass import JsonDataclass
 
 

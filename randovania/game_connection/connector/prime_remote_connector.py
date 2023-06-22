@@ -22,7 +22,7 @@ from randovania.game_description.resources.resource_info import (
 from randovania.game_description.db.region import Region
 from randovania.games.game import RandovaniaGame
 from randovania.lib.infinite_timer import InfiniteTimer
-from opr import all_prime_dol_patches
+from open_prime_rando.dol_patching import all_prime_dol_patches
 
 
 @dataclasses.dataclass(frozen=True)

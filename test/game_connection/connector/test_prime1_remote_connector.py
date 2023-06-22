@@ -10,14 +10,13 @@ from randovania.game_connection.executor.memory_operation import MemoryOperation
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from opr.prime1_dol_patches import Prime1DolVersion
-from opr.prime1_dol_versions import ALL_VERSIONS
+from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
 
 
 @pytest.fixture(name="version")
 def prime1_version():
-    from opr import prime1_dol_versions
-    return prime1_dol_versions.ALL_VERSIONS[0]
+    from open_prime_rando.dol_patching.prime1 import dol_versions
+    return dol_versions.ALL_VERSIONS[0]
 
 
 @pytest.fixture(name="connector")
@@ -33,11 +32,11 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
                                   default_generator_params):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "opr.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
     mock_increment_capacity: MagicMock = mocker.patch(
-        "opr.all_prime_dol_patches.increment_item_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.increment_item_capacity_patch")
     mock_artifact_layer: MagicMock = mocker.patch(
-        "opr.prime1_dol_patches.set_artifact_layer_active_patch")
+        "open_prime_rando.dol_patching.prime1.dol_patches.set_artifact_layer_active_patch")
 
     db = connector.game.resource_database
     if artifact:
@@ -82,8 +81,9 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
 
 @pytest.mark.parametrize("has_cooldown", [False, True])
 @pytest.mark.parametrize("has_patches", [False, True])
-async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool, has_patches: bool):
-    connector = Prime1RemoteConnector(ALL_VERSIONS[0], AsyncMock())
+async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool, has_patches: bool,
+                                                             version):
+    connector = Prime1RemoteConnector(version, AsyncMock())
 
     # Setup
     if has_cooldown:

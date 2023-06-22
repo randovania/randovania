@@ -14,16 +14,15 @@ from randovania.game_connection.connector.prime_remote_connector import DolRemot
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
-from opr.echoes_dol_patches import EchoesDolVersion
+from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 @pytest.fixture(name="version")
 def echoes_version():
-    from opr import echoes_dol_versions
-    return echoes_dol_versions.ALL_VERSIONS[0]
+    from open_prime_rando.dol_patching.echoes import dol_versions
+    return dol_versions.ALL_VERSIONS[0]
 
 
 @pytest.fixture(name="connector")
@@ -129,7 +128,7 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
                                                   mocker, capacity):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "opr.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
 
     connector.executor.perform_single_memory_operation.return_value = struct.pack(">II", 10, 10 + capacity)
     connector.execute_remote_patches = AsyncMock()
@@ -172,9 +171,9 @@ async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnect
                                                        mocker, in_cooldown):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "opr.all_prime_dol_patches.increment_item_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.increment_item_capacity_patch")
     mock_call_display_hud_patch: MagicMock = mocker.patch(
-        "opr.all_prime_dol_patches.call_display_hud_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.call_display_hud_patch")
     if in_cooldown:
         connector.message_cooldown = 1.0
     connector.execute_remote_patches = AsyncMock()
@@ -223,7 +222,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
                                   generic_pickup_category, has_item_percentage, default_generator_params):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "opr.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
 
     db = connector.game.resource_database
 
@@ -260,7 +259,7 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
     # Setup
     patch_address, patch_bytes = MagicMock(), MagicMock()
     mock_remote_execute: MagicMock = mocker.patch(
-        "opr.all_prime_dol_patches.create_remote_execution_body",
+        "open_prime_rando.dol_patching.all_prime_dol_patches.create_remote_execution_body",
         return_value=(patch_address, patch_bytes)
     )
 

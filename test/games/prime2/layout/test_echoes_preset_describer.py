@@ -2,7 +2,7 @@ import dataclasses
 
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout import preset_describer
-from opr.beam_configuration import BeamAmmoConfiguration
+from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.base.available_locations import RandomizationMode

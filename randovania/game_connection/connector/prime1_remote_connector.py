@@ -2,8 +2,9 @@ import struct
 
 from ppc_asm import assembler
 
-from opr import all_prime_dol_patches, prime1_dol_patches
-from opr.prime1_dol_patches import Prime1DolVersion
+from open_prime_rando.dol_patching import all_prime_dol_patches
+from open_prime_rando.dol_patching.prime1 import dol_patches
+from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
 from randovania.game_description.db.region import Region
@@ -110,7 +111,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
                 patches.append(all_prime_dol_patches.increment_item_capacity_patch(
                     self.version.powerup_functions, self.version.game, item.extra["item_id"], delta
                 ))
-                patches.append(prime1_dol_patches.set_artifact_layer_active_patch(
+                patches.append(dol_patches.set_artifact_layer_active_patch(
                     self.version, layer_id, delta > 0
                 ))
 

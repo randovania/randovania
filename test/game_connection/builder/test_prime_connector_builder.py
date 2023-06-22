@@ -6,7 +6,7 @@ from randovania.game_connection.connector.echoes_remote_connector import EchoesR
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException, \
     MemoryOperationExecutor
-from opr import echoes_dol_versions
+from open_prime_rando.dol_patching.echoes import dol_versions
 
 
 class MockedPrimeConnectorBuilder(PrimeConnectorBuilder):
@@ -54,7 +54,7 @@ async def test_identify_game_ntsc(mocker):
     # Assert
     con_builder.executor.perform_memory_operations.assert_called()
     assert isinstance(connector, EchoesRemoteConnector)
-    assert connector.version is echoes_dol_versions.ALL_VERSIONS[0]
+    assert connector.version is dol_versions.ALL_VERSIONS[0]
     mock_start_updates.assert_called_once_with()
 
 
