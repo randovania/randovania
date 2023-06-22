@@ -19,7 +19,6 @@ import socketio.exceptions
 
 from randovania.bitpacking import bitpacking, construct_pack
 from randovania.game_description import default_database
-from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.games.game import RandovaniaGame
 from randovania.network_common import connection_headers, error, admin_actions, pickup_serializer, signals, \
     multiplayer_session
