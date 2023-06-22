@@ -1,8 +1,9 @@
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock, ANY
+from unittest.mock import AsyncMock, MagicMock, ANY, patch
 
 import pytest
 from PySide6 import QtWidgets
+from pytest_mock import MockerFixture
 
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
@@ -103,6 +104,7 @@ async def test_add_connector_builder_debug(window: GameConnectionWindow, abort):
         assert isinstance(window.game_connection.add_connection_builder.call_args[0][0], DebugConnectorBuilder)
         assert window.game_connection.add_connection_builder.call_args[0][0].target_game == RandovaniaGame.BLANK
 
+
 @pytest.mark.parametrize("abort", [False, True])
 async def test_add_connector_builder_dread(window: GameConnectionWindow, abort):
     # Setup
@@ -120,20 +122,32 @@ async def test_add_connector_builder_dread(window: GameConnectionWindow, abort):
         assert isinstance(window.game_connection.add_connection_builder.call_args[0][0], DreadConnectorBuilder)
         assert window.game_connection.add_connection_builder.call_args[0][0].ip == "my_ip"
 
-def test_setup_builder_ui_all_builders(window: GameConnectionWindow):
+
+@pytest.mark.parametrize("system", ["Darwin", "Windows"])
+def test_setup_builder_ui_all_builders(skip_qtbot, system, mocker: MockerFixture, is_dev_version):
     # Setup
-    window.game_connection.connection_builders = [
+    mocker.patch("randovania.is_frozen", return_value=False)
+    mocker.patch("platform.system", return_value=system)
+
+    game_connection = MagicMock()
+    game_connection.connection_builders = [
         DolphinConnectorBuilder(),
         NintendontConnectorBuilder("the_ip"),
         DebugConnectorBuilder(RandovaniaGame.BLANK.value),
     ]
 
+    window = GameConnectionWindow(game_connection)
+    skip_qtbot.addWidget(window)
+
     # Run
     window.setup_builder_ui()
 
     # Assert
-    assert not window._builder_actions[ConnectorBuilderChoice.DOLPHIN].isEnabled()
-    assert len(window.ui_for_builder) == 3
+    if system == "Darwin":
+        assert len(window.ui_for_builder) == 1 + is_dev_version
+    else:
+        assert not window._builder_actions[ConnectorBuilderChoice.DOLPHIN].isEnabled()
+        assert len(window.ui_for_builder) == 2 + is_dev_version
 
 
 @pytest.mark.parametrize("result", [
