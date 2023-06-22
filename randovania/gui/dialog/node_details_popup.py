@@ -330,7 +330,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         if isinstance(new_node, DockNode):
             area = self.game.region_list.nodes_to_area(self.node)
-            has_error = not integrity_check.dock_has_correct_name(area, new_node)[0]
+            has_error = not integrity_check.dock_has_correct_name(area, new_node)
 
         common_qt_lib.set_error_border_stylesheet(self.name_edit, has_error)
 
@@ -370,7 +370,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     def on_dock_update_name_button(self):
         new_node = self.create_new_node()
         assert isinstance(new_node, DockNode)
-        expected_name = integrity_check.base_dock_name(new_node)
+        expected_name = next(integrity_check.expected_dock_names(new_node))
         self.name_edit.setText(expected_name)
         self.on_name_edit(self.name_edit.text())
 

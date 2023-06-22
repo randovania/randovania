@@ -6,7 +6,6 @@ from randovania.lib.enum_lib import iterate_enum
 
 _acceptable_database_errors = {
     RandovaniaGame.SUPER_METROID: True,
-    RandovaniaGame.AM2R: True # TODO: Currently done due to teleporter refactor, remove this after.
 }
 
 
@@ -26,12 +25,19 @@ def test_find_database_errors(game_enum: RandovaniaGame):
 
 
 def test_invalid_db():
+    trivial_req = {"type": "and", "data": { "comment": "", "items": [] }
+                                    }
     sample_data = {
         "schema_version": 14,
         "game": "prime2",
         "resource_database": {
             "items": {},
-            "events": {},
+            "events": {
+                "Boss": {
+                    "long_name": "First Boss Killed",
+                    "extra": {}
+                },
+            },
             "tricks": {},
             "damage": {},
             "versions": {},
@@ -66,7 +72,19 @@ def test_invalid_db():
                 "door": {
                     "name": "Door",
                     "extra": {},
-                    "items": {},
+                    "items": {
+                        "Normal Door": {
+                            "extra": {},
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": None,
+                                    "items": []
+                                }
+                            },
+                            "lock": None
+                        }
+                    },
                     "dock_rando": {
                         "unlocked": None,
                         "locked": None,
@@ -157,18 +175,12 @@ def test_invalid_db():
                                 "coordinates": None,
                                 "description": "",
                                 "layers": [
-                                    "default"
+                                    "default", "unknown"
                                 ],
                                 "extra": {},
                                 "valid_starting_location": False,
                                 "connections": {
-                                    "Event - Foo": {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "",
-                                            "items": []
-                                        }
-                                    }
+                                    "Event - Foo": trivial_req
                                 }
                             },
                             "Door to Area 2 (Generic)": {
@@ -253,6 +265,193 @@ def test_invalid_db():
                                 "connections": {}
                             }
                         }
+                    },
+
+                    "Warm": {
+                        "default_node": None,
+                        "extra": {},
+                        "nodes": {
+                            "Door to Hot": {
+                                "node_type": "dock",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": [
+                                    "default"
+                                ],
+                                "extra": {},
+                                "valid_starting_location": False,
+                                "dock_type": "door",
+                                "default_connection": {
+                                    "world_name": "Lava World",
+                                    "area_name": "Hot",
+                                    "node_name": "Door to World (1)"
+                                },
+                                "default_dock_weakness": "Normal Door",
+                                "override_default_open_requirement": None,
+                                "override_default_lock_requirement": None,
+                                "connections": {}
+                            },
+                            "Door to Lava World": {
+                                "node_type": "dock",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": [
+                                    "default"
+                                ],
+                                "extra": {},
+                                "valid_starting_location": False,
+                                "dock_type": "door",
+                                "default_connection": {
+                                    "world_name": "Lava World",
+                                    "area_name": "Hot",
+                                    "node_name": "Door to World (2)"
+                                },
+                                "default_dock_weakness": "Normal Door",
+                                "override_default_open_requirement": None,
+                                "override_default_lock_requirement": None,
+                                "connections": {}
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "name": "Lava World",
+                "extra": {},
+                "areas": {
+                    "Hot": {
+                        "default_node": None,
+                        "extra": {},
+                        "nodes": {
+                            "Door to World (1)": {
+                                "node_type": "dock",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": [
+                                    "default"
+                                ],
+                                "extra": {
+                                    "different_strongly_connected_component": True
+                                },
+                                "valid_starting_location": False,
+                                "dock_type": "door",
+                                "default_connection": {
+                                    "world_name": "World",
+                                    "area_name": "Warm",
+                                    "node_name": "Door to Hot"
+                                },
+                                "default_dock_weakness": "Normal Door",
+                                "override_default_open_requirement": None,
+                                "override_default_lock_requirement": None,
+                                "connections": {
+                                    "Door to World (2)": trivial_req,
+                                    "Bad Event": trivial_req,
+                                    "Pickup (Not A Pickup)": trivial_req,
+                                    "Bad Pickup": trivial_req,
+                                    "Door to Nowhere": trivial_req,
+                                }
+                            },
+                            "Door to World (2)": {
+                                "node_type": "dock",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": [
+                                    "default"
+                                ],
+                                "extra": {},
+                                "valid_starting_location": False,
+                                "dock_type": "door",
+                                "default_connection": {
+                                    "world_name": "World",
+                                    "area_name": "Warm",
+                                    "node_name": "Door to Lava World"
+                                },
+                                "default_dock_weakness": "Normal Door",
+                                "override_default_open_requirement": None,
+                                "override_default_lock_requirement": None,
+                                "connections": {
+                                    "Door to World (1)": trivial_req
+                                }
+                            },
+
+                            "Door to Nowhere": {
+                                "node_type": "dock",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": [
+                                    "default"
+                                ],
+                                "extra": {
+                                    "different_strongly_connected_component": True
+                                },
+                                "valid_starting_location": False,
+                                "dock_type": "door",
+                                "default_connection": {
+                                    "world_name": "World",
+                                    "area_name": "Nowhere",
+                                    "node_name": "Random Door"
+                                },
+                                "default_dock_weakness": "Normal Door",
+                                "override_default_open_requirement": None,
+                                "override_default_lock_requirement": None,
+                                "connections": {
+                                    "Door to World (1)": trivial_req
+                                }
+                            },
+
+                            "Bad Event": {
+                                "node_type": "event",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": [
+                                    "default"
+                                ],
+                                "extra": {},
+                                "valid_starting_location": False,
+                                "event_name": "Boss",
+                                "connections": {
+                                    "Door to World (1)": trivial_req
+                                }
+                            },
+
+                            "Pickup (Not A Pickup)": {
+                                "node_type": "generic",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": [
+                                    "default"
+                                ],
+                                "extra": {},
+                                "valid_starting_location": False,
+                                "connections": {
+                                    "Door to World (1)": trivial_req
+                                }
+                            },
+
+                            "Bad Pickup": {
+                                "node_type": "pickup",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": [
+                                    "default"
+                                ],
+                                "extra": {},
+                                "valid_starting_location": False,
+                                "pickup_index": 5,
+                                "major_location": False,
+                                "connections": {
+                                    "Door to World (1)": trivial_req
+                                }
+                            },
+                        }
                     }
                 }
             }
@@ -265,21 +464,30 @@ def test_invalid_db():
 
     # Assert
     assert errors == [
-        "World - Area 1 - 'Event - Foo' is not an Event Node, but naming suggests it is",
-        "World - Area 1 - Node 'Event - Foo' has a connection to itself",
-        "World - Area 1 - 'Door to Area 2 (Generic)' should be named 'Other to Area 2 (...)'",
-        "World - Area 1 - 'Door to Area 2 (Generic)' connects to "
-        "'region World/area Area 2/node Generic Node' which is not a DockNode",
+        "World/Area 1/Event - Foo has unknown layers {'unknown'}",
+        "World/Area 1/Event - Foo is not an Event Node, but naming suggests it is",
+        "World/Area 1/Event - Foo has a connection to itself",
+        "World/Area 1/Door to Area 2 (Generic) should be named 'Other to Area 2'",
+        "World/Area 1/Door to Area 2 (Generic) connects to 'region World/area Area 2/node Generic Node'"
+        " which is not a DockNode",
 
-        "World - Area 1 - 'Door to Area 2 (Dock)' should be named 'Other to Area 2 (...)'",
-        "World - Area 1 - 'Door to Area 2 (Dock)' connects to 'region World/area Area 2/node Door to Area 1',"
+        "World/Area 1/Door to Area 2 (Dock) should be named 'Other to Area 2'",
+        "World/Area 1/Door to Area 2 (Dock) connects to 'region World/area Area 2/node Door to Area 1',"
         " but that dock connects to 'region World/area Area 1/node Door to Area 2 (Generic)' instead.",
-        "World - Area 2 - 'Door to Area 1' should be named 'Other to Area 1'",
-        "World - Area 2 - 'Door to Area 1' connects to 'region World/area Area 1/node Door to Area 2 (Generic)',"
+
+        "World/Area 2/Door to Area 1 should be named 'Other to Area 1'",
+        "World/Area 2/Door to Area 1 connects to 'region World/area Area 1/node Door to Area 2 (Generic)',"
         " but that dock connects to 'region World/area Area 2/node Generic Node' instead.",
 
-        "World - Area 2 has multiple valid start nodes ['Generic Node', 'Door to Area 1'],"
+        "World/Area 2 has multiple valid start nodes ['Generic Node', 'Door to Area 1'],"
         " but is not allowed for Metroid Prime 2: Echoes",
+
+        "Lava World/Hot/Door to Nowhere is a Dock Node, but connection 'region World/area Nowhere/node Random Door'"
+        " is invalid: 'Unknown name: Nowhere'",
+
+        "Lava World/Hot/Bad Event is an Event Node, but naming doesn't start with 'Event -'",
+        "Lava World/Hot/Pickup (Not A Pickup) is not a Pickup Node, but naming matches 'Pickup (...)'",
+        "Lava World/Hot/Bad Pickup is a Pickup Node, but naming doesn't match 'Pickup (...)'",
 
         "Unknown strongly connected component detected containing 1 nodes:\n"
         "['World/Area 1/Event - Foo']",

@@ -94,3 +94,15 @@ def test_on_pickup_index_button_pickup(skip_qtbot, echoes_game_description):
 
     dialog.on_pickup_index_button()
     assert dialog.pickup_index_spin.value() == node.pickup_index.index
+
+
+def test_on_dock_update_name_button(skip_qtbot, blank_game_description):
+    node = next(node for node in blank_game_description.region_list.iterate_nodes() if isinstance(node, DockNode))
+    dialog = NodeDetailsPopup(blank_game_description, node)
+    skip_qtbot.addWidget(dialog)
+    dialog.name_edit.setText("Weird Name")
+
+    # Run
+    assert dialog.name_edit.text() == "Weird Name"
+    dialog.on_dock_update_name_button()
+    assert dialog.name_edit.text() == node.name
