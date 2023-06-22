@@ -48,14 +48,12 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
 
     @property
     def num_preferred_locations(self) -> int:
-        preferred = 0
         if self.prefer_metroids_check.isChecked():
-            preferred += 46
+           return 46
         if self.prefer_bosses_check.isChecked():
-            preferred += 6
-        if preferred > 46:
-            preferred = 46
-        return preferred
+            return 6
+        return 0
+
 
     def _on_prefer_metroids(self, value: bool):
         def edit(config: AM2RArtifactConfig):
