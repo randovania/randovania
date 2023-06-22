@@ -5,8 +5,8 @@ from randovania.game_connection.executor.memory_operation import MemoryOperation
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.db.region import Region
-from randovania.games.prime3.patcher.corruption_dol_patches import CorruptionDolVersion
-from randovania.patching.prime import (all_prime_dol_patches)
+from opr.corruption_dol_patches import CorruptionDolVersion
+from opr import all_prime_dol_patches
 
 
 def format_received_item(item_name: str, player_name: str) -> str:

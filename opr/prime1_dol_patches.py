@@ -2,11 +2,12 @@ import dataclasses
 
 import py_randomprime
 
-from randovania.dol_patching import assembler
-from randovania.dol_patching.assembler import custom_ppc
-from randovania.dol_patching.assembler.ppc import lwz, r3, r13, bl, r31, r4, r5, cmpw, beq, li, stw, r1, addi, r6
-from randovania.games.game import RandovaniaGame
-from randovania.patching.prime.all_prime_dol_patches import BasePrimeDolVersion, StringDisplayPatchAddresses, \
+from ppc_asm import assembler
+from ppc_asm.assembler import custom_ppc
+from ppc_asm.assembler.ppc import lwz, r3, r13, bl, r31, r4, r5, cmpw, beq, li, stw, r1, addi, r6
+from retro_data_structures.game_check import Game
+
+from opr.all_prime_dol_patches import BasePrimeDolVersion, StringDisplayPatchAddresses, \
     PowerupFunctionsAddresses
 
 
@@ -21,7 +22,7 @@ class Prime1DolVersion(BasePrimeDolVersion):
         symbols = py_randomprime.symbols_for_version(version)
 
         super().__init__(
-            game=RandovaniaGame.METROID_PRIME,
+            game=Game.PRIME,
             description=description,
             build_string_address=build_string_address,
             build_string=build_string,

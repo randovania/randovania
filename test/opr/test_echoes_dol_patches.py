@@ -1,9 +1,10 @@
 import pytest
 
-from randovania.dol_patching.dol_file import DolHeader, Section
-from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
-from randovania.games.prime2.patcher import echoes_dol_patches, echoes_dol_versions
-from randovania.games.prime2.patcher.echoes_dol_patches import StartingBeamVisorAddresses
+from ppc_asm.dol_file import DolHeader, Section
+from opr import echoes_dol_patches, echoes_dol_versions
+from opr.beam_configuration import BeamAmmoConfiguration
+from opr.echoes_dol_patches import StartingBeamVisorAddresses
+from opr.echoes_user_preferences import OprEchoesUserPreferences
 
 DOLS = [
     (DolHeader(sections=(Section(offset=256, base_address=2147496192, size=1344),
@@ -50,7 +51,7 @@ DOLS = [
 
 
 def test_apply_game_options_patch(dol_file):
-    user_preferences = EchoesUserPreferences()
+    user_preferences = OprEchoesUserPreferences()
     offset = 0x2000
 
     # Run
@@ -86,7 +87,7 @@ def test_apply_game_options_patch(dol_file):
                        )
 
 
-def test_apply_beam_cost_patch(dol_file, default_echoes_preset):
+def test_apply_beam_cost_patch(dol_file):
     patch_addresses = echoes_dol_patches.BeamCostAddresses(
         uncharged_cost=0x2000,
         charged_cost=0x2010,
@@ -97,12 +98,37 @@ def test_apply_beam_cost_patch(dol_file, default_echoes_preset):
         gun_get_player=0x4000,
         get_item_amount=0x5000,
     )
-    beam_configuration = default_echoes_preset.configuration.beam_configuration
+    beam_configurations = [
+        BeamAmmoConfiguration(
+            item_index=0,
+            ammo_a=-1, ammo_b=-1,
+            uncharged_cost=0, charged_cost=0,
+            combo_missile_cost=5, combo_ammo_cost=0
+        ),
+        BeamAmmoConfiguration(
+            item_index=1,
+            ammo_a=45, ammo_b=-1,
+            uncharged_cost=1, charged_cost=5,
+            combo_missile_cost=5, combo_ammo_cost=30
+        ),
+        BeamAmmoConfiguration(
+            item_index=2,
+            ammo_a=46, ammo_b=-1,
+            uncharged_cost=1, charged_cost=5,
+            combo_missile_cost=5, combo_ammo_cost=30
+        ),
+        BeamAmmoConfiguration(
+            item_index=3,
+            ammo_a=46, ammo_b=45,
+            uncharged_cost=1, charged_cost=5,
+            combo_missile_cost=5, combo_ammo_cost=30
+        ),
+    ]
 
     # Run
     dol_file.set_editable(True)
     with dol_file:
-        echoes_dol_patches.apply_beam_cost_patch(patch_addresses, beam_configuration, dol_file)
+        echoes_dol_patches.apply_beam_cost_patch(patch_addresses, beam_configurations, dol_file)
 
     # Assert
     results = dol_file.dol_path.read_bytes()[0x100:]

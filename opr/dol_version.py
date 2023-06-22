@@ -1,13 +1,13 @@
 import dataclasses
 from typing import Iterable
 
-from randovania.dol_patching.dol_file import DolFile
-from randovania.games.game import RandovaniaGame
+from ppc_asm.dol_file import DolFile
+from retro_data_structures.game_check import Game
 
 
 @dataclasses.dataclass(frozen=True)
 class DolVersion:
-    game: RandovaniaGame
+    game: Game
     description: str
     build_string_address: int
     build_string: bytes

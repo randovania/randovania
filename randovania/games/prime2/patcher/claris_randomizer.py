@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Callable
 
 from randovania import get_data_path
-from randovania.games.prime2.patcher import csharp_subprocess, echoes_dol_patcher
+from randovania.games.prime2.patcher import csharp_subprocess
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.lib import status_update_lib, json_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
@@ -176,7 +176,4 @@ def apply_patcher_file(game_root: Path,
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
-    echoes_dol_patcher.apply_patches(game_root,
-                                     echoes_dol_patcher.EchoesDolPatchesData.from_json(patcher_data["dol_patches"]))
     write_patch_version(game_root, CURRENT_PATCH_VERSION)
-

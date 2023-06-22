@@ -6,7 +6,7 @@ from randovania.game_connection.connector.echoes_remote_connector import EchoesR
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException, \
     MemoryOperationExecutor
-from randovania.games.prime2.patcher import echoes_dol_versions
+from opr import echoes_dol_versions
 
 
 class MockedPrimeConnectorBuilder(PrimeConnectorBuilder):

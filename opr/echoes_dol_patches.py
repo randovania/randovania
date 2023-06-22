@@ -1,20 +1,25 @@
 import dataclasses
 import struct
 from enum import Enum
-from typing import NamedTuple
+from typing import NamedTuple, Iterable
 
-from randovania.dol_patching.assembler import custom_ppc
-from randovania.dol_patching.assembler.ppc import *   # noqa: F403
-from randovania.dol_patching.dol_file import DolFile
-from randovania.game_description import default_database
-from randovania.games.game import RandovaniaGame
-from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
-from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
-from randovania.patching.prime.all_prime_dol_patches import (
+from open_prime_rando.echoes.dock_lock_rando.map_icons import DoorMapIcon
+from ppc_asm.assembler import custom_ppc
+from ppc_asm.assembler.ppc import *  # noqa: F403
+from ppc_asm.dol_file import DolFile
+
+from opr.all_prime_dol_patches import (
     BasePrimeDolVersion, HealthCapacityAddresses,
     DangerousEnergyTankAddresses
 )
-from open_prime_rando.echoes.dock_lock_rando.map_icons import DoorMapIcon
+from opr.beam_configuration import BeamAmmoConfiguration
+from opr.echoes_user_preferences import OprEchoesUserPreferences
+
+POWERUP_TO_INDEX = {
+    "Double Damage": 58,
+    "Unlimited Missiles": 81,
+    "Unlimited Beam Ammo": 82,
+}
 
 
 class IsDoorAddr(NamedTuple):
@@ -90,7 +95,7 @@ _FLAGS_ORDER = (
 )
 
 
-def apply_game_options_patch(game_options_constructor_offset: int, user_preferences: EchoesUserPreferences,
+def apply_game_options_patch(game_options_constructor_offset: int, user_preferences: OprEchoesUserPreferences,
                              dol_file: DolFile):
     patch = [
         # Unknown purpose, but keep for safety
@@ -227,7 +232,8 @@ def _is_out_of_ammo_patch(symbols: dict[str, int], ammo_types: list[tuple[int, i
     ]
 
 
-def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, beam_configuration: BeamConfiguration,
+def apply_beam_cost_patch(patch_addresses: BeamCostAddresses,
+                          beam_configurations: Iterable[BeamAmmoConfiguration],
                           dol_file: DolFile):
     uncharged_costs = []
     charged_costs = []
@@ -235,7 +241,7 @@ def apply_beam_cost_patch(patch_addresses: BeamCostAddresses, beam_configuration
     missile_costs = []
     ammo_types = []
 
-    for beam_config in beam_configuration.all_beams:
+    for beam_config in beam_configurations:
         uncharged_costs.append(beam_config.uncharged_cost)
         charged_costs.append(beam_config.charged_cost)
         combo_costs.append(beam_config.combo_ammo_cost)
@@ -380,8 +386,6 @@ class EchoesDolVersion(BasePrimeDolVersion):
 
 
 def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
-    resource_database = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_ECHOES)
-
     dol_file.symbols["CMapWorldInfo::IsAnythingSet"] = version.anything_set_address
 
     dol_file.write_instructions("CMapWorldInfo::IsAnythingSet", [
@@ -393,10 +397,10 @@ def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
         nop(),
     ])
 
-    from randovania.games.prime2.exporter.patch_data_factory import item_id_for_item_resource
 
-    for item in ["Double Damage", "Unlimited Missiles", "Unlimited Beam Ammo"]:
-        index = item_id_for_item_resource(resource_database.get_item_by_name(item))
+def change_powerup_should_persist(version: EchoesDolVersion, dol_file: DolFile, powerups: list[str]):
+    for item in powerups:
+        index = POWERUP_TO_INDEX[item]
         dol_file.write(version.powerup_should_persist + index, b"\x01")
 
 
@@ -450,7 +454,7 @@ def apply_map_door_changes(door_symbols: MapDoorTypeAddresses, dol_file: DolFile
     for symbol in is_door_symbols:
         dol_file.write_instructions(symbol.low, [cmpwi(symbol.register, DOOR_MIN)])
         dol_file.write_instructions(symbol.high, [cmpwi(symbol.register, DOOR_MAX)])
-    
+
     # TODO: add colors to GetDoorColor
     dol_file.symbols["CTweakAutoMapper::GetDoorColor"] = door_symbols.get_door_color
     door_color_array = door_symbols.get_door_color + 32
@@ -467,7 +471,6 @@ def apply_map_door_changes(door_symbols: MapDoorTypeAddresses, dol_file: DolFile
         stw(r0, 0, _out_color),
         blr()
     ])
-    
-    
+
     dol_file.symbols["CTweakAutoMapper::GetDoorColor::DoorColorArray"] = door_color_array
     dol_file.write("CTweakAutoMapper::GetDoorColor::DoorColorArray", DoorMapIcon.get_surface_colors_as_bytes())

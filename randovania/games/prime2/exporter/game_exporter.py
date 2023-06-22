@@ -5,8 +5,10 @@ import shutil
 from pathlib import Path
 
 import mp2hudcolor
+from ppc_asm import dol_file
 from retro_data_structures.asset_manager import PathFileProvider
 
+from opr import echoes_dol_patcher
 from randovania import get_data_path
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
@@ -132,6 +134,11 @@ class EchoesGameExporter(GameExporter):
             patch_data,
             randomizer_data,
             claris_update)
+
+        echoes_dol_patcher.apply_patches(
+            dol_file.DolFile(contents_files_path.joinpath("sys/main.dol")),
+            echoes_dol_patcher.EchoesDolPatchesData.from_json(patch_data["dol_patches"]),
+        )
 
         # New Patcher
         if new_patcher is not None:

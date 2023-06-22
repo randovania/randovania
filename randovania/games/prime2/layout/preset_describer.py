@@ -1,6 +1,7 @@
 from randovania.game_description import default_database
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-from randovania.games.prime2.layout.beam_configuration import BeamConfiguration, BeamAmmoConfiguration
+from opr.beam_configuration import BeamAmmoConfiguration
+from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (

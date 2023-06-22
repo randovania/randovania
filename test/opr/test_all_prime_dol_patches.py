@@ -1,10 +1,10 @@
 import dataclasses
 
 import pytest
+from ppc_asm import assembler
+from retro_data_structures.game_check import Game
 
-from randovania.dol_patching import assembler
-from randovania.games.game import RandovaniaGame
-from randovania.patching.prime import all_prime_dol_patches
+from opr import all_prime_dol_patches
 
 
 @pytest.fixture(name="string_display")
@@ -27,8 +27,8 @@ def _powerup_address():
     )
 
 
-@pytest.mark.parametrize('game', [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES])
-def test_apply_remote_execution_patch(game: RandovaniaGame, dol_file,
+@pytest.mark.parametrize('game', [Game.PRIME, Game.ECHOES])
+def test_apply_remote_execution_patch(game: Game, dol_file,
                                       string_display: all_prime_dol_patches.StringDisplayPatchAddresses):
     dol_file.header = dataclasses.replace(
         dol_file.header,
@@ -46,7 +46,7 @@ def test_apply_remote_execution_patch(game: RandovaniaGame, dol_file,
     for i in range(50):
         print("b'" + "".join(f"\\x{x:02x}" for x in results[i * 20:(i + 1) * 20]) + "'")
 
-    if game == RandovaniaGame.METROID_PRIME:
+    if game == Game.PRIME:
         assert results == (b'\x94\x21\xff\xcc\x7c\x08\x02\xa6\x90\x01\x00\x38\xbf\xc1\x00\x2c\x7c\x7f\x1b\x78'
                            b'\x88\x9f\x00\x02\x2c\x04\x00\x00\x40\x82\x00\x18\xbb\xc1\x00\x2c\x80\x01\x00\x38'
                            b'\x7c\x08\x03\xa6\x38\x21\x00\x34\x4e\x80\x00\x20\x80\x7f\x08\x70\x2c\x03\x00\x00'
@@ -70,7 +70,7 @@ def test_apply_remote_execution_patch(game: RandovaniaGame, dol_file,
                            b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
                            b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
                            b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-    elif game == RandovaniaGame.METROID_PRIME_ECHOES:
+    elif game == Game.ECHOES:
         assert results == (b'\x94\x21\xff\xcc\x7c\x08\x02\xa6\x90\x01\x00\x38\xbf\xc1\x00\x2c\x7c\x7f\x1b\x78'
                            b'\x88\x9f\x00\x02\x2c\x04\x00\x00\x40\x82\x00\x18\xbb\xc1\x00\x2c\x80\x01\x00\x38'
                            b'\x7c\x08\x03\xa6\x38\x21\x00\x34\x4e\x80\x00\x20\x80\x1f\x16\xfc\x2c\x00\x00\x00'
@@ -96,8 +96,8 @@ def test_apply_remote_execution_patch(game: RandovaniaGame, dol_file,
                            b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
 
 
-@pytest.mark.parametrize('game', [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES])
-def test_create_remote_execution_body(game: RandovaniaGame,
+@pytest.mark.parametrize('game', [Game.PRIME, Game.ECHOES])
+def test_create_remote_execution_body(game: Game,
                                       string_display: all_prime_dol_patches.StringDisplayPatchAddresses,
                                       powerup_address: all_prime_dol_patches.PowerupFunctionsAddresses):
     # Run
@@ -107,7 +107,7 @@ def test_create_remote_execution_body(game: RandovaniaGame,
     ])
 
     # Assert
-    if game == RandovaniaGame.METROID_PRIME:
+    if game == Game.PRIME:
         assert patch_address == string_display.update_hint_state + 0x70
 
         assert patch_bytes == (b'\x3c\xa0\x41\x00\x38\xc0\x00\x00\x38\xe0\x00\x01\x39\x20\x00\x09\x90\xa1\x00\x10'
@@ -117,7 +117,7 @@ def test_create_remote_execution_body(game: RandovaniaGame,
                                b'\x48\x03\xd8\x11\x80\x7f\x08\xb8\x80\x63\x00\x00\x38\x80\x00\x03\x38\xa0\x00\x0c'
                                b'\x48\x03\xd6\x6d\x38\xc0\x00\x00\x98\xdf\x00\x02\xbb\xc1\x00\x2c\x80\x01\x00\x38'
                                b'\x7c\x08\x03\xa6\x38\x21\x00\x34\x4e\x80\x00\x20')
-    elif game == RandovaniaGame.METROID_PRIME_ECHOES:
+    elif game == Game.ECHOES:
         assert patch_address == string_display.update_hint_state + 0x64
 
         assert patch_bytes == (b'\x3c\xa0\x41\x00\x38\xc0\x00\x00\x38\xe0\x00\x01\x39\x20\x00\x09\x90\xa1\x00\x10'
@@ -129,8 +129,8 @@ def test_create_remote_execution_body(game: RandovaniaGame,
                                b'\x4e\x80\x00\x20')
 
 
-@pytest.mark.parametrize('game', [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES])
-def test_remote_execution_patch_start(game: RandovaniaGame):
+@pytest.mark.parametrize('game', [Game.PRIME, Game.ECHOES])
+def test_remote_execution_patch_start(game: Game):
     # Run
     patch = all_prime_dol_patches.remote_execution_patch_start(game)
     data = bytes(assembler.assemble_instructions(0x80008020, patch))
@@ -138,14 +138,14 @@ def test_remote_execution_patch_start(game: RandovaniaGame):
         print("b'" + "".join(f"\\x{x:02x}" for x in data[i * 20:(i + 1) * 20]) + "'")
 
     # Assert
-    if game == RandovaniaGame.METROID_PRIME:
+    if game == Game.PRIME:
         assert data == (b'\x94\x21\xff\xcc\x7c\x08\x02\xa6\x90\x01\x00\x38\xbf\xc1\x00\x2c\x7c\x7f\x1b\x78'
                         b'\x88\x9f\x00\x02\x2c\x04\x00\x00\x40\x82\x00\x18\xbb\xc1\x00\x2c\x80\x01\x00\x38'
                         b'\x7c\x08\x03\xa6\x38\x21\x00\x34\x4e\x80\x00\x20\x80\x7f\x08\x70\x2c\x03\x00\x00'
                         b'\x41\x82\xff\xe4\x80\x03\x00\x08\x2c\x00\x00\x00\x41\x81\xff\xd8\x3f\xc0\x80\x00'
                         b'\x63\xde\x80\x8c\x38\x80\x01\x60\x7c\x04\xf7\xac\x2c\x04\x00\x00\x38\x84\xff\xe0'
                         b'\x40\x82\xff\xf4\x7c\x00\x04\xac\x4c\x00\x01\x2c')
-    elif game == RandovaniaGame.METROID_PRIME_ECHOES:
+    elif game == Game.ECHOES:
         assert data == (b'\x94\x21\xff\xcc\x7c\x08\x02\xa6\x90\x01\x00\x38\xbf\xc1\x00\x2c\x7c\x7f\x1b\x78'
                         b'\x88\x9f\x00\x02\x2c\x04\x00\x00\x40\x82\x00\x18\xbb\xc1\x00\x2c\x80\x01\x00\x38'
                         b'\x7c\x08\x03\xa6\x38\x21\x00\x34\x4e\x80\x00\x20\x80\x1f\x16\xfc\x2c\x00\x00\x00'
@@ -186,7 +186,7 @@ def test_call_display_hud_patch(string_display: all_prime_dol_patches.StringDisp
 def test_give_item_patch(powerup_address: all_prime_dol_patches.PowerupFunctionsAddresses):
     # Run
     patch = all_prime_dol_patches.adjust_item_amount_and_capacity_patch(powerup_address,
-                                                                        RandovaniaGame.METROID_PRIME_ECHOES, 10, 5)
+                                                                        Game.ECHOES, 10, 5)
     data = bytes(assembler.assemble_instructions(0x80008020, patch))
 
     # Assert
@@ -195,7 +195,7 @@ def test_give_item_patch(powerup_address: all_prime_dol_patches.PowerupFunctions
 
 
 def test_apply_reverse_energy_tank_heal_patch_active(dol_file):
-    game = RandovaniaGame.METROID_PRIME_ECHOES
+    game = Game.ECHOES
     addresses = all_prime_dol_patches.DangerousEnergyTankAddresses(
         small_number_float=0x1600,
         incr_pickup=0x2000,
@@ -236,7 +236,7 @@ def test_apply_reverse_energy_tank_heal_patch_active(dol_file):
 
 
 def test_apply_reverse_energy_tank_heal_patch_inactive(dol_file):
-    game = RandovaniaGame.METROID_PRIME_ECHOES
+    game = Game.ECHOES
     addresses = all_prime_dol_patches.DangerousEnergyTankAddresses(
         small_number_float=0x1600,
         incr_pickup=0x2000,

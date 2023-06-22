@@ -1,14 +1,15 @@
-from randovania.games.game import RandovaniaGame
-from randovania.games.prime2.patcher.echoes_dol_patches import (
-    BeamCostAddresses, EchoesDolVersion, IsDoorAddr, MapDoorTypeAddresses,
-    SafeZoneAddresses, StartingBeamVisorAddresses)
-from randovania.patching.prime.all_prime_dol_patches import (
+from retro_data_structures.game_check import Game
+
+from opr.all_prime_dol_patches import (
     DangerousEnergyTankAddresses, HealthCapacityAddresses,
     PowerupFunctionsAddresses, StringDisplayPatchAddresses)
+from opr.echoes_dol_patches import (
+    BeamCostAddresses, EchoesDolVersion, IsDoorAddr, MapDoorTypeAddresses,
+    SafeZoneAddresses, StartingBeamVisorAddresses)
 
 ALL_VERSIONS = [
     EchoesDolVersion(
-        game=RandovaniaGame.METROID_PRIME_ECHOES,
+        game=Game.ECHOES,
         description="Gamecube NTSC",
         build_string_address=0x803ac3b0,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32",
@@ -77,7 +78,7 @@ ALL_VERSIONS = [
         )
     ),
     EchoesDolVersion(
-        game=RandovaniaGame.METROID_PRIME_ECHOES,
+        game=Game.ECHOES,
         description="Gamecube PAL",
         build_string_address=0x803ad710,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.035 10/27/2004 19:48:17",

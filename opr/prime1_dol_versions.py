@@ -1,4 +1,4 @@
-from randovania.games.prime1.patcher.prime1_dol_patches import Prime1DolVersion
+from opr.prime1_dol_patches import Prime1DolVersion
 
 ALL_VERSIONS = [
     Prime1DolVersion(

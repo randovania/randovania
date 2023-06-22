@@ -2,18 +2,19 @@ import dataclasses
 import struct
 import uuid
 
-from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.dol_patching import assembler
-from randovania.dol_patching.assembler import custom_ppc
-from randovania.dol_patching.assembler.ppc import *  # noqa: F403
-from randovania.dol_patching.dol_file import DolFile
-from randovania.dol_patching.dol_version import DolVersion
-from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.patcher import prime_items
+from ppc_asm import assembler
+from ppc_asm.assembler import custom_ppc
+from ppc_asm.assembler.ppc import *  # noqa: F403
+from ppc_asm.dol_file import DolFile
+from open_prime_rando.dol_patching.dol_version import DolVersion
+from retro_data_structures.game_check import Game
+
+
+ARTIFACT_ITEMS = list(range(29, 41))
 
 
 @dataclasses.dataclass(frozen=True)
-class StringDisplayPatchAddresses(DataclassPostInitTypeCheck):
+class StringDisplayPatchAddresses:
     update_hint_state: int
     message_receiver_string_ref: int
     wstring_constructor: int
@@ -59,18 +60,18 @@ _remote_execution_stack_size = 0x30 + (_registers_to_save * 4)
 _remote_execution_max_byte_count = 420  # Prime 1 0-00 is 444, Echoes NTSC is 464
 
 
-def remote_execution_patch_start(game: RandovaniaGame) -> list[BaseInstruction]:
+def remote_execution_patch_start(game: Game) -> list[BaseInstruction]:
     return_code = remote_execution_cleanup_and_return()
     return_code_byte_count = assembler.byte_count(return_code)
 
-    if game == RandovaniaGame.METROID_PRIME:
+    if game == Game.PRIME:
         cutscene_check = [
             lwz(r3, 0x870, r31),
             cmpwi(r3, 0),
             beq(-0x8 - return_code_byte_count, True),
             lwz(r0, 0x8, r3),
         ]
-    elif game == RandovaniaGame.METROID_PRIME_ECHOES:
+    elif game == Game.ECHOES:
         cutscene_check = [
             lwz(r0, 0x16fc, r31),
         ]
@@ -166,13 +167,13 @@ def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses) -> list
     ]
 
 
-def _load_player_state(game: RandovaniaGame, target_register: GeneralRegister, state_mgr: GeneralRegister = r31):
-    if game == RandovaniaGame.METROID_PRIME:
+def _load_player_state(game: Game, target_register: GeneralRegister, state_mgr: GeneralRegister = r31):
+    if game == Game.PRIME:
         return [
             lwz(target_register, 0x8b8, state_mgr),
             lwz(target_register, 0, target_register),
         ]
-    elif game == RandovaniaGame.METROID_PRIME_ECHOES:
+    elif game == Game.ECHOES:
         return [
             lwz(target_register, 0x150c, state_mgr),
         ]
@@ -181,10 +182,10 @@ def _load_player_state(game: RandovaniaGame, target_register: GeneralRegister, s
 
 
 def adjust_item_amount_and_capacity_patch(
-        patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int,
+        patch_addresses: PowerupFunctionsAddresses, game: Game, item_id: int, delta: int,
 ) -> list[BaseInstruction]:
     # r31 = CStateManager
-    if game == RandovaniaGame.METROID_PRIME and item_id in prime_items.ARTIFACT_ITEMS:
+    if game == Game.PRIME and item_id in ARTIFACT_ITEMS:
         return increment_item_capacity_patch(patch_addresses, game, item_id, delta)
 
     if delta >= 0:
@@ -200,7 +201,7 @@ def adjust_item_amount_and_capacity_patch(
 
 
 def increment_item_capacity_patch(
-        patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int = 1,
+        patch_addresses: PowerupFunctionsAddresses, game: Game, item_id: int, delta: int = 1,
 ) -> list[BaseInstruction]:
     return [
         *_load_player_state(game, r3, r31),
@@ -211,7 +212,7 @@ def increment_item_capacity_patch(
 
 
 def adjust_item_amount_patch(
-        patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int,
+        patch_addresses: PowerupFunctionsAddresses, game: Game, item_id: int, delta: int,
 ) -> list[BaseInstruction]:
     return [
         *_load_player_state(game, r3, r31),
@@ -221,7 +222,7 @@ def adjust_item_amount_patch(
     ]
 
 
-def remote_execution_patch(game: RandovaniaGame):
+def remote_execution_patch(game: Game):
     return [
         *remote_execution_patch_start(game),
         *remote_execution_clear_pending_op(),
@@ -229,11 +230,11 @@ def remote_execution_patch(game: RandovaniaGame):
     ]
 
 
-def apply_remote_execution_patch(game: RandovaniaGame, patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
+def apply_remote_execution_patch(game: Game, patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
     dol_file.write_instructions(patch_addresses.update_hint_state, remote_execution_patch(game))
 
 
-def create_remote_execution_body(game: RandovaniaGame,
+def create_remote_execution_body(game: Game,
                                  patch_addresses: StringDisplayPatchAddresses,
                                  instructions: list[BaseInstruction]) -> tuple[int, bytes]:
     """
@@ -271,15 +272,15 @@ def apply_energy_tank_capacity_patch(patch_addresses: HealthCapacityAddresses, e
 def apply_reverse_energy_tank_heal_patch(sd2_base: int,
                                          addresses: DangerousEnergyTankAddresses,
                                          active: bool,
-                                         game: RandovaniaGame,
+                                         game: Game,
                                          dol_file: DolFile,
                                          ):
-    if game == RandovaniaGame.METROID_PRIME_ECHOES:
+    if game == Game.ECHOES:
         health_offset = 0x14
         refill_item = 0x29
         patch_offset = 0x90
 
-    elif game == RandovaniaGame.METROID_PRIME_CORRUPTION:
+    elif game == Game.CORRUPTION:
         health_offset = 0xc
         refill_item = 0x12
         patch_offset = 0x138

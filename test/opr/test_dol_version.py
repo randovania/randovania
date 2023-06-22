@@ -1,13 +1,13 @@
 from unittest.mock import MagicMock
 
 import pytest
+from retro_data_structures.game_check import Game
 
-from randovania.dol_patching import dol_version
-from randovania.games.game import RandovaniaGame
+from opr import dol_version
 
 test_versions = [
     dol_version.DolVersion(
-        game=RandovaniaGame.METROID_PRIME_ECHOES,
+        game=Game.ECHOES,
         description="Gamecube NTSC",
         build_string_address=0x803ac3b0,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32",
@@ -15,7 +15,7 @@ test_versions = [
         sda13_base=0x8041fd80,
     ),
     dol_version.DolVersion(
-        game=RandovaniaGame.METROID_PRIME_ECHOES,
+        game=Game.ECHOES,
         description="Gamecube PAL",
         build_string_address=0x803ad710,
         build_string=b"!#$MetroidBuildInfo!#$Build v1.035 10/27/2004 19:48:17",

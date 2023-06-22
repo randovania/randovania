@@ -1,10 +1,11 @@
-from randovania.games.game import RandovaniaGame
-from randovania.games.prime3.patcher.corruption_dol_patches import CorruptionDolVersion
-from randovania.patching.prime.all_prime_dol_patches import PowerupFunctionsAddresses
+from retro_data_structures.game_check import Game
+
+from opr.all_prime_dol_patches import PowerupFunctionsAddresses
+from opr.corruption_dol_patches import CorruptionDolVersion
 
 ALL_VERSIONS = [
     CorruptionDolVersion(
-        game=RandovaniaGame.METROID_PRIME_CORRUPTION,
+        game=Game.CORRUPTION,
         description="Wii NTSC",
         build_string_address=0x805822b0,
         build_string=b"!#$MetroidBuildInfo!#$2007/07/27 13:13 Build v3.436 (MP3)",
@@ -29,7 +30,7 @@ ALL_VERSIONS = [
         ),
     ),
     CorruptionDolVersion(
-        game=RandovaniaGame.METROID_PRIME_CORRUPTION,
+        game=Game.CORRUPTION,
         description="Wii PAL",
         build_string_address=0x805843a8,
         build_string=b"!#$MetroidBuildInfo!#$2007/08/24 16:52 Build v3.453 (mp3)",
@@ -47,7 +48,7 @@ ALL_VERSIONS = [
         ),
     ),
     CorruptionDolVersion(
-        game=RandovaniaGame.METROID_PRIME_CORRUPTION,
+        game=Game.CORRUPTION,
         description="Wii NTSC-J",
         build_string_address=0x80587c2c,
         build_string=b"!#$MetroidBuildInfo!#$2007/11/12 14:15 Build v3.495 (jpn)",
