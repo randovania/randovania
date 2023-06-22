@@ -2,9 +2,11 @@ import construct
 import flask
 from playhouse import flask_utils
 
+from randovania.bitpacking import construct_pack
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
-from randovania.network_common.multiplayer_session import BinaryInventory
+from randovania.layout.versioned_preset import VersionedPreset
+from randovania.network_common.multiplayer_session import BinaryInventory, RemoteInventory
 from randovania.server.database import MultiplayerSession, WorldUserAssociation, World
 from randovania.server.server_app import ServerApp
 
@@ -71,19 +73,20 @@ def admin_session(user, session_id):
         inventory = []
 
         if association.inventory is not None:
+            parsed_inventory: RemoteInventory | None = None
             try:
-                parsed_inventory = BinaryInventory.parse(association.inventory)
+                parsed_inventory = construct_pack.decode(association.inventory, RemoteInventory)
             except construct.ConstructError as e:
                 inventory.append(f"Error parsing: {e}")
-                parsed_inventory = None
 
             if parsed_inventory is not None:
-                db = default_database.resource_database_for(RandovaniaGame(parsed_inventory.game))
-                for item in parsed_inventory.elements:
-                    if item["amount"] + item["capacity"] > 0:
+                game = VersionedPreset.from_str(association.world.preset).game
+                db = default_database.resource_database_for(game)
+                for item_name, item in parsed_inventory.items():
+                    if item.amount + item.capacity > 0:
                         inventory.append("{} x{}/{}".format(
-                            db.get_item(item["name"]).long_name,
-                            item["amount"], item["capacity"]
+                            db.get_item(item_name).long_name,
+                            item.amount, item.capacity
                         ))
         else:
             inventory.append("Missing")

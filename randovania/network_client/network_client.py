@@ -17,8 +17,7 @@ import sentry_sdk
 import socketio
 import socketio.exceptions
 
-import randovania.network_common.multiplayer_session
-from randovania.bitpacking import bitpacking, construct_dataclass
+from randovania.bitpacking import bitpacking, construct_pack
 from randovania.game_description import default_database
 from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.games.game import RandovaniaGame
@@ -27,7 +26,7 @@ from randovania.network_common import connection_headers, error, admin_actions, 
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionListEntry, MultiplayerSessionEntry, User, MultiplayerSessionActions,
     MultiplayerWorldPickups, MultiplayerSessionAuditLog,
-    WorldUserInventory
+    WorldUserInventory, RemoteInventory
 )
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
@@ -320,7 +319,7 @@ class NetworkClient:
 
     async def _on_multiplayer_session_actions_update_raw(self, data: bytes):
         await self.on_multiplayer_session_actions_update(
-            construct_dataclass.decode_json_dataclass(data, multiplayer_session.MultiplayerSessionActions)
+            construct_pack.decode(data, multiplayer_session.MultiplayerSessionActions)
         )
 
     async def on_multiplayer_session_actions_update(self, actions: MultiplayerSessionActions):
@@ -328,7 +327,7 @@ class NetworkClient:
 
     async def _on_multiplayer_session_audit_update_raw(self, data: bytes):
         await self.on_multiplayer_session_audit_update(
-            construct_dataclass.decode_json_dataclass(data, multiplayer_session.MultiplayerSessionAuditLog)
+            construct_pack.decode(data, multiplayer_session.MultiplayerSessionAuditLog)
         )
 
     async def on_multiplayer_session_audit_update(self, audit_log: MultiplayerSessionAuditLog):
@@ -351,19 +350,17 @@ class NetworkClient:
     async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups):
         self.logger.info("world %s, num pickups: %d", pickups.world_id, len(pickups.pickups))
 
-    async def _on_world_user_inventory_raw(self, entry_id: str, raw_inventory: bytes):
+    async def _on_world_user_inventory_raw(self, entry_id: str, user_id: int, raw_inventory: bytes):
         try:
-            inventory = randovania.network_common.multiplayer_session.BinaryInventory.parse(raw_inventory)
+            inventory = construct_pack.decode(raw_inventory, RemoteInventory)
         except construct.ConstructError as e:
             self.logger.debug("Unable to parse inventory for entry %d: %s", entry_id, str(e))
             return
 
         session_inventory = WorldUserInventory(
             world_id=uuid.UUID(entry_id),
-            inventory={
-                element.name: InventoryItem(element.amount, element.capacity)
-                for element in inventory.elements
-            },
+            user_id=user_id,
+            inventory=inventory,
         )
         await self.on_world_user_inventory(session_inventory)
 
@@ -451,9 +448,9 @@ class NetworkClient:
     #                            (self._current_game_session_meta.id, row, enable, True))
 
     async def perform_world_sync(self, request: ServerSyncRequest) -> ServerSyncResponse:
-        return construct_dataclass.decode_json_dataclass(
+        return construct_pack.decode(
             await self.server_call("multiplayer_world_sync",
-                                   construct_dataclass.encode_json_dataclass(request)),
+                                   construct_pack.encode(request)),
             ServerSyncResponse,
         )
 

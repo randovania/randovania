@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, call
 import pytest
 from pytest_mock import MockerFixture
 
-from randovania.bitpacking import construct_dataclass
+from randovania.bitpacking import construct_pack
 from randovania.network_common import multiplayer_session
 from randovania.network_common.multiplayer_session import MultiplayerSessionAuditLog, \
     MultiplayerSessionAuditEntry
@@ -87,7 +87,7 @@ def test_emit_session_actions_update(session_update, flask_app, mocker):
     # Assert
     mock_emit.assert_called_once_with(
         "multiplayer_session_actions_update",
-        construct_dataclass.encode_json_dataclass(actions),
+        construct_pack.encode(actions),
         room=f"multiplayer-session-{session_update.id}",
         namespace='/',
     )
@@ -118,7 +118,7 @@ def test_emit_session_audit_update(session_update, flask_app, mocker):
     # Assert
     mock_emit.assert_called_once_with(
         "multiplayer_session_audit_update",
-        construct_dataclass.encode_json_dataclass(audit_log),
+        construct_pack.encode(audit_log),
         room=f"multiplayer-session-{session_update.id}",
         namespace='/',
     )

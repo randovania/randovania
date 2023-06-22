@@ -204,6 +204,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     mock_emit = mocker.patch("flask_socketio.emit")
     mock_emit_pickups = mocker.patch("randovania.server.multiplayer.world_api.emit_world_pickups_update")
     mock_emit_actions = mocker.patch("randovania.server.multiplayer.session_common.emit_session_actions_update")
+    mock_emit_inventory = mocker.patch("randovania.server.multiplayer.session_common.emit_inventory_update")
 
     sio = MagicMock()
     sio.get_current_user.return_value = database.User.get_by_id(1234)
@@ -217,13 +218,13 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
             w1.uuid: ServerWorldSync(
                 status=GameConnectionStatus.InGame,
                 collected_locations=(5,),
-                inventory=frozendict({}),
+                inventory=b"foo",
                 request_details=True,
             ),
             w2.uuid: ServerWorldSync(
                 status=GameConnectionStatus.Disconnected,
                 collected_locations=(15,),
-                inventory=frozendict({}),
+                inventory=None,
                 request_details=False,
             ),
         })
@@ -246,8 +247,10 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
 
     a1 = database.WorldUserAssociation.get_by_instances(world=w1, user=1234)
     assert a1.connection_state == GameConnectionStatus.InGame
+    assert a1.inventory == b"foo"
     a2 = database.WorldUserAssociation.get_by_instances(world=w2, user=1234)
     assert a2.connection_state == GameConnectionStatus.Disconnected
+    assert a2.inventory is None
 
     sio.store_world_in_session.assert_called_once_with(w1)
     mock_join_room.assert_called_once_with("world-1179c986-758a-4170-9b07-fe4541d78db0")
@@ -255,6 +258,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     mock_emit_pickups.assert_has_calls([call(sio, w1), call(sio, w2)], any_order=True)
     mock_emit_session_update.assert_called_once_with(session)
     mock_emit_actions.assert_called_once_with(session)
+    mock_emit_inventory.assert_called_once_with(a1)
     mock_emit.assert_not_called()
 
 

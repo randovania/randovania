@@ -15,8 +15,7 @@ import socketio.exceptions
 from cryptography.fernet import Fernet
 from prometheus_flask_exporter import PrometheusMetrics
 
-from randovania.bitpacking import construct_dataclass
-from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.bitpacking import construct_pack
 from randovania.network_common import connection_headers
 from randovania.network_common.error import (
     NotLoggedIn, BaseNetworkError, ServerError, InvalidSession, UnsupportedClient,
@@ -26,7 +25,8 @@ from randovania.server.custom_discord_oauth import CustomDiscordOAuth2Session
 from randovania.server.database import User, World
 from randovania.server.lib import logger
 
-R = TypeVar("R", bound=JsonDataclass)
+T = TypeVar("T")
+R = TypeVar("R")
 
 
 class EnforceDiscordRole:
@@ -147,13 +147,13 @@ class ServerApp:
 
         return self.sio.on(message, namespace)(metric_wrapper(_handler))
 
-    def on_with_wrapper(self, message: str, handler: Callable[[ServerApp, construct_dataclass.T], R]):
+    def on_with_wrapper(self, message: str, handler: Callable[[ServerApp, T], R]):
         arg_spec = inspect.getfullargspec(handler)
 
         @functools.wraps(handler)
         def _handler(sio: ServerApp, arg: bytes) -> bytes:
-            decoded_arg = construct_dataclass.decode_json_dataclass(arg, arg_spec.annotations[arg_spec.args[1]])
-            return construct_dataclass.encode_json_dataclass(handler(sio, decoded_arg))
+            decoded_arg = construct_pack.decode(arg, arg_spec.annotations[arg_spec.args[1]])
+            return construct_pack.encode(handler(sio, decoded_arg))
 
         return self.on(message, _handler)
 

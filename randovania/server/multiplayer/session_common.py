@@ -4,10 +4,9 @@ import uuid
 import construct
 import flask_socketio
 
-from randovania.bitpacking import construct_dataclass
-from randovania.lib.construct_lib import convert_to_raw_python
+from randovania.bitpacking import construct_pack
 from randovania.network_common import signals
-from randovania.network_common.multiplayer_session import BinaryInventory
+from randovania.network_common.multiplayer_session import RemoteInventory
 from randovania.server.database import (MultiplayerSession, MultiplayerAuditEntry,
                                         WorldUserAssociation, World)
 from randovania.server.lib import logger
@@ -40,11 +39,17 @@ def emit_inventory_update(association: WorldUserAssociation):
                         room=get_inventory_room_name(association),
                         namespace="/")
     try:
-        flask_socketio.emit(signals.WORLD_JSON_INVENTORY,
-                            (association.world.uuid, association.user.id,
-                             convert_to_raw_python(BinaryInventory.parse(association.inventory))),
-                            room=get_inventory_room_name(association),
-                            namespace="/")
+        inventory: RemoteInventory = construct_pack.decode(association.inventory, RemoteInventory)
+
+        flask_socketio.emit(
+            signals.WORLD_JSON_INVENTORY,
+            (association.world.uuid, association.user.id, {
+                name: {"amount": item.amount, "capacity": item.capacity}
+                for name, item in inventory.items()
+            }),
+            room=get_inventory_room_name(association),
+            namespace="/"
+        )
     except construct.ConstructError as e:
         logger().warning("Unable to encode inventory for world %s, user %d: %s",
                          association.world.uuid, association.user.id, str(e))
@@ -65,13 +70,13 @@ def emit_session_meta_update(session: MultiplayerSession):
 def emit_session_actions_update(session: MultiplayerSession):
     logger().debug("multiplayer_session_actions_update for session %d (%s)", session.id, session.name)
     emit_session_global_event(session, signals.SESSION_ACTIONS_UPDATE,
-                              construct_dataclass.encode_json_dataclass(session.describe_actions()))
+                              construct_pack.encode(session.describe_actions()))
 
 
 def emit_session_audit_update(session: MultiplayerSession):
     logger().debug("multiplayer_session_audit_update for session %d (%s)", session.id, session.name)
     emit_session_global_event(session, signals.SESSION_AUDIT_UPDATE,
-                              construct_dataclass.encode_json_dataclass(session.get_audit_log()))
+                              construct_pack.encode(session.get_audit_log()))
 
 
 def add_audit_entry(sio: ServerApp, session: MultiplayerSession, message: str):

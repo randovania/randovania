@@ -4,22 +4,21 @@ import uuid
 from frozendict import frozendict
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
 
 
 @dataclasses.dataclass(frozen=True)
-class ServerWorldSync(JsonDataclass):
+class ServerWorldSync:
     status: GameConnectionStatus
     collected_locations: tuple[int, ...]
-    inventory: frozendict[str, InventoryItem] | None
+    inventory: bytes | None  # frozendict[str, InventoryItem], but pre-encoded
     request_details: bool
 
 
 @dataclasses.dataclass(frozen=True)
-class ServerSyncRequest(JsonDataclass):
+class ServerSyncRequest:
     worlds: frozendict[uuid.UUID, ServerWorldSync]
 
 

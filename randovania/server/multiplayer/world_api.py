@@ -114,14 +114,17 @@ def update_association(user: User, world: World, inventory: bytes | None,
     association = WorldUserAssociation.get_by_instances(world=world, user=user)
     session = association.world.session
 
+    new_inventory = False
     association.connection_state = connection_state
     if session.state == MultiplayerSessionState.IN_PROGRESS and inventory is not None:
         association.inventory = inventory
+        new_inventory = True
 
     if association.is_dirty():
         association.last_activity = datetime.datetime.now(datetime.timezone.utc)
         association.save()
-        if session.state == MultiplayerSessionState.IN_PROGRESS:
+
+        if new_inventory:
             session_common.emit_inventory_update(association)
 
         logger().info(
@@ -182,7 +185,7 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
                 worlds_to_update.add(world)
                 sio.store_world_in_session(world)
 
-            session_id = update_association(user, world, None, world_request.status)
+            session_id = update_association(user, world, world_request.inventory, world_request.status)
             if session_id is not None:
                 sessions_to_update_meta.add(session_id)
 

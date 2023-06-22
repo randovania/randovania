@@ -6,6 +6,7 @@ import pytest
 from frozendict import frozendict
 from pytest_mock import MockerFixture
 
+from randovania.bitpacking import construct_pack
 from randovania.game_connection.game_connection import ConnectedGameState
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.multiworld_client import MultiworldClient, Data
@@ -115,7 +116,7 @@ def test_create_new_sync_request(client, tmp_path, has_old_pending, has_last_sta
     sync_requests[uuid.UUID(uid_1)] = ServerWorldSync(
         status=GameConnectionStatus.InGame,
         collected_locations=(5,),
-        inventory=frozendict({}),
+        inventory=b"\x00",
         request_details=True,
     )
 

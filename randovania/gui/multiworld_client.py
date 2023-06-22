@@ -9,13 +9,14 @@ from PySide6.QtCore import QObject
 from frozendict import frozendict
 from qasync import asyncSlot
 
+from randovania.bitpacking import construct_pack
 from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.lib import json_lib
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.multiplayer_session import MultiplayerWorldPickups
+from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory
 from randovania.network_common.world_sync import ServerWorldSync, ServerSyncRequest
 
 
@@ -112,8 +113,11 @@ class MultiworldClient(QObject):
                 status=state.status,
                 collected_locations=self._locations_to_upload(state.id),
                 inventory=(
-                    frozendict((item.short_name, item_state)
-                               for item, item_state in state.current_inventory.items())
+                    construct_pack.encode(
+                        {item.short_name: item_state
+                         for item, item_state in state.current_inventory.items()},
+                        RemoteInventory
+                    )
                     if state.status == GameConnectionStatus.InGame else None
                 ),
                 request_details=state.id not in self._remote_games,

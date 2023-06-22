@@ -4,7 +4,7 @@ import dataclasses
 import datetime
 import uuid
 
-from randovania.bitpacking import construct_dataclass
+from randovania.bitpacking import construct_pack
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -125,11 +125,14 @@ class MultiplayerSessionAuditLog(JsonDataclass):
     entries: list[MultiplayerSessionAuditEntry]  # TODO: restore tuple
 
 
+RemoteInventory = dict[str, InventoryItem]
+
+
 @dataclasses.dataclass(frozen=True)
 class WorldUserInventory:
     world_id: uuid.UUID
     user_id: int
-    inventory: dict[str, InventoryItem]
+    inventory: RemoteInventory
 
 
 @dataclasses.dataclass(frozen=True)
@@ -155,6 +158,4 @@ class User:
         }
 
 
-BinaryInventory = construct_dataclass.construct_for_type(WorldUserInventory)
-BinaryGameSessionActions = construct_dataclass.construct_for_type(MultiplayerSessionActions)
-BinaryMultiplayerSessionAuditLog = construct_dataclass.construct_for_type(MultiplayerSessionAuditLog)
+BinaryInventory = construct_pack.construct_for_type(WorldUserInventory)
