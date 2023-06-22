@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class GameSessionState(Enum):
+class MultiplayerSessionState(Enum):
     """State of a game session"""
     SETUP = "setup"
     IN_PROGRESS = "in-progress"

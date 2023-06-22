@@ -102,6 +102,7 @@ _direct_mapping = {
     bool: construct.Flag,
     int: construct.ZigZag,
     str: BinStr,
+    bytes: construct.Prefixed(construct.VarInt, construct.GreedyBytes),
     uuid.UUID: UUIDAdapter(),
     datetime.datetime: DatetimeAdapter(),
 }
