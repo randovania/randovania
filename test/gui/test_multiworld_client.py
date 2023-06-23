@@ -6,10 +6,10 @@ import pytest
 from frozendict import frozendict
 from pytest_mock import MockerFixture
 
-from randovania.bitpacking import construct_pack
 from randovania.game_connection.game_connection import ConnectedGameState
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.multiworld_client import MultiworldClient, Data
+from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib import json_lib
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
@@ -46,12 +46,15 @@ async def test_stop(client: MultiworldClient):
     assert client._sync_task is None
 
 
-@pytest.mark.parametrize("exists", [False, True])
+@pytest.mark.parametrize("exists", [False, True, "invalid"])
 async def test_on_game_state_updated(client: MultiworldClient, tmp_path, exists):
-    the_id = uuid.UUID("00000000-0000-1111-0000-000000000000")
+    the_id = INVALID_UUID if exists == "invalid" else uuid.UUID("00000000-0000-0000-1111-000000000000")
     data = Data(tmp_path.joinpath("data.json"))
-    client._all_data = {the_id: data}
-    data.collected_locations = {10, 15} if exists else {10}
+    if exists == "invalid":
+        client._all_data = {}
+    else:
+        client._all_data = {the_id: data}
+        data.collected_locations = {10, 15} if exists else {10}
     client.start_server_sync_task = MagicMock()
 
     remote_game = MagicMock()
@@ -70,10 +73,13 @@ async def test_on_game_state_updated(client: MultiworldClient, tmp_path, exists)
     await client.on_game_state_updated(state)
 
     # Assert
-    assert data.collected_locations == {10, 15}
-
-    state.source.set_remote_pickups.assert_awaited_once_with(remote_game.pickups)
-    client.start_server_sync_task.assert_called_once_with()
+    if exists == "invalid":
+        state.source.set_remote_pickups.assert_not_awaited()
+        client.start_server_sync_task.assert_not_called()
+    else:
+        assert data.collected_locations == {10, 15}
+        state.source.set_remote_pickups.assert_awaited_once_with(remote_game.pickups)
+        client.start_server_sync_task.assert_called_once_with()
 
 
 async def test_on_network_game_updated(client):
@@ -96,7 +102,7 @@ def test_create_new_sync_request(client, tmp_path, has_old_pending, has_last_sta
     sync_requests = {}
 
     uid_1 = "11111111-0000-0000-0000-000000000000"
-    uid_2 = "00000000-0000-1111-0000-000000000000"
+    uid_2 = "00000000-0000-0000-1111-000000000000"
     uid_3 = "000000000000-0000-0000-0000-11111111"
 
     client._persist_path.joinpath(f"{uid_1}.json").write_text(json.dumps({
@@ -107,6 +113,13 @@ def test_create_new_sync_request(client, tmp_path, has_old_pending, has_last_sta
     client.game_connection.connected_states = {
         MagicMock(): ConnectedGameState(
             id=uuid.UUID(uid_1),
+            source=MagicMock(),
+            status=GameConnectionStatus.InGame,
+            current_inventory={},
+            collected_indices=MagicMock(),
+        ),
+        MagicMock(): ConnectedGameState(
+            id=INVALID_UUID,
             source=MagicMock(),
             status=GameConnectionStatus.InGame,
             current_inventory={},
@@ -247,4 +260,3 @@ async def test_server_sync(client, mocker: MockerFixture):
         'latest_message_displayed': 0,
         'uploaded_locations': [5]
     }
-
