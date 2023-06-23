@@ -12,6 +12,7 @@ from qasync import asyncSlot
 from randovania.bitpacking import construct_pack
 from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
 from randovania.gui.lib.qt_network_client import QtNetworkClient
+from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib import json_lib
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import error
@@ -81,9 +82,10 @@ class MultiworldClient(QObject):
             try:
                 uid = uuid.UUID(f.stem)
             except ValueError:
-                self.logger.warning("File name is not an UUID: %s", f)
+                self.logger.warning("File name is not a UUID: %s", f)
                 continue
-            self._all_data[uid] = Data(f)
+            if uid != INVALID_UUID:
+                self._all_data[uid] = Data(f)
 
         self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
         self.network_client.WorldPickupsUpdated.connect(self.on_network_game_updated)
@@ -109,6 +111,9 @@ class MultiworldClient(QObject):
         sync_requests = {}
 
         for state in self.game_connection.connected_states.values():
+            if state.id == INVALID_UUID:
+                continue
+
             sync_requests[state.id] = ServerWorldSync(
                 status=state.status,
                 collected_locations=self._locations_to_upload(state.id),
@@ -206,6 +211,9 @@ class MultiworldClient(QObject):
         self._sync_task = asyncio.create_task(self._server_sync())
 
     def _get_data_for(self, uid: uuid.UUID) -> Data:
+        if uid == INVALID_UUID:
+            raise ValueError("UID not allowed for Multiworld")
+
         if uid not in self._all_data:
             self._all_data[uid] = Data(self._persist_path.joinpath(f"{uid}.json"))
 
@@ -213,6 +221,9 @@ class MultiworldClient(QObject):
 
     @asyncSlot(ConnectedGameState)
     async def on_game_state_updated(self, state: ConnectedGameState):
+        if state.id == INVALID_UUID:
+            return
+
         data = self._get_data_for(state.id)
         our_indices: set[int] = {i.index for i in state.collected_indices}
         if new_indices := our_indices - data.collected_locations:

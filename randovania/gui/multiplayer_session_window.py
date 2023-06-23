@@ -31,7 +31,8 @@ from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, MultiplayerUser, MultiplayerSessionActions, MultiplayerSessionAuditLog
+    MultiplayerSessionEntry, MultiplayerUser, MultiplayerSessionActions, MultiplayerSessionAuditLog,
+    MultiplayerSessionAction
 )
 from randovania.network_common.session_state import MultiplayerSessionState
 
@@ -314,6 +315,27 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             self_is_admin and session.state == MultiplayerSessionState.IN_PROGRESS)
         self.reset_session_action.setEnabled(self_is_admin and session.state != MultiplayerSessionState.SETUP)
 
+    def _describe_action(self, action: MultiplayerSessionAction):
+        # get_world can fail if the session meta is not up-to-date
+        try:
+            provider_world = self._session.get_world(action.provider)
+            provider_name = provider_world.name
+            receiver_name = self._session.get_world(action.receiver).name
+        except KeyError as e:
+            return "Unknown", "Unknown", f"Unknown worlds {e}"
+
+        preset = VersionedPreset.from_str(provider_world.preset_raw)
+        game = default_database.game_description_for(preset.game)
+        try:
+            location_node = game.region_list.node_from_pickup_index(action.location_index)
+            location_name = game.region_list.node_name(location_node, with_region=True,
+                                                       distinguish_dark_aether=True)
+
+            return provider_name, receiver_name, location_name
+
+        except KeyError as e:
+            return "Unknown", "Unknown", f"Invalid location: {e}"
+
     def update_session_actions(self, actions: MultiplayerSessionActions):
         scrollbar = self.tab_history.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
@@ -321,22 +343,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.tab_history.setRowCount(len(actions.actions))
 
         for i, action in enumerate(actions.actions):
-            # Default to UUID just in case
-            provider_world = self._session.get_world(action.provider)
-            provider_name = provider_world.name
-            receiver_name = self._session.get_world(action.receiver).name
-
-            preset = VersionedPreset.from_str(provider_world.preset_raw)
-            game = default_database.game_description_for(preset.game)
-            try:
-                location_node = game.region_list.node_from_pickup_index(action.location_index)
-                location_name = game.region_list.node_name(location_node, with_region=True,
-                                                           distinguish_dark_aether=True)
-            except KeyError as e:
-                logger.warning("Action %d has invalid location %d for game %s", i, action.location,
-                               preset.game.long_name)
-                location_name = f"Invalid location: {e}"
-
+            provider_name, receiver_name, location_name = self._describe_action(action)
             self.tab_history.setItem(i, 0, QtWidgets.QTableWidgetItem(provider_name))
             self.tab_history.setItem(i, 1, QtWidgets.QTableWidgetItem(receiver_name))
             self.tab_history.setItem(i, 2, QtWidgets.QTableWidgetItem(action.pickup))
