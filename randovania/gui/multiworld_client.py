@@ -14,7 +14,7 @@ from randovania.game_connection.game_connection import GameConnection, Connected
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib import json_lib
-from randovania.network_client.network_client import UnableToConnect
+from randovania.network_client.network_client import UnableToConnect, ConnectionState
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory
@@ -62,6 +62,7 @@ class MultiworldClient(QObject):
     _remote_games: dict[uuid.UUID, MultiplayerWorldPickups]
 
     _last_reported_status: dict[uuid.UUID, GameConnectionStatus]
+    _recently_connected: bool = True
     _last_sync: ServerSyncRequest = ServerSyncRequest(worlds=frozendict({}))
 
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection, persist_path: Path):
@@ -89,6 +90,7 @@ class MultiworldClient(QObject):
 
         self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
         self.network_client.WorldPickupsUpdated.connect(self.on_network_game_updated)
+        self.network_client.ConnectionStateUpdated.connect(self.on_connection_state_updated)
 
     async def start(self):
         self.logger.debug("start")
@@ -155,6 +157,10 @@ class MultiworldClient(QObject):
         while True:
             # Wait a bit, in case a RemoteConnector is sending multiple events in quick succession
             await asyncio.sleep(1)
+
+            if self._recently_connected:
+                self._recently_connected = False
+                self._last_sync = ServerSyncRequest(worlds=frozendict({}))
 
             request = self._create_new_sync_request()
             if request == self._last_sync:
@@ -245,3 +251,8 @@ class MultiworldClient(QObject):
                 await connector.set_remote_pickups(pickups.pickups)
 
         self.start_server_sync_task()
+
+    def on_connection_state_updated(self, state: ConnectionState):
+        if state == ConnectionState.Connected:
+            self._recently_connected = True
+            self.start_server_sync_task()
