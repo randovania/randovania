@@ -3,8 +3,9 @@ import logging
 import struct
 import uuid
 
+from retro_data_structures.game_check import Game as RDSGame
 
-from randovania.dol_patching import assembler
+from ppc_asm import assembler
 from randovania.game_connection.connector.remote_connector import RemoteConnector, PickupEntryWithOwner, \
     PlayerLocationEvent
 from randovania.game_connection.executor.memory_operation import (
@@ -21,13 +22,20 @@ from randovania.game_description.resources.resource_info import (
 from randovania.game_description.db.region import Region
 from randovania.games.game import RandovaniaGame
 from randovania.lib.infinite_timer import InfiniteTimer
-from randovania.patching.prime import (all_prime_dol_patches)
+from open_prime_rando.dol_patching import all_prime_dol_patches
 
 
 @dataclasses.dataclass(frozen=True)
 class DolRemotePatch:
     memory_operations: list[MemoryOperation]
     instructions: list[assembler.BaseInstruction]
+
+
+_RDS_TO_RDV_GAME = {
+    RDSGame.PRIME: RandovaniaGame.METROID_PRIME,
+    RDSGame.ECHOES: RandovaniaGame.METROID_PRIME_ECHOES,
+    RDSGame.CORRUPTION: RandovaniaGame.METROID_PRIME_CORRUPTION,
+}
 
 
 class PrimeRemoteConnector(RemoteConnector):
@@ -47,14 +55,14 @@ class PrimeRemoteConnector(RemoteConnector):
 
         self.executor = executor
         self.version = version
-        self.game = default_database.game_description_for(version.game)
+        self.game = default_database.game_description_for(_RDS_TO_RDV_GAME[version.game])
         self.remote_pickups = tuple()
 
         self._timer = InfiniteTimer(self.update, self._dt)
 
     @property
     def game_enum(self) -> RandovaniaGame:
-        return self.version.game
+        return self.game.game
 
     def description(self):
         return f"{self.game_enum.long_name}: {self.version.description}"
@@ -152,7 +160,7 @@ class PrimeRemoteConnector(RemoteConnector):
             locations = {PickupIndex(magic_inv.amount - 1)}
             patches = [DolRemotePatch([], all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
                 self.version.powerup_functions,
-                self.game.game,
+                self.version.game,
                 multiworld_magic_item.extra["item_id"],
                 -magic_inv.amount,
             ))]
@@ -178,7 +186,7 @@ class PrimeRemoteConnector(RemoteConnector):
         patches = [DolRemotePatch([], item_patch) for item_patch in item_patches]
         patches.append(DolRemotePatch([], all_prime_dol_patches.increment_item_capacity_patch(
             self.version.powerup_functions,
-            self.game.game,
+            self.version.game,
             multiworld_magic_item.extra["item_id"],
         )))
         patches.append(self._dol_patch_for_hud_message(message))
@@ -199,7 +207,7 @@ class PrimeRemoteConnector(RemoteConnector):
             memory_operations.extend(patch.memory_operations)
 
         patch_address, patch_bytes = all_prime_dol_patches.create_remote_execution_body(
-            self.game.game,
+            self.version.game,
             self.version.string_display,
             [instruction
              for patch in patches

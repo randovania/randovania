@@ -1,10 +1,10 @@
 from random import Random
 
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_dread_artifact
@@ -29,40 +29,24 @@ def artifact_pool(game: GameDescription, configuration: DreadConfiguration, rng:
     keys_to_shuffle = keys[:config.required_artifacts]
     starting_keys = keys[config.required_artifacts:]
 
-    locations: list[NodeIdentifier] = []
-    if config.prefer_emmi:
-        locations.extend(_EMMI_INDICES)
-    if config.prefer_major_bosses:
-        locations.extend(_BOSS_INDICES)
+    locations: list[PickupNode] = []
+    for node in game.region_list.all_nodes:
+        if isinstance(node, PickupNode) and "boss_hint_name" in node.extra:
+            if node.extra["pickup_type"] == "emmi":
+                if config.prefer_emmi:
+                    locations.append(node)
+            else:
+                if config.prefer_major_bosses:
+                    locations.append(node)
 
     item_pool = keys_to_shuffle
 
     if rng is not None:
         rng.shuffle(locations)
         new_assignment = {
-            game.region_list.get_pickup_node(location).pickup_index: key
+            location.pickup_index: key
             for location, key in zip(locations, keys_to_shuffle)
         }
         item_pool = [key for key in keys_to_shuffle if key not in new_assignment.values()]
 
     return PoolResults(item_pool, new_assignment, starting_keys)
-
-
-_c = NodeIdentifier.create
-_EMMI_INDICES = [
-    _c("Artaria", "Central Unit Access", "Pickup (Spider Magnet)"),
-    _c("Cataris", "Central Unit Access", "Pickup (Morph Ball)"),
-    _c("Dairon", "Central Unit Access", "Pickup (Speed Booster)"),
-    _c("Ferenia", "Purple EMMI Arena", "Pickup (Wave Beam)"),
-    _c("Ghavoran", "Central Unit Access", "Pickup (Ice Missile)"),
-    _c("Hanubia", "Orange EMMI Introduction", "Pickup (Power Bomb)"),
-]
-
-_BOSS_INDICES = [
-    _c("Artaria", "Corpius Arena", "Pickup (Phantom Cloak)"),
-    _c("Ferenia", "Escue Arena", "Pickup (Storm Missile)"),
-    _c("Ghavoran", "Golzuna Arena", "Pickup (Cross Bomb)"),
-    _c("Burenia", "Drogyga Arena", "Pickup (Drogyga)"),
-    _c("Cataris", "Above Z-57 Fight", "Pickup (Z-57)"),
-    _c("Cataris", "Kraid Arena", "Pickup (Kraid)"),
-]

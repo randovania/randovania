@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, patch, ANY
 
 import flask
 import pytest
+from pytest_mock import MockerFixture
 
 from randovania.network_common.error import InvalidSession
 from randovania.server import user_session
@@ -62,20 +63,12 @@ def test_login_with_discord(mock_fetch_token: MagicMock, clean_database, flask_a
     }
 
 
-@pytest.mark.parametrize("has_session_id", [False, True])
-def test_restore_user_session_with_discord(flask_app, fernet, clean_database, mocker, has_session_id):
+def test_restore_user_session_with_discord(flask_app, fernet, clean_database, mocker):
     discord_user = MagicMock()
     discord_user.id = 3452
     discord_result = MagicMock()
     mock_create_session: MagicMock = mocker.patch("randovania.server.user_session._create_session_with_discord_token",
                                                   autospec=True, return_value=(discord_user, discord_result))
-    mock_get_membership: MagicMock = mocker.patch("randovania.server.database.GameSessionMembership.get_by_ids",
-                                                  autospec=True)
-
-    if has_session_id:
-        session_id = 89
-    else:
-        session_id = None
 
     sio = MagicMock()
     sio.fernet_encrypt = fernet
@@ -89,16 +82,10 @@ def test_restore_user_session_with_discord(flask_app, fernet, clean_database, mo
     # Run
     with flask_app.test_request_context():
         flask.request.sid = 7890
-        result = user_session.restore_user_session(sio, enc_session, session_id)
+        result = user_session.restore_user_session(sio, enc_session)
 
     # Assert
     mock_create_session.assert_called_once_with(sio, "access-token")
-    if has_session_id:
-        mock_get_membership.assert_called_once_with(3452, session_id)
-        sio.join_game_session.assert_called_once_with(mock_get_membership.return_value)
-    else:
-        mock_get_membership.assert_not_called()
-        sio.join_game_session.assert_not_called()
 
     assert result is discord_result
 
@@ -128,9 +115,12 @@ def test_login_with_guest(flask_app, clean_database, mocker):
     assert result is mock_create_session.return_value
 
 
-def test_logout(flask_app, mocker):
-    mock_emit_user_session_update: MagicMock = mocker.patch("randovania.server.user_session._emit_user_session_update",
-                                                            autospec=True)
+def test_logout(flask_app, mocker: MockerFixture):
+    mock_emit_user_session_update = mocker.patch(
+        "randovania.server.user_session._emit_user_session_update", autospec=True)
+    mock_leave_all_rooms = mocker.patch(
+        "randovania.server.multiplayer.session_common.leave_all_rooms", autospec=True)
+
     session = {
         "user-id": 1234,
         "discord-access-token": "access_token",
@@ -144,7 +134,7 @@ def test_logout(flask_app, mocker):
 
     # Assert
     assert session == {}
-    sio.leave_game_session.assert_called_once_with()
+    mock_leave_all_rooms.assert_called_once_with(sio)
     mock_emit_user_session_update.assert_not_called()
 
 
@@ -153,5 +143,5 @@ def test_restore_user_session_invalid_key(flask_app, fernet):
     sio.fernet_encrypt = fernet
 
     with pytest.raises(InvalidSession):
-        user_session.restore_user_session(sio, b"", None)
+        user_session.restore_user_session(sio, b"")
         pass

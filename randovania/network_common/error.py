@@ -111,6 +111,7 @@ class RequestTimeout(BaseNetworkError):
 
 
 class UserNotAuthorized(BaseNetworkError):
+    """When the user is not authorized to log in to the server."""
     @classmethod
     def code(cls):
         return 8
