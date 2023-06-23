@@ -248,3 +248,18 @@ async def test_server_sync(client, mocker: MockerFixture):
         'uploaded_locations': [5]
     }
 
+
+def test_load_files_on_init(tmp_path):
+    uid = "00000000-0000-0000-2222-000000000000"
+
+    persist = tmp_path.joinpath("persist")
+    persist.mkdir()
+
+    json_lib.write_path(persist.joinpath(f"{uid}.json"), {})
+
+    # Run
+    client = MultiworldClient(MagicMock(), MagicMock(), tmp_path.joinpath("persist"))
+
+    # Assert
+    assert list(client._all_data.keys()) == [uuid.UUID(uid)]
+
