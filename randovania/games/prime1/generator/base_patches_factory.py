@@ -35,7 +35,7 @@ class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
 
         if configuration.blue_save_doors:
             for area in game.region_list.all_areas:
-                if area.extra.get("is_save_station"):
+                if area.extra.get("unlocked_save_station"):
                     for node in area.nodes:
                         if isinstance(node, DockNode) and node.dock_type.short_name == "door":
                             dock_weakness.append((node, power_weak))

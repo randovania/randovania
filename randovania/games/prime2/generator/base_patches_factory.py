@@ -4,7 +4,7 @@ from collections.abc import Iterable
 from random import Random
 
 from randovania.game_description.assignment import NodeConfigurationAssociation
-from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.dock import DockWeakness
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -73,7 +73,6 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
                             rng_required: bool = True) -> GamePatches:
         parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
         return self.assign_save_door_weaknesses(parent, configuration, game)
-
 
     def add_elevator_connections_to_patches(self, configuration: EchoesConfiguration, rng: Random,
                                             patches: GamePatches) -> GamePatches:
@@ -192,40 +191,17 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         if not configuration.blue_save_doors:
             return patches
 
-        nic = NodeIdentifier.create
+        get_node = game.region_list.typed_node_by_identifier
         power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
+        dock_weakness: list[tuple[DockNode, DockWeakness]] = []
 
-        save_doors = [
-            nic("Agon Wastes", "Save Station A", "Door to Mining Plaza"),
-            nic("Agon Wastes", "Save Station A", "Door to Transport Center"),
-            nic("Agon Wastes", "Save Station C", "Door to Sand Processing"),
-            nic("Agon Wastes", "Save Station C", "Door to Ventilation Area B"),
-            nic("Agon Wastes", "Save Station 1", "Door to Judgment Pit"),
-            nic("Agon Wastes", "Save Station 2", "Door to Crossroads"),
-            nic("Agon Wastes", "Save Station 2", "Door to Duelling Range"),
-            nic("Agon Wastes", "Save Station 3", "Door to Bitter Well"),
-            nic("Agon Wastes", "Save Station 3", "Door to Hall of Stairs"),
-            nic("Sanctuary Fortress", "Save Station A", "Door to Reactor Core"),
-            nic("Sanctuary Fortress", "Save Station B", "Door to Main Gyro Chamber"),
-            nic("Sanctuary Fortress", "Hive Save Station 1", "Door to Hive Reactor"),
-            nic("Sanctuary Fortress", "Hive Save Station 2", "Door to Hive Gyro Chamber"),
-            nic("Temple Grounds", "Hive Save Station", "Door to Hive Chamber C"),
-            nic("Torvus Bog", "Save Station A", "Door to Torvus Lagoon"),
-            nic("Torvus Bog", "Save Station B", "Door to Hydrodynamo Station"),
-            nic("Torvus Bog", "Save Station 1", "Door to Venomous Pond"),
-            nic("Torvus Bog", "Save Station 2", "Door to Undertemple Shaft"),
-        ]
-        save_doors = [game.region_list.node_by_identifier(identifier) for identifier in save_doors]
+        if configuration.blue_save_doors:
+            for area in game.region_list.all_areas:
+                if area.extra.get("unlocked_save_station"):
+                    for node in area.nodes:
+                        if isinstance(node, DockNode) and node.dock_type.short_name == "door":
+                            dock_weakness.append((node, power_weak))
+                            # TODO: This is not correct in entrance rando
+                            dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
 
-        # FIXME: including the dock connection may break when logical entrance rando is introduced
-        save_doors.extend([patches.get_dock_connection_for(node) for node in save_doors])
-
-        dock_weakness = (
-            (node.identifier, power_weak)
-            for node in save_doors
-        )
-
-        return patches.assign_dock_weakness((
-            (game.region_list.node_by_identifier(identifier), target)
-            for identifier, target in dock_weakness
-        ))
+        return patches.assign_dock_weakness(dock_weakness)
