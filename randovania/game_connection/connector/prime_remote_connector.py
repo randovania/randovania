@@ -3,7 +3,7 @@ import logging
 import struct
 import uuid
 
-from retro_data_structures.game_check import Game
+from retro_data_structures.game_check import Game as RDSGame
 
 from ppc_asm import assembler
 from randovania.game_connection.connector.remote_connector import RemoteConnector, PickupEntryWithOwner, \
@@ -32,10 +32,11 @@ class DolRemotePatch:
 
 
 _RDS_TO_RDV_GAME = {
-    Game.PRIME: RandovaniaGame.METROID_PRIME,
-    Game.ECHOES: RandovaniaGame.METROID_PRIME_ECHOES,
-    Game.CORRUPTION: RandovaniaGame.METROID_PRIME_CORRUPTION,
+    RDSGame.PRIME: RandovaniaGame.METROID_PRIME,
+    RDSGame.ECHOES: RandovaniaGame.METROID_PRIME_ECHOES,
+    RDSGame.CORRUPTION: RandovaniaGame.METROID_PRIME_CORRUPTION,
 }
+
 
 class PrimeRemoteConnector(RemoteConnector):
     version: all_prime_dol_patches.BasePrimeDolVersion

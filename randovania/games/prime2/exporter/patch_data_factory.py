@@ -548,21 +548,6 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             "teleporter_sounds": should_keep_elevator_sounds(self.configuration),
             "dangerous_energy_tank": self.configuration.dangerous_energy_tank,
         }
-        # result["dol_patches"] = EchoesDolPatchesData(
-        #     self.players_config.get_own_uuid(),
-        #     energy_per_tank=self.configuration.energy_per_tank,
-        #     beam_configurations=list(self.configuration.beam_configuration.all_beams),
-        #     safe_zone_heal_per_second=self.configuration.safe_zone.heal_per_second,
-        #     user_preferences=self.cosmetic_patches.user_preferences,
-        #     default_items={
-        #         "visor": default_pickups[pickup_category_visors].name,
-        #         "beam": default_pickups[pickup_category_beams].name,
-        #     },
-        #     unvisited_room_names=(self.configuration.elevators.can_use_unvisited_room_names
-        #                           and self.cosmetic_patches.unvisited_room_names),
-        #     teleporter_sounds=should_keep_elevator_sounds(self.configuration),
-        #     dangerous_energy_tank=self.configuration.dangerous_energy_tank,
-        # ).as_json
 
         # Add Spawn Point
         result["spawn_point"] = _create_spawn_point_field(self.patches, self.game)

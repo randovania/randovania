@@ -6,7 +6,7 @@ import uuid
 import pytest
 
 from ppc_asm.assembler import BaseInstruction
-from retro_data_structures.game_check import Game
+from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
@@ -138,7 +138,7 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
 
     # Assert
     mock_item_patch.assert_called_once_with(version.powerup_functions,
-                                            Game.ECHOES,
+                                            RDSGame.ECHOES,
                                             connector.multiworld_magic_item.extra["item_id"],
                                             -10)
 
@@ -201,7 +201,7 @@ async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnect
         return
 
     mock_item_patch.assert_called_once_with(version.powerup_functions,
-                                            Game.ECHOES,
+                                            RDSGame.ECHOES,
                                             connector.multiworld_magic_item.extra["item_id"])
     connector._patches_for_pickup.assert_awaited_once_with(permanent_pickups[0][0], permanent_pickups[0][1], inventory)
     connector.execute_remote_patches.assert_awaited_once_with([
@@ -248,7 +248,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
 
     # Assert
     mock_item_patch.assert_called_once_with(version.powerup_functions,
-                                            Game.ECHOES,
+                                            RDSGame.ECHOES,
                                             db.energy_tank.extra["item_id"],
                                             db.energy_tank.max_capacity)
     assert patches == [mock_item_patch.return_value]
@@ -279,7 +279,7 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
     await connector.execute_remote_patches(patches)
 
     # Assert
-    mock_remote_execute.assert_called_once_with(Game.ECHOES, version.string_display, instructions)
+    mock_remote_execute.assert_called_once_with(RDSGame.ECHOES, version.string_display, instructions)
     connector.executor.perform_memory_operations.assert_awaited_once_with(memory_operations)
 
 

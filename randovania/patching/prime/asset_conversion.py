@@ -15,7 +15,7 @@ from retro_data_structures.exceptions import InvalidAssetId, UnknownAssetId
 from retro_data_structures.formats import format_for
 from retro_data_structures.formats.pak import PakBody, PakFile
 from retro_data_structures.formats.pak_gc import PAK_GC
-from retro_data_structures.game_check import Game
+from retro_data_structures.game_check import Game as RDSGame
 
 from randovania import get_data_path
 from randovania.game_description import default_database
@@ -41,11 +41,11 @@ def get_asset_cache_version(assets_dir: Path) -> int:
 
 
 def prime_asset_manager(input_iso: Path) -> AssetManager:
-    return AssetManager(IsoFileProvider(input_iso), Game.PRIME)
+    return AssetManager(IsoFileProvider(input_iso), RDSGame.PRIME)
 
 
 def echoes_asset_manager(input_path: Path) -> AssetManager:
-    return AssetManager(IsoFileProvider(input_path), Game.ECHOES)
+    return AssetManager(IsoFileProvider(input_path), RDSGame.ECHOES)
 
 
 class Asset(NamedTuple):
@@ -141,7 +141,7 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
             asset_id=new_asset.id,
             asset_type=new_asset.type,
             should_compress=False,
-            uncompressed_data=format_for(new_asset.type).build(new_asset.resource, target_game=Game.ECHOES),
+            uncompressed_data=format_for(new_asset.type).build(new_asset.resource, target_game=RDSGame.ECHOES),
             compressed_data=None,
         )
 
@@ -169,7 +169,7 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
 
         new_pak: PakBody = PAK_GC.parse(
             pak_path.read_bytes(),
-            target_game=Game.ECHOES,
+            target_game=RDSGame.ECHOES,
         )
 
         additions = []
@@ -185,7 +185,7 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
         for resource in pak_resources.values():
             new_pak.files.append(resource)
 
-        PAK_GC.build_file(new_pak, pak_path, target_game=Game.ECHOES)
+        PAK_GC.build_file(new_pak, pak_path, target_game=RDSGame.ECHOES)
         updaters[2](f"Wrote new {pak_path.name}", pak_i / 6)
 
 
@@ -223,8 +223,8 @@ def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: 
     conversion_updaters = status_update_lib.split_progress_update(status_update, 2)
     conversion_updaters[0]("Loading Prime 1 PAKs", 0)
     converter = AssetConverter(
-        target_game=Game.ECHOES,
-        asset_providers={Game.PRIME: asset_manager},
+        target_game=RDSGame.ECHOES,
+        asset_providers={RDSGame.PRIME: asset_manager},
         id_generator=id_generator,
         converters=conversions.converter_for,
     )
@@ -237,8 +237,8 @@ def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: 
         conversion_updaters[1](f"Converting {name} from Prime 1", i / num_assets)
         if asset.ancs != 0 and asset.cmdl != 0:
             result[name] = Asset(
-                ancs=converter.convert_id(asset.ancs, Game.PRIME),
-                cmdl=converter.convert_id(asset.cmdl, Game.PRIME),
+                ancs=converter.convert_id(asset.ancs, RDSGame.PRIME),
+                cmdl=converter.convert_id(asset.cmdl, RDSGame.PRIME),
                 character=asset.character,
                 scale=asset.scale,
             )
@@ -312,7 +312,7 @@ def _read_prime1_from_cache(assets_path: Path, updaters):
             construct_class = format_for(asset_type)
 
             raw = asset_path.read_bytes()
-            decoded_from_raw = construct_class.parse(raw, target_game=Game.ECHOES)
+            decoded_from_raw = construct_class.parse(raw, target_game=RDSGame.ECHOES)
             converted_asset = ConvertedAsset(
                 id=asset_id,
                 type=asset_type,
@@ -348,8 +348,8 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     logging.info("Loading PAKs")
     status_update("Loading assets from Prime 2 to convert", 0.0)
     converter = AssetConverter(
-        target_game=Game.PRIME,
-        asset_providers={Game.ECHOES: asset_manager},
+        target_game=RDSGame.PRIME,
+        asset_providers={RDSGame.ECHOES: asset_manager},
         id_generator=id_generator,
         converters=conversions.converter_for,
     )
@@ -371,16 +371,16 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     assets_to_change = [
         data
         for data in randomizer_data["ModelData"]
-        if (data["Model"] != Game.ECHOES.invalid_asset_id
-            and data["AnimSet"] != Game.ECHOES.invalid_asset_id)
+        if (data["Model"] != RDSGame.ECHOES.invalid_asset_id
+            and data["AnimSet"] != RDSGame.ECHOES.invalid_asset_id)
     ]
 
     for i, data in enumerate(assets_to_change):
         try:
             status_update(f"Converting {data['Name']} from Prime 2", i / len(assets_to_change))
             result["{}_{}".format(RandovaniaGame.METROID_PRIME_ECHOES.value, data["Name"])] = Asset(
-                ancs=converter.convert_id(data["AnimSet"], Game.ECHOES, missing_assets_as_invalid=False),
-                cmdl=converter.convert_id(data["Model"], Game.ECHOES, missing_assets_as_invalid=False),
+                ancs=converter.convert_id(data["AnimSet"], RDSGame.ECHOES, missing_assets_as_invalid=False),
+                cmdl=converter.convert_id(data["Model"], RDSGame.ECHOES, missing_assets_as_invalid=False),
                 character=data["Character"],
                 scale=data["Scale"][0],
             )
@@ -462,7 +462,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     json_lib.write_path(output_path.joinpath("meta.json"), metadata)
 
     for asset in converter.converted_assets.values():
-        assetdata = format_for(asset.type).build(asset.resource, target_game=Game.PRIME)
+        assetdata = format_for(asset.type).build(asset.resource, target_game=RDSGame.PRIME)
         if len(assetdata) % 32 != 0:
             assetdata += b"\xFF" * (32 - (len(assetdata) % 32))
         output_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
