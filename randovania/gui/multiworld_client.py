@@ -80,7 +80,7 @@ class MultiworldClient(QObject):
 
         for f in self._persist_path.glob("*.json"):
             try:
-                uid = uuid.UUID(f.name)
+                uid = uuid.UUID(f.stem)
             except ValueError:
                 self.logger.warning("File name is not a UUID: %s", f)
                 continue
