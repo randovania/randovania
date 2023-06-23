@@ -446,7 +446,7 @@ class NetworkClient:
         sessions = self._sessions_interested_in
         if listen:
             sessions.add(session.id)
-        else:
+        elif session.id in sessions:
             sessions.remove(session.id)
         return result
 
