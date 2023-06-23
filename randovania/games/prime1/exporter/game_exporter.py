@@ -8,7 +8,9 @@ from textwrap import wrap
 import py_randomprime
 from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
 
-from randovania.dol_patching import assembler
+from ppc_asm import assembler
+from retro_data_structures.game_check import Game as RDSGame
+
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
 from randovania.game_description.db.region import Region
@@ -18,7 +20,8 @@ from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
-from randovania.patching.prime import all_prime_dol_patches, asset_conversion
+from randovania.patching.prime import asset_conversion
+from open_prime_rando.dol_patching import all_prime_dol_patches
 
 
 @dataclasses.dataclass(frozen=True)
@@ -168,7 +171,7 @@ class PrimeGameExporter(GameExporter):
         new_config["gameConfig"]["updateHintStateReplacement"] = list(
             assembler.assemble_instructions(
                 symbols["UpdateHintState__13CStateManagerFf"],
-                all_prime_dol_patches.remote_execution_patch(RandovaniaGame.METROID_PRIME),
+                all_prime_dol_patches.remote_execution_patch(RDSGame.PRIME),
                 symbols=symbols)
         )
         new_config["preferences"]["cacheDir"] = cache_dir

@@ -7,8 +7,8 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items
-from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion
-from randovania.patching.prime import (all_prime_dol_patches)
+from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
+from open_prime_rando.dol_patching import all_prime_dol_patches
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -86,7 +86,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
         patches = [
             all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
-                self.version.powerup_functions, self.game.game,
+                self.version.powerup_functions, self.version.game,
                 item.extra["item_id"], delta,
             )
             for item, delta in resources_to_give.as_resource_gain()

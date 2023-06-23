@@ -3,13 +3,13 @@ from random import Random
 from typing import Iterator, Callable
 
 import randovania
-from randovania.game_description.db.area import Area
 import randovania.games.prime2.exporter.hints
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node
@@ -33,7 +33,6 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.games.prime2.patcher import echoes_items
-from randovania.games.prime2.patcher.echoes_dol_patcher import EchoesDolPatchesData
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -383,7 +382,7 @@ def _create_string_patches(hint_config: HintConfiguration,
     # Elevator Scans
     if not patches.configuration.use_new_patcher:
         string_patches.extend(_create_elevator_scan_port_patches(game.game, game.region_list,
-                                                                patches.get_elevator_connection_for))
+                                                                 patches.get_elevator_connection_for))
 
     string_patches.extend(_logbook_title_string_patches())
 
@@ -534,21 +533,21 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         [pickup_category_beams] = [cat for cat in default_pickups.keys() if cat.name == "beam"]
 
         result["menu_mod"] = self.configuration.menu_mod
-        result["dol_patches"] = EchoesDolPatchesData(
-            self.players_config.get_own_uuid(),
-            energy_per_tank=self.configuration.energy_per_tank,
-            beam_configuration=self.configuration.beam_configuration,
-            safe_zone_heal_per_second=self.configuration.safe_zone.heal_per_second,
-            user_preferences=self.cosmetic_patches.user_preferences,
-            default_items={
+        result["dol_patches"] = {
+            "world_uuid": str(self.players_config.get_own_uuid()),
+            "energy_per_tank": self.configuration.energy_per_tank,
+            "beam_configurations": [b.as_json for b in self.configuration.beam_configuration.all_beams],
+            "safe_zone_heal_per_second": self.configuration.safe_zone.heal_per_second,
+            "user_preferences": self.cosmetic_patches.user_preferences.as_json,
+            "default_items": {
                 "visor": default_pickups[pickup_category_visors].name,
                 "beam": default_pickups[pickup_category_beams].name,
             },
-            unvisited_room_names=(self.configuration.elevators.can_use_unvisited_room_names
-                                  and self.cosmetic_patches.unvisited_room_names),
-            teleporter_sounds=should_keep_elevator_sounds(self.configuration),
-            dangerous_energy_tank=self.configuration.dangerous_energy_tank,
-        ).as_json
+            "unvisited_room_names": (self.configuration.elevators.can_use_unvisited_room_names
+                                     and self.cosmetic_patches.unvisited_room_names),
+            "teleporter_sounds": should_keep_elevator_sounds(self.configuration),
+            "dangerous_energy_tank": self.configuration.dangerous_energy_tank,
+        }
 
         # Add Spawn Point
         result["spawn_point"] = _create_spawn_point_field(self.patches, self.game)
@@ -695,7 +694,6 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
                 area_patches["new_name"] = _pretty_name_for_elevator(
                     self.game.game, self.game.region_list, node, connection
                 )
-
 
     def add_layer_patches(self, regions_patch_data: dict):
         self._add_area_to_regions_patch(
