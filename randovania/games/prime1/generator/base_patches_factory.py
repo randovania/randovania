@@ -1,5 +1,7 @@
 from random import Random
 
+from randovania.game_description.db.dock import DockWeakness
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -20,42 +22,24 @@ class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         assert isinstance(configuration, PrimeConfiguration)
         parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
 
-        dock_weakness = []
-
         nic = NodeIdentifier.create
+        get_node = game.region_list.typed_node_by_identifier
+
+        dock_weakness: list[tuple[DockNode, DockWeakness]] = []
         power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
 
         if configuration.main_plaza_door and not configuration.dock_rando.is_enabled():
             dock_weakness.append(
-                (nic("Chozo Ruins", "Main Plaza", "Door from Plaza Access"), power_weak),
+                (get_node(nic("Chozo Ruins", "Main Plaza", "Door from Plaza Access"), DockNode), power_weak),
             )
 
         if configuration.blue_save_doors:
-            save_doors = [
-                nic("Chozo Ruins", "Save Station 1", "Door to Ruined Nursery"),
-                nic("Chozo Ruins", "Save Station 2", "Door to Gathering Hall"),
-                nic("Magmoor Caverns", "Save Station Magmoor A", "Door to Burning Trail"),
-                nic("Magmoor Caverns", "Save Station Magmoor B", "Door to Transport to Phendrana Drifts South"),
-                nic("Phazon Mines", "Save Station Mines A", "Door to Main Quarry"),
-                nic("Phazon Mines", "Save Station Mines B", "Door to Central Dynamo"),
-                nic("Phazon Mines", "Save Station Mines C", "Door to Metroid Quarantine B"),
-                nic("Phendrana Drifts", "Save Station A", "Door to Ruined Courtyard"),
-                nic("Phendrana Drifts", "Save Station B", "Door to Phendrana Shorelines"),
-                nic("Phendrana Drifts", "Save Station C", "Door to Frost Cave"),
-                nic("Phendrana Drifts", "Save Station D", "Door to Observatory"),
-                nic("Tallon Overworld", "Savestation", "Door to Reactor Access"),
-            ]
-            save_doors = [game.region_list.node_by_identifier(identifier) for identifier in save_doors]
+            for area in game.region_list.all_areas:
+                if area.extra.get("is_save_station"):
+                    for node in area.nodes:
+                        if isinstance(node, DockNode) and node.dock_type.short_name == "door":
+                            dock_weakness.append((node, power_weak))
+                            # TODO: This is not correct in entrance rando
+                            dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
 
-            # FIXME: including the dock connection may break when logical entrance rando is introduced
-            save_doors.extend([parent.get_dock_connection_for(node) for node in save_doors])
-
-            dock_weakness.extend((
-                (node.identifier, power_weak)
-                for node in save_doors
-            ))
-
-        return parent.assign_dock_weakness((
-            (game.region_list.node_by_identifier(identifier), target)
-            for identifier, target in dock_weakness
-        ))
+        return parent.assign_dock_weakness(dock_weakness)
