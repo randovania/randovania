@@ -12,6 +12,17 @@ class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_bosses: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 46, "precision": 1})
 
+    def unsupported_features(self):
+        max_artifacts = 0
+        if (self.prefer_metroids):
+            max_artifacts = 46
+        elif (self.prefer_bosses):
+            max_artifacts = 6
+
+        if self.required_artifacts > max_artifacts:
+            return ["More Metroid DNA than allowed"]
+        return []
+
 
 @dataclasses.dataclass(frozen=True)
 class AM2RConfiguration(BaseConfiguration):

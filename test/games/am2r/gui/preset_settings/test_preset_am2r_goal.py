@@ -35,3 +35,6 @@ def test_preferred_dna(skip_qtbot, am2r_game_description, preset_manager, prefer
     assert tab.num_preferred_locations == expected
     assert tab.dna_slider.maximum() == expected
     assert tab.dna_slider.isEnabled() == (expected > 0)
+    assert editor.configuration.artifacts.prefer_metroids == prefer_metroids
+    assert editor.configuration.artifacts.prefer_bosses == prefer_bosses
+    assert 0 <= editor.configuration.artifacts.required_artifacts <= expected
