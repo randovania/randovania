@@ -22,11 +22,21 @@ from randovania.layout.preset import Preset
 from randovania.lib import json_lib
 
 
-def test_create_patch_data(test_files_dir, mocker):
+@pytest.mark.parametrize(
+    ("rdvgame_filename", "expected_results_filename", "num_of_players"),
+    [
+        ("starter_preset.rdvgame", "starter_preset.json", 1),                             # starter preset
+        ("crazy_settings.rdvgame", "crazy_settings.json", 1),                             # crazy settings
+        ("dread_dread_multiworld.rdvgame", "dread_dread_multiworld_expected.json", 2),    # dread-dread multi
+        ("dread_prime1_multiworld.rdvgame", "dread_prime1_multiworld_expected.json", 2),  # dread-prime1 multi
+    ]
+)
+def test_create_patch_data(test_files_dir, rdvgame_filename,
+                            expected_results_filename, num_of_players, mocker):
     # Setup
-    file = test_files_dir.joinpath("log_files", "dread", "starter_preset.rdvgame")
-    description = LayoutDescription.from_file(file)
-    players_config = PlayersConfiguration(0, {0: "Dread"})
+    rdvgame = test_files_dir.joinpath("log_files", "dread", rdvgame_filename)
+    players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
+    description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = DreadCosmeticPatches()
     mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
                  new_callable=PropertyMock, return_value="Words Hash")
@@ -37,7 +47,11 @@ def test_create_patch_data(test_files_dir, mocker):
     data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    expected_data = json_lib.read_path(test_files_dir.joinpath("patcher_data", "dread", "starter_preset.json"))
+    expected_results_path = test_files_dir.joinpath("patcher_data", "dread", expected_results_filename)
+    expected_data = json_lib.read_path(expected_results_path)
+
+    # Uncomment to easily view diff of failed test
+    # json_lib.write_path(expected_results_path, data)
 
     assert data == expected_data
 
@@ -287,56 +301,3 @@ def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardo
     expected_data = test_files_dir.read_json("patcher_data", "dread", "custom_start.json")
 
     assert data == expected_data
-
-
-def test_create_patch_with_crazy_settings(test_files_dir, mocker):
-    # test for various uncommon or unusual preset settings
-    file = test_files_dir.joinpath("log_files", "dread", "crazy_settings.rdvgame")
-    description = LayoutDescription.from_file(file)
-    players_config = PlayersConfiguration(0, {0: "Dread"})
-    cosmetic_patches = DreadCosmeticPatches()
-    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
-                 new_callable=PropertyMock, return_value="Words Hash")
-    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_hash",
-                 new_callable=PropertyMock, return_value="$$$$$")
-
-    data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
-
-    # Expected Result
-    expected_data = test_files_dir.read_json("patcher_data", "dread", "crazy_settings.json")
-
-    assert data == expected_data
-
-
-def _test_preset(rdvgame_file: Path, expected_results_file: Path):
-    # Setup
-    description = LayoutDescription.from_file(rdvgame_file)
-    players_config = PlayersConfiguration(0, {0: "Player 1", 1: "Player 2"})
-    cosmetic_patches = DreadCosmeticPatches()
-
-    # Run
-    data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
-
-    # Expected Result
-    expected_data = json_lib.read_path(expected_results_file)
-
-    # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_file, data)
-
-    # remove part which has the randovania version in it
-    data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"] = data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"].split("|")[1]
-    expected_data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"] = expected_data["text_patches"]["GUI_COMPANY_TITLE_SCREEN"].split("|")[1]
-
-    assert data == expected_data
-
-@pytest.mark.parametrize(
-    ("rdvgame_filename", "expected_results_filename"),
-    [
-        ("dread_dread_multiworld.rdvgame", "dread_dread_multiworld_expected.json"),    # dread-dread multi
-        ("dread_prime1_multiworld.rdvgame", "dread_prime1_multiworld_expected.json"),  # dread-prime1 multi
-    ]
-)
-def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename):
-    rdvgame = test_files_dir.joinpath("log_files", "dread", rdvgame_filename)
-    expected_results = test_files_dir.joinpath("patcher_data", "dread", expected_results_filename)
-    _test_preset(rdvgame, expected_results)
