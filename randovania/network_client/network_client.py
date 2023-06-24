@@ -106,6 +106,7 @@ class NetworkClient:
     _restore_session_task: asyncio.Task | None = None
     _connect_error: str | None = None
     _num_emit_failures: int = 0
+    _sessions_interested_in: set[int]
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
@@ -124,6 +125,7 @@ class NetworkClient:
         self.sio = socketio.AsyncClient(ssl_verify=configuration.get("verify_ssl", True))
         self._call_lock = asyncio.Lock()
         self._current_timeout = _MINIMUM_TIMEOUT
+        self._sessions_interested_in = set()
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
@@ -188,6 +190,11 @@ class NetworkClient:
                 headers=connection_headers(),
             )
             await waiting_for_on_connect
+
+            # re-join rooms
+            for session_id in list(self._sessions_interested_in):
+                await self.server_call("multiplayer_listen_to_session", (session_id, True))
+
             self.logger.info("connected")
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
@@ -421,16 +428,27 @@ class NetworkClient:
             for item in await self.server_call("multiplayer_list_sessions", (None if ignore_limit else 100,))
         ]
 
+    def _with_new_session(self, data: dict) -> MultiplayerSessionEntry:
+        result = MultiplayerSessionEntry.from_json(data)
+        self._sessions_interested_in.add(result.id)
+        return result
+
     async def create_new_session(self, session_name: str) -> MultiplayerSessionEntry:
         result = await self.server_call("multiplayer_create_session", session_name)
-        return MultiplayerSessionEntry.from_json(result)
+        return self._with_new_session(result)
 
     async def join_multiplayer_session(self, session: MultiplayerSessionListEntry, password: str | None):
         result = await self.server_call("multiplayer_join_session", (session.id, password))
-        return MultiplayerSessionEntry.from_json(result)
+        return self._with_new_session(result)
 
     async def listen_to_session(self, session: MultiplayerSessionEntry, listen: bool):
-        return await self.server_call("multiplayer_listen_to_session", (session.id, listen))
+        result = await self.server_call("multiplayer_listen_to_session", (session.id, listen))
+        sessions = self._sessions_interested_in
+        if listen:
+            sessions.add(session.id)
+        elif session.id in sessions:
+            sessions.remove(session.id)
+        return result
 
     async def session_admin_global(self, session: MultiplayerSessionEntry,
                                    action: admin_actions.SessionAdminGlobalAction, arg):

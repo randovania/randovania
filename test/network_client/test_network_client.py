@@ -4,15 +4,18 @@ from unittest.mock import MagicMock, AsyncMock, call
 
 import aiohttp.client_exceptions
 import pytest
+import pytest_mock
 import socketio.exceptions
 
+from randovania.bitpacking import construct_pack
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.network_client import NetworkClient, ConnectionState, _decode_pickup, UnableToConnect
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import InvalidSession, RequestTimeout, ServerError
-from randovania.network_common.multiplayer_session import MultiplayerWorldPickups
+from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory, WorldUserInventory
 
 
 @pytest.fixture(name="client")
@@ -147,11 +150,14 @@ async def test_session_admin_global(client):
     client.server_call.assert_awaited_once_with("multiplayer_admin_session", (1234, "change_world", 5))
 
 
-async def test_leave_multiplayer_session(client: NetworkClient):
+@pytest.mark.parametrize("was_listening", [False, True])
+@pytest.mark.parametrize("listen", [False, True])
+async def test_listen_to_session(client: NetworkClient, listen, was_listening):
     client.server_call = AsyncMock()
     session_meta = MagicMock()
     session_meta.id = 1234
-    listen = MagicMock()
+    if was_listening:
+        client._sessions_interested_in.add(1234)
 
     # Run
     await client.listen_to_session(session_meta, listen)
@@ -160,6 +166,10 @@ async def test_leave_multiplayer_session(client: NetworkClient):
     client.server_call.assert_awaited_once_with(
         "multiplayer_listen_to_session", (1234, listen)
     )
+    if listen:
+        assert client._sessions_interested_in == {1234}
+    else:
+        assert client._sessions_interested_in == set()
 
 
 async def test_emit_with_result_timeout(client: NetworkClient):
@@ -276,3 +286,48 @@ async def test_on_disconnect(client: NetworkClient):
     # Assert
     client._restore_session_task.cancel.assert_called_once_with()
     assert client.connection_state == ConnectionState.Disconnected
+
+
+async def test_create_new_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):
+    mock_session_from = mocker.patch("randovania.network_common.multiplayer_session.MultiplayerSessionEntry.from_json")
+    client.server_call = AsyncMock()
+
+    # Run
+    result = await client.create_new_session("The Session")
+
+    # Assert
+    assert result is mock_session_from.return_value
+    client.server_call.assert_awaited_once_with("multiplayer_create_session", "The Session")
+    mock_session_from.assert_called_once_with(client.server_call.return_value)
+    assert client._sessions_interested_in == {mock_session_from.return_value.id}
+
+
+async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):
+    session = MagicMock()
+    mock_session_from = mocker.patch("randovania.network_common.multiplayer_session.MultiplayerSessionEntry.from_json")
+    client.server_call = AsyncMock()
+
+    # Run
+    result = await client.join_multiplayer_session(session, "mahSecret")
+
+    # Assert
+    assert result is mock_session_from.return_value
+    client.server_call.assert_awaited_once_with("multiplayer_join_session", (session.id, "mahSecret"))
+    mock_session_from.assert_called_once_with(client.server_call.return_value)
+    assert client._sessions_interested_in == {mock_session_from.return_value.id}
+
+
+async def test_on_world_user_inventory_raw(client: NetworkClient):
+    client.on_world_user_inventory = AsyncMock()
+    uid = "00000000-0000-1111-0000-000000000000"
+    inventory = {
+        "MyKey": InventoryItem(1, 4)
+    }
+    encoded = construct_pack.encode(inventory, RemoteInventory)
+
+    await client._on_world_user_inventory_raw(uid, 1234, encoded)
+    client.on_world_user_inventory.assert_called_once_with(WorldUserInventory(
+        world_id=uuid.UUID(uid),
+        user_id=1234,
+        inventory=inventory,
+    ))
