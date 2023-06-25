@@ -2479,6 +2479,155 @@
                                 "data": "Shoot Sonic Boom"
                             }
                         }
+                    },
+                    "Bomb Blast Shield": {
+                        "extra": {
+                            "door_type": "Bomb"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "MorphBall",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bombs",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Boost Ball Blast Shield": {
+                        "extra": {
+                            "door_type": "Boost"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "MorphBall",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Boost",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Screw Attack Blast Shield": {
+                        "extra": {
+                            "door_type": "ScrewAttack"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Use Screw Attack (Space Jump)"
+                            }
+                        }
+                    },
+                    "Dark Visor Blast Shield": {
+                        "extra": {
+                            "door_type": "DarkVisor"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DarkVisor",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    },
+                    "Echo Visor Blast Shield": {
+                        "extra": {
+                            "door_type": "EchoVisor"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Echo",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
                     }
                 },
                 "dock_rando": {
@@ -2506,7 +2655,12 @@
                         "Seeker Launcher Blast Shield (patched)",
                         "Sonic Boom Blast Shield",
                         "Sunburst Blast Shield",
-                        "Super Missile Blast Shield"
+                        "Super Missile Blast Shield",
+                        "Bomb Blast Shield",
+                        "Boost Ball Blast Shield",
+                        "Screw Attack Blast Shield",
+                        "Dark Visor Blast Shield",
+                        "Echo Visor Blast Shield"
                     ]
                 }
             },
