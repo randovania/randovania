@@ -39,6 +39,8 @@ def _create_item_info_dict():
     info["Power Bomb Launcher"] = AM2RItemInfo("sItemPBombLauncher", def_speed, "Got Power Bomb Launcher",
                                                "Power Bomb can now be fired. "
                                                "Power Bomb capacity increased by [capacity]")
+    info["Metroid DNA"] = AM2RItemInfo("sItemDNA", 0.28, "Metroid DNA acquired",
+                                       "Collect all DNA in order to reach the Queen")
 
     info["Bombs"] = AM2RItemInfo("sItemBomb", def_speed, "Bombs acquired", "Press | in Morph Ball to deploy")
     info["Power Grip"] = AM2RItemInfo("sItemPowergrip", def_speed, "Power Grip acquired", "You can now grab ledges")
@@ -185,6 +187,5 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "game_patches": self._create_game_patches()
             # TODO: add cosmetic field and decide what to even put in there.
             # TODO: add door lock rando field
-            # TODO: add metroid dna /shuffling thing
             # TODO: add hints field
         }
