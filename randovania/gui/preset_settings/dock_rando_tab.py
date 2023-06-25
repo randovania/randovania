@@ -55,6 +55,12 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         self.multiworld_label.setVisible(len(dock_rando.settings_incompatible_with_multiworld()) > 0)
 
         for dock_type, weakness_checks in self.type_checks.items():
+            rando_params = self.game_description.dock_weakness_database.dock_rando_params[dock_type]
+            unlocked_check = weakness_checks[rando_params.unlocked]["can_change_from"]
+            unlocked_check.setEnabled(dock_rando.mode != DockRandoMode.WEAKNESSES)
+            if dock_rando.mode == DockRandoMode.WEAKNESSES:
+                unlocked_check.setChecked(False)
+
             state = dock_rando.types_state[dock_type]
             for weakness, checks in weakness_checks.items():
                 if "can_change_from" in checks:
