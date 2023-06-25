@@ -21,6 +21,7 @@ from randovania.game_description.resources.resource_info import (
 )
 from randovania.game_description.db.region import Region
 from randovania.games.game import RandovaniaGame
+from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib.infinite_timer import InfiniteTimer
 from open_prime_rando.dol_patching import all_prime_dol_patches
 
@@ -75,7 +76,11 @@ class PrimeRemoteConnector(RemoteConnector):
         expected = bytearray(self.version.build_string)
         expected[6:6 + 16] = world_uid
         if build_string == expected:
-            self._layout_uuid = uuid.UUID(bytes=world_uid)
+            if build_string == self.version.build_string:
+                # Game exported with old version, act as if it's invalid uuid
+                self._layout_uuid = INVALID_UUID
+            else:
+                self._layout_uuid = uuid.UUID(bytes=world_uid)
             return True
         else:
             return False
