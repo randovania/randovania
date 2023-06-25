@@ -5,6 +5,7 @@ def patch_game_name_and_id(game_files_path: Path, new_name: str, publisher_id: s
     b = new_name.encode("ASCII")
     if len(b) > 40:
         raise ValueError(f"Name '{new_name}' is bigger than 40 bytes")
+    b = b + b"\x00" * (40 - len(b))
 
     pid = publisher_id.encode("ASCII")
     if len(pid) != 2:

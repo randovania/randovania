@@ -46,7 +46,7 @@ def test_do_export_game(mocker: pytest_mock.MockerFixture,
         "rasdfasdfasdfsd": True,
     }
     patch_data = {
-        "shareable_hash": "asdf",
+        "banner_name": "the_name",
         "publisher_id": "ABCD",
         "pickups": [],
         "menu_mod": use_menu_mod,
@@ -101,7 +101,7 @@ def test_do_export_game(mocker: pytest_mock.MockerFixture,
     assert export_params.contents_files_path.joinpath("files", "patcher_data.json").read_text() == patch_data_str
     mock_patch_banner.assert_called_once_with(
         export_params.contents_files_path,
-        "Metroid Prime 2: Randomizer - {}".format(patch_data["shareable_hash"]),
+        "the_name",
         patch_data["publisher_id"]
     )
 
