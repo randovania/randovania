@@ -1,3 +1,4 @@
+import uuid
 from unittest.mock import MagicMock, PropertyMock, call, ANY
 
 import peewee
@@ -7,6 +8,7 @@ from pytest_mock import MockerFixture
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldSync, ServerSyncResponse, \
     ServerWorldResponse
@@ -227,6 +229,12 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
                 inventory=None,
                 request_details=False,
             ),
+            uuid.UUID("a0cf12f7-8a0e-47ed-9a82-cabfc8b912c2"): ServerWorldSync(
+                status=GameConnectionStatus.TitleScreen,
+                collected_locations=(60,),
+                inventory=None,
+                request_details=False,
+            ),
         })
     )
 
@@ -242,7 +250,9 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
                 session=session.create_list_entry(),
             ),
         }),
-        errors=frozendict({}),
+        errors=frozendict({
+            uuid.UUID("a0cf12f7-8a0e-47ed-9a82-cabfc8b912c2"): error.WorldDoesNotExistError(),
+        }),
     )
 
     a1 = database.WorldUserAssociation.get_by_instances(world=w1, user=1234)
