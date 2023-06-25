@@ -160,7 +160,7 @@ def _check_user_is_associated(user: User, world: World):
             user_id=user.id,
         )
     except peewee.DoesNotExist:
-        raise InvalidAction("This world was not claimed by you")
+        raise error.WorldNotAssociatedError()
 
 
 def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
@@ -175,7 +175,11 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
 
     for uid, world_request in request.worlds.items():
         try:
-            world = World.get_by_uuid(uid)
+            try:
+                world = World.get_by_uuid(uid)
+            except peewee.DoesNotExist:
+                raise error.WorldDoesNotExistError()
+
             _check_user_is_associated(user, world)
 
             if world_request.status == GameConnectionStatus.Disconnected:
@@ -199,11 +203,13 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
             if world_request.collected_locations:
                 worlds_to_update.update(collect_locations(sio, world, world_request.collected_locations))
 
+        except error.BaseNetworkError as e:
+            logger().info("Failed sync for %s: %s", uid, e)
+            failed_syncs[uid] = e
+
         except Exception as e:
             logger().exception("Failed sync for %s: %s", uid, e)
-            if not isinstance(e, error.BaseNetworkError):
-                e = error.ServerError()
-            failed_syncs[uid] = e
+            failed_syncs[uid] = error.ServerError()
 
     for world in worlds_to_update:
         emit_world_pickups_update(sio, world)
