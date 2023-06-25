@@ -72,6 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Reduced the difficulty of the Wall Jump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
 - Changed: Using Wall Jump Advanced to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
 - Changed: The Upper Tunnel from Burenia Teleport to Ghavoran to Main Hub Tower Middle has been converted from a Morph Ball Tunnel to a Slide Tunnel. In order to use this tunnel with Slide, Gravity Suit is also required.
+- Changed: In Burenia Teleport to Ghavoran, using Power Bombs to get back up from Early Gravity Speedboost Room now requires 2 ammo units of Power Bomb. The purpose is to account for using one unit on the way down in the first place.
 - Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
 - Fixed: Burenia Hub to Dairon Transport Blob from Below giving the wrong event resource.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
