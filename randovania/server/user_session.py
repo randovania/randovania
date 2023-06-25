@@ -144,7 +144,8 @@ def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
     return _create_client_side_session(sio, user)
 
 
-def restore_user_session(sio: ServerApp, encrypted_session: bytes):
+def restore_user_session(sio: ServerApp, encrypted_session: bytes, _old_session_id: None = None):
+    # _old_session_id exists to keep compatibility with old dev build clients that try to connect
     try:
         decrypted_session: bytes = sio.fernet_encrypt.decrypt(encrypted_session)
         session = json.loads(decrypted_session.decode("utf-8"))
