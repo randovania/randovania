@@ -4,6 +4,7 @@ import uuid
 from unittest.mock import MagicMock, AsyncMock, ANY, call
 
 import pytest
+import pytest_mock
 from PySide6 import QtWidgets
 from pytest_mock import MockerFixture
 
@@ -505,33 +506,40 @@ async def test_finish_session(window: MultiplayerSessionWindow, accept, mocker):
         window.network_client.session_admin_global.assert_not_awaited()
 
 
-async def test_game_export_listener(window: MultiplayerSessionWindow, mocker, echoes_game_description,
-                                    preset_manager):
+async def test_game_export_listener(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture,
+                                    echoes_game_description, preset_manager):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                        return_value=QtWidgets.QDialog.DialogCode.Accepted)
+    mock_preset_from = mocker.patch("randovania.layout.versioned_preset.VersionedPreset.from_str")
 
-    game = MagicMock()
+    game = mock_preset_from.return_value.game
     window._session = MagicMock()
-    window._session.worlds = [MultiplayerWorld(
+    window._session.name = "SessionName"
+    world = MultiplayerWorld(
         id=uuid.uuid4(),
         name="W1",
         preset_raw=json.dumps(preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json)
-    )]
+    )
+    window._session.get_world.return_value = world
+    window._session.worlds = [world]
     window.network_client.session_admin_player = AsyncMock()
 
     patch_data = MagicMock()
     game.exporter.is_busy = False
 
     # Run
-    await window.game_export_listener(game, patch_data)
+    await window.game_export_listener(world.id, patch_data)
 
     # Assert
+    window._session.get_world.assert_called_once_with(world.id)
+    mock_preset_from.assert_called_once_with(world.preset_raw)
+
     game.gui.export_dialog.assert_called_once_with(
         window._options,
         patch_data,
-        window._session.game_details.word_hash,
+        "SessionName - W1",
         False,
-        [RandovaniaGame.METROID_PRIME_ECHOES],
+        [game],
     )
     mock_execute_dialog.assert_awaited_once_with(game.gui.export_dialog.return_value)
     game.exporter.export_game.assert_called_once_with(

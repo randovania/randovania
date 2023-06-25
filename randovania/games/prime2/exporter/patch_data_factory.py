@@ -1,4 +1,5 @@
 import dataclasses
+import string
 from random import Random
 from typing import Iterator, Callable
 
@@ -513,6 +514,18 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         result = {}
         _add_header_data_to_result(self.description, result)
+
+        if self.players_config.is_multiworld and self.players_config.session_name is not None:
+            valid_chars = set(string.ascii_lowercase + string.ascii_uppercase + string.digits + ' ')
+            filtered_name = ''.join(filter(lambda x: x in valid_chars, self.players_config.get_own_name()))
+            filtered_session = ''.join(filter(lambda x: x in valid_chars, self.players_config.session_name))
+
+            result["banner_name"] = "Prime 2 Rando - {} - {}".format(
+                filtered_name,
+                filtered_session,
+            )[:40]
+        else:
+            result["banner_name"] = "Metroid Prime 2: Randomizer - {}".format(self.description.shareable_hash)
 
         result["publisher_id"] = "0R"
         if self.configuration.menu_mod:
