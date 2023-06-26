@@ -5,23 +5,24 @@ import uuid
 
 import pytest
 
-from randovania.dol_patching.assembler import BaseInstruction
+from ppc_asm.assembler import BaseInstruction
+from retro_data_structures.game_check import Game as RDSGame
+
 from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
-from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion
+from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 @pytest.fixture(name="version")
 def echoes_version():
-    from randovania.games.prime2.patcher import echoes_dol_versions
-    return echoes_dol_versions.ALL_VERSIONS[0]
+    from open_prime_rando.dol_patching.echoes import dol_versions
+    return dol_versions.ALL_VERSIONS[0]
 
 
 @pytest.fixture(name="connector")
@@ -39,6 +40,16 @@ async def test_check_for_world_uid(connector: EchoesRemoteConnector):
     # Run
     assert await connector.check_for_world_uid()
     assert connector.layout_uuid == uuid.UUID("AAAAAAAA-AAAA-1111-AAAA-AAAAAAAAAAAA")
+
+
+async def test_check_for_world_uid_unmodified(connector: EchoesRemoteConnector):
+    # Setup
+    build_info = connector.version.build_string
+    connector.executor.perform_single_memory_operation.return_value = build_info
+
+    # Run
+    assert await connector.check_for_world_uid()
+    assert connector.layout_uuid == uuid.UUID("00000000-0000-1111-0000-000000000000")
 
 
 @pytest.mark.parametrize(["message_original", "message_encoded", "previous_size"], [
@@ -127,7 +138,7 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
                                                   mocker, capacity):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
 
     connector.executor.perform_single_memory_operation.return_value = struct.pack(">II", 10, 10 + capacity)
     connector.execute_remote_patches = AsyncMock()
@@ -137,7 +148,7 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
 
     # Assert
     mock_item_patch.assert_called_once_with(version.powerup_functions,
-                                            RandovaniaGame.METROID_PRIME_ECHOES,
+                                            RDSGame.ECHOES,
                                             connector.multiworld_magic_item.extra["item_id"],
                                             -10)
 
@@ -170,9 +181,9 @@ async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnect
                                                        mocker, in_cooldown):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "randovania.patching.prime.all_prime_dol_patches.increment_item_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.increment_item_capacity_patch")
     mock_call_display_hud_patch: MagicMock = mocker.patch(
-        "randovania.patching.prime.all_prime_dol_patches.call_display_hud_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.call_display_hud_patch")
     if in_cooldown:
         connector.message_cooldown = 1.0
     connector.execute_remote_patches = AsyncMock()
@@ -200,7 +211,7 @@ async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnect
         return
 
     mock_item_patch.assert_called_once_with(version.powerup_functions,
-                                            RandovaniaGame.METROID_PRIME_ECHOES,
+                                            RDSGame.ECHOES,
                                             connector.multiworld_magic_item.extra["item_id"])
     connector._patches_for_pickup.assert_awaited_once_with(permanent_pickups[0][0], permanent_pickups[0][1], inventory)
     connector.execute_remote_patches.assert_awaited_once_with([
@@ -221,7 +232,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
                                   generic_pickup_category, has_item_percentage, default_generator_params):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
 
     db = connector.game.resource_database
 
@@ -247,7 +258,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
 
     # Assert
     mock_item_patch.assert_called_once_with(version.powerup_functions,
-                                            RandovaniaGame.METROID_PRIME_ECHOES,
+                                            RDSGame.ECHOES,
                                             db.energy_tank.extra["item_id"],
                                             db.energy_tank.max_capacity)
     assert patches == [mock_item_patch.return_value]
@@ -258,7 +269,7 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
     # Setup
     patch_address, patch_bytes = MagicMock(), MagicMock()
     mock_remote_execute: MagicMock = mocker.patch(
-        "randovania.patching.prime.all_prime_dol_patches.create_remote_execution_body",
+        "open_prime_rando.dol_patching.all_prime_dol_patches.create_remote_execution_body",
         return_value=(patch_address, patch_bytes)
     )
 
@@ -278,7 +289,7 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
     await connector.execute_remote_patches(patches)
 
     # Assert
-    mock_remote_execute.assert_called_once_with(RandovaniaGame.METROID_PRIME_ECHOES, version.string_display, instructions)
+    mock_remote_execute.assert_called_once_with(RDSGame.ECHOES, version.string_display, instructions)
     connector.executor.perform_memory_operations.assert_awaited_once_with(memory_operations)
 
 

@@ -1,6 +1,7 @@
 from randovania.game_description import default_database
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-from randovania.games.prime2.layout.beam_configuration import BeamConfiguration, BeamAmmoConfiguration
+from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
+from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
@@ -143,6 +144,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
                 {"Warp to start": configuration.warp_to_start,
                  "Menu Mod": configuration.menu_mod,
                  "Final bosses removed": configuration.elevators.skip_final_bosses,
+                 "Unlocked Save Station doors": configuration.blue_save_doors,
                  "Inverted Aether": configuration.inverted_mode},
                 {"New Patcher": configuration.use_new_patcher},
                 *create_beam_configuration_description(configuration.beam_configuration),

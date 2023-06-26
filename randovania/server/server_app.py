@@ -1,24 +1,32 @@
-import functools
-from typing import Mapping
+from __future__ import annotations
 
-import sentry_sdk
+import functools
+import inspect
+from collections.abc import Mapping, Callable
+from typing import TypeVar
+
 import flask
 import flask_discord
 import flask_socketio
 import peewee
 import requests
+import sentry_sdk
 import socketio.exceptions
 from cryptography.fernet import Fernet
 from prometheus_flask_exporter import PrometheusMetrics
 
+from randovania.bitpacking import construct_pack
 from randovania.network_common import connection_headers
 from randovania.network_common.error import (
     NotLoggedIn, BaseNetworkError, ServerError, InvalidSession, UnsupportedClient,
 )
 from randovania.server import client_check
 from randovania.server.custom_discord_oauth import CustomDiscordOAuth2Session
-from randovania.server.database import User, GameSessionMembership
+from randovania.server.database import User, World
 from randovania.server.lib import logger
+
+T = TypeVar("T")
+R = TypeVar("R")
 
 
 class EnforceDiscordRole:
@@ -83,7 +91,7 @@ class ServerApp:
     def save_session(self, session, namespace=None):
         self.get_server().save_session(self._request_sid, session, namespace=namespace)
 
-    def get_session(self, namespace=None):
+    def get_session(self, namespace=None) -> dict:
         return self.get_server().get_session(self._request_sid, namespace=namespace)
 
     def session(self, namespace=None):
@@ -97,21 +105,18 @@ class ServerApp:
         except peewee.DoesNotExist:
             raise InvalidSession()
 
-    def join_game_session(self, membership: GameSessionMembership):
-        flask_socketio.join_room(f"game-session-{membership.session.id}")
-        flask_socketio.join_room(f"game-session-{membership.session.id}-{membership.user.id}")
+    def store_world_in_session(self, world: World):
         with self.session() as sio_session:
-            sio_session["current_game_session"] = membership.session.id
+            if "worlds" not in sio_session:
+                sio_session["worlds"] = []
 
-    def leave_game_session(self):
+            if world.id not in sio_session["worlds"]:
+                sio_session["worlds"].append(world.id)
+
+    def remove_world_from_session(self, world: World):
         with self.session() as sio_session:
-            if "current_game_session" not in sio_session:
-                return
-            current_game_session = sio_session.pop("current_game_session")
-
-        user = self.get_current_user()
-        flask_socketio.leave_room(f"game-session-{current_game_session}")
-        flask_socketio.leave_room(f"game-session-{current_game_session}-{user.id}")
+            if "worlds" in sio_session and world.id in sio_session["worlds"]:
+                sio_session["worlds"].remove(world.id)
 
     def on(self, message: str, handler, namespace=None, *, with_header_check: bool = False):
         @functools.wraps(handler)
@@ -141,6 +146,16 @@ class ServerApp:
         metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")
 
         return self.sio.on(message, namespace)(metric_wrapper(_handler))
+
+    def on_with_wrapper(self, message: str, handler: Callable[[ServerApp, T], R]):
+        arg_spec = inspect.getfullargspec(handler)
+
+        @functools.wraps(handler)
+        def _handler(sio: ServerApp, arg: bytes) -> bytes:
+            decoded_arg = construct_pack.decode(arg, arg_spec.annotations[arg_spec.args[1]])
+            return construct_pack.encode(handler(sio, decoded_arg))
+
+        return self.on(message, _handler, with_header_check=True)
 
     def route_with_user(self, route: str, *, need_admin: bool = False, **kwargs):
         def decorator(handler):

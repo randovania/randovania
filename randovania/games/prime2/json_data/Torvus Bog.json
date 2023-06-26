@@ -1530,6 +1530,7 @@
             "default_node": "Save Station",
             "extra": {
                 "asset_id": 3681435765,
+                "unlocked_save_station": true,
                 "in_dark_aether": false
             },
             "nodes": {
@@ -4991,6 +4992,27 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/sS4WzOr78j4",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ScrewAttackTunnels",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Screw Attack (No Space Jump)"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -7732,11 +7754,52 @@
                         "area": "Cache A",
                         "node": "Door to Poisoned Bog"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 3,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Central Safe Zone (Beacon)": {
                             "type": "or",
@@ -13912,6 +13975,7 @@
             "default_node": "Save Station",
             "extra": {
                 "asset_id": 2591519810,
+                "unlocked_save_station": true,
                 "in_dark_aether": true
             },
             "nodes": {
@@ -13978,7 +14042,8 @@
             "default_node": "Door to Temple Access (Top)",
             "extra": {
                 "asset_id": 3863006870,
-                "in_dark_aether": false
+                "in_dark_aether": false,
+                "low_memory_mode": true
             },
             "nodes": {
                 "Door to Controller Access": {
@@ -14177,11 +14242,52 @@
                         "area": "Transport to Agon Wastes",
                         "node": "Door to Torvus Temple"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 2,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 5,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Lower Level": {
                             "type": "resource",
@@ -14761,7 +14867,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "boss": "sub-guardian"
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 75,
                     "location_category": "major",
@@ -16360,7 +16468,7 @@
                         "node": "Door to Dark Torvus Temple"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -16482,7 +16590,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "boss": "guardian"
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 79,
                     "location_category": "major",
@@ -17344,11 +17454,52 @@
                         "area": "Torvus Temple",
                         "node": "Door to Transport to Agon Wastes"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 2,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 4,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Elevator to Agon Wastes - Transport to Torvus Bog": {
                             "type": "resource",
@@ -18842,11 +18993,156 @@
                         "area": "Training Access",
                         "node": "Door to Hydrodynamo Station"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (underwater; destructible by Screw Attack; Expert)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Seekers",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "or",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "Combat",
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "DarkVisor",
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "or",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "and",
+                                                            "data": {
+                                                                "comment": null,
+                                                                "items": [
+                                                                    {
+                                                                        "type": "template",
+                                                                        "data": "Use Screw Attack (Space Jump)"
+                                                                    },
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "items",
+                                                                            "name": "Missile",
+                                                                            "amount": 4,
+                                                                            "negate": false
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "tricks",
+                                                                            "name": "Knowledge",
+                                                                            "amount": 2,
+                                                                            "negate": false
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "tricks",
+                                                                            "name": "AirUnderwater",
+                                                                            "amount": 3,
+                                                                            "negate": false
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "Missile",
+                                                                "amount": 5,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 4,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "AirUnderwater",
+                                                    "amount": 3,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Pickup (Missile)": {
                             "type": "and",
@@ -21611,6 +21907,7 @@
             "default_node": "Save Station",
             "extra": {
                 "asset_id": 3407240152,
+                "unlocked_save_station": true,
                 "in_dark_aether": false
             },
             "nodes": {
@@ -22296,6 +22593,7 @@
             "default_node": "Save Station",
             "extra": {
                 "asset_id": 321212102,
+                "unlocked_save_station": true,
                 "in_dark_aether": true
             },
             "nodes": {
@@ -29930,7 +30228,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "boss": "sub-guardian"
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 86,
                     "location_category": "major",
@@ -30658,11 +30958,53 @@
                         "area": "Undertemple Access",
                         "node": "Door to Undertemple"
                     },
-                    "default_dock_weakness": "Power Bomb Blast Shield (destructible by Power Bomb Guardian)",
+                    "default_dock_weakness": "Power Bomb Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "MorphBall",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "PowerBomb",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "events",
+                                        "name": "Event92",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Before Power Bomb Guardian": {
                             "type": "resource",
@@ -30815,7 +31157,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "boss": "sub-guardian"
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 88,
                     "location_category": "major",

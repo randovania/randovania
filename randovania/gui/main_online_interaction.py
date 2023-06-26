@@ -4,12 +4,12 @@ from PySide6 import QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
-from randovania.gui.game_session_window import GameSessionWindow
+from randovania.gui.dialog.online_game_list_dialog import OnlineGameListDialog
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
-from randovania.gui.lib import common_qt_lib, async_dialog, wait_dialog
+from randovania.gui.lib import async_dialog, wait_dialog
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.online_game_list_window import GameSessionBrowserDialog
+from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.network_client.network_client import ConnectionState
@@ -38,7 +38,7 @@ async def ensure_logged_in(parent: QtWidgets.QWidget | None, network_client: QtN
 
 class OnlineInteractions(QtWidgets.QWidget):
     network_client: QtNetworkClient
-    game_session_window: GameSessionWindow | None = None
+    game_session_window: MultiplayerSessionWindow | None = None
     _login_window: QtWidgets.QDialog | None = None
 
     def __init__(self, window_manager: WindowManager, preset_manager: PresetManager, network_client: QtNetworkClient,
@@ -52,7 +52,7 @@ class OnlineInteractions(QtWidgets.QWidget):
         self.options = options
 
         # Signals
-        main_window.browse_sessions_button.clicked.connect(self._browse_for_game_session)
+        main_window.browse_sessions_button.clicked.connect(self._browse_for_session)
         main_window.host_new_game_button.clicked.connect(self._host_game_session)
 
         # Menu Bar
@@ -77,7 +77,7 @@ class OnlineInteractions(QtWidgets.QWidget):
 
     @asyncSlot()
     @handle_network_errors
-    async def _browse_for_game_session(self):
+    async def _browse_for_session(self):
         if await self._game_session_active():
             return
 
@@ -85,7 +85,7 @@ class OnlineInteractions(QtWidgets.QWidget):
             return
 
         network_client = self.network_client
-        browser = GameSessionBrowserDialog(network_client)
+        browser = OnlineGameListDialog(network_client)
 
         try:
             result = await wait_dialog.cancellable_wait(
@@ -101,9 +101,9 @@ class OnlineInteractions(QtWidgets.QWidget):
             return
 
         if await async_dialog.execute_dialog(browser) == QtWidgets.QDialog.DialogCode.Accepted:
-            self.game_session_window = await GameSessionWindow.create_and_update(
-                network_client, common_qt_lib.get_game_connection(),
-                self.preset_manager, self.window_manager, self.options,
+            self.game_session_window = await MultiplayerSessionWindow.create_and_update(
+                network_client, browser.joined_session,
+                self.window_manager, self.options,
             )
             if self.game_session_window is not None:
                 self.game_session_window.show()
@@ -136,11 +136,12 @@ class OnlineInteractions(QtWidgets.QWidget):
         if await async_dialog.execute_dialog(dialog) != QtWidgets.QDialog.DialogCode.Accepted:
             return
 
-        await self.network_client.create_new_session(dialog.textValue())
-        self.game_session_window = await GameSessionWindow.create_and_update(self.network_client,
-                                                                             common_qt_lib.get_game_connection(),
-                                                                             self.preset_manager,
-                                                                             self.window_manager,
-                                                                             self.options)
+        new_session = await self.network_client.create_new_session(dialog.textValue())
+        self.game_session_window = await MultiplayerSessionWindow.create_and_update(
+            self.network_client,
+            new_session,
+            self.window_manager,
+            self.options,
+        )
         if self.game_session_window is not None:
             self.game_session_window.show()

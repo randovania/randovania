@@ -1,14 +1,16 @@
 import struct
 
-from randovania.dol_patching import assembler
+from ppc_asm import assembler
+
+from open_prime_rando.dol_patching import all_prime_dol_patches
+from open_prime_rando.dol_patching.prime1 import dol_patches
+from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
+from randovania.game_description.db.region import Region
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.db.region import Region
-from randovania.games.prime1.patcher import prime_items, prime1_dol_patches
-from randovania.games.prime1.patcher.prime1_dol_patches import Prime1DolVersion
-from randovania.patching.prime import (all_prime_dol_patches)
+from randovania.games.prime1.patcher import prime_items
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -98,7 +100,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
             if item.short_name not in prime_items.ARTIFACT_ITEMS:
                 patches.append(all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
-                    self.version.powerup_functions, self.game.game, item.extra["item_id"], delta,
+                    self.version.powerup_functions, self.version.game, item.extra["item_id"], delta,
                 ))
             else:
                 if item.extra["item_id"] > 29:
@@ -107,9 +109,9 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
                     layer_id = 23  # Truth layer
 
                 patches.append(all_prime_dol_patches.increment_item_capacity_patch(
-                    self.version.powerup_functions, self.game.game, item.extra["item_id"], delta
+                    self.version.powerup_functions, self.version.game, item.extra["item_id"], delta
                 ))
-                patches.append(prime1_dol_patches.set_artifact_layer_active_patch(
+                patches.append(dol_patches.set_artifact_layer_active_patch(
                     self.version, layer_id, delta > 0
                 ))
 

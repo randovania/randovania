@@ -1,24 +1,22 @@
-import contextlib
 from unittest.mock import MagicMock, call
 
 import pytest
 from mock import AsyncMock
+from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
-from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperationException
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.patcher.prime1_dol_patches import Prime1DolVersion
-from randovania.games.prime1.patcher.prime1_dol_versions import ALL_VERSIONS
+from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
 
 
 @pytest.fixture(name="version")
 def prime1_version():
-    from randovania.games.prime1.patcher import prime1_dol_versions
-    return prime1_dol_versions.ALL_VERSIONS[0]
+    from open_prime_rando.dol_patching.prime1 import dol_versions
+    return dol_versions.ALL_VERSIONS[0]
 
 
 @pytest.fixture(name="connector")
@@ -34,11 +32,11 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
                                   default_generator_params):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
-        "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")
     mock_increment_capacity: MagicMock = mocker.patch(
-        "randovania.patching.prime.all_prime_dol_patches.increment_item_capacity_patch")
+        "open_prime_rando.dol_patching.all_prime_dol_patches.increment_item_capacity_patch")
     mock_artifact_layer: MagicMock = mocker.patch(
-        "randovania.games.prime1.patcher.prime1_dol_patches.set_artifact_layer_active_patch")
+        "open_prime_rando.dol_patching.prime1.dol_patches.set_artifact_layer_active_patch")
 
     db = connector.game.resource_database
     if artifact:
@@ -72,7 +70,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
 
     expected_patches.insert(0, used_patch.return_value)
     used_patch.assert_called_once_with(connector.version.powerup_functions,
-                                       RandovaniaGame.METROID_PRIME,
+                                       RDSGame.PRIME,
                                        extra[0].extra["item_id"],
                                        extra[1])
     unused_patch.assert_not_called()
@@ -83,8 +81,9 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
 
 @pytest.mark.parametrize("has_cooldown", [False, True])
 @pytest.mark.parametrize("has_patches", [False, True])
-async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool, has_patches: bool):
-    connector = Prime1RemoteConnector(ALL_VERSIONS[0], AsyncMock())
+async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool, has_patches: bool,
+                                                             version):
+    connector = Prime1RemoteConnector(version, AsyncMock())
 
     # Setup
     if has_cooldown:
@@ -119,8 +118,6 @@ async def test_multiworld_interaction(connector: Prime1RemoteConnector, depth: i
     # Setup
     # depth 0: non-empty known_collected_locations with patch
     # depth 1: empty known_collected_locations and empty receive_remote_pickups
-
-    game_enum = RandovaniaGame.METROID_PRIME
 
     location_collected = MagicMock()
     connector.PickupIndexCollected.connect(location_collected)

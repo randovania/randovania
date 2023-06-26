@@ -2,6 +2,7 @@ import json
 from unittest.mock import MagicMock, ANY
 
 import pytest
+import pytest_mock
 
 from randovania.games.prime2.exporter.game_exporter import EchoesGameExporter, EchoesGameExportParams, \
     decode_randomizer_data
@@ -11,37 +12,54 @@ from randovania.games.prime2.exporter.game_exporter import EchoesGameExporter, E
 @pytest.mark.parametrize("use_prime_models", [False, True])
 @pytest.mark.parametrize("use_new_patcher", [False, True])
 @pytest.mark.parametrize("use_hud_color", [False, True])
-def test_do_export_game(mocker, tmp_path, has_input_iso, use_hud_color, use_new_patcher, use_prime_models):
+@pytest.mark.parametrize("use_menu_mod", [False, True])
+def test_do_export_game(mocker: pytest_mock.MockerFixture,
+                        tmp_path,
+                        has_input_iso,
+                        use_hud_color,
+                        use_new_patcher,
+                        use_prime_models,
+                        use_menu_mod):
     input_path = MagicMock() if has_input_iso else None
 
-    mock_patch_banner: MagicMock = mocker.patch(
+    mock_patch_banner = mocker.patch(
         "randovania.patching.patchers.gamecube.banner_patcher.patch_game_name_and_id")
-    mock_unpack_iso: MagicMock = mocker.patch("randovania.patching.patchers.gamecube.iso_packager.unpack_iso")
-    mock_pack_iso: MagicMock = mocker.patch("randovania.patching.patchers.gamecube.iso_packager.pack_iso")
-    mock_create_backup: MagicMock = mocker.patch("randovania.games.prime2.patcher.claris_randomizer.create_pak_backups")
-    mock_restore_backup: MagicMock = mocker.patch(
+    mock_unpack_iso = mocker.patch("randovania.patching.patchers.gamecube.iso_packager.unpack_iso")
+    mock_pack_iso = mocker.patch("randovania.patching.patchers.gamecube.iso_packager.pack_iso")
+    mock_create_backup = mocker.patch("randovania.games.prime2.patcher.claris_randomizer.create_pak_backups")
+    mock_restore_backup = mocker.patch(
         "randovania.games.prime2.patcher.claris_randomizer.restore_pak_backups")
-    mock_apply_patcher: MagicMock = mocker.patch(
+    mock_apply_patcher = mocker.patch(
         "randovania.games.prime2.patcher.claris_randomizer.apply_patcher_file")
-    mock_patch_paks: MagicMock = mocker.patch("open_prime_rando.echoes_patcher.patch_paks")
-    mock_mp2hudcolor_c: MagicMock = mocker.patch("mp2hudcolor.mp2hudcolor_c")
-    mock_convert_prime1: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime1_pickups")
+    mock_patch_paks = mocker.patch("open_prime_rando.echoes_patcher.patch_paks")
+    mock_mp2hudcolor_c = mocker.patch("mp2hudcolor.mp2hudcolor_c")
+    mock_convert_prime1 = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime1_pickups")
+    mock_menu_mod = mocker.patch("randovania.games.prime2.patcher.claris_randomizer.add_menu_mod_to_files")
+
+    mock_dol_file = mocker.patch("ppc_asm.dol_file.DolFile")
+    mock_apply_dol = mocker.patch("open_prime_rando.dol_patching.echoes.dol_patcher.apply_patches")
+    mock_dol_patches_from_json = mocker.patch(
+        "open_prime_rando.dol_patching.echoes.dol_patcher.EchoesDolPatchesData.from_json")
 
     exporter = EchoesGameExporter()
     new_patcher_data = {
         "rasdfasdfasdfsd": True,
     }
     patch_data = {
-        "shareable_hash": "asdf",
+        "banner_name": "the_name",
         "publisher_id": "ABCD",
         "pickups": [],
-        "menu_mod": False,
+        "menu_mod": use_menu_mod,
+        "dol_patches": "old_dol_patches",
         "specific_patches": {
             "hud_color": [0, 255, 127] if use_hud_color else None,
         },
-        "new_patcher": new_patcher_data if use_new_patcher else None,
     }
+
     patch_data_str = json.dumps(patch_data, indent=4)
+
+    if use_new_patcher:
+        patch_data["new_patcher"] = new_patcher_data
 
     export_params = EchoesGameExportParams(
         input_path=input_path,
@@ -83,7 +101,7 @@ def test_do_export_game(mocker, tmp_path, has_input_iso, use_hud_color, use_new_
     assert export_params.contents_files_path.joinpath("files", "patcher_data.json").read_text() == patch_data_str
     mock_patch_banner.assert_called_once_with(
         export_params.contents_files_path,
-        "Metroid Prime 2: Randomizer - {}".format(patch_data["shareable_hash"]),
+        "the_name",
         patch_data["publisher_id"]
     )
 
@@ -102,11 +120,16 @@ def test_do_export_game(mocker, tmp_path, has_input_iso, use_hud_color, use_new_
         ANY,
     )
 
+    mock_dol_file.assert_called_once_with(export_params.contents_files_path.joinpath("sys", "main.dol"))
+    mock_dol_patches_from_json.assert_called_once_with("old_dol_patches")
+    mock_apply_dol.assert_called_once_with(mock_dol_file.return_value, mock_dol_patches_from_json.return_value)
+
     if use_new_patcher:
         mock_patch_paks.assert_called_once_with(
             ANY,  # PathFileProvider(export_params.contents_files_path),
             export_params.contents_files_path,
             new_patcher_data,
+            ANY, # status update
         )
     else:
         mock_patch_paks.assert_not_called()
@@ -118,6 +141,14 @@ def test_do_export_game(mocker, tmp_path, has_input_iso, use_hud_color, use_new_
         )
     else:
         mock_mp2hudcolor_c.assert_not_called()
+
+    if use_menu_mod:
+        mock_menu_mod.assert_called_once_with(
+            export_params.contents_files_path,
+            ANY
+        )
+    else:
+        mock_menu_mod.assert_not_called()
 
     mock_pack_iso.assert_called_once_with(
         iso=export_params.output_path,

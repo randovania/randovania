@@ -4,6 +4,7 @@ from typing import Union
 from unittest.mock import patch, MagicMock, call, ANY
 
 import pytest
+import pytest_mock
 
 from randovania.games.prime2.patcher import claris_randomizer
 from randovania.interface_common import persistence
@@ -192,20 +193,23 @@ def test_create_pak_backups(mock_copy: MagicMock,
     ])
 
 
+@patch("randovania.lib.status_update_lib.create_progress_update_from_successive_messages", autospec=True)
 @patch("randovania.games.prime2.patcher.claris_randomizer._run_with_args", autospec=True)
 @patch("randovania.games.prime2.patcher.claris_randomizer.get_data_path", autospec=True)
 def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
                                mock_run_with_args: MagicMock,
+                               mock_create_from_successive: MagicMock,
                                tmpdir,
                                ):
     # Setup
     mock_get_data_path.return_value = Path("data")
     game_root = Path(tmpdir.join("root"))
     status_update = MagicMock()
+    mock_create_from_successive.return_value = status_update
     game_root.joinpath("files").mkdir(parents=True)
 
     # Run
-    claris_randomizer._add_menu_mod_to_files(game_root, status_update)
+    claris_randomizer.add_menu_mod_to_files(game_root, status_update)
 
     # Assert
     mock_run_with_args.assert_called_once_with(
@@ -226,33 +230,25 @@ def test_get_custom_data_path(skip_qtbot):
 def test_apply_patcher_file(
         include_menu_mod: bool,
         valid_tmp_game_root,
-        mocker,
+        mocker: pytest_mock.MockerFixture,
 ):
     # Setup
-    mock_add_menu_mod_to_files: MagicMock = mocker.patch(
-        "randovania.games.prime2.patcher.claris_randomizer._add_menu_mod_to_files", autospec=True
-    )
-    mock_run_with_args: MagicMock = mocker.patch(
+    mock_run_with_args = mocker.patch(
         "randovania.games.prime2.patcher.claris_randomizer._run_with_args", autospec=True
     )
-    mock_apply_patches: MagicMock = mocker.patch(
-        "randovania.games.prime2.patcher.echoes_dol_patcher.apply_patches", autospec=True
-    )
-    mock_create_progress_update_from_successive_messages: MagicMock = mocker.patch(
+    mock_create_progress_update_from_successive_messages = mocker.patch(
         "randovania.lib.status_update_lib.create_progress_update_from_successive_messages", autospec=True
     )
-    mock_update_json_file: MagicMock = mocker.patch(
+    mock_update_json_file = mocker.patch(
         "randovania.lib.json_lib.write_path", autospec=True
     )
-    mock_get_custom_data_path: MagicMock = mocker.patch(
+    mock_get_custom_data_path = mocker.patch(
         "randovania.games.prime2.patcher.claris_randomizer._get_custom_data_path", autospec=True
     )
 
     game_root = valid_tmp_game_root
     progress_update = MagicMock()
     status_update = mock_create_progress_update_from_successive_messages.return_value
-    mock_data_from_json = mocker.patch(
-        "randovania.games.prime2.patcher.echoes_dol_patcher.EchoesDolPatchesData.from_json")
 
     patcher_data = {
         "menu_mod": include_menu_mod,
@@ -267,7 +263,7 @@ def test_apply_patcher_file(
     # Assert
     mock_create_progress_update_from_successive_messages.assert_called_once_with(
         progress_update,
-        200 if include_menu_mod else 100
+        300
     )
     mock_update_json_file.assert_called_once_with(
         mock_get_custom_data_path.return_value, randomizer_data,
@@ -275,12 +271,5 @@ def test_apply_patcher_file(
     mock_get_custom_data_path.assert_called_with()
     mock_run_with_args.assert_called_once_with(claris_randomizer._base_args(game_root),
                                                json.dumps(patcher_data), "Randomized!", status_update)
-    mock_data_from_json.assert_called_once_with({"key": "special"})
-    mock_apply_patches.assert_called_once_with(game_root, mock_data_from_json.return_value)
-
-    if include_menu_mod:
-        mock_add_menu_mod_to_files.assert_called_once_with(game_root, status_update)
-    else:
-        mock_add_menu_mod_to_files.assert_not_called()
 
     assert claris_randomizer.get_patch_version(game_root) == claris_randomizer.CURRENT_PATCH_VERSION

@@ -1063,6 +1063,7 @@
             "default_node": "Save Station",
             "extra": {
                 "asset_id": 1342271826,
+                "unlocked_save_station": true,
                 "in_dark_aether": false
             },
             "nodes": {
@@ -2087,11 +2088,52 @@
                         "area": "Mine Shaft",
                         "node": "Door to Mining Station B"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 3,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -3131,11 +3173,52 @@
                         "area": "Transport to Torvus Bog",
                         "node": "Door to Transport Center"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 3,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Portal to Crossroads": {
                             "type": "and",
@@ -4671,6 +4754,7 @@
             "default_node": "Save Station",
             "extra": {
                 "asset_id": 2887798667,
+                "unlocked_save_station": true,
                 "in_dark_aether": true
             },
             "nodes": {
@@ -5458,11 +5542,52 @@
                         "area": "Mining Station B",
                         "node": "Door to Mine Shaft"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 3,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Door to Agon Temple": {
                             "type": "and",
@@ -6730,11 +6855,52 @@
                         "area": "Transport Center",
                         "node": "Door to Transport to Torvus Bog"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 5,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Elevator to Torvus Bog - Transport to Agon Wastes": {
                             "type": "resource",
@@ -9286,7 +9452,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "boss": "sub-guardian"
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 37,
                     "location_category": "major",
@@ -10211,7 +10379,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "boss": "sub-guardian"
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 38,
                     "location_category": "major",
@@ -13334,6 +13504,7 @@
             "default_node": "Save Station",
             "extra": {
                 "asset_id": 1511345710,
+                "unlocked_save_station": true,
                 "in_dark_aether": true
             },
             "nodes": {
@@ -14532,7 +14703,7 @@
                         "node": "Door to Dark Agon Temple"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -14704,7 +14875,9 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "boss": "guardian"
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 43,
                     "location_category": "major",
@@ -19105,7 +19278,8 @@
             "default_node": "Door to Sand Processing",
             "extra": {
                 "asset_id": 3436835742,
-                "in_dark_aether": false
+                "in_dark_aether": false,
+                "low_memory_mode": true
             },
             "nodes": {
                 "Portal from Dark Oasis": {
@@ -20442,7 +20616,7 @@
                         "node": "Door to Security Station B (First)"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -23978,6 +24152,7 @@
             "default_node": "Save Station",
             "extra": {
                 "asset_id": 3111736876,
+                "unlocked_save_station": true,
                 "in_dark_aether": false
             },
             "nodes": {
@@ -25869,6 +26044,7 @@
             "default_node": "Save Station",
             "extra": {
                 "asset_id": 41547759,
+                "unlocked_save_station": true,
                 "in_dark_aether": true
             },
             "nodes": {

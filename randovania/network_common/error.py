@@ -39,6 +39,9 @@ class BaseNetworkError(Exception):
 
         raise RuntimeError("Unknown error")
 
+    def __eq__(self, other):
+        return isinstance(other, type(self)) and self.detail == other.detail
+
 
 class NotLoggedIn(BaseNetworkError):
     @classmethod
@@ -111,6 +114,8 @@ class RequestTimeout(BaseNetworkError):
 
 
 class UserNotAuthorized(BaseNetworkError):
+    """When the user is not authorized to log in to the server."""
+
     @classmethod
     def code(cls):
         return 8
@@ -134,3 +139,15 @@ class UnsupportedClient(BaseNetworkError):
 
     def __str__(self):
         return f"Unsupported client: {self.message}"
+
+
+class WorldDoesNotExistError(BaseNetworkError):
+    @classmethod
+    def code(cls):
+        return 10
+
+
+class WorldNotAssociatedError(BaseNetworkError):
+    @classmethod
+    def code(cls):
+        return 11

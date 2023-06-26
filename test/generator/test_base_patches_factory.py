@@ -219,7 +219,7 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
 def test_blue_save_doors(prime_game_description: GameDescription, default_prime_configuration):
     # Setup
     patches_factory = prime_game_description.game.generator.base_patches_factory
-    power_weak = prime_game_description.dock_weakness_database.get_by_weakness("door", "Normal Door")
+    power_weak = prime_game_description.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
 
     configuration = dataclasses.replace(
         default_prime_configuration,

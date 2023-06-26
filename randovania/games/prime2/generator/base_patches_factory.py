@@ -4,6 +4,7 @@ from collections.abc import Iterable
 from random import Random
 
 from randovania.game_description.assignment import NodeConfigurationAssociation
+from randovania.game_description.db.dock import DockWeakness
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -16,6 +17,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import (PrimeTrilogyBasePatchesFactory, MissingRng)
+from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
@@ -62,6 +64,16 @@ WORLDS = [
 
 
 class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
+    def create_base_patches(self,
+                            configuration: BaseConfiguration,
+                            rng: Random,
+                            game: GameDescription,
+                            is_multiworld: bool,
+                            player_index: int,
+                            rng_required: bool = True) -> GamePatches:
+        parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
+        return self.assign_save_door_weaknesses(parent, configuration, game)
+
     def add_elevator_connections_to_patches(self, configuration: EchoesConfiguration, rng: Random,
                                             patches: GamePatches) -> GamePatches:
         patches = super().add_elevator_connections_to_patches(configuration, rng, patches)
@@ -171,3 +183,25 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             ])))
 
         return result
+
+    def assign_save_door_weaknesses(self,
+                                    patches: GamePatches,
+                                    configuration: EchoesConfiguration,
+                                    game: GameDescription) -> GamePatches:
+        if not configuration.blue_save_doors:
+            return patches
+
+        get_node = game.region_list.typed_node_by_identifier
+        power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
+        dock_weakness: list[tuple[DockNode, DockWeakness]] = []
+
+        if configuration.blue_save_doors:
+            for area in game.region_list.all_areas:
+                if area.extra.get("unlocked_save_station"):
+                    for node in area.nodes:
+                        if isinstance(node, DockNode) and node.dock_type.short_name == "door":
+                            dock_weakness.append((node, power_weak))
+                            # TODO: This is not correct in entrance rando
+                            dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
+
+        return patches.assign_dock_weakness(dock_weakness)

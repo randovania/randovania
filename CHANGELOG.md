@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Optimized the solver by allowing more resources as additional resources, allowing more actions to be skipped until the necessary resources are found.
 - Changed: For Multiworld, it's now preferred to have an additional pickups than placing it in another player's game, when there's no locations left in your game.
 - Changed: Randovania now internally uses the term `Region` for what used to be called a `World`. This is mostly an internal change.
+- Changed: Connecting to Dolphin is now hidden on macOS, as it never was supported.
 - Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 - Fixed: The resolver no longer allows events as additional requirements. This fixes a problem that could lead to an event locking itself.
 - Fixed: The `database render-region-graph` command now works properly.
@@ -62,6 +63,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Climb up to the Charge Beam Door in Burenia Main Hub Tower Middle using Gravity Suit and Flash Shift.
 - Added: Climb up from the Charge Beam Door in Burenia Main Hub Tower Middle using Gravity Suit, a Slide Jump, Spin Boost and a Wall Jump.
 - Added: Allow using Shinesparks in Gravity Suit Tower by storing speed in the upper part of Gravity Suit Room, also when Door Lock rando is enabled.
+- Added: Pseudo-Wave Beam to break the blob in Ferenia Wave Beam Tutorial, from the right.
+- Added: Use Spider Magnet with Grapple Beam in Ghavoran Spider Magnet Elevator.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
@@ -69,6 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Reduced the difficulty of the Wall Jump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
 - Changed: Using Wall Jump Advanced to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
 - Changed: The Upper Tunnel from Burenia Teleport to Ghavoran to Main Hub Tower Middle has been converted from a Morph Ball Tunnel to a Slide Tunnel. In order to use this tunnel with Slide, Gravity Suit is also required.
+- Changed: In Burenia Teleport to Ghavoran, using Power Bombs to get back up from Early Gravity Speedboost Room now requires 2 ammo units of Power Bomb. The purpose is to account for using one unit on the way down in the first place.
 - Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
 - Fixed: Burenia Hub to Dairon Transport Blob from Below giving the wrong event resource.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
@@ -79,13 +83,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: QoL Game Breaking, QoL Cosmetic, QoL pickup scans, Varia-only Heat Protection and Deterministic RNG settings are now always enabled. A new chaos option "Legacy Mode" has been added as a catch-all replacement, including the PB Refill from 5.8.0.
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
 - Removed: One-Way door lock randomizer has been removed. This has actually been the case since 5.3.0!
+- Fixed: The "Unlock Save Station doors" option should now correctly unlock them.
 
 
 ### Metroid Prime 2: Echoes
 
-- Added: New random elevators mode: Shuffle Regions. In this mode, we keep the game world consistent by shuffling the regions around Temple Grounds, and then changing the elevators to match. See [this map](randovania/data/gui_assets/echoes_elevator_map.png) for reference. 
+- **Major** - Added: Door Lock randomizer has been added. Note that this feature requires enabling the new patcher.
+- Added: New random elevators mode: Shuffle Regions. In this mode, we keep the game world consistent by shuffling the regions around Temple Grounds, and then changing the elevators to match. See [this map](randovania/data/gui_assets/echoes_elevator_map.png) for reference.
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+- Changed: For Multiworld ISOs, the game name now mentions the session name and world name.
 - Removed: The elevator sound effect removal is no longer an option and is now automatically enabled in the appropriate circumstances.
+- Fixed: The progress bar when exporting a seed is now much more accurate.
 
 #### Logic Database
 
@@ -94,6 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Scan Dash to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash (Intermediate)
 - Added: Method to collect the pickup in Reactor Core using the top Rezbit, Bombs, Bomb Space Jump (Advanced), Standable Terrain (Advanced), Movement (Advanced), and Jump Off Enemies (Expert).
 - Added: Method to reach the top cannon in Sanctuary Entrance using Bombs, Space Jump Boots, Bomb Space Jump (Advanced), and Standable Terrain (Advanced).
+- Added: Method to collect the pickup in Abandoned Worksite using just Screw Attack, and Screw Attack into Tunnels/Openings (Advanced).
 
 ## [5.8.0] - 2023-06-05
 
@@ -111,7 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: 55 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) to 224
 
-##### Tallon Overworld 
+##### Tallon Overworld
 
 - Added: Biotech Research Area 1 - Easier gravityless NSJ method from room center to Deck Beta Security Hall
 - Added: Root Cave - L-Jump method to reach upper area
@@ -128,7 +137,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Phazon Mines
 
 - Fixed: Fungal Hall B - Scan dash method now requires scan visor
-- Fixed: Ventillation Shaft - Combat dash to climb room now requires door lock rando to be off 
+- Fixed: Ventillation Shaft - Combat dash to climb room now requires door lock rando to be off
 
 ## [5.7.0] - 2023-05-05
 
@@ -161,7 +170,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Added: Selecting an ISO that isn't for Metroid Prime 2 is now explicitly refused when exporting.
-- Fixed: Energy Tanks are now considered major items in Major/Minor split. 
+- Fixed: Energy Tanks are now considered major items in Major/Minor split.
 
 ## [5.6.1] - 2023-04-??
 
@@ -196,7 +205,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Use Flash Shift and Spin Boost with Wall Jump (Beginner) in Burenia Main Hub Tower Bottom to reach the tunnel.
 - Changed: The logic for Spin Boost Room in Ghavoran now requires either the template to fight the Chozo X or Highly Dangerous logic to climb out of the room.
 - Changed: Simplified various database connections.
-- Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging. 
+- Changed: All three kinds of Chozo X fights now consider Use Spin Boost a valid means of dodging.
 - Fixed: Missile ammo requirement when fighting Chozo X with Storm Missile. The numbers were previously too high and the numbers with and without the combat trick were swapped.
 - Fixed: Resolve bug with fighting the Twin Robots fights, where to fight them using only missiles for damage always required both the expert level combat trick and the 153 missiles that are intended for trickless.
 - Fixed: Add missing fight requirement to fight the Chozo X in Elun when entering the arena from the left.
@@ -215,7 +224,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Changing trick filters in the Data Visualizer no longer resets the selected connection.
 - Fixed: Using trick filters in the Data Visualizer no longer unnecessarily expands templates or remove comments.
 - Fixed: Using trick filters in the Data Visualizer now properly removes extra requirements when tricks are removed.
-- Fixed: Hiding the pickup collection message now correctly works for other player's pickups in a multiworld. 
+- Fixed: Hiding the pickup collection message now correctly works for other player's pickups in a multiworld.
 
 ### Metroid Prime
 
@@ -233,7 +242,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Tallon Overworld
 
 - Fixed: Landing Site - PAL SJF is now only logical if Dock Rando is disabled
-- Added: Life Grove - Alternate method to skip Bombs and SJ (Scan Dash Expert) to reach item *Found by Vertigo* 
+- Added: Life Grove - Alternate method to skip Bombs and SJ (Scan Dash Expert) to reach item *Found by Vertigo*
 - Added: Life Grove - Trick to skip wallboosts when also skipping SJ and Bombs *Found by Vertigo*
 
 ##### Chozo Ruins
@@ -279,7 +288,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- **Major** - Added: Door Lock randomizer has been added. In this mode, the weapons needed to open doors in the game are also changed, with full support of our logic database. 
+- **Major** - Added: Door Lock randomizer has been added. In this mode, the weapons needed to open doors in the game are also changed, with full support of our logic database.
 - Added: A new cosmetic option for adding an in-game death counter to the HUD.
 - Added: Exporting with a custom path now checks for conflicts with the input path.
 - Fixed: Ryujinx no longer hangs when stopping emulation.
@@ -299,14 +308,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New pixel icons for Prime 1 & 2 autotracker
 - Added: New 8x3 layouts for all Prime 1 & 2 autotracker styles
 - Fixed: The minor/major split setting is obeyed much more accurately by the generator.
-- Fixed: Starting with ammo no longer causes all requirements for that ammo to be ignored. 
+- Fixed: Starting with ammo no longer causes all requirements for that ammo to be ignored.
 - Fixed: The generator no longer attempts placing pickups based on alternatives to satisfied requirements, such as Missile Expansions for Quadraxis while already having Light Beam.
 - Fixed: Minor typos in the UI are fixed.
 - Fixed: Canceling certain actions will no longer cause the UI to react as if it were an error.
 - Changed: Unsupported features are now restricted to dev builds.
-- Changed: Requirements where different amount of the same item, such as both Missile = 5 and Missile = 1, are expected are now properly simplified. 
+- Changed: Requirements where different amount of the same item, such as both Missile = 5 and Missile = 1, are expected are now properly simplified.
 
-  This results in certain pickup combinations no longer being considered for placement in the generator, such as Sunburst for unlocking the Industrial Site from behind. 
+  This results in certain pickup combinations no longer being considered for placement in the generator, such as Sunburst for unlocking the Industrial Site from behind.
 
 ### Metroid Prime
 
@@ -433,7 +442,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing.
 
 ### Metroid Dread
- 
+
 - Added: The Power Beam tiles in the Artaria EMMI Zone Speed Boost puzzle have been changed to Speed Boost tiles to prevent softlocks.
 - Added: Entering Golzuna's arena without releasing the X displays a message explaining why the boss won't spawn.
 - Added: All doors locked while fighting an EMMI now unlock immediately upon defeating it.
@@ -461,7 +470,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: Intermediate Slope Jump and Intermediate Wall Boost to get next to the pickup in Communication Area.
-- Added: Beginner Movement for crossing Hall of Combat Mastery from the Portal Side with NSJ Screw Attack after the tunnel is destroyed. 
+- Added: Beginner Movement for crossing Hall of Combat Mastery from the Portal Side with NSJ Screw Attack after the tunnel is destroyed.
 - Changed: Standable Terrain to reach the upper Command Center Access door in Central Mining Station with Space Jump and Screw Attack has had its difficulty decreased from Intermediate to Beginner.
 
 ## [5.1.0] - 2022-10-01
@@ -485,7 +494,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing.
 
 ### Metroid Dread
- 
+
 - Fixed: The target DNA count is no longer limited to 6 when modifying an existing preset, or changing tabs.
 - Fixed: Exporting multiple games at once is not properly prevented with an error message. It was never possible and fail in unclear ways.
 
@@ -580,7 +589,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.5.0] - 2022-08-01
 
-- Added: Preferences are now saved separately for each version. This means newer Randovania versions don't break the preferences of older versions. 
+- Added: Preferences are now saved separately for each version. This means newer Randovania versions don't break the preferences of older versions.
 - Added: Exporting presets now fills in default file name.
 - Added: Logging messages when receiving events from the server.
 - Changed: Internal changes to server for hopefully less expired sessions.

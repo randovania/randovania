@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Callable
 
 from randovania import get_data_path
-from randovania.games.prime2.patcher import csharp_subprocess, echoes_dol_patcher
+from randovania.games.prime2.patcher import csharp_subprocess
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.lib import status_update_lib, json_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
@@ -133,10 +133,12 @@ def create_pak_backups(
         shutil.copy(files_folder.joinpath(pak), pak_folder.joinpath(pak))
 
 
-def _add_menu_mod_to_files(
+def add_menu_mod_to_files(
         game_root: Path,
-        status_update: Callable[[str], None],
+        progress_update: ProgressUpdateCallable,
 ):
+    status_update = status_update_lib.create_progress_update_from_successive_messages(
+        progress_update, 300)
     files_folder = game_root.joinpath("files")
     _run_with_args(
         [_get_menu_mod_path(), files_folder],
@@ -160,10 +162,8 @@ def apply_patcher_file(game_root: Path,
     :param progress_update:
     :return:
     """
-    menu_mod = patcher_data["menu_mod"]
-
     status_update = status_update_lib.create_progress_update_from_successive_messages(
-        progress_update, 200 if menu_mod else 100)
+        progress_update, 300)
 
     last_version = get_patch_version(game_root)
     if last_version > CURRENT_PATCH_VERSION:
@@ -176,9 +176,4 @@ def apply_patcher_file(game_root: Path,
                    json.dumps(patcher_data),
                    "Randomized!",
                    status_update)
-    echoes_dol_patcher.apply_patches(game_root,
-                                     echoes_dol_patcher.EchoesDolPatchesData.from_json(patcher_data["dol_patches"]))
     write_patch_version(game_root, CURRENT_PATCH_VERSION)
-
-    if menu_mod:
-        _add_menu_mod_to_files(game_root, status_update)

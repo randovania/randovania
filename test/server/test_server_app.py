@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, call
+from unittest.mock import MagicMock
 
 import flask
 import pytest
@@ -6,23 +6,6 @@ import pytest
 from randovania.network_common.error import NotLoggedIn, ServerError, InvalidSession
 from randovania.server import database
 from randovania.server.server_app import ServerApp, EnforceDiscordRole
-
-
-@pytest.fixture(name="server_app")
-def server_app_fixture(flask_app):
-    pytest.importorskip("engineio.async_drivers.threading")
-
-    flask_app.config['SECRET_KEY'] = "key"
-    flask_app.config["DISCORD_CLIENT_ID"] = 1234
-    flask_app.config["DISCORD_CLIENT_SECRET"] = 5678
-    flask_app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"
-    flask_app.config["FERNET_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
-    flask_app.config["GUEST_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
-    flask_app.config["ENFORCE_ROLE"] = None
-    server = ServerApp(flask_app)
-    server.metrics.summary = MagicMock()
-    server.metrics.summary.return_value.side_effect = lambda x: x
-    return server
 
 
 def test_session(server_app):
@@ -74,64 +57,6 @@ def test_get_current_user_unknown_user(server_app, clean_database):
         server_app.get_current_user()
 
 
-def test_join_game_session(mocker, server_app):
-    mock_join_room = mocker.patch("flask_socketio.join_room")
-    membership = MagicMock()
-    membership.session.id = "session_id"
-    membership.user.id = "user_id"
-
-    session = {}
-    server_app.session = MagicMock()
-    server_app.session.return_value.__enter__.return_value = session
-
-    # Run
-    server_app.join_game_session(membership)
-
-    # Assert
-    mock_join_room.assert_has_calls([
-        call("game-session-session_id"),
-        call("game-session-session_id-user_id"),
-    ])
-    assert session == {
-        "current_game_session": "session_id",
-    }
-
-
-def test_leave_game_session_with_session(mocker, server_app):
-    # Setup
-    mock_leave_room = mocker.patch("flask_socketio.leave_room")
-    user = MagicMock()
-    user.id = "user_id"
-    server_app.get_current_user = lambda: user
-
-    session = {"current_game_session": "session_id"}
-    server_app.session = MagicMock()
-    server_app.session.return_value.__enter__.return_value = session
-
-    # Run
-    server_app.leave_game_session()
-
-    # Assert
-    mock_leave_room.assert_has_calls([
-        call("game-session-session_id"),
-        call("game-session-session_id-user_id"),
-    ])
-    assert session == {}
-
-
-def test_leave_game_session_without_session(mocker, server_app):
-    # Setup
-    mock_leave_room: MagicMock = mocker.patch("flask_socketio.leave_room")
-    server_app.session = MagicMock()
-    server_app.session.return_value.__enter__.return_value = {}
-
-    # Run
-    server_app.leave_game_session()
-
-    # Assert
-    mock_leave_room.assert_not_called()
-
-
 def test_on_success_ok(server_app):
     # Setup
     custom = MagicMock(return_value={"foo": 12345})
@@ -173,6 +98,43 @@ def test_on_success_exception(server_app):
     # Assert
     custom.assert_called_once_with(server_app)
     assert result == ServerError().as_json
+
+
+def test_store_world_in_session(server_app):
+    session = {}
+    server_app.session = MagicMock()
+    server_app.session.return_value.__enter__.return_value = session
+
+    world = MagicMock()
+    world.id = 1234
+
+    # Run
+    server_app.store_world_in_session(world)
+
+    # Assert
+    assert session == {
+        "worlds": [1234]
+    }
+
+
+def test_remove_world_from_session(server_app):
+    session = {
+        "worlds": [1234]
+    }
+    server_app.session = MagicMock()
+    server_app.session.return_value.__enter__.return_value = session
+
+    world = MagicMock()
+    world.id = 1234
+
+    # Run
+    server_app.remove_world_from_session(world)
+
+    # Assert
+    assert session == {
+        "worlds": []
+    }
+
 
 
 @pytest.mark.parametrize("valid", [False, True])

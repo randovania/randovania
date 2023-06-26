@@ -2588,26 +2588,6 @@
                         },
                         "lock": null
                     },
-                    "Back-Only Door": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "lock": {
-                            "lock_type": "front-blast-back-free-unlock",
-                            "requirement": {
-                                "type": "or",
-                                "data": {
-                                    "comment": null,
-                                    "items": []
-                                }
-                            }
-                        }
-                    },
                     "Locked Door": {
                         "extra": {},
                         "requirement": {
@@ -2633,7 +2613,6 @@
                     "unlocked": "Normal Door",
                     "locked": "Locked Door",
                     "change_from": [
-                        "Back-Only Door",
                         "Locked Door",
                         "Missile Door",
                         "Normal Door",
@@ -2641,7 +2620,6 @@
                         "Super Missile Door"
                     ],
                     "change_to": [
-                        "Back-Only Door",
                         "Locked Door",
                         "Missile Door",
                         "Normal Door",
@@ -2655,31 +2633,6 @@
                 "extra": {},
                 "items": {
                     "Morph Ball Tunnel": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph Ball",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "lock": null
-                    }
-                },
-                "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
-                }
-            },
-            "pipe": {
-                "name": "Pipe",
-                "extra": {},
-                "items": {
-                    "Teleporter Pipe": {
                         "extra": {},
                         "requirement": {
                             "type": "resource",

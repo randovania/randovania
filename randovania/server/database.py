@@ -1,6 +1,11 @@
+from __future__ import annotations
+
 import datetime
+import enum
 import json
-from typing import Iterator, Callable, Any
+import uuid
+import zlib
+from typing import Any, Self, Iterable
 
 import cachetools
 import peewee
@@ -10,11 +15,13 @@ from sentry_sdk.tracing_utils import record_sql_queries
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions, \
-    BinaryGameSessionAuditLog
-from randovania.network_common.session_state import GameSessionState
+from randovania.network_common import multiplayer_session
+from randovania.network_common.game_connection_status import GameConnectionStatus
+from randovania.network_common.multiplayer_session import MultiplayerUser, GameDetails, \
+    MultiplayerWorld, MultiplayerSessionListEntry, MultiplayerSessionAuditLog, \
+    MultiplayerSessionAuditEntry, UserWorldDetail
+from randovania.network_common.session_state import MultiplayerSessionState
 
 
 class MonitoredDb(peewee.SqliteDatabase):
@@ -37,14 +44,30 @@ class BaseModel(peewee.Model):
         database = db
         legacy_table_names = False
 
+    @classmethod
+    def create(cls, **query) -> Self:
+        return super().create(**query)
+
+    @classmethod
+    def get(cls, *query, **filters) -> Self:
+        return super().get(*query, **filters)
+
+    @classmethod
+    def get_by_id(cls, pk) -> Self:
+        return super().get_by_id(pk)
+
+    @classmethod
+    def get_or_create(cls, **kwargs) -> tuple[Self, bool]:
+        return super().get_or_create(**kwargs)
+
 
 class EnumField(peewee.CharField):
     """
     This class enable an Enum like field for Peewee
     """
 
-    def __init__(self, choices: Callable, *args: Any, **kwargs: Any) -> None:
-        super(peewee.CharField, self).__init__(*args, **kwargs)
+    def __init__(self, choices: type[enum.Enum], *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
         self.choices = choices
         self.max_length = 255
 
@@ -56,12 +79,13 @@ class EnumField(peewee.CharField):
 
 
 class User(BaseModel):
-    discord_id = peewee.IntegerField(index=True, null=True)
-    name = peewee.CharField()
-    admin = peewee.BooleanField(default=False)
+    id: int
+    discord_id: int | None = peewee.IntegerField(index=True, null=True)
+    name: str = peewee.CharField()
+    admin: bool = peewee.BooleanField(default=False)
 
     @classmethod
-    def get_by_id(cls, pk) -> "User":
+    def get_by_id(cls, pk) -> Self:
         return cls.get(cls._meta.primary_key == pk)
 
     @property
@@ -88,62 +112,83 @@ class UserAccessToken(BaseModel):
 
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
-def _decode_layout_description(s):
-    return LayoutDescription.from_json_dict(json.loads(s))
+def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> LayoutDescription:
+    decoded = json.loads(zlib.decompress(layout).decode("utf-8"))
+    decoded["info"]["presets"] = [
+        VersionedPreset.from_str(preset).as_json
+        for preset in presets
+    ]
+    return LayoutDescription.from_json_dict(decoded)
 
 
-class GameSession(BaseModel):
-    name = peewee.CharField()
-    password = peewee.CharField(null=True)
-    state = EnumField(choices=GameSessionState, default=GameSessionState.SETUP)
-    layout_description_json = peewee.TextField(null=True)
-    seed_hash = peewee.CharField(null=True)
-    creator = peewee.ForeignKeyField(User)
+class MultiplayerSession(BaseModel):
+    id: int
+    name: str = peewee.CharField()
+    password: str | None = peewee.CharField(null=True)
+    state: MultiplayerSessionState = EnumField(choices=MultiplayerSessionState,
+                                               default=MultiplayerSessionState.SETUP)
+    layout_description_json: bytes | None = peewee.BlobField(null=True)
+    game_details_json: str | None = peewee.CharField(null=True)
+    creator: User = peewee.ForeignKeyField(User)
     creation_date = peewee.DateTimeField(default=_datetime_now)
-    generation_in_progress = peewee.ForeignKeyField(User, null=True)
-    dev_features = peewee.CharField(null=True)
+    generation_in_progress: User | None = peewee.ForeignKeyField(User, null=True)
+    dev_features: str | None = peewee.CharField(null=True)
+
+    allow_coop: bool = peewee.BooleanField(default=False)
+    allow_everyone_claim_world: bool = peewee.BooleanField(default=False)
+
+    members: list[MultiplayerMembership]
+    worlds: list[World]
+    audit_log: list[MultiplayerAuditEntry]
 
     @classmethod
-    def get_by_id(cls, pk) -> "GameSession":
+    def get_by_id(cls, pk) -> Self:
         return cls.get(cls._meta.primary_key == pk)
 
-    @property
-    def all_presets(self) -> list[Preset]:
-        return [
-            VersionedPreset(json.loads(preset.preset)).get_preset()
-            for preset in sorted(self.presets, key=lambda it: it.row)
-        ]
-
-    @property
-    def num_rows(self) -> int:
-        return len(self.presets)
+    def has_layout_description(self) -> bool:
+        return self.layout_description_json is not None
 
     @property
     def layout_description(self) -> LayoutDescription | None:
-        # FIXME: a server can have an invalid layout description. Likely from an old version!
-        return _decode_layout_description(self.layout_description_json) if self.layout_description_json else None
+        if self.layout_description_json is not None:
+            return _decode_layout_description(
+                self.layout_description_json,
+                tuple(world.preset for world in self.get_ordered_worlds())
+            )
+        else:
+            return None
 
     @layout_description.setter
     def layout_description(self, description: LayoutDescription | None):
         if description is not None:
-            self.layout_description_json = json.dumps(description.as_json(force_spoiler=True))
+            encoded = description.as_json(force_spoiler=True)
+            encoded["info"].pop("presets")
+            self.layout_description_json = zlib.compress(
+                json.dumps(encoded, separators=(',', ':')).encode("utf-8")
+            )
+            self.game_details_json = json.dumps(GameDetails(
+                spoiler=description.has_spoiler,
+                word_hash=description.shareable_word_hash,
+                seed_hash=description.shareable_hash,
+            ).as_json)
         else:
             self.layout_description_json = None
+            self.game_details_json = None
 
     @property
     def creation_datetime(self) -> datetime.datetime:
         return datetime.datetime.fromisoformat(self.creation_date)
 
     def create_list_entry(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "has_password": self.password is not None,
-            "state": self.state.value,
-            "num_players": len(self.players),
-            "creator": self.creator.name,
-            "creation_date": self.creation_datetime.astimezone(datetime.timezone.utc).isoformat(),
-        }
+        return MultiplayerSessionListEntry(
+            id=self.id,
+            name=self.name,
+            has_password=self.password is not None,
+            state=self.state,
+            num_players=len(self.members),
+            creator=self.creator.name,
+            creation_date=self.creation_datetime,
+        )
 
     @property
     def allowed_games(self) -> list[RandovaniaGame]:
@@ -153,168 +198,219 @@ class GameSession(BaseModel):
             if game.data.defaults_available_in_game_sessions or game.value in dev_features
         ]
 
+    def get_ordered_worlds(self) -> list[World]:
+        return list(World.select().where(World.session == self
+                                         ).order_by(World.order.asc()))
+
     def describe_actions(self):
-        description = self.layout_description
-        location_to_name = {
-            row: f"Player {row + 1}" for row in range(self.num_rows)
+        if not self.has_layout_description():
+            return multiplayer_session.MultiplayerSessionActions(self.id, [])
+
+        description: LayoutDescription = self.layout_description
+
+        worlds = self.get_ordered_worlds()
+        world_by_id = {
+            world.uuid: world
+            for world in worlds
         }
-        for membership in self.players:
-            if not membership.is_observer:
-                location_to_name[membership.row] = membership.effective_name
 
-        def _describe_action(action: GameSessionTeamAction) -> dict:
-            provider: int = action.provider_row
-            receiver: int = action.receiver_row
-            provider_location_index = PickupIndex(action.provider_location_index)
-            time = datetime.datetime.fromisoformat(action.time)
-            target = description.all_patches[provider].pickup_assignment[provider_location_index]
+        def _describe_action(action: WorldAction) -> multiplayer_session.MultiplayerSessionAction:
+            provider_index = world_by_id[action.provider.uuid].order
+            location_index = PickupIndex(action.location)
+            target = description.all_patches[provider_index].pickup_assignment[location_index]
 
-            return {
-                "provider": location_to_name[provider],
-                "provider_row": provider,
-                "receiver": location_to_name[receiver],
-                "pickup": target.pickup.name,
-                "location": provider_location_index.index,
-                "time": time.astimezone(datetime.timezone.utc).isoformat(),
-            }
+            return multiplayer_session.MultiplayerSessionAction(
+                provider=action.provider.uuid,
+                receiver=action.receiver.uuid,
+                pickup=target.pickup.name,
+                location=action.location,
+                time=datetime.datetime.fromisoformat(action.time),
+            )
 
-        return BinaryGameSessionActions.build([
-            _describe_action(action)
-            for action in GameSessionTeamAction.select().where(GameSessionTeamAction.session == self
-                                                               ).order_by(GameSessionTeamAction.time.asc())
-        ])
+        return multiplayer_session.MultiplayerSessionActions(
+            self.id,
+            [
+                _describe_action(action)
+                for action in WorldAction.select().where(WorldAction.session == self
+                                                         ).order_by(WorldAction.time.asc())
+            ],
+        )
 
-    def create_session_entry(self):
-        description = self.layout_description
-
+    def create_session_entry(self) -> multiplayer_session.MultiplayerSessionEntry:
         game_details = None
-        if description is not None:
-            game_details = {
-                "spoiler": description.has_spoiler,
-                "word_hash": description.shareable_word_hash,
-                "seed_hash": description.shareable_hash,
-            }
+        if self.game_details_json is not None:
+            game_details = GameDetails.from_json(json.loads(self.game_details_json))
 
-        return BinaryGameSessionEntry.build({
-            "id": self.id,
-            "name": self.name,
-            "state": self.state.value,
-            "players": [
-                membership.as_json
-                for membership in self.players
+        return multiplayer_session.MultiplayerSessionEntry(
+            id=self.id,
+            name=self.name,
+            state=self.state,
+            users_list=[
+                MultiplayerUser(
+                    id=member.user.id,
+                    name=member.user.name,
+                    admin=member.admin,
+                    worlds={
+                        association.world.uuid: UserWorldDetail(
+                            connection_state=association.connection_state,
+                            last_activity=association.last_activity,
+                        )
+                        for association in WorldUserAssociation.find_all_for_user_in_session(
+                            member.user.id, self.id,
+                        )
+                    },
+                )
+                for member in self.members
             ],
-            "presets": [
-                preset.preset
-                for preset in sorted(self.presets, key=lambda it: it.row)
+            worlds=[
+                MultiplayerWorld(
+                    id=world.uuid,
+                    name=world.name,
+                    preset_raw=world.preset,
+                )
+                for world in self.worlds
             ],
-            "game_details": game_details,
-            "generation_in_progress": (self.generation_in_progress.id
-                                       if self.generation_in_progress is not None else None),
-            "allowed_games": [game.value for game in self.allowed_games],
-        })
+            game_details=game_details,
+            generation_in_progress=(self.generation_in_progress.id
+                                    if self.generation_in_progress is not None else None),
+            allowed_games=self.allowed_games,
+        )
 
-    def get_audit_log(self):
-        return BinaryGameSessionAuditLog.build([
-            entry.as_json
-            for entry in self.audit_log
-        ])
-
-    def reset_layout_description(self):
-        self.layout_description_json = None
-        self.save()
-
-
-class GameSessionPreset(BaseModel):
-    session = peewee.ForeignKeyField(GameSession, backref="presets")
-    row = peewee.IntegerField()
-    preset = peewee.TextField()
-
-    class Meta:
-        primary_key = peewee.CompositeKey('session', 'row')
+    def get_audit_log(self) -> MultiplayerSessionAuditLog:
+        return MultiplayerSessionAuditLog(
+            session_id=self.id,
+            entries=[
+                entry.as_entry()
+                for entry in self.audit_log
+            ]
+        )
 
 
-class GameSessionMembership(BaseModel):
-    user = peewee.ForeignKeyField(User, backref="games")
-    session = peewee.ForeignKeyField(GameSession, backref="players")
-    row = peewee.IntegerField(null=True)
-    admin = peewee.BooleanField()
-    join_date = peewee.DateTimeField(default=_datetime_now)
-    connection_state = peewee.TextField(null=True)
+class World(BaseModel):
+    id: int
+    session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="worlds")
+    uuid: uuid.UUID = peewee.UUIDField(default=uuid.uuid4, unique=True)
+
+    name: str = peewee.CharField()
+    preset: str = peewee.TextField()
+    order: int | None = peewee.IntegerField(null=True, default=None)
+
+    associations: list[WorldUserAssociation]
+
+    @classmethod
+    def get_by_uuid(cls, uid) -> World:
+        return cls.get(World.uuid == uid)
+
+    @classmethod
+    def get_by_order(cls, session_id: int, order: int) -> World:
+        return cls.get(
+            World.session == session_id,
+            World.order == order,
+        )
+
+    @classmethod
+    def create_for(cls, session: MultiplayerSession, name: str, preset: VersionedPreset, *,
+                   uid: "uuid.UUID | None" = None, order: int | None = None) -> Self:
+        if uid is None:
+            uid = uuid.uuid4()
+        return cls().create(
+            session=session,
+            uuid=uid,
+            name=name,
+            preset=json.dumps(preset.as_json, separators=(',', ':')),
+            order=order,
+        )
+
+
+class WorldUserAssociation(BaseModel):
+    """A given user's association to one given row."""
+    world: World = peewee.ForeignKeyField(World, backref="associations")
+    user: User = peewee.ForeignKeyField(User)
+
+    connection_state: GameConnectionStatus = EnumField(
+        choices=GameConnectionStatus, default=GameConnectionStatus.Disconnected
+    )
+    last_activity: datetime.datetime = peewee.DateTimeField(default=_datetime_now)
     inventory = peewee.BlobField(null=True)
 
-    @property
-    def as_json(self):
-        return {
-            "id": self.user.id,
-            "name": self.user.name,
-            "row": self.row,
-            "admin": self.admin,
-            "connection_state": self.connection_state,
-        }
+    @classmethod
+    def get_by_instances(cls, *, world: World | int, user: User | int) -> Self:
+        return cls.get(
+            WorldUserAssociation.world == world,
+            WorldUserAssociation.user == user,
+        )
+
+    @classmethod
+    def get_by_ids(cls, world_uid: uuid.UUID, user_id: int) -> Self:
+        return cls.select().join(World).where(
+            World.uuid == world_uid,
+            WorldUserAssociation.user == user_id,
+        ).get()
+
+    @classmethod
+    def find_all_for_user_in_session(cls, user_id: int, session_id: int) -> Iterable[Self]:
+        yield from cls.select().join(World).where(
+            World.session == session_id,
+            WorldUserAssociation.user == user_id,
+        )
+
+    class Meta:
+        primary_key = peewee.CompositeKey('world', 'user')
+
+
+class MultiplayerMembership(BaseModel):
+    user: User = peewee.ForeignKeyField(User, backref="sessions")
+    session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="members")
+    admin: bool = peewee.BooleanField(default=False)
+    join_date = peewee.DateTimeField(default=_datetime_now)
+
+    can_help_layout_generation: bool = peewee.BooleanField(default=False)
 
     @property
     def effective_name(self) -> str:
         return self.user.name
 
-    @property
-    def is_observer(self) -> bool:
-        return self.row is None
-
     @classmethod
-    def get_by_ids(cls, user_id: int, session_id: int) -> "GameSessionMembership":
-        return GameSessionMembership.get(
-            GameSessionMembership.session == session_id,
-            GameSessionMembership.user == user_id,
+    def get_by_ids(cls, user_id: int | User, session_id: int | MultiplayerSession) -> Self:
+        return cls.get(
+            MultiplayerMembership.session == session_id,
+            MultiplayerMembership.user == user_id,
         )
-
-    @classmethod
-    def get_by_session_position(cls, session: GameSession, row: int) -> "GameSessionMembership":
-        return GameSessionMembership.get(
-            GameSessionMembership.session == session,
-            GameSessionMembership.row == row,
-        )
-
-    @classmethod
-    def non_observer_members(cls, session: GameSession) -> Iterator["GameSessionMembership"]:
-        yield from GameSessionMembership.select().where(GameSessionMembership.session == session,
-                                                        GameSessionMembership.row.is_null(False),
-                                                        )
 
     class Meta:
         primary_key = peewee.CompositeKey('user', 'session')
-        constraints = [peewee.SQL('UNIQUE(session_id, row)')]
 
 
-class GameSessionTeamAction(BaseModel):
-    session = peewee.ForeignKeyField(GameSession)
-    provider_row = peewee.IntegerField()
-    provider_location_index = peewee.IntegerField()
-    receiver_row = peewee.IntegerField()
+class WorldAction(BaseModel):
+    provider: World = peewee.ForeignKeyField(World, backref="actions")
+    location: int = peewee.IntegerField()
 
-    time = peewee.DateTimeField(default=_datetime_now)
+    session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession)
+    receiver: World = peewee.ForeignKeyField(World)
+    time: str = peewee.DateTimeField(default=_datetime_now)
 
     class Meta:
-        primary_key = peewee.CompositeKey('session', 'provider_row', 'provider_location_index')
+        primary_key = peewee.CompositeKey('provider', 'location')
 
 
-class GameSessionAudit(BaseModel):
-    session = peewee.ForeignKeyField(GameSession, backref="audit_log")
-    user = peewee.ForeignKeyField(User)
-    message = peewee.TextField()
-    time = peewee.DateTimeField(default=_datetime_now)
+class MultiplayerAuditEntry(BaseModel):
+    session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="audit_log")
+    user: User = peewee.ForeignKeyField(User)
+    message: str = peewee.TextField()
+    time: str = peewee.DateTimeField(default=_datetime_now)
 
-    @property
-    def as_json(self):
+    def as_entry(self) -> MultiplayerSessionAuditEntry:
         time = datetime.datetime.fromisoformat(self.time)
 
-        return {
-            "user": self.user.name,
-            "message": self.message,
-            "time": time.astimezone(datetime.timezone.utc).isoformat(),
-        }
+        return MultiplayerSessionAuditEntry(
+            user=self.user.name,
+            message=self.message,
+            time=time,
+        )
 
 
 all_classes = [
-    User, UserAccessToken, GameSession, GameSessionPreset,
-    GameSessionMembership, GameSessionTeamAction, GameSessionAudit,
+    User, UserAccessToken, MultiplayerSession, World,
+    WorldUserAssociation, MultiplayerMembership,
+    WorldAction, MultiplayerAuditEntry,
 ]

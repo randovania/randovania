@@ -5,8 +5,10 @@ import shutil
 from pathlib import Path
 
 import mp2hudcolor
+from ppc_asm import dol_file
 from retro_data_structures.asset_manager import PathFileProvider
 
+from open_prime_rando.dol_patching.echoes import dol_patcher
 from randovania import get_data_path
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
@@ -53,13 +55,29 @@ class EchoesGameExporter(GameExporter):
     def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
                         progress_update: status_update_lib.ProgressUpdateCallable):
         assert isinstance(export_params, EchoesGameExportParams)
-        updaters = status_update_lib.split_progress_update(progress_update, 4)
+        new_patcher = patch_data.pop("new_patcher", None)
+
+        # restore backups
+        # convert prime models
+        # claris patcher
+        # open-prime-rando
+        # menu mod
+        # nod
+        num_updaters = 3
+        if new_patcher is not None:
+            num_updaters += 1
+        if patch_data["menu_mod"]:
+            num_updaters += 1
+        if export_params.use_prime_models:
+            num_updaters += 1
+        updaters = status_update_lib.split_progress_update(progress_update, num_updaters)
 
         contents_files_path = export_params.contents_files_path
         backup_files_path = export_params.backup_files_path
 
+        backups_update = updaters.pop(0)
         if export_params.input_path is not None:
-            unpack_updaters = status_update_lib.split_progress_update(updaters[0], 2)
+            unpack_updaters = status_update_lib.split_progress_update(backups_update, 2)
             shutil.rmtree(contents_files_path, ignore_errors=True)
             shutil.rmtree(backup_files_path, ignore_errors=True)
             iso_packager.unpack_iso(
@@ -77,7 +95,7 @@ class EchoesGameExporter(GameExporter):
                 claris_randomizer.restore_pak_backups(
                     contents_files_path,
                     backup_files_path,
-                    updaters[0]
+                    backups_update
                 )
             except FileNotFoundError:
                 raise RuntimeError(
@@ -93,37 +111,52 @@ class EchoesGameExporter(GameExporter):
         # Apply patcher
         banner_patcher.patch_game_name_and_id(
             contents_files_path,
-            "Metroid Prime 2: Randomizer - {}".format(patch_data["shareable_hash"]),
+            patch_data["banner_name"],
             patch_data["publisher_id"]
         )
         randomizer_data = copy.deepcopy(decode_randomizer_data())
 
         if export_params.use_prime_models:
+            convert_update = updaters.pop(0)
             from randovania.patching.prime import asset_conversion
             assets_path = export_params.asset_cache_path
             asset_conversion.convert_prime1_pickups(
                 export_params.prime_path, contents_files_path, assets_path,
-                patch_data, randomizer_data, updaters[1],
+                patch_data, randomizer_data, convert_update,
             )
 
-        new_patcher = patch_data.pop("new_patcher", None)
-
         # Claris Rando
+        claris_update = updaters.pop(0)
         adjust_model_name(patch_data, randomizer_data)
 
         claris_randomizer.apply_patcher_file(
             contents_files_path,
             patch_data,
             randomizer_data,
-            updaters[2])
+            claris_update)
+
+        dol_patcher.apply_patches(
+            dol_file.DolFile(contents_files_path.joinpath("sys/main.dol")),
+            dol_patcher.EchoesDolPatchesData.from_json(patch_data["dol_patches"]),
+        )
 
         # New Patcher
         if new_patcher is not None:
+            opr_update = updaters.pop(0)
             import open_prime_rando.echoes_patcher
             open_prime_rando.echoes_patcher.patch_paks(
                 PathFileProvider(contents_files_path),
                 contents_files_path,
                 new_patcher,
+                opr_update
+            )
+
+        # Menu Mod
+        if patch_data["menu_mod"]:
+            menumod_update = updaters.pop(0)
+            claris_randomizer.add_menu_mod_to_files(
+                contents_files_path,
+                menumod_update
             )
 
         # Change the color of the hud
@@ -138,10 +171,11 @@ class EchoesGameExporter(GameExporter):
             mp2hudcolor.mp2hudcolor_c(ntwk_file, ntwk_file, hud_color[0], hud_color[1], hud_color[2])  # RGB 0.0-1.0
 
         # Pack ISO
+        nod_update = updaters.pop(0)
         iso_packager.pack_iso(
             iso=export_params.output_path,
             game_files_path=contents_files_path,
-            progress_update=updaters[3],
+            progress_update=nod_update,
         )
 
 

@@ -11,8 +11,9 @@ from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
 from requests_oauthlib import OAuth2Session
 
 from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction, UserNotAuthorized
-from randovania.server.database import User, UserAccessToken, GameSessionMembership
+from randovania.server.database import User, UserAccessToken, MultiplayerMembership
 from randovania.server.lib import logger
+from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
 
 
@@ -23,12 +24,15 @@ def _encrypt_session_for_user(sio: ServerApp, session: dict) -> bytes:
 
 def _create_client_side_session_raw(sio: ServerApp, user: User) -> dict:
     logger().info(f"Client at {sio.current_client_ip()} is user {user.name} ({user.id}).")
+    memberships: list[MultiplayerMembership] = list(
+        MultiplayerMembership.select().where(MultiplayerMembership.user == user)
+    )
 
     return {
         "user": user.as_json,
         "sessions": [
-            membership.session.create_list_entry()
-            for membership in GameSessionMembership.select().where(GameSessionMembership.user == user)
+            membership.session.create_list_entry().as_json
+            for membership in memberships
         ],
     }
 
@@ -140,7 +144,8 @@ def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
     return _create_client_side_session(sio, user)
 
 
-def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: int | None):
+def restore_user_session(sio: ServerApp, encrypted_session: bytes, _old_session_id: None = None):
+    # _old_session_id exists to keep compatibility with old dev build clients that try to connect
     try:
         decrypted_session: bytes = sio.fernet_encrypt.decrypt(encrypted_session)
         session = json.loads(decrypted_session.decode("utf-8"))
@@ -163,9 +168,6 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: i
 
             else:
                 result = _create_client_side_session(sio, user)
-
-        if session_id is not None:
-            sio.join_game_session(GameSessionMembership.get_by_ids(user.id, session_id))
 
         return result
 
@@ -191,7 +193,7 @@ def _emit_user_session_update(sio: ServerApp):
 
 
 def logout(sio: ServerApp):
-    sio.leave_game_session()
+    session_common.leave_all_rooms(sio)
     flask.session.pop("DISCORD_OAUTH2_TOKEN", None)
     with sio.session() as session:
         session.pop("discord-access-token", None)

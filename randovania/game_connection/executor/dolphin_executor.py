@@ -1,3 +1,5 @@
+import platform
+
 import dolphin_memory_engine
 import pid
 
@@ -25,6 +27,9 @@ class DolphinExecutor(MemoryOperationExecutor):
         return "randovania-dolphin-backend"
 
     async def connect(self) -> str | None:
+        if platform.system() == "Darwin":
+            return "macOS is not supported"
+
         if not self.dolphin.is_hooked():
             self.dolphin.hook()
 

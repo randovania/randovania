@@ -144,7 +144,7 @@ async def show_game_details(app: QtWidgets.QApplication, options, file_path: Pat
 
 
 async def show_game_session(app: QtWidgets.QApplication, options, session_id: int):
-    from randovania.gui.game_session_window import GameSessionWindow
+    from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.interface_common.preset_manager import PresetManager
 
@@ -152,19 +152,46 @@ async def show_game_session(app: QtWidgets.QApplication, options, session_id: in
 
     sessions = [
         session
-        for session in await network_client.get_game_session_list(False)
+        for session in await network_client.get_multiplayer_session_list(False)
         if session.id == session_id
     ]
     if not sessions:
         app.quit()
         return
-    await network_client.join_game_session(sessions[0], None)
+
+    new_session = await network_client.join_multiplayer_session(sessions[0], None)
+    # preset_for = preset_manager.default_preset_for_game
+
+    # games = [uuid.uuid4(), uuid.uuid4(), uuid.uuid4(), uuid.uuid4()]
+    # GameSessionEntry(
+    #     id=1,
+    #     name="Session",
+    #     games=[
+    #         SessionGame(games[0], "DZ_1", ),
+    #         SessionGame(games[1], "DZ_2", preset_for(RandovaniaGame.METROID_DREAD)),
+    #         SessionGame(games[2], "Uncle Reggie", preset_for(RandovaniaGame.METROID_PRIME)),
+    #         SessionGame(games[3], "Fancy", preset_for(RandovaniaGame.SUPER_METROID)),
+    #     ],
+    #     players=[
+    #         PlayerSessionEntry(1, "Darkszero", True, {
+    #             games[0]: "In-Game",
+    #             games[1]: "Title Screen",
+    #         }),
+    #         PlayerSessionEntry(2, "Uncle Reggie", False, {
+    #             games[2]: "In-Game",
+    #         })
+    #     ],
+    #     game_details=None,
+    #     state=GameSessionState.SETUP,
+    #     generation_in_progress=None,
+    #     allowed_games=[],
+    # )
 
     preset_manager = PresetManager(options.presets_path)
 
-    app.game_session_window = await GameSessionWindow.create_and_update(
+    app.game_session_window = await MultiplayerSessionWindow.create_and_update(
         network_client,
-        app.game_connection,
+        new_session,
         preset_manager,
         None,
         options
@@ -268,9 +295,15 @@ async def qt_main(app: QtWidgets.QApplication, args):
         logging.info("Logging as %s", args.login_as_guest)
         await app.network_client.login_as_guest(args.login_as_guest)
 
-    logging.info("Configuring game connection with the backend...")
+    logging.info("Creating the global game connection")
     from randovania.game_connection.game_connection import GameConnection
     app.game_connection = GameConnection(options)
+    
+    logging.info("Creating the global multiworld client")
+    from randovania.gui.multiworld_client import MultiworldClient
+    app.multiworld_client = MultiworldClient(app.network_client, app.game_connection,
+                                             options.data_dir.joinpath("multiworld_games"))
+    await app.multiworld_client.start()
 
     logging.info("Configuring qasync...")
     import qasync

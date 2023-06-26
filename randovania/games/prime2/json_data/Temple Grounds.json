@@ -1433,11 +1433,52 @@
                         "area": "Hall of Honored Dead",
                         "node": "Door to Path of Honor"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 3,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Door to Service Access": {
                             "type": "and",
@@ -2268,11 +2309,52 @@
                         "area": "Path of Honor",
                         "node": "Door to Hall of Honored Dead"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 3,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Morph Ball Door to Path of Honor": {
                             "type": "or",
@@ -5726,6 +5808,7 @@
             "default_node": "Save Station",
             "extra": {
                 "asset_id": 341957679,
+                "unlocked_save_station": true,
                 "in_dark_aether": false
             },
             "nodes": {
@@ -8321,11 +8404,52 @@
                         "area": "Gateway Access",
                         "node": "Door to Shrine Access"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 2,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 5,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Safe Zone": {
                             "type": "resource",
@@ -10100,11 +10224,52 @@
                         "area": "Lake Access",
                         "node": "Door to Plain of Dark Worship"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 4,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Portal to Temple Assembly Site": {
                             "type": "resource",
@@ -16687,11 +16852,52 @@
                         "area": "Reliquary Access",
                         "node": "Door to Phazon Grounds"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 2,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 4,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Door to Phazon Pit": {
                             "type": "or",
@@ -17038,11 +17244,52 @@
                         "area": "Phazon Grounds",
                         "node": "Door to Reliquary Access"
                     },
-                    "default_dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)",
+                    "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Destroy Seeker Locks"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "template",
+                                                "data": "Use Screw Attack (Space Jump)"
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Missile",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "SeekerlessLocks",
+                                                    "amount": 4,
+                                                    "negate": false
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "connections": {
                         "Door to Reliquary Grounds": {
                             "type": "or",

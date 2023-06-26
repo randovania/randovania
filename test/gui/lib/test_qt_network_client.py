@@ -63,7 +63,7 @@ async def test_login_to_discord(client, mocker):
     mock_aioclient = mocker.patch("pypresence.AioClient")
     mock_aioclient.return_value = discord_client = AsyncMock()
     discord_client.authorize.return_value = {"data": {"code": "the-code"}}
-    client._emit_with_result = AsyncMock()
+    client.server_call = AsyncMock()
     client.on_user_session_updated = AsyncMock()
 
     # Run
@@ -73,5 +73,5 @@ async def test_login_to_discord(client, mocker):
     mock_aioclient.assert_called_once_with(1234)
     discord_client.start.assert_awaited_once_with()
     discord_client.authorize.assert_awaited_once_with(1234, ['identify'])
-    client._emit_with_result.assert_awaited_once_with("login_with_discord", "the-code")
-    client.on_user_session_updated.assert_awaited_once_with(client._emit_with_result.return_value)
+    client.server_call.assert_awaited_once_with("login_with_discord", "the-code")
+    client.on_user_session_updated.assert_awaited_once_with(client.server_call.return_value)

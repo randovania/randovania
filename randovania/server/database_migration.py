@@ -16,5 +16,5 @@ def apply_migrations():
             migrator.rename_table("gamesessionmembership", "game_session_membership"),
             migrator.rename_table("gamesessionpreset", "game_session_preset"),
             migrator.rename_table("gamesessionteamaction", "game_session_team_action"),
-            migrator.add_column("game_session", "dev_features", database.GameSession.dev_features),
+            migrator.add_column("game_session", "dev_features", database.MultiplayerSession.dev_features),
         )

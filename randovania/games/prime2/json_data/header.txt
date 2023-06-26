@@ -69,35 +69,60 @@ Templates
 * Shoot Supers:
       Charge Beam and Missile ≥ 5 and Power Beam and Super Missile
 
+* Destroy Underwater Seeker Locks:
+      All of the following:
+          Missile ≥ 5 and Missile Launcher and Seeker Launcher
+          Combat Visor or Dark Visor
+
+* Destroy Seeker Locks:
+      All of the following:
+          Missile Launcher and Seeker Launcher
+          Combat Visor or Dark Visor
+          Any of the following:
+              Missile ≥ 5
+              Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
+
 ====================
 Dock Weaknesses
 
 > Door
   * Normal Door
+      Extra - door_type: Normal
+      Open:
+          Trivial
+      No lock
+
+
+  * Normal Door (Forced)
+      Extra - door_type: Normal
       Open:
           Trivial
       No lock
 
 
   * Dark Door
+      Extra - door_type: Dark
       Open:
           Shoot Dark Beam
       No lock
 
 
   * Light Door
+      Extra - door_type: Light
       Open:
           Shoot Light Beam
       No lock
 
 
   * Annihilator Door
+      Extra - door_type: Annihilator
       Open:
           Shoot Annihilator Beam
       No lock
 
 
   * Missile Blast Shield
+      Extra - door_type: Missile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -105,27 +130,32 @@ Dock Weaknesses
 
 
   * Super Missile Blast Shield
+      Extra - door_type: SuperMissile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
           Charge Beam and Missile ≥ 5 and Power Beam and Super Missile
 
 
-  * Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)
+  * Seeker Launcher Blast Shield
+      Extra - door_type: SeekerMissile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              All of the following:
-                  Seeker Launcher
-                  Combat Visor or Dark Visor
-                  Any of the following:
-                      Missile ≥ 5
-                      Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
-              Missile and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
+          Destroy Seeker Locks
+
+
+  * Seeker Launcher Blast Shield (patched)
+      Extra - door_type: SeekerMissile
+      Extra - display_name: Seeker Launcher Blast Shield
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Destroy Underwater Seeker Locks
 
 
   * Power Bomb Blast Shield
+      Extra - door_type: PowerBomb
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -133,76 +163,105 @@ Dock Weaknesses
 
 
   * Permanently Locked
+      Extra - door_type: Disabled
       Open:
           Impossible
       No lock
 
 
-  * Seeker Launcher Blast Shield (underwater; destructible by Screw Attack; Expert)
+  * Darkburst Blast Shield
+      Extra - door_type: Darkburst
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              All of the following:
-                  Seeker Launcher
-                  Combat Visor or Dark Visor
-                  Any of the following:
-                      Missile ≥ 5
-                      Missile ≥ 4 and Air Underwater (Advanced) and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
-              Missile and Air Underwater (Advanced) and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
+          Shoot Darkburst
 
 
-  * Power Bomb Blast Shield (destructible by Power Bomb Guardian)
+  * Sunburst Blast Shield
+      Extra - door_type: Sunburst
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              After Undertemple Blast Shield Destroyed by PB Guardian
-              Morph Ball and Power Bomb
+          Shoot Sunburst
 
 
-  * Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode)
+  * Sonic Boom Blast Shield
+      Extra - door_type: SonicBoom
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              All of the following:
-                  Seeker Launcher
-                  Combat Visor or Dark Visor
-                  Any of the following:
-                      Missile ≥ 5
-                      Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
-              Missile ≥ 2 and Seeker Locks without Seeker Missiles (Hypermode) and Use Screw Attack (Space Jump)
+          Shoot Sonic Boom
 
 
-  * Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)
+  * Bomb Blast Shield
+      Extra - door_type: Bomb
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              All of the following:
-                  Seeker Launcher
-                  Combat Visor or Dark Visor
-                  Any of the following:
-                      Missile ≥ 5
-                      Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
-              Missile and Seeker Locks without Seeker Missiles (Advanced) and Use Screw Attack (Space Jump)
+          Morph Ball Bomb and Morph Ball
 
 
-  * Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles)
+  * Boost Ball Blast Shield
+      Extra - door_type: Boost
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Any of the following:
-              All of the following:
-                  Seeker Launcher
-                  Combat Visor or Dark Visor
-                  Any of the following:
-                      Missile ≥ 5
-                      Missile ≥ 4 and Knowledge (Intermediate) and Use Screw Attack (Space Jump)
-              Missile ≥ 2 and Seeker Locks without Seeker Missiles (Expert) and Use Screw Attack (Space Jump)
+          Boost Ball and Morph Ball
 
-  > Dock Rando: Disabled
+
+  * Screw Attack Blast Shield
+      Extra - door_type: ScrewAttack
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Use Screw Attack (Space Jump)
+
+
+  * Dark Visor Blast Shield
+      Extra - door_type: DarkVisor
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Dark Visor
+
+
+  * Echo Visor Blast Shield
+      Extra - door_type: EchoVisor
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Echo Visor
+
+  > Dock Rando:
+      Unlocked: Normal Door
+      Locked: Permanently Locked
+      Change from:
+          Annihilator Door
+          Dark Door
+          Light Door
+          Missile Blast Shield
+          Normal Door
+          Power Bomb Blast Shield
+          Seeker Launcher Blast Shield
+          Super Missile Blast Shield
+      Change to:
+          Annihilator Door
+          Bomb Blast Shield
+          Boost Ball Blast Shield
+          Dark Door
+          Dark Visor Blast Shield
+          Darkburst Blast Shield
+          Echo Visor Blast Shield
+          Light Door
+          Missile Blast Shield
+          Normal Door
+          Permanently Locked
+          Power Bomb Blast Shield
+          Screw Attack Blast Shield
+          Seeker Launcher Blast Shield (patched)
+          Sonic Boom Blast Shield
+          Sunburst Blast Shield
+          Super Missile Blast Shield
 
 
 > Portal

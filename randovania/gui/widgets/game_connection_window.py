@@ -18,7 +18,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.debug_backend_window import DebugConnectorWindow
 from randovania.gui.generated.game_connection_window_ui import Ui_GameConnectionWindow
 from randovania.gui.lib import common_qt_lib, async_dialog
-from randovania.lib import enum_lib
 
 
 class BuilderUi:
@@ -64,10 +63,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
 
         self.add_builder_menu = QtWidgets.QMenu(self.add_builder_button)
         self._builder_actions = {}
-        for choice in enum_lib.iterate_enum(ConnectorBuilderChoice):
-            if choice is ConnectorBuilderChoice.DEBUG and (randovania.is_frozen() or not randovania.is_dev_version()):
-                continue
-
+        for choice in ConnectorBuilderChoice.all_usable_choices():
             action = QtGui.QAction(choice.pretty_text, self.add_builder_menu)
             self._builder_actions[choice] = action
             action.triggered.connect(functools.partial(self._add_connector_builder, choice))
@@ -156,6 +152,9 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         add_action_enabled: dict[ConnectorBuilderChoice, bool] = collections.defaultdict(lambda: True)
 
         for builder in self.game_connection.connection_builders:
+            if not builder.connector_builder_choice.is_usable():
+                continue
+
             self.add_ui_for_builder(builder)
             if not builder.connector_builder_choice.supports_multiple_instances():
                 add_action_enabled[builder.connector_builder_choice] = False
