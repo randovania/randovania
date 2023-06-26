@@ -5,7 +5,6 @@ from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
@@ -34,7 +33,7 @@ def connect_to(action: QtGui.QAction, target, *args):
 
 
 class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
-    GameExportRequested = Signal(RandovaniaGame, dict)
+    GameExportRequested = Signal(uuid.UUID, dict)
 
     _session: MultiplayerSessionEntry
 
@@ -191,7 +190,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         patch_data = await self._session_api.create_patcher_file(
             world_uid, options.options_for_game(game_enum).cosmetic_patches.as_json
         )
-        self.GameExportRequested.emit(game_enum, patch_data)
+        self.GameExportRequested.emit(world_uid, patch_data)
 
     #
 

@@ -72,6 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Reduced the difficulty of the Wall Jump in Dairon Teleporter to Artaria, to reach the pickup from the teleporter, from Advanced to Intermediate.
 - Changed: Using Wall Jump Advanced to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
 - Changed: The Upper Tunnel from Burenia Teleport to Ghavoran to Main Hub Tower Middle has been converted from a Morph Ball Tunnel to a Slide Tunnel. In order to use this tunnel with Slide, Gravity Suit is also required.
+- Changed: In Burenia Teleport to Ghavoran, using Power Bombs to get back up from Early Gravity Speedboost Room now requires 2 ammo units of Power Bomb. The purpose is to account for using one unit on the way down in the first place.
 - Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
 - Fixed: Burenia Hub to Dairon Transport Blob from Below giving the wrong event resource.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
@@ -89,7 +90,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Door Lock randomizer has been added. Note that this feature requires enabling the new patcher.
 - Added: New random elevators mode: Shuffle Regions. In this mode, we keep the game world consistent by shuffling the regions around Temple Grounds, and then changing the elevators to match. See [this map](randovania/data/gui_assets/echoes_elevator_map.png) for reference.
+- Added: When the new patcher is enabled, Security Station B starts in the post-Dark Samus appearance. This change is supported by logic.
+- Added: When both the new patcher and Speed Up Credits are enabled, part of the end game cutscenes are skipped. 
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+- Changed: When the new patcher is enabled, some cosmetic effects are removed from Torvus Temple in an attempt to make it crash less.
+- Changed: For Multiworld ISOs, the game name now mentions the session name and world name.
 - Removed: The elevator sound effect removal is no longer an option and is now automatically enabled in the appropriate circumstances.
 - Fixed: The progress bar when exporting a seed is now much more accurate.
 

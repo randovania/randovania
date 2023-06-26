@@ -2,6 +2,7 @@ import asyncio
 import json
 import logging
 import random
+import uuid
 from typing import Self
 
 from PySide6 import QtWidgets, QtGui, QtCore
@@ -606,10 +607,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             raise RuntimeError(f"Unknown session state: {state}")
 
     @asyncSlot()
-    async def game_export_listener(self, game: RandovaniaGame, patch_data: dict):
-        other_worlds = [VersionedPreset.from_str(p.preset_raw).game for p in self._session.worlds]
-        dialog = game.gui.export_dialog(self._options, patch_data, self._session.game_details.word_hash,
-                                        False, other_worlds)
+    async def game_export_listener(self, world_id: uuid.UUID, patch_data: dict):
+        world = self._session.get_world(world_id)
+        games_by_world: dict[uuid.UUID, RandovaniaGame] = {
+            w.id: VersionedPreset.from_str(w.preset_raw).game for w in self._session.worlds
+        }
+        game = games_by_world[world_id]
+
+        dialog = game.gui.export_dialog(self._options, patch_data, f"{self._session.name} - {world.name}",
+                                        False, list(games_by_world.values()))
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QtWidgets.QDialog.DialogCode.Accepted:
@@ -617,6 +623,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         dialog.save_options()
         self._can_stop_background_process = game.exporter.export_can_be_aborted
+        self.tabWidget.setCurrentWidget(self.tab_session)
         await game_exporter.export_game(
             exporter=game.exporter,
             export_dialog=dialog,

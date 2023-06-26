@@ -2126,11 +2126,37 @@
                                         "data": "Can Use Power Bombs"
                                     },
                                     {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Super Missiles",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 10,
+                                            "type": "events",
+                                            "name": "EMP",
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     }
