@@ -102,7 +102,7 @@ class MSRPatchDataFactory(BasePatchDataFactory):
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
-        starting_items = self._calculate_starting_inventory(self.patches.starting_items)
+        starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
 
         useless_target = PickupTarget(pickup_creator.create_nothing_pickup(self.game.resource_database),
                                       self.players_config.player_index)
