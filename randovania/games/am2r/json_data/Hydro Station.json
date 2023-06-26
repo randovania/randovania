@@ -954,15 +954,6 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power Beam",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": "Shinespark from room on the right",
@@ -993,6 +984,15 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -1000,7 +1000,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up via Spider Ball",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -7469,6 +7469,10 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Space Jump Wall"
                                                 }
                                             ]
                                         }
@@ -7495,18 +7499,34 @@
                     "event_name": "Alpha12",
                     "connections": {
                         "Dock to Breeding Grounds Gamma Nest": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
+                                                    "data": "Hijump Wall"
+                                                },
+                                                {
+                                                    "type": "template",
                                                     "data": "Go Through Vines"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Power Grip Wall"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -7522,7 +7542,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Hijump Wall"
+                                        "data": "Space Jump Wall"
                                     }
                                 ]
                             }
