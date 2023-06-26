@@ -1,16 +1,18 @@
 import os
+from typing import Iterator
 
-from randovania.exporter import pickup_exporter
+from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node import Node
-from randovania.game_description.db.node_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
+from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 
@@ -24,36 +26,38 @@ def get_item_id_for_item(item: ItemResourceInfo) -> str:
         raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
-def convert_conditional_resource(respects_lock: bool, res: ConditionalResources) -> dict:
+def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
     if not res.resources:
-        return {"item_id": "ITEM_NONE", "quantity": 0}
+        yield {"item_id": "ITEM_NONE", "quantity": 0}
+        return
 
-    item_id = get_item_id_for_item(res.resources[0][0])
-    quantity = res.resources[0][1]
+    for resource in reversed(res.resources):
+        item_id = get_item_id_for_item(resource[0])
+        quantity = resource[1]
 
-    # only main pbs have 2 elements in res.resources, everything else is just 1
-    if len(res.resources) != 1:
-        item_id = get_item_id_for_item(res.resources[1][0])
-        assert item_id == "ITEM_WEAPON_SUPER_MISSILE"
-        assert item_id == "ITEM_WEAPON_POWER_BOMB"
-        assert len(res.resources) == 5
-
-    # non-required mains
-    if item_id == "ITEM_WEAPON_SUPER_MISSILE_MAX" and not respects_lock:
-        item_id = "ITEM_WEAPON_SUPER_MISSILE"
-    if item_id == "ITEM_WEAPON_POWER_BOMB_MAX" and not respects_lock:
-        item_id = "ITEM_WEAPON_POWER_BOMB"
-
-    return {"item_id": item_id, "quantity": quantity}
+        yield {"item_id": item_id, "quantity": quantity}
 
 
-def get_resources_for_details(detail: ExportedPickupDetails) -> list[dict]:
-    return [
-        convert_conditional_resource(detail.original_pickup.respects_lock, res)
-        for res in detail.conditional_resources
+
+def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]:
+    pickup = detail.original_pickup
+    resources = [
+        list(convert_conditional_resource(conditional_resource))
+        for conditional_resource in detail.conditional_resources
     ]
 
+    if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
+        # Add the lock resource into the pickup in addition to the expansion's resources
+        assert len(resources) == 1
+        resources[0].append({
+            "item_id": get_item_id_for_item(pickup.resource_lock.locked_by),
+            "quantity": 1,
+        })
+
+    return resources
+
 class MSRPatchDataFactory(BasePatchDataFactory):
+    cosmetic_patches: MSRCosmeticPatches
     configuration: MSRConfiguration
 
     def __init__(self, *args, **kwargs):
@@ -76,6 +80,14 @@ class MSRPatchDataFactory(BasePatchDataFactory):
                 continue
         return result
 
+    def _starting_inventory_text(self):
+        result = [r"{c1}Random starting items:{c0}"]
+        items = item_names.additional_starting_equipment(self.configuration, self.game, self.patches)
+        if not items:
+            return []
+        result.extend(items)
+        return result
+
     def _node_for(self, identifier: AreaIdentifier | NodeIdentifier) -> Node:
         if isinstance(identifier, NodeIdentifier):
             return self.game.region_list.node_by_identifier(identifier)
@@ -87,6 +99,10 @@ class MSRPatchDataFactory(BasePatchDataFactory):
 
     def _key_error_for_node(self, node: Node, err: KeyError):
         return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
+    
+    def _key_error_for_start_node(self, node: Node):
+        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has neither a " +
+                        "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
 
     def _start_point_ref_for(self, node: Node) -> dict:
         region = self.game.region_list.nodes_to_region(node)
