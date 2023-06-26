@@ -159,6 +159,20 @@ class MultiplayerSessionApi(QtCore.QObject):
             (str(world_uid), cosmetic_patches)
         )
 
+    @handle_network_errors
+    async def kick_player(self, kick_id: int):
+        await self.session_admin_player(
+            kick_id, admin_actions.SessionAdminUserAction.KICK,
+            None,
+        )
+
+    @handle_network_errors
+    async def switch_admin(self, new_admin_id: int):
+        await self.session_admin_player(
+            new_admin_id, admin_actions.SessionAdminUserAction.SWITCH_ADMIN,
+            None,
+        )
+
     async def request_session_update(self):
         await self.network_client.server_call(
             "multiplayer_request_session_update",
