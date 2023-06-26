@@ -35,8 +35,8 @@ class MultiworldClient(QObject):
 
         self.network_client = network_client
         self.game_connection = game_connection
-        self._remote_games = {}
         self.database = database
+        self._remote_games = {}
         self._last_reported_status = {}
         self._pickups_lock = asyncio.Lock()
 

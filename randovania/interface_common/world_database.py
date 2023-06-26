@@ -67,7 +67,6 @@ class WorldDatabase:
         persist_path.mkdir(parents=True, exist_ok=True)
         self._persist_path = persist_path
 
-        self._remote_games = {}
         self._all_data = {}
         self._lock = asyncio.Lock()
 
