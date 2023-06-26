@@ -110,7 +110,7 @@ class WorldDatabase:
     async def set_many_data(self, new_data: dict[uuid.UUID, WorldData]):
         async with self._lock:
             for uid, data in new_data.items():
-                if data != self._all_data[uid]:
+                if data != self._all_data.get(uid):
                     self._all_data[uid] = data
                     await self._write_data(uid, data)
 
