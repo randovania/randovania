@@ -89,6 +89,14 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         await self._session_api.unclaim_world(world_uid, owner)
 
     @asyncSlot()
+    async def _kick_player(self, kick_id: int):
+        await self._session_api.kick_player(kick_id)
+
+    @asyncSlot()
+    async def _switch_admin(self, new_admin_id: int):
+        await self._session_api.switch_admin(new_admin_id)
+
+    @asyncSlot()
     async def _world_rename(self, world_uid: uuid.UUID):
         dialog = QtWidgets.QInputDialog(self)
         dialog.setModal(True)
@@ -306,8 +314,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             if player.id != self.your_id and self.is_admin():
                 tool = make_tool("Administrate")
                 menu = QtWidgets.QMenu(tool)
-                menu.addAction("Kick player")
-                menu.addAction("Demote from Admin" if player.admin else "Promote to Admin")
+                kick_action = menu.addAction("Kick player")
+                connect_to(kick_action, self._kick_player, player.id)
+                switch_admin = menu.addAction("Demote from Admin" if player.admin else "Promote to Admin")
+                connect_to(switch_admin, self._switch_admin, player.id)
                 tool.setMenu(menu)
                 self.setItemWidget(item, 3, tool)
 

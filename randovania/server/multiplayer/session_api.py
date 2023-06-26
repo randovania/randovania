@@ -55,16 +55,14 @@ def join_session(sio: ServerApp, session_id: int, password: str | None):
 
 
 def listen_to_session(sio: ServerApp, session_id: int, listen: bool):
-    try:
-        membership = MultiplayerMembership.get_by_ids(user_id=sio.get_current_user(), session_id=session_id)
-
-    except peewee.DoesNotExist:
-        raise error.NotAuthorizedForAction()
-
     if listen:
+        try:
+            membership = MultiplayerMembership.get_by_ids(user_id=sio.get_current_user(), session_id=session_id)
+        except peewee.DoesNotExist:
+            raise error.NotAuthorizedForAction()
         session_common.join_room(sio, membership.session)
     else:
-        session_common.leave_room(sio, membership.session)
+        session_common.leave_room(sio, session_id)
 
 
 def request_session_update(sio: ServerApp, session_id: int):
