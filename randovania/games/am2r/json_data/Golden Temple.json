@@ -70,10 +70,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Mumbo Manor": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GTVisited",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Guardian",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Dock to Torture Room": {
@@ -369,40 +388,48 @@
                             }
                         },
                         "Event - Guardian": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "events",
-                                            "name": "GTVisited",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Energy requirements",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
+                                                        "type": "events",
+                                                        "name": "GTVisited",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 199,
-                                                        "negate": false
+                                                        "comment": "Energy requirements",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 199,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
