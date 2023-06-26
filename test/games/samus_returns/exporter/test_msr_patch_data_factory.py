@@ -1,24 +1,11 @@
-import dataclasses
-from unittest.mock import PropertyMock, MagicMock
-from pathlib import Path
+from unittest.mock import PropertyMock
 
 import pytest
 
-from randovania.exporter import pickup_exporter
-from randovania.game_description import default_database
-from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.samus_returns.exporter.patch_data_factory import MSRPatchDataFactory, MSRAcquiredMemo, \
-    get_resources_for_details
-from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MSRMissileCosmeticType
-from randovania.games.game import RandovaniaGame
-from randovania.generator.pickup_pool import pickup_creator
+from randovania.games.samus_returns.exporter.patch_data_factory import MSRPatchDataFactory
+from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.ammo_pickup_state import AmmoPickupState
-from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
 from randovania.lib import json_lib
 
 
