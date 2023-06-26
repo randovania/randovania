@@ -31,11 +31,11 @@ def test_list_sessions(clean_database, flask_app, limit):
     # Assert
     expected = [
         {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_players': 0, 'creator': 'Someone',
-         'creation_date': '2021-01-20T05:02:00+00:00'},
+         'creation_date': '2021-01-20T05:02:00+00:00', 'is_user_in_session': False},
         {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 0, 'creator': 'Someone',
-         'creation_date': '2020-01-20T05:02:00+00:00'},
+         'creation_date': '2020-01-20T05:02:00+00:00', 'is_user_in_session': False},
         {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 0, 'creator': 'Someone',
-         'creation_date': '2020-10-02T10:20:00+00:00'},
+         'creation_date': '2020-10-02T10:20:00+00:00', 'is_user_in_session': False},
     ]
     if limit == 2:
         expected = expected[:2]

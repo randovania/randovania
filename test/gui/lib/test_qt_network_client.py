@@ -1,12 +1,19 @@
+import asyncio
+import datetime
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock
+from mock import patch
+from PySide6 import QtWidgets 
 
 import pytest
 import pytest_mock
 
 from randovania.gui.lib import qt_network_client
+from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.error import InvalidAction, ServerError, NotAuthorizedForAction, NotLoggedIn, \
     RequestTimeout
+from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
+from randovania.network_common.session_state import MultiplayerSessionState
 
 
 @pytest.fixture(name="client")
@@ -70,3 +77,46 @@ async def test_login_to_discord(client, mocker: pytest_mock.MockerFixture):
     # Assert
     mock_browser_open.assert_called_once_with("http://localhost:5000/login?sid=THE_SID")
     client.server_call.assert_awaited_once_with("start_discord_login_flow")
+
+@pytest.mark.parametrize("connection_state", [ConnectionState.Disconnected, ConnectionState.Connected])
+async def test_ensure_logged_in(client, mocker, connection_state):
+    # Setup
+    mock_message_box = mocker.patch("PySide6.QtWidgets.QMessageBox")
+
+    async def true(): return True
+    connect_task = asyncio.create_task(true())
+
+    client.connect_to_server = MagicMock(return_value=connect_task)
+    client.connection_state = connection_state
+    mocker.patch("randovania.network_client.network_client.NetworkClient.current_user", return_value=MagicMock())
+
+    # Run
+    result = await client.ensure_logged_in(None)
+
+    # Assert
+    if connection_state == ConnectionState.Disconnected:
+        mock_message_box.assert_called_once()
+    assert result
+
+
+@pytest.mark.parametrize("in_session", [False, True])
+async def test_attempt_join(client, mocker, in_session):
+    # Setup
+    mocked_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
+                                       return_value=QtWidgets.QDialog.DialogCode.Accepted)
+    mocker.patch("randovania.network_client.network_client.NetworkClient.join_multiplayer_session", return_value="A Session")
+    session = MultiplayerSessionListEntry(
+        id=1, name="A Game", has_password=True, state=MultiplayerSessionState.FINISHED,
+        num_players=1, creator="You", is_user_in_session=in_session,
+        creation_date=datetime.datetime(year=2015, month=5, day=1, tzinfo=datetime.UTC),
+    )
+
+    # Run
+    result = await client.attempt_join(session)
+    # Assert
+    assert result == "A Session"
+    if in_session:
+        mocked_execute_dialog.assert_not_called()
+    else:
+        mocked_execute_dialog.assert_called_once()
+

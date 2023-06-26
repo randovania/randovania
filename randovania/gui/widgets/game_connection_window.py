@@ -1,5 +1,6 @@
 import collections
 import functools
+import uuid
 
 import wiiload
 from PySide6 import QtWidgets, QtGui
@@ -18,7 +19,11 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.debug_backend_window import DebugConnectorWindow
 from randovania.gui.generated.game_connection_window_ui import Ui_GameConnectionWindow
 from randovania.gui.lib import common_qt_lib, async_dialog
-
+from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
+from randovania.gui.main_window import MainWindow
+from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.options import Options
+from randovania.network_common import error
 
 class BuilderUi:
     group: QtWidgets.QGroupBox
@@ -27,10 +32,12 @@ class BuilderUi:
     remove: QtGui.QAction
     description: QtWidgets.QLabel
     status: QtWidgets.QLabel
+    join_session: tuple[QtGui.QAction, QtGui.QAction] # seperator + button
 
     def __init__(self, parent: QtWidgets.QWidget):
         self.group = QtWidgets.QGroupBox(parent)
         self.layout = QtWidgets.QGridLayout(self.group)
+        self.join_session = None
 
         self.button = QtWidgets.QToolButton(self.group)
         self.button.setText("...")
@@ -50,16 +57,43 @@ class BuilderUi:
         self.layout.addWidget(self.button)
         self.layout.addWidget(self.description, 0, 1)
         self.layout.addWidget(self.status, 1, 0, 1, 2)
+    
+    def add_session_button(self) -> QtGui.QAction:
+        if self.join_session:
+            return self.join_session[1]
+        seperator = self.menu.addSeparator()
+        button = QtGui.QAction(self.menu)
+        button.setText("Open Session Window")
+        self.menu.addAction(button)
+        self.join_session = (seperator, button)
+        return button
 
+    def remove_session_button(self):
+        if self.join_session:
+            seperator, button = self.join_session
+            self.menu.removeAction(seperator)
+            self.menu.removeAction(button)
+            self.join_session = None
+
+    def change_session_button(self, new_value: bool):
+        if self.join_session:
+            button = self.join_session[1]
+            button.setDisabled(new_value)
 
 class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
     ui_for_builder: dict[ConnectorBuilder, BuilderUi]
+    layout_uuid_for_builder: dict[ConnectorBuilder, uuid.UUID]
 
-    def __init__(self, game_connection: GameConnection):
+    def __init__(self, window_manager: MainWindow, network_client: QtNetworkClient,
+                  options: Options, game_connection: GameConnection):
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self.setupUi(self)
+        self.window_manager = window_manager
+        self.network_client = network_client
+        self.options = options
         self.game_connection = game_connection
+        self.world_database = game_connection.world_database
 
         self.add_builder_menu = QtWidgets.QMenu(self.add_builder_button)
         self._builder_actions = {}
@@ -72,6 +106,8 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
 
         self.game_connection.BuildersChanged.connect(self.setup_builder_ui)
         self.game_connection.BuildersUpdated.connect(self.update_builder_ui)
+        self.game_connection.GameStateUpdated.connect(self.update_builder_ui)
+        self.world_database.WorldDataUpdate.connect(self._update_join_actions)
         self.setup_builder_ui()
 
     async def _prompt_for_text(self, title: str, label: str) -> str | None:
@@ -149,6 +185,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             child.deleteLater()
 
         self.ui_for_builder = {}
+        self.layout_uuid_for_builder = {}
         add_action_enabled: dict[ConnectorBuilderChoice, bool] = collections.defaultdict(lambda: True)
 
         for builder in self.game_connection.connection_builders:
@@ -164,10 +201,75 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
 
         self.update_builder_ui()
 
+    @asyncSlot()
+    @handle_network_errors
+    async def _attempt_join(self, layout_uuid: uuid.UUID):
+        if not await self.network_client.ensure_logged_in(self):
+            return
+        session_id = self._check_session_data(layout_uuid)
+        try:
+            await self.network_client.listen_to_session(session_id, True)
+            await self.window_manager.ensure_multiplayer_session_window(
+                self.network_client, session_id,
+                self.options
+            )
+        except error.NotAuthorizedForAction:
+            await async_dialog.warning(self, "Unauthorized",
+                                       "You're not a member of this session.")
+
+    def _update_join_actions(self):
+        for builder, layout_uuid in self.layout_uuid_for_builder.items():
+            new_value = self._check_session_data(layout_uuid) is None
+            self.ui_for_builder[builder].change_session_button(new_value)
+
+    def _check_session_data(self, layout_uuid: uuid.UUID) -> int | None:
+        world_data = self.world_database.get_data_for(layout_uuid)
+        server_data = world_data.server_data
+        if server_data is not None:
+            return server_data.session_id
+        return None
+
+    def _get_valid_uuid(self, builder: ConnectorBuilder) -> uuid.UUID | None:
+        # check if there is a remote connector for the builder
+        associated_rc = self.game_connection.remote_connectors.get(builder, None)
+        if associated_rc is None:
+            return None
+        
+        # check the uuid
+        layout_uuid = associated_rc.layout_uuid
+        if layout_uuid == INVALID_UUID:
+            return None
+
+        return layout_uuid
+
+    def _add_session_action(self, builder: ConnectorBuilder, ui: BuilderUi):
+        def new_button(layout_uuid: uuid.UUID):
+            button = ui.add_session_button()
+            button.triggered.connect(functools.partial(self._attempt_join, layout_uuid))
+            self._update_join_actions()
+
+        layout_uuid = self._get_valid_uuid(builder)
+        layout_uuid_before = self.layout_uuid_for_builder.get(builder, None)
+        # same uuid or both are None
+        if layout_uuid_before == layout_uuid:
+            return
+        self.layout_uuid_for_builder[builder] = layout_uuid
+        # layout_uuid was none but now there is a valid one
+        if layout_uuid is not None and layout_uuid_before is None:
+            new_button(layout_uuid)
+        # fast switch of uuid (like possible with dolphin)
+        elif layout_uuid is not None and layout_uuid_before is not None:
+            ui.remove_session_button()
+            new_button(layout_uuid)
+        # uuid switched from valid to non valid
+        elif layout_uuid is None:
+            ui.remove_session_button()
+
     def update_builder_ui(self):
         for builder, ui in self.ui_for_builder.items():
             if (message := builder.get_status_message()) is not None:
                 ui.status.setText(message)
+                self._add_session_action(builder, ui)
 
     def add_ui_for_builder(self, builder: ConnectorBuilder):
         ui = BuilderUi(self.builders_group)

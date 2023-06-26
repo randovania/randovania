@@ -11,7 +11,8 @@ if typing.TYPE_CHECKING:
     from randovania.layout.layout_description import LayoutDescription
     from randovania.layout.preset import Preset
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
-
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.interface_common.options import Options
 
 class WindowManager(QtWidgets.QMainWindow):
     tracked_windows: list[CloseEventWidget]
@@ -54,6 +55,12 @@ class WindowManager(QtWidgets.QMainWindow):
 
         window.CloseEvent.connect(remove_window)
         self.tracked_windows.append(window)
+
+    async def ensure_multiplayer_session_window(self, network_client: QtNetworkClient,
+                                                session_id: int, options: Options
+                                                ):
+        raise NotImplementedError()
+        
 
 
 def get_global_window_manager() -> WindowManager:

@@ -54,6 +54,7 @@ def test_encode_sync_response():
                     num_players=2,
                     creator="Not You",
                     creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc),
+                    is_user_in_session=True,
                 ),
             ),
         }),
@@ -66,6 +67,6 @@ def test_encode_sync_response():
 
     assert encoded == (
         b'\x01&\x8e\x8d38\xccJ\x9b\xb7?A\x9f\xad\xa7H\xb7\x05World\n\x0bOur Session'
-        b'\x01\x01\x04\x07Not You\x80\xa0\xcc\xf1\x8c\xa3\xb78\x01\x97U\xef\xc7'
+        b'\x01\x01\x04\x07Not You\x80\xa0\xcc\xf1\x8c\xa3\xb78\x01\x01\x97U\xef\xc7'
         b'w\xe4G\x11\x8f\x03\xbaq\xc3f\xef\x81"{"error":{"code":6,"detail":null}}'
     )

@@ -437,17 +437,17 @@ class NetworkClient:
         result = await self.server_call("multiplayer_create_session", session_name)
         return self._with_new_session(result)
 
-    async def join_multiplayer_session(self, session: MultiplayerSessionListEntry, password: str | None):
-        result = await self.server_call("multiplayer_join_session", (session.id, password))
+    async def join_multiplayer_session(self, session_id: int, password: str | None):
+        result = await self.server_call("multiplayer_join_session", (session_id, password))
         return self._with_new_session(result)
 
-    async def listen_to_session(self, session: MultiplayerSessionEntry, listen: bool):
-        result = await self.server_call("multiplayer_listen_to_session", (session.id, listen))
+    async def listen_to_session(self, session_id: int, listen: bool):
+        result = await self.server_call("multiplayer_listen_to_session", (session_id, listen))
         sessions = self._sessions_interested_in
         if listen:
-            sessions.add(session.id)
-        elif session.id in sessions:
-            sessions.remove(session.id)
+            sessions.add(session_id)
+        elif session_id in sessions:
+            sessions.remove(session_id)
         return result
 
     async def session_admin_global(self, session: MultiplayerSessionEntry,

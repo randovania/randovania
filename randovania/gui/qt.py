@@ -73,8 +73,7 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
         from randovania.gui.lib import async_dialog
 
         try:
-            from randovania.gui import main_online_interaction
-            if not await main_online_interaction.ensure_logged_in(None, network_client):
+            if not await network_client.ensure_logged_in(None):
                 await async_dialog.warning(None, "Login required",
                                            "Logging in is required to use dev builds.")
                 return False
@@ -159,7 +158,7 @@ async def show_game_session(app: QtWidgets.QApplication, options, session_id: in
         app.quit()
         return
 
-    new_session = await network_client.join_multiplayer_session(sessions[0], None)
+    new_session = await network_client.join_multiplayer_session(sessions[0].id, None)
     # preset_for = preset_manager.default_preset_for_game
 
     preset_manager = PresetManager(options.presets_path)
@@ -168,7 +167,6 @@ async def show_game_session(app: QtWidgets.QApplication, options, session_id: in
         network_client,
         new_session,
         preset_manager,
-        None,
         options
     )
     app.game_session_window.show()
@@ -279,7 +277,7 @@ async def qt_main(app: QtWidgets.QApplication, args):
 
     logging.info("Creating the global game connection")
     from randovania.game_connection.game_connection import GameConnection
-    app.game_connection = GameConnection(options)
+    app.game_connection = GameConnection(options, app.world_database)
     
     logging.info("Creating the global multiworld client")
     from randovania.gui.multiworld_client import MultiworldClient

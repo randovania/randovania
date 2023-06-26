@@ -1,15 +1,14 @@
 import datetime
 
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QInputDialog, QLineEdit
+from PySide6.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem
 from qasync import asyncSlot
 
 from randovania.gui.generated.multiplayer_session_browser_dialog_ui import Ui_MultiplayerSessionBrowserDialog
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry, MultiplayerSessionEntry
 from randovania.network_client.network_client import ConnectionState
-from randovania.network_common.error import WrongPassword
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
@@ -29,7 +28,7 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         self.button_box.button(QDialogButtonBox.StandardButton.Ok).setEnabled(False)
         self.button_box.button(QDialogButtonBox.StandardButton.Ok).setText("Join")
 
-        self.button_box.accepted.connect(self.attempt_join)
+        self.button_box.accepted.connect(self._attempt_join)
         self.button_box.rejected.connect(self.reject)
         self.refresh_button.clicked.connect(self._refresh_slot)
 
@@ -77,36 +76,19 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
 
     @asyncSlot(QTableWidgetItem)
     async def on_double_click(self, item: QTableWidgetItem):
-        await self.attempt_join()
+        await self._attempt_join()
 
     @asyncSlot()
-    @handle_network_errors
-    async def attempt_join(self):
+    async def _attempt_join(self):
         if not self.visible_sessions:
             return
 
         session = self.selected_session
 
-        if session.has_password:
-            dialog = QInputDialog(self)
-            dialog.setWindowTitle("Enter password")
-            dialog.setLabelText("This session requires a password:")
-            dialog.setWindowModality(Qt.WindowModal)
-            dialog.setTextEchoMode(QLineEdit.EchoMode.Password)
-
-            if await async_dialog.execute_dialog(dialog) != QDialog.DialogCode.Accepted:
-                return
-
-            password = dialog.textValue()
-        else:
-            password = None
-
-        try:
-            self.joined_session = await self.network_client.join_multiplayer_session(session, password)
+        self.joined_session = await self.network_client.attempt_join_with_password_check(session)
+        if self.joined_session is not None:
             return self.accept()
 
-        except WrongPassword:
-            await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
 
     def update_list(self):
         self.table_widget.clear()

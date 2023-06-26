@@ -1,9 +1,10 @@
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock, ANY, patch
+from unittest.mock import AsyncMock, MagicMock, ANY
 
 import pytest
 from PySide6 import QtWidgets
 from pytest_mock import MockerFixture
+from PySide6 import QtWidgets, QtGui
 
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
@@ -11,15 +12,19 @@ from randovania.game_connection.builder.dread_connector_builder import DreadConn
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
-from randovania.gui.widgets.game_connection_window import GameConnectionWindow
+from randovania.gui.lib.qt_network_client import QtNetworkClient
+from randovania.gui.widgets.game_connection_window import BuilderUi, GameConnectionWindow
+from randovania.interface_common.players_configuration import INVALID_UUID
 
 
 @pytest.fixture(name="window")
-def _window(skip_qtbot):
+def _window(skip_qtbot, mocker):
     game_connection = MagicMock()
     game_connection.connection_builders = []
+    parent = QtWidgets.QWidget()
+    network_client = MagicMock(QtNetworkClient)
 
-    result = GameConnectionWindow(game_connection)
+    result = GameConnectionWindow(parent, network_client, MagicMock(), game_connection)
     skip_qtbot.addWidget(result)
 
     return result
@@ -135,8 +140,9 @@ def test_setup_builder_ui_all_builders(skip_qtbot, system, mocker: MockerFixture
         NintendontConnectorBuilder("the_ip"),
         DebugConnectorBuilder(RandovaniaGame.BLANK.value),
     ]
-
-    window = GameConnectionWindow(game_connection)
+    parent = QtWidgets.QWidget()
+    network_client = MagicMock(QtNetworkClient)
+    window = GameConnectionWindow(parent, network_client, MagicMock(), game_connection)
     skip_qtbot.addWidget(window)
 
     # Run
@@ -189,3 +195,67 @@ async def test_prompt_for_game(window: GameConnectionWindow, mocker, result):
     else:
         assert response is None
     mock_execute_dialog.assert_awaited_once()
+
+
+@pytest.mark.parametrize("case", [i for i in range(4)])
+async def test_internal_try_to_find_session(window: GameConnectionWindow, case: int):
+    if case == 0:
+        # session found and set
+        cb_mock = MagicMock()
+        result = await window._try_to_find_session(cb_mock)
+        assert result
+        assert window.session_for_builder.get(cb_mock, None) is not None
+    elif case == 1:
+        # no login
+        cb_mock = MagicMock()
+        window.network_client.ensure_logged_in = AsyncMock(return_value=False)
+        result = await window._try_to_find_session(cb_mock)
+        assert not result
+        assert window.session_for_builder.get(cb_mock, None) is None
+    elif case == 2:
+        # invalid uuid
+        cb_mock = MagicMock()
+        rc_mock = MagicMock()
+        rc_mock._layout_uuid = INVALID_UUID
+        window.game_connection.remote_connectors = {cb_mock: rc_mock}
+        result = await window._try_to_find_session(cb_mock)
+        assert not result
+        assert window.session_for_builder.get(cb_mock, None) is None
+    elif case == 3:
+        # no remote connector for builder
+        window.game_connection.remote_connectors = {}
+        result = await window._try_to_find_session(None)
+        assert not result
+    
+
+@pytest.mark.parametrize("case", [i for i in range(2)])
+async def test_try_to_find_session(window: GameConnectionWindow, case: int):
+    ui = MagicMock()
+    if case == 0:
+        window._try_to_find_session = AsyncMock(return_value=None)
+        await window.try_to_find_session(None, ui)
+        ui.remove_session_button.assert_called_once()
+    elif case == 1:
+        window._try_to_find_session = AsyncMock(return_value="Something")
+        await window.try_to_find_session(None, ui)
+        ui.add_session_button.assert_called_once()
+
+
+@pytest.mark.parametrize("case", [i for i in range(2)])
+def test_builder_ui_add_session_button(window: GameConnectionWindow, case: int):
+    ui = BuilderUi(window.builders_group)
+
+    if case == 0:
+        result = ui.add_session_button()
+        assert isinstance(result, QtGui.QAction)
+    elif case == 1:
+        ui.join_session = (MagicMock(), MagicMock())
+        result = ui.add_session_button()
+        assert ui.join_session[1] == result
+
+
+def test_builder_ui_remove_session_button(window: GameConnectionWindow):
+    ui = BuilderUi(window.builders_group)
+    ui.add_session_button()
+    ui.remove_session_button()
+    assert ui.join_session is None

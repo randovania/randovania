@@ -191,7 +191,7 @@ def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: Se
     if world_request.request_details:
         response = ServerWorldResponse(
             world_name=world.name,
-            session=world.session.create_list_entry(),
+            session=world.session.create_list_entry(user),
         )
 
     # Do this last, as it fails if session is in setup

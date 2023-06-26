@@ -3,7 +3,7 @@ import peewee
 from randovania.network_common import error
 from randovania.network_common.error import WrongPassword
 from randovania.server import database
-from randovania.server.database import MultiplayerSession, MultiplayerMembership
+from randovania.server.database import MultiplayerSession, MultiplayerMembership, User
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
 
@@ -14,7 +14,7 @@ def list_sessions(sio: ServerApp, limit: int | None):
     )
 
     return [
-        session.create_list_entry().as_json
+        session.create_list_entry(sio.get_current_user()).as_json
         for session in sessions
     ]
 
@@ -40,12 +40,14 @@ def create_session(sio: ServerApp, session_name: str):
 
 def join_session(sio: ServerApp, session_id: int, password: str | None):
     session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
+    user: User = sio.get_current_user()
 
-    if session.password is not None:
-        if password is None or session_common.hash_password(password) != session.password:
+    if not session.is_user_in_session(user):
+        if session.password is not None:
+            if password is None or session_common.hash_password(password) != session.password:
+                raise WrongPassword()
+        elif password is not None:
             raise WrongPassword()
-    elif password is not None:
-        raise WrongPassword()
 
     MultiplayerMembership.get_or_create(user=sio.get_current_user(), session=session)
     session_common.join_room(sio, session)
