@@ -19,7 +19,7 @@ from randovania.lib import json_lib
 def test_create_patch_data(test_files_dir, rdvgame_filename,
                             expected_results_filename, num_of_players, mocker):
     # Setup
-    rdvgame = test_files_dir.joinpath("log_files", "msr", rdvgame_filename)
+    rdvgame = test_files_dir.joinpath("log_files", "samus_returns", rdvgame_filename)
     players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
     description = LayoutDescription.from_file(rdvgame)
     cosmetic_patches = MSRCosmeticPatches()
@@ -32,7 +32,7 @@ def test_create_patch_data(test_files_dir, rdvgame_filename,
     data = MSRPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    expected_results_path = test_files_dir.joinpath("patcher_data", "msr", expected_results_filename)
+    expected_results_path = test_files_dir.joinpath("patcher_data", "samus_returns", expected_results_filename)
     expected_data = json_lib.read_path(expected_results_path)
 
     assert data == expected_data
