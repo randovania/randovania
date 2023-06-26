@@ -14,10 +14,10 @@ from discord import Embed
 from discord.ext.commands import Converter, Context
 
 from randovania.game_description import default_database, pretty_print
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.node import NodeLocation, Node
 from randovania.game_description.db.region import Region
+from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
 from randovania.server.discord.bot import RandovaniaBot
@@ -163,7 +163,7 @@ async def create_split_regions(db: GameDescription) -> list[SplitRegion]:
 
                     region_options.append(SplitRegion(
                         region, "{} ({}-{})".format(name, areas_part[0].name[:2],
-                                                   areas_part[-1].name[:2]),
+                                                    areas_part[-1].name[:2]),
                         create_areas(areas_part),
                         create_id(),
                     ))
@@ -384,9 +384,6 @@ class SelectSplitRegionItem(discord.ui.Select):
         r = interaction.response
         assert isinstance(r, discord.InteractionResponse)
 
-        # defer is needed to be able to edit the original message.
-        await r.defer()
-
         option_selected = self.values[0]
 
         valid_items = [
@@ -395,8 +392,8 @@ class SelectSplitRegionItem(discord.ui.Select):
             if it.command_id == option_selected
         ]
         if not valid_items:
-            return await interaction.edit_original_response(
-                view=None, embeds=[],
+            return await r.send_message(
+                view=None, embeds=[], ephemeral=True,
                 content=f"Invalid selected option, unable to find given db subset '{option_selected}'."
             )
         split_region = valid_items[0]
@@ -406,28 +403,10 @@ class SelectSplitRegionItem(discord.ui.Select):
 
         logging.info("Responding to area selection for section %s with %d options.",
                      split_region.name, len(split_region.areas))
-        return await interaction.edit_original_response(
+        return await r.send_message(
             embed=embed,
             view=split_region.view,
-        )
-
-
-class BackToGameButton(discord.ui.Button):
-    def __init__(self, game: RandovaniaGame, response_view: discord.ui.View):
-        self.game = game
-        self.response_view = response_view
-
-        super().__init__(
-            label="Back",
-            custom_id=f"back_to_{game.value}",
-        )
-
-    async def callback(self, interaction: discord.Interaction):
-        # defer is needed to be able to edit the original message.
-        await interaction.response.defer()
-        return await interaction.edit_original_response(
-            embed=Embed(title=f"{self.game.long_name} Database", description="Choose the db subset to visualize."),
-            view=self.response_view,
+            ephemeral=True,
         )
 
 
@@ -469,7 +448,6 @@ class DatabaseCommandCog(RandovaniaCog):
             for split_region in region_options:
                 split_region.view = discord.ui.View(
                     SelectAreaItem(game, split_region),
-                    BackToGameButton(game, view),
                     timeout=None,
                 )
                 self.bot.add_view(split_region.view)
