@@ -107,9 +107,14 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
     uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
     uid_2 = uuid.UUID("00000000-0000-0000-1111-000000000000")
     uid_3 = uuid.UUID("000000000000-0000-0000-0000-11111111")
+    uid_4 = uuid.UUID("22222222-0000-0000-0000-000000000000")
 
+    client._blacklisted_worlds[uid_4] = error.WorldDoesNotExistError()
     client.database._all_data[uid_1] = WorldData(
         collected_locations=(5,),
+    )
+    client.database._all_data[uid_4] = WorldData(
+        collected_locations=(55,),
     )
     client.game_connection.connected_states = {
         MagicMock(): ConnectedGameState(
@@ -125,7 +130,14 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
             status=GameConnectionStatus.InGame,
             current_inventory={},
             collected_indices=MagicMock(),
-        )
+        ),
+        MagicMock(): ConnectedGameState(
+            id=uid_4,
+            source=MagicMock(),
+            status=GameConnectionStatus.InGame,
+            current_inventory={},
+            collected_indices=MagicMock(),
+        ),
     }
     sync_requests[uid_1] = ServerWorldSync(
         status=GameConnectionStatus.InGame,
@@ -227,7 +239,7 @@ async def test_server_sync(client, mocker: MockerFixture):
                 ),
             }),
             errors=frozendict({
-                uid_3: error.InvalidAction("bad thing")
+                uid_3: error.WorldDoesNotExistError()
             }),
         ),
         ServerSyncResponse(frozendict({}), frozendict({})),
@@ -267,3 +279,6 @@ async def test_server_sync(client, mocker: MockerFixture):
             session_name="The Session",
         )
     )
+    assert client._blacklisted_worlds == {
+        uid_3: error.WorldDoesNotExistError(),
+    }
