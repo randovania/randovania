@@ -155,7 +155,7 @@ class ServerApp:
             decoded_arg = construct_pack.decode(arg, arg_spec.annotations[arg_spec.args[1]])
             return construct_pack.encode(handler(sio, decoded_arg))
 
-        return self.on(message, _handler)
+        return self.on(message, _handler, with_header_check=True)
 
     def route_with_user(self, route: str, *, need_admin: bool = False, **kwargs):
         def decorator(handler):

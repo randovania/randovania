@@ -203,7 +203,8 @@ def test_admin_session_patcher_file(flask_app, mock_audit, mocker,
                 1: "World 2",
             },
             {0: uuid.UUID('1179c986-758a-4170-9b07-fe4541d78db0'),
-             1: uuid.UUID('6b5ac1a1-d250-4f05-a5fb-ae37e8a92165')}
+             1: uuid.UUID('6b5ac1a1-d250-4f05-a5fb-ae37e8a92165')},
+            two_player_session.name,
         ),
         cosmetic,
     )

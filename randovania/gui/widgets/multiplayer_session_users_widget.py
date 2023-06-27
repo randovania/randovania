@@ -5,7 +5,6 @@ from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
@@ -34,7 +33,7 @@ def connect_to(action: QtGui.QAction, target, *args):
 
 
 class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
-    GameExportRequested = Signal(RandovaniaGame, dict)
+    GameExportRequested = Signal(uuid.UUID, dict)
 
     _session: MultiplayerSessionEntry
 
@@ -88,6 +87,14 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     @asyncSlot()
     async def _world_unclaim(self, world_uid: uuid.UUID, owner: int):
         await self._session_api.unclaim_world(world_uid, owner)
+
+    @asyncSlot()
+    async def _kick_player(self, kick_id: int):
+        await self._session_api.kick_player(kick_id)
+
+    @asyncSlot()
+    async def _switch_admin(self, new_admin_id: int):
+        await self._session_api.switch_admin(new_admin_id)
 
     @asyncSlot()
     async def _world_rename(self, world_uid: uuid.UUID):
@@ -191,7 +198,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         patch_data = await self._session_api.create_patcher_file(
             world_uid, options.options_for_game(game_enum).cosmetic_patches.as_json
         )
-        self.GameExportRequested.emit(game_enum, patch_data)
+        self.GameExportRequested.emit(world_uid, patch_data)
 
     #
 
@@ -307,8 +314,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             if player.id != self.your_id and self.is_admin():
                 tool = make_tool("Administrate")
                 menu = QtWidgets.QMenu(tool)
-                menu.addAction("Kick player")
-                menu.addAction("Demote from Admin" if player.admin else "Promote to Admin")
+                kick_action = menu.addAction("Kick player")
+                connect_to(kick_action, self._kick_player, player.id)
+                switch_admin = menu.addAction("Demote from Admin" if player.admin else "Promote to Admin")
+                connect_to(switch_admin, self._switch_admin, player.id)
                 tool.setMenu(menu)
                 self.setItemWidget(item, 3, tool)
 

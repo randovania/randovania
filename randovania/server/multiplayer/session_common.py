@@ -104,13 +104,13 @@ def join_room(sio: ServerApp, session: MultiplayerSession):
             sio_session["multiplayer_sessions"].append(session.id)
 
 
-def leave_room(sio: ServerApp, session: MultiplayerSession):
-    flask_socketio.leave_room(room_name_for(session.id))
+def leave_room(sio: ServerApp, session_id: int):
+    flask_socketio.leave_room(room_name_for(session_id))
 
     with sio.session() as sio_session:
         if "multiplayer_sessions" in sio_session:
-            if session.id in sio_session["multiplayer_sessions"]:
-                sio_session["multiplayer_sessions"].remove(session.id)
+            if session_id in sio_session["multiplayer_sessions"]:
+                sio_session["multiplayer_sessions"].remove(session_id)
 
 
 def leave_all_rooms(sio: ServerApp):

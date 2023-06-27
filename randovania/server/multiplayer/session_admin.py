@@ -526,6 +526,7 @@ def _create_patcher_file(sio: ServerApp, session: MultiplayerSession, world_uid:
         player_index=player_index,
         player_names=player_names,
         uuids=uuids,
+        session_name=session.name,
     )
     preset = layout_description.get_preset(players_config.player_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
