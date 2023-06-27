@@ -3,16 +3,37 @@ import typing
 from collections import defaultdict
 from typing import Iterator
 
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
+
+
+def _build_satisfiable_requirements(logic: Logic, all_nodes: tuple[Node | None, ...], resource_db: ResourceDatabase,
+                                    requirements_by_node: dict[int, list[Requirement]]):
+
+    def _for_node(node_index: int, reqs: list[Requirement]) -> frozenset[RequirementList]:
+        additional = logic.get_additional_requirements(all_nodes[node_index])
+
+        set_param = set()
+        for req in set(reqs):
+            set_param.update(req.as_set(resource_db).alternatives)
+
+        return RequirementSet(set_param).union(additional).alternatives
+
+    return frozenset.union(
+        *(
+            _for_node(node_index, requirements)
+            for node_index, requirements in requirements_by_node.items()
+        )
+    )
 
 
 class ResolverReach:
@@ -71,7 +92,7 @@ class ResolverReach:
         }
 
         reach_nodes: dict[int, int] = {}
-        requirements_by_node: dict[int, set[RequirementList]] = defaultdict(set)
+        requirements_by_node: dict[int, list[Requirement]] = defaultdict(list)
 
         path_to_node: dict[int, list[int]] = {
             initial_state.node.node_index: [],
@@ -117,18 +138,16 @@ class ResolverReach:
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
-                    requirements_by_node[target_node_index].update(
-                        requirement.as_set(initial_state.resource_database).alternatives)
+                    requirements_by_node[target_node_index].append(requirement)
 
         # Discard satisfiable requirements of nodes reachable by other means
         for node_index in set(reach_nodes.keys()).intersection(requirements_by_node.keys()):
             requirements_by_node.pop(node_index)
 
         if requirements_by_node:
-            satisfiable_requirements = frozenset.union(
-                *[RequirementSet(requirements).union(
-                    logic.get_additional_requirements(all_nodes[node_index])).alternatives
-                  for node_index, requirements in requirements_by_node.items()])
+            satisfiable_requirements = _build_satisfiable_requirements(
+                logic, all_nodes, initial_state.resource_database, requirements_by_node
+            )
         else:
             satisfiable_requirements = frozenset()
 
