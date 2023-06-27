@@ -38,7 +38,7 @@ class ResourceDatabase:
     misc: list[SimpleResourceInfo]
     requirement_template: dict[str, Requirement]
     damage_reductions: dict[SimpleResourceInfo, list[DamageReduction]]
-    energy_tank_item_index: str
+    energy_tank_item: ItemResourceInfo
     base_damage_reduction: Callable[[ResourceDatabase, ResourceCollection], float] = default_base_damage_reduction
     resource_by_index: list[ResourceInfo | None] = dataclasses.field(default_factory=list)
 
@@ -89,7 +89,7 @@ class ResourceDatabase:
 
     @property
     def energy_tank(self) -> ItemResourceInfo:
-        return self.get_by_type_and_index(ResourceType.ITEM, self.energy_tank_item_index)
+        return self.energy_tank_item
 
     def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection):
         cached_result = current_resources.get_damage_reduction_cache(resource)

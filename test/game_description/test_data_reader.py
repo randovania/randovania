@@ -29,7 +29,7 @@ def test_invalid_node_type():
 def test_area_with_invalid_connections():
     # Setup
     db = ResourceDatabase(RandovaniaGame.METROID_PRIME_ECHOES, [], [], [], [], [], [], {},
-                          damage_reductions={}, energy_tank_item_index="Energy")
+                          damage_reductions={}, energy_tank_item=None)
     reader = RegionReader(db, None)
     reader.current_region_name = "World"
 

@@ -25,7 +25,7 @@ class ResourceCollection:
     _resource_array: list[int]
     _existing_resources: dict[int, ResourceInfo]
     add_self_as_requirement_to_resources: bool
-    _damage_reduction_cache: dict[ResourceInfo, float] | None
+    _damage_reduction_cache: dict[int, float] | None
 
     def __init__(self):
         self.resource_bitmask = 0
@@ -151,13 +151,13 @@ class ResourceCollection:
 
     def get_damage_reduction_cache(self, resource: ResourceInfo) -> float | None:
         if self._damage_reduction_cache is not None:
-            return self._damage_reduction_cache.get(resource)
+            return self._damage_reduction_cache.get(resource.resource_index)
         return None
 
     def add_damage_reduction_cache(self, resource: ResourceInfo, multiplier: float):
         if self._damage_reduction_cache is None:
             self._damage_reduction_cache = {}
-        self._damage_reduction_cache[resource] = multiplier
+        self._damage_reduction_cache[resource.resource_index] = multiplier
 
     def __copy__(self):
         return self.duplicate()

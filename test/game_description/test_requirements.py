@@ -40,7 +40,7 @@ def _database() -> ResourceDatabase:
         ],
         requirement_template={},
         damage_reductions={},
-        energy_tank_item_index="",
+        energy_tank_item=None,
     )
 
 
