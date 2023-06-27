@@ -31,7 +31,15 @@ def test_invalid_db():
         "schema_version": 14,
         "game": "prime2",
         "resource_database": {
-            "items": {},
+            "items": {
+                "LightAmmo": {
+                    "long_name": "Light Ammo",
+                    "max_capacity": 1,
+                    "extra": {
+                        "item_id": 46
+                    }
+                }
+            },
             "events": {
                 "Boss": {
                     "long_name": "First Boss Killed",
@@ -44,7 +52,7 @@ def test_invalid_db():
             "misc": {},
             "requirement_template": {},
             "damage_reductions": [],
-            "energy_tank_item_index": "Power",
+            "energy_tank_item_index": "LightAmmo",
             "item_percentage_index": "Power",
             "multiworld_magic_item_index": "Power"
         },
