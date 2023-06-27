@@ -9,7 +9,7 @@ from randovania.game_description.game_description import calculate_interesting_r
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
-from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.resources import fast_as_set
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
@@ -27,9 +27,9 @@ def _build_satisfiable_requirements(
 
         set_param = set()
         for req in set(reqs):
-            set_param.update(req.as_set(resource_db).alternatives)
+            set_param.update(fast_as_set.fast_as_alternatives(req, resource_db))
 
-        yield from(
+        yield from (
             a.union(b)
             for a in set_param
             for b in additional
