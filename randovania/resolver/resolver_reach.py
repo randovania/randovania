@@ -170,7 +170,7 @@ class ResolverReach:
     def satisfiable_actions(self,
                             state: State,
                             victory_condition: Requirement,
-                            actions: list[tuple[ResourceNode, int]],
+                            actions: typing.Iterable[tuple[ResourceNode, int]],
                             ) -> Iterator[tuple[ResourceNode, int]]:
 
         interesting_resources = calculate_interesting_resources(
