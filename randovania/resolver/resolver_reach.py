@@ -29,11 +29,11 @@ def _build_satisfiable_requirements(
         for req in set(reqs):
             set_param.update(req.as_set(resource_db).alternatives)
 
-        return RequirementSet(
+        yield from(
             a.union(b)
             for a in set_param
             for b in additional
-        ).alternatives
+        )
 
     for it in requirements_by_node.items():
         result.update(_for_node(*it))
