@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import functools
 from math import ceil
 
 from randovania.game_description.requirements.base import Requirement
@@ -32,6 +33,7 @@ class ResourceRequirement(Requirement):
         return PositiveResourceRequirement(resource, amount, negate)
 
     @classmethod
+    @functools.cache
     def simple(cls, simple: ResourceInfo) -> ResourceRequirement:
         return cls.create(simple, 1, False)
 
