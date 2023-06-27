@@ -1,3 +1,5 @@
+from typing import Iterable
+
 from randovania.game_description.requirements.array_base import RequirementArrayBase, mergeable_array, expand_items
 from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -6,12 +8,20 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceCollection
 
 
+def _halt_damage_on_zero(items: Iterable[Requirement], current_resources: ResourceCollection,
+                         database: ResourceDatabase):
+    for item in items:
+        dmg = item.damage(current_resources, database)
+        yield dmg
+        if dmg == 0:
+            break
+
+
 class RequirementOr(RequirementArrayBase):
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         try:
             return min(
-                item.damage(current_resources, database)
-                for item in self.items
+                _halt_damage_on_zero(self.items, current_resources, database)
             )
         except ValueError:
             return MAX_DAMAGE
