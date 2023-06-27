@@ -85,6 +85,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed: One-Way door lock randomizer has been removed. This has actually been the case since 5.3.0!
 - Fixed: The "Unlock Save Station doors" option should now correctly unlock them.
 
+#### Logic Database
+
+- Added: The Hall of the Elders Ghost Skip from Reflecting Pool Access to reach Crossway Access South, using advanced level tricks or higher.
+- Added: Connections from Reflecting Pool Access to Elder Chamber utilizing the Ghost Skip.
+- Added: Slope Jump (Intermediate) from Elder Chamber to Reflecting Pool Access available only with the Ghost Skip; combined with the above, allows items here that lock Power Beam.
+- Added: Connection from Elder Chamber to Crossway Access South available only with the Ghost Skip; allows Scan Visor to be placed here in these circumstances.
+- Changed: Removed Ice Beam from the normal connection to Elder Chamber.
 
 ### Metroid Prime 2: Echoes
 
