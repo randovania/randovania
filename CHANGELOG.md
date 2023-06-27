@@ -87,6 +87,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed: One-Way door lock randomizer has been removed. This has actually been the case since 5.3.0!
 - Fixed: The "Unlock Save Station doors" option should now correctly unlock them.
 
+#### Logic Database
+
+#### Chozo Ruins
+
+- Changed: Reorganized Morph Ball pickup in Ruined Shrine to better fit database good practices.
 
 ### Metroid Prime 2: Echoes
 
