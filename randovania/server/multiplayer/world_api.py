@@ -5,6 +5,7 @@ import uuid
 
 import flask_socketio
 import peewee
+import sentry_sdk
 from frozendict import frozendict
 
 from randovania.bitpacking import bitpacking
@@ -19,7 +20,8 @@ from randovania.network_common import signals, error
 from randovania.network_common.error import InvalidAction
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import MultiplayerSessionState
-from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse, ServerWorldResponse
+from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse, ServerWorldResponse, \
+    ServerWorldSync
 from randovania.server.database import (
     World, WorldUserAssociation, MultiplayerSession,
     WorldAction, User
@@ -163,6 +165,39 @@ def _check_user_is_associated(user: User, world: World):
         raise error.WorldNotAssociatedError()
 
 
+def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: ServerWorldSync,
+                   ) -> tuple[ServerWorldResponse | None, int | None, set[World]]:
+    try:
+        world = World.get_by_uuid(uid)
+    except peewee.DoesNotExist:
+        raise error.WorldDoesNotExistError()
+
+    _check_user_is_associated(user, world)
+    response = None
+    worlds_to_update = set()
+
+    if world_request.status == GameConnectionStatus.Disconnected:
+        flask_socketio.leave_room(_get_world_room(world))
+    else:
+        flask_socketio.join_room(_get_world_room(world))
+        worlds_to_update.add(world)
+        sio.store_world_in_session(world)
+
+    session_id = update_association(user, world, world_request.inventory, world_request.status)
+
+    if world_request.request_details:
+        response = ServerWorldResponse(
+            world_name=world.name,
+            session=world.session.create_list_entry(),
+        )
+
+    # Do this last, as it fails if session is in setup
+    if world_request.collected_locations:
+        worlds_to_update.update(collect_locations(sio, world, world_request.collected_locations))
+
+    return response, session_id, worlds_to_update
+
+
 def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
     user = sio.get_current_user()
 
@@ -174,42 +209,30 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
     sessions_to_update_meta = set()
 
     for uid, world_request in request.worlds.items():
-        try:
+        with sentry_sdk.start_transaction(op="message", name="sync_one_world") as span:
+            span.set_tag("world_id", uid)
+            span.set_data("message.error", 0)
+
             try:
-                world = World.get_by_uuid(uid)
-            except peewee.DoesNotExist:
-                raise error.WorldDoesNotExistError()
+                response, session_id, new_worlds_to_update = sync_one_world(sio, user, uid, world_request)
 
-            _check_user_is_associated(user, world)
+                if response is not None:
+                    world_details[uid] = response
 
-            if world_request.status == GameConnectionStatus.Disconnected:
-                flask_socketio.leave_room(_get_world_room(world))
-            else:
-                flask_socketio.join_room(_get_world_room(world))
-                worlds_to_update.add(world)
-                sio.store_world_in_session(world)
+                if session_id is not None:
+                    sessions_to_update_meta.add(session_id)
 
-            session_id = update_association(user, world, world_request.inventory, world_request.status)
-            if session_id is not None:
-                sessions_to_update_meta.add(session_id)
+                worlds_to_update.update(new_worlds_to_update)
 
-            if world_request.request_details:
-                world_details[uid] = ServerWorldResponse(
-                    world_name=world.name,
-                    session=world.session.create_list_entry(),
-                )
+            except error.BaseNetworkError as e:
+                logger().info("[%s] Refused sync for %s: %s, %s", user.name, uid, type(e), e)
+                failed_syncs[uid] = e
 
-            # Do this last, as it fails if session is in setup
-            if world_request.collected_locations:
-                worlds_to_update.update(collect_locations(sio, world, world_request.collected_locations))
+            except Exception as e:
+                logger().exception("[%s] Failed sync for %s: %s, %s", user.name, uid, type(e), e)
+                failed_syncs[uid] = error.ServerError()
 
-        except error.BaseNetworkError as e:
-            logger().info("Failed sync for %s: %s", uid, e)
-            failed_syncs[uid] = e
-
-        except Exception as e:
-            logger().exception("Failed sync for %s: %s", uid, e)
-            failed_syncs[uid] = error.ServerError()
+            span.set_data("message.error", failed_syncs.get(uid, 0))
 
     for world in worlds_to_update:
         emit_world_pickups_update(sio, world)
