@@ -533,9 +533,6 @@ def read_split_file(dir_path: Path) -> dict:
 
     regions = data.pop(key_name)
 
-    data[key_name] = [
-        json_lib.read_path(dir_path.joinpath(region_file_name), raise_on_duplicate_keys=True)
-        for region_file_name in regions
-    ]
+    data[key_name] = [json_lib.read_path(dir_path.joinpath(region_file_name)) for region_file_name in regions]
 
     return data

@@ -4,6 +4,7 @@ import json
 from typing import TYPE_CHECKING, Any
 
 import aiofiles
+import orjson
 
 if TYPE_CHECKING:
     from collections.abc import Hashable
@@ -22,8 +23,13 @@ def _hook_for_raise_on_duplicate_keys(ordered_pairs: list[tuple[Hashable, Any]])
 
 
 def read_path(path: Path, *, raise_on_duplicate_keys: bool = False) -> dict | list:
-    with path.open("r") as file:
-        return json.load(file, object_pairs_hook=_hook_for_raise_on_duplicate_keys if raise_on_duplicate_keys else None)
+    if raise_on_duplicate_keys:
+        with path.open("r") as file:
+            return json.load(
+                file, object_pairs_hook=_hook_for_raise_on_duplicate_keys if raise_on_duplicate_keys else None
+            )
+    else:
+        return orjson.loads(path.read_bytes())
 
 
 def read_dict(path: Path) -> dict:
