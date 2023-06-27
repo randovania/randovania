@@ -114,8 +114,16 @@ class DockNode(Node):
         return context.patches.get_dock_connection_for(self)
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        target_node = context.patches.get_dock_connection_for(self)
-        yield self._open_dock_connection(context, target_node)
+        result = context.patches.get_cached_dock_connections_from(self)
+        if result is None:
+            result = []
 
-        if (lock_connection := self._lock_connection(context)) is not None:
-            yield lock_connection
+            target_node = context.patches.get_dock_connection_for(self)
+            result.append(self._open_dock_connection(context, target_node))
+
+            if (lock_connection := self._lock_connection(context)) is not None:
+                result.append(lock_connection)
+
+            context.patches.set_cached_dock_connections_from(self, tuple(result))
+
+        yield from result
