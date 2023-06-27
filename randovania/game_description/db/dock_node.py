@@ -84,8 +84,12 @@ class DockNode(Node):
         if (other_lock_req := _requirement_from_back(context, target_node)) is not None:
             reqs.append(other_lock_req)
 
-        requirement = RequirementAnd(reqs).simplify() if len(reqs) != 1 else reqs[0]
-        return target_node, requirement
+        if len(reqs) != 1:
+            final_req = RequirementAnd(reqs)
+        else:
+            final_req = reqs[0]
+
+        return target_node, final_req
 
     def _lock_connection(self, context: NodeContext) -> tuple[Node, Requirement] | None:
         requirement = Requirement.trivial()
