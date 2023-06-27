@@ -89,12 +89,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Chozo Ruins
 
-- Added: The Hall of the Elders Ghost Skip from Reflecting Pool Access to reach Crossway Access South, using advanced level tricks or higher.
-- Added: Connections from Reflecting Pool Access to Elder Chamber utilizing the Ghost Skip.
-- Added: Slope Jump (Intermediate) from Elder Chamber to Reflecting Pool Access available only with the Ghost Skip; combined with the above, allows items here that lock Power Beam.
-- Added: Connection from Elder Chamber to Crossway Access South available only with the Ghost Skip; allows Scan Visor to be placed here in these circumstances.
+- Added: The Hall of the Elders Ghost Skip from Reflecting Pool Access to reach Crossway Access South, using advanced level tricks.
+- Added: Hall of the Elders Ghost Skip to get into Elder Chamber.
+- Added: Slope Jump (Intermediate) from HotE - Room Center to Reflecting Pool Access available only with the Ghost Skip; combined with the above, allows items here that lock Power Beam.
+- Added: Connection from HotE - Room Center to Crossway Access South available only with the Ghost Skip; allows Scan Visor to be placed here in these circumstances.
 - Changed: Reorganized Morph Ball pickup in Ruined Shrine to better fit database good practices.
-- Removed: Ice Beam has been removed from the normal connection to Elder Chamber in Hall of the Elders.
+- Removed: Ice Beam has been removed from the connection to Elder Chamber in Hall of the Elders.
 
 ### Metroid Prime 2: Echoes
 
