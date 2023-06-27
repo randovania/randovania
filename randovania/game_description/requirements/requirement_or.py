@@ -12,7 +12,6 @@ class RequirementOr(RequirementArrayBase):
             return min(
                 item.damage(current_resources, database)
                 for item in self.items
-                if item.satisfied(current_resources, MAX_DAMAGE, database)
             )
         except ValueError:
             return MAX_DAMAGE

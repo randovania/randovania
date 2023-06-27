@@ -4,7 +4,7 @@ import dataclasses
 import functools
 from math import ceil
 
-from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.base import Requirement, MAX_DAMAGE
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -55,7 +55,10 @@ class ResourceRequirement(Requirement):
         return False
 
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
-        return 0
+        if self.satisfied(current_resources, MAX_DAMAGE, database):
+            return 0
+        else:
+            return MAX_DAMAGE
 
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         """Checks if a given resource collection satisfies this requirement"""
