@@ -66,7 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Pseudo-Wave Beam to break the blob in Ferenia Wave Beam Tutorial, from the right.
 - Added: Use Spider Magnet with Grapple Beam in Ghavoran Spider Magnet Elevator.
 - Added: Use Speed Booster to get past the pool of water in Dairon Freezer before turning on the power.
-- Added: Various trick alternatives to get paset the pool of water in Dairon Freezer with Bomb Jumps.
+- Added: Various trick alternatives to get past the pool of water in Dairon Freezer with Bomb Jumps.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
