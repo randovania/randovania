@@ -102,7 +102,7 @@ class DockNode(Node):
 
         back_weakness = self.get_back_weakness(context)
         back_lock = None
-        if back_weakness is not None:
+        if back_weakness is not None and back_weakness is not forward_weakness:
             back_lock = back_weakness.lock
 
             if back_lock is not None and back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
