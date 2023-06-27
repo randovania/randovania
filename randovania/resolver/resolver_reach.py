@@ -16,24 +16,29 @@ from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
 
 
-def _build_satisfiable_requirements(logic: Logic, all_nodes: tuple[Node | None, ...], resource_db: ResourceDatabase,
-                                    requirements_by_node: dict[int, list[Requirement]]):
+def _build_satisfiable_requirements(
+        logic: Logic, all_nodes: tuple[Node | None, ...], resource_db: ResourceDatabase,
+        requirements_by_node: dict[int, list[Requirement]],
+) -> SatisfiableRequirements:
+    result = set()
 
     def _for_node(node_index: int, reqs: list[Requirement]) -> frozenset[RequirementList]:
-        additional = logic.get_additional_requirements(all_nodes[node_index])
+        additional = logic.get_additional_requirements(all_nodes[node_index]).alternatives
 
         set_param = set()
         for req in set(reqs):
             set_param.update(req.as_set(resource_db).alternatives)
 
-        return RequirementSet(set_param).union(additional).alternatives
+        return RequirementSet(
+            a.union(b)
+            for a in set_param
+            for b in additional
+        ).alternatives
 
-    return frozenset.union(
-        *(
-            _for_node(node_index, requirements)
-            for node_index, requirements in requirements_by_node.items()
-        )
-    )
+    for it in requirements_by_node.items():
+        result.update(_for_node(*it))
+
+    return frozenset(result)
 
 
 class ResolverReach:
@@ -59,10 +64,6 @@ class ResolverReach:
             all_nodes[part]
             for part in self._path_to_node[node.node_index]
         )
-
-    @property
-    def satisfiable_as_requirement_set(self) -> RequirementSet:
-        return RequirementSet(self._satisfiable_requirements)
 
     def __init__(self,
                  nodes: dict[int, int],
@@ -126,9 +127,11 @@ class ResolverReach:
                 satisfied = requirement.satisfied(initial_state.resources, energy, database)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
-                    satisfied = logic.get_additional_requirements(node).satisfied(initial_state.resources,
-                                                                                  energy,
-                                                                                  initial_state.resource_database)
+                    satisfied = logic.get_additional_requirements(node).satisfied(
+                        initial_state.resources,
+                        energy,
+                        initial_state.resource_database
+                    )
 
                 if satisfied:
                     nodes_to_check[target_node_index] = energy - requirement.damage(initial_state.resources, database)
