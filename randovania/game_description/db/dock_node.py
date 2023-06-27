@@ -47,11 +47,8 @@ class DockNode(Node):
     def __repr__(self):
         return f"DockNode({self.name!r} -> {self.default_connection})"
 
-    def get_front_weakness(self, context: NodeContext) -> DockWeakness:
-        return context.patches.get_dock_weakness_for(self)
-
     def get_back_weakness(self, context: NodeContext) -> DockWeakness | None:
-        target_node = self.get_target_node(context)
+        target_node = context.patches.get_dock_connection_for(self)
         if isinstance(target_node, DockNode):
             return context.patches.get_dock_weakness_for(target_node)
 
@@ -72,7 +69,7 @@ class DockNode(Node):
     def _open_dock_connection(self, context: NodeContext, target_node: Node,
                               ) -> tuple[Node, Requirement]:
 
-        forward_weakness = self.get_front_weakness(context)
+        forward_weakness = context.patches.get_dock_weakness_for(self)
 
         reqs: list[Requirement] = [self._get_open_requirement(context, forward_weakness)]
 
@@ -94,7 +91,7 @@ class DockNode(Node):
     def _lock_connection(self, context: NodeContext) -> tuple[Node, Requirement] | None:
         requirement = Requirement.trivial()
 
-        forward_weakness = self.get_front_weakness(context)
+        forward_weakness = context.patches.get_dock_weakness_for(self)
         forward_lock = forward_weakness.lock
 
         if forward_lock is not None:
@@ -117,7 +114,7 @@ class DockNode(Node):
         return context.patches.get_dock_connection_for(self)
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        target_node = self.get_target_node(context)
+        target_node = context.patches.get_dock_connection_for(self)
         yield self._open_dock_connection(context, target_node)
 
         if (lock_connection := self._lock_connection(context)) is not None:
