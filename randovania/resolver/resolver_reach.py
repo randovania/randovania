@@ -1,3 +1,4 @@
+import itertools
 import math
 import typing
 from collections import defaultdict
@@ -20,8 +21,6 @@ def _build_satisfiable_requirements(
         logic: Logic, all_nodes: tuple[Node | None, ...], resource_db: ResourceDatabase,
         requirements_by_node: dict[int, list[Requirement]],
 ) -> SatisfiableRequirements:
-    result = set()
-
     def _for_node(node_index: int, reqs: list[Requirement]) -> frozenset[RequirementList]:
         additional = logic.get_additional_requirements(all_nodes[node_index]).alternatives
 
@@ -35,10 +34,10 @@ def _build_satisfiable_requirements(
             for b in additional
         )
 
-    for it in requirements_by_node.items():
-        result.update(_for_node(*it))
-
-    return frozenset(result)
+    return frozenset(itertools.chain.from_iterable(
+        _for_node(*it)
+        for it in requirements_by_node.items()
+    ))
 
 
 class ResolverReach:
