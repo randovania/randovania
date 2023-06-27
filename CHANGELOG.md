@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: For Multiworld, it's now preferred to have an additional pickups than placing it in another player's game, when there's no locations left in your game.
 - Changed: Randovania now internally uses the term `Region` for what used to be called a `World`. This is mostly an internal change.
 - Changed: Connecting to Dolphin is now hidden on macOS, as it never was supported.
+- Changed: Door Lock rando generation is now up to 50% faster.
 - Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 - Fixed: The resolver no longer allows events as additional requirements. This fixes a problem that could lead to an event locking itself.
 - Fixed: The `database render-region-graph` command now works properly.
