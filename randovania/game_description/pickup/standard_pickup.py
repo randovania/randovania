@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from dataclasses import dataclass
-from typing import Self
+from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
@@ -13,6 +13,9 @@ from randovania.game_description.resources.location_category import LocationCate
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.standard_pickup_state import StandardPickupStateCase
+
+if TYPE_CHECKING:
+    from typing_extensions import Self
 
 EXCLUDE_DEFAULT = {"exclude_if_default": True}
 

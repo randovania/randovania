@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Self
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from typing_extensions import Self
 
 
 class PickupModelStyle(BitPackEnum, Enum):

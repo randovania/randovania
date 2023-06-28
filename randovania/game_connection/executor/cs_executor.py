@@ -6,11 +6,11 @@ import struct
 from asyncio import StreamReader
 from collections.abc import Collection
 from enum import IntEnum
-from typing import Self
 from uuid import UUID
 
 from tsc_utils.flags import Address, flag_to_address
 from tsc_utils.numbers import TscInput, tsc_value_to_num
+from typing_extensions import Self
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder

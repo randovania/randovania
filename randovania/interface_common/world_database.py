@@ -4,7 +4,8 @@ import asyncio
 import dataclasses
 import logging
 import uuid
-from typing import TYPE_CHECKING, Self
+from collections.abc import Iterable
+from typing import TYPE_CHECKING
 
 from PySide6.QtCore import QObject, Signal
 
@@ -15,6 +16,7 @@ from randovania.lib import json_lib, migration_lib
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from pathlib import Path
+    from typing import Self
 
 _MIGRATIONS = [
     # lambda data: data,

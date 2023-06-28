@@ -1,10 +1,13 @@
 from __future__ import annotations
 
-from typing import Self
+from typing import TYPE_CHECKING
 
 import attrs
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
+
+if TYPE_CHECKING:
+    from typing_extensions import Self
 
 
 @attrs.define(init=True, frozen=True, cache_hash=True, order=True, slots=True)

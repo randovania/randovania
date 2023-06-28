@@ -3,9 +3,12 @@ from __future__ import annotations
 import os
 import platform
 from enum import Enum
-from typing import Self
+from typing import TYPE_CHECKING
 
 import randovania
+
+if TYPE_CHECKING:
+    from typing_extensions import Self
 
 
 class ConnectorBuilderChoice(Enum):

@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import dataclasses
 import typing
-from typing import TYPE_CHECKING, NamedTuple, Self
+from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 
 if TYPE_CHECKING:
+    from typing_extensions import Self
+
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceGain
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Self
+from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
@@ -13,6 +13,8 @@ from randovania.game_description.resources.location_category import LocationCate
 from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
+    from typing_extensions import Self
+
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 EXCLUDE_DEFAULT = {"exclude_if_default": True}

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import TYPE_CHECKING, Self
+from collections.abc import Iterable, Iterator
+from typing import TYPE_CHECKING
 
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import Node, NodeContext
@@ -12,6 +13,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
+
+    from typing_extensions import Self
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList

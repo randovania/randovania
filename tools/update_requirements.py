@@ -3,10 +3,10 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
-import tomllib
 from pathlib import Path
 
 import piptools
+import tomllib
 
 # Just import piptools so the error is a bit cleaner in case it's missing.
 assert piptools is not None

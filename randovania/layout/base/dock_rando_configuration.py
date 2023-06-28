@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 from dataclasses import dataclass
 from enum import Enum
-from typing import TYPE_CHECKING, Self
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
@@ -15,6 +15,8 @@ from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
+
+    from typing_extensions import Self
 
     from randovania.game_description.db.dock import DockWeaknessDatabase
 

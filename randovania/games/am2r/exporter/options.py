@@ -2,10 +2,13 @@ from __future__ import annotations
 
 import dataclasses
 from pathlib import Path
-from typing import Self
+from typing import TYPE_CHECKING
 
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
+
+if TYPE_CHECKING:
+    from typing_extensions import Self
 
 
 @dataclasses.dataclass(frozen=True)

@@ -5,6 +5,7 @@ import collections
 import itertools
 import logging
 import random
+import uuid
 from typing import TYPE_CHECKING, Self
 
 from PySide6 import QtCore, QtGui, QtWidgets

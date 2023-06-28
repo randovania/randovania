@@ -23,6 +23,8 @@ from randovania.lib.construct_lib import JsonEncodedValue
 if typing.TYPE_CHECKING:
     from pathlib import Path
 
+    from typing_extensions import Self
+
     from randovania.game_description.game_patches import GamePatches
     from randovania.layout.preset import Preset
 
@@ -94,7 +96,7 @@ class LayoutDescription:
         generator_parameters: GeneratorParameters,
         all_patches: dict[int, GamePatches],
         item_order: tuple[str, ...],
-    ) -> typing.Self:
+    ) -> Self:
         return cls(
             randovania_version_text=randovania.VERSION,
             randovania_version_git=randovania.GIT_HASH,
@@ -104,7 +106,7 @@ class LayoutDescription:
         )
 
     @classmethod
-    def from_json_dict(cls, json_dict: dict) -> typing.Self:
+    def from_json_dict(cls, json_dict: dict) -> Self:
         if "secret" in json_dict:
             try:
                 secret = obfuscator.deobfuscate_json(json_dict["secret"])
@@ -148,7 +150,7 @@ class LayoutDescription:
         )
 
     @classmethod
-    def from_file(cls, path: Path) -> typing.Self:
+    def from_file(cls, path: Path) -> Self:
         return cls.from_json_dict(json_lib.read_path(path))
 
     @classmethod

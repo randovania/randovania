@@ -6,7 +6,8 @@ import enum
 import json
 import uuid
 import zlib
-from typing import TYPE_CHECKING, Any, Self
+from collections.abc import Iterable
+from typing import TYPE_CHECKING, Any
 
 import cachetools
 import peewee
@@ -33,6 +34,8 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
+
+    from typing_extensions import Self
 
 
 class MonitoredDb(peewee.SqliteDatabase):

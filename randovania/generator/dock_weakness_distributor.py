@@ -4,8 +4,10 @@ import asyncio
 import dataclasses
 import itertools
 import time
+from collections.abc import Callable
 from functools import lru_cache
-from typing import TYPE_CHECKING, Self
+from random import Random
+from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
@@ -26,6 +28,8 @@ from randovania.resolver.resolver_reach import ResolverReach
 if TYPE_CHECKING:
     from collections.abc import Callable
     from random import Random
+
+    from typing_extensions import Self
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
