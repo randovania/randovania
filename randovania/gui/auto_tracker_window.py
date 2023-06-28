@@ -42,6 +42,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
     item_tracker: ItemTrackerWidget | None = None
     _dummy_tracker: QtWidgets.QLabel | None = None
     _last_source: RemoteConnector | None = None
+    _last_selected_builder: ConnectorBuilder | None = None
 
     def __init__(self, game_connection: GameConnection, window_manager: WindowManager | None, options: Options):
         super().__init__()
@@ -88,7 +89,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             self.select_game_button.setVisible(False)
         else:
             self.select_game_button.clicked.connect(window_manager.open_game_connection_window)
-        self.select_game_combo.currentIndexChanged.connect(self.create_tracker)
+        self.select_game_combo.currentIndexChanged.connect(self.on_select_game_combo)
         self.game_connection.BuildersChanged.connect(self.update_sources_combo)
         self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
         self.update_sources_combo()
@@ -148,7 +149,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
 
             self.connected_game_state_label.setText(f"{target_game.long_name}: {status.pretty_text}")
         else:
-            self.connected_game_state_label.setText("")
+            self.connected_game_state_label.setText("Not Connected")
 
         if target_game is None and self._current_tracker_game is not None:
             target_game = self._current_tracker_game
@@ -204,6 +205,14 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
 
     def selected_builder(self) -> ConnectorBuilder | None:
         return self.select_game_combo.currentData()
+
+    def on_select_game_combo(self, _):
+        builder = self.selected_builder()
+        if builder != self._last_selected_builder:
+            self.delete_tracker()
+            self._current_tracker_game = None
+            self.create_tracker()
+        self._last_selected_builder = builder
 
     def on_game_state_updated(self, state: ConnectedGameState):
         self.create_tracker()

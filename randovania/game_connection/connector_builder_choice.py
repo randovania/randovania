@@ -26,7 +26,7 @@ class ConnectorBuilderChoice(Enum):
         return True
 
     def supports_multiple_instances(self) -> bool:
-        return self == ConnectorBuilderChoice.NINTENDONT
+        return self != ConnectorBuilderChoice.DOLPHIN
 
     @classmethod
     def all_usable_choices(cls) -> list[Self]:
