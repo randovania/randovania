@@ -17,37 +17,37 @@ jobs:
       matrix:
         include:
           - os: 'ubuntu-latest'
-            python: '3.11'
+            python: 'pypy3.10'
             executable: false
             name: 'Linux'
 
           - os: 'ubuntu-latest'
-            python: '3.11'
+            python: 'pypy3.10'
             executable: true
             name: 'Linux Executable'
 
           - os: 'macos-latest'
-            python: '3.11'
+            python: 'pypy3.10'
             executable: false
             name: 'macOS'
 
           - os: 'macos-latest'
-            python: '3.11'
+            python: 'pypy3.10'
             executable: true
             name: 'macOS Executable'
 
           - os: 'windows-latest'
-            python: '3.11'
+            python: 'pypy3.10'
             executable: false
             name: 'Windows'
 
           - os: 'windows-latest'
-            python: '3.11'
+            python: 'pypy3.10'
             executable: true
             name: 'Windows Executable'
 
           - os: 'ubuntu-latest'
-            python: '3.11'
+            python: 'pypy3.10'
             executable: false
             name: 'Resolver'
 
@@ -224,7 +224,7 @@ jobs:
           $productDetails.UpgradeCode.UpgradeCode = "{7583BC7E-D9ED-4428-A9AD-AE60AE48D4A2}";
           # Use dev name
           $productDetails.Name = "Randovania Dev";
-          
+
           # Save the changes
           $project.Save();
 
@@ -237,11 +237,11 @@ jobs:
           $advinst = new-object -com advancedinstaller;
           $project = $advinst.LoadProject($aipPath);
           $productDetails = $project.ProductDetails;
-          
+
           # Bump the ProductVersion
           $productDetails.Version = "${{ steps.version.outputs.version }}";
           Write-Host "Version: $productDetails.Version";
-          
+
           # Build the project
           $project.Build();
 
@@ -439,7 +439,7 @@ jobs:
       -
         name: Test image
         run: |
-          docker run --rm --entrypoint /bin/bash randovania/server:${{ steps.prep.outputs.version }} tools/server_image_test.sh 
+          docker run --rm --entrypoint /bin/bash randovania/server:${{ steps.prep.outputs.version }} tools/server_image_test.sh
 
   release:
     runs-on: 'ubuntu-latest'
@@ -517,7 +517,7 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
 
       - name: Discord Notifications
-        run: python tools/post_discord_webhook.py --artifact-dir "packages/Randovania Linux Executable/" 
+        run: python tools/post_discord_webhook.py --artifact-dir "packages/Randovania Linux Executable/"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
