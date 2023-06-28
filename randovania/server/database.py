@@ -5,7 +5,8 @@ import enum
 import json
 import uuid
 import zlib
-from typing import Any, Self, Iterable
+from typing import Any, Iterable
+from typing_extensions import Self
 
 import cachetools
 import peewee

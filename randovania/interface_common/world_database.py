@@ -5,7 +5,8 @@ import dataclasses
 import logging
 import uuid
 from pathlib import Path
-from typing import Iterable, Self
+from typing import Iterable
+from typing_extensions import Self
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.interface_common.players_configuration import INVALID_UUID

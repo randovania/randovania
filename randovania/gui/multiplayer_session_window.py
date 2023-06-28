@@ -3,7 +3,7 @@ import json
 import logging
 import random
 import uuid
-from typing import Self
+from typing_extensions import Self
 
 from PySide6 import QtWidgets, QtGui, QtCore
 from qasync import asyncSlot, asyncClose

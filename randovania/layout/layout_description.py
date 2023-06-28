@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from random import Random
+from typing_extensions import Self
 
 import randovania
 from randovania import get_data_path
@@ -82,7 +83,7 @@ class LayoutDescription:
                    generator_parameters: GeneratorParameters,
                    all_patches: dict[int, GamePatches],
                    item_order: tuple[str, ...],
-                   ) -> typing.Self:
+                   ) -> Self:
         return cls(
             randovania_version_text=randovania.VERSION,
             randovania_version_git=randovania.GIT_HASH,
@@ -92,7 +93,7 @@ class LayoutDescription:
         )
 
     @classmethod
-    def from_json_dict(cls, json_dict: dict) -> typing.Self:
+    def from_json_dict(cls, json_dict: dict) -> Self:
         json_dict = description_migration.convert_to_current_version(json_dict)
 
         if "secret" in json_dict:
@@ -129,7 +130,7 @@ class LayoutDescription:
         )
 
     @classmethod
-    def from_file(cls, path: Path) -> typing.Self:
+    def from_file(cls, path: Path) -> Self:
         return cls.from_json_dict(json_lib.read_path(path))
 
     @property

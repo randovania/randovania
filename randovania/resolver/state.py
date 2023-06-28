@@ -1,5 +1,6 @@
 import dataclasses
-from typing import Iterator, Self, Iterable
+from typing import Iterator, Iterable
+from typing_extensions import Self
 
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import Node, NodeContext

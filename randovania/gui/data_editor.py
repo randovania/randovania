@@ -1,7 +1,7 @@
 import dataclasses
 import re
 from pathlib import Path
-from typing import Self
+from typing_extensions import Self
 
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt

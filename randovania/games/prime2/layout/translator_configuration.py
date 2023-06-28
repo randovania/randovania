@@ -2,7 +2,8 @@ import copy
 import dataclasses
 import functools
 from enum import Enum
-from typing import Iterator, Self
+from typing import Iterator
+from typing_extensions import Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum

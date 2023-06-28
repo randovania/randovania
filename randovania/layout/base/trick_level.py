@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Self
+from typing_extensions import Self
 
 from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.lib import enum_lib
