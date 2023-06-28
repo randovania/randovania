@@ -10,6 +10,7 @@ from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_am2r_artifact
 from randovania.generator.pickup_pool.pool_creator import _extend_pool_results
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.exceptions import InvalidConfiguration
 
 
 def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription,
@@ -21,6 +22,15 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
 
 def artifact_pool(game: GameDescription, configuration: AM2RConfiguration, rng: Random) -> PoolResults:
     config = configuration.artifacts
+
+    # Check whether we have valid artifact requirements in configuration
+    max_artifacts = 0
+    if config.prefer_metroids:
+        max_artifacts = 46
+    elif config.prefer_bosses:
+        max_artifacts = 6
+    if config.required_artifacts > max_artifacts:
+        raise InvalidConfiguration("More Metroid DNA than allowed!")
 
     new_assignment: dict[PickupIndex, PickupEntry] = {}
 
