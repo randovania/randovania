@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 import json
 import uuid
@@ -591,3 +592,66 @@ def test_update_session_audit_log(window: MultiplayerSessionWindow):
     window.tab_audit.scrollToTop()
     window.update_session_audit_log(log)
     assert scrollbar.value() == scrollbar.minimum()
+
+
+async def test_on_close_item_tracker(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture):
+    world_uid = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
+    user_id = 10
+    mocked_tracker = MagicMock()
+    window.tracker_windows[(world_uid, user_id)] = mocked_tracker
+    window.network_client.world_track_inventory = AsyncMock()
+
+    the_coroutine = None
+
+    def run(c, loop):
+        nonlocal the_coroutine
+        the_coroutine = c
+        assert loop == asyncio.get_event_loop()
+
+    mocker.patch("asyncio.run_coroutine_threadsafe", side_effect=run)
+
+    # Run
+    window._on_close_item_tracker(world_uid, user_id)
+    assert the_coroutine is not None
+    await the_coroutine
+
+    # Assert
+    assert window.tracker_windows == {}
+    window.network_client.world_track_inventory.assert_awaited_once_with(world_uid, user_id, False)
+
+
+async def test_track_world_listener_existing_window(window: MultiplayerSessionWindow):
+    world_uid = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
+    user_id = 10
+    mocked_tracker = MagicMock()
+    window.tracker_windows[(world_uid, user_id)] = mocked_tracker
+
+    # Run
+    await window.track_world_listener(world_uid, user_id)
+
+    # Assert
+    mocked_tracker.raise_.assert_called_once_with()
+
+
+async def test_track_world_listener_create(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture,
+                                           preset_manager):
+    world_uid = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
+    user_id = 10
+    mock_popup_window = mocker.patch("randovania.gui.multiplayer_session_window.ItemTrackerPopupWindow")
+
+    window.network_client.world_track_inventory = AsyncMock()
+
+    window._session = MagicMock()
+    world = window._session.get_world.return_value
+    world.preset_raw = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_str
+
+    # Run
+    await window.track_world_listener(world_uid, user_id)
+
+    # Assert
+    window._session.get_world.assert_called_once_with(world_uid)
+    mock_popup_window.return_value.show.assert_called_once_with()
+    assert window.tracker_windows == {
+        (world_uid, user_id): mock_popup_window.return_value
+    }
+    window.network_client.world_track_inventory.assert_awaited_once_with(world_uid, user_id, True)

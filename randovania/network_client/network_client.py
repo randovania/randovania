@@ -460,9 +460,9 @@ class NetworkClient:
         return await self.server_call("multiplayer_admin_player",
                                       (session.id, user_id, action.value, arg))
 
-    # async def session_track_inventory(self, row: int, enable: bool):
-    #     await self.server_call("game_session_watch_row_inventory",
-    #                            (self._current_game_session_meta.id, row, enable, True))
+    async def world_track_inventory(self, world_uid: uuid.UUID, user_id: int, enable: bool):
+        await self.server_call("multiplayer_watch_inventory",
+                               (str(world_uid), user_id, enable, True))
 
     async def perform_world_sync(self, request: ServerSyncRequest) -> ServerSyncResponse:
         return construct_pack.decode(

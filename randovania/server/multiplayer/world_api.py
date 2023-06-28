@@ -24,7 +24,7 @@ from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncRe
     ServerWorldSync
 from randovania.server.database import (
     World, WorldUserAssociation, MultiplayerSession,
-    WorldAction, User
+    WorldAction, User, MultiplayerMembership
 )
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
@@ -139,15 +139,18 @@ def update_association(user: User, world: World, inventory: bytes | None,
 
 
 def watch_inventory(sio: ServerApp, world_uid: uuid.UUID, user_id: int, watch: bool, binary: bool):
+    logger().debug("Watching inventory of %s/%d: %s", world_uid, user_id, watch)
     if watch:
-        # current_user = sio.get_current_user()
-        # TODO: check if current user belongs to the same session
+        try:
+            world = World.get_by_uuid(world_uid)
+            MultiplayerMembership.get_by_ids(sio.get_current_user(), world.session)
+        except peewee.DoesNotExist:
+            raise error.NotAuthorizedForAction()
 
         association = WorldUserAssociation.get_by_ids(
             world_uid=world_uid,
             user_id=user_id,
         )
-
         flask_socketio.join_room(session_common.get_inventory_room_name(association))
         session_common.emit_inventory_update(association)
     else:
