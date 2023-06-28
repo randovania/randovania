@@ -1,5 +1,4 @@
 import datetime
-import json
 import uuid
 from unittest.mock import MagicMock, AsyncMock, call
 
@@ -10,12 +9,11 @@ from pytest_mock import MockerFixture
 from randovania.game_connection.game_connection import ConnectedGameState
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.multiworld_client import MultiworldClient
-from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
 from randovania.interface_common.players_configuration import INVALID_UUID
-from randovania.lib import json_lib
+from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
+from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry, MultiplayerUser
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldSync, ServerSyncResponse, \
     ServerWorldResponse
@@ -282,3 +280,68 @@ async def test_server_sync(client, mocker: MockerFixture):
     assert client._blacklisted_worlds == {
         uid_3: error.WorldDoesNotExistError(),
     }
+
+
+async def test_on_session_meta_update_not_logged_in(client: MultiworldClient):
+    uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
+
+    entry = MagicMock()
+    client.network_client.current_user = None
+    client._blacklisted_worlds[uid_1] = error.WorldDoesNotExistError()
+
+    # Run
+    await client.on_session_meta_update(entry)
+
+    # Assert
+    assert client._blacklisted_worlds == {uid_1: error.WorldDoesNotExistError()}
+
+
+async def test_on_session_meta_update_not_in_session(client: MultiworldClient):
+    uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
+
+    entry = MagicMock()
+    entry.users = {}
+    client._blacklisted_worlds[uid_1] = error.WorldDoesNotExistError()
+
+    # Run
+    await client.on_session_meta_update(entry)
+
+    # Assert
+    assert client._blacklisted_worlds == {uid_1: error.WorldDoesNotExistError()}
+
+
+async def test_on_session_meta_update_not_own_world(client: MultiworldClient):
+    uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
+    uid_2 = uuid.UUID("11111111-0000-0000-0000-111111111111")
+
+    entry = MagicMock()
+    entry.users = {
+        client.network_client.current_user.id: MultiplayerUser(
+            10, "You", False, {uid_2: MagicMock()}
+        )
+    }
+    client._blacklisted_worlds[uid_1] = error.WorldDoesNotExistError()
+
+    # Run
+    await client.on_session_meta_update(entry)
+
+    # Assert
+    assert client._blacklisted_worlds == {uid_1: error.WorldDoesNotExistError()}
+
+
+async def test_on_session_meta_update_clear(client: MultiworldClient):
+    uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
+
+    entry = MagicMock()
+    entry.users = {
+        client.network_client.current_user.id: MultiplayerUser(
+            10, "You", False, {uid_1: MagicMock()}
+        )
+    }
+    client._blacklisted_worlds[uid_1] = error.WorldDoesNotExistError()
+
+    # Run
+    await client.on_session_meta_update(entry)
+
+    # Assert
+    assert client._blacklisted_worlds == {}
