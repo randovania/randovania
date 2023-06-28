@@ -156,6 +156,14 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             game_patches[launcher_text] = state.requires_main_item
         return game_patches
 
+    def _create_door_locks(self):
+        locks = {}
+        for node, weakness in self.patches.all_dock_weaknesses():
+            locks[node.extra["instance_id"]] = {
+                "lock": weakness.long_name
+            }
+        return locks
+
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.AM2R
 
@@ -184,8 +192,8 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "starting_location": self._create_starting_location(),
             "pickups": self._create_pickups_dict(pickup_list, item_info, self.rng),
             "rooms": self._create_room_dict(),
-            "game_patches": self._create_game_patches()
+            "game_patches": self._create_game_patches(),
+            "door_locks": self._create_door_locks()
             # TODO: add cosmetic field and decide what to even put in there.
-            # TODO: add door lock rando field
             # TODO: add hints field
         }
