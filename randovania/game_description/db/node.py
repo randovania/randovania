@@ -5,15 +5,14 @@ import typing
 
 from frozendict import frozendict
 
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
-    from randovania.game_description.resources.node_resource_info import NodeResourceInfo
     from randovania.game_description.db.node_provider import NodeProvider
 
 NodeIndex = int
@@ -52,8 +51,6 @@ class Node:
     layers: tuple[str, ...]
     extra: dict[str, typing.Any]
     valid_starting_location: bool
-    cache_node_resource_info: NodeResourceInfo | None = dataclasses.field(init=False, hash=False,
-                                                                          compare=False, default=None)
 
     def __lt__(self, other: Node):
         return self.identifier < other.identifier
