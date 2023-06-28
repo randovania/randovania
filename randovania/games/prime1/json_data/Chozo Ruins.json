@@ -13008,26 +13008,10 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Deactivate barrier": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Scan",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Behind Barrier": {
+                        "Door to Crossway Access South": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Ghost Skip": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
+                                "comment": "https://www.youtube.com/watch?v=_GG9XoOsDos",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -13035,15 +13019,6 @@
                                             "type": "items",
                                             "name": "SpaceJump",
                                             "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Standable",
-                                            "amount": 2,
                                             "negate": false
                                         }
                                     },
@@ -13064,8 +13039,144 @@
                                             "amount": 2,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Standable",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Scan",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "MorphBall",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bombs",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "https://youtu.be/lOQVD6oRwGU",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Boost",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallBoost",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "https://www.youtube.com/watch?v=3tb2eY1zUWc",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Boost",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
+                            }
+                        },
+                        "Behind Barrier": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -13329,32 +13440,6 @@
                     "valid_starting_location": false,
                     "event_name": "Event14",
                     "connections": {
-                        "Front of Beam Bomb Slots": {
-                            "type": "and",
-                            "data": {
-                                "comment": "https://www.youtube.com/watch?v=NxpkXWUbKW8",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event58",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Room Center": {
                             "type": "and",
                             "data": {
@@ -13413,23 +13498,6 @@
                                 ]
                             }
                         },
-                        "Door to Crossway Access South": {
-                            "type": "and",
-                            "data": {
-                                "comment": "https://www.youtube.com/watch?v=_GG9XoOsDos",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event58",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
@@ -13456,41 +13524,6 @@
                                     {
                                         "type": "template",
                                         "data": "Shoot Ice Beam"
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Activate bomb slots": {
-                            "type": "and",
-                            "data": {
-                                "comment": "https://www.youtube.com/watch?v=_GG9XoOsDos",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bombs",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event58",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
@@ -13616,41 +13649,6 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Reflecting Pool Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": "https://www.youtube.com/watch?v=zj6kmFDdA00",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event58",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event15",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SJump",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Elder Hall Access": {
                             "type": "and",
                             "data": {
@@ -13738,46 +13736,12 @@
                             }
                         },
                         "Door to Crossway Access South": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event48",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Slope Jump: https://www.youtube.com/watch?v=zj6kmFDdA00 --- Ghost Skip: https://www.youtube.com/watch?v=_GG9XoOsDos",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Event58",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SJump",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event48",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Elder Chamber": {
@@ -14528,27 +14492,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Event - Ghost Skip": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Event58",
-                    "connections": {
-                        "Door to Reflecting Pool Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
