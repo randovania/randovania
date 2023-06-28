@@ -5,6 +5,7 @@ import typing
 import uuid
 from enum import Enum
 
+import typing_extensions
 from frozendict import frozendict
 
 from randovania.lib import type_lib
@@ -45,7 +46,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
             else:
                 value_types = type_args
         else:
-            value_types = [typing.Any] * len(arg)
+            value_types = [typing_extensions.Any] * len(arg)
 
         return tuple(
             _decode_with_type(value, value_type, {})
@@ -56,7 +57,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
         if type_args := typing.get_args(type_):
             key_type, value_types = type_args
         else:
-            key_type, value_types = str, typing.Any
+            key_type, value_types = str, typing_extensions.Any
 
         return type_origin(
             (_decode_with_type(key, key_type, {}), _decode_with_type(value, value_types, {}))
