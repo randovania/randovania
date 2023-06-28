@@ -72,7 +72,7 @@ def test_connections_from_dock_blast_shield(empty_patches):
         (node_1_lock, RequirementAnd([trivial, req_2])),
     ]
     assert result_2 == [
-        (node_1, simple(NodeResourceInfo.from_node(node_2, context))),
+        (node_1, RequirementAnd([Requirement.trivial(), simple(NodeResourceInfo.from_node(node_2, context))])),
         (node_2_lock, req_2),
     ]
 

@@ -52,6 +52,10 @@ class GamePatches:
     starting_location: NodeIdentifier
     hints: dict[NodeIdentifier, Hint]
 
+    cached_dock_connections_from: list[tuple[tuple[Node, Requirement], ...] | None] = dataclasses.field(
+        hash=False, compare=False
+    )
+
     def __post_init__(self):
         if isinstance(self.starting_equipment, (ResourceCollection, list)):
             if isinstance(self.starting_equipment, ResourceCollection):
@@ -76,6 +80,7 @@ class GamePatches:
             starting_equipment=[],
             starting_location=game.starting_location,
             hints={},
+            cached_dock_connections_from=[None] * len(game.region_list.all_nodes),
         )
 
     def assign_new_pickups(self, assignments: Iterable[PickupTargetAssociation]) -> GamePatches:
@@ -143,11 +148,15 @@ class GamePatches:
     # Dock Connection
     def assign_dock_connections(self, assignment: Iterable[tuple[DockNode, Node]]) -> GamePatches:
         connections = list(self.dock_connection)
+        cached_dock_connections = list(self.cached_dock_connections_from)
 
         for source, target in assignment:
             connections[source.node_index] = target.node_index
+            cached_dock_connections[source.node_index] = None
+            # TODO: maybe this should set the other side too?
 
-        return dataclasses.replace(self, dock_connection=connections)
+        return dataclasses.replace(self, dock_connection=connections,
+                                   cached_dock_connections_from=cached_dock_connections)
 
     def get_dock_connection_for(self, node: DockNode) -> Node:
         target_index = self.dock_connection[node.node_index]
@@ -170,11 +179,15 @@ class GamePatches:
     # Dock Weakness
     def assign_dock_weakness(self, weaknesses: Iterable[tuple[DockNode, DockWeakness]]) -> GamePatches:
         new_weakness = list(self.dock_weakness)
+        cached_dock_connections = list(self.cached_dock_connections_from)
 
         for node, weakness in weaknesses:
             new_weakness[node.node_index] = weakness
+            cached_dock_connections[node.node_index] = None
+            cached_dock_connections[self.get_dock_connection_for(node).node_index] = None
 
-        return dataclasses.replace(self, dock_weakness=new_weakness)
+        return dataclasses.replace(self, dock_weakness=new_weakness,
+                                   cached_dock_connections_from=cached_dock_connections)
 
     def assign_weaknesses_to_shuffle(self, weaknesses: Iterable[tuple[DockNode, bool]]) -> GamePatches:
         new_to_shuffle = list(self.weaknesses_to_shuffle)
@@ -220,3 +233,11 @@ class GamePatches:
             for it in self.starting_equipment:
                 result.add_resource_gain(it.resource_gain(result))
             return result
+
+    # Cache things
+    def get_cached_dock_connections_from(self, node: DockNode) -> tuple[tuple[Node, Requirement], ...] | None:
+        return self.cached_dock_connections_from[node.node_index]
+
+    def set_cached_dock_connections_from(self, node: DockNode, cache: tuple[tuple[Node, Requirement], ...]):
+        self.cached_dock_connections_from[node.node_index] = cache
+

@@ -103,7 +103,8 @@ class RequirementSet:
         return RequirementSet(
             a.union(b)
             for a in self.alternatives
-            for b in other.alternatives)
+            for b in other.alternatives
+        )
 
     def expand_alternatives(self, other: RequirementSet) -> RequirementSet:
         """Create a new RequirementSet that is satisfied when either are satisfied."""

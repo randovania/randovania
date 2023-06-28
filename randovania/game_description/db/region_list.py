@@ -170,7 +170,7 @@ class RegionList(NodeProvider):
         :return: Generator of pairs Node + Requirement for going to that node
         """
         if self._patched_node_connections is not None:
-            all_nodes = self.all_nodes
+            all_nodes = self._nodes
             for target_index, requirements in self._patched_node_connections[node.node_index].items():
                 yield all_nodes[target_index], requirements
         else:

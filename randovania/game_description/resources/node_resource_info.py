@@ -24,12 +24,17 @@ class NodeResourceInfo:
 
     @classmethod
     def from_node(cls, node: Node, context: NodeContext) -> NodeResourceInfo:
-        return cls(
-            context.database.first_unused_resource_index() + node.node_index,
-            node.identifier,
-            node.name,
-            node.name,
-        )
+        result = getattr(node, "cache_node_resource_info", None)
+        if result is None:
+            result = cls(
+                context.database.first_unused_resource_index() + node.node_index,
+                node.identifier,
+                node.name,
+                node.name,
+            )
+            object.__setattr__(node, "cache_node_resource_info", result)
+
+        return result
 
     @classmethod
     def from_identifier(cls, identifier: NodeIdentifier, context: NodeContext) -> NodeResourceInfo:
