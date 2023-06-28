@@ -15,7 +15,8 @@ from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.network_client.network_client import UnableToConnect, ConnectionState
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory
+from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory, \
+    MultiplayerSessionEntry
 from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
 from randovania.network_common.world_sync import ServerWorldSync, ServerSyncRequest
 
@@ -27,6 +28,7 @@ class MultiworldClient(QObject):
 
     _last_reported_status: dict[uuid.UUID, GameConnectionStatus]
     _recently_connected: bool = True
+    _blacklisted_worlds: dict[uuid.UUID, error.BaseNetworkError]
     _last_sync: ServerSyncRequest = ServerSyncRequest(worlds=frozendict({}))
 
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection, database: WorldDatabase):
@@ -38,9 +40,11 @@ class MultiworldClient(QObject):
         self.database = database
         self._remote_games = {}
         self._last_reported_status = {}
+        self._blacklisted_worlds = {}
         self._pickups_lock = asyncio.Lock()
 
         self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
+        self.network_client.MultiplayerSessionMetaUpdated.connect(self.on_session_meta_update)
         self.network_client.WorldPickupsUpdated.connect(self.on_network_game_updated)
         self.network_client.ConnectionStateUpdated.connect(self.on_connection_state_updated)
 
@@ -95,6 +99,10 @@ class MultiworldClient(QObject):
                     inventory=None,
                     request_details=False,
                 )
+
+        for blacklisted in set(sync_requests.keys()) & set(self._blacklisted_worlds.keys()):
+            self.logger.debug("Not syncing %s: blacklisted", blacklisted)
+            sync_requests.pop(blacklisted)
 
         return ServerSyncRequest(
             worlds=frozendict(sync_requests),
@@ -161,13 +169,17 @@ class MultiworldClient(QObject):
             )
             if result.errors:
                 for uid, err in result.errors.items():
-                    # TODO: some better visibility for these errors would be great
-                    message = f"Exception {type(err)} when attempting to sync {uid}."
-                    if isinstance(err, (UnableToConnect, error.NotLoggedIn, error.InvalidSession, error.RequestTimeout)
-                                  ):
-                        self.logger.warning(message)
+                    if isinstance(err, (error.WorldDoesNotExistError, error.WorldNotAssociatedError)):
+                        self.logger.info("Blacklisting %s: received %s", uid, type(err))
+                        self._blacklisted_worlds[uid] = err
                     else:
-                        self.logger.exception(message)
+                        # TODO: some better visibility for these errors would be great
+                        message = f"Exception {type(err)} when attempting to sync {uid}."
+                        if isinstance(err, (UnableToConnect, error.NotLoggedIn, error.InvalidSession,
+                                            error.RequestTimeout)):
+                            self.logger.warning(message)
+                        else:
+                            self.logger.exception(message)
 
             if modified_data:
                 await self.database.set_many_data(modified_data)
@@ -195,6 +207,19 @@ class MultiworldClient(QObject):
             await state.source.set_remote_pickups(self._remote_games[state.id].pickups)
 
         self.start_server_sync_task()
+
+    @asyncSlot(MultiplayerSessionEntry)
+    async def on_session_meta_update(self, session: MultiplayerSessionEntry):
+        user = self.network_client.current_user
+        if user is None:
+            return
+
+        user_details = session.users.get(user.id)
+        if user_details is None:
+            return
+
+        for uid in user_details.worlds.keys():
+            self._blacklisted_worlds.pop(uid, None)
 
     @asyncSlot(MultiplayerWorldPickups)
     async def on_network_game_updated(self, pickups: MultiplayerWorldPickups):
