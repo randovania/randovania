@@ -40,7 +40,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
     _current_tracker_game: RandovaniaGame | None = None
     _current_tracker_name: str = "undefined"
     item_tracker: ItemTrackerWidget | None = None
-    _dummy_tracker: QtWidgets.QWidget | None = None
+    _dummy_tracker: QtWidgets.QLabel | None = None
     _last_source: RemoteConnector | None = None
 
     def __init__(self, game_connection: GameConnection, window_manager: WindowManager | None, options: Options):
@@ -93,12 +93,15 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
         self.update_sources_combo()
 
-    def selected_tracker_for(self, game: RandovaniaGame) -> str:
+    def selected_tracker_for(self, game: RandovaniaGame) -> str | None:
         actions = [action for action in self._tracker_actions[game] if action.isChecked()]
         if not actions:
             actions = self._tracker_actions[game]
 
-        return actions[0].text()
+        if actions:
+            return actions[0].text()
+
+        return None
 
     def _on_action_default_game(self, game: RandovaniaGame):
         with self.options as options:
@@ -126,8 +129,8 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
 
     def create_tracker(self):
         connector = self.game_connection.get_connector_for_builder(self.selected_builder())
-        tracker_name = None
-        target_game = None
+        tracker_name: str | None = None
+        target_game: RandovaniaGame | None = None
 
         inventory = {}
 
@@ -138,8 +141,14 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             target_game = connector.game_enum
 
             state = self.game_connection.connected_states.get(connector)
+            status = GameConnectionStatus.Disconnected
             if state is not None:
                 inventory = state.current_inventory
+                status = state.status
+
+            self.connected_game_state_label.setText(f"{target_game.long_name}: {status.pretty_text}")
+        else:
+            self.connected_game_state_label.setText("")
 
         if target_game is None and self._current_tracker_game is not None:
             target_game = self._current_tracker_game
@@ -153,10 +162,13 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         self.delete_tracker()
 
         if target_game is None or tracker_name is None:
-            self._dummy_tracker = QtWidgets.QLabel(
-                "Not currently connected to any games",
-                self
-            )
+            if target_game is None:
+                msg = "Not currently connected to any games"
+            else:
+                msg = f"{target_game.long_name} does not support auto tracking"
+
+            self._dummy_tracker = QtWidgets.QLabel(msg, self)
+            self._dummy_tracker.setWordWrap(True)
             self.gridLayout.addWidget(self._dummy_tracker, 0, 0, 1, 1)
         else:
             tracker_details = json_lib.read_path(self.trackers[target_game][tracker_name])
@@ -198,5 +210,5 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         expected_connector = self.game_connection.get_connector_for_builder(self.selected_builder())
         if expected_connector == state.source or self._last_source == state.source:
             self._last_source = state.source
-            self.item_tracker.update_state(state.current_inventory)
-            self.connected_game_state_label.setText(f"{state.source.game_enum.long_name}: {state.status.pretty_text}")
+            if self.item_tracker is not None:
+                self.item_tracker.update_state(state.current_inventory)
