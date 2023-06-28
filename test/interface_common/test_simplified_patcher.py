@@ -29,3 +29,26 @@ def test_generate_layout(mocker):
         timeout_during_generation=options.advanced_timeout_during_generation,
         attempts=None,
     )
+
+
+def test_general_blank_layout(default_blank_preset):
+    # Setup
+    options: Options = MagicMock()
+    options.advanced_validate_seed_after = True
+    options.advanced_timeout_during_generation = True
+
+    parameters = GeneratorParameters(
+        seed_number=1000,
+        spoiler=True,
+        presets=[default_blank_preset],
+        development=True,
+    )
+
+    progress_update = MagicMock()
+
+    # Run
+    result = simplified_patcher.generate_layout(options, parameters, progress_update)
+
+    # Assert
+    assert result.generator_parameters == parameters
+    assert result.get_seed_for_player(0) == 1000
