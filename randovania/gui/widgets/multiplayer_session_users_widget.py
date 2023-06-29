@@ -1,3 +1,4 @@
+import dataclasses
 import functools
 import uuid
 
@@ -5,6 +6,7 @@ from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
+from randovania.gui import game_specific_gui
 from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
@@ -216,6 +218,18 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         # Temp
         await self._session_api.create_new_world(new_name, preset, user_id)
 
+    @asyncSlot()
+    async def _customize_cosmetic(self, world_uid: uuid.UUID):
+        preset = self._get_preset(world_uid)
+        per_game_options = self._options.options_for_game(preset.game)
+
+        dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)
+        result = await async_dialog.execute_dialog(dialog)
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
+            with self._options as options:
+                options.set_options_for_game(preset.game, dataclasses.replace(per_game_options,
+                                                                              cosmetic_patches=dialog.cosmetic_patches))
+
     #
 
     def is_admin(self) -> bool:
@@ -236,7 +250,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         def _add_world(world_details: MultiplayerWorld, parent: QtWidgets.QTreeWidgetItem,
                        owner: int | None, user_world_state: str):
-            
+
             preset = VersionedPreset.from_str(world_details.preset_raw)
             world_item = QtWidgets.QTreeWidgetItem(parent)
             # game_item.setFlags(game_item.flags() | Qt.ItemFlag.ItemIsEditable)
@@ -271,6 +285,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 export_action = world_menu.addAction("Export game")
                 export_action.setEnabled(has_layout)
                 connect_to(export_action, self._world_export, world_details.id)
+
+                connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic,
+                           world_details.id)
 
             if owner is None:
                 world_menu.addSeparator()
