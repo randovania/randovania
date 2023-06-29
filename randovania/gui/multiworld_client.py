@@ -122,6 +122,10 @@ class MultiworldClient(QObject):
                 self.logger.debug("Skipping server sync: no changes from last time")
                 return
 
+            for uid, world_request in request.worlds.items():
+                self.logger.debug("Syncing %s: State %s, collected %s", uid, world_request.status,
+                                  world_request.collected_locations)
+
             try:
                 result = await self.network_client.perform_world_sync(request)
             except (Exception, UnableToConnect) as e:

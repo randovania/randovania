@@ -1,12 +1,10 @@
 import hashlib
 import uuid
 
-import construct
 import flask_socketio
 
 from randovania.bitpacking import construct_pack
 from randovania.network_common import signals
-from randovania.network_common.multiplayer_session import RemoteInventory
 from randovania.server.database import (MultiplayerSession, MultiplayerAuditEntry,
                                         WorldUserAssociation, World)
 from randovania.server.lib import logger
@@ -35,24 +33,23 @@ def emit_inventory_update(association: WorldUserAssociation):
         return
 
     flask_socketio.emit(signals.WORLD_BINARY_INVENTORY,
-                        (association.world.uuid, association.user.id, association.inventory),
+                        (str(association.world.uuid), association.user.id, association.inventory),
                         room=get_inventory_room_name(association),
                         namespace="/")
-    try:
-        inventory: RemoteInventory = construct_pack.decode(association.inventory, RemoteInventory)
-
-        flask_socketio.emit(
-            signals.WORLD_JSON_INVENTORY,
-            (association.world.uuid, association.user.id, {
-                name: {"amount": item.amount, "capacity": item.capacity}
-                for name, item in inventory.items()
-            }),
-            room=get_inventory_room_name(association),
-            namespace="/"
-        )
-    except construct.ConstructError as e:
-        logger().warning("Unable to encode inventory for world %s, user %d: %s",
-                         association.world.uuid, association.user.id, str(e))
+    # try:
+    #     inventory: RemoteInventory = construct_pack.decode(association.inventory, RemoteInventory)
+    #     flask_socketio.emit(
+    #         signals.WORLD_JSON_INVENTORY,
+    #         (association.world.uuid, association.user.id, {
+    #             name: {"amount": item.amount, "capacity": item.capacity}
+    #             for name, item in inventory.items()
+    #         }),
+    #         room=get_inventory_room_name(association),
+    #         namespace="/"
+    #     )
+    # except construct.ConstructError as e:
+    #     logger().warning("Unable to encode inventory for world %s, user %d: %s",
+    #                      association.world.uuid, association.user.id, str(e))
 
 
 def describe_session(session: MultiplayerSession, world: World | None = None) -> str:

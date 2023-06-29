@@ -11,7 +11,7 @@ from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry, MultiplayerSessionActions,
-    MultiplayerSessionAuditLog, WorldUserInventory
+    MultiplayerSessionAuditLog
 )
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import admin_actions
@@ -80,7 +80,6 @@ class MultiplayerSessionApi(QtCore.QObject):
     MetaUpdated = QtCore.Signal(MultiplayerSessionEntry)
     ActionsUpdated = QtCore.Signal(MultiplayerSessionActions)
     AuditLogUpdated = QtCore.Signal(MultiplayerSessionAuditLog)
-    InventoryUpdated = QtCore.Signal(WorldUserInventory)
 
     current_entry: MultiplayerSessionEntry
     widget_root: QtWidgets.QWidget | None

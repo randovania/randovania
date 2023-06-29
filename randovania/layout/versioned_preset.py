@@ -136,6 +136,10 @@ class VersionedPreset:
             assert self.data is not None
             return self.data
 
+    @property
+    def as_str(self) -> str:
+        return json.dumps(self.as_json)
+
     def recover_old_base_uuid(self) -> UUID | None:
         """Returns the base preset uuid that existed in old versions.
         Should be used only for migrating that field to Options, before the preset itself is migrated."""

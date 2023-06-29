@@ -36,6 +36,7 @@ def connect_to(action: QtGui.QAction, target, *args):
 
 class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     GameExportRequested = Signal(uuid.UUID, dict)
+    TrackWorldRequested = Signal(uuid.UUID, int)
 
     _session: MultiplayerSessionEntry
 
@@ -232,6 +233,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     #
 
+    def _watch_inventory(self, world_uid: uuid.UUID, user_id: int):
+        self.TrackWorldRequested.emit(world_uid, user_id)
+
+    #
+
     def is_admin(self) -> bool:
         return self._session.users[self.your_id].admin
 
@@ -312,6 +318,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 delete_action = world_menu.addAction("Delete")
                 delete_action.setEnabled(not has_layout)
                 connect_to(delete_action, self._world_delete, world_details.id)
+
+            if owner is not None:
+                world_menu.addSeparator()
+                connect_to(world_menu.addAction("Watch inventory"), self._watch_inventory, world_details.id, owner)
 
             world_tool.setMenu(world_menu)
 
