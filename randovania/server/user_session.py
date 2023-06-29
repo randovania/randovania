@@ -38,13 +38,15 @@ def _create_client_side_session_raw(sio: ServerApp, user: User) -> dict:
     }
 
 
-def _create_client_side_session(sio: ServerApp, user: User | None) -> dict:
+def _create_client_side_session(sio: ServerApp, user: User | None, session: dict | None = None) -> dict:
     """
 
     :param user: If the session's user was already retrieved, pass it along to avoid an extra query.
     :return:
     """
-    session = sio.get_session()
+    if session is None:
+        session = sio.get_session()
+
     if user is None:
         user = User.get_by_id(session["user-id"])
     elif user.id != session["user-id"]:
@@ -82,22 +84,24 @@ def _create_session_with_access_token(sio: ServerApp, token: UserAccessToken) ->
     )
 
 
-def _create_session_with_discord_token(sio: ServerApp, access_token: str) -> tuple[User, dict]:
-    flask.session["DISCORD_OAUTH2_TOKEN"] = access_token
+def _create_session_with_discord_token(sio: ServerApp, sid: str | None) -> User:
     discord_user = sio.discord.fetch_user()
-
-    user = _create_user_from_discord(discord_user)
 
     if sio.enforce_role is not None:
         if not sio.enforce_role.verify_user(discord_user.id):
             logger().info("User %s is not authorized for connecting to the server", discord_user.name)
             raise UserNotAuthorized()
 
-    with sio.session() as session:
-        session["user-id"] = user.id
-        session["discord-access-token"] = access_token
+    user = _create_user_from_discord(discord_user)
 
-    return user, _create_client_side_session(sio, user)
+    if sid is None:
+        return user
+
+    with sio.session(sid=sid) as session:
+        session["user-id"] = user.id
+        session["discord-access-token"] = flask.session["DISCORD_OAUTH2_TOKEN"]
+
+    return user
 
 
 def start_discord_login_flow(sio: ServerApp):
@@ -143,7 +147,9 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, _old_session_
         session = json.loads(decrypted_session.decode("utf-8"))
 
         if "discord-access-token" in session:
-            user, result = _create_session_with_discord_token(sio, session["discord-access-token"])
+            flask.session["DISCORD_OAUTH2_TOKEN"] = session["discord-access-token"]
+            user = _create_session_with_discord_token(sio, sio.request_sid)
+            result = _create_client_side_session(sio, user)
         else:
             user = User.get_by_id(session["user-id"])
             sio.save_session(session)
@@ -198,21 +204,27 @@ def browser_login_with_discord(sio: ServerApp):
 def browser_discord_login_callback(sio: ServerApp):
     try:
         sio.discord.callback()
-        discord_user = sio.discord.fetch_user()
 
-        user = _create_user_from_discord(discord_user)
         sid = flask.session.get("sid")
+        user = _create_session_with_discord_token(sio, sid)
+
         if sid is None:
             return flask.redirect(flask.url_for("browser_me"))
         else:
-            result = _create_client_side_session_raw(sio, user)
-            session = sio.get_session(sid=sid)
-            result["encoded_session_b85"] = _encrypt_session_for_user(sio, session)
+            result = _create_client_side_session(sio, user,
+                                                 sio.get_session(sid=sid))
             flask_socketio.emit("user_session_update", result, to=sid, namespace="/")
             return flask.render_template(
                 "return_to_randovania.html",
                 user=user,
             )
+
+    except UserNotAuthorized:
+        return flask.render_template(
+            "unable_to_login.html",
+            error_message=f"You're not authorized to use this build.\nPlease check #dev-builds for more details.",
+        )
+
     except oauthlib.oauth2.rfc6749.errors.OAuth2Error as error:
         if isinstance(error, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):
             logger().info("Invalid grant when finishing Discord login")
@@ -221,7 +233,7 @@ def browser_discord_login_callback(sio: ServerApp):
 
         return flask.render_template(
             "unable_to_login.html",
-            error=error,
+            error_message=f"Unable to complete login. Please try again! {error}",
         )
 
 

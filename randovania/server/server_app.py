@@ -82,25 +82,27 @@ class ServerApp:
         return self.sio.server
 
     def get_environ(self) -> Mapping:
-        return self.get_server().get_environ(self._request_sid)
+        return self.get_server().get_environ(self.request_sid)
 
     @property
-    def _request_sid(self):
+    def request_sid(self):
         try:
             return getattr(flask.request, "sid")
         except AttributeError:
             return flask.session["sid"]
 
     def save_session(self, session, namespace=None):
-        self.get_server().save_session(self._request_sid, session, namespace=namespace)
+        self.get_server().save_session(self.request_sid, session, namespace=namespace)
 
     def get_session(self, *, sid=None, namespace=None) -> dict:
         if sid is None:
-            sid = self._request_sid
+            sid = self.request_sid
         return self.get_server().get_session(sid, namespace=namespace)
 
-    def session(self, namespace=None):
-        return self.get_server().session(self._request_sid, namespace=namespace)
+    def session(self, *, sid=None, namespace=None):
+        if sid is None:
+            sid = self.request_sid
+        return self.get_server().session(sid, namespace=namespace)
 
     def get_current_user(self) -> User:
         try:
@@ -190,14 +192,14 @@ class ServerApp:
 
     def current_client_ip(self, sid=None) -> str:
         try:
-            environ = self.get_server().get_environ(sid or self._request_sid)
+            environ = self.get_server().get_environ(sid or self.request_sid)
             forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
             return f"{environ['REMOTE_ADDR']} ({forwarded_for})"
         except KeyError as e:
             return f"<unknown sid {e}>"
 
     def check_client_headers(self):
-        environ = self.get_server().get_environ(self._request_sid)
+        environ = self.get_server().get_environ(self.request_sid)
         return client_check.check_client_headers(
             self.expected_headers,
             environ,
