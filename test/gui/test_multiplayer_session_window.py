@@ -514,7 +514,7 @@ async def test_game_export_listener(window: MultiplayerSessionWindow, mocker: py
 
     game = mock_preset_from.return_value.game
     window._session = MagicMock()
-    window._session.name = "SessionName"
+    window._session.name = "Session'x Name 51?"
     world = MultiplayerWorld(
         id=uuid.uuid4(),
         name="W1",
@@ -537,7 +537,7 @@ async def test_game_export_listener(window: MultiplayerSessionWindow, mocker: py
     game.gui.export_dialog.assert_called_once_with(
         window._options,
         patch_data,
-        "SessionName - W1",
+        "Sessionx Name 51 - W1",
         False,
         [game],
     )

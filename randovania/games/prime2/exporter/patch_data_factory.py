@@ -1,5 +1,4 @@
 import dataclasses
-import string
 from random import Random
 from typing import Iterator, Callable
 
@@ -39,6 +38,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.lib import string_lib
 from randovania.patching.prime import elevators
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
@@ -516,9 +516,8 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         _add_header_data_to_result(self.description, result)
 
         if self.players_config.is_multiworld and self.players_config.session_name is not None:
-            valid_chars = set(string.ascii_lowercase + string.ascii_uppercase + string.digits + ' ')
-            filtered_name = ''.join(filter(lambda x: x in valid_chars, self.players_config.get_own_name()))
-            filtered_session = ''.join(filter(lambda x: x in valid_chars, self.players_config.session_name))
+            filtered_name = string_lib.sanitize_for_path(self.players_config.get_own_name())
+            filtered_session = string_lib.sanitize_for_path(self.players_config.session_name)
 
             result["banner_name"] = "Prime 2 Rando - {} - {}".format(
                 filtered_name,

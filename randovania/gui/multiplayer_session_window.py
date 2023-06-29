@@ -28,6 +28,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib import string_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
@@ -614,7 +615,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         }
         game = games_by_world[world_id]
 
-        dialog = game.gui.export_dialog(self._options, patch_data, f"{self._session.name} - {world.name}",
+        export_suffix = string_lib.sanitize_for_path(f"{self._session.name} - {world.name}")
+        dialog = game.gui.export_dialog(self._options, patch_data, export_suffix,
                                         False, list(games_by_world.values()))
         result = await async_dialog.execute_dialog(dialog)
 
