@@ -222,7 +222,7 @@ def browser_discord_login_callback(sio: ServerApp):
     except UserNotAuthorized:
         return flask.render_template(
             "unable_to_login.html",
-            error_message=f"You're not authorized to use this build.\nPlease check #dev-builds for more details.",
+            error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
         )
 
     except oauthlib.oauth2.rfc6749.errors.OAuth2Error as error:
