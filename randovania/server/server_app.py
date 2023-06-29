@@ -128,6 +128,9 @@ class ServerApp:
     def on(self, message: str, handler, namespace=None, *, with_header_check: bool = False):
         @functools.wraps(handler)
         def _handler(*args):
+            setattr(flask.request, "message", message)
+            logger().debug("Starting call")
+
             with sentry_sdk.start_transaction(op="message", name=message) as span:
                 if with_header_check:
                     error_msg = self.check_client_headers()
@@ -139,6 +142,7 @@ class ServerApp:
                     return {
                         "result": handler(self, *args),
                     }
+
                 except BaseNetworkError as error:
                     span.set_data("message.error", error.code())
                     return error.as_json
