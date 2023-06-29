@@ -110,7 +110,7 @@ Extra - map_name: rm_a6a06
   * Layers: default
   * Open Passage to Hideout Hub Access East/Dock to Hideout Hub
   > Dock to Ridley Room
-      After Area 6 - First Omega
+      Trivial
   > Dock to Hideout Hub Access West
       Power Grip Wall
 
@@ -120,33 +120,20 @@ Extra - map_name: rm_a6a06
   > Dock to Skreek and Skorp Space
       Trivial
   > Dock to Hideout Hub Access East
-      Any of the following:
-          All of the following:
-              # After killing omega
-              After Area 6 - First Omega
-              Any of the following:
-                  # Get onto floating platform
-                  Space Jump or Can Use Spider Ball
-                  Hi-Jump Boots and Walljump (Beginner)
-                  All of the following:
-                      # IBJ
-                      Infinite Bomb Jumping (Intermediate) and Can Use Bombs
-          All of the following:
-              # Before killing omega
-              Before Area 6 - First Omega and Hijump Wall
+      All of the following:
+          # After killing omega
+          Any of the following:
+              # Get onto floating platform
+              Space Jump or Can Use Spider Ball
+              Hi-Jump Boots and Walljump (Beginner)
+              All of the following:
+                  # IBJ
+                  Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
 > Dock to Hideout Hub Access West; Heals? False
   * Layers: default
   * Open Passage to Hideout Hub Access West/Dock to Hideout Hub
   > Dock to Hideout Hub Access East
-      Trivial
-  > Event - Pre First Omega Scan
-      After Area 6 - Last Alpha
-
-> Event - Pre First Omega Scan; Heals? False
-  * Layers: default
-  * Event Nest Scan Before First Omega
-  > Dock to Hideout Hub Access West
       Trivial
 
 ----------------
@@ -188,9 +175,9 @@ Extra - map_name: rm_a6a09
   > Dock to Hideout Alpha Nest Access East
       Trivial
   > Dock to Hideout Omega Nest Access
-      After Nest Scan Before First Omega and Hijump With Power Grip Wall
+      Hijump With Power Grip Wall
   > Event - Alpha
-      Before Nest Scan Before First Omega and Defeat Alpha
+      Defeat Alpha
 
 > Dock to Hideout Alpha Nest Access East; Heals? False
   * Layers: default
@@ -202,14 +189,21 @@ Extra - map_name: rm_a6a09
   * Layers: default
   * Open Passage to Hideout Omega Nest Access/Dock to Hideout Alpha Nest
   > Dock to Hideout Alpha Nest Access West
-      Any of the following:
-          After Nest Scan Before First Omega
-          Speed Booster and After Area 6 - Last Alpha and Shinesparking Tricks (Beginner) and Power Grip Wall
+      Trivial
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Area 6 - Last Alpha
   > Dock to Hideout Alpha Nest Access West
+      Trivial
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 372; Category? Minor
+  * Extra - object_name: oItemDNA_372
+  > Event - Alpha
       Trivial
 
 ----------------
@@ -250,6 +244,15 @@ Extra - map_name: rm_a6a09B
   * Layers: default
   * Event Area 6 - First Omega
   > Dock to Hideout Omega Nest Access
+      Trivial
+  > Pickup (Omega)
+      Trivial
+
+> Pickup (Omega); Heals? False
+  * Layers: default
+  * Pickup 392; Category? Major
+  * Extra - object_name: oItemDNA_392
+  > Event - Omega
       Trivial
 
 ----------------
@@ -403,7 +406,7 @@ Extra - map_name: rm_a6a14
 ----------------
 Omega Nest Entrance Save Station
 Extra - map_name: rm_a6a15
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 21
   > Dock to Skorp Lava Pool Access
@@ -608,7 +611,7 @@ Extra - map_name: rm_a6b05
 ----------------
 Depths Save Station
 Extra - map_name: rm_a6b06
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 22
   > Dock to Depths Hub
@@ -658,6 +661,15 @@ Extra - map_name: rm_a6b08
   * Event Area 6 - Nest Left Top Omega
   > Tunnel to Depths Omega Nest North West Access
       Power Grip Climb
+  > Pickup (Omega)
+      Trivial
+
+> Pickup (Omega); Heals? False
+  * Layers: default
+  * Pickup 394; Category? Major
+  * Extra - object_name: oItemDNA_394
+  > Event - Omega
+      Trivial
 
 ----------------
 Depths Omega Nest East Access
@@ -692,6 +704,15 @@ Extra - map_name: rm_a6b10
   * Event Area 6 - Nest Right Omega
   > Tunnel to Depths Omega Nest East Access
       Hijump Tunnel Climb
+  > Pickup (Omega)
+      Trivial
+
+> Pickup (Omega); Heals? False
+  * Layers: default
+  * Pickup 393; Category? Major
+  * Extra - object_name: oItemDNA_393
+  > Event - Omega
+      Trivial
 
 ----------------
 Depths Omega Nest South West Access
@@ -756,6 +777,15 @@ Extra - map_name: rm_a6b12
   * Event Area 6 - Nest Left Bottom Omega
   > Tunnel to Depths Omega Nest South West Access
       Hijump Tunnel Climb
+  > Pickup (Omega)
+      Trivial
+
+> Pickup (Omega); Heals? False
+  * Layers: default
+  * Pickup 395; Category? Major
+  * Extra - object_name: oItemDNA_395
+  > Event - Omega
+      Trivial
 
 ----------------
 Depths Curved Bubble Pillar
@@ -785,9 +815,7 @@ Extra - map_name: rm_a6b13
           Space Jump or Walljump (Intermediate) or Can Use Spider Ball
           Hi-Jump Boots and Power Grip
   > Above Bomb Blocks
-      All of the following:
-          # The 3 Nest Omegas
-          After Area 6 - Nest Left Bottom Omega and After Area 6 - Nest Left Top Omega and After Area 6 - Nest Right Omega
+      Trivial
 
 > Above Bomb Blocks; Heals? False
   * Layers: default
@@ -870,7 +898,7 @@ Extra - map_name: rm_a6b16
   > Save Station
       Trivial
 
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 23
   > Dock to Depths Skorp Snag

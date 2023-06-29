@@ -186,6 +186,10 @@ def corruption_game_description(corruption_game_data) -> GameDescription:
 def dread_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_DREAD)
 
+@pytest.fixture(scope="session")
+def am2r_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.AM2R)
+
 
 @pytest.fixture(scope="session")
 def randomizer_data() -> dict:

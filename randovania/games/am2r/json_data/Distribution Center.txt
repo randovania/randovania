@@ -431,6 +431,8 @@ Extra - map_name: rm_a5c12
   * Event Area 5 - Interior Zeta
   > Middle
       Trivial
+  > Pickup (Zeta)
+      Trivial
 
 > Middle; Heals? False
   * Layers: default
@@ -452,6 +454,13 @@ Extra - map_name: rm_a5c12
                   Hi-Jump Boots or Space Jump or Walljump (Beginner) or Can Use Spider Ball
   > Event - Zeta
       Defeat Zeta
+
+> Pickup (Zeta); Heals? False
+  * Layers: default
+  * Pickup 391; Category? Major
+  * Extra - object_name: oItemDNA_391
+  > Event - Zeta
+      Trivial
 
 ----------------
 Distribution Facility Tower West
@@ -732,11 +741,15 @@ Extra - map_name: rm_a5c18
   * Event Area 5 - Squad Right Bottom Alpha
   > Bottom
       Trivial
+  > Pickup (Right Bottom Alpha)
+      Trivial
 
 > Event - Right Top Alpha; Heals? False
   * Layers: default
   * Event Area 5 - Squad Right Top Alpha
   > Bottom
+      Trivial
+  > Pickup (Right Top Alpha)
       Trivial
 
 > Event - Left Bottom Alpha; Heals? False
@@ -744,17 +757,23 @@ Extra - map_name: rm_a5c18
   * Event Area 5 - Squad Left Bottom Alpha
   > Bottom
       Trivial
+  > Pickup (Left Bottom Alpha)
+      Trivial
 
 > Event - Left Middle Alpha; Heals? False
   * Layers: default
   * Event Area 5 - Squad Left Middle Alpha
   > Bottom
       Trivial
+  > Pickup (Left Middle Alpha)
+      Trivial
 
 > Event - Left Top Alpha; Heals? False
   * Layers: default
   * Event Area 5 - Squad Left Top Alpha
   > Bottom
+      Trivial
+  > Pickup (Left Top Alpha)
       Trivial
 
 > Bottom; Heals? False
@@ -777,6 +796,41 @@ Extra - map_name: rm_a5c18
       Defeat Alpha
   > Event - Left Top Alpha
       Defeat Alpha
+
+> Pickup (Left Top Alpha); Heals? False
+  * Layers: default
+  * Pickup 367; Category? Minor
+  * Extra - object_name: oItemDNA_367
+  > Event - Left Top Alpha
+      Trivial
+
+> Pickup (Left Middle Alpha); Heals? False
+  * Layers: default
+  * Pickup 368; Category? Minor
+  * Extra - object_name: oItemDNA_368
+  > Event - Left Middle Alpha
+      Trivial
+
+> Pickup (Left Bottom Alpha); Heals? False
+  * Layers: default
+  * Pickup 369; Category? Minor
+  * Extra - object_name: oItemDNA_369
+  > Event - Left Bottom Alpha
+      Trivial
+
+> Pickup (Right Top Alpha); Heals? False
+  * Layers: default
+  * Pickup 371; Category? Minor
+  * Extra - object_name: oItemDNA_371
+  > Event - Right Top Alpha
+      Trivial
+
+> Pickup (Right Bottom Alpha); Heals? False
+  * Layers: default
+  * Pickup 370; Category? Minor
+  * Extra - object_name: oItemDNA_370
+  > Event - Right Bottom Alpha
+      Trivial
 
 ----------------
 Distribution Facility Save Station
@@ -850,10 +904,10 @@ Extra - map_name: rm_a5c21
           All of the following:
               # IBJ
               Infinite Bomb Jumping (Expert) and Can Use Bombs
-  > Event - BeforeScrewEMP
+  > Event - EMP
       Trivial
 
-> Event - BeforeScrewEMP; Heals? False
+> Event - EMP; Heals? False
   * Layers: default
   * Event EMP NearScrewEMP
   > Door to Bullet Hell Room
@@ -1082,11 +1136,29 @@ Extra - map_name: rm_a5c30
   * Event Area 5 - Dual Left Gamma
   > Door to Facility Storage Intersection East
       Trivial
+  > Pickup (Left Gamma)
+      Trivial
 
 > Event - Right Gamma; Heals? False
   * Layers: default
   * Event Area 5 - Dual Right Gamma
   > Door to Facility Storage Intersection East
+      Trivial
+  > Pickup (Right Gamma)
+      Trivial
+
+> Pickup (Left Gamma); Heals? False
+  * Layers: default
+  * Pickup 386; Category? Minor
+  * Extra - object_name: oItemDNA_386
+  > Event - Left Gamma
+      Trivial
+
+> Pickup (Right Gamma); Heals? False
+  * Layers: default
+  * Pickup 387; Category? Minor
+  * Extra - object_name: oItemDNA_387
+  > Event - Right Gamma
       Trivial
 
 ----------------
