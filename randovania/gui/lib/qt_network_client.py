@@ -1,9 +1,9 @@
 import datetime
 import functools
 import json
+import webbrowser
 from pathlib import Path
 
-import pypresence
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QWidget
 
@@ -31,8 +31,6 @@ class QtNetworkClient(QWidget, NetworkClient):
 
     WorldPickupsUpdated = Signal(MultiplayerWorldPickups)
     WorldUserInventoryUpdated = Signal(WorldUserInventory)
-
-    discord: pypresence.AioClient | None = None
 
     def __init__(self, user_data_dir: Path):
         super().__init__()
@@ -85,14 +83,9 @@ class QtNetworkClient(QWidget, NetworkClient):
         if "discord_client_id" not in self.configuration:
             raise RuntimeError("Missing Discord configuration for Randovania")
 
-        self.discord = pypresence.AioClient(self.configuration["discord_client_id"])
-        self.discord._events_on = False  # workaround for broken AioClient
-        await self.discord.start()
-
-        authorize = await self.discord.authorize(self.configuration["discord_client_id"], ['identify'])
-
-        new_session = await self.server_call("login_with_discord", authorize["data"]["code"])
-        await self.on_user_session_updated(new_session)
+        sid = await self.server_call("start_discord_login_flow")
+        url = self.configuration["server_address"] + f"/login?sid={sid}"
+        webbrowser.open(url)
 
     async def login_as_guest(self, name: str = "Unknown"):
         if "guest_secret" not in self.configuration:
