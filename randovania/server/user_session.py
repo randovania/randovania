@@ -6,9 +6,9 @@ import cryptography.fernet
 import flask
 import flask_discord.models
 import flask_socketio
+import oauthlib
 import peewee
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
-from requests_oauthlib import OAuth2Session
 
 from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction, UserNotAuthorized
 from randovania.server.database import User, UserAccessToken, MultiplayerMembership
@@ -24,6 +24,7 @@ def _encrypt_session_for_user(sio: ServerApp, session: dict) -> bytes:
 
 def _create_client_side_session_raw(sio: ServerApp, user: User) -> dict:
     logger().info(f"Client at {sio.current_client_ip()} is user {user.name} ({user.id}).")
+
     memberships: list[MultiplayerMembership] = list(
         MultiplayerMembership.select().where(MultiplayerMembership.user == user)
     )
@@ -99,17 +100,8 @@ def _create_session_with_discord_token(sio: ServerApp, access_token: str) -> tup
     return user, _create_client_side_session(sio, user)
 
 
-def login_with_discord(sio: ServerApp, code: str) -> dict:
-    oauth = OAuth2Session(
-        client_id=sio.app.config["DISCORD_CLIENT_ID"],
-        redirect_uri=sio.app.config["DISCORD_REDIRECT_URI"],
-    )
-    access_token = oauth.fetch_token(
-        "https://discord.com/api/oauth2/token",
-        code=code,
-        client_secret=sio.app.config["DISCORD_CLIENT_SECRET"],
-    )
-    return _create_session_with_discord_token(sio, access_token)[1]
+def start_discord_login_flow(sio: ServerApp):
+    return flask.request.sid
 
 
 def _get_now():
@@ -188,10 +180,6 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, _old_session_
         raise InvalidSession()
 
 
-def _emit_user_session_update(sio: ServerApp):
-    flask_socketio.emit("user_session_update", _create_client_side_session(sio, None), room=None)
-
-
 def logout(sio: ServerApp):
     session_common.leave_all_rooms(sio)
     flask.session.pop("DISCORD_OAUTH2_TOKEN", None)
@@ -200,24 +188,51 @@ def logout(sio: ServerApp):
         session.pop("user-id", None)
 
 
+def browser_login_with_discord(sio: ServerApp):
+    sid = flask.request.args.get('sid')
+    if sid is not None:
+        flask.session["sid"] = sid
+    return sio.discord.create_session()
+
+
+def browser_discord_login_callback(sio: ServerApp):
+    try:
+        sio.discord.callback()
+        discord_user = sio.discord.fetch_user()
+
+        user = _create_user_from_discord(discord_user)
+        sid = flask.session.get("sid")
+        if sid is None:
+            return flask.redirect(flask.url_for("browser_me"))
+        else:
+            result = _create_client_side_session_raw(sio, user)
+            session = sio.get_session(sid=sid)
+            result["encoded_session_b85"] = _encrypt_session_for_user(sio, session)
+            flask_socketio.emit("user_session_update", result, to=sid, namespace="/")
+            return flask.render_template(
+                "return_to_randovania.html",
+                user=user,
+            )
+    except oauthlib.oauth2.rfc6749.errors.OAuth2Error as error:
+        if isinstance(error, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):
+            logger().info("Invalid grant when finishing Discord login")
+        else:
+            logger().exception("OAuth2Error when finishing Discord login")
+
+        return flask.render_template(
+            "unable_to_login.html",
+            error=error,
+        )
+
+
 def setup_app(sio: ServerApp):
-    sio.on("login_with_discord", login_with_discord)
+    sio.on("start_discord_login_flow", start_discord_login_flow)
     sio.on("login_with_guest", login_with_guest)
     sio.on("restore_user_session", restore_user_session)
     sio.on("logout", logout)
 
-    @sio.app.route("/login")
-    def browser_login_with_discord():
-        return sio.discord.create_session()
-
-    @sio.app.route("/login_callback")
-    def browser_discord_login_callback():
-        sio.discord.callback()
-        discord_user = sio.discord.fetch_user()
-
-        _create_user_from_discord(discord_user)
-
-        return flask.redirect(flask.url_for("browser_me"))
+    sio.route_path("/login", browser_login_with_discord)
+    sio.route_path("/login_callback", browser_discord_login_callback)
 
     @sio.route_with_user("/me")
     def browser_me(user: User):

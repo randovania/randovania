@@ -1,9 +1,10 @@
 import datetime
 import json
-from unittest.mock import MagicMock, patch, ANY
+from unittest.mock import MagicMock, ANY
 
 import flask
 import pytest
+import pytest_mock
 from pytest_mock import MockerFixture
 
 from randovania.network_common.error import InvalidSession
@@ -15,52 +16,54 @@ def test_setup_app():
     user_session.setup_app(MagicMock())
 
 
-@patch("requests_oauthlib.OAuth2Session.fetch_token", autospec=True)
 @pytest.mark.parametrize("has_global_name", [False, True])
 @pytest.mark.parametrize("existing", [False, True])
-def test_login_with_discord(mock_fetch_token: MagicMock, clean_database, flask_app, existing, has_global_name):
+def test_browser_discord_login_callback_with_sid(
+        mocker: pytest_mock.MockerFixture, clean_database, flask_app, existing, has_global_name
+):
     # Setup
+    mock_emit = mocker.patch("flask_socketio.emit")
+    mock_render = mocker.patch("flask.render_template")
+
     sio = MagicMock()
     session = {}
     sio.session.return_value.__enter__.return_value = session
     sio.get_session.return_value = session
-    mock_fetch_token.return_value = "access_token"
     sio.fernet_encrypt.encrypt.return_value = b"encrypted"
 
     discord_user = sio.discord.fetch_user.return_value
     discord_user.id = 1234
     discord_user.name = "A Name"
     discord_user.to_json.return_value = {"global_name": "Global Name" if has_global_name else None}
+    expected_name = "Global Name" if has_global_name else "A Name"
 
     if existing:
         User.create(discord_id=discord_user.id, name="Someone else")
 
     # Run
     with flask_app.test_request_context():
-        result = user_session.login_with_discord(sio, "code")
+        flask.session["sid"] = "TheSid"
+
+        result = user_session.browser_discord_login_callback(sio)
 
     # Assert
-    mock_fetch_token.assert_called_once_with(
-        ANY,
-        "https://discord.com/api/oauth2/token",
-        code="code",
-        client_secret=sio.app.config["DISCORD_CLIENT_SECRET"],
-    )
     user = User.get(User.discord_id == 1234)
-    if has_global_name:
-        assert user.name == "Global Name"
-    else:
-        assert user.name == "A Name"
 
-    assert session == {
-        "user-id": user.id,
-        "discord-access-token": "access_token",
-    }
-    assert result == {
-        "user": user.as_json,
-        "sessions": [],
-        "encoded_session_b85": b'Wo~0~d2n=PWB',
-    }
+    sio.discord.callback.assert_called_once_with()
+    sio.discord.callback.fetch_user()
+
+    mock_emit.assert_called_once_with(
+        "user_session_update", {
+            'encoded_session_b85': b'Wo~0~d2n=PWB',
+            'sessions': [],
+            'user': {'discord_id': 1234, 'id': 1, 'name': expected_name}
+        },
+        to="TheSid", namespace="/"
+    )
+    mock_render.assert_called_once_with("return_to_randovania.html", user=user)
+    assert result is mock_render.return_value
+    assert user.name == expected_name
+    assert session == {}
 
 
 def test_restore_user_session_with_discord(flask_app, fernet, clean_database, mocker):
@@ -116,8 +119,6 @@ def test_login_with_guest(flask_app, clean_database, mocker):
 
 
 def test_logout(flask_app, mocker: MockerFixture):
-    mock_emit_user_session_update = mocker.patch(
-        "randovania.server.user_session._emit_user_session_update", autospec=True)
     mock_leave_all_rooms = mocker.patch(
         "randovania.server.multiplayer.session_common.leave_all_rooms", autospec=True)
 
@@ -135,7 +136,6 @@ def test_logout(flask_app, mocker: MockerFixture):
     # Assert
     assert session == {}
     mock_leave_all_rooms.assert_called_once_with(sio)
-    mock_emit_user_session_update.assert_not_called()
 
 
 def test_restore_user_session_invalid_key(flask_app, fernet):

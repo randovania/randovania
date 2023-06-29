@@ -28,7 +28,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         )
         self.privacy_policy_label.setText(self.privacy_policy_label.text().replace("color:#0000ff;", ""))
 
-        self.button_box.button(QtWidgets.QDialogButtonBox.Reset).setText("Logout")
+        self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).setText("Logout")
 
         # Signals
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
@@ -36,15 +36,16 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
 
         self.guest_button.clicked.connect(self.on_login_as_guest_button)
         self.discord_button.clicked.connect(self.on_login_with_discord_button)
-        self.button_box.button(QtWidgets.QDialogButtonBox.Ok).clicked.connect(self.on_ok_button)
-        self.button_box.button(QtWidgets.QDialogButtonBox.Reset).clicked.connect(self.on_logout_button)
+        self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).clicked.connect(self.on_ok_button)
+        self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).clicked.connect(self.on_logout_button)
 
         # Initial update
         self.on_user_changed(network_client.current_user)
 
     def on_user_changed(self, user: User):
+        self.activateWindow()
         self.on_server_connection_state_updated(self.network_client.connection_state)
-        self.button_box.button(QtWidgets.QDialogButtonBox.Reset).setEnabled(user is not None)
+        self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).setEnabled(user is not None)
 
     def on_server_connection_state_updated(self, state: ConnectionState):
         message = f"{state.value}"

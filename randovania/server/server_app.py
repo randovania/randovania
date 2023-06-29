@@ -86,13 +86,18 @@ class ServerApp:
 
     @property
     def _request_sid(self):
-        return getattr(flask.request, "sid")
+        try:
+            return getattr(flask.request, "sid")
+        except AttributeError:
+            return flask.session["sid"]
 
     def save_session(self, session, namespace=None):
         self.get_server().save_session(self._request_sid, session, namespace=namespace)
 
-    def get_session(self, namespace=None) -> dict:
-        return self.get_server().get_session(self._request_sid, namespace=namespace)
+    def get_session(self, *, sid=None, namespace=None) -> dict:
+        if sid is None:
+            sid = self._request_sid
+        return self.get_server().get_session(sid, namespace=namespace)
 
     def session(self, namespace=None):
         return self.get_server().session(self._request_sid, namespace=namespace)
@@ -156,6 +161,9 @@ class ServerApp:
             return construct_pack.encode(handler(sio, decoded_arg))
 
         return self.on(message, _handler, with_header_check=True)
+
+    def route_path(self, route: str, target):
+        return self.app.add_url_rule(route, target.__name__, functools.partial(target, self))
 
     def route_with_user(self, route: str, *, need_admin: bool = False, **kwargs):
         def decorator(handler):

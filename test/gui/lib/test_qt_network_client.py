@@ -2,6 +2,7 @@ from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
+import pytest_mock
 
 from randovania.gui.lib import qt_network_client
 from randovania.network_common.error import InvalidAction, ServerError, NotAuthorizedForAction, NotLoggedIn, \
@@ -59,19 +60,13 @@ async def test_handle_network_errors_exception(skip_qtbot, qapp, mocker, excepti
     mock_dialog.assert_awaited_once_with(qapp, title, message)
 
 
-async def test_login_to_discord(client, mocker):
-    mock_aioclient = mocker.patch("pypresence.AioClient")
-    mock_aioclient.return_value = discord_client = AsyncMock()
-    discord_client.authorize.return_value = {"data": {"code": "the-code"}}
-    client.server_call = AsyncMock()
-    client.on_user_session_updated = AsyncMock()
+async def test_login_to_discord(client, mocker: pytest_mock.MockerFixture):
+    mock_browser_open = mocker.patch("webbrowser.open")
+    client.server_call = AsyncMock(return_value="THE_SID")
 
     # Run
     await client.login_with_discord()
 
     # Assert
-    mock_aioclient.assert_called_once_with(1234)
-    discord_client.start.assert_awaited_once_with()
-    discord_client.authorize.assert_awaited_once_with(1234, ['identify'])
-    client.server_call.assert_awaited_once_with("login_with_discord", "the-code")
-    client.on_user_session_updated.assert_awaited_once_with(client.server_call.return_value)
+    mock_browser_open.assert_called_once_with("http://localhost:5000/login?sid=THE_SID")
+    client.server_call.assert_awaited_once_with("start_discord_login_flow")
