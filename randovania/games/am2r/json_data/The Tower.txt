@@ -266,7 +266,9 @@ Extra - map_name: rm_a4h04
   > Dock to Gamma Nest West Access
       Mid-Air Morph (Intermediate) and Movement (Intermediate)
   > Dock to Tower Exterior North
-      Space Jump or Walljump (Expert) or Can Use Spider Ball
+      Any of the following:
+          Space Jump or Can Use Spider Ball
+          Hi-Jump Boots and Walljump (Advanced)
   > Door to Tower Activation Station
       Trivial
 
@@ -752,19 +754,32 @@ Tester Arena
 Extra - map_name: rm_a4a05
 > Door to Tester Arena Access North; Heals? False
   * Layers: default
-  * After Tester Door to Tester Arena Access North/Door to Tester Arena
+  * Normal Door to Tester Arena Access North/Door to Tester Arena
   * Extra - instance_id: 127943
-  > Door to Tester Arena Access South
+  > Before Tester
       Trivial
 
 > Door to Tester Arena Access South; Heals? False
   * Layers: default
-  * After Tester Door to Tester Arena Access South/Door to Tester Arena
+  * Normal Door to Tester Arena Access South/Door to Tester Arena
   * Extra - instance_id: 128037
+  > Before Tester
+      Trivial
+
+> Event - Tester; Heals? False
+  * Layers: default
+  * Event Boss Tester Defeated
+  > Door to Tester Arena Access North
+      Space Jump Wall
+  > Door to Tester Arena Access South
+      Trivial
+
+> Before Tester; Heals? False
+  * Layers: default
   > Event - Tester
       All of the following:
           Any of the following:
-              # Movements requirements
+              # Movement requirements
               Space Jump or Combat (Advanced)
           Any of the following:
               # Energy requirements
@@ -773,14 +788,8 @@ Extra - map_name: rm_a4a05
               # Attack requirements
               Plasma Beam or Spazer Beam or Combat (Intermediate)
               All of the following:
-                  # 4 PBs to destroy the outer shell
+                  # 4 PBs to destroy outer shell
                   Morph Ball and Power Bombs ≥ 4
-
-> Event - Tester; Heals? False
-  * Layers: default
-  * Event Boss Tester Defeated
-  > Door to Tester Arena Access North
-      Space Jump Wall
 
 ----------------
 Tester Arena Access South
@@ -963,7 +972,7 @@ Extra - map_name: rm_a4a10
 
 > Door to Plasma Beam Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to Plasma Beam Chamber Access/Door to Plasma Beam Chamber
+  * Tower Activated Door to Plasma Beam Chamber Access/Door to Plasma Beam Chamber
   * Extra - instance_id: 128664
   > Pickup (Plasma Beam)
       Trivial

@@ -2051,17 +2051,34 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 4,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
                                         "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -5285,13 +5302,13 @@
                         "area": "Tester Arena Access North",
                         "node": "Door to Tester Arena"
                     },
-                    "default_dock_weakness": "After Tester Door",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Tester Arena Access South": {
+                        "Before Tester": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5322,11 +5339,72 @@
                         "area": "Tester Arena Access South",
                         "node": "Door to Tester Arena"
                     },
-                    "default_dock_weakness": "After Tester Door",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Before Tester": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Tester": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.841354723707665,
+                        "y": 496.541889483066,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "TesterDead",
+                    "connections": {
+                        "Door to Tester Arena Access North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Space Jump Wall"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Tester Arena Access South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Before Tester": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 163.99286987522282,
+                        "y": 498.8235294117647,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Event - Tester": {
                             "type": "and",
@@ -5336,7 +5414,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Movements requirements",
+                                            "comment": "Movement requirements",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5393,9 +5471,9 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
+                                                        "type": "items",
+                                                        "name": "Plasma Beam",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -5411,16 +5489,16 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Plasma Beam",
-                                                        "amount": 1,
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "4 PBs to destroy the outer shell",
+                                                        "comment": "4 PBs to destroy outer shell",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5445,36 +5523,6 @@
                                                 }
                                             ]
                                         }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Event - Tester": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 154.38,
-                        "y": 506.41,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "TesterDead",
-                    "connections": {
-                        "Door to Tester Arena Access North": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Space Jump Wall"
                                     }
                                 ]
                             }
@@ -6622,7 +6670,7 @@
                         "area": "Plasma Beam Chamber Access",
                         "node": "Door to Plasma Beam Chamber"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Tower Activated Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
