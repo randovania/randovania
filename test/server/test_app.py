@@ -62,7 +62,7 @@ def test_custom_formatter(flask_app, has_user):
     record = logging.LogRecord("Name", logging.DEBUG, "path", 10, "the msg",
                                (), None)
 
-    x = app.CustomFormatter('%(context)s [%(who)s] %(levelname)s in %(where)s: %(message)s')
+    x = app.ServerLoggingFormatter('%(context)s [%(who)s] %(levelname)s in %(where)s: %(message)s')
 
     with flask_app.test_request_context() as context:
         context.request.sid = "THE_SID"

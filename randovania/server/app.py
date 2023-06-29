@@ -14,7 +14,7 @@ from randovania.server.multiplayer import world_api
 from randovania.server.server_app import ServerApp
 
 
-class CustomFormatter(logging.Formatter):
+class ServerLoggingFormatter(logging.Formatter):
     converter = time.gmtime
 
     def format(self, record):
@@ -55,7 +55,7 @@ def create_app():
         'formatters': {
             'default': {
                 'format': '[%(asctime)s] %(context)s [%(who)s] %(levelname)s in %(where)s: %(message)s',
-                'class': 'randovania.server.app.CustomFormatter',
+                'class': 'randovania.server.app.ServerLoggingFormatter',
             }
         },
         'handlers': {'wsgi': {
