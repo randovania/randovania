@@ -1,6 +1,6 @@
 import datetime
 import json
-from unittest.mock import MagicMock, ANY
+from unittest.mock import MagicMock
 
 import flask
 import pytest
@@ -43,6 +43,7 @@ def test_browser_discord_login_callback_with_sid(
     # Run
     with flask_app.test_request_context():
         flask.session["sid"] = "TheSid"
+        flask.session["DISCORD_OAUTH2_TOKEN"] = "The_Token"
 
         result = user_session.browser_discord_login_callback(sio)
 
@@ -63,15 +64,17 @@ def test_browser_discord_login_callback_with_sid(
     mock_render.assert_called_once_with("return_to_randovania.html", user=user)
     assert result is mock_render.return_value
     assert user.name == expected_name
-    assert session == {}
+    assert session == {'discord-access-token': 'The_Token', 'user-id': 1}
 
 
-def test_restore_user_session_with_discord(flask_app, fernet, clean_database, mocker):
+def test_restore_user_session_with_discord(flask_app, fernet, clean_database, mocker: pytest_mock.MockerFixture):
     discord_user = MagicMock()
     discord_user.id = 3452
     discord_result = MagicMock()
-    mock_create_session: MagicMock = mocker.patch("randovania.server.user_session._create_session_with_discord_token",
-                                                  autospec=True, return_value=(discord_user, discord_result))
+    mock_create_session = mocker.patch("randovania.server.user_session._create_session_with_discord_token",
+                                       autospec=True, return_value=discord_user)
+    mock_create_client_side = mocker.patch("randovania.server.user_session._create_client_side_session",
+                                           autospec=True, return_value=discord_result)
 
     sio = MagicMock()
     sio.fernet_encrypt = fernet
@@ -83,12 +86,14 @@ def test_restore_user_session_with_discord(flask_app, fernet, clean_database, mo
     enc_session = fernet.encrypt(json.dumps(session).encode("utf-8"))
 
     # Run
-    with flask_app.test_request_context():
-        flask.request.sid = 7890
+    with flask_app.test_request_context() as context:
+        context.request.sid = 7890
         result = user_session.restore_user_session(sio, enc_session)
+        assert context.session["DISCORD_OAUTH2_TOKEN"] == "access-token"
 
     # Assert
-    mock_create_session.assert_called_once_with(sio, "access-token")
+    mock_create_session.assert_called_once_with(sio, sio.request_sid)
+    mock_create_client_side.assert_called_once_with(sio, discord_user)
 
     assert result is discord_result
 
