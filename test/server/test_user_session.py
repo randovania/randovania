@@ -3,10 +3,12 @@ import json
 from unittest.mock import MagicMock
 
 import flask
+import oauthlib.oauth2.rfc6749.errors
 import pytest
 import pytest_mock
 from pytest_mock import MockerFixture
 
+from randovania.network_common import error
 from randovania.network_common.error import InvalidSession
 from randovania.server import user_session
 from randovania.server.database import User
@@ -14,6 +16,21 @@ from randovania.server.database import User
 
 def test_setup_app():
     user_session.setup_app(MagicMock())
+
+
+@pytest.mark.parametrize("has_sio", [False, True])
+def test_browser_login_with_discord(has_sio, flask_app):
+    sio = MagicMock()
+
+    with flask_app.test_request_context(query_string="&sid=THE_SID" if has_sio else None) as context:
+        result = user_session.browser_login_with_discord(sio)
+
+        if has_sio:
+            assert context.session["sid"] == "THE_SID"
+        else:
+            assert "sid" not in context.session
+
+    assert result is sio.discord.create_session.return_value
 
 
 @pytest.mark.parametrize("has_global_name", [False, True])
@@ -65,6 +82,45 @@ def test_browser_discord_login_callback_with_sid(
     assert result is mock_render.return_value
     assert user.name == expected_name
     assert session == {'discord-access-token': 'The_Token', 'user-id': 1}
+
+
+def test_browser_discord_login_callback_not_authorized(flask_app, mocker: pytest_mock.MockerFixture):
+    mock_render = mocker.patch("flask.render_template")
+    mock_create = mocker.patch("randovania.server.user_session._create_session_with_discord_token",
+                               side_effect=error.UserNotAuthorized)
+
+    sio = MagicMock()
+
+    # Run
+    with flask_app.test_request_context():
+        result = user_session.browser_discord_login_callback(sio)
+
+    # Assert
+    sio.discord.callback.assert_called_once_with()
+    mock_create.assert_called_once_with(sio, None)
+    assert result is mock_render.return_value
+    mock_render.assert_called_once_with(
+        "unable_to_login.html",
+        error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
+    )
+
+
+def test_browser_discord_login_callback_oauth_error(flask_app, mocker: pytest_mock.MockerFixture):
+    mock_render = mocker.patch("flask.render_template")
+
+    sio = MagicMock()
+    sio.discord.callback.side_effect = oauthlib.oauth2.rfc6749.errors.InvalidGrantError()
+
+    # Run
+    result = user_session.browser_discord_login_callback(sio)
+
+    # Assert
+    sio.discord.callback.assert_called_once_with()
+    assert result is mock_render.return_value
+    mock_render.assert_called_once_with(
+        "unable_to_login.html",
+        error_message="Unable to complete login. Please try again! (invalid_grant) ",
+    )
 
 
 def test_restore_user_session_with_discord(flask_app, fernet, clean_database, mocker: pytest_mock.MockerFixture):
