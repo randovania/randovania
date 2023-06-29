@@ -1731,48 +1731,82 @@
                 }
             },
             "Defeat Alpha": {
-                "type": "or",
+                "type": "and",
                 "data": {
                     "comment": null,
                     "items": [
                         {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 7,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Super Missiles",
-                                "amount": 2,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
+                                "comment": "Item requirements",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Charge Beam",
-                                            "amount": 1,
+                                            "name": "Missiles",
+                                            "amount": 7,
                                             "negate": false
                                         }
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
+                                            "type": "items",
+                                            "name": "Super Missiles",
                                             "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Damage requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 66,
                                             "negate": false
                                         }
                                     }
@@ -1783,48 +1817,82 @@
                 }
             },
             "Defeat Gamma": {
-                "type": "or",
+                "type": "and",
                 "data": {
                     "comment": null,
                     "items": [
                         {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 15,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Super Missiles",
-                                "amount": 3,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
+                                "comment": "Item requirements",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Charge Beam",
-                                            "amount": 1,
+                                            "name": "Missiles",
+                                            "amount": 15,
                                             "negate": false
                                         }
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Energy requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
                                             "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 2,
+                                            "name": "Combat",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 99,
                                             "negate": false
                                         }
                                     }
@@ -1835,48 +1903,125 @@
                 }
             },
             "Defeat Zeta": {
-                "type": "or",
+                "type": "and",
                 "data": {
                     "comment": null,
                     "items": [
                         {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 30,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Super Missiles",
-                                "amount": 6,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
+                                "comment": "Item requirements",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Charge Beam",
-                                            "amount": 1,
+                                            "name": "Missiles",
+                                            "amount": 30,
                                             "negate": false
                                         }
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 2,
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 6,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Energy requirements",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph Ball",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 199,
                                             "negate": false
                                         }
                                     }
@@ -1887,39 +2032,21 @@
                 }
             },
             "Defeat Omega": {
-                "type": "or",
+                "type": "and",
                 "data": {
                     "comment": null,
                     "items": [
                         {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 32,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Super Missiles",
-                                "amount": 7,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
+                                "comment": "Item requirements",
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 2,
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 32,
                                             "negate": false
                                         }
                                     },
@@ -1927,30 +2054,13 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Charge Beam",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 2,
+                                            "name": "Super Missile Launcher",
+                                            "amount": 7,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -1958,21 +2068,133 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Super Missiles",
-                                                        "amount": 3,
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 11,
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Backshots",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missiles",
+                                                                    "amount": 11,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Super Missiles",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Energy requirements",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph Ball",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 399,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -2670,6 +2892,45 @@
                         },
                         "lock": null
                     },
+                    "Bomb Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Bombs",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Spider Ball Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Spider Ball",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Screw Attack Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw Attack",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
                     "Locked Door": {
                         "extra": {},
                         "requirement": {
@@ -2703,6 +2964,7 @@
                         "Tower Activated Door"
                     ],
                     "change_to": [
+                        "Bomb Door",
                         "Charge Beam Door",
                         "Ice Beam Door",
                         "Locked Door",
@@ -2710,7 +2972,9 @@
                         "Normal Door",
                         "Plasma Beam Door",
                         "Power Bomb Door",
+                        "Screw Attack Door",
                         "Spazer Beam Door",
+                        "Spider Ball Door",
                         "Super Missile Door",
                         "Wave Beam Door"
                     ]
