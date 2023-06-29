@@ -1,4 +1,3 @@
-import pypresence
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 from qasync import asyncSlot
@@ -6,8 +5,8 @@ from qasync import asyncSlot
 from randovania.gui.generated.login_prompt_dialog_ui import Ui_LoginPromptDialog
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
-from randovania.network_common.multiplayer_session import User
 from randovania.network_client.network_client import ConnectionState
+from randovania.network_common.multiplayer_session import User
 
 
 class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
@@ -71,20 +70,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
     @asyncSlot()
     @handle_network_errors
     async def on_login_with_discord_button(self):
-        try:
-            await self.network_client.login_with_discord()
-
-        except pypresence.exceptions.DiscordNotFound as e:
-            await async_dialog.warning(self, "Discord not found",
-                                       str(e))
-
-        except pypresence.exceptions.InvalidPipe:
-            await async_dialog.warning(self, "Discord login",
-                                       "Login failed. Is Discord running?")
-
-        except pypresence.exceptions.ServerError:
-            await async_dialog.warning(self, "Discord login",
-                                       "Login failed. Did you reject the authorization prompt in Discord?")
+        await self.network_client.login_with_discord()
 
     def on_ok_button(self):
         self.accept()
