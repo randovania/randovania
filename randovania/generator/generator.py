@@ -197,6 +197,8 @@ async def _create_description(generator_params: GeneratorParameters,
         generator_params.get_preset(i)
         for i in range(generator_params.player_count)
     ]
+    if not presets:
+        raise InvalidConfiguration("Must have at least one World")
 
     retrying = tenacity.AsyncRetrying(
         stop=tenacity.stop_after_attempt(attempts),
