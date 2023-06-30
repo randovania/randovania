@@ -19,8 +19,6 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry, MultiplayerSessionListEntry, User, MultiplayerSessionActions,
     MultiplayerWorldPickups, MultiplayerSessionAuditLog,
     WorldUserInventory)
-from PySide6.QtWidgets import QDialog, QInputDialog, QLineEdit
-from PySide6.QtCore import Qt
 
 
 def handle_network_errors(fn):

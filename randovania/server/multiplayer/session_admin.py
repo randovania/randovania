@@ -9,7 +9,7 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import NotAuthorizedForAction, InvalidAction
-from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH, MAX_WORLD_NAME_LENGTH, WORLD_NAME_RE
+from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH, WORLD_NAME_RE
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.database import MultiplayerMembership, is_boolean, MultiplayerSession, World, \

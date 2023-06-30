@@ -4,7 +4,7 @@ from qasync import asyncSlot
 
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.login_prompt_dialog_ui import Ui_LoginPromptDialog
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.multiplayer_session import User
