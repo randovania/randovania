@@ -2686,7 +2686,7 @@
                         {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill them while frozen",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2703,6 +2703,27 @@
                                             "type": "items",
                                             "name": "Super Missiles",
                                             "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Get rid of them if they're draining you",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     }
