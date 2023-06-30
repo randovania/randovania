@@ -41,6 +41,8 @@ def _create_item_info_dict():
                                                "Power Bomb capacity increased by [capacity]")
     info["Metroid DNA"] = AM2RItemInfo("sItemDNA", 0.28, "Metroid DNA acquired",
                                        "Collect all DNA in order to reach the Queen")
+    for i in range(1, 47):
+        info[f'Metroid DNA {i}'] = info["Metroid DNA"]
 
     info["Bombs"] = AM2RItemInfo("sItemBomb", def_speed, "Bombs acquired", "Press | in Morph Ball to deploy")
     info["Power Grip"] = AM2RItemInfo("sItemPowergrip", def_speed, "Power Grip acquired", "You can now grab ledges")
