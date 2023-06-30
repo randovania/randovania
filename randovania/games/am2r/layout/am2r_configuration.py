@@ -21,7 +21,8 @@ class AM2RConfiguration(BaseConfiguration):
     skip_cutscenes: bool
     respawn_bomb_blocks: bool
     remove_grave_grotto_blocks: bool
-    # TODO: have "fusion mode" setting
+    fusion_mode: bool # TODO: requires DB changes
+    nest_pipes: bool # TODO: requires DB changes
     # TODO: more setting for individual block placements, like bombs to a3?
 
 

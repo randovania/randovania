@@ -16,7 +16,9 @@ _FIELDS = [
     "change_level_design",
     "respawn_bomb_blocks",
     "skip_cutscenes",
-    "remove_grave_grotto_blocks"
+    "remove_grave_grotto_blocks",
+    "fusion_mode",
+    "nest_pipes"
 ]
 
 

@@ -139,7 +139,8 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "respawn_bomb_blocks": self.patches.configuration.respawn_bomb_blocks,
             "skip_cutscenes": self.patches.configuration.skip_cutscenes,
             "energy_per_tank": self.patches.configuration.energy_per_tank,
-            "remove_grave_grotto_blocks": self.patches.configuration.remove_grave_grotto_blocks
+            "remove_grave_grotto_blocks": self.patches.configuration.remove_grave_grotto_blocks,
+            "fusion_mode": self.patches.configuration.fusion_mode,
         }
         for item, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
             launcher_text = ""
