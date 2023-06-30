@@ -208,3 +208,11 @@ class ServerApp:
             self.expected_headers,
             environ,
         )
+
+    def ensure_in_room(self, room_name: str) -> bool:
+        """
+        Ensures the client is connected to the given room, and returns if we had to join.
+        """
+        all_rooms = flask_socketio.rooms()
+        flask_socketio.join_room(room_name)
+        return room_name not in all_rooms

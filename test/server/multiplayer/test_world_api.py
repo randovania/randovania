@@ -202,7 +202,6 @@ def test_collect_locations_other(flask_app, two_player_session, echoes_resource_
 
 def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mock_emit_session_update):
     mock_leave_room = mocker.patch("flask_socketio.leave_room")
-    mock_join_room = mocker.patch("flask_socketio.join_room")
     mock_emit = mocker.patch("flask_socketio.emit")
     mock_emit_pickups = mocker.patch("randovania.server.multiplayer.world_api.emit_world_pickups_update")
     mock_emit_actions = mocker.patch("randovania.server.multiplayer.session_common.emit_session_actions_update")
@@ -264,7 +263,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     assert a2.inventory is None
 
     sio.store_world_in_session.assert_called_once_with(w1)
-    mock_join_room.assert_called_once_with("world-1179c986-758a-4170-9b07-fe4541d78db0")
+    sio.ensure_in_room.assert_called_once_with("world-1179c986-758a-4170-9b07-fe4541d78db0")
     mock_leave_room.assert_called_once_with("world-6b5ac1a1-d250-4f05-a5fb-ae37e8a92165")
     mock_emit_pickups.assert_has_calls([call(sio, w1), call(sio, w2)], any_order=True)
     mock_emit_session_update.assert_called_once_with(session)
