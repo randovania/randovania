@@ -13,6 +13,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.auto_tracker_window import load_trackers_configuration
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, layout_loader
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -35,7 +36,7 @@ from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry, MultiplayerUser, MultiplayerSessionActions, MultiplayerSessionAuditLog,
-    MultiplayerSessionAction, WorldUserInventory
+    MultiplayerSessionAction, WorldUserInventory, MAX_SESSION_NAME_LENGTH
 )
 from randovania.network_common.session_state import MultiplayerSessionState
 
@@ -370,33 +371,42 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     @handle_network_errors
     async def rename_session(self):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setWindowTitle("Enter new title")
-        dialog.setLabelText("Enter the new title for the session:")
-        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
-            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_TITLE, dialog.textValue())
+        new_name = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter new title",
+            description="Enter the new title for the session:",
+            initial_value=self._session.name,
+            is_modal=True,
+            max_length=MAX_SESSION_NAME_LENGTH,
+        )
+        if new_name is not None:
+            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_TITLE, new_name)
 
     @asyncSlot()
     @handle_network_errors
     async def change_password(self):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setWindowTitle("Enter password")
-        dialog.setLabelText("Enter the new password for the session:")
-        dialog.setTextEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
-        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
-            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_PASSWORD, dialog.textValue())
+        password = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter password",
+            description="Enter the new password for the session:",
+            is_password=True,
+            is_modal=True,
+        )
+        if password is not None:
+            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_PASSWORD, password)
 
     @asyncSlot()
     @handle_network_errors
     async def duplicate_session(self):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setWindowTitle("Enter new title")
-        dialog.setLabelText("Enter the title for the duplicated copy of the session:")
-        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
-            await self._admin_global_action(SessionAdminGlobalAction.DUPLICATE_SESSION, dialog.textValue())
+        new_name = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter new title",
+            description="Enter the title for the duplicated copy of the session:",
+            is_modal=True,
+            max_length=MAX_SESSION_NAME_LENGTH,
+        )
+        if new_name is not None:
+            await self._admin_global_action(SessionAdminGlobalAction.DUPLICATE_SESSION, new_name)
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
         all_dangerous_settings = [

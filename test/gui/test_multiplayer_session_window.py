@@ -11,6 +11,7 @@ from pytest_mock import MockerFixture
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.games.game import RandovaniaGame
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
@@ -239,13 +240,15 @@ async def test_update_logic_settings_window(window: MultiplayerSessionWindow, mo
     (SessionAdminGlobalAction.DUPLICATE_SESSION, "duplicate_session"),
 ])
 async def test_change_password_title_or_duplicate(window, mocker, action, method_name, accept):
-    def set_text_value(dialog: QtWidgets.QInputDialog):
-        dialog.setTextValue("magoo")
+    def set_text_value(dialog: TextPromptDialog):
+        dialog.prompt_edit.setText("magoo")
         return accept
 
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                   side_effect=set_text_value)
     window._admin_global_action = AsyncMock()
+    window._session = MagicMock()
+    window._session.name = "OldName"
 
     # Run
     await getattr(window, method_name)()

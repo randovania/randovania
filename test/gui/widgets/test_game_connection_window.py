@@ -12,6 +12,7 @@ from randovania.game_connection.builder.dread_connector_builder import DreadConn
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.widgets.game_connection_window import BuilderUi, GameConnectionWindow
 from randovania.interface_common.players_configuration import INVALID_UUID
@@ -162,8 +163,8 @@ def test_setup_builder_ui_all_builders(skip_qtbot, system, mocker: MockerFixture
     QtWidgets.QDialog.DialogCode.Rejected,
 ])
 async def test_prompt_for_text(window: GameConnectionWindow, mocker, result):
-    def side_effect(dialog: QtWidgets.QInputDialog):
-        dialog.setTextValue("UserInput")
+    def side_effect(dialog: TextPromptDialog):
+        dialog.prompt_edit.setText("UserInput")
         assert dialog.windowTitle() == "Title"
         return result
 

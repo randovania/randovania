@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import datetime
+import re
 import uuid
 
 from randovania.bitpacking import construct_pack
@@ -12,6 +13,14 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.session_state import MultiplayerSessionState
+
+
+MAX_SESSION_NAME_LENGTH = 50
+MAX_WORLD_NAME_LENGTH = 30
+
+WORLD_NAME_RE = re.compile(
+    r"^[a-zA-Z0-9 _\-!?]{1," + str(MAX_WORLD_NAME_LENGTH) + "}$"
+)
 
 
 @dataclasses.dataclass(frozen=True)

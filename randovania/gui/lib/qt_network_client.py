@@ -10,6 +10,7 @@ from PySide6.QtWidgets import QWidget
 from qasync import asyncSlot
 
 import randovania
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, wait_dialog
 from randovania.network_client.network_client import NetworkClient, ConnectionState, UnableToConnect
 from randovania.network_common.error import (InvalidAction, NotAuthorizedForAction, ServerError, RequestTimeout,
@@ -165,16 +166,13 @@ class QtNetworkClient(QWidget, NetworkClient):
     @asyncSlot()
     async def attempt_join_with_password_check(self, session: MultiplayerSessionListEntry):
         if session.has_password and not session.is_user_in_session:
-            dialog = QInputDialog(self)
-            dialog.setWindowTitle("Enter password")
-            dialog.setLabelText("This session requires a password:")
-            dialog.setWindowModality(Qt.WindowModal)
-            dialog.setTextEchoMode(QLineEdit.EchoMode.Password)
-
-            if await async_dialog.execute_dialog(dialog) != QDialog.DialogCode.Accepted:
+            password = await TextPromptDialog.prompt(
+                title="Enter password",
+                description="This session requires a password:",
+                is_password=True,
+            )
+            if password is None:
                 return
-
-            password = dialog.textValue()
         else:
             password = None
         return await self.attempt_join(session.id, password)

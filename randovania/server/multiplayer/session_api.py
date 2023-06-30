@@ -2,6 +2,7 @@ import peewee
 
 from randovania.network_common import error
 from randovania.network_common.error import WrongPassword
+from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH
 from randovania.server import database
 from randovania.server.database import MultiplayerSession, MultiplayerMembership, User
 from randovania.server.multiplayer import session_common
@@ -21,6 +22,9 @@ def list_sessions(sio: ServerApp, limit: int | None):
 
 def create_session(sio: ServerApp, session_name: str):
     current_user = sio.get_current_user()
+
+    if not (0 < len(session_name) <= MAX_SESSION_NAME_LENGTH):
+        raise error.InvalidAction("Invalid session name length")
 
     with database.db.atomic():
         new_session: MultiplayerSession = MultiplayerSession.create(
