@@ -15,12 +15,12 @@ class Foldable(QtWidgets.QWidget):
         self._folded = initially_folded
 
         self._toggle_button = QtWidgets.QToolButton(self)
-        self._toggle_button.setStyleSheet("QToolButton { height: 20px; }")
+        self._toggle_button.setStyleSheet("QToolButton { height: 30px; padding: 0px; }")
         font = self._toggle_button.font()
         font.setBold(True)
         font.setPixelSize(13)
         self._toggle_button.setFont(font)
-        self._toggle_button.setMaximumHeight(20)
+        self._toggle_button.setMaximumHeight(30)
         self._toggle_button.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         self._toggle_button.setArrowType(QtCore.Qt.ArrowType.RightArrow)
         self._toggle_button.setText(title)
