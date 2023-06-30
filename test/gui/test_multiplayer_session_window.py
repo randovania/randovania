@@ -77,7 +77,6 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
     game_connection.lock_identifier = None
 
     u1 = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
-    u2 = uuid.UUID('4bdb294e-9059-4fdf-9822-3f649023249a')
 
     initial_session = sample_session
     second_session = MultiplayerSessionEntry(
@@ -106,7 +105,7 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
     )
-    window = await MultiplayerSessionWindow.create_and_update(network_client, initial_session,
+    window = await MultiplayerSessionWindow.create_and_update(network_client, initial_session.id,
                                                               MagicMock(), MagicMock())
     skip_qtbot.addWidget(window)
 
@@ -480,7 +479,7 @@ async def test_on_kicked(skip_qtbot, window: MultiplayerSessionWindow, mocker, a
         mock_warning.assert_not_awaited()
         window.close.assert_not_called()
     else:
-        window.network_client.listen_to_session.assert_awaited_once_with(window._session, False)
+        window.network_client.listen_to_session.assert_awaited_once_with(window._session.id, False)
         mock_warning.assert_awaited_once()
         window.close.assert_called_once_with()
 
@@ -566,7 +565,7 @@ async def test_on_close_event(window: MultiplayerSessionWindow, mocker, is_membe
     super_close_event.assert_called_once_with(event)
 
     if is_member:
-        window.network_client.listen_to_session.assert_awaited_once_with(window._session, False)
+        window.network_client.listen_to_session.assert_awaited_once_with(window._session.id, False)
     else:
         window.network_client.listen_to_session.assert_not_awaited()
 

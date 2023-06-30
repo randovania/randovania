@@ -2,7 +2,6 @@ import asyncio
 import datetime
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock
-from mock import patch
 from PySide6 import QtWidgets 
 
 import pytest
@@ -112,7 +111,7 @@ async def test_attempt_join(client, mocker, in_session):
     )
 
     # Run
-    result = await client.attempt_join(session)
+    result = await client.attempt_join_with_password_check(session)
     # Assert
     assert result == "A Session"
     if in_session:

@@ -1,16 +1,16 @@
 import datetime
-from unittest.mock import patch, AsyncMock, MagicMock
+from unittest.mock import AsyncMock, MagicMock
 
 from randovania.gui.dialog.online_game_list_dialog import OnlineGameListDialog
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
-async def test_attempt_join():
+async def test_attempt_join(skip_qtbot):
     # Setup
     utc = datetime.timezone.utc
     network_client = MagicMock()
-    network_client.attempt_join = AsyncMock()
+    network_client.attempt_join_with_password_check = AsyncMock()
 
     session_a = MultiplayerSessionListEntry(
         id=1, name="A Game", has_password=True, state=MultiplayerSessionState.FINISHED,
@@ -33,4 +33,4 @@ async def test_attempt_join():
     await dialog._attempt_join()
 
     # Assert
-    network_client.attempt_join.assert_awaited_once_with(session_b)
+    network_client.attempt_join_with_password_check.assert_awaited_once_with(session_b)

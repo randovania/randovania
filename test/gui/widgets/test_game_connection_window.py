@@ -15,6 +15,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.widgets.game_connection_window import BuilderUi, GameConnectionWindow
 from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.network_common import error
 
 
 @pytest.fixture(name="window")
@@ -197,49 +198,182 @@ async def test_prompt_for_game(window: GameConnectionWindow, mocker, result):
     mock_execute_dialog.assert_awaited_once()
 
 
-@pytest.mark.parametrize("case", [i for i in range(4)])
-async def test_internal_try_to_find_session(window: GameConnectionWindow, case: int):
-    if case == 0:
-        # session found and set
-        cb_mock = MagicMock()
-        result = await window._try_to_find_session(cb_mock)
-        assert result
-        assert window.session_for_builder.get(cb_mock, None) is not None
-    elif case == 1:
-        # no login
-        cb_mock = MagicMock()
-        window.network_client.ensure_logged_in = AsyncMock(return_value=False)
-        result = await window._try_to_find_session(cb_mock)
-        assert not result
-        assert window.session_for_builder.get(cb_mock, None) is None
-    elif case == 2:
-        # invalid uuid
-        cb_mock = MagicMock()
-        rc_mock = MagicMock()
-        rc_mock._layout_uuid = INVALID_UUID
-        window.game_connection.remote_connectors = {cb_mock: rc_mock}
-        result = await window._try_to_find_session(cb_mock)
-        assert not result
-        assert window.session_for_builder.get(cb_mock, None) is None
-    elif case == 3:
-        # no remote connector for builder
-        window.game_connection.remote_connectors = {}
-        result = await window._try_to_find_session(None)
-        assert not result
+def test_add_session_action_no_layout_uuid(window: GameConnectionWindow):
+    # setup
+    window._get_valid_uuid = MagicMock()
+    window._get_valid_uuid.return_value = None
+    builder = MagicMock()
+    ui = MagicMock(BuilderUi)
+    # run
+    window._add_session_action(builder, ui)
+    # assert
+    ui.remove_session_button.assert_not_called()
+    ui.add_session_button.assert_not_called()
+
+
+def test_add_session_action_new_layout_uuid(window: GameConnectionWindow):
+    # setup
+    window._get_valid_uuid = MagicMock()
+    window._get_valid_uuid.return_value = MagicMock()
+    builder = MagicMock()
+    ui = MagicMock(BuilderUi)
+    window.ui_for_builder = {builder: ui}
+    # run
+    window._add_session_action(builder, ui)
+    # assert
+    ui.remove_session_button.assert_not_called()
+    ui.add_session_button.assert_called_once()
+
+
+def test_add_session_action_fast_new_layout_uuid(window: GameConnectionWindow):
+    # setup
+    window._get_valid_uuid = MagicMock()
+    window._get_valid_uuid.return_value = MagicMock()
+    builder = MagicMock()
+    ui = MagicMock(BuilderUi)
+    layout_uuid = MagicMock()
+    window.ui_for_builder = {builder: ui}
+    window.layout_uuid_for_builder = {builder: layout_uuid}
+
+    # run
+    window._add_session_action(builder, ui)
+
+    # assert
+    ui.remove_session_button.assert_called_once()
+    ui.add_session_button.assert_called_once()
+
+
+def test_add_session_action_removed_layout_uuid(window: GameConnectionWindow):
+    # setup
+    window._get_valid_uuid = MagicMock()
+    window._get_valid_uuid.return_value = None
+    builder = MagicMock()
+    ui = MagicMock(BuilderUi)
+    layout_uuid = MagicMock()
+    window.ui_for_builder = {builder: ui}
+    window.layout_uuid_for_builder = {builder: layout_uuid}
+
+    # run
+    window._add_session_action(builder, ui)
+
+    # assert
+    ui.remove_session_button.assert_called_once()
+    ui.add_session_button.assert_not_called()
+
+
+def test_get_valid_uuid_no_remote_connector(window: GameConnectionWindow):
+    # setup
+    builder = MagicMock()
+    window.game_connection.remote_connectors = {}
+
+    # run
+    result = window._get_valid_uuid(builder)
+
+    # assert
+    assert result is None
+
+
+def test_get_valid_uuid_invalid_uuid(window: GameConnectionWindow):
+    # setup
+    builder = MagicMock()
+    remote_connector = MagicMock()
+    remote_connector.layout_uuid = INVALID_UUID
+    window.game_connection.remote_connectors = {builder: remote_connector}
+
+    # run
+    result = window._get_valid_uuid(builder)
+
+    # assert
+    assert result is None
+
+
+def test_get_valid_uuid_valid_uuid(window: GameConnectionWindow):
+    # setup
+    builder = MagicMock()
+    layout_uuid = MagicMock()
+    remote_connector = MagicMock()
+    remote_connector.layout_uuid = layout_uuid
+    window.game_connection.remote_connectors = {builder: remote_connector}
+
+    # run
+    result = window._get_valid_uuid(builder)
+
+    # assert
+    assert result is layout_uuid
+
+
+def test_check_session_data_no_data(window: GameConnectionWindow):
+    # setup
+    world_database = MagicMock()
+    world_data = MagicMock()
+    world_data.server_data = None
+    world_database.get_data_for = MagicMock(return_value=world_data)
+    window.world_database = world_database
     
+    # run
+    result = window._check_session_data(MagicMock())
 
-@pytest.mark.parametrize("case", [i for i in range(2)])
-async def test_try_to_find_session(window: GameConnectionWindow, case: int):
-    ui = MagicMock()
-    if case == 0:
-        window._try_to_find_session = AsyncMock(return_value=None)
-        await window.try_to_find_session(None, ui)
-        ui.remove_session_button.assert_called_once()
-    elif case == 1:
-        window._try_to_find_session = AsyncMock(return_value="Something")
-        await window.try_to_find_session(None, ui)
-        ui.add_session_button.assert_called_once()
+    # assert
+    assert result is None
 
+
+def test_check_session_data_with_data(window: GameConnectionWindow):
+    # setup
+    world_database = MagicMock()
+    world_data = MagicMock()
+    server_data = MagicMock()
+    server_data.session_id = "Foo"
+    world_data.server_data = server_data
+    world_database.get_data_for = MagicMock(return_value=world_data)
+    window.world_database = world_database
+    
+    # run
+    result = window._check_session_data(MagicMock())
+
+    # assert
+    assert result is "Foo"
+
+
+async def test_attempt_join_no_login(window: GameConnectionWindow):
+    # setup
+    window.network_client.ensure_logged_in = AsyncMock(return_value=False)
+    window._check_session_data = MagicMock()
+
+    # run
+    await window._attempt_join(MagicMock())
+
+    # assert
+    window._check_session_data.assert_not_called()
+
+
+async def test_attempt_join_success(window: GameConnectionWindow):
+    # setup
+    window.network_client.ensure_logged_in = AsyncMock(return_value=True)
+    window._check_session_data = MagicMock()
+    layout_uuid = MagicMock()
+    window.window_manager.ensure_multiplayer_session_window = AsyncMock()
+    # run
+    await window._attempt_join(layout_uuid)
+
+    # assert
+    window._check_session_data.assert_called_once_with(layout_uuid)
+    window.window_manager.ensure_multiplayer_session_window.assert_called_once()
+
+async def test_attempt_join_not_authorized(window: GameConnectionWindow, mocker):
+    # setup
+    window.network_client.ensure_logged_in = AsyncMock(return_value=True)
+    window._check_session_data = MagicMock()
+    layout_uuid = MagicMock()
+    window.window_manager.ensure_multiplayer_session_window = AsyncMock()
+    window.network_client.listen_to_session = AsyncMock(side_effect=error.NotAuthorizedForAction())
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    # run
+    await window._attempt_join(layout_uuid)
+
+    # assert
+    window._check_session_data.assert_called_once_with(layout_uuid)
+    window.window_manager.ensure_multiplayer_session_window.assert_not_called()
+    mock_warning.assert_awaited_once()
 
 @pytest.mark.parametrize("case", [i for i in range(2)])
 def test_builder_ui_add_session_button(window: GameConnectionWindow, case: int):

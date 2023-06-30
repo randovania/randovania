@@ -252,7 +252,7 @@ async def test_create_game_session_window(default_main_window, mocker):
     mocker.patch("randovania.gui.multiplayer_session_window.MultiplayerSessionWindow.create_and_update",
                                       return_value=mock_return)
     # run
-    await default_main_window.activate_or_create_game_session_window(network_client, session_entry, MagicMock())
+    await default_main_window.ensure_multiplayer_session_window(network_client, session_entry.id, MagicMock())
 
     # assert
     mock_return.show.assert_called_once()
@@ -272,7 +272,7 @@ async def test_existing_game_session_window(default_main_window, has_closed: boo
     default_main_window.opened_session_windows[session_entry.id] = mock_return
 
     # run
-    await default_main_window.activate_or_create_game_session_window(network_client, session_entry, MagicMock())
+    await default_main_window.ensure_multiplayer_session_window(network_client, session_entry.id, MagicMock())
 
     # assert
     if has_closed:
