@@ -149,23 +149,12 @@ async def show_game_session(app: QtWidgets.QApplication, options, session_id: in
 
     network_client: QtNetworkClient = app.network_client
 
-    sessions = [
-        session
-        for session in await network_client.get_multiplayer_session_list(False)
-        if session.id == session_id
-    ]
-    if not sessions:
-        app.quit()
-        return
-
-    new_session = await network_client.join_multiplayer_session(sessions[0].id, None)
-    # preset_for = preset_manager.default_preset_for_game
-
+    new_session = await network_client.join_multiplayer_session(session_id, None)
     preset_manager = PresetManager(options.presets_path)
 
     app.game_session_window = await MultiplayerSessionWindow.create_and_update(
         network_client,
-        new_session,
+        new_session.id,
         preset_manager,
         options
     )

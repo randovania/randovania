@@ -716,10 +716,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if session_window is not None and not session_window.has_closed:
             session_window.activateWindow()
             return
-        game_session_window = await MultiplayerSessionWindow.create_and_update(
+
+        session_window = await MultiplayerSessionWindow.create_and_update(
             network_client, session_id,
-            self.preset_manager, options,
+            self, options,
         )
-        if game_session_window is not None:
-            self.opened_session_windows[session_id] = game_session_window
-            game_session_window.show()
+        if session_window is not None:
+            self.opened_session_windows[session_id] = session_window
+            session_window.show()

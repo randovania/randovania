@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.0] - 2023-06-??
 
-- WIP: New multiworld in progress (TODO: proper message when done)
+- **Major** - Multiworld support has been significantly changed! New features include:
+  *  Sessions now have Worlds instead of rows with users, and users can be associated with any number of Worlds.
+     * This means it's now possible to play a Multiworld entirely solo.
+  *  You can connect to one Dolphin and any number of Nintendont at the same time.
+  *  Multiple sessions can be opened at the same time.
+  *  A session window is no longer required to be kept open. As long as Randovania is connected to a game, the server communication works. 
 - Added: It's now possible to drag presets directly into the root of the presets.
 - Added: The order you place presets when drag and dropping is now saved.
 - Added: New command line arguments `--local-data` and `--user-data` to allow configuring where Randovania saves its data.

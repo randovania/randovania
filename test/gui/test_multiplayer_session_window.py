@@ -12,6 +12,7 @@ from pytest_mock import MockerFixture
 from randovania.game_connection.game_connection import GameConnection
 from randovania.games.game import RandovaniaGame
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
+from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
@@ -27,7 +28,7 @@ from randovania.network_common.session_state import MultiplayerSessionState
 
 @pytest.fixture()
 async def window(skip_qtbot) -> MultiplayerSessionWindow:
-    window = MultiplayerSessionWindow(MagicMock(), MagicMock(), MagicMock())
+    window = MultiplayerSessionWindow(MagicMock(), MagicMock(spec=PresetManager), MagicMock())
     skip_qtbot.addWidget(window)
     window.connect_to_events()
     return window
@@ -106,7 +107,7 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
     )
     window = await MultiplayerSessionWindow.create_and_update(network_client, initial_session.id,
-                                                              MagicMock(), MagicMock())
+                                                              MagicMock(spec=PresetManager), MagicMock())
     skip_qtbot.addWidget(window)
 
     # Run
@@ -150,25 +151,22 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
     ]
 
 
-@pytest.mark.parametrize(["has_background_process", "generation_in_progress", "game_details", "expected_text"], [
-    (True, None, None, "Stop"),
-    (False, True, None, "Abort generation"),
-    (False, None, None, "Generate game"),
-    (False, None, True, "Clear generated game"),
+@pytest.mark.parametrize(["generation_in_progress", "game_details", "expected_text"], [
+    (True, None, "Abort generation"),
+    (None, None, "Generate game"),
+    (None, True, "Clear generated game"),
 ])
-def test_update_background_process_button(window: MultiplayerSessionWindow, has_background_process,
-                                          generation_in_progress, game_details, expected_text):
+def test_update_generate_game_button(window: MultiplayerSessionWindow,
+                                     generation_in_progress, game_details, expected_text):
     window._session = MagicMock()
-
-    window._background_thread = True if has_background_process else None
     window._session.generation_in_progress = generation_in_progress
     window._session.game_details = game_details
 
     # Run
-    window.update_background_process_button()
+    window.update_generate_game_button()
 
     # Assert
-    assert window.background_process_button.text() == expected_text
+    assert window.generate_game_button.text() == expected_text
 
 
 def test_sync_background_process_to_session_other_generation(window: MultiplayerSessionWindow):
