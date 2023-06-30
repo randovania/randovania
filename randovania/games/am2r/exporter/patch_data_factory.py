@@ -91,7 +91,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 "quantity": quantity,
                 "text": {
                     "header": item_info[pickup.model.name].text_header,
-                    "description": item_info[pickup.model.name].text_desc.replace("[capacity]", str(quantity)).replace(
+                    "description": item_info[pickup.name].text_desc.replace("[capacity]", str(quantity)).replace(
                         "[energy]", str(self.configuration.energy_per_tank)
                     )
                 }
