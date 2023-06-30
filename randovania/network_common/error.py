@@ -2,6 +2,9 @@ from typing import Self
 
 
 class BaseNetworkError(Exception):
+    @classmethod
+    def human_readable_name(cls) -> str:
+        return cls.__name__
 
     @classmethod
     def code(cls):
@@ -33,7 +36,6 @@ class BaseNetworkError(Exception):
         detail = data["error"]["detail"]
 
         for ret_cls in BaseNetworkError.__subclasses__():
-            ret_cls: type[BaseNetworkError] = ret_cls
             if code == ret_cls.code():
                 return ret_cls.from_detail(detail)
 
@@ -42,26 +44,29 @@ class BaseNetworkError(Exception):
     def __eq__(self, other):
         return isinstance(other, type(self)) and self.detail == other.detail
 
+    def __str__(self):
+        return self.human_readable_name()
 
-class NotLoggedIn(BaseNetworkError):
+
+class NotLoggedInError(BaseNetworkError):
     @classmethod
     def code(cls):
         return 1
 
 
-class WrongPassword(BaseNetworkError):
+class WrongPasswordError(BaseNetworkError):
     @classmethod
     def code(cls):
         return 2
 
 
-class NotAuthorizedForAction(BaseNetworkError):
+class NotAuthorizedForActionError(BaseNetworkError):
     @classmethod
     def code(cls):
         return 3
 
 
-class InvalidAction(BaseNetworkError):
+class InvalidActionError(BaseNetworkError):
     def __init__(self, message: str):
         self.message = message
 
@@ -81,19 +86,24 @@ class InvalidAction(BaseNetworkError):
         return f"Invalid Action: {self.message}"
 
 
-class InvalidSession(BaseNetworkError):
+class InvalidSessionError(BaseNetworkError):
     @classmethod
     def code(cls):
         return 5
 
 
 class ServerError(BaseNetworkError):
+    """An unexpected error happened when processing the request."""
+    @classmethod
+    def human_readable_name(cls) -> str:
+        return "Internal Server Error"
+
     @classmethod
     def code(cls):
         return 6
 
 
-class RequestTimeout(BaseNetworkError):
+class RequestTimeoutError(BaseNetworkError):
     def __init__(self, message: str):
         self.message = message
 
@@ -106,22 +116,24 @@ class RequestTimeout(BaseNetworkError):
         return self.message
 
     @classmethod
-    def from_detail(cls, detail) -> "RequestTimeout":
+    def from_detail(cls, detail) -> Self:
         return cls(detail)
 
     def __str__(self):
         return f"Request timed out: {self.message}"
 
 
-class UserNotAuthorized(BaseNetworkError):
-    """When the user is not authorized to log in to the server."""
+class UserNotAuthorizedToUseServerError(BaseNetworkError):
+    """When the user is not authorized to log in to the server. Used for the Beta Tester role enforcement."""
 
     @classmethod
     def code(cls):
         return 8
 
 
-class UnsupportedClient(BaseNetworkError):
+class UnsupportedClientError(BaseNetworkError):
+    """When the version headers sent by the client does not match the versions from the server."""
+
     def __init__(self, message: str):
         self.message = message
 
@@ -142,12 +154,16 @@ class UnsupportedClient(BaseNetworkError):
 
 
 class WorldDoesNotExistError(BaseNetworkError):
+    """When the UUID of a request does not mention a world that exists"""
+
     @classmethod
     def code(cls):
         return 10
 
 
 class WorldNotAssociatedError(BaseNetworkError):
+    """When the World mentioned with a request is not associated with the user currently authenticated."""
+
     @classmethod
     def code(cls):
         return 11

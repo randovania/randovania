@@ -10,6 +10,7 @@ from randovania.network_common import error
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.multiplayer import session_api
+from randovania.server.server_app import ServerApp
 
 
 @pytest.mark.parametrize("limit", [None, 2, 3])
@@ -120,14 +121,14 @@ def test_listen_to_session(session_update, mocker: MockerFixture, flask_app, lis
 
     if not is_member and listen:
         user = database.User.create(name="Random")
-        expectation = pytest.raises(error.NotAuthorizedForAction)
+        expectation = pytest.raises(error.NotAuthorizedForActionError)
         membership = None
     else:
         user = database.User.get_by_id(1234)
         membership = database.MultiplayerMembership.get_by_ids(user_id=1234, session_id=session_update)
         expectation = contextlib.nullcontext()
 
-    sio = MagicMock()
+    sio = MagicMock(spec=ServerApp)
     sio.get_current_user.return_value = user
 
     # Run

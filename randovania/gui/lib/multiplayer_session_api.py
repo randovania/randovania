@@ -26,28 +26,28 @@ def handle_network_errors(fn: typing.Callable[typing.Concatenate[MultiplayerSess
         try:
             return await fn(self, *args, **kwargs)
 
-        except error.InvalidAction as e:
+        except error.InvalidActionError as e:
             await async_dialog.warning(parent, "Invalid action", f"{e}")
 
         except error.ServerError:
             await async_dialog.warning(parent, "Server error",
                                        "An error occurred on the server while processing your request.")
 
-        except error.NotLoggedIn:
+        except error.NotLoggedInError:
             await async_dialog.warning(parent, "Unauthenticated",
                                        "You must be logged in.")
 
-        except error.NotAuthorizedForAction:
+        except error.NotAuthorizedForActionError:
             await async_dialog.warning(parent, "Unauthorized",
                                        "You're not authorized to perform that action.")
 
-        except error.UserNotAuthorized:
+        except error.UserNotAuthorizedToUseServerError:
             await async_dialog.warning(
                 parent, "Unauthorized",
                 "You're not authorized to use this build.\nPlease check #dev-builds for more details.",
             )
 
-        except error.UnsupportedClient as e:
+        except error.UnsupportedClientError as e:
             s = e.detail.replace('\n', '<br />')
             await async_dialog.warning(
                 parent, "Unsupported client",
@@ -59,7 +59,7 @@ def handle_network_errors(fn: typing.Callable[typing.Concatenate[MultiplayerSess
             await async_dialog.warning(parent, "Connection Error",
                                        f"<b>Unable to connect to the server:</b><br /><br />{s}")
 
-        except error.RequestTimeout as e:
+        except error.RequestTimeoutError as e:
             await async_dialog.warning(parent, "Connection Error",
                                        f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
                                        f"<br />Further attempts will wait for longer.")

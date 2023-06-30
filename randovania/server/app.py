@@ -30,7 +30,7 @@ class ServerLoggingFormatter(logging.Formatter):
                 record.context = "SocketIO"
                 try:
                     who = sio.get_current_user().name
-                except (error.NotLoggedIn, error.InvalidSession):
+                except (error.NotLoggedInError, error.InvalidSessionError):
                     pass
                 where = getattr(flask.request, "message", where)
             else:

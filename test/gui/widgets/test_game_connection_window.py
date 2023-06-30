@@ -360,13 +360,14 @@ async def test_attempt_join_success(window: GameConnectionWindow):
     window._check_session_data.assert_called_once_with(layout_uuid)
     window.window_manager.ensure_multiplayer_session_window.assert_called_once()
 
+
 async def test_attempt_join_not_authorized(window: GameConnectionWindow, mocker):
     # setup
     window.network_client.ensure_logged_in = AsyncMock(return_value=True)
     window._check_session_data = MagicMock()
     layout_uuid = MagicMock()
     window.window_manager.ensure_multiplayer_session_window = AsyncMock()
-    window.network_client.listen_to_session = AsyncMock(side_effect=error.NotAuthorizedForAction())
+    window.network_client.listen_to_session = AsyncMock(side_effect=error.NotAuthorizedForActionError())
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     # run
     await window._attempt_join(layout_uuid)
@@ -375,6 +376,7 @@ async def test_attempt_join_not_authorized(window: GameConnectionWindow, mocker)
     window._check_session_data.assert_called_once_with(layout_uuid)
     window.window_manager.ensure_multiplayer_session_window.assert_not_called()
     mock_warning.assert_awaited_once()
+
 
 @pytest.mark.parametrize("case", [i for i in range(2)])
 def test_builder_ui_add_session_button(window: GameConnectionWindow, case: int):

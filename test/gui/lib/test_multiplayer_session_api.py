@@ -13,10 +13,10 @@ from randovania.network_common import error, admin_actions
 
 
 @pytest.mark.parametrize("exception", [
-    None, error.NotAuthorizedForAction(), error.UserNotAuthorized(),
-    error.ServerError(), error.NotLoggedIn(), error.RequestTimeout("timeout"),
-    error.InvalidAction("not this"),
-    error.UnsupportedClient("Not nice<br />An Error"),
+    None, error.NotAuthorizedForActionError(), error.UserNotAuthorizedToUseServerError(),
+    error.ServerError(), error.NotLoggedInError(), error.RequestTimeoutError("timeout"),
+    error.InvalidActionError("not this"),
+    error.UnsupportedClientError("Not nice<br />An Error"),
     UnableToConnect("No connect"),
     error.WorldDoesNotExistError(),
 ])

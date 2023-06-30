@@ -56,7 +56,7 @@ def test_custom_formatter(flask_app, has_user):
         sio.get_current_user.return_value.name = expected_name
     else:
         expected_name = None
-        sio.get_current_user.side_effect = error.NotLoggedIn()
+        sio.get_current_user.side_effect = error.NotLoggedInError()
 
     flask_app.sio = sio
     record = logging.LogRecord("Name", logging.DEBUG, "path", 10, "the msg",

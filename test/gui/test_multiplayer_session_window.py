@@ -14,11 +14,10 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
-from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
+from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
-from randovania.network_common.error import NotAuthorizedForAction
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry, MultiplayerUser, User, MultiplayerSessionAction,
@@ -354,7 +353,7 @@ async def test_copy_permalink_not_admin(window: MultiplayerSessionWindow, mocker
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     execute_dialog: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    window._admin_global_action = AsyncMock(side_effect=NotAuthorizedForAction)
+    window._admin_global_action = AsyncMock(side_effect=error.NotAuthorizedForActionError)
 
     # Run
     await window.copy_permalink()

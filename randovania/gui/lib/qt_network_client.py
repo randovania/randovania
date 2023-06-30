@@ -1,8 +1,8 @@
+import asyncio
 import datetime
 import functools
 import json
 import webbrowser
-import asyncio
 from pathlib import Path
 
 from PySide6.QtCore import Signal
@@ -13,8 +13,7 @@ import randovania
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, wait_dialog
 from randovania.network_client.network_client import NetworkClient, ConnectionState, UnableToConnect
-from randovania.network_common.error import (InvalidAction, NotAuthorizedForAction, ServerError, RequestTimeout,
-                                             NotLoggedIn, UserNotAuthorized, UnsupportedClient, WrongPassword)
+from randovania.network_common import error
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry, MultiplayerSessionListEntry, User, MultiplayerSessionActions,
     MultiplayerWorldPickups, MultiplayerSessionAuditLog,
@@ -27,28 +26,28 @@ def handle_network_errors(fn):
         try:
             return await fn(self, *args, **kwargs)
 
-        except InvalidAction as e:
+        except error.InvalidActionError as e:
             await async_dialog.warning(self, "Invalid action", f"{e}")
 
-        except ServerError:
+        except error.ServerError:
             await async_dialog.warning(self, "Server error",
                                        "An error occurred on the server while processing your request.")
 
-        except NotLoggedIn:
+        except error.NotLoggedInError:
             await async_dialog.warning(self, "Unauthenticated",
                                        "You must be logged in.")
 
-        except NotAuthorizedForAction:
+        except error.NotAuthorizedForActionError:
             await async_dialog.warning(self, "Unauthorized",
                                        "You're not authorized to perform that action.")
 
-        except UserNotAuthorized:
+        except error.UserNotAuthorizedToUseServerError:
             await async_dialog.warning(
                 self, "Unauthorized",
                 "You're not authorized to use this build.\nPlease check #dev-builds for more details.",
             )
 
-        except UnsupportedClient as e:
+        except error.UnsupportedClientError as e:
             s = e.detail.replace('\n', '<br />')
             await async_dialog.warning(
                 self, "Unsupported client",
@@ -60,7 +59,7 @@ def handle_network_errors(fn):
             await async_dialog.warning(self, "Connection Error",
                                        f"<b>Unable to connect to the server:</b><br /><br />{s}")
 
-        except RequestTimeout as e:
+        except error.RequestTimeoutError as e:
             await async_dialog.warning(self, "Connection Error",
                                        f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
                                        f"<br />Further attempts will wait for longer.")
@@ -183,7 +182,7 @@ class QtNetworkClient(QWidget, NetworkClient):
             joined_session = await self.join_multiplayer_session(session_id, password)
             return joined_session
 
-        except WrongPassword:
+        except error.WrongPasswordError:
             await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
 
     async def ensure_logged_in(self, parent: QWidget | None):
@@ -206,4 +205,3 @@ class QtNetworkClient(QWidget, NetworkClient):
             await async_dialog.execute_dialog(LoginPromptDialog(self))
 
         return self.current_user is not None
-

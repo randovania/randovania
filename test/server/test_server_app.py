@@ -4,7 +4,7 @@ import flask
 import pytest
 import pytest_mock
 
-from randovania.network_common.error import NotLoggedIn, ServerError, InvalidSession
+from randovania.network_common import error
 from randovania.server import database
 from randovania.server.server_app import EnforceDiscordRole
 
@@ -46,7 +46,7 @@ def test_get_current_user_not_logged(server_app, clean_database):
     server_app.get_session = MagicMock(return_value={})
 
     # Run
-    with pytest.raises(NotLoggedIn):
+    with pytest.raises(error.NotLoggedInError):
         server_app.get_current_user()
 
 
@@ -54,7 +54,7 @@ def test_get_current_user_unknown_user(server_app, clean_database):
     server_app.get_session = MagicMock(return_value={"user-id": 1234})
 
     # Run
-    with pytest.raises(InvalidSession):
+    with pytest.raises(error.InvalidSessionError):
         server_app.get_current_user()
 
 
@@ -74,8 +74,8 @@ def test_on_success_ok(server_app):
 
 def test_on_success_network_error(server_app):
     # Setup
-    error = NotLoggedIn()
-    custom = MagicMock(side_effect=error)
+    err = error.NotLoggedInError()
+    custom = MagicMock(side_effect=err)
     server_app.on("custom", custom)
 
     # Run
@@ -84,7 +84,7 @@ def test_on_success_network_error(server_app):
 
     # Assert
     custom.assert_called_once_with(server_app)
-    assert result == error.as_json
+    assert result == err.as_json
 
 
 def test_on_success_exception(server_app):
@@ -98,7 +98,7 @@ def test_on_success_exception(server_app):
 
     # Assert
     custom.assert_called_once_with(server_app)
-    assert result == ServerError().as_json
+    assert result == error.ServerError().as_json
 
 
 def test_store_world_in_session(server_app):

@@ -10,7 +10,7 @@ import pytest_mock
 from pytest_mock import MockerFixture
 
 from randovania.network_common import error
-from randovania.network_common.error import InvalidSession
+from randovania.network_common.error import InvalidSessionError
 from randovania.server import user_session
 from randovania.server.database import User
 
@@ -88,7 +88,7 @@ def test_browser_discord_login_callback_with_sid(
 def test_browser_discord_login_callback_not_authorized(flask_app, mocker: pytest_mock.MockerFixture):
     mock_render = mocker.patch("flask.render_template")
     mock_create = mocker.patch("randovania.server.user_session._create_session_with_discord_token",
-                               side_effect=error.UserNotAuthorized)
+                               side_effect=error.UserNotAuthorizedToUseServerError)
 
     sio = MagicMock()
 
@@ -222,6 +222,6 @@ def test_restore_user_session_invalid_key(flask_app, fernet):
     sio = MagicMock()
     sio.fernet_encrypt = fernet
 
-    with pytest.raises(InvalidSession):
+    with pytest.raises(InvalidSessionError):
         user_session.restore_user_session(sio, b"")
         pass

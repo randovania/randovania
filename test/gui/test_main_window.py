@@ -22,7 +22,7 @@ from randovania.network_common.multiplayer_session import MultiplayerSessionEntr
 
 def create_window(options: Options | MagicMock,
                   preset_manager: PresetManager) -> MainWindow:
-    return MainWindow(options, preset_manager, MagicMock(), False)
+    return MainWindow(options, preset_manager, MagicMock(), MagicMock(), False)
 
 
 @pytest.fixture(name="default_main_window")
