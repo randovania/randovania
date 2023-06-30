@@ -19,12 +19,12 @@ from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
+from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
@@ -47,12 +47,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     _session: MultiplayerSessionEntry
     has_closed = False
     _logic_settings_window: CustomizePresetDialog | None = None
-    _window_manager: WindowManager
     _generating_game: bool = False
     _already_kicked = False
     _can_stop_background_process = True
 
-    def __init__(self, game_session_api: MultiplayerSessionApi, window_manager: WindowManager, options: Options):
+    def __init__(self, game_session_api: MultiplayerSessionApi, preset_manager: PresetManager, options: Options):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -61,8 +60,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.network_client = game_session_api.network_client
         self.failure_handler = GenerationFailureHandler(self)
 
-        self._preset_manager = window_manager.preset_manager
-        self._window_manager = window_manager
+        self._preset_manager = preset_manager
         self._options = options
         self._trackers = load_trackers_configuration()
         self._update_status_lock = asyncio.Lock()
@@ -160,15 +158,14 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         ]
 
     @classmethod
-    async def create_and_update(cls, network_client: QtNetworkClient, session_entry: MultiplayerSessionEntry,
-                                window_manager: WindowManager, options: Options,
+    async def create_and_update(cls, network_client: QtNetworkClient, session_id: int,
+                                preset_manager: PresetManager, options: Options
                                 ) -> Self:
 
         logger.debug("Creating MultiplayerSessionWindow")
 
-        game_session_api = MultiplayerSessionApi(network_client, session_entry)
-        window = cls(game_session_api, window_manager, options)
-        await window.on_meta_update(session_entry)
+        game_session_api = MultiplayerSessionApi(network_client, session_id)
+        window = cls(game_session_api, preset_manager, options)
         window.on_server_connection_state_updated(network_client.connection_state)
         window.connect_to_events()
         await game_session_api.request_session_update()
@@ -196,7 +193,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         try:
             if not is_kicked and not self.network_client.connection_state.is_disconnected:
-                await self.network_client.listen_to_session(self._session, False)
+                await self.network_client.listen_to_session(self._session.id, False)
         finally:
             for d in list(self.tracker_windows.values()):
                 d.close()
@@ -205,7 +202,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     @asyncSlot(MultiplayerSessionEntry)
     async def on_meta_update(self, session: MultiplayerSessionEntry):
-        if session.id != self.game_session_api.current_entry.id:
+        if session.id != self.game_session_api.current_session_id:
             return
 
         self._session = session
@@ -246,7 +243,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if self._already_kicked:
             return
         self._already_kicked = True
-        leave_session = self.network_client.listen_to_session(self._session, False)
+        leave_session = self.network_client.listen_to_session(self._session.id, False)
         if self._session.users:
             message = "Kicked", "You have been kicked out of the session."
         else:

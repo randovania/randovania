@@ -8,13 +8,16 @@ from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 
 from randovania.games.game import RandovaniaGame
+from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.main_window import MainWindow
+from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.gui.widgets.about_widget import AboutWidget
 from randovania.gui.widgets.randovania_help_widget import RandovaniaHelpWidget
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
+from randovania.network_common.multiplayer_session import MultiplayerSessionEntry
 
 
 def create_window(options: Options | MagicMock,
@@ -238,3 +241,42 @@ def test_select_game_and_selector_visibility(default_main_window, skip_qtbot):
     default_main_window.main_tab_widget.setCurrentWidget(default_main_window.tab_welcome)
     default_main_window.set_games_selector_visible(True)
     assert default_main_window.main_tab_widget.currentWidget() is default_main_window.tab_welcome
+
+
+async def test_create_game_session_window(default_main_window, mocker):
+    # setup
+    network_client = MagicMock(QtNetworkClient)
+    session_entry = MagicMock(MultiplayerSessionEntry)
+    session_entry.id = 1
+    mock_return = MagicMock(MultiplayerSessionWindow)
+    mocker.patch("randovania.gui.multiplayer_session_window.MultiplayerSessionWindow.create_and_update",
+                                      return_value=mock_return)
+    # run
+    await default_main_window.ensure_multiplayer_session_window(network_client, session_entry.id, MagicMock())
+
+    # assert
+    mock_return.show.assert_called_once()
+    assert default_main_window.opened_session_windows[session_entry.id] == mock_return
+
+
+@pytest.mark.parametrize("has_closed", [False, True])
+async def test_existing_game_session_window(default_main_window, has_closed: bool, mocker):
+    # setup
+    network_client = MagicMock(QtNetworkClient)
+    session_entry = MagicMock(MultiplayerSessionEntry)
+    session_entry.id = 1
+    mock_return = MagicMock(MultiplayerSessionWindow)
+    mock_return.has_closed = has_closed
+    mocker.patch("randovania.gui.multiplayer_session_window.MultiplayerSessionWindow.create_and_update",
+                                      return_value=mock_return)
+    default_main_window.opened_session_windows[session_entry.id] = mock_return
+
+    # run
+    await default_main_window.ensure_multiplayer_session_window(network_client, session_entry.id, MagicMock())
+
+    # assert
+    if has_closed:
+        mock_return.show.assert_called_once()
+    else:
+        mock_return.activateWindow.assert_called_once()
+    assert default_main_window.opened_session_windows[session_entry.id] == mock_return

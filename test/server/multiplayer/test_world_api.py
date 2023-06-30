@@ -209,7 +209,8 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     mock_emit_inventory = mocker.patch("randovania.server.multiplayer.session_common.emit_inventory_update")
 
     sio = MagicMock()
-    sio.get_current_user.return_value = database.User.get_by_id(1234)
+    user = database.User.get_by_id(1234)
+    sio.get_current_user.return_value = user
 
     w1 = database.World.get_by_id(1)
     w2 = database.World.get_by_id(2)
@@ -247,7 +248,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
         worlds=frozendict({
             w1.uuid: ServerWorldResponse(
                 world_name=w1.name,
-                session=session.create_list_entry(),
+                session=session.create_list_entry(user),
             ),
         }),
         errors=frozendict({

@@ -199,6 +199,7 @@ async def test_server_sync(client, mocker: MockerFixture):
         id=567, name="The Session", has_password=False, state=MultiplayerSessionState.IN_PROGRESS,
         num_players=5, creator="Not You", creation_date=datetime.datetime(2019, 1, 3, 2, 50,
                                                                           tzinfo=datetime.timezone.utc),
+        is_user_in_session=False,
     )
 
     request = ServerSyncRequest(worlds=frozendict({

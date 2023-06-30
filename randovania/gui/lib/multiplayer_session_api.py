@@ -77,25 +77,26 @@ def handle_network_errors(fn: typing.Callable[typing.Concatenate[MultiplayerSess
 
 
 class MultiplayerSessionApi(QtCore.QObject):
+    # FIXME: All these signals are unused
     MetaUpdated = QtCore.Signal(MultiplayerSessionEntry)
     ActionsUpdated = QtCore.Signal(MultiplayerSessionActions)
     AuditLogUpdated = QtCore.Signal(MultiplayerSessionAuditLog)
 
-    current_entry: MultiplayerSessionEntry
+    current_session_id: int
     widget_root: QtWidgets.QWidget | None
 
-    def __init__(self, network_client: QtNetworkClient, entry: MultiplayerSessionEntry):
+    def __init__(self, network_client: QtNetworkClient, session_id: int):
         super().__init__()
         self.widget_root = None
         self.network_client = network_client
-        self.current_entry = entry
+        self.current_session_id = session_id
 
     async def session_admin_global(self, action: admin_actions.SessionAdminGlobalAction, arg):
         try:
             self.widget_root.setEnabled(False)
             return await self.network_client.server_call(
                 "multiplayer_admin_session",
-                (self.current_entry.id, action.value, arg))
+                (self.current_session_id, action.value, arg))
         finally:
             self.widget_root.setEnabled(True)
 
@@ -104,7 +105,7 @@ class MultiplayerSessionApi(QtCore.QObject):
             self.widget_root.setEnabled(False)
             return await self.network_client.server_call(
                 "multiplayer_admin_player",
-                (self.current_entry.id, user_id, action.value, arg)
+                (self.current_session_id, user_id, action.value, arg)
             )
         finally:
             self.widget_root.setEnabled(True)
@@ -175,5 +176,5 @@ class MultiplayerSessionApi(QtCore.QObject):
     async def request_session_update(self):
         await self.network_client.server_call(
             "multiplayer_request_session_update",
-            self.current_entry.id
+            self.current_session_id
         )

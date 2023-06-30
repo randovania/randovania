@@ -32,7 +32,7 @@ def _create_client_side_session_raw(sio: ServerApp, user: User) -> dict:
     return {
         "user": user.as_json,
         "sessions": [
-            membership.session.create_list_entry().as_json
+            membership.session.create_list_entry(user).as_json
             for membership in memberships
         ],
     }
