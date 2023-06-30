@@ -74,6 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Use Spider Magnet with Grapple Beam in Ghavoran Spider Magnet Elevator.
 - Added: Use Speed Booster to get past the pool of water in Dairon Freezer before turning on the power.
 - Added: Various trick alternatives to get past the pool of water in Dairon Freezer with Bomb Jumps.
+- Added: Water Bomb Jump in Burenia Underneath Drogyga to get up to the left ledge with Normal Bomb, rated as Intermediate.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
@@ -84,6 +85,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In Burenia Teleport to Ghavoran, using Power Bombs to get back up from Early Gravity Speedboost Room now requires 2 ammo units of Power Bomb. The purpose is to account for using one unit on the way down in the first place.
 - Changed: Water Bomb Jump in Artaria First Tutorial, after adding the water has been changed to Infinite Bomb Jump.
 - Changed: Infinite Bomb Jump in Artaria Screw Attack Room to jump out of the water under the Recharge Station has been changed to Water Bomb Jump.
+- Changed: Water Bomb Jump in Burenia Underneath Drogyga to get the pickup is now Beginner with Cross Bombs.
+- Changed: Water Bomb Jump in Burenia Underneath Drogyga to get up to the left ledge with Cross Bomb is now Beginner.
 - Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
 - Fixed: Burenia Hub to Dairon Transport Blob from Below giving the wrong event resource.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
