@@ -260,6 +260,25 @@ def test_admin_session_create_world(mock_emit_session_update: MagicMock, mock_au
     mock_audit.assert_called_once_with(sio, session, "Created new world New World")
 
 
+def test_admin_session_create_world_bad_name(mock_emit_session_update: MagicMock, mock_audit,
+                                    clean_database, flask_app, preset_manager):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    database.MultiplayerMembership.create(user=user1, session=session, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    with flask_app.test_request_context(), pytest.raises(error.InvalidAction, match="Invalid world name"):
+        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CREATE_WORLD.value,
+                                    ("New####,World", preset_manager.default_preset.as_json))
+
+    # Assert
+    mock_emit_session_update.assert_not_called()
+    assert list(database.World.select()) == []
+    mock_audit.assert_not_called()
+
+
 @pytest.mark.parametrize("association", ["no", "yes", "admin"])
 def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_audit,
                                     clean_database, flask_app, preset_manager, association):
@@ -297,6 +316,41 @@ def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_au
         mock_emit_session_update.assert_called_once_with(session)
         assert json.loads(new_preset_row.preset) == preset_manager.default_preset.as_json
         mock_audit.assert_called_once_with(sio, session, f"Changing world {w1.name}")
+
+
+@pytest.mark.parametrize("valid_name", [False, True])
+def test_admin_session_rename_world(mock_emit_session_update: MagicMock, mock_audit,
+                                    clean_database, flask_app, valid_name):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    w1 = database.World.create(session=session, name="W1", preset="{}")
+    database.World.create(session=session, name="W2", preset="{}")
+    database.MultiplayerMembership.create(user=user1, session=session, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    if valid_name:
+        context = contextlib.nullcontext()
+        new_name = "TheNewName"
+    else:
+        context = pytest.raises(error.InvalidAction, match="Invalid world name")
+        new_name = "TheNew,?/1#Name"
+
+    # Run
+    with flask_app.test_request_context(), context:
+        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.RENAME_WORLD.value,
+                                    (str(w1.uuid), new_name))
+
+    world_after = database.World.get_by_id(w1.id)
+    # Assert
+    if valid_name:
+        mock_emit_session_update.assert_called_once_with(session)
+        assert world_after.name == new_name
+        mock_audit.assert_called_once_with(sio, session, f"Renaming world W1 to {new_name}")
+    else:
+        mock_emit_session_update.assert_not_called()
+        assert world_after.name == "W1"
+        mock_audit.assert_not_called()
 
 
 @pytest.mark.parametrize("association", ["no", "yes", "admin"])
@@ -609,21 +663,34 @@ def test_admin_session_change_password(clean_database, mock_emit_session_update,
     assert database.MultiplayerSession.get_by_id(1).password == expected_password
 
 
-def test_admin_session_change_title(clean_database, mock_emit_session_update, flask_app, mock_audit):
+@pytest.mark.parametrize("valid_name", [False, True])
+def test_admin_session_change_title(clean_database, mock_emit_session_update, flask_app, mock_audit, valid_name):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
+    if valid_name:
+        context = contextlib.nullcontext()
+        new_name = "new_name"
+    else:
+        context = pytest.raises(error.InvalidAction, match="Invalid session name length")
+        new_name = "new_name" * 10
+
     # Run
-    with flask_app.test_request_context():
-        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_TITLE.value, "new_name")
+    with flask_app.test_request_context(), context:
+        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_TITLE.value, new_name)
 
     # Assert
-    mock_emit_session_update.assert_called_once_with(session)
-    mock_audit.assert_called_once_with(sio, session, "Changed name from Debug to new_name")
-    assert database.MultiplayerSession.get_by_id(1).name == "new_name"
+    if valid_name:
+        mock_emit_session_update.assert_called_once_with(session)
+        mock_audit.assert_called_once_with(sio, session, "Changed name from Debug to new_name")
+        assert database.MultiplayerSession.get_by_id(1).name == "new_name"
+    else:
+        mock_emit_session_update.assert_not_called()
+        mock_audit.assert_not_called()
+        assert database.MultiplayerSession.get_by_id(1).name == "Debug"
 
 
 def test_admin_session_duplicate_session(clean_database, mock_emit_session_update, flask_app, mock_audit):

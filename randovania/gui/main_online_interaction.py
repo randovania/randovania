@@ -5,12 +5,14 @@ from qasync import asyncSlot
 
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.online_game_list_dialog import OnlineGameListDialog
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, wait_dialog
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
+from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH
 
 
 class OnlineInteractions(QtWidgets.QWidget):
@@ -79,14 +81,17 @@ class OnlineInteractions(QtWidgets.QWidget):
         if not await self.network_client.ensure_logged_in(self):
             return
 
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setWindowTitle("Enter session name")
-        dialog.setLabelText("Select a name for the session:")
-        if await async_dialog.execute_dialog(dialog) != QtWidgets.QDialog.DialogCode.Accepted:
+        session_name = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter session name",
+            description="Select a name for the session:",
+            is_modal=True,
+            max_length=MAX_SESSION_NAME_LENGTH,
+        )
+        if session_name is None:
             return
 
-        new_session = await self.network_client.create_new_session(dialog.textValue())
+        new_session = await self.network_client.create_new_session(session_name)
         await self.window_manager.ensure_multiplayer_session_window(
             self.network_client,
             new_session.id,

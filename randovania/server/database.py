@@ -20,7 +20,7 @@ from randovania.network_common import multiplayer_session
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerUser, GameDetails, \
     MultiplayerWorld, MultiplayerSessionListEntry, MultiplayerSessionAuditLog, \
-    MultiplayerSessionAuditEntry, UserWorldDetail
+    MultiplayerSessionAuditEntry, UserWorldDetail, MAX_SESSION_NAME_LENGTH, MAX_WORLD_NAME_LENGTH
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
@@ -123,7 +123,7 @@ def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> Layou
 
 class MultiplayerSession(BaseModel):
     id: int
-    name: str = peewee.CharField()
+    name: str = peewee.CharField(max_length=MAX_SESSION_NAME_LENGTH)
     password: str | None = peewee.CharField(null=True)
     state: MultiplayerSessionState = EnumField(choices=MultiplayerSessionState,
                                                default=MultiplayerSessionState.SETUP)
@@ -299,7 +299,7 @@ class World(BaseModel):
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="worlds")
     uuid: uuid.UUID = peewee.UUIDField(default=uuid.uuid4, unique=True)
 
-    name: str = peewee.CharField()
+    name: str = peewee.CharField(max_length=MAX_WORLD_NAME_LENGTH)
     preset: str = peewee.TextField()
     order: int | None = peewee.IntegerField(null=True, default=None)
 

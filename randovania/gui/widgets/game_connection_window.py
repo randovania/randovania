@@ -17,6 +17,7 @@ from randovania.game_connection.connector_builder_choice import ConnectorBuilder
 from randovania.game_connection.game_connection import GameConnection
 from randovania.games.game import RandovaniaGame
 from randovania.gui.debug_backend_window import DebugConnectorWindow
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.game_connection_window_ui import Ui_GameConnectionWindow
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
@@ -80,6 +81,7 @@ class BuilderUi:
             button = self.join_session[1]
             button.setDisabled(new_value)
 
+
 class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
     ui_for_builder: dict[ConnectorBuilder, BuilderUi]
     layout_uuid_for_builder: dict[ConnectorBuilder, uuid.UUID]
@@ -111,17 +113,12 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         self.setup_builder_ui()
 
     async def _prompt_for_text(self, title: str, label: str) -> str | None:
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setWindowTitle(title)
-        dialog.setLabelText(label)
-        new_text = ""
-        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
-            new_text = dialog.textValue()
-
-        if new_text == "":
-            return None
-        return new_text
+        return await TextPromptDialog.prompt(
+            parent=self,
+            title=title,
+            description=label,
+            is_modal=True,
+        )
 
     async def _prompt_for_game(self, title: str, label: str) -> RandovaniaGame | None:
         games_by_name = {

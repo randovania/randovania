@@ -8,13 +8,15 @@ from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerWorld
+from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerWorld, \
+    MAX_WORLD_NAME_LENGTH, WORLD_NAME_RE
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
@@ -101,16 +103,16 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     @asyncSlot()
     async def _world_rename(self, world_uid: uuid.UUID):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setTextValue(self._session.get_world(world_uid).name)
-        dialog.setWindowTitle("Enter world name")
-        dialog.setLabelText("Select a new name for the world:")
-        if await async_dialog.execute_dialog(dialog) != QtWidgets.QDialog.DialogCode.Accepted:
-            return
-
-        new_name = dialog.textValue().strip()
-        if new_name:
+        new_name = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter world name",
+            description="Select a new name for the world:",
+            initial_value=self._session.get_world(world_uid).name,
+            is_modal=True,
+            max_length=MAX_WORLD_NAME_LENGTH,
+            check_re=WORLD_NAME_RE,
+        )
+        if new_name is not None:
             await self._session_api.rename_world(world_uid, new_name)
 
     @asyncSlot()
