@@ -9,7 +9,6 @@ import sentry_sdk
 from frozendict import frozendict
 
 from randovania.bitpacking import bitpacking
-from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -18,6 +17,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import signals, error
 from randovania.network_common.error import InvalidAction
+from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse, ServerWorldResponse, \
@@ -117,8 +117,12 @@ def update_association(user: User, world: World, inventory: bytes | None,
     session = association.world.session
 
     new_inventory = False
-    association.connection_state = connection_state
-    if session.state == MultiplayerSessionState.IN_PROGRESS and inventory is not None:
+
+    if connection_state != association.connection_state:
+        association.connection_state = connection_state
+
+    if (session.state == MultiplayerSessionState.IN_PROGRESS
+            and inventory is not None and inventory != association.inventory):
         association.inventory = inventory
         new_inventory = True
 
@@ -182,9 +186,9 @@ def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: Se
     if world_request.status == GameConnectionStatus.Disconnected:
         flask_socketio.leave_room(_get_world_room(world))
     else:
-        flask_socketio.join_room(_get_world_room(world))
-        worlds_to_update.add(world)
-        sio.store_world_in_session(world)
+        if sio.ensure_in_room(_get_world_room(world)):
+            worlds_to_update.add(world)
+            sio.store_world_in_session(world)
 
     session_id = update_association(user, world, world_request.inventory, world_request.status)
 

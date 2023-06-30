@@ -2,6 +2,7 @@ from unittest.mock import MagicMock
 
 import flask
 import pytest
+import pytest_mock
 
 from randovania.network_common.error import NotLoggedIn, ServerError, InvalidSession
 from randovania.server import database
@@ -180,3 +181,17 @@ def test_request_sid_from_request(server_app):
     with server_app.app.test_request_context() as context:
         context.request.sid = "THE_SID@"
         assert server_app.request_sid == "THE_SID@"
+
+
+@pytest.mark.parametrize("expected", [False, True])
+def test_ensure_in_room(server_app, mocker: pytest_mock.MockerFixture, expected):
+    mock_room = mocker.patch("flask_socketio.rooms", return_value=[] if expected else ["the_room"])
+    mock_join = mocker.patch("flask_socketio.join_room")
+
+    # Run
+    result = server_app.ensure_in_room("the_room")
+
+    # Assert
+    mock_room.assert_called_once_with()
+    mock_join.assert_called_once_with("the_room")
+    assert result is expected
