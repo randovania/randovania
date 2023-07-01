@@ -515,11 +515,13 @@ def test_admin_session_change_layout_description(clean_database, preset_manager,
 
 def test_admin_session_remove_layout_description(mock_emit_session_update: MagicMock, clean_database,
                                                  flask_app, mock_audit):
+    original_uid = uuid.UUID('6b5ac1a1-d250-4f05-0000-ae37e8a92165')
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
                                                  generation_in_progress=user1,
                                                  layout_description_json="layout_description_json")
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
+    database.World.create(session=session, name="W1", preset="{}", uuid=original_uid)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
@@ -533,6 +535,7 @@ def test_admin_session_remove_layout_description(mock_emit_session_update: Magic
     mock_audit.assert_called_once_with(sio, session, "Removed generated game")
     assert database.MultiplayerSession.get_by_id(1).layout_description_json is None
     assert database.MultiplayerSession.get_by_id(1).generation_in_progress is None
+    assert database.World.get_by_id(1).uuid != original_uid
 
 
 @pytest.mark.parametrize("other_user", [False, True])
