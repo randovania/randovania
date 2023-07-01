@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Door Lock Randomizer can randomize doors to be weak to Ice Missile, Storm Missile, Diffusion Beam, Bombs, Cross Bombs, Power Bombs.
 - Added: New option under "Game Modifications" to choose how inconsistencies in Raven Beak's damage resistance are handled.
 - Added: Auto tracker is now supported via a new game connection choice.
+- Added: Exporting now checks if the RomFS folder has some required files.
 - Changed: The doors in Itorash are now excluded from being shuffled in Door Lock Randomizer.
 
 #### Patcher Changes
