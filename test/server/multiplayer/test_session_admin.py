@@ -261,7 +261,7 @@ def test_admin_session_create_world(mock_emit_session_update: MagicMock, mock_au
 
 
 def test_admin_session_create_world_bad_name(mock_emit_session_update: MagicMock, mock_audit,
-                                    clean_database, flask_app, preset_manager):
+                                             clean_database, flask_app, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
@@ -387,6 +387,24 @@ def test_admin_session_delete_world(mock_emit_session_update: MagicMock, mock_au
         mock_emit_session_update.assert_called_once_with(session)
         assert world_count == 1
         mock_audit.assert_called_once_with(sio, session, f"Deleting world {w1.name}")
+
+
+def test_admin_session_delete_world_missing(clean_database, flask_app):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    database.MultiplayerMembership.create(user=user1, session=session, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+    uid = 'ffa5bf78-21f5-45af-96e6-f2c025a9ead2'
+
+    context = pytest.raises(error.WorldDoesNotExistError)
+
+    # Run
+    with flask_app.test_request_context(), context:
+        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.DELETE_WORLD.value, uid)
+
+    # Assert
+    assert database.World.select().count() == 0
 
 
 @pytest.mark.parametrize("case", ["to_false", "to_true_free", "to_true_busy"])
