@@ -219,6 +219,12 @@ def browser_discord_login_callback(sio: ServerApp):
                 user=user,
             )
 
+    except flask_discord.exceptions.AccessDenied:
+        return flask.render_template(
+            "unable_to_login.html",
+            error_message="Discord login was cancelled. Please try again!",
+        )
+
     except UserNotAuthorized:
         return flask.render_template(
             "unable_to_login.html",

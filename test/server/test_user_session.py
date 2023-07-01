@@ -3,6 +3,7 @@ import json
 from unittest.mock import MagicMock
 
 import flask
+import flask_discord
 import oauthlib.oauth2.rfc6749.errors
 import pytest
 import pytest_mock
@@ -120,6 +121,24 @@ def test_browser_discord_login_callback_oauth_error(flask_app, mocker: pytest_mo
     mock_render.assert_called_once_with(
         "unable_to_login.html",
         error_message="Unable to complete login. Please try again! (invalid_grant) ",
+    )
+
+
+def test_browser_discord_login_callback_cancelled(flask_app, mocker: pytest_mock.MockerFixture):
+    mock_render = mocker.patch("flask.render_template")
+
+    sio = MagicMock()
+    sio.discord.callback.side_effect = flask_discord.exceptions.AccessDenied()
+
+    # Run
+    result = user_session.browser_discord_login_callback(sio)
+
+    # Assert
+    sio.discord.callback.assert_called_once_with()
+    assert result is mock_render.return_value
+    mock_render.assert_called_once_with(
+        "unable_to_login.html",
+        error_message="Discord login was cancelled. Please try again!",
     )
 
 
