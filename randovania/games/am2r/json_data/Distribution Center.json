@@ -11245,8 +11245,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.0,
-                        "y": 288.0,
+                        "x": 27.379679144385026,
+                        "y": 289.4117647058823,
                         "z": 0.0
                     },
                     "description": "",
@@ -11329,7 +11329,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Varia Suit",
+                                                        "name": "Gravity Suit",
                                                         "amount": 1,
                                                         "negate": true
                                                     }
@@ -11349,7 +11349,7 @@
                                 ]
                             }
                         },
-                        "Door to Gravity Area Blockade": {
+                        "Top": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11398,7 +11398,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Varia Suit",
+                                                        "name": "Gravity Suit",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -11448,18 +11448,56 @@
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [
-                        "Spider Ball Door",
-                        "Screw Attack Door"
-                    ],
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Top": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Top": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 142.03208556149733,
+                        "y": 578.6096256684492,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Gravity Area Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Door to Gravity Area Blockade": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity Suit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
