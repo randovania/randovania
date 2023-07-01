@@ -116,6 +116,26 @@ class MSRPatchDataFactory(BasePatchDataFactory):
         except KeyError as e:
             raise self._key_error_for_node(node, e)
 
+    def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
+        # target.
+
+        resources = get_resources_for_details(detail)
+
+        pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
+        pickup_type = pickup_node.extra.get("pickup_type", "actor")
+
+        hud_text = detail.collection_text[0]
+        if len(set(detail.collection_text)) > 1:
+            hud_text = self.memo_data[detail.original_pickup.name]
+
+        details = {
+            "pickup_type": pickup_type,
+            "caption": hud_text,
+            "resources": resources,
+        }
+
+        return details
+
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
