@@ -16,7 +16,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common import multiplayer_session
+from randovania.network_common import multiplayer_session, error
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerUser, GameDetails, \
     MultiplayerWorld, MultiplayerSessionListEntry, MultiplayerSessionAuditLog, \
@@ -83,10 +83,6 @@ class User(BaseModel):
     discord_id: int | None = peewee.IntegerField(index=True, null=True)
     name: str = peewee.CharField()
     admin: bool = peewee.BooleanField(default=False)
-
-    @classmethod
-    def get_by_id(cls, pk) -> Self:
-        return cls.get(cls._meta.primary_key == pk)
 
     @property
     def as_json(self):
@@ -307,7 +303,10 @@ class World(BaseModel):
 
     @classmethod
     def get_by_uuid(cls, uid) -> World:
-        return cls.get(World.uuid == uid)
+        try:
+            return cls.get(World.uuid == uid)
+        except peewee.DoesNotExist:
+            raise error.WorldDoesNotExistError()
 
     @classmethod
     def get_by_order(cls, session_id: int, order: int) -> World:

@@ -174,11 +174,7 @@ def _check_user_is_associated(user: User, world: World):
 
 def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: ServerWorldSync,
                    ) -> tuple[ServerWorldResponse | None, int | None, set[World]]:
-    try:
-        world = World.get_by_uuid(uid)
-    except peewee.DoesNotExist:
-        raise error.WorldDoesNotExistError()
-
+    world = World.get_by_uuid(uid)
     _check_user_is_associated(user, world)
     response = None
     worlds_to_update = set()

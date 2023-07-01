@@ -136,7 +136,7 @@ async def test_disconnect_from_server(client: NetworkClient):
     client.sio.disconnect.assert_awaited_once_with()
 
 
-async def test_session_admin_global(client):
+async def test_session_admin_global(client: NetworkClient):
     client.server_call = AsyncMock()
 
     game_session_meta = MagicMock()
