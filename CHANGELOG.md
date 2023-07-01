@@ -88,6 +88,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Water Bomb Jump in Burenia Underneath Drogyga to get the pickup is now Beginner with Cross Bombs.
 - Changed: Water Bomb Jump in Burenia Underneath Drogyga to get up to the left ledge with Cross Bomb is now Beginner.
 - Changed: Bomb Jumping to the upper part of Ghavoran Map Station Access now requires Water Bomb Jump Intermediate with Normal Bomb and Beginner with Cross Bomb. This was previously trivial with both of those.
+- Changed: Bomb Jumping to the upper part of Ghavoran EMMI Zone Exit Southeast with Cross Bombs is changed from trivial to Water Bomb Jump Intermediate.
+- Changed: Bomb Jumping to the upper part of Ghavoran EMMI Zone Exit Southeast with Normal Bombs is changed from Infinite Bomb Jump Intermediate to both Water Bomb Jump Intermediate and Diagonal Bomb Jump Intermediate.
 - Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
 - Fixed: Burenia Hub to Dairon Transport Blob from Below giving the wrong event resource.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
