@@ -1090,7 +1090,7 @@
             }
         },
         "Laboratory Save Station": {
-            "default_node": null,
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a7b02A"
             },
@@ -1110,7 +1110,7 @@
                     "extra": {
                         "save_room": 24
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Laboratory Entrance": {
                             "type": "and",
@@ -1437,34 +1437,11 @@
                         "Pipe to Hydro Station": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "New goal removes vanilla requirement",
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega2",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega3",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega4",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Power Grip Wall"
                                     }
                                 ]
                             }
@@ -1503,7 +1480,7 @@
                         "Door to Laboratory Entrance": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "New goal removes vanilla requirement",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1512,41 +1489,6 @@
                                             "name": "Morph Ball",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Last 3 omegas",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Omega2",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Omega3",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Omega4",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -1590,16 +1532,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hatchling Room Underside": {
-                            "type": "or",
+                        "Bottom": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1632,6 +1569,39 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": "New goal moved Metroid requirement to here",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "All Artifacts"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Bottom": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 478.4326724888974,
+                        "y": 56.42294043900469,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Door to Laboratory Entrance": {
                             "type": "or",
                             "data": {
@@ -1639,7 +1609,23 @@
                                 "items": [
                                     {
                                         "type": "template",
+                                        "data": "Power Grip Wall"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Hatchling Room Underside": {
+                            "type": "and",
+                            "data": {
+                                "comment": "New goal moved Metroid requirement to here",
+                                "items": [
+                                    {
+                                        "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "All Artifacts"
                                     }
                                 ]
                             }

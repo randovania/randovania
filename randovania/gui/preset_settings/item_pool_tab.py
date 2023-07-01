@@ -195,6 +195,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 message += " - ".join(parts)
 
             self.item_pool_count_label.setText(message)
+            self.item_pool_description_label.setText(f"If there are fewer than {maximum_size} items, the rest of the "
+                                                     f"item locations will contain 'Nothing' items.")
 
         except InvalidConfiguration as invalid_config:
             self.item_pool_count_label.setText(f"Invalid Configuration: {invalid_config}")

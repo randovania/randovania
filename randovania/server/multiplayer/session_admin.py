@@ -9,6 +9,7 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.error import NotAuthorizedForAction, InvalidAction
+from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH, WORLD_NAME_RE
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.database import MultiplayerMembership, is_boolean, MultiplayerSession, World, \
@@ -110,6 +111,9 @@ def _create_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[str, d
     name, preset_json = arg
     preset = _get_preset(preset_json)
 
+    if WORLD_NAME_RE.match(name) is None:
+        raise InvalidAction("Invalid world name")
+
     logger().info(f"{session_common.describe_session(session)}: Creating world {name}.")
 
     world = World.create_for(session=session, name=name, preset=preset)
@@ -157,6 +161,9 @@ def _rename_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.U
     world = World.get_by_uuid(world_uid)
     _verify_world_has_session(world, session)
     verify_has_admin_or_claimed(sio, world)
+
+    if WORLD_NAME_RE.match(new_name) is None:
+        raise InvalidAction("Invalid world name")
 
     with database.db.atomic():
         logger().info(f"{session_common.describe_session(session)}: Renaming {world.name} ({world_uid}) to {new_name}.")
@@ -223,7 +230,14 @@ def _change_layout_description(sio: ServerApp, session: MultiplayerSession, desc
     worlds_to_update = []
 
     if description_json is None:
+        if not session.has_layout_description():
+            return
+
         description = None
+        for world in session.worlds:
+            world.uuid = uuid.uuid4()
+            worlds_to_update.append(world)
+
     else:
         if session.generation_in_progress != sio.get_current_user():
             if session.generation_in_progress is None:
@@ -318,6 +332,9 @@ def _change_password(sio: ServerApp, session: MultiplayerSession, password: str)
 def _change_title(sio: ServerApp, session: MultiplayerSession, title: str):
     verify_has_admin(sio, session.id, None)
 
+    if not (0 < len(title) <= MAX_SESSION_NAME_LENGTH):
+        raise InvalidAction("Invalid session name length")
+
     old_name = session.name
     session.name = title
     logger().info(f"{session_common.describe_session(session)}: Changed name from {old_name}.")
@@ -327,6 +344,9 @@ def _change_title(sio: ServerApp, session: MultiplayerSession, title: str):
 
 def _duplicate_session(sio: ServerApp, session: MultiplayerSession, new_title: str):
     verify_has_admin(sio, session.id, None)
+
+    if not (0 < len(new_title) <= MAX_SESSION_NAME_LENGTH):
+        raise InvalidAction("Invalid session name length")
 
     current_user = sio.get_current_user()
     session_common.add_audit_entry(sio, session, f"Duplicated session as {new_title}")

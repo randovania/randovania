@@ -109,7 +109,7 @@ class NetworkClient:
     _sessions_interested_in: set[int]
 
     def __init__(self, user_data_dir: Path, configuration: dict):
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger("NetworkClient")
 
         old_connect = aiohttp.ClientSession.ws_connect
 
@@ -189,12 +189,8 @@ class NetworkClient:
                 transports=['websocket'],
                 headers=connection_headers(),
             )
+            self.logger.info("sio.connect successful")
             await waiting_for_on_connect
-
-            # re-join rooms
-            for session_id in list(self._sessions_interested_in):
-                await self.server_call("multiplayer_listen_to_session", (session_id, True))
-
             self.logger.info("connected")
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
@@ -239,7 +235,13 @@ class NetworkClient:
                     "restore_user_session", persisted_session, handle_invalid_session=False
                 ))
 
+                # re-join rooms
+                self.logger.info("calling listen to session for %s", self._sessions_interested_in)
+                for session_id in list(self._sessions_interested_in):
+                    await self.server_call("multiplayer_listen_to_session", (session_id, True))
+
                 self.logger.info("session restored successful")
+
                 self.connection_state = ConnectionState.Connected
 
             except (error.InvalidSession, error.UserNotAuthorized) as e:
@@ -255,6 +257,7 @@ class NetworkClient:
             self.connection_state = ConnectionState.ConnectedNotLogged
 
     async def on_connect(self):
+        self.logger.debug("Received on_connect")
         error_message = None
         try:
             self._restore_session_task = asyncio.create_task(self._restore_session())
@@ -437,17 +440,17 @@ class NetworkClient:
         result = await self.server_call("multiplayer_create_session", session_name)
         return self._with_new_session(result)
 
-    async def join_multiplayer_session(self, session: MultiplayerSessionListEntry, password: str | None):
-        result = await self.server_call("multiplayer_join_session", (session.id, password))
+    async def join_multiplayer_session(self, session_id: int, password: str | None):
+        result = await self.server_call("multiplayer_join_session", (session_id, password))
         return self._with_new_session(result)
 
-    async def listen_to_session(self, session: MultiplayerSessionEntry, listen: bool):
-        result = await self.server_call("multiplayer_listen_to_session", (session.id, listen))
+    async def listen_to_session(self, session_id: int, listen: bool):
+        result = await self.server_call("multiplayer_listen_to_session", (session_id, listen))
         sessions = self._sessions_interested_in
         if listen:
-            sessions.add(session.id)
-        elif session.id in sessions:
-            sessions.remove(session.id)
+            sessions.add(session_id)
+        elif session_id in sessions:
+            sessions.remove(session_id)
         return result
 
     async def session_admin_global(self, session: MultiplayerSessionEntry,
@@ -460,9 +463,9 @@ class NetworkClient:
         return await self.server_call("multiplayer_admin_player",
                                       (session.id, user_id, action.value, arg))
 
-    # async def session_track_inventory(self, row: int, enable: bool):
-    #     await self.server_call("game_session_watch_row_inventory",
-    #                            (self._current_game_session_meta.id, row, enable, True))
+    async def world_track_inventory(self, world_uid: uuid.UUID, user_id: int, enable: bool):
+        await self.server_call("multiplayer_watch_inventory",
+                               (str(world_uid), user_id, enable, True))
 
     async def perform_world_sync(self, request: ServerSyncRequest) -> ServerSyncResponse:
         return construct_pack.decode(

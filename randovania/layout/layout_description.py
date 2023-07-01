@@ -16,7 +16,7 @@ from randovania.layout import game_patches_serializer, description_migration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.versioned_preset import VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset, InvalidPreset
 from randovania.lib import obfuscator, json_lib
 
 
@@ -107,12 +107,20 @@ class LayoutDescription:
         if "game_modifications" not in json_dict:
             raise InvalidLayoutDescription("Unable to read details of a race game file")
 
+        def get_preset(i, p):
+            try:
+                return VersionedPreset(p).get_preset()
+            except InvalidPreset as e:
+                raise InvalidLayoutDescription(
+                    f"Invalid preset for world {i + 1}: {e}"
+                ) from e.original_exception
+
         generator_parameters = GeneratorParameters(
             seed_number=json_dict["info"]["seed"],
             spoiler=json_dict["info"]["has_spoiler"],
             presets=[
-                VersionedPreset(preset).get_preset()
-                for preset in json_dict["info"]["presets"]
+                get_preset(i, preset)
+                for i, preset in enumerate(json_dict["info"]["presets"])
             ],
         )
 

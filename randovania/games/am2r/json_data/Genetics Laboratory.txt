@@ -181,7 +181,7 @@ Extra - map_name: rm_a7b01A
 ----------------
 Laboratory Save Station
 Extra - map_name: rm_a7b02A
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 24
   > Door to Laboratory Entrance
@@ -242,7 +242,9 @@ Extra - map_name: rm_a7b03B
   * Normal Door to Laboratory Entrance/Door to Laboratory Pipe
   * Extra - instance_id: 146563
   > Pipe to Hydro Station
-      After Area 6 - Nest Left Bottom Omega and After Area 6 - Nest Left Top Omega and After Area 6 - Nest Right Omega
+      All of the following:
+          # New goal removes vanilla requirement
+          Power Grip Wall
 
 > Pipe to Hydro Station; Heals? False
   * Layers: default
@@ -251,10 +253,8 @@ Extra - map_name: rm_a7b03B
   * Extra - editable: True
   > Door to Laboratory Entrance
       All of the following:
+          # New goal removes vanilla requirement
           Morph Ball
-          All of the following:
-              # Last 3 omegas
-              After Area 6 - Nest Left Bottom Omega and After Area 6 - Nest Left Top Omega and After Area 6 - Nest Right Omega
 
 ----------------
 Destroyed Chozo Memorial
@@ -263,15 +263,26 @@ Extra - map_name: rm_a7b04A
   * Layers: default
   * Normal Door to Laboratory Entrance/Door to Destroyed Chozo Memorial
   * Extra - instance_id: 146602
-  > Door to Hatchling Room Underside
-      Can Use Any Bombs
+  > Bottom
+      Trivial
 
 > Door to Hatchling Room Underside; Heals? False
   * Layers: default
   * Normal Door to Hatchling Room Underside/Door to Destroyed Chozo Memorial
   * Extra - instance_id: 146601
+  > Bottom
+      All of the following:
+          # New goal moved Metroid requirement to here
+          All Artifacts and Can Use Any Bombs
+
+> Bottom; Heals? False
+  * Layers: default
   > Door to Laboratory Entrance
-      Can Use Any Bombs
+      Power Grip Wall
+  > Door to Hatchling Room Underside
+      All of the following:
+          # New goal moved Metroid requirement to here
+          All Artifacts and Can Use Any Bombs
 
 ----------------
 Hatchling Room Underside

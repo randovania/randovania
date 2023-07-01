@@ -15,7 +15,19 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
+    <item row="0" column="0">
+     <widget class="QWidget" name="item_tracker_widget" native="true">
+      <layout class="QGridLayout" name="inventory_layout"/>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="connected_game_state_label">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
      <layout class="QHBoxLayout" name="select_game_layout">
       <item>
        <widget class="QComboBox" name="select_game_combo"/>
@@ -35,10 +47,18 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="0">
-     <widget class="QWidget" name="item_tracker" native="true">
-      <layout class="QGridLayout" name="inventory_layout"/>
-     </widget>
+    <item row="1" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>
@@ -60,10 +80,21 @@
       <string>Theme</string>
      </property>
     </widget>
+    <widget class="QMenu" name="menu_default_game">
+     <property name="title">
+      <string>Default Game</string>
+     </property>
+    </widget>
     <addaction name="menu_tracker"/>
+    <addaction name="menu_default_game"/>
    </widget>
    <addaction name="menu_options"/>
   </widget>
+  <action name="actions">
+   <property name="text">
+    <string>s</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

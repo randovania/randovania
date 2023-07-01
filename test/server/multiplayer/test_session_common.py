@@ -158,7 +158,7 @@ def test_leave_room(mocker: MockerFixture, had_session):
     sio.session.return_value.__enter__.return_value = session
 
     # Run
-    session_common.leave_room(sio, multi_session)
+    session_common.leave_room(sio, multi_session.id)
 
     # Assert
     mock_leave_room.assert_called_once_with("multiplayer-session-7890")

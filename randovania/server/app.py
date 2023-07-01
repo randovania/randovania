@@ -8,20 +8,56 @@ from flask_socketio import ConnectionRefusedError
 
 import randovania
 import randovania.server.multiplayer.world_api
+from randovania.network_common import error
 from randovania.server import user_session, database, client_check, multiplayer
 from randovania.server.multiplayer import world_api
 from randovania.server.server_app import ServerApp
 
 
+class ServerLoggingFormatter(logging.Formatter):
+    converter = time.gmtime
+
+    def format(self, record):
+        if flask.has_request_context():
+            who = flask.request.remote_addr
+
+            sio: ServerApp = flask.current_app.sio
+            is_socketio = hasattr(flask.request, "sid")
+
+            where = flask.request.url
+
+            if is_socketio:
+                record.context = "SocketIO"
+                try:
+                    who = sio.get_current_user().name
+                except (error.NotLoggedIn, error.InvalidSession):
+                    pass
+                where = getattr(flask.request, "message", where)
+            else:
+                record.context = "Flask"
+
+            record.who = who
+            record.where = where
+
+        else:
+            record.who = None
+            record.where = None
+            record.context = "Free"
+
+        return super().format(record)
+
+
 def create_app():
     configuration = randovania.get_configuration()
 
-    logging.Formatter.converter = time.gmtime
     dictConfig({
         'version': 1,
-        'formatters': {'default': {
-            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-        }},
+        'formatters': {
+            'default': {
+                'format': '[%(asctime)s] %(context)s [%(who)s] %(levelname)s in %(where)s: %(message)s',
+                'class': 'randovania.server.app.ServerLoggingFormatter',
+            }
+        },
         'handlers': {'wsgi': {
             'class': 'logging.StreamHandler',
             'stream': 'ext://flask.logging.wsgi_errors_stream',

@@ -341,7 +341,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)
         result = dialog.exec_()
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             with self._options as options:
                 options.set_options_for_game(game, dataclasses.replace(per_game_options,
                                                                        cosmetic_patches=dialog.cosmetic_patches))

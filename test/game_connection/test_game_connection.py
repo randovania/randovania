@@ -18,7 +18,7 @@ from randovania.games.game import RandovaniaGame
 
 @pytest.fixture(name="connection")
 def _connection(skip_qtbot):
-    return GameConnection(MagicMock())
+    return GameConnection(MagicMock(), MagicMock())
 
 
 async def test_create_builders_on_init(skip_qtbot):
@@ -29,7 +29,7 @@ async def test_create_builders_on_init(skip_qtbot):
     options.connector_builders = [builder_option]
 
     # Run
-    connection = GameConnection(options)
+    connection = GameConnection(options, MagicMock())
 
     # Assert
     assert options.connector_builders == [builder_option]

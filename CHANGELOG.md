@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.0] - 2023-06-??
 
-- WIP: New multiworld in progress (TODO: proper message when done)
+- **Major** - Multiworld support has been significantly changed! New features include:
+  *  Sessions now have Worlds instead of rows with users, and users can be associated with any number of Worlds.
+     * This means it's now possible to play a Multiworld entirely solo.
+  *  You can connect to one Dolphin and any number of Nintendont at the same time.
+  *  Multiple sessions can be opened at the same time.
+  *  A session window is no longer required to be kept open. As long as Randovania is connected to a game, the server communication works. 
 - Added: It's now possible to drag presets directly into the root of the presets.
 - Added: The order you place presets when drag and dropping is now saved.
 - Added: New command line arguments `--local-data` and `--user-data` to allow configuring where Randovania saves its data.
@@ -15,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Interface to customize preset description.
 - Added: It's now possible to save rdvgame files for race games. This is not available for multiworld.
 - Added: When editing a Pickup Node, there's now a button to find an unused pickup index.
+- Changed: Discord login is now performed via your browser, instead of the Discord client.
 - Changed: Door Lock mode Two-way is now named Doors. The functionality is unchanged.
 - Changed: Improved preset descriptions, making them significantly simpler.
 - Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please select `Advanced > Show Experimental Settings`.
@@ -23,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: For Multiworld, it's now preferred to have an additional pickups than placing it in another player's game, when there's no locations left in your game.
 - Changed: Randovania now internally uses the term `Region` for what used to be called a `World`. This is mostly an internal change.
 - Changed: Connecting to Dolphin is now hidden on macOS, as it never was supported.
+- Changed: Door Lock rando generation is now up to 50% faster.
 - Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 - Fixed: The resolver no longer allows events as additional requirements. This fixes a problem that could lead to an event locking itself.
 - Fixed: The `database render-region-graph` command now works properly.
@@ -38,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Door Lock Randomizer can randomize doors to be weak to Ice Missile, Storm Missile, Diffusion Beam, Bombs, Cross Bombs, Power Bombs.
 - Added: New option under "Game Modifications" to choose how inconsistencies in Raven Beak's damage resistance are handled.
 - Added: Auto tracker is now supported via a new game connection choice.
+- Added: Exporting now checks if the RomFS folder has some required files.
 - Changed: The doors in Itorash are now excluded from being shuffled in Door Lock Randomizer.
 
 #### Patcher Changes
@@ -65,6 +73,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Allow using Shinesparks in Gravity Suit Tower by storing speed in the upper part of Gravity Suit Room, also when Door Lock rando is enabled.
 - Added: Pseudo-Wave Beam to break the blob in Ferenia Wave Beam Tutorial, from the right.
 - Added: Use Spider Magnet with Grapple Beam in Ghavoran Spider Magnet Elevator.
+- Added: Use Speed Booster to get past the pool of water in Dairon Freezer before turning on the power.
+- Added: Various trick alternatives to get past the pool of water in Dairon Freezer with Bomb Jumps.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
@@ -85,12 +95,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed: One-Way door lock randomizer has been removed. This has actually been the case since 5.3.0!
 - Fixed: The "Unlock Save Station doors" option should now correctly unlock them.
 
+#### Logic Database
+
+#### Chozo Ruins
+
+- Changed: Reorganized Morph Ball pickup in Ruined Shrine to better fit database good practices.
 
 ### Metroid Prime 2: Echoes
 
 - **Major** - Added: Door Lock randomizer has been added. Note that this feature requires enabling the new patcher.
 - Added: New random elevators mode: Shuffle Regions. In this mode, we keep the game world consistent by shuffling the regions around Temple Grounds, and then changing the elevators to match. See [this map](randovania/data/gui_assets/echoes_elevator_map.png) for reference.
+- Added: When the new patcher is enabled, Security Station B starts in the post-Dark Samus appearance. This change is supported by logic. 
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
+- Changed: When the new patcher is enabled, some cosmetic effects are removed from Torvus Temple in an attempt to make it crash less.
 - Changed: For Multiworld ISOs, the game name now mentions the session name and world name.
 - Removed: The elevator sound effect removal is no longer an option and is now automatically enabled in the appropriate circumstances.
 - Fixed: The progress bar when exporting a seed is now much more accurate.

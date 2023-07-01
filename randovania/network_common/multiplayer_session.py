@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import datetime
+import re
 import uuid
 
 from randovania.bitpacking import construct_pack
@@ -14,6 +15,14 @@ from randovania.network_common.game_connection_status import GameConnectionStatu
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
+MAX_SESSION_NAME_LENGTH = 50
+MAX_WORLD_NAME_LENGTH = 30
+
+WORLD_NAME_RE = re.compile(
+    r"^[a-zA-Z0-9 _\-!?]{1," + str(MAX_WORLD_NAME_LENGTH) + "}$"
+)
+
+
 @dataclasses.dataclass(frozen=True)
 class MultiplayerSessionListEntry(JsonDataclass):
     id: int
@@ -23,6 +32,7 @@ class MultiplayerSessionListEntry(JsonDataclass):
     num_players: int
     creator: str
     creation_date: datetime.datetime
+    is_user_in_session: bool
 
     def __post_init__(self):
         tzinfo = self.creation_date.tzinfo

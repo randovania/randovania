@@ -180,7 +180,7 @@ def write_resource_database(resource_database: ResourceDatabase):
             }
             for resource, reductions in resource_database.damage_reductions.items()
         ],
-        "energy_tank_item_index": resource_database.energy_tank_item_index,
+        "energy_tank_item_index": resource_database.energy_tank_item.short_name,
     }
 
 

@@ -5,7 +5,7 @@ Extra - map_name: rm_a4h01
   * Layers: default
   * Normal Door to Inner Save Station East Access/Door to Tower Exterior South East
   * Extra - instance_id: 125465
-  > Dock to Tower Right Exterior Access
+  > Dock to Tower East Exterior Access
       Trivial
   > Dock to Tower Exterior North East
       Any of the following:
@@ -24,9 +24,9 @@ Extra - map_name: rm_a4h01
               Mid-Air Morph (Intermediate) or Walljump (Intermediate)
               Power Grip and Shinesparking Tricks (Advanced)
 
-> Dock to Tower Right Exterior Access; Heals? False
+> Dock to Tower East Exterior Access; Heals? False
   * Layers: default
-  * Open Passage to Tower Right Exterior Access/Dock to Tower Exterior South East
+  * Open Passage to Tower East Exterior Access/Dock to Tower Exterior South East
   > Door to Inner Save Station East Access
       Trivial
   > Dock to Exterior Zeta Nest East Access
@@ -40,7 +40,7 @@ Extra - map_name: rm_a4h01
 > Dock to Exterior Zeta Nest East Access; Heals? False
   * Layers: default
   * Open Passage to Exterior Zeta Nest East Access/Dock to Tower Exterior South East
-  > Dock to Tower Right Exterior Access
+  > Dock to Tower East Exterior Access
       Trivial
   > Top Right Cliff
       Any of the following:
@@ -266,7 +266,9 @@ Extra - map_name: rm_a4h04
   > Dock to Gamma Nest West Access
       Mid-Air Morph (Intermediate) and Movement (Intermediate)
   > Dock to Tower Exterior North
-      Space Jump or Walljump (Expert) or Can Use Spider Ball
+      Any of the following:
+          Space Jump or Can Use Spider Ball
+          Hi-Jump Boots and Walljump (Advanced)
   > Door to Tower Activation Station
       Trivial
 
@@ -354,6 +356,15 @@ Extra - map_name: rm_a4h06
       Any of the following:
           High Mid-Air Morph Tunnel Climb
           Speed Booster and Knowledge (Intermediate)
+  > Pickup (Zeta)
+      Trivial
+
+> Pickup (Zeta); Heals? False
+  * Layers: default
+  * Pickup 389; Category? Major
+  * Extra - object_name: oItemDNA_389
+  > Event - Zeta
+      Trivial
 
 ----------------
 Gamma Nest South East
@@ -368,6 +379,15 @@ Extra - map_name: rm_a4h07
   * Layers: default
   * Event Area 4 - Right Bottom Gamma
   > Dock to Tower Exterior South East
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 383; Category? Minor
+  * Extra - object_name: oItemDNA_383
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -409,6 +429,15 @@ Extra - map_name: rm_a4h09
   * Layers: default
   * Event Area 4 - Right Top Gamma
   > Dock to Gamma Nest North East Access
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 384; Category? Minor
+  * Extra - object_name: oItemDNA_384
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -467,6 +496,15 @@ Extra - map_name: rm_a4h11
   * Layers: default
   * Event Area 4 - Left Gamma
   > Dock to Gamma Nest West Access
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 385; Category? Minor
+  * Extra - object_name: oItemDNA_385
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -539,6 +577,15 @@ Extra - map_name: rm_a4h13
   * Layers: default
   * Event Area 4 - Left Zeta
   > Dock to Exterior Zeta Nest West Access
+      Trivial
+  > Pickup (Zeta)
+      Trivial
+
+> Pickup (Zeta); Heals? False
+  * Layers: default
+  * Pickup 388; Category? Major
+  * Extra - object_name: oItemDNA_388
+  > Event - Zeta
       Trivial
 
 ----------------
@@ -707,19 +754,32 @@ Tester Arena
 Extra - map_name: rm_a4a05
 > Door to Tester Arena Access North; Heals? False
   * Layers: default
-  * After Tester Door to Tester Arena Access North/Door to Tester Arena
+  * Normal Door to Tester Arena Access North/Door to Tester Arena
   * Extra - instance_id: 127943
-  > Door to Tester Arena Access South
+  > Before Tester
       Trivial
 
 > Door to Tester Arena Access South; Heals? False
   * Layers: default
-  * After Tester Door to Tester Arena Access South/Door to Tester Arena
+  * Normal Door to Tester Arena Access South/Door to Tester Arena
   * Extra - instance_id: 128037
+  > Before Tester
+      Trivial
+
+> Event - Tester; Heals? False
+  * Layers: default
+  * Event Boss Tester Defeated
+  > Door to Tester Arena Access North
+      Space Jump Wall
+  > Door to Tester Arena Access South
+      Trivial
+
+> Before Tester; Heals? False
+  * Layers: default
   > Event - Tester
       All of the following:
           Any of the following:
-              # Movements requirements
+              # Movement requirements
               Space Jump or Combat (Advanced)
           Any of the following:
               # Energy requirements
@@ -728,14 +788,8 @@ Extra - map_name: rm_a4a05
               # Attack requirements
               Plasma Beam or Spazer Beam or Combat (Intermediate)
               All of the following:
-                  # 4 PBs to destroy the outer shell
+                  # 4 PBs to destroy outer shell
                   Morph Ball and Power Bombs ≥ 4
-
-> Event - Tester; Heals? False
-  * Layers: default
-  * Event Boss Tester Defeated
-  > Door to Tester Arena Access North
-      Space Jump Wall
 
 ----------------
 Tester Arena Access South
@@ -918,7 +972,7 @@ Extra - map_name: rm_a4a10
 
 > Door to Plasma Beam Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to Plasma Beam Chamber Access/Door to Plasma Beam Chamber
+  * Tower Activated Door to Plasma Beam Chamber Access/Door to Plasma Beam Chamber
   * Extra - instance_id: 128664
   > Pickup (Plasma Beam)
       Trivial
@@ -976,6 +1030,15 @@ Extra - map_name: rm_a4a12
   * Event Area 4 - Interior Zeta
   > Dock to Inner Zeta Nest Access
       Can Use Any Bombs and High Mid-Air Morph Tunnel Climb
+  > Pickup (Zeta)
+      Trivial
+
+> Pickup (Zeta); Heals? False
+  * Layers: default
+  * Pickup 390; Category? Major
+  * Extra - object_name: oItemDNA_390
+  > Event - Zeta
+      Trivial
 
 ----------------
 Dark Maze

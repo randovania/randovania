@@ -136,7 +136,7 @@ async def test_disconnect_from_server(client: NetworkClient):
     client.sio.disconnect.assert_awaited_once_with()
 
 
-async def test_session_admin_global(client):
+async def test_session_admin_global(client: NetworkClient):
     client.server_call = AsyncMock()
 
     game_session_meta = MagicMock()
@@ -160,7 +160,7 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
         client._sessions_interested_in.add(1234)
 
     # Run
-    await client.listen_to_session(session_meta, listen)
+    await client.listen_to_session(session_meta.id, listen)
 
     # Assert
     client.server_call.assert_awaited_once_with(
@@ -308,7 +308,7 @@ async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mo
     client.server_call = AsyncMock()
 
     # Run
-    result = await client.join_multiplayer_session(session, "mahSecret")
+    result = await client.join_multiplayer_session(session.id, "mahSecret")
 
     # Assert
     assert result is mock_session_from.return_value

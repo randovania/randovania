@@ -52,7 +52,7 @@ class RequirementList:
         return self._cached_hash
 
     def __repr__(self):
-        return repr(self._items)
+        return repr(list(self._items.values()))
 
     def __str__(self) -> str:
         if self._items:

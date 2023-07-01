@@ -36,7 +36,7 @@ class GenerationFailureHandler(QtWidgets.QWidget):
             box = error_message_box.create_box_for_exception(exception)
             await async_dialog.execute_dialog(box)
 
-        progress_update(f"{message}: {exception}", -1)
+        progress_update(f"{message}: {exception}", 0)
 
     @asyncSlot(GenerationFailure)
     async def _show_failed_generation_exception(self, exception: GenerationFailure):

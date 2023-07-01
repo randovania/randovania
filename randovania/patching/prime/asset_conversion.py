@@ -418,7 +418,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
                             if depb.type == "EVNT":
                                 if depb.id not in unique_evnt:
                                     unique_evnt.append(depb.id)
-                                    converted_dependencies[ancs.id].button(depb)
+                                    converted_dependencies[ancs.id].remove(depb)
                                     converted_dependencies[ancs.id].add(Dependency("EVNT", unique_anim[anim.id]))
                                 else:
                                     dont_delete.append(depb.id)

@@ -20,6 +20,15 @@ Extra - map_name: rm_a2h01
   * Event Area 2 - Entrance Alpha
   > Dock to Grave Grotto
       Trivial
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 355; Category? Minor
+  * Extra - object_name: oItemDNA_355
+  > Event - Alpha
+      Trivial
 
 ----------------
 Hydro Station Exterior
@@ -135,14 +144,15 @@ Extra - map_name: rm_a2h02
       Morph Ball
   > Dock to Arachnus Save Station
       Any of the following:
-          Power Beam or Space Jump or Walljump (Advanced)
+          Space Jump or Walljump (Advanced)
           All of the following:
               Hi-Jump Boots
               Power Grip or Walljump (Beginner)
           All of the following:
               # Shinespark from room on the right
-              Morph Ball and Speed Booster and Shinesparking Tricks (Beginner)
+              Morph Ball and Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
           All of the following:
+              # Get up via Spider Ball
               Can Use Spider Ball
               Any of the following:
                   Mid-Air Morph (Beginner) or Can Use Bombs or Can Use Spring Ball
@@ -179,6 +189,15 @@ Extra - map_name: rm_a2h03
   * Layers: default
   * Event Area 2 - Exterior Alpha
   > Dock to Hydro Station Exterior
+      Trivial
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 356; Category? Minor
+  * Extra - object_name: oItemDNA_356
+  > Event - Alpha
       Trivial
 
 ----------------
@@ -318,6 +337,9 @@ Extra - map_name: rm_a2a04
           Any of the following:
               # Energy requirements
               Combat (Beginner) or Normal Damage ≥ 199
+          Any of the following:
+              # Fusion Mode requirements
+              Missiles or Super Missiles or Disabled Fusion Mode
   > Pickup (Spring Ball)
       After Boss Arachnus Defeated
 
@@ -368,6 +390,15 @@ Extra - map_name: rm_a2a05
   * Layers: default
   * Event Area 2 - Interior Upper Alpha
   > Dock to Hydro Station Exterior
+      Trivial
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 357; Category? Minor
+  * Extra - object_name: oItemDNA_357
+  > Event - Alpha
       Trivial
 
 ----------------
@@ -561,12 +592,21 @@ Extra - map_name: rm_a2a09
   * Event Area 2 - Interior Lower Alpha
   > Dock to Water Turbine Station
       Trivial
+  > Pickup (Alpha)
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 151; Category? Minor
   * Extra - object_name: oItemM_151
   > Dock to Water Turbine Station
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 358; Category? Minor
+  * Extra - object_name: oItemDNA_358
+  > Event - Alpha
       Trivial
 
 ----------------
@@ -1055,6 +1095,15 @@ Extra - map_name: rm_a2c04
   * Event Area 2 - Breeding Grounds Upper Right Alpha
   > Dock to Breeding Grounds Shaft
       Hijump Wall
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 359; Category? Minor
+  * Extra - object_name: oItemDNA_359
+  > Event - Alpha
+      Trivial
 
 ----------------
 Breeding Grounds Lobby
@@ -1123,6 +1172,15 @@ Extra - map_name: rm_a2c06
   * Event Area 2 - Breeding Grounds Left Alpha
   > Dock to Breeding Grounds Lobby
       Go Through Vines or Hijump Wall
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 361; Category? Minor
+  * Extra - object_name: oItemDNA_361
+  > Event - Alpha
+      Trivial
 
 ----------------
 Breeding Grounds Gamma Nest
@@ -1139,12 +1197,21 @@ Extra - map_name: rm_a2c07
   > Dock to Breeding Grounds Lobby
       Trivial
   > Event - Gamma
-      After Area 1 - Breeding Grounds Lower Right Alpha and Defeat Gamma
+      After Area 2 - Breeding Grounds Lower Right Alpha and Defeat Gamma
 
 > Event - Gamma; Heals? False
   * Layers: default
   * Event Area 2 - Breeding Grounds Gamma
   > Dock to Breeding Grounds Alpha Nest South
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 373; Category? Minor
+  * Extra - object_name: oItemDNA_373
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -1157,16 +1224,26 @@ Extra - map_name: rm_a2c08
       All of the following:
           Defeat Alpha
           Any of the following:
-              Go Through Vines
+              Go Through Vines or Space Jump Wall
               Movement (Intermediate) and Hijump Wall
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Area 2 - Breeding Grounds Lower Right Alpha
   > Dock to Breeding Grounds Gamma Nest
-      All of the following:
-          Hijump Wall
-          Movement (Intermediate) or Go Through Vines
+      Any of the following:
+          Space Jump Wall
+          Go Through Vines and Hijump Wall
+          Movement (Intermediate) and Power Grip Wall
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 360; Category? Minor
+  * Extra - object_name: oItemDNA_360
+  > Event - Alpha
+      Trivial
 
 ----------------
 Breeding Grounds Overgrown Alley

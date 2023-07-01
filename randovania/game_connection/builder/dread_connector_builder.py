@@ -1,9 +1,9 @@
 import logging
+
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.connector.dread_remote_connector import DreadRemoteConnector
 from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_connection.executor.dread_executor import DreadExecutor
+
 
 class DreadConnectorBuilder(ConnectorBuilder):
     _last_status_message: str | None = None
@@ -18,6 +18,10 @@ class DreadConnectorBuilder(ConnectorBuilder):
         return f"{super().pretty_text}: {self.ip}"
 
     async def build_connector(self) -> RemoteConnector | None:
+        # Delay importing these to avoid too many early imports in startup
+        from randovania.game_connection.connector.dread_remote_connector import DreadRemoteConnector
+        from randovania.game_connection.executor.dread_executor import DreadExecutor
+
         self.executor = DreadExecutor(self.ip)
         self._status_message(f"Connecting to {self.ip}")
         connect_error = await self.executor.connect()

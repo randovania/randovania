@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, AsyncMock
 
 import pytest
+import pytest_mock
 from PySide6 import QtWidgets
 
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
@@ -11,19 +12,29 @@ def login_prompt_fixture(skip_qtbot):
     return LoginPromptDialog(MagicMock())
 
 
-async def test_on_login_as_guest_button(prompt, mocker):
+@pytest.mark.parametrize("valid_name", [False, True])
+async def test_on_login_as_guest_button(prompt, mocker: pytest_mock.MockerFixture, valid_name):
     # Setup
     prompt.network_client.login_as_guest = AsyncMock()
-    mock_dialog = mocker.patch("PySide6.QtWidgets.QInputDialog").return_value
-    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
-                                       return_value=QtWidgets.QDialog.DialogCode.Accepted)
+    mock_prompt = mocker.patch("randovania.gui.dialog.text_prompt_dialog.TextPromptDialog.prompt",
+                               autospec=True)
+    if not valid_name:
+        mock_prompt.return_value = None
 
     # Run
     await prompt.on_login_as_guest_button()
 
     # Assert
-    mock_execute_dialog.assert_awaited_once_with(mock_dialog)
-    prompt.network_client.login_as_guest.assert_awaited_once_with(mock_dialog.textValue.return_value)
+    mock_prompt.assert_awaited_once_with(
+        parent=prompt,
+        title="Enter guest name",
+        description="Select a name for the guest account:",
+        is_modal=True,
+    )
+    if valid_name:
+        prompt.network_client.login_as_guest.assert_awaited_once_with(mock_prompt.return_value)
+    else:
+        prompt.network_client.login_as_guest.assert_not_awaited()
 
 
 async def test_on_login_with_discord_button(prompt):

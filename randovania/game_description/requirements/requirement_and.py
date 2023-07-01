@@ -9,9 +9,8 @@ class RequirementAnd(RequirementArrayBase):
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         result = 0
         for item in self.items:
-            if item.satisfied(current_resources, MAX_DAMAGE, database):
-                result += item.damage(current_resources, database)
-            else:
+            result += item.damage(current_resources, database)
+            if result >= MAX_DAMAGE:
                 return MAX_DAMAGE
         return result
 

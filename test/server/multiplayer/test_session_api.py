@@ -31,11 +31,11 @@ def test_list_sessions(clean_database, flask_app, limit):
     # Assert
     expected = [
         {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_players': 0, 'creator': 'Someone',
-         'creation_date': '2021-01-20T05:02:00+00:00'},
+         'creation_date': '2021-01-20T05:02:00+00:00', 'is_user_in_session': False},
         {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 0, 'creator': 'Someone',
-         'creation_date': '2020-01-20T05:02:00+00:00'},
+         'creation_date': '2020-01-20T05:02:00+00:00', 'is_user_in_session': False},
         {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 0, 'creator': 'Someone',
-         'creation_date': '2020-10-02T10:20:00+00:00'},
+         'creation_date': '2020-10-02T10:20:00+00:00', 'is_user_in_session': False},
     ]
     if limit == 2:
         expected = expected[:2]
@@ -118,14 +118,14 @@ def test_listen_to_session(session_update, mocker: MockerFixture, flask_app, lis
     mock_join_room = mocker.patch("randovania.server.multiplayer.session_common.join_room", autospec=True)
     mock_leave_room = mocker.patch("randovania.server.multiplayer.session_common.leave_room", autospec=True)
 
-    if is_member:
-        user = database.User.get_by_id(1234)
-        membership = database.MultiplayerMembership.get_by_ids(user_id=1234, session_id=session_update)
-        expectation = contextlib.nullcontext()
-    else:
+    if not is_member and listen:
         user = database.User.create(name="Random")
         expectation = pytest.raises(error.NotAuthorizedForAction)
         membership = None
+    else:
+        user = database.User.get_by_id(1234)
+        membership = database.MultiplayerMembership.get_by_ids(user_id=1234, session_id=session_update)
+        expectation = contextlib.nullcontext()
 
     sio = MagicMock()
     sio.get_current_user.return_value = user
@@ -140,8 +140,8 @@ def test_listen_to_session(session_update, mocker: MockerFixture, flask_app, lis
     else:
         mock_join_room.assert_not_called()
 
-    if not listen and is_member:
-        mock_leave_room.assert_called_once_with(sio, membership.session)
+    if not listen:
+        mock_leave_room.assert_called_once_with(sio, membership.session.id)
     else:
         mock_leave_room.assert_not_called()
 

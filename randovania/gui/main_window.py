@@ -22,6 +22,7 @@ from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.common_qt_lib import open_directory_in_explorer
+from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.layout.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
@@ -31,6 +32,7 @@ from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import enum_lib, json_lib
 from randovania.resolver import debug
+from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 
 if typing.TYPE_CHECKING:
     from randovania.layout.permalink import Permalink
@@ -68,6 +70,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
     game_connection_window: GameConnectionWindow | None = None
+    opened_session_windows: dict[int, MultiplayerSessionWindow]
 
     GameDetailsSignal = Signal(LayoutDescription)
     RequestOpenLayoutSignal = Signal(Path)
@@ -104,6 +107,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self._preset_manager = preset_manager
         self.network_client = network_client
         self._play_game_logos = {}
+        self.opened_session_windows = {}
 
         if preview:
             debug.set_level(2)
@@ -449,7 +453,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def open_game_connection_window(self):
         from randovania.gui.widgets.game_connection_window import GameConnectionWindow
         if self.game_connection_window is None:
-            self.game_connection_window = GameConnectionWindow(common_qt_lib.get_game_connection())
+            self.game_connection_window = GameConnectionWindow(self, self.network_client,
+                                                               self._options, common_qt_lib.get_game_connection())
 
         self.game_connection_window.show()
         self.game_connection_window.raise_()
@@ -703,3 +708,19 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         tab = getattr(self.help_window.centralWidget(), tab_name, None)
         if tab is not None:
             self.help_window.centralWidget().setCurrentWidget(tab)
+
+    async def ensure_multiplayer_session_window(self, network_client: QtNetworkClient,
+                                                session_id: int, options: Options
+                                                ):
+        session_window = self.opened_session_windows.get(session_id, None)
+        if session_window is not None and not session_window.has_closed:
+            session_window.activateWindow()
+            return
+
+        session_window = await MultiplayerSessionWindow.create_and_update(
+            network_client, session_id,
+            self, options,
+        )
+        if session_window is not None:
+            self.opened_session_windows[session_id] = session_window
+            session_window.show()

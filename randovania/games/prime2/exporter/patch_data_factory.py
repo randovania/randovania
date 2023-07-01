@@ -1,5 +1,4 @@
 import dataclasses
-import string
 from random import Random
 from typing import Iterator, Callable
 
@@ -39,6 +38,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.lib import string_lib
 from randovania.patching.prime import elevators
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
@@ -516,9 +516,8 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         _add_header_data_to_result(self.description, result)
 
         if self.players_config.is_multiworld and self.players_config.session_name is not None:
-            valid_chars = set(string.ascii_lowercase + string.ascii_uppercase + string.digits + ' ')
-            filtered_name = ''.join(filter(lambda x: x in valid_chars, self.players_config.get_own_name()))
-            filtered_session = ''.join(filter(lambda x: x in valid_chars, self.players_config.session_name))
+            filtered_name = string_lib.sanitize_for_path(self.players_config.get_own_name())
+            filtered_session = string_lib.sanitize_for_path(self.players_config.session_name)
 
             result["banner_name"] = "Prime 2 Rando - {} - {}".format(
                 filtered_name,
@@ -605,12 +604,6 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         if self.configuration.use_new_patcher:
             result["new_patcher"] = self.new_patcher_configuration()
-
-            # FIXME HACK: don't change Aerie name as that breaks OPR's API
-            if self.configuration.portal_rando:
-                for elev in result["elevators"]:
-                    if elev["instance_id"] == 4260106:
-                        elev["room_name"] = "Aerie"
 
         return result
 
@@ -717,6 +710,10 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             regions_patch_data,
             AreaIdentifier("Temple Grounds", "Trooper Security Station")
         )
+        self._add_area_to_regions_patch(
+            regions_patch_data,
+            AreaIdentifier("Agon Wastes", "Security Station B")
+        )
         regions_patch_data["Temple Grounds"]["areas"]["Dynamo Chamber"]["layers"] = {
             "1st Pass Scripting": False,
             "2nd Pass Scripting": True,
@@ -724,6 +721,22 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         regions_patch_data["Temple Grounds"]["areas"]["Trooper Security Station"]["layers"] = {
             "1st Pass": False,
             "2nd Pass": True,
+        }
+        regions_patch_data["Agon Wastes"]["areas"]["Security Station B"]["layers"] = {
+            "1st Pass": False,
+            "2nd Pass": True,
+        }
+
+    def add_credits_skip(self, regions_patch_data: dict):
+        region, area = self._add_area_to_regions_patch(
+            regions_patch_data,
+            AreaIdentifier("Temple Grounds", "Sky Temple Gateway")
+        )
+        regions_patch_data[region.name]["areas"][area.name]["docks"]["Cinema_Dock"] = {
+            "connect_to": {
+                "area": "game_end_part3",
+                "dock": "cinema_dock",
+            }
         }
 
     def new_patcher_configuration(self):
@@ -733,11 +746,15 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         self.add_dock_type_changes(regions_patch_data)
         self.add_new_patcher_elevators(regions_patch_data)
 
+        # TODO: re-add when this no longer crashes sometimes
+        # if self.cosmetic_patches.speed_up_credits:
+        #     self.add_credits_skip(regions_patch_data)
+
         return {
             "worlds": regions_patch_data,
-            # "area_patches": {
-            #     "torvus_temple": True
-            # },
+            "area_patches": {
+                "torvus_temple": True
+            },
             "small_randomizations": {
                 "seed": self.description.get_seed_for_player(self.players_config.player_index),
                 "echo_locks": True,
@@ -770,6 +787,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             {"asset_id": 326, "connections": [124, 194, 241, 327], },
             {"asset_id": 327, "connections": [46, 275], },
         ]
+
 
 
 def generate_patcher_data(description: LayoutDescription,

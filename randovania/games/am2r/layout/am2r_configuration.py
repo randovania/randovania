@@ -1,8 +1,16 @@
 import dataclasses
 
+from randovania.bitpacking.bitpacking import BitPackDataclass
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 
+
+@dataclasses.dataclass(frozen=True)
+class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
+    prefer_metroids: bool
+    prefer_bosses: bool
+    required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 46, "precision": 1})
 
 @dataclasses.dataclass(frozen=True)
 class AM2RConfiguration(BaseConfiguration):
@@ -15,9 +23,8 @@ class AM2RConfiguration(BaseConfiguration):
     change_level_design: bool   # TODO: requires changes in DB!
     skip_cutscenes: bool        # TODO: requires changes in DB!
     respawn_bomb_blocks: bool   # TODO: requires changes in DB!
+    artifacts: AM2RArtifactConfig
     # TODO: warp to start
-
-
 
 
     @classmethod

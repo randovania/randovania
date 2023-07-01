@@ -285,11 +285,12 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def update(self):
         try:
-            self.logger.debug("Start update")
             has_pending_op, region = await self.current_game_status()
             if region != self._last_emitted_region:
+                self.logger.debug("Region changed from last emitted %s", region)
                 self.PlayerLocationChanged.emit(PlayerLocationEvent(region, None))
             self._last_emitted_region = region
+
             if region is not None:
                 await self.update_current_inventory()
                 if not has_pending_op:
