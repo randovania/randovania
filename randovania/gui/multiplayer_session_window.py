@@ -16,7 +16,7 @@ from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, layout_loader
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin, BackgroundTaskInProgressError
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
@@ -435,6 +435,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if not await self._check_dangerous_presets(permalink):
             return
 
+        if self.has_background_process:
+            return async_dialog.warning(
+                self, "Busy",
+                "Unable to generate a game right now, another background process is already in progress.",
+            )
+
         def generate_layout(progress_update: ProgressUpdateCallable):
             return simplified_patcher.generate_layout(progress_update=progress_update,
                                                       parameters=permalink.parameters,
@@ -449,7 +455,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             await self._upload_layout_description(layout)
             self.update_progress("Uploaded!", 100)
 
-        except asyncio.exceptions.CancelledError:
+        except (asyncio.exceptions.CancelledError, BackgroundTaskInProgressError):
             pass
 
         except Exception as e:
