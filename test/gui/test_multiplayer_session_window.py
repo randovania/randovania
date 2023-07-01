@@ -12,6 +12,7 @@ from pytest_mock import MockerFixture
 from randovania.game_connection.game_connection import GameConnection
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -29,7 +30,7 @@ from randovania.network_common.session_state import MultiplayerSessionState
 
 @pytest.fixture()
 async def window(skip_qtbot) -> MultiplayerSessionWindow:
-    window = MultiplayerSessionWindow(MagicMock(), MagicMock(spec=PresetManager), MagicMock())
+    window = MultiplayerSessionWindow(MagicMock(), MagicMock(spec=WindowManager), MagicMock())
     skip_qtbot.addWidget(window)
     window.connect_to_events()
     return window
@@ -108,7 +109,7 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
     )
     window = await MultiplayerSessionWindow.create_and_update(network_client, initial_session.id,
-                                                              MagicMock(spec=PresetManager), MagicMock())
+                                                              MagicMock(spec=WindowManager), MagicMock())
     skip_qtbot.addWidget(window)
 
     # Run
