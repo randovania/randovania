@@ -129,7 +129,7 @@ class ServerApp:
         @functools.wraps(handler)
         def _handler(*args):
             setattr(flask.request, "message", message)
-            logger().debug("Starting call")
+            logger().debug("Starting call with args %s", args)
 
             with sentry_sdk.start_transaction(op="message", name=message) as span:
                 if with_header_check:

@@ -69,6 +69,7 @@ def handle_network_errors(fn):
 
     return wrapper
 
+
 class QtNetworkClient(QWidget, NetworkClient):
     Connect = Signal()
     ConnectError = Signal()
