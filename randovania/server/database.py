@@ -137,10 +137,6 @@ class MultiplayerSession(BaseModel):
     worlds: list[World]
     audit_log: list[MultiplayerAuditEntry]
 
-    @classmethod
-    def get_by_id(cls, pk) -> Self:
-        return cls.get(cls._meta.primary_key == pk)
-
     def has_layout_description(self) -> bool:
         return self.layout_description_json is not None
 
