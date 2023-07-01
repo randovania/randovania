@@ -109,7 +109,7 @@ class NetworkClient:
     _sessions_interested_in: set[int]
 
     def __init__(self, user_data_dir: Path, configuration: dict):
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger("NetworkClient")
 
         old_connect = aiohttp.ClientSession.ws_connect
 
@@ -189,12 +189,8 @@ class NetworkClient:
                 transports=['websocket'],
                 headers=connection_headers(),
             )
+            self.logger.info("sio.connect successful")
             await waiting_for_on_connect
-
-            # re-join rooms
-            for session_id in list(self._sessions_interested_in):
-                await self.server_call("multiplayer_listen_to_session", (session_id, True))
-
             self.logger.info("connected")
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
@@ -239,7 +235,13 @@ class NetworkClient:
                     "restore_user_session", persisted_session, handle_invalid_session=False
                 ))
 
+                # re-join rooms
+                self.logger.info("calling listen to session for %s", self._sessions_interested_in)
+                for session_id in list(self._sessions_interested_in):
+                    await self.server_call("multiplayer_listen_to_session", (session_id, True))
+
                 self.logger.info("session restored successful")
+
                 self.connection_state = ConnectionState.Connected
 
             except (error.InvalidSession, error.UserNotAuthorized) as e:
@@ -255,6 +257,7 @@ class NetworkClient:
             self.connection_state = ConnectionState.ConnectedNotLogged
 
     async def on_connect(self):
+        self.logger.debug("Received on_connect")
         error_message = None
         try:
             self._restore_session_task = asyncio.create_task(self._restore_session())
