@@ -26,7 +26,6 @@ from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWin
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
-from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
@@ -54,7 +53,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     _can_stop_background_process = True
     _window_manager: WindowManager | None
 
-    def __init__(self, game_session_api: MultiplayerSessionApi, window_manager: WindowManager | PresetManager,
+    def __init__(self, game_session_api: MultiplayerSessionApi, window_manager: WindowManager,
                  options: Options):
         super().__init__()
         self.setupUi(self)
@@ -64,14 +63,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.network_client = game_session_api.network_client
         self.failure_handler = GenerationFailureHandler(self)
 
-        if isinstance(window_manager, WindowManager):
-            self._window_manager = window_manager
-            self._preset_manager = window_manager.preset_manager
-        else:
-            assert isinstance(window_manager, PresetManager)
-            self._window_manager = None
-            self._preset_manager = window_manager
-            self.edit_game_connections_button.setVisible(False)
+        self._window_manager = window_manager
+        self._preset_manager = window_manager.preset_manager
 
         self._options = options
         self._trackers = load_trackers_configuration()
@@ -138,8 +131,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         # Connectivity
         self.server_connection_button.clicked.connect(self._connect_to_server)
-        if self._window_manager is not None:
-            self.edit_game_connections_button.clicked.connect(self._window_manager.open_game_connection_window)
+        self.edit_game_connections_button.clicked.connect(self._window_manager.open_game_connection_window)
 
         # Signals
         self.users_widget.GameExportRequested.connect(self.game_export_listener)
@@ -158,7 +150,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     @classmethod
     async def create_and_update(cls, network_client: QtNetworkClient, session_id: int,
-                                window_manager: WindowManager | PresetManager, options: Options
+                                window_manager: WindowManager, options: Options
                                 ) -> Self:
 
         logger.debug("Creating MultiplayerSessionWindow")

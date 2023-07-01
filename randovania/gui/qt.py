@@ -142,25 +142,6 @@ async def show_game_details(app: QtWidgets.QApplication, options, file_path: Pat
     app.details_window = details_window
 
 
-async def show_game_session(app: QtWidgets.QApplication, options, session_id: int):
-    from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
-    from randovania.interface_common.preset_manager import PresetManager
-
-    network_client: QtNetworkClient = app.network_client
-
-    new_session = await network_client.join_multiplayer_session(session_id, None)
-    preset_manager = PresetManager(options.presets_path)
-
-    app.game_session_window = await MultiplayerSessionWindow.create_and_update(
-        network_client,
-        new_session.id,
-        preset_manager,
-        options
-    )
-    app.game_session_window.show()
-
-
 async def display_window_for(app: QtWidgets.QApplication, options: Options, command: str, args):
     if command == "tracker":
         await show_tracker(app, options)
@@ -170,8 +151,6 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
         show_data_editor(app, options, RandovaniaGame(args.game))
     elif command == "game":
         await show_game_details(app, options, args.rdvgame)
-    elif command == "session":
-        await show_game_session(app, options, args.session_id)
     else:
         raise RuntimeError(f"Unknown command: {command}")
 
@@ -346,10 +325,6 @@ def create_subparsers(sub_parsers):
     game_parser = gui_parsers.add_parser("game", help="Opens an rdvgame")
     game_parser.add_argument("rdvgame", type=Path, help="Path ")
     game_parser.set_defaults(func=run)
-
-    session_parser = gui_parsers.add_parser("session", help="Connects to a game session")
-    session_parser.add_argument("session_id", type=int, help="Id of the session")
-    session_parser.set_defaults(func=run)
 
     def check_command(args):
         if args.command is None:
