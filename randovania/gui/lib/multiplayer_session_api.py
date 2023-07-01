@@ -76,6 +76,29 @@ def handle_network_errors(fn: typing.Callable[typing.Concatenate[MultiplayerSess
     return wrapper
 
 
+class SessionIdLoggingFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        if hasattr(record, "session_id"):
+            record.msg = f"[Session {record.session_id}] {record.msg}"
+        return True
+
+
+class SessionIdLoggerAdapter(logging.LoggerAdapter):
+    def __init__(self, logger: logging.Logger, api: MultiplayerSessionApi):
+        super().__init__(logger)
+        self.api = api
+
+    def process(self, msg, kwargs):
+        kwargs["extra"] = {
+            "session_id": self.api.current_session_id,
+        }
+        return msg, kwargs
+
+
+_base_logger = logging.getLogger("MultiplayerSessionApi")
+_base_logger.addFilter(SessionIdLoggingFilter())
+
+
 class MultiplayerSessionApi(QtCore.QObject):
     current_session_id: int
     widget_root: QtWidgets.QWidget | None
@@ -85,8 +108,7 @@ class MultiplayerSessionApi(QtCore.QObject):
         self.widget_root = None
         self.network_client = network_client
         self.current_session_id = session_id
-
-        self.logger = logging.Logger(__name__)
+        self.logger = SessionIdLoggerAdapter(_base_logger, self)
 
     async def _session_admin_global(self, action: admin_actions.SessionAdminGlobalAction, arg):
         try:
@@ -180,7 +202,7 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     async def request_session_update(self):
-        self.logger.info("Requesting updated session data for %d", self.current_session_id)
+        self.logger.info("Requesting updated session data")
         await self.network_client.server_call(
             "multiplayer_request_session_update",
             self.current_session_id
