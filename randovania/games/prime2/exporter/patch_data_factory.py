@@ -745,8 +745,10 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         self.add_dock_connection_changes(regions_patch_data)
         self.add_dock_type_changes(regions_patch_data)
         self.add_new_patcher_elevators(regions_patch_data)
-        if self.cosmetic_patches.speed_up_credits:
-            self.add_credits_skip(regions_patch_data)
+
+        # TODO: re-add when this no longer crashes sometimes
+        # if self.cosmetic_patches.speed_up_credits:
+        #     self.add_credits_skip(regions_patch_data)
 
         return {
             "worlds": regions_patch_data,
