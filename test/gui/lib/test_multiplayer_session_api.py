@@ -18,6 +18,7 @@ from randovania.network_common import error, admin_actions
     error.InvalidAction("not this"),
     error.UnsupportedClient("Not nice<br />An Error"),
     UnableToConnect("No connect"),
+    error.WorldDoesNotExistError(),
 ])
 async def test_handle_network_errors(skip_qtbot, mocker: MockerFixture, exception):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
