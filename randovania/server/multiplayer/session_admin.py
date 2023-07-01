@@ -230,7 +230,14 @@ def _change_layout_description(sio: ServerApp, session: MultiplayerSession, desc
     worlds_to_update = []
 
     if description_json is None:
+        if not session.has_layout_description():
+            return
+
         description = None
+        for world in session.worlds:
+            world.uuid = uuid.uuid4()
+            worlds_to_update.append(world)
+
     else:
         if session.generation_in_progress != sio.get_current_user():
             if session.generation_in_progress is None:
