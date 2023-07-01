@@ -8,6 +8,10 @@ from PySide6.QtCore import Signal
 import randovania.games.prime2.patcher.csharp_subprocess
 
 
+class BackgroundTaskInProgressError(Exception):
+    pass
+
+
 class BackgroundTaskMixin:
     progress_update_signal = Signal(str, int)
     background_tasks_button_lock_signal = Signal(bool)
@@ -46,7 +50,7 @@ class BackgroundTaskMixin:
                 self.background_tasks_button_lock_signal.emit(True)
 
         if self._background_thread:
-            raise RuntimeError("Trying to start a new background thread while one exists already.")
+            raise BackgroundTaskInProgressError("Trying to start a new background thread while one exists already.")
 
         self.abort_background_task_requested = False
         progress_update(starting_message, 0)
