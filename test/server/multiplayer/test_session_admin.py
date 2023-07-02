@@ -647,7 +647,7 @@ def test_admin_session_finish_session(clean_database, mock_emit_session_update, 
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     if starting_state != MultiplayerSessionState.IN_PROGRESS:
-        expectation = pytest.raises(error.InvalidActionError, match="Invalid Action: Session is not in progress")
+        expectation = pytest.raises(error.SessionInWrongStateError, match="Session was not in state In-Progress")
     else:
         expectation = contextlib.nullcontext()
 
@@ -772,7 +772,7 @@ def test_verify_in_setup(clean_database, flask_app):
                                                  creator=user1,
                                                  layout_description_json="{}")
 
-    with pytest.raises(error.InvalidActionError), flask_app.test_request_context():
+    with pytest.raises(error.SessionInWrongStateError), flask_app.test_request_context():
         session_admin._verify_in_setup(session)
 
 
@@ -782,5 +782,5 @@ def test_verify_no_layout_description(clean_database, flask_app):
                                                  creator=user1,
                                                  layout_description_json="{}")
 
-    with pytest.raises(error.InvalidActionError), flask_app.test_request_context():
+    with pytest.raises(error.SessionInWrongStateError), flask_app.test_request_context():
         session_admin._verify_in_setup(session)
