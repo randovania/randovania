@@ -89,7 +89,7 @@
                     }
                 },
                 "Elevator - Golden Four": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 251.56421918995022,
@@ -102,15 +102,22 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": null
+                        "teleporter_instance_id": null,
+                        "keep_name_when_vanilla": false,
+                        "editable": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Crateria",
-                        "area": "Gold Four"
+                        "area": "Gold Four",
+                        "node": "Elevator - Tourian Entrance"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Metroid Room 1": {
                             "type": "and",

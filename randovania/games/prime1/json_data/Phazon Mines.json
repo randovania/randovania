@@ -58,7 +58,7 @@
                     }
                 },
                 "Elevator to Tallon Overworld - Transport to Phazon Mines East": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -67,15 +67,22 @@
                     ],
                     "extra": {
                         "scan_asset_id": 2685334598,
-                        "teleporter_instance_id": 28
+                        "teleporter_instance_id": 28,
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Tallon Overworld",
-                        "area": "Transport to Phazon Mines East"
+                        "area": "Transport to Phazon Mines East",
+                        "node": "Elevator to Phazon Mines - Transport to Tallon Overworld South"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Quarry Access": {
                             "type": "and",
@@ -7659,7 +7666,7 @@
                     }
                 },
                 "Elevator - Transport to Phazon Mines West": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -7668,15 +7675,22 @@
                     ],
                     "extra": {
                         "scan_asset_id": 495694188,
-                        "teleporter_instance_id": 1638417
+                        "teleporter_instance_id": 1638417,
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Magmoor Caverns",
-                        "area": "Transport to Phazon Mines West"
+                        "area": "Transport to Phazon Mines West",
+                        "node": "Elevator - Transport to Magmoor Caverns South"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport Access": {
                             "type": "and",

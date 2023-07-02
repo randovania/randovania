@@ -619,7 +619,7 @@
                     }
                 },
                 "Teleporter to Artaria - Teleport to Dairon": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 16650.0,
@@ -636,15 +636,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleport_baselab_000_platform",
                         "start_point_actor_name": "teleport_cave_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Artaria",
-                        "area": "Teleport to Dairon"
+                        "area": "Teleport to Dairon",
+                        "node": "Teleporter to Dairon - Teleport to Artaria"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Top Floor": {
                             "type": "or",
@@ -1479,7 +1486,7 @@
                     }
                 },
                 "Elevator to Ferenia - East Transport to Darion": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 13250.0,
@@ -1496,15 +1503,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_baselab_000_platform",
                         "start_point_actor_name": "elevator_sanctuary_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ferenia",
-                        "area": "East Transport to Darion"
+                        "area": "East Transport to Darion",
+                        "node": "Elevator to Dairon - East Transport to Ferenia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to EMMI Zone Exit East": {
                             "type": "resource",
@@ -3022,7 +3036,7 @@
                     }
                 },
                 "Teleporter to Cataris - Teleport to Dairon": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1800.0,
@@ -3039,15 +3053,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleport_baselab_000_platform",
                         "start_point_actor_name": "teleport_magma_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Teleport to Dairon"
+                        "area": "Teleport to Dairon",
+                        "node": "Teleporter to Dairon - Teleport to Cataris"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Blob, from teleporter": {
                             "type": "template",
@@ -5016,7 +5037,7 @@
                     }
                 },
                 "Elevator to Artaria - Transport to Dairon": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 13650.0,
@@ -5033,15 +5054,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_baselab_000_platform",
                         "start_point_actor_name": "elevator_cave_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Artaria",
-                        "area": "Transport to Dairon"
+                        "area": "Transport to Dairon",
+                        "node": "Elevator to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Early Grapple Room": {
                             "type": "or",
@@ -8802,7 +8830,7 @@
                     }
                 },
                 "Elevator to Ferenia - Transport to Dairon": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1850.0,
@@ -8819,15 +8847,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_baselab_001_platform",
                         "start_point_actor_name": "elevator_sanctuary_001_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ferenia",
-                        "area": "Transport to Dairon"
+                        "area": "Transport to Dairon",
+                        "node": "Elevator to Dairon - West Transport to Ferenia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Navigation Station North (Upper)": {
                             "type": "and",
@@ -16992,7 +17027,7 @@
                     }
                 },
                 "Elevator to Cataris - Transport to Dairon": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 24600.0,
@@ -17009,15 +17044,22 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_baselab_000_platform",
                         "start_point_actor_name": "wagontrain_magma_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Transport to Dairon"
+                        "area": "Transport to Dairon",
+                        "node": "Elevator to Dairon - Transport to Cataris"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Teleport to Artaria": {
                             "type": "and",
@@ -17265,7 +17307,7 @@
                     }
                 },
                 "Tram to Burenia - Lower Transport to Dairon": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -21400.0,
@@ -17282,15 +17324,22 @@
                         "elevator_component": "CTrainWithPortalUsableComponent",
                         "target_spawn_point": "wagontrain_baselab_001_platform",
                         "start_point_actor_name": "wagontrain_aqua_001_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Burenia",
-                        "area": "Lower Transport to Dairon"
+                        "area": "Lower Transport to Dairon",
+                        "node": "Tram to Dairon - Lower Transport to Burenia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Burenia Lower Transport Access": {
                             "type": "and",
@@ -17376,7 +17425,7 @@
                     }
                 },
                 "Tram to Burenia - Upper Transport to Dairon": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -23900.0,
@@ -17393,15 +17442,22 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_baselab_000_platform",
                         "start_point_actor_name": "wagontrain_aqua_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Burenia",
-                        "area": "Upper Transport to Dairon"
+                        "area": "Upper Transport to Dairon",
+                        "node": "Tram to Dairon - Upper Transport to Burenia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Burenia Upper Transport Access": {
                             "type": "and",
@@ -17445,7 +17501,7 @@
             },
             "nodes": {
                 "Elevator to Ghavoran - Transport to Dairon": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -16900.0,
@@ -17462,15 +17518,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_baselab_000_platform",
                         "start_point_actor_name": "elevator_forest_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ghavoran",
-                        "area": "Transport to Dairon"
+                        "area": "Transport to Dairon",
+                        "node": "Elevator to Dairon - Transport to Ghavoran"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Energy Recharge Station West": {
                             "type": "and",

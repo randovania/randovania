@@ -78,13 +78,15 @@ Extra - asset_id: collision_camera_001
 
 > Elevator to Hanubia; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Hanubia - Transport to Itorash
+  * Teleporter to Transport to Itorash/Elevator to Itorash - Transport to Hanubia
   * Extra - actor_name: capsuleelevatorskybase_000
   * Extra - actor_def: actordef:actors/props/capsuleelevatorskybase/charclasses/capsuleelevatorskybase.bmsad
   * Extra - elevator_component: CCapsuleUsableComponent
   * Extra - target_spawn_point: elevator_skybase_000_platform
   * Extra - start_point_actor_name: elevator_shipyard_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  * Extra - keep_name_when_vanilla: True
+  * Extra - editable: True
   > Start Point
       Trivial
   > Artifact Gate
@@ -141,11 +143,13 @@ Extra - asset_id: collision_camera_002
 
 > Elevator to Raven Beak Arena; Heals? False
   * Layers: default
-  * Teleporter to Itorash - Raven Beak Arena
+  * Teleporter to Raven Beak Arena/Before Fight
   * Extra - actor_name: commander_elevator
   * Extra - actor_def: actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_commanderelevator_000
   * Extra - start_point_actor_def: actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad
+  * Extra - keep_name_when_vanilla: False
+  * Extra - editable: False
   > Door to Save Station
       Trivial
   > Start Point
@@ -209,5 +213,7 @@ Extra - asset_id: collision_camera_004
 
 > Escape Sequence; Heals? True
   * Layers: default
-  * Teleporter to Hanubia - Raven Beak X Arena
+  * Teleporter to Raven Beak X Arena/Raven Beak X Checkpoint
+  * Extra - keep_name_when_vanilla: False
+  * Extra - editable: False
 
