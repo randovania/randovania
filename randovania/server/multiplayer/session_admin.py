@@ -69,9 +69,13 @@ def _verify_world_has_session(world: World, session: MultiplayerSession):
         raise error.InvalidActionError("Wrong session")
 
 
+def _verify_in_state(session: MultiplayerSession, state: MultiplayerSessionState):
+    if session.state != state:
+        raise error.SessionInWrongStateError(state)
+
+
 def _verify_in_setup(session: MultiplayerSession):
-    if session.state != MultiplayerSessionState.SETUP:
-        raise error.InvalidActionError("Session is not in setup")
+    _verify_in_state(session, MultiplayerSessionState.SETUP)
 
 
 def _verify_no_layout_description(session: MultiplayerSession):
@@ -301,8 +305,7 @@ def _start_session(sio: ServerApp, session: MultiplayerSession):
 
 def _finish_session(sio: ServerApp, session: MultiplayerSession):
     verify_has_admin(sio, session.id, None)
-    if session.state != MultiplayerSessionState.IN_PROGRESS:
-        raise error.InvalidActionError("Session is not in progress")
+    _verify_in_state(session, MultiplayerSessionState.IN_PROGRESS)
 
     session.state = MultiplayerSessionState.FINISHED
     logger().info(f"{session_common.describe_session(session)}: Finishing session.")

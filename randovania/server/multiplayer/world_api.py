@@ -96,7 +96,7 @@ def collect_locations(sio: ServerApp, source_world: World, pickup_locations: tup
     session = source_world.session
 
     if session.state != MultiplayerSessionState.IN_PROGRESS:
-        raise error.InvalidActionError("Unable to collect locations of sessions that aren't in progress")
+        raise error.SessionInWrongStateError(MultiplayerSessionState.IN_PROGRESS)
 
     logger().info(f"{session_common.describe_session(session, source_world)} found items {pickup_locations}")
     description = session.layout_description
@@ -224,11 +224,11 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
                 worlds_to_update.update(new_worlds_to_update)
 
             except error.BaseNetworkError as e:
-                logger().info("[%s] Refused sync for %s: %s, %s", user.name, uid, type(e), e)
+                logger().info("[%s] Refused sync for %s: %s", user.name, uid, e)
                 failed_syncs[uid] = e
 
             except Exception as e:
-                logger().exception("[%s] Failed sync for %s: %s, %s", user.name, uid, type(e), e)
+                logger().exception("[%s] Failed sync for %s: %s", user.name, uid, e)
                 failed_syncs[uid] = error.ServerError()
 
             span.set_data("message.error", failed_syncs.get(uid, 0))
