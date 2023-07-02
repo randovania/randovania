@@ -197,7 +197,16 @@ def logout(sio: ServerApp):
 def browser_login_with_discord(sio: ServerApp):
     sid = flask.request.args.get('sid')
     if sid is not None:
+        if not sio.get_server().rooms(sid):
+            return flask.render_template(
+                "unable_to_login.html",
+                error_message="Invalid sid received from Randovania!",
+            ), 400
+
         flask.session["sid"] = sid
+    else:
+        flask.session.pop("sid", None)
+
     return sio.discord.create_session()
 
 
@@ -211,8 +220,15 @@ def browser_discord_login_callback(sio: ServerApp):
         if sid is None:
             return flask.redirect(flask.url_for("browser_me"))
         else:
-            result = _create_client_side_session(sio, user,
-                                                 sio.get_session(sid=sid))
+            try:
+                session = sio.get_session(sid=sid)
+            except KeyError:
+                return flask.render_template(
+                    "unable_to_login.html",
+                    error_message="Unable to find your Randovania client.",
+                ), 401
+
+            result = _create_client_side_session(sio, user, session)
             flask_socketio.emit("user_session_update", result, to=sid, namespace="/")
             return flask.render_template(
                 "return_to_randovania.html",
@@ -223,13 +239,13 @@ def browser_discord_login_callback(sio: ServerApp):
         return flask.render_template(
             "unable_to_login.html",
             error_message="Discord login was cancelled. Please try again!",
-        )
+        ), 401
 
     except error.UserNotAuthorizedToUseServerError:
         return flask.render_template(
             "unable_to_login.html",
             error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
-        )
+        ), 403
 
     except oauthlib.oauth2.rfc6749.errors.OAuth2Error as err:
         if isinstance(err, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):
@@ -240,7 +256,7 @@ def browser_discord_login_callback(sio: ServerApp):
         return flask.render_template(
             "unable_to_login.html",
             error_message=f"Unable to complete login. Please try again! {err}",
-        )
+        ), 500
 
 
 def setup_app(sio: ServerApp):
