@@ -19,18 +19,31 @@ def test_setup_app():
     user_session.setup_app(MagicMock())
 
 
-@pytest.mark.parametrize("has_sio", [False, True])
-def test_browser_login_with_discord(has_sio, flask_app):
+@pytest.mark.parametrize("has_sio", [False, True, "invalid_sio"])
+def test_browser_login_with_discord(has_sio, flask_app, mocker: pytest_mock.MockerFixture):
+    mock_render = mocker.patch("flask.render_template")
+
     sio = MagicMock()
+    server = sio.get_server.return_value
+    server.rooms.return_value = ["THE_SID"] if has_sio is True else []
 
     with flask_app.test_request_context(query_string="&sid=THE_SID" if has_sio else None) as context:
         result = user_session.browser_login_with_discord(sio)
 
         if has_sio:
+            server.rooms.assert_called_once_with("THE_SID")
+            if has_sio == "invalid_sio":
+                mock_render.assert_called_once_with(
+                    "unable_to_login.html",
+                    error_message="Invalid sid received from Randovania!",
+                )
+                assert result == (mock_render.return_value, 400)
+                return
             assert context.session["sid"] == "THE_SID"
         else:
             assert "sid" not in context.session
 
+    mock_render.assert_not_called()
     assert result is sio.discord.create_session.return_value
 
 
@@ -99,7 +112,7 @@ def test_browser_discord_login_callback_not_authorized(flask_app, mocker: pytest
     # Assert
     sio.discord.callback.assert_called_once_with()
     mock_create.assert_called_once_with(sio, None)
-    assert result is mock_render.return_value
+    assert result == (mock_render.return_value, 403)
     mock_render.assert_called_once_with(
         "unable_to_login.html",
         error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
@@ -117,7 +130,7 @@ def test_browser_discord_login_callback_oauth_error(flask_app, mocker: pytest_mo
 
     # Assert
     sio.discord.callback.assert_called_once_with()
-    assert result is mock_render.return_value
+    assert result == (mock_render.return_value, 500)
     mock_render.assert_called_once_with(
         "unable_to_login.html",
         error_message="Unable to complete login. Please try again! (invalid_grant) ",
@@ -135,10 +148,34 @@ def test_browser_discord_login_callback_cancelled(flask_app, mocker: pytest_mock
 
     # Assert
     sio.discord.callback.assert_called_once_with()
-    assert result is mock_render.return_value
+    assert result == (mock_render.return_value, 401)
     mock_render.assert_called_once_with(
         "unable_to_login.html",
         error_message="Discord login was cancelled. Please try again!",
+    )
+
+
+def test_browser_discord_login_callback_invalid_sid(flask_app, mocker: pytest_mock.MockerFixture):
+    mock_render = mocker.patch("flask.render_template")
+    mock_create = mocker.patch("randovania.server.user_session._create_session_with_discord_token")
+
+    sio = MagicMock()
+    sio.get_session = MagicMock(side_effect=KeyError())
+
+    # Run
+    with flask_app.test_request_context():
+        flask.session["sid"] = "TheSid"
+        # flask.session["DISCORD_OAUTH2_TOKEN"] = "The_Token"
+        result = user_session.browser_discord_login_callback(sio)
+
+    # Assert
+    sio.discord.callback.assert_called_once_with()
+    mock_create.assert_called_once_with(sio, "TheSid")
+    sio.get_session.assert_called_once_with(sid="TheSid")
+    assert result == (mock_render.return_value, 401)
+    mock_render.assert_called_once_with(
+        "unable_to_login.html",
+        error_message="Unable to find your Randovania client.",
     )
 
 
