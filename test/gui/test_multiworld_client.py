@@ -107,6 +107,7 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
     uid_3 = uuid.UUID("000000000000-0000-0000-0000-11111111")
     uid_4 = uuid.UUID("22222222-0000-0000-0000-000000000000")
 
+    client._world_sync_errors[uid_1] = error.ServerError()
     client._world_sync_errors[uid_4] = error.WorldDoesNotExistError()
     client.database._all_data[uid_1] = WorldData(
         collected_locations=(5,),

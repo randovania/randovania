@@ -21,6 +21,13 @@ from randovania.network_common.multiplayer_session import MultiplayerWorldPickup
 from randovania.network_common.world_sync import ServerWorldSync, ServerSyncRequest
 
 
+_ERRORS_THAT_STOP_SYNC = (
+    error.WorldDoesNotExistError,
+    error.WorldNotAssociatedError,
+    error.SessionInWrongStateError,
+)
+
+
 class MultiworldClient(QtCore.QObject):
     _persist_path: Path
     _sync_task: asyncio.Task | None = None
@@ -105,8 +112,9 @@ class MultiworldClient(QtCore.QObject):
                 )
 
         for uid in set(sync_requests.keys()) & set(self._world_sync_errors.keys()):
-            self.logger.debug("Not syncing %s: had sync error", uid)
-            sync_requests.pop(uid)
+            if isinstance(self._world_sync_errors[uid], _ERRORS_THAT_STOP_SYNC):
+                self.logger.debug("Not syncing %s: had sync error", uid)
+                sync_requests.pop(uid)
 
         return ServerSyncRequest(
             worlds=frozendict(sync_requests),
