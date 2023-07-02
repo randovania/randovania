@@ -11,32 +11,23 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Game Connection</string>
+   <string>Game Connections</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="root_layout">
+    <property name="leftMargin">
+     <number>4</number>
+    </property>
+    <property name="topMargin">
+     <number>4</number>
+    </property>
+    <property name="rightMargin">
+     <number>4</number>
+    </property>
+    <property name="bottomMargin">
+     <number>4</number>
+    </property>
     <item row="1" column="0">
-     <spacer name="spacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="builders_group">
-      <property name="title">
-       <string>Games</string>
-      </property>
-      <layout class="QVBoxLayout" name="builders_layout"/>
-     </widget>
-    </item>
-    <item row="2" column="0">
      <widget class="QGroupBox" name="meta_group">
       <property name="title">
        <string/>
@@ -44,7 +35,19 @@
       <property name="flat">
        <bool>true</bool>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="meta_layout">
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
        <item>
         <widget class="QToolButton" name="add_builder_button">
          <property name="text">
@@ -59,6 +62,37 @@
         </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QScrollArea" name="builders_scroll">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="builders_content">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>462</width>
+         <height>244</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="builders_layout">
+        <property name="leftMargin">
+         <number>4</number>
+        </property>
+        <property name="topMargin">
+         <number>4</number>
+        </property>
+        <property name="rightMargin">
+         <number>4</number>
+        </property>
+        <property name="bottomMargin">
+         <number>4</number>
+        </property>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
