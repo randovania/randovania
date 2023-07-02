@@ -51,6 +51,11 @@ def _t(key: str, disambiguation: str | None = None):
     return QtCore.QCoreApplication.translate("MainWindow", key, disambiguation)
 
 
+class LayoutWithPlayers(typing.NamedTuple):
+    layout: LayoutDescription
+    players: list[str] | None
+
+
 class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
@@ -72,7 +77,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     game_connection_window: GameConnectionWindow | None = None
     opened_session_windows: dict[int, MultiplayerSessionWindow]
 
-    GameDetailsSignal = Signal(LayoutDescription)
+    GameDetailsSignal = Signal(LayoutWithPlayers)
     RequestOpenLayoutSignal = Signal(Path)
     InitPostShowSignal = Signal()
 
@@ -389,13 +394,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if result == QtWidgets.QDialog.DialogCode.Accepted:
             await self.generate_seed_from_permalink(dialog.permalink)
 
-    def open_game_details(self, layout: LayoutDescription):
-        self.GameDetailsSignal.emit(layout)
+    def open_game_details(self, layout: LayoutDescription, players: list[str] | None = None):
+        self.GameDetailsSignal.emit(LayoutWithPlayers(layout, players))
 
-    def _open_game_details(self, layout: LayoutDescription):
+    def _open_game_details(self, layout: LayoutWithPlayers):
         from randovania.gui.game_details.game_details_window import GameDetailsWindow
         details_window = GameDetailsWindow(self, self._options)
-        details_window.update_layout_description(layout)
+        details_window.update_layout_description(layout.layout, layout.players)
         details_window.show()
         self.track_window(details_window)
 

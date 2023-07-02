@@ -250,7 +250,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
     # Layout Visualization
 
-    def update_layout_description(self, description: LayoutDescription):
+    def update_layout_description(self, description: LayoutDescription, players: list[str] | None = None):
         self.layout_description = description
         self.layout_info_tab.show()
 
@@ -258,8 +258,14 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.export_log_button.setText("Save Spoiler" if description.has_spoiler
                                        else "Save to file")
 
+        if players is None:
+            def _get_player_name(i):
+                return f"Player {i + 1}"
+        else:
+            def _get_player_name(i):
+                return players[i]
         self._player_names = {
-            i: f"Player {i + 1}"
+            i: _get_player_name(i)
             for i in range(description.player_count)
         }
 

@@ -150,6 +150,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             for world in self._session.worlds
         ]
 
+    def _get_world_names(self) -> list[str]:
+        return [
+            world.name
+            for world in self._session.worlds
+        ]
+
     @classmethod
     async def create_and_update(cls, network_client: QtNetworkClient, session_id: int,
                                 window_manager: WindowManager, options: Options
@@ -619,7 +625,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         description_json = await self._admin_global_action(SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION, None)
         description = LayoutDescription.from_json_dict(json.loads(description_json))
-        self._window_manager.open_game_details(description)
+        self._window_manager.open_game_details(description, self._get_world_names())
 
     @asyncSlot()
     @handle_network_errors
