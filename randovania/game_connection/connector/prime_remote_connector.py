@@ -8,6 +8,7 @@ from retro_data_structures.game_check import Game as RDSGame
 from ppc_asm import assembler
 from randovania.game_connection.connector.remote_connector import RemoteConnector, PickupEntryWithOwner, \
     PlayerLocationEvent
+from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.executor.memory_operation import (
     MemoryOperationException, MemoryOperation, MemoryOperationExecutor
 )
@@ -285,6 +286,13 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def update(self):
         try:
+            if isinstance(self.executor, DolphinExecutor):
+                current_uid = self._layout_uuid
+                if not await self.check_for_world_uid() or current_uid != self._layout_uuid:
+                    self.logger.warning("Dolphin changed games too quickly")
+                    self.executor.disconnect()
+                    return
+
             has_pending_op, region = await self.current_game_status()
             if region != self._last_emitted_region:
                 self.logger.debug("Region changed from last emitted %s", region)
