@@ -141,7 +141,7 @@ class MultiworldClient(QtCore.QObject):
             try:
                 result = await self.network_client.perform_world_sync(request)
 
-            except (UnableToConnect, error.RequestTimeoutError) as e:
+            except (UnableToConnect, error.RequestTimeoutError, error.UnsupportedClientError) as e:
                 self._update_sync_exception(e)
                 self.logger.info("Can't sync worlds: Unable to connect to server: %s", e)
                 await asyncio.sleep(15)
