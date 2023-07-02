@@ -1,4 +1,3 @@
-import peewee
 
 from randovania.network_common import error
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH
