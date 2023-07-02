@@ -141,7 +141,7 @@ class MultiworldClient(QtCore.QObject):
             try:
                 result = await self.network_client.perform_world_sync(request)
 
-            except (UnableToConnect, error.RequestTimeoutError) as e:
+            except (UnableToConnect, error.RequestTimeoutError, error.UnsupportedClientError) as e:
                 self._update_sync_exception(e)
                 self.logger.info("Can't sync worlds: Unable to connect to server: %s", e)
                 await asyncio.sleep(15)
@@ -198,7 +198,7 @@ class MultiworldClient(QtCore.QObject):
 
             if result.errors:
                 for uid, err in result.errors.items():
-                    self.logger.info("When syncing %s, received error %s", uid, err)
+                    self.logger.info("When syncing %s, received %s", uid, err)
                     self._world_sync_errors[uid] = err
                 self.SyncFailure.emit()
 
@@ -240,6 +240,7 @@ class MultiworldClient(QtCore.QObject):
             if user_details is not None:
                 user_worlds = user_details.worlds
 
+        any_error_cleared = False
         for uid, err in list(self._world_sync_errors.items()):
             error_cleared = False
             match type(err):
@@ -254,7 +255,11 @@ class MultiworldClient(QtCore.QObject):
                     error_cleared = uid in worlds_by_id and session.state == err.state
 
             if error_cleared:
+                any_error_cleared = True
                 self._world_sync_errors.pop(uid)
+
+        if any_error_cleared:
+            self.SyncFailure.emit()
 
     @asyncSlot(MultiplayerWorldPickups)
     async def on_network_game_updated(self, pickups: MultiplayerWorldPickups):
