@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Importing permalinks and spoilers in multiworld no longer fails.
 - Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
 
+### Metroid Dread
+
+#### Logic Database
+
+- Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
+
 ## [6.0.0] - 2023-07-03
 
 - **Major** - Multiworld support has been significantly changed! New features include:
