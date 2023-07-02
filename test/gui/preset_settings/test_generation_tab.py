@@ -30,7 +30,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game_data):
     window: PresetGeneration = tab(editor, default_database.game_description_for(game), MagicMock())
     parent = QtWidgets.QWidget()
     window.setParent(parent)
-    skip_qtbot.addWidget(window)
+    skip_qtbot.addWidget(parent)
 
     # Run
     window.on_preset_changed(editor.create_custom_preset_with())
@@ -47,7 +47,7 @@ def test_persist_local_first_progression(skip_qtbot, preset_manager):
     skip_qtbot.addWidget(window)
 
     # Run
-    skip_qtbot.mouseClick(window.local_first_progression_check, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.local_first_progression_check, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
     editor.__enter__.return_value.set_configuration_field.assert_called_once_with(
