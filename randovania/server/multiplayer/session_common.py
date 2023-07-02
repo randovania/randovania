@@ -2,9 +2,11 @@ import hashlib
 import uuid
 
 import flask_socketio
+import peewee
 
 from randovania.bitpacking import construct_pack
-from randovania.network_common import signals
+from randovania.network_common import signals, error
+from randovania.server import database
 from randovania.server.database import (MultiplayerSession, MultiplayerAuditEntry,
                                         WorldUserAssociation, World)
 from randovania.server.lib import logger
@@ -26,6 +28,19 @@ def get_inventory_room_name_raw(world_uuid: uuid.UUID, user_id: int):
 
 def get_inventory_room_name(association: WorldUserAssociation):
     return get_inventory_room_name_raw(association.world.uuid, association.user.id)
+
+
+def get_membership_for(sio_or_user: ServerApp | database.User | int, session: int | database.MultiplayerSession
+                       ) -> database.MultiplayerMembership:
+    if isinstance(sio_or_user, ServerApp):
+        user = sio_or_user.get_current_user()
+    else:
+        user = sio_or_user
+
+    try:
+        return database.MultiplayerMembership.get_by_ids(user, session)
+    except peewee.DoesNotExist:
+        raise error.NotAuthorizedForActionError()
 
 
 def emit_inventory_update(association: WorldUserAssociation):

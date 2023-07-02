@@ -15,10 +15,10 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
-from randovania.network_common.error import InvalidAction
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.multiplayer import session_admin
+from randovania.server.server_app import ServerApp
 
 
 def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_audit):
@@ -218,7 +218,7 @@ def test_admin_session_patcher_file_not_associated(flask_app, two_player_session
     w2 = database.World.get_by_id(2)
 
     # Run
-    with flask_app.test_request_context(), pytest.raises(error.NotAuthorizedForAction):
+    with flask_app.test_request_context(), pytest.raises(error.NotAuthorizedForActionError):
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value,
                                     (str(w2.uuid), {}))
 
@@ -269,7 +269,7 @@ def test_admin_session_create_world_bad_name(mock_emit_session_update: MagicMock
     sio.get_current_user.return_value = user1
 
     # Run
-    with flask_app.test_request_context(), pytest.raises(error.InvalidAction, match="Invalid world name"):
+    with flask_app.test_request_context(), pytest.raises(error.InvalidActionError, match="Invalid world name"):
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CREATE_WORLD.value,
                                     ("New####,World", preset_manager.default_preset.as_json))
 
@@ -287,11 +287,11 @@ def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_au
     w1 = database.World.create(session=session, name="W1", preset="{}")
     database.World.create(session=session, name="W2", preset="{}")
     database.MultiplayerMembership.create(user=user1, session=session, admin=association == "admin")
-    sio = MagicMock()
+    sio = MagicMock(spec=ServerApp)
     sio.get_current_user.return_value = user1
 
     if association == "no":
-        context = pytest.raises(error.NotAuthorizedForAction)
+        context = pytest.raises(error.NotAuthorizedForActionError)
     else:
         context = contextlib.nullcontext()
 
@@ -326,14 +326,14 @@ def test_admin_session_rename_world(mock_emit_session_update: MagicMock, mock_au
     w1 = database.World.create(session=session, name="W1", preset="{}")
     database.World.create(session=session, name="W2", preset="{}")
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
-    sio = MagicMock()
+    sio = MagicMock(spec=ServerApp)
     sio.get_current_user.return_value = user1
 
     if valid_name:
         context = contextlib.nullcontext()
         new_name = "TheNewName"
     else:
-        context = pytest.raises(error.InvalidAction, match="Invalid world name")
+        context = pytest.raises(error.InvalidActionError, match="Invalid world name")
         new_name = "TheNew,?/1#Name"
 
     # Run
@@ -361,11 +361,11 @@ def test_admin_session_delete_world(mock_emit_session_update: MagicMock, mock_au
     w1 = database.World.create(session=session, name="W1", preset="{}")
     database.World.create(session=session, name="W2", preset="{}")
     database.MultiplayerMembership.create(user=user1, session=session, admin=association == "admin")
-    sio = MagicMock()
+    sio = MagicMock(spec=ServerApp)
     sio.get_current_user.return_value = user1
 
     if association == "no":
-        context = pytest.raises(error.NotAuthorizedForAction)
+        context = pytest.raises(error.NotAuthorizedForActionError)
     else:
         context = contextlib.nullcontext()
 
@@ -428,7 +428,7 @@ def test_admin_session_update_layout_generation(mock_emit_session_update: MagicM
     expected_order = {w.name: None for w in [w1, w2, w3]}
 
     if case == "to_true_busy":
-        expectation = pytest.raises(InvalidAction, match="Generation already in progress by Other.")
+        expectation = pytest.raises(error.InvalidActionError, match="Generation already in progress by Other.")
         expected_user = user2
     else:
         expectation = contextlib.nullcontext()
@@ -555,7 +555,7 @@ def test_admin_session_change_layout_description_invalid(mock_emit_session_updat
         expected_message = "Not waiting for a layout."
 
     # Run
-    with pytest.raises(InvalidAction, match=expected_message), flask_app.test_request_context():
+    with pytest.raises(error.InvalidActionError, match=expected_message), flask_app.test_request_context():
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
                                     "layout_description_json")
 
@@ -567,7 +567,7 @@ def test_admin_session_change_layout_description_invalid(mock_emit_session_updat
 def test_admin_session_download_layout_description(flask_app, solo_two_world_session, mock_emit_session_update,
                                                    mock_audit):
     session = database.MultiplayerSession.get_by_id(1)
-    sio = MagicMock()
+    sio = MagicMock(spec=ServerApp)
     sio.get_current_user.return_value = database.User.get_by_id(1234)
 
     # Run
@@ -590,12 +590,12 @@ def test_admin_session_download_layout_description_no_spoiler(clean_database, mo
     session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
                                                  layout_description_json="layout_description_json")
     database.MultiplayerMembership.create(user=user1, session=session, admin=False)
-    sio = MagicMock()
+    sio = MagicMock(spec=ServerApp)
     sio.get_current_user.return_value = user1
     mock_layout_description.return_value.has_spoiler = False
 
     # Run
-    with pytest.raises(InvalidAction), flask_app.test_request_context():
+    with pytest.raises(error.InvalidActionError), flask_app.test_request_context():
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value,
                                     None)
 
@@ -619,7 +619,7 @@ def test_admin_session_start_session(mock_emit_session_update,
     if has_layout:
         expectation = contextlib.nullcontext()
     else:
-        expectation = pytest.raises(InvalidAction,
+        expectation = pytest.raises(error.InvalidActionError,
                                     match="Invalid Action: Unable to start session, no game is available.")
 
     # Run
@@ -647,7 +647,7 @@ def test_admin_session_finish_session(clean_database, mock_emit_session_update, 
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     if starting_state != MultiplayerSessionState.IN_PROGRESS:
-        expectation = pytest.raises(InvalidAction, match="Invalid Action: Session is not in progress")
+        expectation = pytest.raises(error.InvalidActionError, match="Invalid Action: Session is not in progress")
     else:
         expectation = contextlib.nullcontext()
 
@@ -696,7 +696,7 @@ def test_admin_session_change_title(clean_database, mock_emit_session_update, fl
         context = contextlib.nullcontext()
         new_name = "new_name"
     else:
-        context = pytest.raises(error.InvalidAction, match="Invalid session name length")
+        context = pytest.raises(error.InvalidActionError, match="Invalid session name length")
         new_name = "new_name" * 10
 
     # Run
@@ -762,7 +762,7 @@ def test_admin_session_download_permalink(clean_database, mock_emit_session_upda
 
 
 def test_change_row_missing_arguments(flask_app):
-    with pytest.raises(InvalidAction), flask_app.test_request_context():
+    with pytest.raises(error.InvalidActionError), flask_app.test_request_context():
         session_admin._change_world(MagicMock(), MagicMock(), (5,))
 
 
@@ -772,7 +772,7 @@ def test_verify_in_setup(clean_database, flask_app):
                                                  creator=user1,
                                                  layout_description_json="{}")
 
-    with pytest.raises(InvalidAction), flask_app.test_request_context():
+    with pytest.raises(error.InvalidActionError), flask_app.test_request_context():
         session_admin._verify_in_setup(session)
 
 
@@ -782,5 +782,5 @@ def test_verify_no_layout_description(clean_database, flask_app):
                                                  creator=user1,
                                                  layout_description_json="{}")
 
-    with pytest.raises(InvalidAction), flask_app.test_request_context():
+    with pytest.raises(error.InvalidActionError), flask_app.test_request_context():
         session_admin._verify_in_setup(session)

@@ -7,12 +7,14 @@ from PySide6 import QtWidgets
 if typing.TYPE_CHECKING:
     from randovania.games.game import RandovaniaGame
     from randovania.gui.lib.close_event_widget import CloseEventWidget
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.multiworld_client import MultiworldClient
+    from randovania.interface_common.options import Options
     from randovania.interface_common.preset_manager import PresetManager
+    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
     from randovania.layout.layout_description import LayoutDescription
     from randovania.layout.preset import Preset
-    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
-    from randovania.interface_common.options import Options
+
 
 class WindowManager(QtWidgets.QMainWindow):
     tracked_windows: list[CloseEventWidget]
@@ -23,6 +25,10 @@ class WindowManager(QtWidgets.QMainWindow):
 
     @property
     def preset_manager(self) -> PresetManager:
+        raise NotImplementedError()
+
+    @property
+    def multiworld_client(self) -> MultiworldClient:
         raise NotImplementedError()
 
     async def open_map_tracker(self, configuration: Preset):
@@ -60,8 +66,3 @@ class WindowManager(QtWidgets.QMainWindow):
                                                 session_id: int, options: Options
                                                 ):
         raise NotImplementedError()
-        
-
-
-def get_global_window_manager() -> WindowManager:
-    return QtWidgets.QApplication.instance().main_window

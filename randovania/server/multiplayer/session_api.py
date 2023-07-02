@@ -1,7 +1,5 @@
-import peewee
 
 from randovania.network_common import error
-from randovania.network_common.error import WrongPassword
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH
 from randovania.server import database
 from randovania.server.database import MultiplayerSession, MultiplayerMembership, User
@@ -49,9 +47,9 @@ def join_session(sio: ServerApp, session_id: int, password: str | None):
     if not session.is_user_in_session(user):
         if session.password is not None:
             if password is None or session_common.hash_password(password) != session.password:
-                raise WrongPassword()
+                raise error.WrongPasswordError()
         elif password is not None:
-            raise WrongPassword()
+            raise error.WrongPasswordError()
 
     MultiplayerMembership.get_or_create(user=sio.get_current_user(), session=session)
     session_common.join_room(sio, session)
@@ -62,10 +60,7 @@ def join_session(sio: ServerApp, session_id: int, password: str | None):
 
 def listen_to_session(sio: ServerApp, session_id: int, listen: bool):
     if listen:
-        try:
-            membership = MultiplayerMembership.get_by_ids(user_id=sio.get_current_user(), session_id=session_id)
-        except peewee.DoesNotExist:
-            raise error.NotAuthorizedForAction()
+        membership = session_common.get_membership_for(sio, session_id)
         session_common.join_room(sio, membership.session)
     else:
         session_common.leave_room(sio, session_id)

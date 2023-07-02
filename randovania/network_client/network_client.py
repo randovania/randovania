@@ -244,10 +244,10 @@ class NetworkClient:
 
                 self.connection_state = ConnectionState.Connected
 
-            except (error.InvalidSession, error.UserNotAuthorized) as e:
+            except (error.InvalidSessionError, error.UserNotAuthorizedToUseServerError) as e:
                 self.logger.info(
                     "session not authorized, deleting"
-                    if isinstance(e, error.UserNotAuthorized) else
+                    if isinstance(e, error.UserNotAuthorizedToUseServerError) else
                     "invalid session, deleting"
                 )
                 self.connection_state = ConnectionState.ConnectedNotLogged
@@ -410,7 +410,7 @@ class NetworkClient:
                 if self._num_emit_failures >= _TIMEOUTS_TO_DISCONNECT:
                     # If getting too many timeouts in a row, just disconnect so the user is aware something is wrong.
                     await self.disconnect_from_server()
-                raise error.RequestTimeout(f"Timeout after {request_time:.2f}s, with a timeout of {timeout}.")
+                raise error.RequestTimeoutError(f"Timeout after {request_time:.2f}s, with a timeout of {timeout}.")
 
         if result is None:
             return None
@@ -419,7 +419,7 @@ class NetworkClient:
         if possible_error is None:
             return result["result"]
         else:
-            if handle_invalid_session and isinstance(possible_error, error.InvalidSession):
+            if handle_invalid_session and isinstance(possible_error, error.InvalidSessionError):
                 self.logger.info("Received InvalidSession during a %s call", event)
                 await self.logout()
 

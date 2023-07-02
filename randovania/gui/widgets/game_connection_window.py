@@ -22,9 +22,10 @@ from randovania.gui.generated.game_connection_window_ui import Ui_GameConnection
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.main_window import MainWindow
-from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.interface_common.options import Options
+from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.network_common import error
+
 
 class BuilderUi:
     group: QtWidgets.QGroupBox
@@ -33,7 +34,7 @@ class BuilderUi:
     remove: QtGui.QAction
     description: QtWidgets.QLabel
     status: QtWidgets.QLabel
-    join_session: tuple[QtGui.QAction, QtGui.QAction] # seperator + button
+    join_session: tuple[QtGui.QAction, QtGui.QAction] | None  # seperator + button
 
     def __init__(self, parent: QtWidgets.QWidget):
         self.group = QtWidgets.QGroupBox(parent)
@@ -58,7 +59,7 @@ class BuilderUi:
         self.layout.addWidget(self.button)
         self.layout.addWidget(self.description, 0, 1)
         self.layout.addWidget(self.status, 1, 0, 1, 2)
-    
+
     def add_session_button(self) -> QtGui.QAction:
         if self.join_session:
             return self.join_session[1]
@@ -87,7 +88,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
     layout_uuid_for_builder: dict[ConnectorBuilder, uuid.UUID]
 
     def __init__(self, window_manager: MainWindow, network_client: QtNetworkClient,
-                  options: Options, game_connection: GameConnection):
+                 options: Options, game_connection: GameConnection):
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self.setupUi(self)
@@ -210,7 +211,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
                 self.network_client, session_id,
                 self.options
             )
-        except error.NotAuthorizedForAction:
+        except error.NotAuthorizedForActionError:
             await async_dialog.warning(self, "Unauthorized",
                                        "You're not a member of this session.")
 
@@ -231,7 +232,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         associated_rc = self.game_connection.remote_connectors.get(builder, None)
         if associated_rc is None:
             return None
-        
+
         # check the uuid
         layout_uuid = associated_rc.layout_uuid
         if layout_uuid == INVALID_UUID:

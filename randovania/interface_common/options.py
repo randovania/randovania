@@ -12,6 +12,7 @@ from randovania.interface_common import update_checker, persisted_options
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import migration_lib
 
+
 T = TypeVar("T")
 
 

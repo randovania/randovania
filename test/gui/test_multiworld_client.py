@@ -229,7 +229,7 @@ async def test_server_sync(client, mocker: MockerFixture):
         ServerSyncRequest(worlds=frozendict({})),  # And a last time, to make sure there were no new requests
     ])
     client.network_client.perform_world_sync = AsyncMock(side_effect=[
-        error.RequestTimeout,
+        error.RequestTimeoutError,
         ServerSyncResponse(
             worlds=frozendict({
                 uid_1: ServerWorldResponse(
@@ -255,7 +255,7 @@ async def test_server_sync(client, mocker: MockerFixture):
     mock_sleep.assert_has_awaits([
         # First request
         call(1),
-        call(5),  # perform_world_sync call timed out
+        call(15),  # perform_world_sync call timed out
 
         # Second request
         call(1),

@@ -65,6 +65,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         self._window_manager = window_manager
         self._preset_manager = window_manager.preset_manager
+        self._multiworld_client = window_manager.multiworld_client
 
         self._options = options
         self._trackers = load_trackers_configuration()
@@ -141,6 +142,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.network_client.MultiplayerAuditLogUpdated.connect(self.on_audit_log_update)
         self.network_client.WorldUserInventoryUpdated.connect(self.on_user_inventory_update)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
+        self._multiworld_client.SyncFailure.connect(self.update_multiworld_client_status)
 
     def _get_world_order(self) -> list[str]:
         return [
@@ -209,6 +211,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.sync_background_process_to_session()
         self.update_game_tab()
         await self.update_logic_settings_window()
+        self.update_multiworld_client_status()
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -687,6 +690,36 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.server_connection_label.setText(message)
         common_qt_lib.set_error_border_stylesheet(self.server_connection_label,
                                                   state == ConnectionState.ConnectedNotLogged)
+
+    def update_multiworld_client_status(self):
+        lines = []
+
+        err = self._multiworld_client.last_sync_exception
+        if err is not None:
+            lines.append(f"Error when syncing worlds: {err}")
+
+        multi_user = self._session.users[self.network_client.current_user.id]
+        world_status = []
+        for uid in multi_user.worlds.keys():
+            data = self._multiworld_client.database.get_data_for(uid)
+
+            msg = "- {}: {} collected locations, {} pending uploads.".format(
+                self._session.get_world(uid).name,
+                len(data.collected_locations),
+                len(set(data.collected_locations) - set(data.uploaded_locations)),
+            )
+
+            err = self._multiworld_client.get_world_sync_error(uid)
+            if err is not None:
+                msg += f" Received {err} when syncing."
+
+            world_status.append(msg)
+
+        if world_status:
+            lines.append("Status of your worlds, in this client:")
+            lines.extend(world_status)
+
+        self.multiworld_client_status_label.setText("\n".join(lines))
 
     @asyncSlot()
     @handle_network_errors

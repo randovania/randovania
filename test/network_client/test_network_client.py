@@ -14,7 +14,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.network_client.network_client import NetworkClient, ConnectionState, _decode_pickup, UnableToConnect
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
-from randovania.network_common.error import InvalidSession, RequestTimeout, ServerError
+from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory, WorldUserInventory
 
 
@@ -49,7 +49,7 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
             "encoded_session_b85": b'Ze@30VtI6Ba{'
         }}
     else:
-        call_result = InvalidSession().as_json
+        call_result = InvalidSessionError().as_json
 
     client.sio = MagicMock()
     client.sio.call = AsyncMock(return_value=call_result)
@@ -179,7 +179,7 @@ async def test_emit_with_result_timeout(client: NetworkClient):
     client.sio.call.side_effect = socketio.exceptions.TimeoutError()
 
     # Run
-    with pytest.raises(RequestTimeout, match="Timeout after "):
+    with pytest.raises(RequestTimeoutError, match="Timeout after "):
         await client.server_call("test_event")
 
 
