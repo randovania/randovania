@@ -325,6 +325,38 @@ def _migrate_v17(json_dict: dict) -> dict:
 
     return json_dict
 
+def _migrate_v18(data: dict) -> dict:
+    # TODO: remove code before merge (this creates the migration data from current db)
+    # from randovania.game_description.default_database import game_description_for
+    # from randovania.lib import json_lib
+    # from randovania.game_description.db.dock_node import DockNode
+    # for game in RandovaniaGame.all_games():
+    #     raw_data = migration_data.get_raw_data(game)
+    #     default_node_per_area = {}
+    #     # following games have no teleporters
+    #     if game.value in {"blank", "cave_story", "am2r"}:
+    #         raw_data["default_node_per_area"] = default_node_per_area
+    #         json_lib.write_path(game.data_path.joinpath("assets", "migration_data.json"), raw_data)
+    #         continue
+
+    #     description = game_description_for(game)
+    #     rl = description.region_list
+    #     for area in rl.all_areas:
+    #         area_id = rl.identifier_for_area(area)
+    #         default_node_per_area[area_id.as_string] = area.default_node
+    #     raw_data["default_node_per_area"] = default_node_per_area
+    #     json_lib.write_path(game.data_path.joinpath("assets", "migration_data.json"), raw_data)
+
+    for game in data["game_modifications"]:
+        game_name = game["game"]
+        if game_name not in {"blank", "cave_story", "am2r"}:
+            default_node_per_area = migration_data.get_raw_data(RandovaniaGame(game_name))["default_node_per_area"]
+            # remove teleporters and add to dock_connections
+            for source, target in game["teleporters"].items():
+                target_node = default_node_per_area[target]
+                game["teleporters"][source] = f"{target}/{target_node}"
+        game["dock_connections"].update(game.pop("teleporters"))
+    return data
 
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
@@ -344,6 +376,7 @@ _MIGRATIONS = [
     _migrate_v15,
     _migrate_v16,
     _migrate_v17,
+    _migrate_v18,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -11,10 +11,8 @@ from randovania.game_description.db.area import Area
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import Node
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
@@ -114,15 +112,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             return []
         result.extend(items)
         return result
-
-    def _node_for(self, identifier: AreaIdentifier | NodeIdentifier) -> Node:
-        if isinstance(identifier, NodeIdentifier):
-            return self.game.region_list.node_by_identifier(identifier)
-        else:
-            area = self.game.region_list.area_by_area_location(identifier)
-            node = area.node_with_name(area.default_node)
-            assert node is not None
-            return node
 
     def _key_error_for_node(self, node: Node, err: KeyError):
         return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
@@ -437,7 +426,8 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         ]
 
     def create_data(self) -> dict:
-        starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
+        starting_location_node = self.game.region_list.node_by_identifier(self.patches.starting_location)
+        starting_location = self._start_point_ref_for(starting_location_node)
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = [self._starting_inventory_text()]
 
@@ -457,6 +447,8 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         energy_per_tank = self.configuration.energy_per_tank if self.configuration.immediate_energy_parts else 100.0
 
+        teleporter_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
+
         return {
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
@@ -470,9 +462,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "elevators": [
                 {
                     "teleporter": self._teleporter_ref_for(source),
-                    "destination": self._start_point_ref_for(self._node_for(target)),
+                    "destination": self._start_point_ref_for(target),
                 }
-                for source, target in self.patches.all_elevator_connections()
+                for source, target in self.patches.all_dock_connections() if source.dock_type in teleporter_dock_types
             ],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),

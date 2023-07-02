@@ -131,3 +131,18 @@ class DockWeaknessDatabase:
     def all_weaknesses(self) -> Iterator[DockWeakness]:
         for weakness_dict in self.weaknesses.values():
             yield from weakness_dict.values()
+
+    # FIXME: Make is_teleporter and ignore_for_hints proper DockType fields
+    @property
+    def all_teleporter_dock_types(self) -> list[DockType]:
+        return [
+            dock_type
+            for dock_type in self.dock_types if dock_type.extra.get("is_teleporter", False)
+        ]
+    
+    @property
+    def all_ignore_hints_dock_types(self) -> list[DockType]:
+        return [
+            dock_type
+            for dock_type in self.dock_types if dock_type.extra.get("ignore_for_hints", False)
+        ]
