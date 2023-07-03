@@ -210,18 +210,20 @@ class MultiplayerSession(BaseModel):
 
         worlds = self.get_ordered_worlds()
         world_by_id = {
-            world.uuid: world
+            world.id: world
             for world in worlds
         }
 
         def _describe_action(action: WorldAction) -> multiplayer_session.MultiplayerSessionAction:
-            provider_index = world_by_id[action.provider.uuid].order
+            provider = world_by_id[action.provider.id]
+            receiver = world_by_id[action.receiver.id]
+
             location_index = PickupIndex(action.location)
-            target = description.all_patches[provider_index].pickup_assignment[location_index]
+            target = description.all_patches[provider.order].pickup_assignment[location_index]
 
             return multiplayer_session.MultiplayerSessionAction(
-                provider=action.provider.uuid,
-                receiver=action.receiver.uuid,
+                provider=provider.uuid,
+                receiver=receiver.uuid,
                 pickup=target.pickup.name,
                 location=action.location,
                 time=datetime.datetime.fromisoformat(action.time),
