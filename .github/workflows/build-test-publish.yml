@@ -410,9 +410,16 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2.8.0
 
+      - name: Should Push
+        id: decide_push
+        env:
+            SHOULD_PUSH: ${{ github.event_name != 'pull_request' && github.event_name != 'merge_group' && !startsWith(github.ref, 'refs/heads/stable') }}
+        run: |
+          echo should=${SHOULD_PUSH} >> $GITHUB_OUTPUT
+
       -
         name: Login to DockerHub
-        if: github.event_name != 'pull_request' && github.event_name != 'merge_group'
+        if: ${{ fromJSON(steps.decide_push.outputs.should) }}
         uses: docker/login-action@v2.2.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -426,8 +433,8 @@ jobs:
           context: .
           file: ./Dockerfile.server
           platforms: linux/amd64
-          load: ${{ github.event_name == 'pull_request' || github.event_name == 'merge_group' }}
-          push: ${{ github.event_name != 'pull_request' && github.event_name != 'merge_group' }}
+          load: ${{ !fromJSON(steps.decide_push.outputs.should) }}
+          push: ${{ fromJSON(steps.decide_push.outputs.should) }}
           tags: ${{ steps.prep.outputs.tags }}
           labels: |
             org.opencontainers.image.created=${{ steps.prep.outputs.created }}
