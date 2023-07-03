@@ -48,6 +48,7 @@ def _get_pickup_target(description: LayoutDescription, provider: int, location: 
     return pickup_assignment.get(PickupIndex(location))
 
 
+@sentry_sdk.trace
 def _collect_location(session: MultiplayerSession, world: World,
                       description: LayoutDescription,
                       pickup_location: int) -> World | None:
@@ -91,6 +92,7 @@ def _collect_location(session: MultiplayerSession, world: World,
     return target_world
 
 
+@sentry_sdk.trace
 def collect_locations(sio: ServerApp, source_world: World, pickup_locations: tuple[int, ...],
                       ) -> set[World]:
     session = source_world.session
@@ -110,10 +112,11 @@ def collect_locations(sio: ServerApp, source_world: World, pickup_locations: tup
     return receiver_worlds
 
 
+@sentry_sdk.trace
 def update_association(user: User, world: World, inventory: bytes | None,
                        connection_state: GameConnectionStatus, ) -> int | None:
     association = WorldUserAssociation.get_by_instances(world=world, user=user)
-    session = association.world.session
+    session = world.session
 
     new_inventory = False
 
@@ -168,9 +171,13 @@ def _check_user_is_associated(user: User, world: World):
         raise error.WorldNotAssociatedError()
 
 
+@sentry_sdk.trace
 def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: ServerWorldSync,
                    ) -> tuple[ServerWorldResponse | None, int | None, set[World]]:
+    sentry_sdk.set_tag("world_uuid", str(uid))
     world = World.get_by_uuid(uid)
+    sentry_sdk.set_tag("session_id", world.session.id)
+
     _check_user_is_associated(user, world)
     response = None
     worlds_to_update = set()
@@ -208,30 +215,24 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
     sessions_to_update_meta = set()
 
     for uid, world_request in request.worlds.items():
-        with sentry_sdk.start_transaction(op="message", name="sync_one_world") as span:
-            span.set_tag("world_id", uid)
-            span.set_data("message.error", 0)
+        try:
+            response, session_id, new_worlds_to_update = sync_one_world(sio, user, uid, world_request)
 
-            try:
-                response, session_id, new_worlds_to_update = sync_one_world(sio, user, uid, world_request)
+            if response is not None:
+                world_details[uid] = response
 
-                if response is not None:
-                    world_details[uid] = response
+            if session_id is not None:
+                sessions_to_update_meta.add(session_id)
 
-                if session_id is not None:
-                    sessions_to_update_meta.add(session_id)
+            worlds_to_update.update(new_worlds_to_update)
 
-                worlds_to_update.update(new_worlds_to_update)
+        except error.BaseNetworkError as e:
+            logger().info("[%s] Refused sync for %s: %s", user.name, uid, e)
+            failed_syncs[uid] = e
 
-            except error.BaseNetworkError as e:
-                logger().info("[%s] Refused sync for %s: %s", user.name, uid, e)
-                failed_syncs[uid] = e
-
-            except Exception as e:
-                logger().exception("[%s] Failed sync for %s: %s", user.name, uid, e)
-                failed_syncs[uid] = error.ServerError()
-
-            span.set_data("message.error", failed_syncs.get(uid, 0))
+        except Exception as e:
+            logger().exception("[%s] Failed sync for %s: %s", user.name, uid, e)
+            failed_syncs[uid] = error.ServerError()
 
     for world in worlds_to_update:
         emit_world_pickups_update(sio, world)

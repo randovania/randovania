@@ -127,6 +127,10 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, ex
 
 
 def client_init():
+    if not randovania.is_frozen():
+        # TODO: It'd be nice to catch these running from source, but only for unmodified main.
+        return
+
     _init(False, _CLIENT_DEFAULT_URL,
           exclude_server_name=True)
     sentry_sdk.set_tag("frozen", randovania.is_frozen())
@@ -142,7 +146,7 @@ def bot_init():
 
 @contextlib.contextmanager
 def attach_patcher_data(patcher_data: dict):
-    with sentry_sdk.configure_scope() as scope:
+    with sentry_sdk.push_scope() as scope:
         scope.add_attachment(
             json.dumps(patcher_data).encode("utf-8"),
             filename="patcher.json",
