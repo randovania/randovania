@@ -146,7 +146,7 @@ def bot_init():
 
 @contextlib.contextmanager
 def attach_patcher_data(patcher_data: dict):
-    with sentry_sdk.configure_scope() as scope:
+    with sentry_sdk.push_scope() as scope:
         scope.add_attachment(
             json.dumps(patcher_data).encode("utf-8"),
             filename="patcher.json",
