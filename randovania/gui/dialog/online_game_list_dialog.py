@@ -89,7 +89,6 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         if self.joined_session is not None:
             return self.accept()
 
-
     def update_list(self):
         self.table_widget.clear()
         self.table_widget.setHorizontalHeaderLabels(["Name", "State", "Players", "Password?", "Creator",

@@ -200,7 +200,14 @@ class QtNetworkClient(QWidget, NetworkClient):
                     "Connecting",
                     "Connecting to server...",
                 )
-            except (asyncio.CancelledError, UnableToConnect):
+            except UnableToConnect as e:
+                await async_dialog.warning(
+                    parent, "Unable to connect",
+                    e.reason,
+                )
+                return False
+
+            except asyncio.CancelledError:
                 return False
 
         if self.current_user is None:
