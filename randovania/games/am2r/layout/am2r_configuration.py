@@ -19,6 +19,7 @@ class AM2RConfiguration(BaseConfiguration):
     #include_metroid_pickups: bool
     #include_boss_pickups: bool
     # TODO: ability to go to credits sooner?
+    sotflock_prevention: bool
     septogg_helpers: bool
     change_level_design: bool   # TODO: requires changes in DB!
     skip_cutscenes: bool        # TODO: requires changes in DB!
@@ -27,7 +28,6 @@ class AM2RConfiguration(BaseConfiguration):
     grave_grotto_blocks: bool
     # TODO: warp to start
     a3_entrance_blocks: bool
-
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
