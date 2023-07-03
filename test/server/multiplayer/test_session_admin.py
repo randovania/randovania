@@ -741,15 +741,17 @@ def test_admin_session_duplicate_session(clean_database, mock_emit_session_updat
     assert list(itertools.chain.from_iterable(w.associations for w in new_session.worlds)) == []
 
 
-def test_admin_session_download_permalink(clean_database, mock_emit_session_update, flask_app,
+def test_admin_session_download_permalink(solo_two_world_session, mock_emit_session_update, flask_app,
                                           mock_audit, mocker):
-    user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
-    database.MultiplayerMembership.create(user=user1, session=session, admin=True)
+    assoc = database.MultiplayerMembership.get_by_ids(1234, 1)
+    assoc.admin = True
+    assoc.save()
+    user1 = assoc.user
+
     sio = MagicMock()
     sio.get_current_user.return_value = user1
-    mock_session_description: PropertyMock = mocker.patch(
-        "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock)
+    mock_permalink: PropertyMock = mocker.patch(
+        "randovania.layout.layout_description.LayoutDescription.permalink", new_callable=PropertyMock)
 
     # Run
     with flask_app.test_request_context():
@@ -757,8 +759,24 @@ def test_admin_session_download_permalink(clean_database, mock_emit_session_upda
 
     # Assert
     mock_emit_session_update.assert_not_called()
-    mock_audit.assert_called_once_with(sio, session, "Requested permalink")
-    assert result == mock_session_description.return_value.permalink.as_base64_str
+    mock_audit.assert_called_once_with(sio, solo_two_world_session, "Requested permalink")
+    assert result == mock_permalink.return_value.as_base64_str
+
+
+def test_admin_session_download_permalink_no_layout(clean_database, mock_emit_session_update, flask_app, mock_audit):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    database.MultiplayerMembership.create(user=user1, session=session, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    with flask_app.test_request_context(), pytest.raises(error.InvalidActionError):
+        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.REQUEST_PERMALINK.value, None)
+
+    # Assert
+    mock_emit_session_update.assert_not_called()
+    mock_audit.assert_not_called()
 
 
 def test_change_row_missing_arguments(flask_app):

@@ -376,7 +376,7 @@ def _duplicate_session(sio: ServerApp, session: MultiplayerSession, new_title: s
 def _get_permalink(sio: ServerApp, session: MultiplayerSession) -> str:
     verify_has_admin(sio, session.id, None)
 
-    if session.has_layout_description():
+    if not session.has_layout_description():
         raise error.InvalidActionError("Session does not contain a game")
 
     session_common.add_audit_entry(sio, session, "Requested permalink")
