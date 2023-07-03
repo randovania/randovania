@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
      * This means it's now possible to play a Multiworld entirely solo.
   *  You can connect to one Dolphin and any number of Nintendont at the same time.
   *  Multiple sessions can be opened at the same time.
-  *  A session window is no longer required to be kept open. As long as Randovania is connected to a game, the server communication works. 
+  *  A session window is no longer required to be kept open. As long as Randovania is connected to a game, the server communication works.
 - Added: It's now possible to drag presets directly into the root of the presets.
 - Added: The order you place presets when drag and dropping is now saved.
 - Added: New command line arguments `--local-data` and `--user-data` to allow configuring where Randovania saves its data.
@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Interface to customize preset description.
 - Added: It's now possible to save rdvgame files for race games. This is not available for multiworld.
 - Added: When editing a Pickup Node, there's now a button to find an unused pickup index.
+- Added: When viewing the spoiler log in a Multiworld session, it will now display the names for each world rather than "Player 1", "Player 2", etc.
 - Changed: Discord login is now performed via your browser, instead of the Discord client.
 - Changed: Door Lock mode Two-way is now named Doors. The functionality is unchanged.
 - Changed: Improved preset descriptions, making them significantly simpler.
@@ -113,7 +114,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Door Lock randomizer has been added. Note that this feature requires enabling the new patcher.
 - Added: New random elevators mode: Shuffle Regions. In this mode, we keep the game world consistent by shuffling the regions around Temple Grounds, and then changing the elevators to match. See [this map](randovania/data/gui_assets/echoes_elevator_map.png) for reference.
-- Added: When the new patcher is enabled, Security Station B starts in the post-Dark Samus appearance. This change is supported by logic. 
+- Added: When the new patcher is enabled, Security Station B starts in the post-Dark Samus appearance. This change is supported by logic.
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
 - Changed: When the new patcher is enabled, some cosmetic effects are removed from Torvus Temple in an attempt to make it crash less.
 - Changed: For Multiworld ISOs, the game name now mentions the session name and world name.

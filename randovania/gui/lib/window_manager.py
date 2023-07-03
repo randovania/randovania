@@ -38,7 +38,7 @@ class WindowManager(QtWidgets.QMainWindow):
                                 trick_levels: TrickLevelConfiguration | None = None):
         raise NotImplementedError()
 
-    def open_game_details(self, layout: LayoutDescription):
+    def open_game_details(self, layout: LayoutDescription, players: list[str] | None = None):
         raise NotImplementedError()
 
     def open_game_connection_window(self):
