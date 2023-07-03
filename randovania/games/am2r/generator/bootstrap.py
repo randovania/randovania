@@ -19,6 +19,7 @@ class AM2RBootstrap(MetroidBootstrap):
             "respawn_bomb_blocks": "RespawnBombBlocks",
             "a3_entrance_blocks": "A3Entrance",
             "grave_grotto_blocks": "GraveGrottoBlocks"
+            "screw_blocks": "ScrewBlocks"
         }
 
         for name, index in logical_patches.items():

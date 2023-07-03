@@ -26,6 +26,7 @@ class AM2RConfiguration(BaseConfiguration):
     nest_pipes: bool
     # TODO: warp to start
     a3_entrance_blocks: bool
+    screw_blocks: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

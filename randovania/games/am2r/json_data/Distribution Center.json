@@ -2955,6 +2955,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Pipe Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Space Jump Wall"
+                                    }
+                                ]
+                            }
+                        },
                         "Near Middle Pipe": {
                             "type": "and",
                             "data": {
@@ -3014,6 +3035,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Distribution Facility Connecting Path": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Pillar": {
                             "type": "and",
                             "data": {
@@ -3276,8 +3314,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 152.77434893873246,
-                        "y": 1208.9357218124342,
+                        "x": 154.524064171123,
+                        "y": 1210.7807486631016,
                         "z": 0.0
                     },
                     "description": "",
