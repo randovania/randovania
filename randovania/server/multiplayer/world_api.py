@@ -62,15 +62,16 @@ def _collect_location(session: MultiplayerSession, world: World,
     """
     pickup_target = _get_pickup_target(description, world.order, pickup_location)
 
-    def log(msg):
-        logger().info(f"{session_common.describe_session(session, world)} found item at {pickup_location}. {msg}")
+    def log(msg: str, *args):
+        logger().info("%s found item at %d. " + msg,
+                      session_common.describe_session(session, world), pickup_location, *args)
 
     if pickup_target is None:
         log("It's nothing.")
         return None
 
     if pickup_target.player == world.order:
-        log(f"It's a {pickup_target.pickup.name} for themselves.")
+        log("It's a %s for themselves.", pickup_target.pickup.name)
         return None
 
     target_world = World.get_by_order(session.id, pickup_target.player)
@@ -85,10 +86,10 @@ def _collect_location(session: MultiplayerSession, world: World,
         )
     except peewee.IntegrityError:
         # Already exists, and it's for another player, no inventory update needed
-        log(f"It's a {pickup_target.pickup.name} for {target_world.name}, but it was already collected.")
+        log("It's a %s for %s, but it was already collected.", pickup_target.pickup.name, target_world.name)
         return None
 
-    log(f"It's a {pickup_target.pickup.name} for {target_world.name}.")
+    log("It's a %s for %s.", pickup_target.pickup.name, target_world.name)
     return target_world
 
 
@@ -176,7 +177,7 @@ def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: Se
                    ) -> tuple[ServerWorldResponse | None, int | None, set[World]]:
     sentry_sdk.set_tag("world_uuid", str(uid))
     world = World.get_by_uuid(uid)
-    sentry_sdk.set_tag("session_id", world.session.id)
+    sentry_sdk.set_tag("session_id", world.session.get_id())
 
     _check_user_is_associated(user, world)
     response = None
