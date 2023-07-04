@@ -111,6 +111,9 @@ def _create_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[str, d
     if WORLD_NAME_RE.match(name) is None:
         raise error.InvalidActionError("Invalid world name")
 
+    if any(name == world.name for world in session.worlds):
+        raise error.InvalidActionError("World name already exists")
+
     logger().info(f"{session_common.describe_session(session)}: Creating world {name}.")
 
     world = World.create_for(session=session, name=name, preset=preset)
@@ -161,6 +164,9 @@ def _rename_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.U
 
     if WORLD_NAME_RE.match(new_name) is None:
         raise error.InvalidActionError("Invalid world name")
+
+    if any(new_name == world.name for world in session.worlds):
+        raise error.InvalidActionError("World name already exists")
 
     with database.db.atomic():
         logger().info(f"{session_common.describe_session(session)}: Renaming {world.name} ({world_uid}) to {new_name}.")
