@@ -160,7 +160,11 @@ set_tag = sentry_sdk.set_tag
 
 
 def trace_block(description: str):
-    return sentry_sdk.get_current_span().start_child(
-        op=sentry_sdk.consts.OP.FUNCTION,
-        description=description,
-    )
+    current_span = sentry_sdk.get_current_span()
+    if current_span is not None:
+        return current_span.start_child(
+            op=sentry_sdk.consts.OP.FUNCTION,
+            description=description,
+        )
+    else:
+        return contextlib.nullcontext()

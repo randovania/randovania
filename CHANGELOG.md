@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Importing permalinks and spoilers in multiworld no longer fails.
 - Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
+- Changed: Tweaked the error reporting for generating and exporting games. 
 
 ## [6.0.0] - 2023-07-03
 

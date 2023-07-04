@@ -24,7 +24,7 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget
-from randovania.interface_common import simplified_patcher
+from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
@@ -451,7 +451,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             )
 
         def generate_layout(progress_update: ProgressUpdateCallable):
-            return simplified_patcher.generate_layout(progress_update=progress_update,
+            return generator_frontend.generate_layout(progress_update=progress_update,
                                                       parameters=permalink.parameters,
                                                       options=self._options,
                                                       retries=retries)

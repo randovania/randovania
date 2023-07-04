@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 
 import nod
-import sentry_sdk
 
 from randovania import monitoring
 from randovania.interface_common.game_workdir import validate_game_files_path

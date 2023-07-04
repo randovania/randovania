@@ -5,7 +5,6 @@ import shutil
 from pathlib import Path
 
 import mp2hudcolor
-import sentry_sdk
 from ppc_asm import dol_file
 from retro_data_structures.asset_manager import PathFileProvider
 

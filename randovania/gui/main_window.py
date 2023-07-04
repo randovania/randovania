@@ -342,8 +342,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
 
         def work(progress_update: ProgressUpdateCallable):
-            from randovania.interface_common import simplified_patcher
-            layout = simplified_patcher.generate_layout(progress_update=progress_update,
+            from randovania.interface_common import generator_frontend
+            layout = generator_frontend.generate_layout(progress_update=progress_update,
                                                         parameters=permalink.parameters,
                                                         options=self._options)
             progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
