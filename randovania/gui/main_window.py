@@ -70,6 +70,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
     about_window: QtWidgets.QMainWindow | None = None
     dependencies_window: QtWidgets.QMainWindow | None = None
+    reporting_widget: QtWidgets.QWidget | None = None
     all_change_logs: dict[str, str] | None = None
     changelog_tab: QtWidgets.QWidget | None = None
     changelog_window: QtWidgets.QMainWindow | None = None
@@ -225,6 +226,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_changelog.setVisible(False)
         self.menu_action_about.triggered.connect(self._on_menu_action_about)
         self.menu_action_dependencies.triggered.connect(self._on_menu_action_dependencies)
+        self.menu_action_automatic_reporting.triggered.connect(self._on_menu_action_automatic_reporting)
 
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
@@ -480,6 +482,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.tab_game_details.on_options_changed(self._options)
         theme.set_dark_theme(self._options.dark_mode)
 
+        self.network_client.allow_reporting_username = self._options.use_user_for_crash_reporting
+
     # Menu Actions
     def _open_data_visualizer_for_game(self, game: RandovaniaGame):
         self.open_data_visualizer_at(None, None, game)
@@ -673,10 +677,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.games_experimental_label.setText(experimental if randovania.is_dev_version() else "")
         self.intro_welcome_label.setText(welcome)
 
-    def _create_generic_window(self, widget: QtWidgets.QWidget, title: str) -> QtWidgets.QMainWindow:
+    def _create_generic_window(self, widget: QtWidgets.QWidget, title: str | None = None) -> QtWidgets.QMainWindow:
         window = QtWidgets.QMainWindow()
         window.setCentralWidget(widget)
-        window.setWindowTitle(title)
+        if title is not None:
+            window.setWindowTitle(title)
+        else:
+            window.setWindowTitle(window.windowTitle())
         window.setWindowIcon(self.windowIcon())
         window.resize(self.size())
         return window
@@ -710,6 +717,15 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.dependencies_window is None:
             self.dependencies_window = self._create_generic_window(DependenciesWidget(), "Dependencies")
         self.dependencies_window.show()
+
+    def _on_menu_action_automatic_reporting(self):
+        from randovania.gui.widgets.reporting_optout_widget import ReportingOptOutWidget
+        if self.reporting_widget is None:
+            self.reporting_widget = ReportingOptOutWidget()
+
+        assert isinstance(self.reporting_widget, ReportingOptOutWidget)
+        self.reporting_widget.on_options_changed(self._options)
+        self.reporting_widget.show()
 
     def _on_click_help_link(self, link: str):
         tab_name = re.match(r"^help://(.+)$", link).group(1)

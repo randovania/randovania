@@ -144,13 +144,20 @@ def _convert_v23(options: dict) -> dict:
 
     return options
 
+
 def _convert_v24(options: dict) -> dict:
     # added Dread's missile pack recolor
     return options
 
+
 def _convert_v25(options: dict) -> dict:
     # added Dread's auto tracker
     return options
+
+
+def _only_new_fields(options: dict) -> dict:
+    return options
+
 
 _CONVERTER_FOR_VERSION = [
     None,
@@ -178,6 +185,7 @@ _CONVERTER_FOR_VERSION = [
     _convert_v23,
     _convert_v24,
     _convert_v25,
+    _only_new_fields,  # added allow_crash_reporting
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
