@@ -1,12 +1,15 @@
+import os
 from pathlib import Path
 
 import nod
-import os
+import sentry_sdk
 
+from randovania import monitoring
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
+@monitoring.trace_function
 def unpack_iso(iso: Path,
                game_files_path: Path,
                progress_update: ProgressUpdateCallable,
@@ -31,6 +34,7 @@ def unpack_iso(iso: Path,
     progress_update("Finished extracting ISO", 1)
 
 
+@monitoring.trace_function
 def pack_iso(iso: Path,
              game_files_path: Path,
              progress_update: ProgressUpdateCallable

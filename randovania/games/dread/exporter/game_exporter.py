@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Callable
 
 import randovania
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.lib import status_update_lib, json_lib
 
@@ -53,10 +54,11 @@ class DreadGameExporter(GameExporter):
         assert isinstance(export_params, DreadGameExportParams)
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
-        from open_dread_rando.version import version as open_dread_rando_version
-
         patch_data["mod_compatibility"] = export_params.target_platform.value
         patch_data["mod_category"] = "romfs" if export_params.use_exlaunch else "pkg"
+        monitoring.set_tag("dread_mod_category", patch_data["mod_category"])
+
+        from open_dread_rando.version import version as open_dread_rando_version
 
         text_patches = patch_data["text_patches"]
         text_patches["GUI_COMPANY_TITLE_SCREEN"] = text_patches["GUI_COMPANY_TITLE_SCREEN"].replace(
@@ -76,10 +78,12 @@ class DreadGameExporter(GameExporter):
             shutil.rmtree(export_params.output_path, ignore_errors=True)
             progress_update(f"Finished deleting {export_params.output_path}", -1)
 
-        import open_dread_rando
-        open_dread_rando.patch_with_status_update(
-            export_params.input_path, export_params.output_path, patch_data,
-            lambda progress, msg: patcher_update(msg, progress),
-        )
+        with monitoring.trace_block("open_dread_rando.patch_with_status_update"):
+            import open_dread_rando
+            open_dread_rando.patch_with_status_update(
+                export_params.input_path, export_params.output_path, patch_data,
+                lambda progress, msg: patcher_update(msg, progress),
+            )
+            
         if export_params.post_export is not None:
             export_params.post_export(status_update_lib.OffsetProgressUpdate(progress_update, 0.75, 0.25))

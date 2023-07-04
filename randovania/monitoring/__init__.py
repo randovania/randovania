@@ -153,3 +153,14 @@ def attach_patcher_data(patcher_data: dict):
             content_type="application/json",
         )
         yield
+
+
+trace_function = sentry_sdk.trace
+set_tag = sentry_sdk.set_tag
+
+
+def trace_block(description: str):
+    return sentry_sdk.get_current_span().start_child(
+        op=sentry_sdk.consts.OP.FUNCTION,
+        description=description,
+    )
