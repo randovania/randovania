@@ -118,7 +118,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         if new_name is not None:
             if any(new_name == world.name for world in self._session.worlds):
-                return async_dialog.warning(self, "Name already exists", f"A world named '{new_name}' already exists.")
+                return await async_dialog.warning(
+                    self, "Name already exists", f"A world named '{new_name}' already exists.")
 
             await self._session_api.rename_world(world_uid, new_name)
 
@@ -226,7 +227,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         new_name = dialog.world_name_edit.text().strip()
 
         if any(new_name == world.name for world in self._session.worlds):
-            return async_dialog.warning(self, "Name already exists", f"A world named '{new_name}' already exists.")
+            return await async_dialog.warning(
+                self, "Name already exists", f"A world named '{new_name}' already exists.")
 
         # Temp
         await self._session_api.create_new_world(new_name, preset, user_id)
