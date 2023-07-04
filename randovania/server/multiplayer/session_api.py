@@ -9,6 +9,8 @@ from randovania.server.server_app import ServerApp
 
 
 def list_sessions(sio: ServerApp, limit: int | None):
+    # Note: this query fails to list any session that has no memberships
+    # But that's fine, because these sessions should've been deleted!
     sessions: list[MultiplayerSession] = list(
         MultiplayerSession.select(
             MultiplayerSession,

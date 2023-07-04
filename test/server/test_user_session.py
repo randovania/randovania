@@ -87,7 +87,6 @@ def test_browser_discord_login_callback_with_sid(
     mock_emit.assert_called_once_with(
         "user_session_update", {
             'encoded_session_b85': b'Wo~0~d2n=PWB',
-            'sessions': [],
             'user': {'discord_id': 1234, 'id': 1, 'name': expected_name}
         },
         to="TheSid", namespace="/"
