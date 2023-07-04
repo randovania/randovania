@@ -515,7 +515,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 f"this session only have {len(self._session.worlds)} rows.")
             return False
 
-        if any(not preset_p.is_same_configuration(preset_s.get_preset())
+        if any(not preset_p.is_same_configuration(preset_s.preset)
                for preset_p, preset_s in zip(parameters.presets, self._session.worlds)):
             response = await async_dialog.warning(
                 self, "Different presets",
