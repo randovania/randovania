@@ -116,7 +116,7 @@ async def test_generate_seed_from_permalink(default_main_window, mocker):
     permalink = MagicMock(spec=Permalink)
     permalink.seed_hash = None
     permalink.parameters = MagicMock(spec=GeneratorParameters)
-    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout",
+    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout",
                                                    autospec=True)
     default_main_window.open_game_details = MagicMock()
     mock_open_for_background_task = mocker.patch(

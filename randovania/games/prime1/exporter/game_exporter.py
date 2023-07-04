@@ -7,10 +7,11 @@ from textwrap import wrap
 
 import py_randomprime
 from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
-
+from open_prime_rando.dol_patching import all_prime_dol_patches
 from ppc_asm import assembler
 from retro_data_structures.game_check import Game as RDSGame
 
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
 from randovania.game_description.db.region import Region
@@ -21,7 +22,6 @@ from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 from randovania.patching.prime import asset_conversion
-from open_prime_rando.dol_patching import all_prime_dol_patches
 
 
 @dataclasses.dataclass(frozen=True)
@@ -144,6 +144,7 @@ class PrimeGameExporter(GameExporter):
         """
         return False
 
+    @monitoring.trace_function
     def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict):
         rl = default_database.game_description_for(RandovaniaGame.METROID_PRIME).region_list
 

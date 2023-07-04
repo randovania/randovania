@@ -260,7 +260,7 @@ async def test_change_password_title_or_duplicate(window, mocker, action, method
 
 
 async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_manager):
-    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout")
+    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout")
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
     mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
