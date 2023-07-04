@@ -260,22 +260,32 @@ def test_admin_session_create_world(mock_emit_session_update: MagicMock, mock_au
     mock_audit.assert_called_once_with(sio, session, "Created new world New World")
 
 
-def test_admin_session_create_world_bad_name(mock_emit_session_update: MagicMock, mock_audit,
-                                             clean_database, flask_app, preset_manager):
+@pytest.mark.parametrize("reason", ["bad_name", "already_exists"])
+def test_admin_session_create_world_bad(mock_emit_session_update: MagicMock, mock_audit,
+                                        clean_database, flask_app, preset_manager, reason):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
 
+    old_world = database.World.create(session=session, name="New World", preset="{}")
+
+    if reason == "bad_name":
+        new_name = "New####,World"
+        match = "Invalid world name"
+    else:
+        new_name = "New World"
+        match = "World name already exists"
+
     # Run
-    with flask_app.test_request_context(), pytest.raises(error.InvalidActionError, match="Invalid world name"):
+    with flask_app.test_request_context(), pytest.raises(error.InvalidActionError, match=match):
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CREATE_WORLD.value,
-                                    ("New####,World", preset_manager.default_preset.as_json))
+                                    (new_name, preset_manager.default_preset.as_json))
 
     # Assert
     mock_emit_session_update.assert_not_called()
-    assert list(database.World.select()) == []
+    assert list(database.World.select()) == [old_world]
     mock_audit.assert_not_called()
 
 
@@ -318,9 +328,10 @@ def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_au
         mock_audit.assert_called_once_with(sio, session, f"Changing world {w1.name}")
 
 
+@pytest.mark.parametrize("already_exists", [False, True])
 @pytest.mark.parametrize("valid_name", [False, True])
 def test_admin_session_rename_world(mock_emit_session_update: MagicMock, mock_audit,
-                                    clean_database, flask_app, valid_name):
+                                    clean_database, flask_app, valid_name, already_exists):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
     w1 = database.World.create(session=session, name="W1", preset="{}")
@@ -330,8 +341,12 @@ def test_admin_session_rename_world(mock_emit_session_update: MagicMock, mock_au
     sio.get_current_user.return_value = user1
 
     if valid_name:
-        context = contextlib.nullcontext()
         new_name = "TheNewName"
+        if already_exists:
+            database.World.create(session=session, name=new_name, preset="{}")
+            context = pytest.raises(error.InvalidActionError, match="World name already exists")
+        else:
+            context = contextlib.nullcontext()
     else:
         context = pytest.raises(error.InvalidActionError, match="Invalid world name")
         new_name = "TheNew,?/1#Name"
@@ -343,7 +358,7 @@ def test_admin_session_rename_world(mock_emit_session_update: MagicMock, mock_au
 
     world_after = database.World.get_by_id(w1.id)
     # Assert
-    if valid_name:
+    if valid_name and not already_exists:
         mock_emit_session_update.assert_called_once_with(session)
         assert world_after.name == new_name
         mock_audit.assert_called_once_with(sio, session, f"Renaming world W1 to {new_name}")
