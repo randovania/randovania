@@ -35,13 +35,15 @@ class DatabaseBitPackHelper:
     # Resource Quantity
     def encode_resource_quantity(self, item: ResourceQuantity):
         yield from bitpacking.pack_array_element(item[0], self.database.item)
-        assert item[1] <= item[0].max_capacity
-        yield item[1], item[0].max_capacity + 1
+        amount = item[1]
+        capacity = item[0].max_capacity
+        assert abs(amount) <= capacity
+        yield amount + capacity, capacity * 2 + 1
 
     def decode_resource_quantity(self, decoder: BitPackDecoder) -> ResourceQuantity:
         resource = self._decode_item(decoder)
-        quantity = decoder.decode_single(resource.max_capacity + 1)
-        return resource, quantity
+        quantity = decoder.decode_single(resource.max_capacity * 2 + 1)
+        return resource, quantity - resource.max_capacity
 
     # Resource Conversion
     def encode_resource_conversion(self, item: ResourceConversion):
