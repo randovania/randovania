@@ -251,6 +251,7 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
     )
 
 
+@sentry_sdk.trace
 def emit_world_pickups_update(sio: ServerApp, world: World):
     session = world.session
 
@@ -262,8 +263,10 @@ def emit_world_pickups_update(sio: ServerApp, world: World):
     resource_database = _get_resource_database(description, world.order)
 
     result = []
-    actions: list[WorldAction] = WorldAction.select().where(
-        WorldAction.receiver == world).order_by(WorldAction.time.asc())
+    actions: list[WorldAction] = WorldAction.select(WorldAction, World).join(
+        World, on=WorldAction.provider).where(
+        WorldAction.receiver == world
+    ).order_by(WorldAction.time.asc())
 
     for action in actions:
         pickup_target = _get_pickup_target(description, action.provider.order,

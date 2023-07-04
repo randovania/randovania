@@ -11,7 +11,7 @@ import peewee
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
 
 from randovania.network_common import error
-from randovania.server.database import User, UserAccessToken, MultiplayerMembership
+from randovania.server.database import User, UserAccessToken
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
@@ -25,16 +25,8 @@ def _encrypt_session_for_user(sio: ServerApp, session: dict) -> bytes:
 def _create_client_side_session_raw(sio: ServerApp, user: User) -> dict:
     logger().info(f"Client at {sio.current_client_ip()} is user {user.name} ({user.id}).")
 
-    memberships: list[MultiplayerMembership] = list(
-        MultiplayerMembership.select().where(MultiplayerMembership.user == user)
-    )
-
     return {
         "user": user.as_json,
-        "sessions": [
-            membership.session.create_list_entry(user).as_json
-            for membership in memberships
-        ],
     }
 
 
