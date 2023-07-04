@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
 - Fixed: Pickups providing negative resources can now be sent in multiworld games.
 - Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words. 
+- Fixed: In multiworld sessions, the copy permalink button is properly disabled before a game is available.
 
 ## [6.0.0] - 2023-07-03
 
