@@ -59,6 +59,12 @@ def create_app():
             'stream': 'ext://flask.logging.wsgi_errors_stream',
             'formatter': 'default'
         }},
+        'loggers': {
+            # Enable peewee logging to see the queries being made
+            # 'peewee': {
+            #     'level': 'DEBUG',
+            # },
+        },
         'root': {
             'level': 'INFO',
             'handlers': ['wsgi']
