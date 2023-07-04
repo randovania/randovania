@@ -210,6 +210,7 @@ class MultiplayerSession(BaseModel):
         if not self.has_layout_description():
             return multiplayer_session.MultiplayerSessionActions(self.id, [])
 
+        # TODO: layout_description getter loads all worlds
         description: LayoutDescription = self.layout_description
 
         worlds = self.get_ordered_worlds()
@@ -285,11 +286,17 @@ class MultiplayerSession(BaseModel):
         )
 
     def get_audit_log(self) -> MultiplayerSessionAuditLog:
+        audit_log = MultiplayerAuditEntry.select(
+            MultiplayerAuditEntry, User.name
+        ).join(User).where(
+            MultiplayerAuditEntry.session == self
+        )
+
         return MultiplayerSessionAuditLog(
             session_id=self.id,
             entries=[
                 entry.as_entry()
-                for entry in self.audit_log
+                for entry in audit_log
             ]
         )
 
