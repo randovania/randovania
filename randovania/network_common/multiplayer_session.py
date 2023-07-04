@@ -11,6 +11,8 @@ from randovania.game_description.resources.item_resource_info import InventoryIt
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+from randovania.layout.preset import Preset
+from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.session_state import MultiplayerSessionState
 
@@ -58,6 +60,10 @@ class MultiplayerWorld(JsonDataclass):
     id: uuid.UUID
     name: str
     preset_raw: str
+
+    @property
+    def preset(self) -> Preset:
+        return VersionedPreset.from_str(self.preset_raw).get_preset()
 
 
 @dataclasses.dataclass(frozen=True)
