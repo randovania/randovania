@@ -19,7 +19,7 @@ class AM2RConfiguration(BaseConfiguration):
     #include_metroid_pickups: bool
     #include_boss_pickups: bool
     # TODO: ability to go to credits sooner?
-    sotflock_prevention: bool
+    softlock_prevention_blocks: bool
     septogg_helpers: bool
     change_level_design: bool   # TODO: requires changes in DB!
     skip_cutscenes: bool        # TODO: requires changes in DB!
