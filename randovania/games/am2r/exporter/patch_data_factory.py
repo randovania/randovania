@@ -3,8 +3,12 @@ from random import Random
 from randovania.exporter import pickup_exporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
+from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 
 
 class AM2RItemInfo:
@@ -167,6 +171,20 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             }
         return locks
 
+    def _create_dna_hints(self):
+        artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
+        artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+            self.description.all_patches,
+            self.players_config,
+            #HintNamer(self.description.all_patches, self.players_config),
+            AM2RHintNamer(self.description.all_patches, self.players_config),
+            True,
+            artifacts,
+            True
+        )
+        print("remove me when done")
+
+
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.AM2R
 
@@ -196,7 +214,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "pickups": self._create_pickups_dict(pickup_list, item_info, self.rng),
             "rooms": self._create_room_dict(),
             "game_patches": self._create_game_patches(),
-            "door_locks": self._create_door_locks()
+            "door_locks": self._create_door_locks(),
+            "dna_hints": self._create_dna_hints()
             # TODO: add cosmetic field and decide what to even put in there.
-            # TODO: add hints field
         }
