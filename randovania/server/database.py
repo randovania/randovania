@@ -179,12 +179,16 @@ class MultiplayerSession(BaseModel):
         return True
 
     def create_list_entry(self, user: User):
+        num_players = getattr(self, "num_players", None)
+        if num_players is None:
+            num_players = len(self.members)
+
         return MultiplayerSessionListEntry(
             id=self.id,
             name=self.name,
             has_password=self.password is not None,
             state=self.state,
-            num_players=len(self.members),
+            num_players=num_players,
             creator=self.creator.name,
             creation_date=self.creation_datetime,
             is_user_in_session=self.is_user_in_session(user),
