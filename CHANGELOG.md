@@ -36,6 +36,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 
+### Metroid Dread
+
+#### Logic Database
+
+- Fixed: The Pseudo Wave Beam in Burenia Burenia Hub to Dairon now correctly requires Wide Beam.
+
 ## [6.0.0] - 2023-07-03
 
 - **Major** - Multiworld support has been significantly changed! New features include:
