@@ -9,10 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Option for disabling crash reporting and monitoring.
 - Changed: The Privacy Policy has been updated to mention crash reporting and monitoring.
+- Changed: Tweaked the error reporting for generating and exporting games.
 - Fixed: Importing permalinks and spoilers in multiworld no longer fails.
 - Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
-- Changed: Tweaked the error reporting for generating and exporting games.
 - Fixed: Pickups providing negative resources can now be sent in multiworld games.
+- Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words. 
 
 ## [6.0.0] - 2023-07-03
 
