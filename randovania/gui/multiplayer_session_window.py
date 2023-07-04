@@ -417,7 +417,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             for preset in permalink.parameters.presets
         ]
         if any(all_incompatible_settings):
-            message = ("The following presets have settings that are incompatible with Multiworld:\n"
+            message = ("The following worlds have settings that are incompatible with Multiworld:\n"
                        f"\n{_combine(all_incompatible_settings)}\n"
                        "\nDo you want to continue?")
             await async_dialog.warning(self, "Incompatible preset", message)
@@ -428,7 +428,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             for preset in permalink.parameters.presets
         ]
         if any(all_dangerous_settings):
-            message = ("The following presets have settings that can cause an impossible game:\n"
+            message = ("The following worlds have settings that can cause an impossible game:\n"
                        f"\n{_combine(all_dangerous_settings)}\n"
                        "\nDo you want to continue?")
             result = await async_dialog.warning(self, "Dangerous preset", message,

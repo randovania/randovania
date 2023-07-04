@@ -323,7 +323,7 @@ async def test_check_dangerous_presets_incompatible(window: MultiplayerSessionWi
     result = await window._check_dangerous_presets(permalink)
 
     # Assert
-    message = ("The following presets have settings that are incompatible with Multiworld:\n"
+    message = ("The following worlds have settings that are incompatible with Multiworld:\n"
                "\nCrazy Person: Cake"
                "\nWorld 2: Bomb, Knife"
                "\n\nDo you want to continue?")
@@ -359,7 +359,7 @@ async def test_check_dangerous_presets_impossible(window: MultiplayerSessionWind
     result = await window._check_dangerous_presets(permalink)
 
     # Assert
-    message = ("The following presets have settings that can cause an impossible game:\n"
+    message = ("The following worlds have settings that can cause an impossible game:\n"
                "\nCrazy Person: Cake"
                "\nWorld 2: Bomb, Knife"
                "\n\nDo you want to continue?")
