@@ -25,7 +25,7 @@ class AM2RConfiguration(BaseConfiguration):
     respawn_bomb_blocks: bool   # TODO: requires changes in DB!
     artifacts: AM2RArtifactConfig
     # TODO: warp to start
-    a3_entrance: bool
+    a3_entrance_blocks: bool
 
 
     @classmethod

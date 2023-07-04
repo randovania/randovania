@@ -17,7 +17,7 @@ class AM2RBootstrap(MetroidBootstrap):
             "change_level_design": "LevelDesign",
             "skip_cutscenes": "SkipCutscenes",
             "respawn_bomb_blocks": "RespawnBombBlocks",
-            "a3_entrance": "A3Entrance"
+            "a3_entrance_blocks": "A3Entrance"
         }
 
         for name, index in logical_patches.items():
