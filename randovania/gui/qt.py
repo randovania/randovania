@@ -68,6 +68,9 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     network_client: QtNetworkClient = app.network_client
 
+    from randovania.gui.multiworld_client import MultiworldClient
+    multiworld_client: MultiworldClient = app.multiworld_client
+
     async def attempt_login():
         from randovania.network_client.network_client import UnableToConnect
         from randovania.gui.lib import async_dialog
@@ -104,7 +107,7 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
 
     from randovania.gui.main_window import MainWindow
     logger.info("Preparing main window...")
-    main_window = MainWindow(options, preset_manager, network_client, is_preview)
+    main_window = MainWindow(options, preset_manager, network_client, multiworld_client, is_preview)
     app.main_window = main_window
 
     logger.info("Displaying main window")

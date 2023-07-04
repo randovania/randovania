@@ -250,7 +250,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
     # Layout Visualization
 
-    def update_layout_description(self, description: LayoutDescription):
+    def update_layout_description(self, description: LayoutDescription, players: list[str] | None = None):
         self.layout_description = description
         self.layout_info_tab.show()
 
@@ -258,10 +258,14 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.export_log_button.setText("Save Spoiler" if description.has_spoiler
                                        else "Save to file")
 
-        self._player_names = {
-            i: f"Player {i + 1}"
+        numbered_players = [
+            f"Player {i + 1}"
             for i in range(description.player_count)
-        }
+        ]
+        if players is None:
+            players = numbered_players
+        self._player_names = dict(enumerate(players))
+        assert len(self._player_names) == len(players)
 
         self.export_iso_button.setEnabled(description.player_count == 1 or not randovania.is_frozen())
         if description.player_count > 1:
@@ -288,7 +292,13 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             if not any(preset.configuration.should_hide_generation_log() for preset in description.all_presets):
                 action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
                 for item_order in description.item_order:
+                    # update player names in the generation order
+                    if numbered_players != players:
+                        for player, number in zip(players, numbered_players):
+                            item_order = item_order.replace(number, player)
+                            item_order = item_order.replace(number.lower(), player)
                     action_list_widget.addItem(item_order)
+
                 self.layout_info_tab.addTab(action_list_widget, "Spoiler: Generation Order")
 
         self._update_current_player()

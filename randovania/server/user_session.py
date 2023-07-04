@@ -10,7 +10,7 @@ import oauthlib
 import peewee
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
 
-from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction, UserNotAuthorized
+from randovania.network_common import error
 from randovania.server.database import User, UserAccessToken, MultiplayerMembership
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
@@ -90,7 +90,7 @@ def _create_session_with_discord_token(sio: ServerApp, sid: str | None) -> User:
     if sio.enforce_role is not None:
         if not sio.enforce_role.verify_user(discord_user.id):
             logger().info("User %s is not authorized for connecting to the server", discord_user.name)
-            raise UserNotAuthorized()
+            raise error.UserNotAuthorizedToUseServerError()
 
     user = _create_user_from_discord(discord_user)
 
@@ -115,22 +115,22 @@ def _get_now():
 
 def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
     if sio.guest_encrypt is None:
-        raise NotAuthorizedForAction()
+        raise error.NotAuthorizedForActionError()
 
     try:
         login_request_bytes = sio.guest_encrypt.decrypt(encrypted_login_request)
     except cryptography.fernet.InvalidToken:
-        raise NotAuthorizedForAction()
+        raise error.NotAuthorizedForActionError()
 
     try:
         login_request = json.loads(login_request_bytes.decode("utf-8"))
         name = login_request["name"]
         date = datetime.datetime.fromisoformat(login_request["date"])
     except (UnicodeDecodeError, json.JSONDecodeError, KeyError, ValueError) as e:
-        raise InvalidAction(str(e))
+        raise error.InvalidActionError(str(e))
 
     if _get_now() - date > datetime.timedelta(days=1):
-        raise NotAuthorizedForAction()
+        raise error.NotAuthorizedForActionError()
 
     user: User = User.create(name=f"Guest: {name}")
 
@@ -169,7 +169,7 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, _old_session_
 
         return result
 
-    except UserNotAuthorized:
+    except error.UserNotAuthorizedToUseServerError:
         sio.save_session({})
         raise
 
@@ -178,12 +178,12 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, _old_session_
         sio.save_session({})
         logger().info("Client at %s was unable to restore session: (%s) %s",
                       sio.current_client_ip(), str(type(e)), str(e))
-        raise InvalidSession()
+        raise error.InvalidSessionError()
 
     except Exception:
         sio.save_session({})
         logger().exception("Error decoding user session")
-        raise InvalidSession()
+        raise error.InvalidSessionError()
 
 
 def logout(sio: ServerApp):
@@ -197,7 +197,16 @@ def logout(sio: ServerApp):
 def browser_login_with_discord(sio: ServerApp):
     sid = flask.request.args.get('sid')
     if sid is not None:
+        if not sio.get_server().rooms(sid):
+            return flask.render_template(
+                "unable_to_login.html",
+                error_message="Invalid sid received from Randovania!",
+            ), 400
+
         flask.session["sid"] = sid
+    else:
+        flask.session.pop("sid", None)
+
     return sio.discord.create_session()
 
 
@@ -211,8 +220,15 @@ def browser_discord_login_callback(sio: ServerApp):
         if sid is None:
             return flask.redirect(flask.url_for("browser_me"))
         else:
-            result = _create_client_side_session(sio, user,
-                                                 sio.get_session(sid=sid))
+            try:
+                session = sio.get_session(sid=sid)
+            except KeyError:
+                return flask.render_template(
+                    "unable_to_login.html",
+                    error_message="Unable to find your Randovania client.",
+                ), 401
+
+            result = _create_client_side_session(sio, user, session)
             flask_socketio.emit("user_session_update", result, to=sid, namespace="/")
             return flask.render_template(
                 "return_to_randovania.html",
@@ -223,24 +239,24 @@ def browser_discord_login_callback(sio: ServerApp):
         return flask.render_template(
             "unable_to_login.html",
             error_message="Discord login was cancelled. Please try again!",
-        )
+        ), 401
 
-    except UserNotAuthorized:
+    except error.UserNotAuthorizedToUseServerError:
         return flask.render_template(
             "unable_to_login.html",
             error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
-        )
+        ), 403
 
-    except oauthlib.oauth2.rfc6749.errors.OAuth2Error as error:
-        if isinstance(error, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):
+    except oauthlib.oauth2.rfc6749.errors.OAuth2Error as err:
+        if isinstance(err, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):
             logger().info("Invalid grant when finishing Discord login")
         else:
             logger().exception("OAuth2Error when finishing Discord login")
 
         return flask.render_template(
             "unable_to_login.html",
-            error_message=f"Unable to complete login. Please try again! {error}",
-        )
+            error_message=f"Unable to complete login. Please try again! {err}",
+        ), 500
 
 
 def setup_app(sio: ServerApp):

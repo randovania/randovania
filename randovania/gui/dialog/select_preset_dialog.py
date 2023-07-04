@@ -68,9 +68,13 @@ class SelectPresetDialog(QtWidgets.QDialog, Ui_SelectPresetDialog):
         else:
             try:
                 raw_preset = preset.get_preset()
-                can_generate = True
-                description = f"<p style='font-weight:600;'>{raw_preset.name}</p><p>{raw_preset.description}</p>"
-                description += preset_describer.merge_categories(preset_describer.describe(raw_preset))
+                incompatible = raw_preset.settings_incompatible_with_multiworld()
+                if incompatible:
+                    description = "The following settings are incompatible with multiworld:\n" + "\n".join(incompatible)
+                else:
+                    can_generate = True
+                    description = f"<p style='font-weight:600;'>{raw_preset.name}</p><p>{raw_preset.description}</p>"
+                    description += preset_describer.merge_categories(preset_describer.describe(raw_preset))
 
             except InvalidPreset as e:
                 if not isinstance(e.original_exception, UnsupportedVersion):

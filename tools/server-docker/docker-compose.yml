@@ -30,6 +30,10 @@ services:
         constraints:
           - node.labels.randovania-allow-${SERVER_ENVIRONMENT} == true
 
+      resources:
+        reservations:
+          memory: 400M
+
       labels:
         - traefik.enable=true
         - traefik.constraint-label=traefik-public
@@ -83,3 +87,8 @@ services:
     command: --configuration "/run/secrets/configuration" server bot
 
     hostname: "{{.Node.Hostname}}"
+
+    deploy:
+      resources:
+        reservations:
+          memory: 150M

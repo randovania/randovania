@@ -7,8 +7,8 @@ import randovania
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
-from randovania.network_common.error import NotAuthorizedForAction, InvalidAction
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH, WORLD_NAME_RE
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
@@ -26,7 +26,7 @@ def _check_user_associated_with(sio: ServerApp, world: World):
             WorldUserAssociation.user == sio.get_current_user(),
         )
     except peewee.DoesNotExist:
-        raise NotAuthorizedForAction()
+        raise error.NotAuthorizedForActionError()
 
 
 def verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None,
@@ -40,10 +40,7 @@ def verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None,
     :return:
     """
     current_user = sio.get_current_user()
-    try:
-        current_membership = MultiplayerMembership.get_by_ids(current_user.id, session_id)
-    except peewee.DoesNotExist:
-        raise NotAuthorizedForAction()
+    current_membership = session_common.get_membership_for(current_user, session_id)
 
     if not (current_membership.admin or (admin_user_id is not None and current_user.id == admin_user_id)):
         if allow_when_no_admins and MultiplayerMembership.select().where(
@@ -51,7 +48,7 @@ def verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None,
                 is_boolean(MultiplayerMembership.admin, True)
         ).count() == 0:
             return
-        raise NotAuthorizedForAction()
+        raise error.NotAuthorizedForActionError()
 
 
 def verify_has_admin_or_claimed(sio: ServerApp, world: World) -> None:
@@ -61,11 +58,7 @@ def verify_has_admin_or_claimed(sio: ServerApp, world: World) -> None:
     :param world:
     :return:
     """
-    current_user = sio.get_current_user()
-    try:
-        current_membership = MultiplayerMembership.get_by_ids(current_user.id, world.session)
-    except peewee.DoesNotExist:
-        raise NotAuthorizedForAction()
+    current_membership = session_common.get_membership_for(sio, world.session)
 
     if not current_membership.admin:
         _check_user_associated_with(sio, world)
@@ -73,22 +66,26 @@ def verify_has_admin_or_claimed(sio: ServerApp, world: World) -> None:
 
 def _verify_world_has_session(world: World, session: MultiplayerSession):
     if world.session.id != session.id:
-        raise InvalidAction("Wrong session")
+        raise error.InvalidActionError("Wrong session")
+
+
+def _verify_in_state(session: MultiplayerSession, state: MultiplayerSessionState):
+    if session.state != state:
+        raise error.SessionInWrongStateError(state)
 
 
 def _verify_in_setup(session: MultiplayerSession):
-    if session.state != MultiplayerSessionState.SETUP:
-        raise InvalidAction("Session is not in setup")
+    _verify_in_state(session, MultiplayerSessionState.SETUP)
 
 
 def _verify_no_layout_description(session: MultiplayerSession):
     if session.layout_description_json is not None:
-        raise InvalidAction("Session has a generated game")
+        raise error.InvalidActionError("Session has a generated game")
 
 
 def _verify_not_in_generation(session: MultiplayerSession):
     if session.generation_in_progress is not None:
-        raise InvalidAction("Session game is being generated")
+        raise error.InvalidActionError("Session game is being generated")
 
 
 def _get_preset(preset_json: dict) -> VersionedPreset:
@@ -97,12 +94,12 @@ def _get_preset(preset_json: dict) -> VersionedPreset:
         preset.get_preset()  # test if valid
         return preset
     except Exception as e:
-        raise InvalidAction(f"invalid preset: {e}")
+        raise error.InvalidActionError(f"invalid preset: {e}")
 
 
 def _create_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[str, dict], for_user: int | None = None):
     if len(arg) != 2:
-        raise InvalidAction("Missing arguments.")
+        raise error.InvalidActionError("Missing arguments.")
     verify_has_admin(sio, session.id, for_user)
 
     _verify_in_setup(session)
@@ -112,7 +109,7 @@ def _create_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[str, d
     preset = _get_preset(preset_json)
 
     if WORLD_NAME_RE.match(name) is None:
-        raise InvalidAction("Invalid world name")
+        raise error.InvalidActionError("Invalid world name")
 
     logger().info(f"{session_common.describe_session(session)}: Creating world {name}.")
 
@@ -123,7 +120,7 @@ def _create_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[str, d
 
 def _change_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.UUID, dict]):
     if len(arg) != 2:
-        raise InvalidAction("Missing arguments.")
+        raise error.InvalidActionError("Missing arguments.")
 
     world_uid, preset_json = arg
     world = World.get_by_uuid(world_uid)
@@ -137,10 +134,10 @@ def _change_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.U
     verify_has_admin_or_claimed(sio, world)
 
     if preset.game not in session.allowed_games:
-        raise InvalidAction(f"Only {preset.game} preset not allowed.")
+        raise error.InvalidActionError(f"Only {preset.game} preset not allowed.")
 
     if not randovania.is_dev_version() and preset.get_preset().configuration.unsupported_features():
-        raise InvalidAction("Preset uses unsupported features.")
+        raise error.InvalidActionError("Preset uses unsupported features.")
 
     try:
         with database.db.atomic():
@@ -150,12 +147,12 @@ def _change_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.U
             session_common.add_audit_entry(sio, session, f"Changing world {world.name}")
 
     except peewee.DoesNotExist:
-        raise InvalidAction(f"invalid world: {world_uid}")
+        raise error.InvalidActionError(f"invalid world: {world_uid}")
 
 
 def _rename_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.UUID, str]):
     if len(arg) != 2:
-        raise InvalidAction("Missing arguments.")
+        raise error.InvalidActionError("Missing arguments.")
     world_uid, new_name = arg
 
     world = World.get_by_uuid(world_uid)
@@ -163,7 +160,7 @@ def _rename_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.U
     verify_has_admin_or_claimed(sio, world)
 
     if WORLD_NAME_RE.match(new_name) is None:
-        raise InvalidAction("Invalid world name")
+        raise error.InvalidActionError("Invalid world name")
 
     with database.db.atomic():
         logger().info(f"{session_common.describe_session(session)}: Renaming {world.name} ({world_uid}) to {new_name}.")
@@ -201,14 +198,14 @@ def _update_layout_generation(sio: ServerApp, session: MultiplayerSession, world
         used_ids = set(world_objects.keys())
         for world_uuid in world_order:
             if world_uuid not in used_ids:
-                raise InvalidAction(f"World {world_uuid} duplicated in order, or unknown.")
+                raise error.InvalidActionError(f"World {world_uuid} duplicated in order, or unknown.")
             used_ids.remove(world_uuid)
 
         if used_ids:
-            raise InvalidAction(f"Expected {len(world_objects)} worlds, got {len(world_order)}.")
+            raise error.InvalidActionError(f"Expected {len(world_objects)} worlds, got {len(world_order)}.")
 
         if session.generation_in_progress is not None:
-            raise InvalidAction(f"Generation already in progress by {session.generation_in_progress.name}.")
+            raise error.InvalidActionError(f"Generation already in progress by {session.generation_in_progress.name}.")
 
     with database.db.atomic():
         if world_order:
@@ -241,28 +238,28 @@ def _change_layout_description(sio: ServerApp, session: MultiplayerSession, desc
     else:
         if session.generation_in_progress != sio.get_current_user():
             if session.generation_in_progress is None:
-                raise InvalidAction("Not waiting for a layout.")
+                raise error.InvalidActionError("Not waiting for a layout.")
             else:
-                raise InvalidAction(f"Waiting for a layout from {session.generation_in_progress.name}.")
+                raise error.InvalidActionError(f"Waiting for a layout from {session.generation_in_progress.name}.")
 
         _verify_no_layout_description(session)
         description = LayoutDescription.from_json_dict(description_json)
         worlds = session.get_ordered_worlds()
 
         if description.player_count != len(worlds):
-            raise InvalidAction(f"Description is for a {description.player_count} players,"
-                                f" while the session is for {len(worlds)}.")
+            raise error.InvalidActionError(f"Description is for a {description.player_count} players,"
+                                           f" while the session is for {len(worlds)}.")
 
         if any(world.order is None for world in worlds):
-            raise InvalidAction("One of the worlds has undefined order field.")
+            raise error.InvalidActionError("One of the worlds has undefined order field.")
 
         for permalink_preset, world in zip(description.all_presets, worlds):
             if _get_preset(json.loads(world.preset)).get_preset() != permalink_preset:
                 preset = VersionedPreset.with_preset(permalink_preset)
                 if preset.game not in session.allowed_games:
-                    raise InvalidAction(f"{preset.game} preset not allowed.")
+                    raise error.InvalidActionError(f"{preset.game} preset not allowed.")
                 if not randovania.is_dev_version() and permalink_preset.configuration.unsupported_features():
-                    raise InvalidAction(f"Preset {permalink_preset.name} uses unsupported features.")
+                    raise error.InvalidActionError(f"Preset {permalink_preset.name} uses unsupported features.")
                 world.preset = json.dumps(preset.as_json)
                 worlds_to_update.append(world)
 
@@ -279,19 +276,16 @@ def _change_layout_description(sio: ServerApp, session: MultiplayerSession, desc
 
 
 def _download_layout_description(sio: ServerApp, session: MultiplayerSession):
-    try:
-        # You must be a session member to do get the spoiler
-        MultiplayerMembership.get_by_ids(sio.get_current_user().id, session.id)
-    except peewee.DoesNotExist:
-        raise NotAuthorizedForAction()
+    # You must be a session member to do get the spoiler
+    session_common.get_membership_for(sio, session)
 
     if not session.has_layout_description():
-        raise InvalidAction("Session does not contain a game")
+        raise error.InvalidActionError("Session does not contain a game")
 
     description = session.layout_description
 
     if not description.has_spoiler:
-        raise InvalidAction("Session does not contain a spoiler")
+        raise error.InvalidActionError("Session does not contain a spoiler")
 
     session_common.add_audit_entry(sio, session, "Requested the spoiler log")
     return json.dumps(description.as_json())
@@ -301,7 +295,7 @@ def _start_session(sio: ServerApp, session: MultiplayerSession):
     verify_has_admin(sio, session.id, None)
     _verify_in_setup(session)
     if session.layout_description_json is None:
-        raise InvalidAction("Unable to start session, no game is available.")
+        raise error.InvalidActionError("Unable to start session, no game is available.")
 
     session.state = MultiplayerSessionState.IN_PROGRESS
     logger().info(f"{session_common.describe_session(session)}: Starting session.")
@@ -311,8 +305,7 @@ def _start_session(sio: ServerApp, session: MultiplayerSession):
 
 def _finish_session(sio: ServerApp, session: MultiplayerSession):
     verify_has_admin(sio, session.id, None)
-    if session.state != MultiplayerSessionState.IN_PROGRESS:
-        raise InvalidAction("Session is not in progress")
+    _verify_in_state(session, MultiplayerSessionState.IN_PROGRESS)
 
     session.state = MultiplayerSessionState.FINISHED
     logger().info(f"{session_common.describe_session(session)}: Finishing session.")
@@ -333,7 +326,7 @@ def _change_title(sio: ServerApp, session: MultiplayerSession, title: str):
     verify_has_admin(sio, session.id, None)
 
     if not (0 < len(title) <= MAX_SESSION_NAME_LENGTH):
-        raise InvalidAction("Invalid session name length")
+        raise error.InvalidActionError("Invalid session name length")
 
     old_name = session.name
     session.name = title
@@ -346,7 +339,7 @@ def _duplicate_session(sio: ServerApp, session: MultiplayerSession, new_title: s
     verify_has_admin(sio, session.id, None)
 
     if not (0 < len(new_title) <= MAX_SESSION_NAME_LENGTH):
-        raise InvalidAction("Invalid session name length")
+        raise error.InvalidActionError("Invalid session name length")
 
     current_user = sio.get_current_user()
     session_common.add_audit_entry(sio, session, f"Duplicated session as {new_title}")
@@ -383,8 +376,8 @@ def _duplicate_session(sio: ServerApp, session: MultiplayerSession, new_title: s
 def _get_permalink(sio: ServerApp, session: MultiplayerSession) -> str:
     verify_has_admin(sio, session.id, None)
 
-    if session.has_layout_description():
-        raise InvalidAction("Session does not contain a game")
+    if not session.has_layout_description():
+        raise error.InvalidActionError("Session does not contain a game")
 
     session_common.add_audit_entry(sio, session, "Requested permalink")
     return session.layout_description.permalink.as_base64_str
@@ -452,8 +445,8 @@ def _kick_user(sio: ServerApp, session: MultiplayerSession, membership: Multipla
 
     with database.db.atomic():
         for association in WorldUserAssociation.select().join(World).where(
-            World.session == session.id,
-            WorldUserAssociation.user == user_id,
+                World.session == session.id,
+                WorldUserAssociation.user == user_id,
         ):
             association.delete_instance()
         membership.delete_instance()
@@ -484,7 +477,7 @@ def _claim_world(sio: ServerApp, session: MultiplayerSession, user_id: int, worl
 
     if not session.allow_coop:
         for _ in WorldUserAssociation.select().where(WorldUserAssociation.world == world.id):
-            raise InvalidAction("World is already claimed")
+            raise error.InvalidActionError("World is already claimed")
 
     WorldUserAssociation.create(
         world=world,
@@ -515,7 +508,7 @@ def _switch_admin(sio: ServerApp, session: MultiplayerSession, membership: Multi
                                                       is_boolean(MultiplayerMembership.admin, True)).count()
 
     if membership.admin and num_admins <= 1:
-        raise InvalidAction("can't demote the only admin")
+        raise error.InvalidActionError("can't demote the only admin")
 
     membership.admin = not membership.admin
     session_common.add_audit_entry(sio, session,
@@ -539,7 +532,7 @@ def _create_patcher_file(sio: ServerApp, session: MultiplayerSession, world_uid:
             _check_user_associated_with(sio, world)
 
     if player_index is None:
-        raise InvalidAction("Unknown world uid for exporting")
+        raise error.InvalidActionError("Unknown world uid for exporting")
 
     layout_description = session.layout_description
     players_config = PlayersConfiguration(
@@ -559,7 +552,7 @@ def _create_patcher_file(sio: ServerApp, session: MultiplayerSession, world_uid:
         return data_factory.create_data()
     except Exception as e:
         logger().exception("Error when creating patch data")
-        raise InvalidAction(f"Unable to export game: {e}")
+        raise error.InvalidActionError(f"Unable to export game: {e}")
 
 
 def admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, arg):
@@ -567,7 +560,7 @@ def admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, arg
     action: SessionAdminUserAction = SessionAdminUserAction(action)
 
     session: MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
-    membership = MultiplayerMembership.get_by_ids(user_id, session_id)
+    membership = session_common.get_membership_for(user_id, session)
 
     if action == SessionAdminUserAction.KICK:
         _kick_user(sio, session, membership, user_id)
@@ -586,7 +579,7 @@ def admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, arg
 
     elif action == SessionAdminUserAction.ABANDON:
         # FIXME
-        raise InvalidAction("Abandon is NYI")
+        raise error.InvalidActionError("Abandon is NYI")
 
     session_common.emit_session_meta_update(session)
 

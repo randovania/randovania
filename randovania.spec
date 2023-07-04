@@ -18,7 +18,6 @@ datas=[
     ("randovania/data/ClarisEchoesMenu", "data/ClarisEchoesMenu"),
     ("randovania/data/ClarisPrimeRandomizer", "data/ClarisPrimeRandomizer"),
     ("randovania/data/gui_assets", "data/gui_assets"),
-    ("randovania/data/hash_words", "data/hash_words"),
     ("randovania/data/icons", "data/icons"),
     ("randovania/data/nintendont", "data/nintendont"),
     *pickup_databases,

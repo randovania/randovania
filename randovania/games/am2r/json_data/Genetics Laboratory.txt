@@ -321,7 +321,7 @@ Extra - map_name: rm_a7b05
 
 > Door to Laboratory Small Shaft East; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Small Shaft East/Door to Laboratory Foyer; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Small Shaft East/Door to Laboratory Foyer
   * Extra - instance_id: 146900
   > Bottom
       Trivial
@@ -331,7 +331,7 @@ Extra - map_name: rm_a7b05
   > Tunnel to Hatchling Room Underside
       Power Grip Wall
   > Door to Laboratory Small Shaft East
-      Trivial
+      After Area 7 - Introduction Larva
   > Event - Larva Metroid
       Defeat Larva
 
@@ -346,39 +346,46 @@ Laboratory Small Shaft East
 Extra - map_name: rm_a7b06
 > Door to Laboratory Foyer; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Foyer/Door to Laboratory Small Shaft East; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Foyer/Door to Laboratory Small Shaft East
   * Extra - instance_id: 146934
-  > Door to Laboratory Corridor
+  > Top
       Power Grip Wall
 
 > Door to Laboratory Corridor; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Corridor/Door to Laboratory Small Shaft East; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Corridor/Door to Laboratory Small Shaft East
   * Extra - instance_id: 146935
-  > Door to Laboratory Foyer
+  > Top
       Trivial
-  > Event - Larva
-      Defeat Larva
 
 > Event - Larva; Heals? False
   * Layers: default
   * Event Area 7 - Small Shaft Larva
-  > Door to Laboratory Corridor
+  > Top
       Trivial
+
+> Top; Heals? False
+  * Layers: default
+  > Door to Laboratory Foyer
+      After Area 7 - Small Shaft Larva
+  > Door to Laboratory Corridor
+      After Area 7 - Small Shaft Larva
+  > Event - Larva
+      Defeat Larva
 
 ----------------
 Laboratory Corridor
 Extra - map_name: rm_a7b06A
 > Door to Laboratory Small Shaft East; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Small Shaft East/Door to Laboratory Corridor; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Small Shaft East/Door to Laboratory Corridor
   * Extra - instance_id: 146959
   > Door to Laboratory Long Shaft
       Trivial
 
 > Door to Laboratory Long Shaft; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Long Shaft/Door to Laboratory Corridor; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Long Shaft/Door to Laboratory Corridor
   * Extra - instance_id: 146956
   > Door to Laboratory Small Shaft East
       Trivial
@@ -388,72 +395,70 @@ Laboratory Long Shaft
 Extra - map_name: rm_a7b07
 > Door to Laboratory Corridor; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Corridor/Door to Laboratory Long Shaft; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Corridor/Door to Laboratory Long Shaft
   * Extra - instance_id: 147000
-  > Door to Laboratory Spiked Hall
-      Any of the following:
-          Space Jump or Walljump (Advanced) or Can Use Spider Ball
-          Hi-Jump Boots and Power Grip
-          All of the following:
-              # IBJ
-              Charged Bomb Jump (Intermediate) and Can Use Bombs
-          Morph Ball and Morph Glide (Beginner) and Walljump (Intermediate)
+  > Bottom
+      Trivial
 
 > Door to Laboratory Spiked Hall; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Spiked Hall/Door to Laboratory Long Shaft; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Spiked Hall/Door to Laboratory Long Shaft
   * Extra - instance_id: 147001
-  > Door to Laboratory Corridor
+  > Top
       Trivial
-  > Event - Top Larva
-      Defeat Larva
-  > Event - Bottom Larva
-      Defeat Larva
 
 > Event - Top Larva; Heals? False
   * Layers: default
   * Event Area 7 - Big Shaft Top Larva
-  > Door to Laboratory Corridor
+  > Bottom
       Trivial
 
 > Event - Bottom Larva; Heals? False
   * Layers: default
   * Event Area 7 - Big Shaft Bottom Larva
-  > Door to Laboratory Corridor
+  > Bottom
       Trivial
+
+> Top; Heals? False
+  * Layers: default
+  > Door to Laboratory Spiked Hall
+      After Area 7 - Big Shaft Bottom Larva and After Area 7 - Big Shaft Top Larva
+  > Event - Top Larva
+      Defeat Larva
+  > Event - Bottom Larva
+      Defeat Larva
+  > Bottom
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
+  > Door to Laboratory Corridor
+      After Area 7 - Big Shaft Bottom Larva and After Area 7 - Big Shaft Top Larva
+  > Top
+      Any of the following:
+          Space Jump or Walljump (Advanced) or Can Use Spider Ball
+          Hi-Jump Boots and Power Grip
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          Morph Ball and Morph Glide (Beginner) and Walljump (Intermediate)
 
 ----------------
 Laboratory Spiked Hall
 Extra - map_name: rm_a7b08
 > Door to Laboratory Arena; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Arena/Door to Laboratory Spiked Hall; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Arena/Door to Laboratory Spiked Hall
   * Extra - instance_id: 147042
-  > Middle Platform
-      Any of the following:
-          Space Jump or Damage Boost (Intermediate) or Can Use Spider Ball
-          All of the following:
-              Hi-Jump Boots
-              Any of the following:
-                  Morph Glide (Expert)
-                  All of the following:
-                      Morph Glide (Advanced)
-                      Power Grip or Walljump (Advanced)
+  > Left Side
+      Trivial
 
 > Door to Laboratory Long Shaft; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Long Shaft/Door to Laboratory Spiked Hall; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Long Shaft/Door to Laboratory Spiked Hall
   * Extra - instance_id: 147043
-  > Middle Platform
-      Any of the following:
-          Space Jump or Damage Boost (Intermediate) or Can Use Spider Ball
-          All of the following:
-              Hi-Jump Boots
-              Any of the following:
-                  Morph Glide (Expert)
-                  All of the following:
-                      Morph Glide (Advanced)
-                      Power Grip or Walljump (Advanced)
+  > Right Side
+      Trivial
 
 > Event - Right Larva; Heals? False
   * Layers: default
@@ -469,24 +474,13 @@ Extra - map_name: rm_a7b08
 
 > Middle Platform; Heals? False
   * Layers: default
-  > Door to Laboratory Arena
+  > Event - Right Larva
+      Defeat Larva
+  > Event - Left Larva
+      Defeat Larva
+  > Right Side
       Any of the following:
-          Space Jump or Damage Boost (Intermediate) or Morph Glide (Expert)
-          All of the following:
-              # Reach ceiling
-              Can Use Spider Ball
-              Any of the following:
-                  All of the following:
-                      # IBJ
-                      Infinite Bomb Jumping (Intermediate) and Can Use Bombs
-                  Hi-Jump Boots and Mid-Air Morph (Beginner)
-                  Charged Bomb Jump (Beginner) and Can Use Charged Bomb Jump
-          All of the following:
-              Morph Glide (Advanced)
-              Power Grip or Walljump (Advanced)
-  > Door to Laboratory Long Shaft
-      Any of the following:
-          Space Jump or Damage Boost (Intermediate) or Morph Glide (Advanced)
+          Space Jump or Morph Glide (Advanced)
           All of the following:
               # Reach ceiling
               Can Use Spider Ball
@@ -499,26 +493,97 @@ Extra - map_name: rm_a7b08
           All of the following:
               Morph Glide (Intermediate)
               Power Grip or Walljump (Intermediate)
-  > Event - Right Larva
-      Defeat Larva
-  > Event - Left Larva
-      Defeat Larva
+  > Left Side
+      Any of the following:
+          Space Jump or Morph Glide (Expert)
+          All of the following:
+              # Reach ceiling
+              Can Use Spider Ball
+              Any of the following:
+                  All of the following:
+                      # IBJ
+                      Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+                  Hi-Jump Boots and Mid-Air Morph (Beginner)
+                  Charged Bomb Jump (Beginner) and Can Use Charged Bomb Jump
+          All of the following:
+              Morph Glide (Advanced)
+              Power Grip or Walljump (Advanced)
+
+> Right Side; Heals? False
+  * Layers: default
+  > Door to Laboratory Long Shaft
+      After Area 7 - Long Hallway Right Larva and After Area 7 - Long Hallway Left Larva
+  > Middle Platform
+      Any of the following:
+          Space Jump or Can Use Spider Ball
+          All of the following:
+              Hi-Jump Boots
+              Any of the following:
+                  Morph Glide (Expert)
+                  All of the following:
+                      Morph Glide (Advanced)
+                      Power Grip or Walljump (Advanced)
+
+> Left Side; Heals? False
+  * Layers: default
+  > Door to Laboratory Arena
+      After Area 7 - Long Hallway Right Larva and After Area 7 - Long Hallway Left Larva
+  > Middle Platform
+      Any of the following:
+          Space Jump or Can Use Spider Ball
+          All of the following:
+              Hi-Jump Boots
+              Any of the following:
+                  Morph Glide (Expert)
+                  All of the following:
+                      Morph Glide (Advanced)
+                      Power Grip or Walljump (Advanced)
 
 ----------------
 Laboratory Arena
 Extra - map_name: rm_a7b08A
 > Door to Laboratory Spiked Hall; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Spiked Hall/Door to Laboratory Arena; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Spiked Hall/Door to Laboratory Arena
   * Extra - instance_id: 147081
-  > Door to Laboratory Small Shaft West
-      Can Use Any Bombs
+  > Top
+      Trivial
 
 > Door to Laboratory Small Shaft West; Heals? False
   * Layers: default
-  * Normal Door to Laboratory Small Shaft West/Door to Laboratory Arena; Excluded from Dock Lock Rando
+  * Normal Door to Laboratory Small Shaft West/Door to Laboratory Arena
   * Extra - instance_id: 147287
+  > Bottom
+      Trivial
+
+> Event - Bottom Larva; Heals? False
+  * Layers: default
+  * Event Area 7 - Big Arena Bottom Larva
+  > Bottom
+      Trivial
+
+> Event - Top Larva; Heals? False
+  * Layers: default
+  * Event Area 7 - Big Arena Top Larva
+  > Bottom
+      Trivial
+
+> Top; Heals? False
+  * Layers: default
   > Door to Laboratory Spiked Hall
+      After Area 7 - Big Arena Bottom Larva and After Area 7 - Big Arena Top Larva
+  > Bottom
+      Can Use Any Bombs
+
+> Bottom; Heals? False
+  * Layers: default
+  > Door to Laboratory Small Shaft West
+      After Area 7 - Big Arena Bottom Larva and After Area 7 - Big Arena Top Larva
+  > Event - Bottom Larva
+      Defeat Larva
+  > Event - Top Larva
+      Defeat Larva
+  > Top
       All of the following:
           Space Jump Wall
           Any of the following:
@@ -531,22 +596,6 @@ Extra - map_name: rm_a7b08A
                       All of the following:
                           Mid-Air Morph (Beginner)
                           Hi-Jump Boots or Walljump (Intermediate)
-  > Event - Bottom Larva
-      Defeat Larva
-  > Event - Top Larva
-      Defeat Larva
-
-> Event - Bottom Larva; Heals? False
-  * Layers: default
-  * Event Area 7 - Big Arena Bottom Larva
-  > Door to Laboratory Small Shaft West
-      Trivial
-
-> Event - Top Larva; Heals? False
-  * Layers: default
-  * Event Area 7 - Big Arena Top Larva
-  > Door to Laboratory Small Shaft West
-      Trivial
 
 ----------------
 Laboratory Small Shaft West
@@ -574,7 +623,8 @@ Extra - map_name: rm_a7b10
   * Extra - instance_id: 147656
   > Dock to Queen Arena
       Any of the following:
-          Space Jump or Damage Boost (Intermediate)
+          Space Jump
+          Damage Boost (Intermediate) and Normal Damage ≥ 120
           All of the following:
               # DIBJ
               Diagonal Infinite Bomb Jumping (Expert) and Can Use Bombs
@@ -584,7 +634,8 @@ Extra - map_name: rm_a7b10
   * Open Passage to Queen Arena/Dock from Queen Arena Access
   > Door to Laboratory Small Shaft West
       Any of the following:
-          Space Jump or Damage Boost (Intermediate)
+          Space Jump
+          Damage Boost (Intermediate) and Normal Damage ≥ 120
           All of the following:
               # DIBJ
               Diagonal Infinite Bomb Jumping (Expert) and Can Use Bombs
@@ -601,9 +652,22 @@ Extra - map_name: rm_a7b11
   * Back Only to Queen Arena Access/Dock to Queen Arena
   > Dock to Hatchling Room
       All of the following:
-          Plasma Beam or Combat (Advanced)
-          Missiles or Super Missiles or Can Use Bombs
-          Combat (Expert) or Normal Damage ≥ 599
+          Any of the following:
+              # Item requirements to damage
+              All of the following:
+                  # Hit queen with bombs
+                  Can Use Any Bombs
+                  Screw Attack or Combat (Expert) or Can Use Power Bombs
+              All of the following:
+                  # Need ice to farm the goo
+                  Ice Beam
+                  Missiles or Super Missiles
+                  Any of the following:
+                      # Need this to help destroy the goo
+                      Plasma Beam or Spazer Beam or Combat (Expert)
+          Any of the following:
+              # Energy requirements
+              Combat (Expert) or Normal Damage ≥ 530
 
 ----------------
 Hatchling Room
