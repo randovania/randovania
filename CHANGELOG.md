@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.0.1] - 2023-07-??
 
-- Added: Option for disabling crash reporting.
+- Added: Option for disabling crash reporting and monitoring.
+- Changed: The Privacy Policy has been updated to mention crash reporting and monitoring.
 - Fixed: Importing permalinks and spoilers in multiworld no longer fails.
 - Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
 
