@@ -11,7 +11,7 @@ import peewee
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
 
 from randovania.network_common import error
-from randovania.server.database import User, UserAccessToken, MultiplayerMembership
+from randovania.server.database import User, UserAccessToken
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
