@@ -405,18 +405,31 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             await self._admin_global_action(SessionAdminGlobalAction.DUPLICATE_SESSION, new_name)
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
+        def _combine(arr: list[list[str]]):
+            return "\n".join(
+                f"{world.name}: {', '.join(dangerous)}"
+                for world, dangerous in zip(self._session.worlds, arr, strict=True)
+                if dangerous
+            )
+
+        all_incompatible_settings = [
+            preset.settings_incompatible_with_multiworld()
+            for preset in permalink.parameters.presets
+        ]
+        if any(all_incompatible_settings):
+            message = ("The following presets have settings that are incompatible with Multiworld:\n"
+                       f"\n{_combine(all_incompatible_settings)}\n"
+                       "\nDo you want to continue?")
+            await async_dialog.warning(self, "Incompatible preset", message)
+            return False
+
         all_dangerous_settings = [
             preset.dangerous_settings()
             for preset in permalink.parameters.presets
         ]
         if any(all_dangerous_settings):
-            warnings = "\n".join(
-                f"{world.name}: {', '.join(dangerous)}"
-                for world, dangerous in zip(self._session.worlds, all_dangerous_settings)
-                if dangerous
-            )
             message = ("The following presets have settings that can cause an impossible game:\n"
-                       f"\n{warnings}\n"
+                       f"\n{_combine(all_dangerous_settings)}\n"
                        "\nDo you want to continue?")
             result = await async_dialog.warning(self, "Dangerous preset", message,
                                                 async_dialog.StandardButton.Yes | async_dialog.StandardButton.No)

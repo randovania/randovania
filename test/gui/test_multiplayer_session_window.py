@@ -299,11 +299,46 @@ async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_ma
     window._upload_layout_description.assert_awaited_once_with(mock_generate_layout.return_value)
 
 
-async def test_check_dangerous_presets(window: MultiplayerSessionWindow, mocker):
+async def test_check_dangerous_presets_incompatible(window: MultiplayerSessionWindow, mocker):
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+
+    presets = [MagicMock(), MagicMock(), MagicMock()]
+    presets[0].settings_incompatible_with_multiworld.return_value = ["Cake"]
+    presets[1].settings_incompatible_with_multiworld.return_value = ["Bomb", "Knife"]
+    presets[2].settings_incompatible_with_multiworld.return_value = []
+
+    session = MagicMock()
+    session.worlds = [MagicMock(), MagicMock(), MagicMock()]
+    session.worlds[0].name = "Crazy Person"
+    session.worlds[1].name = "World 2"
+    session.worlds[2].name = "World 3"
+
+    window._session = session
+
+    permalink = MagicMock(spec=Permalink)
+    permalink.parameters = MagicMock(spec=GeneratorParameters)
+    permalink.parameters.presets = presets
+
+    # Run
+    result = await window._check_dangerous_presets(permalink)
+
+    # Assert
+    message = ("The following presets have settings that are incompatible with Multiworld:\n"
+               "\nCrazy Person: Cake"
+               "\nWorld 2: Bomb, Knife"
+               "\n\nDo you want to continue?")
+    mock_warning.assert_awaited_once_with(window, "Incompatible preset", message)
+    assert not result
+
+
+async def test_check_dangerous_presets_impossible(window: MultiplayerSessionWindow, mocker):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     mock_warning.return_value = QtWidgets.QMessageBox.StandardButton.No
 
     presets = [MagicMock(), MagicMock(), MagicMock()]
+    presets[0].settings_incompatible_with_multiworld.return_value = []
+    presets[1].settings_incompatible_with_multiworld.return_value = []
+    presets[2].settings_incompatible_with_multiworld.return_value = []
     presets[0].dangerous_settings.return_value = ["Cake"]
     presets[1].dangerous_settings.return_value = ["Bomb", "Knife"]
     presets[2].dangerous_settings.return_value = []
