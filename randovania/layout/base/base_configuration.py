@@ -7,7 +7,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
+from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
@@ -85,4 +85,4 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
 
     def should_hide_generation_log(self):
         """Certain settings makes the generation log full of nonsense. It should be hidden in these cases."""
-        return self.dock_rando.is_enabled()
+        return self.dock_rando.mode == DockRandoMode.DOCKS
