@@ -6,6 +6,7 @@ import typing
 from pathlib import Path
 
 import sentry_sdk
+import sentry_sdk.scrubber
 
 import randovania
 from randovania.version_hash import full_git_hash
@@ -63,16 +64,10 @@ def _filter_windows_home(data):
     return _filter_data(data, filter_home)
 
 
-def _before_send(event, hint):
-    _filter_windows_home(event["extra"])
-    if "logentry" in event:
-        _filter_windows_home(event["logentry"])
-    return event
-
-
-def _before_breadcrumb(event, hint):
-    _filter_windows_home(event)
-    return event
+class HomeEventScrubber(sentry_sdk.scrubber.EventScrubber):
+    def scrub_dict(self, d):
+        super().scrub_dict(d)
+        _filter_windows_home(d)
 
 
 def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, exclude_server_name: bool = False):
@@ -116,9 +111,8 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, ex
         environment="staging" if randovania.is_dev_version() else "production",
         traces_sampler=traces_sampler,
         server_name=server_name,
-        before_send=_before_send,
-        before_breadcrumb=_before_breadcrumb,
         auto_session_tracking=include_flask,
+        event_scrubber=HomeEventScrubber(),
     )
     sentry_sdk.set_context("os", {
         "name": platform.system(),
