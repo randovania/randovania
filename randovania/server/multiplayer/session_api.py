@@ -11,9 +11,9 @@ def list_sessions(sio: ServerApp, limit: int | None):
     sessions: list[MultiplayerSession] = list(
         MultiplayerSession.select().order_by(MultiplayerSession.id.desc()).limit(limit)
     )
-
+    user = sio.get_current_user()
     return [
-        session.create_list_entry(sio.get_current_user()).as_json
+        session.create_list_entry(user).as_json
         for session in sessions
     ]
 
