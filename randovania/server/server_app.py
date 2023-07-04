@@ -131,12 +131,14 @@ class ServerApp:
             with sentry_sdk.start_transaction(op="message", name=message) as span:
                 try:
                     user = self.get_current_user()
+                    flask.request.current_user = user
                     sentry_sdk.set_user({
                         "id": user.discord_id,
                         "username": user.name,
                         "server_id": user.id,
                     })
                 except (error.NotLoggedInError, error.InvalidSessionError):
+                    flask.request.current_user = None
                     sentry_sdk.set_user(None)
 
                 if with_header_check:
