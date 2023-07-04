@@ -65,7 +65,7 @@ def verify_has_admin_or_claimed(sio: ServerApp, world: World) -> None:
 
 
 def _verify_world_has_session(world: World, session: MultiplayerSession):
-    if world.session.id != session.id:
+    if world.session_id != session.id:
         raise error.InvalidActionError("Wrong session")
 
 
