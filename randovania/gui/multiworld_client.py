@@ -1,11 +1,10 @@
 import asyncio
-import json
+import dataclasses
 import logging
 import uuid
 from pathlib import Path
-from typing import AsyncContextManager, Self
 
-from PySide6.QtCore import QObject
+from PySide6 import QtCore
 from frozendict import frozendict
 from qasync import asyncSlot
 
@@ -13,82 +12,50 @@ from randovania.bitpacking import construct_pack
 from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.interface_common.players_configuration import INVALID_UUID
-from randovania.lib import json_lib
+from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
 from randovania.network_client.network_client import UnableToConnect, ConnectionState
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory
+from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory, \
+    MultiplayerSessionEntry
 from randovania.network_common.world_sync import ServerWorldSync, ServerSyncRequest
 
 
-class Data(AsyncContextManager):
-    collected_locations: set[int]
-    uploaded_locations: set[int]
-    latest_message_displayed: int
-
-    def __init__(self, path: Path):
-        self._path = path
-        self._lock = asyncio.Lock()
-
-        try:
-            data = json_lib.read_path(self._path)
-            self.collected_locations = set(data["collected_locations"])
-            self.uploaded_locations = set(data["uploaded_locations"])
-            self.latest_message_displayed = data["latest_message_displayed"]
-
-        except (FileNotFoundError, json.JSONDecodeError, KeyError):
-            self.collected_locations = set()
-            self.uploaded_locations = set()
-            self.latest_message_displayed = 0
-
-    async def __aenter__(self) -> Self:
-        await self._lock.acquire()
-        return self
-
-    async def __aexit__(self, exc_type, exc, tb):
-        new_data = {
-            "collected_locations": list(self.collected_locations),
-            "uploaded_locations": list(self.uploaded_locations),
-            "latest_message_displayed": self.latest_message_displayed,
-        }
-        json_lib.write_path(self._path, new_data)
-        self._lock.release()
+_ERRORS_THAT_STOP_SYNC = (
+    error.WorldDoesNotExistError,
+    error.WorldNotAssociatedError,
+    error.SessionInWrongStateError,
+)
 
 
-class MultiworldClient(QObject):
-    _all_data: dict[uuid.UUID, Data]
+class MultiworldClient(QtCore.QObject):
     _persist_path: Path
     _sync_task: asyncio.Task | None = None
     _remote_games: dict[uuid.UUID, MultiplayerWorldPickups]
 
     _last_reported_status: dict[uuid.UUID, GameConnectionStatus]
     _recently_connected: bool = True
+    _world_sync_errors: dict[uuid.UUID, error.BaseNetworkError]
     _last_sync: ServerSyncRequest = ServerSyncRequest(worlds=frozendict({}))
 
-    def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection, persist_path: Path):
+    _last_sync_exception: Exception | None = None
+
+    SyncFailure = QtCore.Signal()
+
+    def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection, database: WorldDatabase):
         super().__init__()
         self.logger = logging.getLogger(__name__)
 
-        persist_path.mkdir(parents=True, exist_ok=True)
-        self._persist_path = persist_path
-
         self.network_client = network_client
         self.game_connection = game_connection
+        self.database = database
         self._remote_games = {}
-        self._all_data = {}
         self._last_reported_status = {}
+        self._world_sync_errors = {}
         self._pickups_lock = asyncio.Lock()
 
-        for f in self._persist_path.glob("*.json"):
-            try:
-                uid = uuid.UUID(f.stem)
-            except ValueError:
-                self.logger.warning("File name is not a UUID: %s", f)
-                continue
-            if uid != INVALID_UUID:
-                self._all_data[uid] = Data(f)
-
         self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
+        self.network_client.MultiplayerSessionMetaUpdated.connect(self.on_session_meta_update)
         self.network_client.WorldPickupsUpdated.connect(self.on_network_game_updated)
         self.network_client.ConnectionStateUpdated.connect(self.on_connection_state_updated)
 
@@ -104,11 +71,6 @@ class MultiworldClient(QObject):
             self._sync_task.cancel()
             self._sync_task = None
 
-    def _locations_to_upload(self, uid: uuid.UUID) -> tuple[int, ...]:
-        data = self._get_data_for(uid)
-        return tuple(i for i in sorted(data.collected_locations)
-                     if i not in data.uploaded_locations)
-
     def _create_new_sync_request(self) -> ServerSyncRequest:
         sync_requests = {}
 
@@ -118,7 +80,7 @@ class MultiworldClient(QObject):
 
             sync_requests[state.id] = ServerWorldSync(
                 status=state.status,
-                collected_locations=self._locations_to_upload(state.id),
+                collected_locations=self.database.get_locations_to_upload(state.id),
                 inventory=(
                     construct_pack.encode(
                         {item.short_name: item_state
@@ -131,8 +93,8 @@ class MultiworldClient(QObject):
             )
 
         # Check for all games that were connected at some point, and upload any pending location from them.
-        for uid, data in self._all_data.items():
-            if uid not in sync_requests and (locations := self._locations_to_upload(uid)):
+        for uid in self.database.all_known_data():
+            if uid not in sync_requests and (locations := self.database.get_locations_to_upload(uid)):
                 sync_requests[uid] = ServerWorldSync(
                     status=GameConnectionStatus.Disconnected,
                     collected_locations=locations,
@@ -144,10 +106,15 @@ class MultiworldClient(QObject):
             if old_status != GameConnectionStatus.Disconnected and uid not in sync_requests:
                 sync_requests[uid] = ServerWorldSync(
                     status=GameConnectionStatus.Disconnected,
-                    collected_locations=self._locations_to_upload(uid),
+                    collected_locations=self.database.get_locations_to_upload(uid),
                     inventory=None,
                     request_details=False,
                 )
+
+        for uid in set(sync_requests.keys()) & set(self._world_sync_errors.keys()):
+            if isinstance(self._world_sync_errors[uid], _ERRORS_THAT_STOP_SYNC):
+                self.logger.debug("Not syncing %s: had sync error", uid)
+                sync_requests.pop(uid)
 
         return ServerSyncRequest(
             worlds=frozendict(sync_requests),
@@ -167,28 +134,59 @@ class MultiworldClient(QObject):
                 self.logger.debug("Skipping server sync: no changes from last time")
                 return
 
+            for uid, world_request in request.worlds.items():
+                self.logger.debug("Syncing %s: State %s, collected %s", uid, world_request.status,
+                                  world_request.collected_locations)
+
             try:
                 result = await self.network_client.perform_world_sync(request)
-            except (Exception, UnableToConnect) as e:
-                message = f"Exception {type(e)} when attempting to sync locations."
-                if isinstance(e, (UnableToConnect, error.NotLoggedIn, error.InvalidSession, error.RequestTimeout)):
-                    self.logger.warning(message)
-                else:
-                    self.logger.exception(message)
-                await asyncio.sleep(5)
+
+            except (UnableToConnect, error.RequestTimeoutError, error.UnsupportedClientError) as e:
+                self._update_sync_exception(e)
+                self.logger.info("Can't sync worlds: Unable to connect to server: %s", e)
+                await asyncio.sleep(15)
                 continue
+
+            except (error.NotLoggedInError, error.InvalidSessionError) as e:
+                self._update_sync_exception(e)
+                self.logger.info("Can't sync worlds: Not logged in")
+                await asyncio.sleep(30)
+                continue
+
+            except Exception as e:
+                self._update_sync_exception(e)
+                self.logger.exception("Unexpected error syncing worlds: %s", e)
+                await asyncio.sleep(15)
+                continue
+
+            self._last_sync_exception = None
+            modified_data: dict[uuid.UUID, WorldData] = {}
+
+            def get_data(u: uuid.UUID):
+                if u not in modified_data:
+                    modified_data[u] = self.database.get_data_for(u)
+                return modified_data[u]
 
             for uid, world in request.worlds.items():
                 if uid in result.errors:
                     continue
 
                 self._last_reported_status[uid] = world.status
+                self._world_sync_errors.pop(uid, None)
                 if world.collected_locations:
-                    async with self._get_data_for(uid) as data_mod:
-                        data_mod.uploaded_locations.update(world.collected_locations)
+                    modified_data[uid] = get_data(uid).extend_uploaded_locations(
+                        world.collected_locations
+                    )
 
-            # for uid, world in result.worlds.items():
-            #     # TODO: store world name/session somewhere
+            for uid, world in result.worlds.items():
+                modified_data[uid] = dataclasses.replace(
+                    get_data(uid),
+                    server_data=WorldServerData(
+                        world_name=world.world_name,
+                        session_id=world.session.id,
+                        session_name=world.session.name
+                    )
+                )
 
             self._last_sync = ServerSyncRequest(
                 worlds=frozendict([
@@ -197,15 +195,15 @@ class MultiworldClient(QObject):
                     if uid not in result.errors
                 ])
             )
+
             if result.errors:
                 for uid, err in result.errors.items():
-                    # TODO: some better visibility for these errors would be great
-                    message = f"Exception {type(err)} when attempting to sync {uid}."
-                    if isinstance(err, (UnableToConnect, error.NotLoggedIn, error.InvalidSession, error.RequestTimeout)
-                                  ):
-                        self.logger.warning(message)
-                    else:
-                        self.logger.exception(message)
+                    self.logger.info("When syncing %s, received %s", uid, err)
+                    self._world_sync_errors[uid] = err
+                self.SyncFailure.emit()
+
+            if modified_data:
+                await self.database.set_many_data(modified_data)
 
             # Wait a bit, and try sending a new request in case new data came while waiting for the server response
             await asyncio.sleep(4)
@@ -216,30 +214,52 @@ class MultiworldClient(QObject):
 
         self._sync_task = asyncio.create_task(self._server_sync())
 
-    def _get_data_for(self, uid: uuid.UUID) -> Data:
-        if uid == INVALID_UUID:
-            raise ValueError("UID not allowed for Multiworld")
-
-        if uid not in self._all_data:
-            self._all_data[uid] = Data(self._persist_path.joinpath(f"{uid}.json"))
-
-        return self._all_data[uid]
-
     @asyncSlot(ConnectedGameState)
     async def on_game_state_updated(self, state: ConnectedGameState):
         if state.id == INVALID_UUID:
             return
 
-        data = self._get_data_for(state.id)
         our_indices: set[int] = {i.index for i in state.collected_indices}
-        if new_indices := our_indices - data.collected_locations:
-            async with data as data_edit:
-                data_edit.collected_locations.update(new_indices)
+
+        data = self.database.get_data_for(state.id)
+        await self.database.set_data_for(state.id, data.extend_collected_location(our_indices))
 
         if state.id in self._remote_games:
             await state.source.set_remote_pickups(self._remote_games[state.id].pickups)
 
         self.start_server_sync_task()
+
+    @asyncSlot(MultiplayerSessionEntry)
+    async def on_session_meta_update(self, session: MultiplayerSessionEntry):
+        worlds_by_id = {world.id for world in session.worlds}
+        user_worlds = {}
+
+        user = self.network_client.current_user
+        if user is not None:
+            user_details = session.users.get(user.id)
+            if user_details is not None:
+                user_worlds = user_details.worlds
+
+        any_error_cleared = False
+        for uid, err in list(self._world_sync_errors.items()):
+            error_cleared = False
+            match type(err):
+                case error.WorldDoesNotExistError:
+                    error_cleared = uid in worlds_by_id
+
+                case error.WorldNotAssociatedError:
+                    error_cleared = uid in user_worlds
+
+                case error.SessionInWrongStateError:
+                    assert isinstance(err, error.SessionInWrongStateError)
+                    error_cleared = uid in worlds_by_id and session.state == err.state
+
+            if error_cleared:
+                any_error_cleared = True
+                self._world_sync_errors.pop(uid)
+
+        if any_error_cleared:
+            self.SyncFailure.emit()
 
     @asyncSlot(MultiplayerWorldPickups)
     async def on_network_game_updated(self, pickups: MultiplayerWorldPickups):
@@ -256,3 +276,16 @@ class MultiworldClient(QObject):
         if state == ConnectionState.Connected:
             self._recently_connected = True
             self.start_server_sync_task()
+
+    @property
+    def last_sync_exception(self):
+        return self._last_sync_exception
+
+    def get_world_sync_error(self, uid: uuid.UUID) -> error.BaseNetworkError | None:
+        return self._world_sync_errors.get(uid)
+
+    def _update_sync_exception(self, err: Exception | None):
+        last = self._last_sync_exception
+        self._last_sync_exception = err
+        if last != err:
+            self.SyncFailure.emit()

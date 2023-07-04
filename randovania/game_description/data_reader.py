@@ -30,6 +30,7 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
@@ -451,6 +452,7 @@ def read_resource_database(game: RandovaniaGame, data: dict) -> ResourceDatabase
     reader = ResourceReader()
 
     item = read_dict(data["items"], reader.read_item_resource_info)
+
     db = ResourceDatabase(
         game_enum=game,
         item=item,
@@ -461,7 +463,9 @@ def read_resource_database(game: RandovaniaGame, data: dict) -> ResourceDatabase
         misc=reader.read_resource_info_array(data["misc"], ResourceType.MISC),
         requirement_template={},
         damage_reductions={},
-        energy_tank_item_index=data["energy_tank_item_index"],
+        energy_tank_item=search.find_resource_info_with_id(
+            item, data["energy_tank_item_index"], ResourceType.ITEM
+        ),
     )
     db.requirement_template.update(read_requirement_templates(data["requirement_template"], db))
     db.damage_reductions.update(read_resource_reductions_dict(data["damage_reductions"], db))

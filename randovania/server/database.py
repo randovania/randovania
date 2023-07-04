@@ -16,11 +16,11 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common import multiplayer_session
+from randovania.network_common import multiplayer_session, error
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerUser, GameDetails, \
     MultiplayerWorld, MultiplayerSessionListEntry, MultiplayerSessionAuditLog, \
-    MultiplayerSessionAuditEntry, UserWorldDetail
+    MultiplayerSessionAuditEntry, UserWorldDetail, MAX_SESSION_NAME_LENGTH, MAX_WORLD_NAME_LENGTH
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
@@ -84,10 +84,6 @@ class User(BaseModel):
     name: str = peewee.CharField()
     admin: bool = peewee.BooleanField(default=False)
 
-    @classmethod
-    def get_by_id(cls, pk) -> Self:
-        return cls.get(cls._meta.primary_key == pk)
-
     @property
     def as_json(self):
         return {
@@ -123,7 +119,7 @@ def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> Layou
 
 class MultiplayerSession(BaseModel):
     id: int
-    name: str = peewee.CharField()
+    name: str = peewee.CharField(max_length=MAX_SESSION_NAME_LENGTH)
     password: str | None = peewee.CharField(null=True)
     state: MultiplayerSessionState = EnumField(choices=MultiplayerSessionState,
                                                default=MultiplayerSessionState.SETUP)
@@ -140,10 +136,6 @@ class MultiplayerSession(BaseModel):
     members: list[MultiplayerMembership]
     worlds: list[World]
     audit_log: list[MultiplayerAuditEntry]
-
-    @classmethod
-    def get_by_id(cls, pk) -> Self:
-        return cls.get(cls._meta.primary_key == pk)
 
     def has_layout_description(self) -> bool:
         return self.layout_description_json is not None
@@ -179,7 +171,14 @@ class MultiplayerSession(BaseModel):
     def creation_datetime(self) -> datetime.datetime:
         return datetime.datetime.fromisoformat(self.creation_date)
 
-    def create_list_entry(self):
+    def is_user_in_session(self, user: User):
+        try:
+            MultiplayerMembership.get_by_ids(user, self.id)
+        except peewee.DoesNotExist:
+            return False
+        return True
+
+    def create_list_entry(self, user: User):
         return MultiplayerSessionListEntry(
             id=self.id,
             name=self.name,
@@ -188,6 +187,7 @@ class MultiplayerSession(BaseModel):
             num_players=len(self.members),
             creator=self.creator.name,
             creation_date=self.creation_datetime,
+            is_user_in_session=self.is_user_in_session(user),
         )
 
     @property
@@ -210,18 +210,20 @@ class MultiplayerSession(BaseModel):
 
         worlds = self.get_ordered_worlds()
         world_by_id = {
-            world.uuid: world
+            world.id: world
             for world in worlds
         }
 
         def _describe_action(action: WorldAction) -> multiplayer_session.MultiplayerSessionAction:
-            provider_index = world_by_id[action.provider.uuid].order
+            provider = world_by_id[action.provider.id]
+            receiver = world_by_id[action.receiver.id]
+
             location_index = PickupIndex(action.location)
-            target = description.all_patches[provider_index].pickup_assignment[location_index]
+            target = description.all_patches[provider.order].pickup_assignment[location_index]
 
             return multiplayer_session.MultiplayerSessionAction(
-                provider=action.provider.uuid,
-                receiver=action.receiver.uuid,
+                provider=provider.uuid,
+                receiver=receiver.uuid,
                 pickup=target.pickup.name,
                 location=action.location,
                 time=datetime.datetime.fromisoformat(action.time),
@@ -291,7 +293,7 @@ class World(BaseModel):
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="worlds")
     uuid: uuid.UUID = peewee.UUIDField(default=uuid.uuid4, unique=True)
 
-    name: str = peewee.CharField()
+    name: str = peewee.CharField(max_length=MAX_WORLD_NAME_LENGTH)
     preset: str = peewee.TextField()
     order: int | None = peewee.IntegerField(null=True, default=None)
 
@@ -299,7 +301,10 @@ class World(BaseModel):
 
     @classmethod
     def get_by_uuid(cls, uid) -> World:
-        return cls.get(World.uuid == uid)
+        try:
+            return cls.get(World.uuid == uid)
+        except peewee.DoesNotExist:
+            raise error.WorldDoesNotExistError()
 
     @classmethod
     def get_by_order(cls, session_id: int, order: int) -> World:

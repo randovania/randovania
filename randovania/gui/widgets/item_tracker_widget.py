@@ -45,6 +45,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
         super().__init__()
         self._layout = QtWidgets.QGridLayout(self)
         self.tracker_config = tracker_config
+        self.current_state = {}
 
         self.tracker_elements: list[Element] = []
         game_enum = RandovaniaGame(tracker_config["game"])
@@ -103,6 +104,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
 
     def update_state(self, inventory: dict[ItemResourceInfo, InventoryItem]):
         self.current_state = inventory
+
         for element in self.tracker_elements:
             if len(element.labels) > 1:
                 satisfied = False

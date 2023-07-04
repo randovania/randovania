@@ -1,4 +1,4 @@
-import json
+import datetime
 import uuid
 from unittest.mock import MagicMock, AsyncMock, call
 
@@ -8,11 +8,13 @@ from pytest_mock import MockerFixture
 
 from randovania.game_connection.game_connection import ConnectedGameState
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.gui.multiworld_client import MultiworldClient, Data
+from randovania.gui.multiworld_client import MultiworldClient
 from randovania.interface_common.players_configuration import INVALID_UUID
-from randovania.lib import json_lib
+from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
+from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry, MultiplayerUser, MultiplayerWorld
+from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldSync, ServerSyncResponse, \
     ServerWorldResponse
 
@@ -20,7 +22,7 @@ from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldS
 @pytest.fixture()
 def client(skip_qtbot, tmp_path):
     network_client = MagicMock()
-    return MultiworldClient(network_client, MagicMock(), tmp_path.joinpath("persist"))
+    return MultiworldClient(network_client, MagicMock(), WorldDatabase(tmp_path.joinpath("persist")))
 
 
 async def test_start(client):
@@ -49,12 +51,11 @@ async def test_stop(client: MultiworldClient):
 @pytest.mark.parametrize("exists", [False, True, "invalid"])
 async def test_on_game_state_updated(client: MultiworldClient, tmp_path, exists):
     the_id = INVALID_UUID if exists == "invalid" else uuid.UUID("00000000-0000-0000-1111-000000000000")
-    data = Data(tmp_path.joinpath("data.json"))
+    data = WorldData(collected_locations=(10, 15) if exists else (10,))
     if exists == "invalid":
         client._all_data = {}
     else:
-        client._all_data = {the_id: data}
-        data.collected_locations = {10, 15} if exists else {10}
+        client.database._all_data[the_id] = data
     client.start_server_sync_task = MagicMock()
 
     remote_game = MagicMock()
@@ -77,7 +78,7 @@ async def test_on_game_state_updated(client: MultiworldClient, tmp_path, exists)
         state.source.set_remote_pickups.assert_not_awaited()
         client.start_server_sync_task.assert_not_called()
     else:
-        assert data.collected_locations == {10, 15}
+        assert client.database.get_data_for(the_id).collected_locations == (10, 15)
         state.source.set_remote_pickups.assert_awaited_once_with(remote_game.pickups)
         client.start_server_sync_task.assert_called_once_with()
 
@@ -98,21 +99,25 @@ async def test_on_network_game_updated(client):
 
 @pytest.mark.parametrize("has_last_status", [False, True])
 @pytest.mark.parametrize("has_old_pending", [False, True])
-def test_create_new_sync_request(client, tmp_path, has_old_pending, has_last_status):
+def test_create_new_sync_request(client, has_old_pending, has_last_status):
     sync_requests = {}
 
-    uid_1 = "11111111-0000-0000-0000-000000000000"
-    uid_2 = "00000000-0000-0000-1111-000000000000"
-    uid_3 = "000000000000-0000-0000-0000-11111111"
+    uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
+    uid_2 = uuid.UUID("00000000-0000-0000-1111-000000000000")
+    uid_3 = uuid.UUID("000000000000-0000-0000-0000-11111111")
+    uid_4 = uuid.UUID("22222222-0000-0000-0000-000000000000")
 
-    client._persist_path.joinpath(f"{uid_1}.json").write_text(json.dumps({
-        "collected_locations": [5],
-        "uploaded_locations": [],
-        "latest_message_displayed": 0,
-    }))
+    client._world_sync_errors[uid_1] = error.ServerError()
+    client._world_sync_errors[uid_4] = error.WorldDoesNotExistError()
+    client.database._all_data[uid_1] = WorldData(
+        collected_locations=(5,),
+    )
+    client.database._all_data[uid_4] = WorldData(
+        collected_locations=(55,),
+    )
     client.game_connection.connected_states = {
         MagicMock(): ConnectedGameState(
-            id=uuid.UUID(uid_1),
+            id=uid_1,
             source=MagicMock(),
             status=GameConnectionStatus.InGame,
             current_inventory={},
@@ -124,9 +129,16 @@ def test_create_new_sync_request(client, tmp_path, has_old_pending, has_last_sta
             status=GameConnectionStatus.InGame,
             current_inventory={},
             collected_indices=MagicMock(),
-        )
+        ),
+        MagicMock(): ConnectedGameState(
+            id=uid_4,
+            source=MagicMock(),
+            status=GameConnectionStatus.InGame,
+            current_inventory={},
+            collected_indices=MagicMock(),
+        ),
     }
-    sync_requests[uuid.UUID(uid_1)] = ServerWorldSync(
+    sync_requests[uid_1] = ServerWorldSync(
         status=GameConnectionStatus.InGame,
         collected_locations=(5,),
         inventory=b"\x00",
@@ -134,14 +146,11 @@ def test_create_new_sync_request(client, tmp_path, has_old_pending, has_last_sta
     )
 
     if has_old_pending:
-        data_path = tmp_path.joinpath("old-data.json")
-        data_path.write_text(json.dumps({
-            "collected_locations": [10, 15],
-            "uploaded_locations": [15],
-            "latest_message_displayed": 0,
-        }))
-        client._all_data[uuid.UUID(uid_2)] = Data(data_path)
-        sync_requests[uuid.UUID(uid_2)] = ServerWorldSync(
+        client.database._all_data[uid_2] = WorldData(
+            collected_locations=(10, 15),
+            uploaded_locations=(15,),
+        )
+        sync_requests[uid_2] = ServerWorldSync(
             status=GameConnectionStatus.Disconnected,
             collected_locations=(10,),
             inventory=None,
@@ -149,9 +158,9 @@ def test_create_new_sync_request(client, tmp_path, has_old_pending, has_last_sta
         )
 
     if has_last_status:
-        client._last_reported_status[uuid.UUID(uid_1)] = GameConnectionStatus.TitleScreen
-        client._last_reported_status[uuid.UUID(uid_3)] = GameConnectionStatus.InGame
-        sync_requests[uuid.UUID(uid_3)] = ServerWorldSync(
+        client._last_reported_status[uid_1] = GameConnectionStatus.TitleScreen
+        client._last_reported_status[uid_3] = GameConnectionStatus.InGame
+        sync_requests[uid_3] = ServerWorldSync(
             status=GameConnectionStatus.Disconnected,
             collected_locations=(),
             inventory=None,
@@ -187,23 +196,30 @@ async def test_server_sync(client, mocker: MockerFixture):
     uid_2 = uuid.UUID("00000000-0000-1111-0000-000000000000")
     uid_3 = uuid.UUID("000000000000-0000-0000-0000-11111111")
 
+    w1_session = MultiplayerSessionListEntry(
+        id=567, name="The Session", has_password=False, state=MultiplayerSessionState.IN_PROGRESS,
+        num_players=5, creator="Not You", creation_date=datetime.datetime(2019, 1, 3, 2, 50,
+                                                                          tzinfo=datetime.timezone.utc),
+        is_user_in_session=False,
+    )
+
     request = ServerSyncRequest(worlds=frozendict({
         uid_1: ServerWorldSync(
             status=GameConnectionStatus.InGame,
             collected_locations=(5,),
-            inventory=frozendict({}),
+            inventory=b"foo",
             request_details=True,
         ),
         uid_2: ServerWorldSync(
             status=GameConnectionStatus.TitleScreen,
             collected_locations=(),
-            inventory=frozendict({}),
+            inventory=b"bar",
             request_details=False,
         ),
         uid_3: ServerWorldSync(
             status=GameConnectionStatus.Disconnected,
             collected_locations=(15, 20),
-            inventory=frozendict({}),
+            inventory=None,
             request_details=False,
         ),
     }))
@@ -214,16 +230,16 @@ async def test_server_sync(client, mocker: MockerFixture):
         ServerSyncRequest(worlds=frozendict({})),  # And a last time, to make sure there were no new requests
     ])
     client.network_client.perform_world_sync = AsyncMock(side_effect=[
-        error.RequestTimeout,
+        error.RequestTimeoutError,
         ServerSyncResponse(
             worlds=frozendict({
                 uid_1: ServerWorldResponse(
                     world_name="World 1",
-                    session=MagicMock(),
+                    session=w1_session,
                 ),
             }),
             errors=frozendict({
-                uid_3: error.InvalidAction("bad thing")
+                uid_3: error.WorldDoesNotExistError()
             }),
         ),
         ServerSyncResponse(frozendict({}), frozendict({})),
@@ -240,7 +256,7 @@ async def test_server_sync(client, mocker: MockerFixture):
     mock_sleep.assert_has_awaits([
         # First request
         call(1),
-        call(5),  # perform_world_sync call timed out
+        call(15),  # perform_world_sync call timed out
 
         # Second request
         call(1),
@@ -255,22 +271,92 @@ async def test_server_sync(client, mocker: MockerFixture):
     ])
     # TODO: test that the error handling
 
-    assert json_lib.read_path(client._persist_path.joinpath(f"{uid_1}.json")) == {
-        'collected_locations': [],
-        'latest_message_displayed': 0,
-        'uploaded_locations': [5]
+    assert client.database.get_data_for(uid_1) == WorldData(
+        uploaded_locations=(5,),
+        server_data=WorldServerData(
+            world_name="World 1",
+            session_id=567,
+            session_name="The Session",
+        )
+    )
+    assert client._world_sync_errors == {
+        uid_3: error.WorldDoesNotExistError(),
     }
 
-def test_load_files_on_init(tmp_path):
-    uid = "00000000-0000-0000-2222-000000000000"
 
-    persist = tmp_path.joinpath("persist")
-    persist.mkdir()
+async def test_on_session_meta_update_not_logged_in(client: MultiworldClient):
+    uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
+    uid_2 = uuid.UUID("11111111-0000-0000-0000-111111111111")
 
-    json_lib.write_path(persist.joinpath(f"{uid}.json"), {})
+    entry = MagicMock()
+    entry.worlds = [
+        MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")
+    ]
+    client.network_client.current_user = None
+    client._world_sync_errors[uid_1] = error.WorldDoesNotExistError()
+    client._world_sync_errors[uid_2] = error.WorldNotAssociatedError()
 
     # Run
-    client = MultiworldClient(MagicMock(), MagicMock(), tmp_path.joinpath("persist"))
+    await client.on_session_meta_update(entry)
 
     # Assert
-    assert list(client._all_data.keys()) == [uuid.UUID(uid)]
+    assert client._world_sync_errors == {uid_2: error.WorldNotAssociatedError()}
+
+
+async def test_on_session_meta_update_not_in_session(client: MultiworldClient):
+    uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
+    uid_2 = uuid.UUID("11111111-0000-0000-0000-111111111111")
+
+    entry = MagicMock()
+    entry.worlds = [
+        MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")
+    ]
+    entry.users = {}
+    client._world_sync_errors[uid_1] = error.WorldNotAssociatedError()
+    client._world_sync_errors[uid_2] = error.SessionInWrongStateError(MultiplayerSessionState.IN_PROGRESS)
+
+    # Run
+    await client.on_session_meta_update(entry)
+
+    # Assert
+    assert client._world_sync_errors == {
+        uid_1: error.WorldNotAssociatedError(),
+        uid_2: error.SessionInWrongStateError(MultiplayerSessionState.IN_PROGRESS),
+    }
+
+
+async def test_on_session_meta_update_not_own_world(client: MultiworldClient):
+    uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
+    uid_2 = uuid.UUID("11111111-0000-0000-0000-111111111111")
+
+    entry = MagicMock()
+    entry.users = {
+        client.network_client.current_user.id: MultiplayerUser(
+            10, "You", False, {uid_2: MagicMock()}
+        )
+    }
+    client._world_sync_errors[uid_1] = error.WorldNotAssociatedError()
+
+    # Run
+    await client.on_session_meta_update(entry)
+
+    # Assert
+    assert client._world_sync_errors == {uid_1: error.WorldNotAssociatedError()}
+
+
+async def test_on_session_meta_wrong_state(client: MultiworldClient):
+    uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
+
+    entry = MagicMock()
+    entry.worlds = [
+        MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")
+    ]
+    entry.users = {}
+    entry.state = MultiplayerSessionState.IN_PROGRESS
+    client._world_sync_errors[uid_1] = error.SessionInWrongStateError(MultiplayerSessionState.IN_PROGRESS)
+
+    # Run
+    await client.on_session_meta_update(entry)
+
+    # Assert
+    assert client._world_sync_errors == {}

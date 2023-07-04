@@ -68,13 +68,15 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     network_client: QtNetworkClient = app.network_client
 
+    from randovania.gui.multiworld_client import MultiworldClient
+    multiworld_client: MultiworldClient = app.multiworld_client
+
     async def attempt_login():
         from randovania.network_client.network_client import UnableToConnect
         from randovania.gui.lib import async_dialog
 
         try:
-            from randovania.gui import main_online_interaction
-            if not await main_online_interaction.ensure_logged_in(None, network_client):
+            if not await network_client.ensure_logged_in(None):
                 await async_dialog.warning(None, "Login required",
                                            "Logging in is required to use dev builds.")
                 return False
@@ -105,7 +107,7 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
 
     from randovania.gui.main_window import MainWindow
     logger.info("Preparing main window...")
-    main_window = MainWindow(options, preset_manager, network_client, is_preview)
+    main_window = MainWindow(options, preset_manager, network_client, multiworld_client, is_preview)
     app.main_window = main_window
 
     logger.info("Displaying main window")
@@ -143,62 +145,6 @@ async def show_game_details(app: QtWidgets.QApplication, options, file_path: Pat
     app.details_window = details_window
 
 
-async def show_game_session(app: QtWidgets.QApplication, options, session_id: int):
-    from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
-    from randovania.interface_common.preset_manager import PresetManager
-
-    network_client: QtNetworkClient = app.network_client
-
-    sessions = [
-        session
-        for session in await network_client.get_multiplayer_session_list(False)
-        if session.id == session_id
-    ]
-    if not sessions:
-        app.quit()
-        return
-
-    new_session = await network_client.join_multiplayer_session(sessions[0], None)
-    # preset_for = preset_manager.default_preset_for_game
-
-    # games = [uuid.uuid4(), uuid.uuid4(), uuid.uuid4(), uuid.uuid4()]
-    # GameSessionEntry(
-    #     id=1,
-    #     name="Session",
-    #     games=[
-    #         SessionGame(games[0], "DZ_1", ),
-    #         SessionGame(games[1], "DZ_2", preset_for(RandovaniaGame.METROID_DREAD)),
-    #         SessionGame(games[2], "Uncle Reggie", preset_for(RandovaniaGame.METROID_PRIME)),
-    #         SessionGame(games[3], "Fancy", preset_for(RandovaniaGame.SUPER_METROID)),
-    #     ],
-    #     players=[
-    #         PlayerSessionEntry(1, "Darkszero", True, {
-    #             games[0]: "In-Game",
-    #             games[1]: "Title Screen",
-    #         }),
-    #         PlayerSessionEntry(2, "Uncle Reggie", False, {
-    #             games[2]: "In-Game",
-    #         })
-    #     ],
-    #     game_details=None,
-    #     state=GameSessionState.SETUP,
-    #     generation_in_progress=None,
-    #     allowed_games=[],
-    # )
-
-    preset_manager = PresetManager(options.presets_path)
-
-    app.game_session_window = await MultiplayerSessionWindow.create_and_update(
-        network_client,
-        new_session,
-        preset_manager,
-        None,
-        options
-    )
-    app.game_session_window.show()
-
-
 async def display_window_for(app: QtWidgets.QApplication, options: Options, command: str, args):
     if command == "tracker":
         await show_tracker(app, options)
@@ -208,13 +154,13 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
         show_data_editor(app, options, RandovaniaGame(args.game))
     elif command == "game":
         await show_game_details(app, options, args.rdvgame)
-    elif command == "session":
-        await show_game_session(app, options, args.session_id)
     else:
         raise RuntimeError(f"Unknown command: {command}")
 
+
 def abs_path_for_args(path: str):
     return Path(path).resolve()
+
 
 def add_options_cli_args(parser: ArgumentParser):
     parser.add_argument(
@@ -295,14 +241,19 @@ async def qt_main(app: QtWidgets.QApplication, args):
         logging.info("Logging as %s", args.login_as_guest)
         await app.network_client.login_as_guest(args.login_as_guest)
 
+    logging.info("Creating the world database")
+    from randovania.interface_common.world_database import WorldDatabase
+    app.world_database = WorldDatabase(app.network_client.server_data_path.joinpath("multiworld_games"))
+    await app.world_database.load_existing_data()
+
     logging.info("Creating the global game connection")
     from randovania.game_connection.game_connection import GameConnection
-    app.game_connection = GameConnection(options)
+    app.game_connection = GameConnection(options, app.world_database)
     
     logging.info("Creating the global multiworld client")
     from randovania.gui.multiworld_client import MultiworldClient
     app.multiworld_client = MultiworldClient(app.network_client, app.game_connection,
-                                             options.data_dir.joinpath("multiworld_games"))
+                                             app.world_database)
     await app.multiworld_client.start()
 
     logging.info("Configuring qasync...")
@@ -377,10 +328,6 @@ def create_subparsers(sub_parsers):
     game_parser = gui_parsers.add_parser("game", help="Opens an rdvgame")
     game_parser.add_argument("rdvgame", type=Path, help="Path ")
     game_parser.set_defaults(func=run)
-
-    session_parser = gui_parsers.add_parser("session", help="Connects to a game session")
-    session_parser.add_argument("session_id", type=int, help="Id of the session")
-    session_parser.set_defaults(func=run)
 
     def check_command(args):
         if args.command is None:

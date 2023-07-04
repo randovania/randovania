@@ -17,6 +17,12 @@ from randovania.lib import json_lib
 
 class InvalidPreset(Exception):
     def __init__(self, original_exception: Exception):
+        if isinstance(original_exception, KeyError):
+            msg = f"Missing key {original_exception}"
+        else:
+            msg = original_exception
+
+        super().__init__(msg)
         self.original_exception = original_exception
 
 
@@ -135,6 +141,10 @@ class VersionedPreset:
         else:
             assert self.data is not None
             return self.data
+
+    @property
+    def as_str(self) -> str:
+        return json.dumps(self.as_json)
 
     def recover_old_base_uuid(self) -> UUID | None:
         """Returns the base preset uuid that existed in old versions.

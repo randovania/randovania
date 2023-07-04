@@ -1,4 +1,5 @@
 from __future__ import annotations
+import json
 
 import typing
 from dataclasses import dataclass
@@ -49,7 +50,7 @@ class GameLayout:
     """Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
     get_ingame_hash: Callable[[bytes], str | None] = _get_none
-    """(Optional) Takes a layout hash bytes and produces a string representing how the game 
+    """(Optional) Takes a layout hash bytes and produces a string representing how the game
     will represent the hash in-game. Only override if the game cannot display arbitrary text on the title screen."""
 
 
@@ -191,6 +192,14 @@ class RandovaniaGame(BitPackEnum, Enum):
     @property
     def data_path(self) -> Path:
         return randovania.get_file_path().joinpath("games", self.value)
+
+    @cached_property
+    def hash_words(self) -> list[str] | None:
+        hash_file = self.data_path.joinpath("assets", "hash_words.json")
+        if hash_file.exists():
+            with hash_file.open() as words:
+                return json.load(words)
+        return None
 
     @property
     def short_name(self) -> str:

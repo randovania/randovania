@@ -1,3 +1,4 @@
+import dataclasses
 import functools
 import uuid
 
@@ -5,14 +6,17 @@ from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
+from randovania.gui import game_specific_gui
 from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerWorld
+from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerWorld, \
+    MAX_WORLD_NAME_LENGTH, WORLD_NAME_RE
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
@@ -34,6 +38,7 @@ def connect_to(action: QtGui.QAction, target, *args):
 
 class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     GameExportRequested = Signal(uuid.UUID, dict)
+    TrackWorldRequested = Signal(uuid.UUID, int)
 
     _session: MultiplayerSessionEntry
 
@@ -89,17 +94,25 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         await self._session_api.unclaim_world(world_uid, owner)
 
     @asyncSlot()
-    async def _world_rename(self, world_uid: uuid.UUID):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setTextValue(self._session.get_world(world_uid).name)
-        dialog.setWindowTitle("Enter world name")
-        dialog.setLabelText("Select a new name for the world:")
-        if await async_dialog.execute_dialog(dialog) != QtWidgets.QDialog.DialogCode.Accepted:
-            return
+    async def _kick_player(self, kick_id: int):
+        await self._session_api.kick_player(kick_id)
 
-        new_name = dialog.textValue().strip()
-        if new_name:
+    @asyncSlot()
+    async def _switch_admin(self, new_admin_id: int):
+        await self._session_api.switch_admin(new_admin_id)
+
+    @asyncSlot()
+    async def _world_rename(self, world_uid: uuid.UUID):
+        new_name = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter world name",
+            description="Select a new name for the world:",
+            initial_value=self._session.get_world(world_uid).name,
+            is_modal=True,
+            max_length=MAX_WORLD_NAME_LENGTH,
+            check_re=WORLD_NAME_RE,
+        )
+        if new_name is not None:
             await self._session_api.rename_world(world_uid, new_name)
 
     @asyncSlot()
@@ -208,6 +221,23 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         # Temp
         await self._session_api.create_new_world(new_name, preset, user_id)
 
+    @asyncSlot()
+    async def _customize_cosmetic(self, world_uid: uuid.UUID):
+        preset = self._get_preset(world_uid)
+        per_game_options = self._options.options_for_game(preset.game)
+
+        dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)
+        result = await async_dialog.execute_dialog(dialog)
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
+            with self._options as options:
+                options.set_options_for_game(preset.game, dataclasses.replace(per_game_options,
+                                                                              cosmetic_patches=dialog.cosmetic_patches))
+
+    #
+
+    def _watch_inventory(self, world_uid: uuid.UUID, user_id: int):
+        self.TrackWorldRequested.emit(world_uid, user_id)
+
     #
 
     def is_admin(self) -> bool:
@@ -228,7 +258,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         def _add_world(world_details: MultiplayerWorld, parent: QtWidgets.QTreeWidgetItem,
                        owner: int | None, user_world_state: str):
-            
+
             preset = VersionedPreset.from_str(world_details.preset_raw)
             world_item = QtWidgets.QTreeWidgetItem(parent)
             # game_item.setFlags(game_item.flags() | Qt.ItemFlag.ItemIsEditable)
@@ -264,6 +294,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 export_action.setEnabled(has_layout)
                 connect_to(export_action, self._world_export, world_details.id)
 
+                connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic,
+                           world_details.id)
+
             if owner is None:
                 world_menu.addSeparator()
                 connect_to(world_menu.addAction("Claim for yourself"),
@@ -288,6 +321,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 delete_action.setEnabled(not has_layout)
                 connect_to(delete_action, self._world_delete, world_details.id)
 
+            if owner is not None:
+                world_menu.addSeparator()
+                connect_to(world_menu.addAction("Watch inventory"), self._watch_inventory, world_details.id, owner)
+
             world_tool.setMenu(world_menu)
 
             self.setItemWidget(world_item, 3, world_tool)
@@ -306,8 +343,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             if player.id != self.your_id and self.is_admin():
                 tool = make_tool("Administrate")
                 menu = QtWidgets.QMenu(tool)
-                menu.addAction("Kick player")
-                menu.addAction("Demote from Admin" if player.admin else "Promote to Admin")
+                kick_action = menu.addAction("Kick player")
+                connect_to(kick_action, self._kick_player, player.id)
+                switch_admin = menu.addAction("Demote from Admin" if player.admin else "Promote to Admin")
+                connect_to(switch_admin, self._switch_admin, player.id)
                 tool.setMenu(menu)
                 self.setItemWidget(item, 3, tool)
 

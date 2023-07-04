@@ -7,11 +7,11 @@ from pathlib import Path
 from typing import TypeVar, Callable, Any
 
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
-from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common import update_checker, persisted_options
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import migration_lib
+
 
 T = TypeVar("T")
 
@@ -129,7 +129,8 @@ _SERIALIZER_FOR_FIELD = {
     "experimental_settings": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "hidden_preset_uuids": Serializer(serialize_uuid_set, decode_uuid_set),
-    "game_backend": Serializer(lambda it: it.value, ConnectorBuilderChoice),
+    "tracker_default_game": Serializer(lambda it: it.value if it is not None else None,
+                                       lambda it: RandovaniaGame(it) if it is not None else None),
     "parent_for_presets": Serializer(serialize_uuid_dict, decode_uuid_dict),
     "connector_builders": Serializer(lambda obj: [it.as_json for it in obj],
                                      lambda obj: [ConnectorBuilderOption.from_json(it) for it in obj]),
@@ -192,7 +193,7 @@ class Options:
     _displayed_alerts: set[InfoAlert] | None = None
     _hidden_preset_uuids: set[uuid.UUID] | None = None
     _parent_for_presets: dict[uuid.UUID, uuid.UUID] | None = None
-    _game_backend: ConnectorBuilderChoice | None = None
+    _tracker_default_game: RandovaniaGame | None = None
     _connector_builders: list[ConnectorBuilderOption] | None = None
 
     def __init__(self, data_dir: Path, user_dir: Path | None = None):
@@ -403,12 +404,12 @@ class Options:
         self._edit_field("experimental_settings", value)
 
     @property
-    def game_backend(self) -> ConnectorBuilderChoice:
-        return _return_with_default(self._game_backend, lambda: ConnectorBuilderChoice.DOLPHIN)
+    def tracker_default_game(self) -> RandovaniaGame | None:
+        return self._tracker_default_game
 
-    @game_backend.setter
-    def game_backend(self, value: ConnectorBuilderChoice):
-        self._edit_field("game_backend", value)
+    @tracker_default_game.setter
+    def tracker_default_game(self, value: RandovaniaGame | None):
+        self._edit_field("tracker_default_game", value)
 
     def selected_tracker_for(self, game: RandovaniaGame) -> str:
         return getattr(self, f"selected_tracker_{game.value}")

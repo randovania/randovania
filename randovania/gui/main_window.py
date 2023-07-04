@@ -16,17 +16,13 @@ from qasync import asyncSlot
 
 import randovania
 from randovania import VERSION, get_readme_section
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.common_qt_lib import open_directory_in_explorer
-from randovania.layout.lib.trick_lib import used_tricks, difficulties_for_trick
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
 from randovania.interface_common.options import Options
-from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import enum_lib, json_lib
@@ -36,7 +32,12 @@ if typing.TYPE_CHECKING:
     from randovania.layout.permalink import Permalink
     from randovania.layout.preset import Preset
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.gui.widgets.game_connection_window import GameConnectionWindow
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.multiworld_client import MultiworldClient
+    from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
+    from randovania.interface_common.preset_manager import PresetManager
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -50,6 +51,11 @@ def _t(key: str, disambiguation: str | None = None):
     return QtCore.QCoreApplication.translate("MainWindow", key, disambiguation)
 
 
+class LayoutWithPlayers(typing.NamedTuple):
+    layout: LayoutDescription
+    players: list[str] | None
+
+
 class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
@@ -60,6 +66,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     _data_visualizer: QtWidgets.QWidget | None = None
     _map_tracker: QtWidgets.QWidget
     _preset_manager: PresetManager
+    _multiworld_client: MultiworldClient
     _play_game_logos: dict[RandovaniaGame, QtWidgets.QLabel]
     about_window: QtWidgets.QMainWindow | None = None
     dependencies_window: QtWidgets.QMainWindow | None = None
@@ -68,8 +75,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     changelog_window: QtWidgets.QMainWindow | None = None
     help_window: QtWidgets.QMainWindow | None = None
     game_connection_window: GameConnectionWindow | None = None
+    opened_session_windows: dict[int, MultiplayerSessionWindow]
 
-    GameDetailsSignal = Signal(LayoutDescription)
+    GameDetailsSignal = Signal(LayoutWithPlayers)
     RequestOpenLayoutSignal = Signal(Path)
     InitPostShowSignal = Signal()
 
@@ -82,6 +90,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         return self._preset_manager
 
     @property
+    def multiworld_client(self):
+        return self._multiworld_client
+
+    @property
     def main_window(self) -> QtWidgets.QMainWindow:
         return self
 
@@ -90,7 +102,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         return self._is_preview_mode
 
     def __init__(self, options: Options, preset_manager: PresetManager,
-                 network_client, preview: bool):
+                 network_client: QtNetworkClient, multiworld_client: MultiworldClient, preview: bool):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle(f"Randovania {VERSION}")
@@ -103,7 +115,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         self._preset_manager = preset_manager
         self.network_client = network_client
+        self._multiworld_client = multiworld_client
         self._play_game_logos = {}
+        self.opened_session_windows = {}
 
         if preview:
             debug.set_level(2)
@@ -164,7 +178,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                     label.setGraphicsEffect(label.new_effect)
                 else:
                     label.setGraphicsEffect(None)
-                
+
             logo.entered.connect(partial(highlight_logo, logo, True))
             logo.left.connect(partial(highlight_logo, logo, False))
             self.play_flow_layout.addWidget(logo)
@@ -380,13 +394,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if result == QtWidgets.QDialog.DialogCode.Accepted:
             await self.generate_seed_from_permalink(dialog.permalink)
 
-    def open_game_details(self, layout: LayoutDescription):
-        self.GameDetailsSignal.emit(layout)
+    def open_game_details(self, layout: LayoutDescription, players: list[str] | None = None):
+        self.GameDetailsSignal.emit(LayoutWithPlayers(layout, players))
 
-    def _open_game_details(self, layout: LayoutDescription):
+    def _open_game_details(self, layout: LayoutWithPlayers):
         from randovania.gui.game_details.game_details_window import GameDetailsWindow
         details_window = GameDetailsWindow(self, self._options)
-        details_window.update_layout_description(layout)
+        details_window.update_layout_description(layout.layout, layout.players)
         details_window.show()
         self.track_window(details_window)
 
@@ -449,7 +463,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def open_game_connection_window(self):
         from randovania.gui.widgets.game_connection_window import GameConnectionWindow
         if self.game_connection_window is None:
-            self.game_connection_window = GameConnectionWindow(common_qt_lib.get_game_connection())
+            self.game_connection_window = GameConnectionWindow(self, self.network_client,
+                                                               self._options, common_qt_lib.get_game_connection())
 
         self.game_connection_window.show()
         self.game_connection_window.raise_()
@@ -540,8 +555,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _setup_difficulties_menu(self, game: RandovaniaGame, menu: QtWidgets.QMenu):
         from randovania.game_description import default_database
+        from randovania.layout.lib import trick_lib
+
         game = default_database.game_description_for(game)
-        tricks_in_use = used_tricks(game)
+        tricks_in_use = trick_lib.used_tricks(game)
 
         menu.clear()
         for trick in sorted(game.resource_database.trick, key=lambda _trick: _trick.long_name):
@@ -552,7 +569,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             trick_menu.setTitle(_t(trick.long_name))
             menu.addAction(trick_menu.menuAction())
 
-            used_difficulties = difficulties_for_trick(game, trick)
+            used_difficulties = trick_lib.difficulties_for_trick(game, trick)
             for trick_level in enum_lib.iterate_enum(LayoutTrickLevel):
                 if trick_level in used_difficulties:
                     difficulty_action = QtGui.QAction(self)
@@ -619,7 +636,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def _on_menu_action_previously_generated_games(self):
         path = self._options.game_history_path
         try:
-            open_directory_in_explorer(path)
+            common_qt_lib.open_directory_in_explorer(path)
 
         except OSError:
             box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.Information, "Game History",
@@ -631,7 +648,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def _on_menu_action_log_files_directory(self):
         path = self._options.logs_path
         try:
-            open_directory_in_explorer(path)
+            common_qt_lib.open_directory_in_explorer(path)
 
         except OSError:
             box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.Information, "Logs",
@@ -673,7 +690,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def _on_menu_action_changelog(self):
         if self.all_change_logs is None:
             return
-        
+
         if self.changelog_window is None:
             from randovania.gui.widgets.changelog_widget import ChangeLogWidget
             self.changelog_tab = ChangeLogWidget(self.all_change_logs)
@@ -703,3 +720,20 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         tab = getattr(self.help_window.centralWidget(), tab_name, None)
         if tab is not None:
             self.help_window.centralWidget().setCurrentWidget(tab)
+
+    async def ensure_multiplayer_session_window(self, network_client: QtNetworkClient,
+                                                session_id: int, options: Options
+                                                ):
+        session_window = self.opened_session_windows.get(session_id, None)
+        if session_window is not None and not session_window.has_closed:
+            session_window.activateWindow()
+            return
+
+        from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
+        session_window = await MultiplayerSessionWindow.create_and_update(
+            network_client, session_id,
+            self, options,
+        )
+        if session_window is not None:
+            self.opened_session_windows[session_id] = session_window
+            session_window.show()

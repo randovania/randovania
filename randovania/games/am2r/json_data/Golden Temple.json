@@ -70,10 +70,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Mumbo Manor": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GTVisited",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Guardian",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Dock to Torture Room": {
@@ -369,40 +388,48 @@
                             }
                         },
                         "Event - Guardian": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "events",
-                                            "name": "GTVisited",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Energy requirements",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
+                                                        "type": "events",
+                                                        "name": "GTVisited",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 199,
-                                                        "negate": false
+                                                        "comment": "Energy requirements",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 130,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2091,6 +2118,41 @@
                     "event_name": "Alpha2",
                     "connections": {
                         "Dock to Golden Temple Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 510.12,
+                        "y": 143.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_351"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 351,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5961,6 +6023,41 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1362.93,
+                        "y": 195.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_352"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 352,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -6034,6 +6131,41 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 143.81,
+                        "y": 164.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_353"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 353,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -6102,6 +6234,41 @@
                     "event_name": "Alpha4",
                     "connections": {
                         "Dock to Breeding Grounds Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 523.6,
+                        "y": 148.99,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_354"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 354,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
                             "type": "and",
                             "data": {
                                 "comment": null,

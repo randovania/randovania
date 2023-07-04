@@ -113,7 +113,7 @@ def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = Fa
         },
         'handlers': handlers,
         'loggers': {
-            'randovania.network_client.network_client': {
+            'NetworkClient': {
                 'level': 'DEBUG',
             },
             'randovania.game_connection.connection_backend': {

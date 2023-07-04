@@ -11,12 +11,14 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
+    from randovania.games.am2r.gui.preset_settings.am2r_goal_tab import PresetAM2RGoal
     from randovania.games.am2r.gui.preset_settings.am2r_patches_tab import PresetAM2RPatches
 
     return [
         PresetTrickLevel,
         PresetGeneration,
         PresetLocationPool,
+        PresetAM2RGoal,
         MetroidPresetItemPool,
         PresetPatcherEnergy,
         PresetMetroidStartingArea,

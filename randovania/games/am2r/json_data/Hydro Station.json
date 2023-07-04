@@ -127,6 +127,41 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 316.4,
+                        "y": 194.16,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_355"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 355,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -816,15 +851,6 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageBoost",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
                                                         "type": "items",
                                                         "name": "Hi-Jump",
                                                         "amount": 1,
@@ -954,15 +980,6 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power Beam",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": "Shinespark from room on the right",
@@ -993,6 +1010,15 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -1000,7 +1026,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up via Spider Ball",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1246,6 +1272,41 @@
                     "event_name": "Alpha7",
                     "connections": {
                         "Dock to Hydro Station Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 77.3,
+                        "y": 165.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_356"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 356,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2069,7 +2130,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -2078,7 +2139,42 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Damage",
-                                                        "amount": 199,
+                                                        "amount": 130,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Fusion Mode requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "FusionMode",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Super Missiles",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -2344,6 +2440,41 @@
                     "event_name": "Alpha8",
                     "connections": {
                         "Dock to Hydro Station Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 556.86,
+                        "y": 193.82,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_357"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 357,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3630,8 +3761,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 777.2,
-                        "y": 46.04,
+                        "x": 615.5075211730502,
+                        "y": 110.8987485779295,
                         "z": 0.0
                     },
                     "description": "",
@@ -3643,6 +3774,13 @@
                     "event_name": "Alpha9",
                     "connections": {
                         "Dock to Water Turbine Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Alpha)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3671,6 +3809,34 @@
                     "location_category": "minor",
                     "connections": {
                         "Dock to Water Turbine Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 775.2850461382885,
+                        "y": 42.133737833396566,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_358"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 358,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5808,21 +5974,55 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "DamageBoost",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "DamageBoost",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "damage",
+                                                                                                        "name": "Damage",
+                                                                                                        "amount": 7,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "or",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Walljump",
-                                                                                            "amount": 4,
-                                                                                            "negate": false
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 4,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Knowledge",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -5977,12 +6177,29 @@
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "type": "resource",
+                                                                                                    "type": "and",
                                                                                                     "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "DamageBoost",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "DamageBoost",
+                                                                                                                    "amount": 2,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "damage",
+                                                                                                                    "name": "Damage",
+                                                                                                                    "amount": 14,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
                                                                                                     }
                                                                                                 }
                                                                                             ]
@@ -6023,12 +6240,29 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "DamageBoost",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "DamageBoost",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "damage",
+                                                                                                        "name": "Damage",
+                                                                                                        "amount": 7,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     },
                                                                                     {
@@ -6069,12 +6303,29 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "DamageBoost",
-                                                                                "amount": 2,
-                                                                                "negate": false
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "DamageBoost",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "damage",
+                                                                                            "name": "Damage",
+                                                                                            "amount": 14,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
@@ -6865,6 +7116,41 @@
                                     }
                                 ]
                             }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1136.19,
+                        "y": 206.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_359"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 359,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -7270,6 +7556,41 @@
                                     }
                                 ]
                             }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 226.96,
+                        "y": 506.63,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_361"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 361,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -7355,17 +7676,17 @@
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "template",
+                                        "data": "Defeat Gamma"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Alpha4",
+                                            "name": "Alpha12",
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Gamma"
                                     }
                                 ]
                             }
@@ -7389,6 +7710,41 @@
                     "event_name": "Gamma1",
                     "connections": {
                         "Dock to Breeding Grounds Alpha Nest South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 253.93,
+                        "y": 180.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_373"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 373,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Gamma": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7469,6 +7825,10 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Space Jump Wall"
                                                 }
                                             ]
                                         }
@@ -7495,18 +7855,34 @@
                     "event_name": "Alpha12",
                     "connections": {
                         "Dock to Breeding Grounds Gamma Nest": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
+                                                    "data": "Hijump Wall"
+                                                },
+                                                {
+                                                    "type": "template",
                                                     "data": "Go Through Vines"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Power Grip Wall"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -7522,9 +7898,44 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Hijump Wall"
+                                        "data": "Space Jump Wall"
                                     }
                                 ]
+                            }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1025.62,
+                        "y": 444.95,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_360"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 360,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

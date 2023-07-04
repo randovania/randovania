@@ -5,9 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [?.?.0] - 2023-06-??
+## [6.0.1] - 2023-07-??
 
-- WIP: New multiworld in progress (TODO: proper message when done)
+- Fixed: Importing permalinks and spoilers in multiworld no longer fails.
+- Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
+
+## [6.0.0] - 2023-07-03
+
+- **Major** - Multiworld support has been significantly changed! New features include:
+  *  Sessions now have Worlds instead of rows with users, and users can be associated with any number of Worlds.
+     * This means it's now possible to play a Multiworld entirely solo.
+  *  You can connect to one Dolphin and any number of Nintendont at the same time.
+  *  Multiple sessions can be opened at the same time.
+  *  A session window is no longer required to be kept open. As long as Randovania is connected to a game, the server communication works.
 - Added: It's now possible to drag presets directly into the root of the presets.
 - Added: The order you place presets when drag and dropping is now saved.
 - Added: New command line arguments `--local-data` and `--user-data` to allow configuring where Randovania saves its data.
@@ -15,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Interface to customize preset description.
 - Added: It's now possible to save rdvgame files for race games. This is not available for multiworld.
 - Added: When editing a Pickup Node, there's now a button to find an unused pickup index.
+- Added: When viewing the spoiler log in a Multiworld session, it will now display the names for each world rather than "Player 1", "Player 2", etc.
+- Changed: Discord login is now performed via your browser, instead of the Discord client.
 - Changed: Door Lock mode Two-way is now named Doors. The functionality is unchanged.
 - Changed: Improved preset descriptions, making them significantly simpler.
 - Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please select `Advanced > Show Experimental Settings`.
@@ -23,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: For Multiworld, it's now preferred to have an additional pickups than placing it in another player's game, when there's no locations left in your game.
 - Changed: Randovania now internally uses the term `Region` for what used to be called a `World`. This is mostly an internal change.
 - Changed: Connecting to Dolphin is now hidden on macOS, as it never was supported.
+- Changed: Door Lock rando generation is now up to 50% faster.
 - Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 - Fixed: The resolver no longer allows events as additional requirements. This fixes a problem that could lead to an event locking itself.
 - Fixed: The `database render-region-graph` command now works properly.
@@ -38,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Door Lock Randomizer can randomize doors to be weak to Ice Missile, Storm Missile, Diffusion Beam, Bombs, Cross Bombs, Power Bombs.
 - Added: New option under "Game Modifications" to choose how inconsistencies in Raven Beak's damage resistance are handled.
 - Added: Auto tracker is now supported via a new game connection choice.
+- Added: Exporting now checks if the RomFS folder has some required files.
 - Changed: The doors in Itorash are now excluded from being shuffled in Door Lock Randomizer.
 
 #### Patcher Changes
@@ -65,6 +79,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Allow using Shinesparks in Gravity Suit Tower by storing speed in the upper part of Gravity Suit Room, also when Door Lock rando is enabled.
 - Added: Pseudo-Wave Beam to break the blob in Ferenia Wave Beam Tutorial, from the right.
 - Added: Use Spider Magnet with Grapple Beam in Ghavoran Spider Magnet Elevator.
+- Added: Use Speed Booster to get past the pool of water in Dairon Freezer before turning on the power.
+- Added: Various trick alternatives to get past the pool of water in Dairon Freezer with Bomb Jumps.
+- Added: Water Bomb Jump in Burenia Underneath Drogyga to get up to the left ledge with Normal Bomb, rated as Intermediate.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
@@ -73,6 +90,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Using Wall Jump Advanced to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
 - Changed: The Upper Tunnel from Burenia Teleport to Ghavoran to Main Hub Tower Middle has been converted from a Morph Ball Tunnel to a Slide Tunnel. In order to use this tunnel with Slide, Gravity Suit is also required.
 - Changed: In Burenia Teleport to Ghavoran, using Power Bombs to get back up from Early Gravity Speedboost Room now requires 2 ammo units of Power Bomb. The purpose is to account for using one unit on the way down in the first place.
+- Changed: Water Bomb Jump in Artaria First Tutorial, after adding the water has been changed to Infinite Bomb Jump.
+- Changed: Infinite Bomb Jump in Artaria Screw Attack Room to jump out of the water under the Recharge Station has been changed to Water Bomb Jump.
+- Changed: Water Bomb Jump in Burenia Underneath Drogyga to get the pickup is now Beginner with Cross Bombs.
+- Changed: Water Bomb Jump in Burenia Underneath Drogyga to get up to the left ledge with Cross Bomb is now Beginner.
+- Changed: Bomb Jumping to the upper part of Ghavoran Map Station Access now requires Water Bomb Jump Intermediate with Normal Bomb and Beginner with Cross Bomb. This was previously trivial with both of those.
+- Changed: Bomb Jumping to the upper part of Ghavoran EMMI Zone Exit Southeast with Cross Bombs is changed from trivial to Water Bomb Jump Intermediate.
+- Changed: Bomb Jumping to the upper part of Ghavoran EMMI Zone Exit Southeast with Normal Bombs is changed from Infinite Bomb Jump Intermediate to both Water Bomb Jump Intermediate and Diagonal Bomb Jump Intermediate.
 - Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
 - Fixed: Burenia Hub to Dairon Transport Blob from Below giving the wrong event resource.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
@@ -85,13 +109,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed: One-Way door lock randomizer has been removed. This has actually been the case since 5.3.0!
 - Fixed: The "Unlock Save Station doors" option should now correctly unlock them.
 
+#### Logic Database
+
+#### Chozo Ruins
+
+- Changed: Reorganized Morph Ball pickup in Ruined Shrine to better fit database good practices.
 
 ### Metroid Prime 2: Echoes
 
 - **Major** - Added: Door Lock randomizer has been added. Note that this feature requires enabling the new patcher.
 - Added: New random elevators mode: Shuffle Regions. In this mode, we keep the game world consistent by shuffling the regions around Temple Grounds, and then changing the elevators to match. See [this map](randovania/data/gui_assets/echoes_elevator_map.png) for reference.
 - Added: When the new patcher is enabled, Security Station B starts in the post-Dark Samus appearance. This change is supported by logic.
-- Added: When both the new patcher and Speed Up Credits are enabled, part of the end game cutscenes are skipped. 
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
 - Changed: When the new patcher is enabled, some cosmetic effects are removed from Torvus Temple in an attempt to make it crash less.
 - Changed: For Multiworld ISOs, the game name now mentions the session name and world name.

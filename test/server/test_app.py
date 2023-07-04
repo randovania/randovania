@@ -1,5 +1,11 @@
+import logging
+from unittest.mock import MagicMock
+
+import pytest
+
 import randovania
 import randovania.server.client_check
+from randovania.network_common import error
 from randovania.server import app
 
 
@@ -40,3 +46,28 @@ def test_create_app(mocker, tmpdir):
 
     encrpyted_value = b'gAAAAABfSh6fY4FOiqfGWMHXdE9A4uNVEu5wfn8BAsgP8EZ0-f-lqbYDqYzdiblhT5xhk-wMmG8sOLgKNN-dUaiV7n6JCydn7Q=='
     assert result.sio.fernet_encrypt.decrypt(encrpyted_value) == b'banana'
+
+
+@pytest.mark.parametrize("has_user", [False, True])
+def test_custom_formatter(flask_app, has_user):
+    sio = MagicMock()
+    if has_user:
+        expected_name = "TheName"
+        sio.get_current_user.return_value.name = expected_name
+    else:
+        expected_name = None
+        sio.get_current_user.side_effect = error.NotLoggedInError()
+
+    flask_app.sio = sio
+    record = logging.LogRecord("Name", logging.DEBUG, "path", 10, "the msg",
+                               (), None)
+
+    x = app.ServerLoggingFormatter('%(context)s [%(who)s] %(levelname)s in %(where)s: %(message)s')
+
+    with flask_app.test_request_context() as context:
+        context.request.sid = "THE_SID"
+        context.request.message = "TheMessage"
+
+        result = x.format(record)
+
+    assert result == f'SocketIO [{expected_name}] DEBUG in TheMessage: the msg'

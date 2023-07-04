@@ -184,7 +184,7 @@ Extra - map_name: rm_a3h04
               Infinite Bomb Jumping (Advanced) and Can Use Bombs
           All of the following:
               # Walljump up
-              Damage Boost (Advanced) and Walljump (Advanced)
+              Damage Boost (Intermediate) and Walljump (Advanced) and Normal Damage ≥ 10
   > Above torizo
       Space Jump Wall
 
@@ -236,7 +236,7 @@ Extra - map_name: rm_a3h05
   * Open Passage to Exterior Gamma Nest/Dock to Exterior Gamma Nest Access
   > Dock to Industrial Complex Exterior
       Any of the following:
-          Hi-Jump Boots or Space Jump or Speed Booster
+          Hi-Jump Boots or Space Jump or Speed Booster or Can Use Spider Ball
           All of the following:
               # WJ to right and glide over
               Morph Glide (Intermediate) and Short Charge (Intermediate)
@@ -274,6 +274,15 @@ Extra - map_name: rm_a3h06
   * Layers: default
   * Event Area 3 - Exterior Gamma
   > Top
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 374; Category? Minor
+  * Extra - object_name: oItemDNA_374
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -378,8 +387,22 @@ Extra - map_name: rm_a3a01
   * Extra - object_name: oItemSpaceJump
   > Event - Torizo
       All of the following:
-          Space Jump or Combat (Advanced)
-          Combat (Intermediate) or Normal Damage ≥ 399
+          Any of the following:
+              # Item requirements
+              Space Jump or Combat (Expert)
+          Any of the following:
+              # Energy requirements
+              All of the following:
+                  # With space jump
+                  Space Jump
+                  Combat (Advanced) or Normal Damage ≥ 260
+              All of the following:
+                  # Without space jump
+                  No Space Jump
+                  Combat (Hypermode) or Normal Damage ≥ 399
+          Any of the following:
+              # Fusion Mode requirements
+              Missiles or Super Missiles or Disabled Fusion Mode
 
 > Event - Torizo; Heals? False
   * Layers: default
@@ -430,7 +453,7 @@ Extra - map_name: rm_a3a02
               Morph Ball and Mid-Air Morph (Beginner)
           Any of the following:
               # Destroy Sand
-              Missiles or Super Missiles or Can Use Any Bombs
+              Missiles or Super Missiles or Wave Beam or Can Use Any Bombs
   > Dock to Upper Factory Intersection
       Trivial
 
@@ -589,12 +612,21 @@ Extra - map_name: rm_a3a07
   * Event Area 3 - Interior Shaft Gamma
   > Dock to Upper Factory Autoad Fork
       Trivial
+  > Pickup (Gamma)
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 204; Category? Minor
   * Extra - object_name: oItemM_204
   > Dock to Upper Factory Autoad Fork
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 375; Category? Minor
+  * Extra - object_name: oItemDNA_375
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -728,7 +760,8 @@ Extra - map_name: rm_a3a13
               Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
           Any of the following:
               # Walljump
-              Damage Boost (Intermediate) or Walljump (Advanced)
+              Walljump (Advanced)
+              Damage Boost (Intermediate) and Lava ≥ 10
 
 > Dock to Upper Factory Alpha Nest Access; Heals? False
   * Layers: default
@@ -792,6 +825,8 @@ Extra - map_name: rm_a3a15
   * Event Area 3 - Interior Alpha
   > Outside Of Tunnel
       Trivial
+  > Pickup (Alpha)
+      Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -808,6 +843,13 @@ Extra - map_name: rm_a3a15
       Defeat Alpha
   > Pickup (Energy Tank)
       Morph Ball and Power Grip Wall
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 362; Category? Minor
+  * Extra - object_name: oItemDNA_362
+  > Event - Alpha
+      Trivial
 
 ----------------
 Lower Factory Entrance
@@ -1002,26 +1044,33 @@ Extra - map_name: rm_a3a22
 > Dock to Weapon Testing; Heals? False
   * Layers: default
   * Open Passage to Weapon Testing/Dock to Skippy Room
-  > Dock to Super Missile Chamber Access
+  > Event - Skippy
+      Morph Ball
+  > Event - Past Super Blocks
       All of the following:
           Hijump With Power Grip Wall
           Any of the following:
-              # Break the super blocks
-              Morph Ball
-              Super Missiles ≥ 3 and Before Area 3 Skippy
-  > Event - Skippy
-      Morph Ball
+              # Get past super blocks
+              Super Missiles ≥ 3 or After Area 3 Skippy
 
 > Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
   * Open Passage to Super Missile Chamber Access/Dock to Skippy Room
-  > Dock to Weapon Testing
-      Space Jump Wall
+  > Event - Past Super Blocks
+      Trivial
 
 > Event - Skippy; Heals? False
   * Layers: default
   * Event Area 3 Skippy
   > Dock to Weapon Testing
+      Trivial
+
+> Event - Past Super Blocks; Heals? False
+  * Layers: default
+  * Event Area 3 Skippy
+  > Dock to Weapon Testing
+      Space Jump Wall
+  > Dock to Super Missile Chamber Access
       Trivial
 
 ----------------
@@ -1055,8 +1104,8 @@ Extra - map_name: rm_a3a23a
 > Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
   * Open Passage to Super Missile Chamber Access/Dock to Super Missile Chamber
-  > Before Super
-      After Area 3 Crystal before Super Missile or Power Grip Wall
+  > In Front Of Super
+      After Area 3 Super Missile Crystal or Power Grip Wall
   > Event - SuperCrystal
       Super Missiles
 
@@ -1064,13 +1113,13 @@ Extra - map_name: rm_a3a23a
   * Layers: default
   * Pickup 206; Category? Minor
   * Extra - object_name: oItemSM_206
-  > Before Super
+  > In Front Of Super
       Trivial
 
-> Before Super; Heals? False
+> In Front Of Super; Heals? False
   * Layers: default
   > Dock to Super Missile Chamber Access
-      After Area 3 Crystal before Super Missile
+      After Area 3 Super Missile Crystal
   > Pickup (Super Missile Tank)
       Trivial
   > Event - SuperCrystal
@@ -1078,10 +1127,10 @@ Extra - map_name: rm_a3a23a
 
 > Event - SuperCrystal; Heals? False
   * Layers: default
-  * Event Area 3 Crystal before Super Missile
+  * Event Area 3 Super Missile Crystal
   > Dock to Super Missile Chamber Access
       Trivial
-  > Before Super
+  > In Front Of Super
       Trivial
 
 ----------------
@@ -1111,7 +1160,7 @@ Extra - map_name: rm_a3a25
           Any of the following:
               # Lava run
               Gravity Suit
-              Damage Boost (Advanced) and Power Grip Wall
+              Damage Boost (Intermediate) and Lava ≥ 100 and Power Grip Wall
 
 > Dock to Lower Factory Lava Lake Access; Heals? False
   * Layers: default
@@ -1122,7 +1171,9 @@ Extra - map_name: rm_a3a25
           All of the following:
               # Lava run
               Walljump (Intermediate)
-              Gravity Suit or Damage Boost (Advanced)
+              Any of the following:
+                  Gravity Suit
+                  Damage Boost (Intermediate) and Lava ≥ 130
 
 ----------------
 Lower Factory Gamma Nest
@@ -1137,6 +1188,15 @@ Extra - map_name: rm_a3a26
   * Layers: default
   * Event Area 3 - Deep Factory Gamma
   > Dock to Lower Factory Lava Lake
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 376; Category? Minor
+  * Extra - object_name: oItemDNA_376
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -1228,6 +1288,15 @@ Extra - map_name: rm_a3b03
   * Event Area 3 - Breeding Grounds Left Gamma
   > Dock to Breeding Grounds Crossroads
       Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 377; Category? Minor
+  * Extra - object_name: oItemDNA_377
+  > Event - Gamma
+      Trivial
 
 ----------------
 Breeding Grounds Gamma Nest Middle
@@ -1250,6 +1319,15 @@ Extra - map_name: rm_a3b04
   * Layers: default
   * Event Area 3 - Breeding Grounds Middle Middle Gamma
   > Dock to Breeding Grounds Crossroads
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 378; Category? Minor
+  * Extra - object_name: oItemDNA_378
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -1289,6 +1367,15 @@ Extra - map_name: rm_a3b06
   * Event Area 3 - Breeding Grounds Alpha
   > Dock to Breeding Grounds Alpha Nest Access
       Trivial
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 363; Category? Minor
+  * Extra - object_name: oItemDNA_363
+  > Event - Alpha
+      Trivial
 
 ----------------
 Breeding Grounds Gamma Nest Top
@@ -1303,6 +1390,15 @@ Extra - map_name: rm_a3b07
   * Layers: default
   * Event Area 3 - Breeding Grounds Middle Top Gamma
   > Tunnel to Breeding Grounds Alpha Nest
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 379; Category? Minor
+  * Extra - object_name: oItemDNA_379
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -1333,7 +1429,7 @@ Extra - map_name: rm_a3b08
               After Area 3 - Breeding Grounds Middle Bottom Gamma and Infinite Bomb Jumping (Advanced) and Can Use Bombs
   > Dock to Breeding Grounds Fly Stadium Access
       Any of the following:
-          Space Jump
+          Space Jump or Can Use Spider Ball
           All of the following:
               # High jump
               Hi-Jump Boots
@@ -1348,6 +1444,15 @@ Extra - map_name: rm_a3b08
   * Layers: default
   * Event Area 3 - Breeding Grounds Middle Bottom Gamma
   > Bottom
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 380; Category? Major
+  * Extra - object_name: oItemDNA_380
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -1441,4 +1546,13 @@ Extra - map_name: rm_a3b12
   * Event Area 3 - Breeding Grounds Right Gamma
   > Dock to Breeding Grounds Maze
       Hijump Wall
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 381; Category? Minor
+  * Extra - object_name: oItemDNA_381
+  > Event - Gamma
+      Trivial
 

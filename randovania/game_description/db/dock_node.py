@@ -47,11 +47,8 @@ class DockNode(Node):
     def __repr__(self):
         return f"DockNode({self.name!r} -> {self.default_connection})"
 
-    def get_front_weakness(self, context: NodeContext) -> DockWeakness:
-        return context.patches.get_dock_weakness_for(self)
-
     def get_back_weakness(self, context: NodeContext) -> DockWeakness | None:
-        target_node = self.get_target_node(context)
+        target_node = context.patches.get_dock_connection_for(self)
         if isinstance(target_node, DockNode):
             return context.patches.get_dock_weakness_for(target_node)
 
@@ -72,7 +69,7 @@ class DockNode(Node):
     def _open_dock_connection(self, context: NodeContext, target_node: Node,
                               ) -> tuple[Node, Requirement]:
 
-        forward_weakness = self.get_front_weakness(context)
+        forward_weakness = context.patches.get_dock_weakness_for(self)
 
         reqs: list[Requirement] = [self._get_open_requirement(context, forward_weakness)]
 
@@ -84,13 +81,17 @@ class DockNode(Node):
         if (other_lock_req := _requirement_from_back(context, target_node)) is not None:
             reqs.append(other_lock_req)
 
-        requirement = RequirementAnd(reqs).simplify() if len(reqs) != 1 else reqs[0]
-        return target_node, requirement
+        if len(reqs) != 1:
+            final_req = RequirementAnd(reqs)
+        else:
+            final_req = reqs[0]
+
+        return target_node, final_req
 
     def _lock_connection(self, context: NodeContext) -> tuple[Node, Requirement] | None:
         requirement = Requirement.trivial()
 
-        forward_weakness = self.get_front_weakness(context)
+        forward_weakness = context.patches.get_dock_weakness_for(self)
         forward_lock = forward_weakness.lock
 
         if forward_lock is not None:
@@ -98,7 +99,7 @@ class DockNode(Node):
 
         back_weakness = self.get_back_weakness(context)
         back_lock = None
-        if back_weakness is not None:
+        if back_weakness is not None and back_weakness is not forward_weakness:
             back_lock = back_weakness.lock
 
             if back_lock is not None and back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
@@ -113,8 +114,16 @@ class DockNode(Node):
         return context.patches.get_dock_connection_for(self)
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        target_node = self.get_target_node(context)
-        yield self._open_dock_connection(context, target_node)
+        result = context.patches.get_cached_dock_connections_from(self)
+        if result is None:
+            result = []
 
-        if (lock_connection := self._lock_connection(context)) is not None:
-            yield lock_connection
+            target_node = context.patches.get_dock_connection_for(self)
+            result.append(self._open_dock_connection(context, target_node))
+
+            if (lock_connection := self._lock_connection(context)) is not None:
+                result.append(lock_connection)
+
+            context.patches.set_cached_dock_connections_from(self, tuple(result))
+
+        yield from result
