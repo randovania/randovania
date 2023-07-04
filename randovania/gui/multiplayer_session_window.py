@@ -289,7 +289,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             game_details = session.game_details
             self.generate_game_label.setText(f"Seed hash: {game_details.word_hash} ({game_details.seed_hash})")
             self.view_game_details_button.setEnabled(game_details.spoiler)
-            self.copy_permalink_button.setEnabled(game_details.spoiler)
 
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
