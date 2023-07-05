@@ -204,7 +204,14 @@ def browser_login_with_discord(sio: ServerApp):
 
 def browser_discord_login_callback(sio: ServerApp):
     try:
-        sio.discord.callback()
+        try:
+            sio.discord.callback()
+
+        except ValueError as v:
+            if v.args == ('not enough values to unpack (expected 2, got 1)',):
+                raise oauthlib.oauth2.rfc6749.errors.MismatchingStateError()
+            else:
+                raise
 
         sid = flask.session.get("sid")
         user = _create_session_with_discord_token(sio, sid)
@@ -238,6 +245,14 @@ def browser_discord_login_callback(sio: ServerApp):
             "unable_to_login.html",
             error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
         ), 403
+
+    except oauthlib.oauth2.rfc6749.errors.MismatchingStateError:
+        return flask.render_template(
+            "unable_to_login.html",
+            error_message=(
+                "You must finish the login with the same browser that you started it with."
+            ),
+        ), 401
 
     except oauthlib.oauth2.rfc6749.errors.OAuth2Error as err:
         if isinstance(err, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):
