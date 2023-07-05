@@ -16,7 +16,11 @@ _FIELDS = [
     "change_level_design",
     "respawn_bomb_blocks",
     "skip_cutscenes",
-    # "grave_grotto_blocks" - TODO: Uncomment later when splitting the GUI stuff from the am2r exporter PR
+    "grave_grotto_blocks",
+    "fusion_mode",
+    "nest_pipes",
+    "softlock_prevention_blocks",
+    "a3_entrance_blocks"
 ]
 
 
