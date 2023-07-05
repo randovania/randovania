@@ -11,7 +11,7 @@ from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
-    ConditionalResources, ResourceConversion, PickupGeneratorParams
+    ConditionalResources, ResourceConversion
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode

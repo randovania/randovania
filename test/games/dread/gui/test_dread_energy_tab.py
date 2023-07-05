@@ -6,7 +6,6 @@ from PySide6 import QtCore
 
 from randovania.games.dread.gui.preset_settings.dread_energy_tab import PresetDreadEnergy
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_editor import PresetEditor
 
 
