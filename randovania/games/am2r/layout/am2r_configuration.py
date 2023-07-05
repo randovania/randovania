@@ -20,6 +20,7 @@ class AM2RConfiguration(BaseConfiguration):
     change_level_design: bool
     skip_cutscenes: bool
     respawn_bomb_blocks: bool
+    screw_blocks: bool
     artifacts: AM2RArtifactConfig
     fusion_mode: bool
     grave_grotto_blocks: bool

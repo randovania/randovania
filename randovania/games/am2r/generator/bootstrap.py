@@ -15,6 +15,7 @@ class AM2RBootstrap(MetroidBootstrap):
         logical_patches = {
             "septogg_helpers": "Septogg",
             "change_level_design": "LevelDesign",
+            "screw_blocks": "ScrewBlocks",
             "skip_cutscenes": "SkipCutscenes",
             "respawn_bomb_blocks": "RespawnBombBlocks",
             "a3_entrance_blocks": "A3Entrance",

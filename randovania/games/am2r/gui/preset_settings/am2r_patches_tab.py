@@ -20,7 +20,8 @@ _FIELDS = [
     "fusion_mode",
     "nest_pipes",
     "softlock_prevention_blocks",
-    "a3_entrance_blocks"
+    "a3_entrance_blocks",
+    "screw_blocks"
 ]
 
 
