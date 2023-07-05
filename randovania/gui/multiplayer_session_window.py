@@ -13,9 +13,10 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.auto_tracker_window import load_trackers_configuration
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, layout_loader
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin, BackgroundTaskInProgressError
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
@@ -23,7 +24,7 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget
-from randovania.interface_common import simplified_patcher
+from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
@@ -35,7 +36,7 @@ from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry, MultiplayerUser, MultiplayerSessionActions, MultiplayerSessionAuditLog,
-    MultiplayerSessionAction, WorldUserInventory
+    MultiplayerSessionAction, WorldUserInventory, MAX_SESSION_NAME_LENGTH
 )
 from randovania.network_common.session_state import MultiplayerSessionState
 
@@ -47,12 +48,13 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     _session: MultiplayerSessionEntry
     has_closed = False
     _logic_settings_window: CustomizePresetDialog | None = None
-    _window_manager: WindowManager
     _generating_game: bool = False
     _already_kicked = False
     _can_stop_background_process = True
+    _window_manager: WindowManager | None
 
-    def __init__(self, game_session_api: MultiplayerSessionApi, window_manager: WindowManager, options: Options):
+    def __init__(self, game_session_api: MultiplayerSessionApi, window_manager: WindowManager,
+                 options: Options):
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -61,8 +63,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.network_client = game_session_api.network_client
         self.failure_handler = GenerationFailureHandler(self)
 
-        self._preset_manager = window_manager.preset_manager
         self._window_manager = window_manager
+        self._preset_manager = window_manager.preset_manager
+        self._multiworld_client = window_manager.multiworld_client
+
         self._options = options
         self._trackers = load_trackers_configuration()
         self._update_status_lock = asyncio.Lock()
@@ -85,73 +89,60 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.advanced_options_menu.addAction(self.duplicate_session_action)
         self.advanced_options_tool.setMenu(self.advanced_options_menu)
 
-        # Background process Button
-        self.background_process_menu = QtWidgets.QMenu(self.background_process_button)
-        self.generate_game_with_spoiler_action = QtGui.QAction("Generate game", self.background_process_menu)
+        # Generate Game Menu
+        self.generate_game_menu = QtWidgets.QMenu(self.generate_game_button)
+        self.generate_game_with_spoiler_action = QtGui.QAction("Generate game", self.generate_game_menu)
         self.generate_game_with_spoiler_no_retry_action = QtGui.QAction("Generate game (no retries)",
-                                                                        self.background_process_menu)
+                                                                        self.generate_game_menu)
         self.generate_game_without_spoiler_action = QtGui.QAction("Generate without spoiler",
-                                                                  self.background_process_menu)
-        self.import_permalink_action = QtGui.QAction("Import permalink", self.background_process_menu)
-        self.import_layout_action = QtGui.QAction("Import game/spoiler", self.background_process_menu)
+                                                                  self.generate_game_menu)
+        self.import_permalink_action = QtGui.QAction("Import permalink", self.generate_game_menu)
+        self.import_layout_action = QtGui.QAction("Import game/spoiler", self.generate_game_menu)
 
-        self.background_process_menu.addAction(self.generate_game_with_spoiler_action)
-        self.background_process_menu.addAction(self.generate_game_with_spoiler_no_retry_action)
-        self.background_process_menu.addAction(self.generate_game_without_spoiler_action)
-        self.background_process_menu.addAction(self.import_permalink_action)
-        self.background_process_menu.addAction(self.import_layout_action)
-        self.background_process_button.setMenu(self.background_process_menu)
-
-        # Session status
-        self.session_status_menu = QtWidgets.QMenu(self.session_status_tool)
-        self.start_session_action = QtGui.QAction("Start session", self.session_status_menu)
-        self.finish_session_action = QtGui.QAction("Finish session", self.session_status_menu)
-        self.reset_session_action = QtGui.QAction("Reset session", self.session_status_menu)
-
-        self.session_status_menu.addAction(self.start_session_action)
-        self.session_status_menu.addAction(self.finish_session_action)
-        self.session_status_menu.addAction(self.reset_session_action)
-        self.session_status_tool.setMenu(self.session_status_menu)
+        self.generate_game_menu.addAction(self.generate_game_with_spoiler_action)
+        self.generate_game_menu.addAction(self.generate_game_with_spoiler_no_retry_action)
+        self.generate_game_menu.addAction(self.generate_game_without_spoiler_action)
+        self.generate_game_menu.addAction(self.import_permalink_action)
+        self.generate_game_menu.addAction(self.import_layout_action)
+        self.generate_game_button.setMenu(self.generate_game_menu)
 
         self.tracker_windows = {}
 
     def connect_to_events(self):
-        # Advanced Options
-        self.rename_session_action.triggered.connect(self.rename_session)
-        self.change_password_action.triggered.connect(self.change_password)
-        self.duplicate_session_action.triggered.connect(self.duplicate_session)
-
-        # Save ISO Button
-        self.copy_permalink_button.clicked.connect(self.copy_permalink)
-
+        # Game Generation
         self.generate_game_with_spoiler_action.triggered.connect(self.generate_game_with_spoiler)
         self.generate_game_with_spoiler_no_retry_action.triggered.connect(self.generate_game_with_spoiler_no_retry)
         self.generate_game_without_spoiler_action.triggered.connect(self.generate_game_without_spoiler)
         self.import_permalink_action.triggered.connect(self.import_permalink)
         self.import_layout_action.triggered.connect(self.import_layout)
-        self.background_process_button.clicked.connect(self.background_process_button_clicked)
+        self.generate_game_button.clicked.connect(self.generate_game_button_clicked)
+        self.session_status_button.clicked.connect(self._session_status_button_clicked)
 
-        # Signals
+        # Session Admin
+        self.rename_session_action.triggered.connect(self.rename_session)
+        self.change_password_action.triggered.connect(self.change_password)
+        self.duplicate_session_action.triggered.connect(self.duplicate_session)
+        self.copy_permalink_button.clicked.connect(self.copy_permalink)
+        self.view_game_details_button.clicked.connect(self.view_game_details)
+
+        # Background Tasks
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
         self.progress_update_signal.connect(self.update_progress)
-        self.session_status_tool.clicked.connect(self._session_status_button_clicked)
-        self.view_game_details_button.clicked.connect(self.view_game_details)
+        self.background_process_button.clicked.connect(self.background_process_button_clicked)
+
+        # Connectivity
+        self.server_connection_button.clicked.connect(self._connect_to_server)
+        self.edit_game_connections_button.clicked.connect(self._window_manager.open_game_connection_window)
+
+        # Signals
         self.users_widget.GameExportRequested.connect(self.game_export_listener)
         self.users_widget.TrackWorldRequested.connect(self.track_world_listener)
-
-        # Server Status
-        self.server_connection_button.clicked.connect(self._connect_to_server)
-
-        # Session status
-        self.start_session_action.triggered.connect(self.start_session)
-        self.finish_session_action.triggered.connect(self.finish_session)
-        self.reset_session_action.triggered.connect(self.reset_session)
-
         self.network_client.MultiplayerSessionMetaUpdated.connect(self.on_meta_update)
         self.network_client.MultiplayerSessionActionsUpdated.connect(self.on_actions_update)
         self.network_client.MultiplayerAuditLogUpdated.connect(self.on_audit_log_update)
         self.network_client.WorldUserInventoryUpdated.connect(self.on_user_inventory_update)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
+        self._multiworld_client.SyncFailure.connect(self.update_multiworld_client_status)
 
     def _get_world_order(self) -> list[str]:
         return [
@@ -159,16 +150,21 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             for world in self._session.worlds
         ]
 
+    def _get_world_names(self) -> list[str]:
+        return [
+            world.name
+            for world in self._session.worlds
+        ]
+
     @classmethod
-    async def create_and_update(cls, network_client: QtNetworkClient, session_entry: MultiplayerSessionEntry,
-                                window_manager: WindowManager, options: Options,
+    async def create_and_update(cls, network_client: QtNetworkClient, session_id: int,
+                                window_manager: WindowManager, options: Options
                                 ) -> Self:
 
         logger.debug("Creating MultiplayerSessionWindow")
 
-        game_session_api = MultiplayerSessionApi(network_client, session_entry)
+        game_session_api = MultiplayerSessionApi(network_client, session_id)
         window = cls(game_session_api, window_manager, options)
-        await window.on_meta_update(session_entry)
         window.on_server_connection_state_updated(network_client.connection_state)
         window.connect_to_events()
         await game_session_api.request_session_update()
@@ -196,7 +192,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         try:
             if not is_kicked and not self.network_client.connection_state.is_disconnected:
-                await self.network_client.listen_to_session(self._session, False)
+                await self.network_client.listen_to_session(self._session.id, False)
         finally:
             for d in list(self.tracker_windows.values()):
                 d.close()
@@ -205,7 +201,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     @asyncSlot(MultiplayerSessionEntry)
     async def on_meta_update(self, session: MultiplayerSessionEntry):
-        if session.id != self.game_session_api.current_entry.id:
+        if session.id != self.game_session_api.current_session_id:
             return
 
         self._session = session
@@ -221,6 +217,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.sync_background_process_to_session()
         self.update_game_tab()
         await self.update_logic_settings_window()
+        self.update_multiworld_client_status()
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -246,7 +243,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if self._already_kicked:
             return
         self._already_kicked = True
-        leave_session = self.network_client.listen_to_session(self._session, False)
+        leave_session = self.network_client.listen_to_session(self._session.id, False)
         if self._session.users:
             message = "Kicked", "You have been kicked out of the session."
         else:
@@ -271,19 +268,20 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         session = self._session
         self_is_admin = session.users[self.network_client.current_user.id].admin
 
-        self.session_status_label.setText(f"Session: {session.state.user_friendly_name}")
         self.update_background_process_button()
+        self.update_generate_game_button()
         self.generate_game_with_spoiler_action.setEnabled(self_is_admin)
         self.generate_game_without_spoiler_action.setEnabled(self_is_admin)
         self.import_permalink_action.setEnabled(self_is_admin)
-        self.session_status_tool.setEnabled(self_is_admin)
+        self.session_status_button.setEnabled(self_is_admin and session.state != MultiplayerSessionState.FINISHED)
         _state_to_label = {
-            MultiplayerSessionState.SETUP: "Start",
-            MultiplayerSessionState.IN_PROGRESS: "Finish",
-            MultiplayerSessionState.FINISHED: "Reset",
+            MultiplayerSessionState.SETUP: "Start session",
+            MultiplayerSessionState.IN_PROGRESS: "Finish session",
+            MultiplayerSessionState.FINISHED: "Session finished",
         }
-        self.session_status_tool.setText(_state_to_label[session.state])
+        self.session_status_button.setText(_state_to_label[session.state])
 
+        self.copy_permalink_button.setEnabled(session.game_details is not None)
         if session.game_details is None:
             self.generate_game_label.setText("<Game not generated>")
             self.view_game_details_button.setEnabled(False)
@@ -291,11 +289,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             game_details = session.game_details
             self.generate_game_label.setText(f"Seed hash: {game_details.word_hash} ({game_details.seed_hash})")
             self.view_game_details_button.setEnabled(game_details.spoiler)
-
-        self.start_session_action.setEnabled(self_is_admin and session.state == MultiplayerSessionState.SETUP)
-        self.finish_session_action.setEnabled(
-            self_is_admin and session.state == MultiplayerSessionState.IN_PROGRESS)
-        self.reset_session_action.setEnabled(self_is_admin and session.state != MultiplayerSessionState.SETUP)
 
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
@@ -373,47 +366,69 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     @handle_network_errors
     async def rename_session(self):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setWindowTitle("Enter new title")
-        dialog.setLabelText("Enter the new title for the session:")
-        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
-            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_TITLE, dialog.textValue())
+        new_name = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter new title",
+            description="Enter the new title for the session:",
+            initial_value=self._session.name,
+            is_modal=True,
+            max_length=MAX_SESSION_NAME_LENGTH,
+        )
+        if new_name is not None:
+            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_TITLE, new_name)
 
     @asyncSlot()
     @handle_network_errors
     async def change_password(self):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setWindowTitle("Enter password")
-        dialog.setLabelText("Enter the new password for the session:")
-        dialog.setTextEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
-        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
-            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_PASSWORD, dialog.textValue())
+        password = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter password",
+            description="Enter the new password for the session:",
+            is_password=True,
+            is_modal=True,
+        )
+        if password is not None:
+            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_PASSWORD, password)
 
     @asyncSlot()
     @handle_network_errors
     async def duplicate_session(self):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setWindowTitle("Enter new title")
-        dialog.setLabelText("Enter the title for the duplicated copy of the session:")
-        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
-            await self._admin_global_action(SessionAdminGlobalAction.DUPLICATE_SESSION, dialog.textValue())
+        new_name = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter new title",
+            description="Enter the title for the duplicated copy of the session:",
+            is_modal=True,
+            max_length=MAX_SESSION_NAME_LENGTH,
+        )
+        if new_name is not None:
+            await self._admin_global_action(SessionAdminGlobalAction.DUPLICATE_SESSION, new_name)
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
+        def _combine(arr: list[list[str]]):
+            return "\n".join(
+                f"{world.name}: {', '.join(dangerous)}"
+                for world, dangerous in zip(self._session.worlds, arr, strict=True)
+                if dangerous
+            )
+
+        all_incompatible_settings = [
+            preset.settings_incompatible_with_multiworld()
+            for preset in permalink.parameters.presets
+        ]
+        if any(all_incompatible_settings):
+            message = ("The following worlds have settings that are incompatible with Multiworld:\n"
+                       f"\n{_combine(all_incompatible_settings)}\n"
+                       "\nDo you want to continue?")
+            await async_dialog.warning(self, "Incompatible preset", message)
+            return False
+
         all_dangerous_settings = [
             preset.dangerous_settings()
             for preset in permalink.parameters.presets
         ]
         if any(all_dangerous_settings):
-            warnings = "\n".join(
-                f"{world.name}: {', '.join(dangerous)}"
-                for world, dangerous in zip(self._session.worlds, all_dangerous_settings)
-                if dangerous
-            )
-            message = ("The following presets have settings that can cause an impossible game:\n"
-                       f"\n{warnings}\n"
+            message = ("The following worlds have settings that can cause an impossible game:\n"
+                       f"\n{_combine(all_dangerous_settings)}\n"
                        "\nDo you want to continue?")
             result = await async_dialog.warning(self, "Dangerous preset", message,
                                                 async_dialog.StandardButton.Yes | async_dialog.StandardButton.No)
@@ -443,8 +458,14 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if not await self._check_dangerous_presets(permalink):
             return
 
+        if self.has_background_process:
+            return async_dialog.warning(
+                self, "Busy",
+                "Unable to generate a game right now, another background process is already in progress.",
+            )
+
         def generate_layout(progress_update: ProgressUpdateCallable):
-            return simplified_patcher.generate_layout(progress_update=progress_update,
+            return generator_frontend.generate_layout(progress_update=progress_update,
                                                       parameters=permalink.parameters,
                                                       options=self._options,
                                                       retries=retries)
@@ -457,7 +478,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             await self._upload_layout_description(layout)
             self.update_progress("Uploaded!", 100)
 
-        except asyncio.exceptions.CancelledError:
+        except (asyncio.exceptions.CancelledError, BackgroundTaskInProgressError):
             pass
 
         except Exception as e:
@@ -508,7 +529,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 f"this session only have {len(self._session.worlds)} rows.")
             return False
 
-        if any(not preset_p.is_same_configuration(preset_s.get_preset())
+        if any(not preset_p.is_same_configuration(preset_s.preset)
                for preset_p, preset_s in zip(parameters.presets, self._session.worlds)):
             response = await async_dialog.warning(
                 self, "Different presets",
@@ -552,13 +573,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
                                         layout.as_json(force_spoiler=True))
 
-    @asyncSlot()
-    @handle_network_errors
     async def start_session(self):
         await self._admin_global_action(SessionAdminGlobalAction.START_SESSION, None)
 
-    @asyncSlot()
-    @handle_network_errors
     async def finish_session(self):
         result = await async_dialog.warning(
             self, "Finish session?",
@@ -572,18 +589,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     @asyncSlot()
     @handle_network_errors
-    async def reset_session(self):
-        await async_dialog.warning(self, "NYI", "Reset session is not implemented.")
-
-    @asyncSlot()
     async def _session_status_button_clicked(self):
         state = self._session.state
         if state == MultiplayerSessionState.SETUP:
             await self.start_session()
         elif state == MultiplayerSessionState.IN_PROGRESS:
             await self.finish_session()
-        elif state == MultiplayerSessionState.FINISHED:
-            await self.reset_session()
         else:
             raise RuntimeError(f"Unknown session state: {state}")
 
@@ -628,7 +639,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         description_json = await self._admin_global_action(SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION, None)
         description = LayoutDescription.from_json_dict(json.loads(description_json))
-        self._window_manager.open_game_details(description)
+        self._window_manager.open_game_details(description, self._get_world_names())
 
     @asyncSlot()
     @handle_network_errors
@@ -645,32 +656,37 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     @asyncSlot()
     @handle_network_errors
-    async def background_process_button_clicked(self):
-        if self.has_background_process:
-            self.stop_background_process()
+    async def generate_game_button_clicked(self):
+        if self._session.game_details is not None:
+            await self.clear_generated_game()
         elif self._session.generation_in_progress is not None:
             await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, [])
-        elif self._session.game_details is not None:
-            await self.clear_generated_game()
         else:
             await self.generate_game(True, retries=None)
 
-    def update_background_process_button(self):
+    def update_generate_game_button(self):
         is_admin = self.current_player_membership.admin
-        if self.has_background_process:
-            self.background_process_button.setEnabled(self.has_background_process and self._can_stop_background_process)
-            self.background_process_button.setText("Stop")
+        is_enabled = self._session.state == MultiplayerSessionState.SETUP and is_admin
+        has_menu = False
 
+        if self._session.game_details is not None:
+            text = "Clear generated game"
         elif self._session.generation_in_progress is not None:
-            self.background_process_button.setEnabled(is_admin)
-            self.background_process_button.setText("Abort generation")
+            text = "Abort generation"
         else:
-            self.background_process_button.setEnabled(
-                self._session.state == MultiplayerSessionState.SETUP and is_admin)
-            if self._session.game_details is not None:
-                self.background_process_button.setText("Clear generated game")
-            else:
-                self.background_process_button.setText("Generate game")
+            text = "Generate game"
+            has_menu = True
+
+        self.generate_game_button.setEnabled(is_enabled)
+        self.generate_game_button.setText(text)
+        self.generate_game_button.setMenu(self.generate_game_menu if has_menu else None)
+
+    def background_process_button_clicked(self):
+        self.stop_background_process()
+
+    def update_background_process_button(self):
+        self.background_process_button.setEnabled(self.has_background_process and self._can_stop_background_process)
+        self.background_process_button.setText("Stop")
 
     def enable_buttons_with_background_tasks(self, value: bool):
         self.update_background_process_button()
@@ -694,6 +710,36 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.server_connection_label.setText(message)
         common_qt_lib.set_error_border_stylesheet(self.server_connection_label,
                                                   state == ConnectionState.ConnectedNotLogged)
+
+    def update_multiworld_client_status(self):
+        lines = []
+
+        err = self._multiworld_client.last_sync_exception
+        if err is not None:
+            lines.append(f"Error when syncing worlds: {err}")
+
+        multi_user = self._session.users[self.network_client.current_user.id]
+        world_status = []
+        for uid in multi_user.worlds.keys():
+            data = self._multiworld_client.database.get_data_for(uid)
+
+            msg = "- {}: {} collected locations, {} pending uploads.".format(
+                self._session.get_world(uid).name,
+                len(data.collected_locations),
+                len(set(data.collected_locations) - set(data.uploaded_locations)),
+            )
+
+            err = self._multiworld_client.get_world_sync_error(uid)
+            if err is not None:
+                msg += f" Received {err} when syncing."
+
+            world_status.append(msg)
+
+        if world_status:
+            lines.append("Status of your worlds, in this client:")
+            lines.extend(world_status)
+
+        self.multiworld_client_status_label.setText("\n".join(lines))
 
     @asyncSlot()
     @handle_network_errors

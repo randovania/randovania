@@ -9,7 +9,7 @@ from ppc_asm import dol_file
 from retro_data_structures.asset_manager import PathFileProvider
 
 from open_prime_rando.dol_patching.echoes import dol_patcher
-from randovania import get_data_path
+from randovania import get_data_path, monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
 from randovania.games.prime2.patcher import claris_randomizer
@@ -56,6 +56,7 @@ class EchoesGameExporter(GameExporter):
                         progress_update: status_update_lib.ProgressUpdateCallable):
         assert isinstance(export_params, EchoesGameExportParams)
         new_patcher = patch_data.pop("new_patcher", None)
+        monitoring.set_tag("echoes_new_patcher", new_patcher is not None)
 
         # restore backups
         # convert prime models
@@ -143,13 +144,15 @@ class EchoesGameExporter(GameExporter):
         # New Patcher
         if new_patcher is not None:
             opr_update = updaters.pop(0)
-            import open_prime_rando.echoes_patcher
-            open_prime_rando.echoes_patcher.patch_paks(
-                PathFileProvider(contents_files_path),
-                contents_files_path,
-                new_patcher,
-                opr_update
-            )
+
+            with monitoring.trace_block("open_prime_rando.echoes_patcher.patch_paks"):
+                import open_prime_rando.echoes_patcher
+                open_prime_rando.echoes_patcher.patch_paks(
+                    PathFileProvider(contents_files_path),
+                    contents_files_path,
+                    new_patcher,
+                    opr_update
+                )
 
         # Menu Mod
         if patch_data["menu_mod"]:

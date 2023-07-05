@@ -16,10 +16,7 @@ from cryptography.fernet import Fernet
 from prometheus_flask_exporter import PrometheusMetrics
 
 from randovania.bitpacking import construct_pack
-from randovania.network_common import connection_headers
-from randovania.network_common.error import (
-    NotLoggedIn, BaseNetworkError, ServerError, InvalidSession, UnsupportedClient,
-)
+from randovania.network_common import connection_headers, error
 from randovania.server import client_check
 from randovania.server.custom_discord_oauth import CustomDiscordOAuth2Session
 from randovania.server.database import User, World
@@ -108,9 +105,9 @@ class ServerApp:
         try:
             return User.get_by_id(self.get_session()["user-id"])
         except KeyError:
-            raise NotLoggedIn()
+            raise error.NotLoggedInError()
         except peewee.DoesNotExist:
-            raise InvalidSession()
+            raise error.InvalidSessionError()
 
     def store_world_in_session(self, world: World):
         with self.session() as sio_session:
@@ -129,30 +126,42 @@ class ServerApp:
         @functools.wraps(handler)
         def _handler(*args):
             setattr(flask.request, "message", message)
-            logger().debug("Starting call")
+            logger().debug("Starting call with args %s", args)
 
             with sentry_sdk.start_transaction(op="message", name=message) as span:
+                try:
+                    user = self.get_current_user()
+                    flask.request.current_user = user
+                    sentry_sdk.set_user({
+                        "id": user.discord_id,
+                        "username": user.name,
+                        "server_id": user.id,
+                    })
+                except (error.NotLoggedInError, error.InvalidSessionError):
+                    flask.request.current_user = None
+                    sentry_sdk.set_user(None)
+
                 if with_header_check:
                     error_msg = self.check_client_headers()
                     if error_msg is not None:
-                        return UnsupportedClient(error_msg).as_json
+                        return error.UnsupportedClientError(error_msg).as_json
 
                 try:
-                    span.set_data("message.error", 0)
+                    span.set_tag("message.error", 0)
                     return {
                         "result": handler(self, *args),
                     }
 
-                except BaseNetworkError as error:
-                    span.set_data("message.error", error.code())
-                    return error.as_json
+                except error.BaseNetworkError as err:
+                    span.set_tag("message.error", err.code())
+                    return err.as_json
 
                 except (Exception, TypeError):
-                    span.set_data("message.error", ServerError.code())
+                    span.set_tag("message.error", error.ServerError.code())
                     logger().exception(
                         f"Unhandled exception while processing request for message {message}. Args: {args}"
                     )
-                    return ServerError().as_json
+                    return error.ServerError().as_json
 
         metric_wrapper = self.metrics.summary(f"socket_{message}", f"Socket.io messages of type {message}")
 
@@ -208,3 +217,11 @@ class ServerApp:
             self.expected_headers,
             environ,
         )
+
+    def ensure_in_room(self, room_name: str) -> bool:
+        """
+        Ensures the client is connected to the given room, and returns if we had to join.
+        """
+        all_rooms = flask_socketio.rooms()
+        flask_socketio.join_room(room_name)
+        return room_name not in all_rooms

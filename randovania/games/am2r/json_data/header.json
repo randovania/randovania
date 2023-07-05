@@ -839,6 +839,22 @@
             "EntranceRando": {
                 "long_name": "Entrance Rando",
                 "extra": {}
+            },
+            "FusionMode": {
+                "long_name": "Fusion Mode",
+                "extra": {}
+            },
+            "GraveGrottoBlocks": {
+                "long_name": "Grave Grotto Blocks",
+                "extra": {}
+            },
+            "A3Entrance": {
+                "long_name": "Industrial Complex Entrance Blocks",
+                "extra": {}
+            },
+            "SoftlockPrevention": {
+                "long_name": "Softlock Prevention",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -2543,7 +2559,7 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "Zip",
-                                            "amount": 2,
+                                            "amount": 3,
                                             "negate": false
                                         }
                                     },
@@ -2585,7 +2601,7 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "Zip",
-                                            "amount": 3,
+                                            "amount": 5,
                                             "negate": false
                                         }
                                     }
@@ -2686,7 +2702,7 @@
                         {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill them while frozen",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2703,6 +2719,27 @@
                                             "type": "items",
                                             "name": "Super Missiles",
                                             "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Get rid of them if they're draining you",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     }
@@ -3302,6 +3339,71 @@
                         },
                         "lock": null
                     },
+                    "Guardian Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Guardian",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Arachnus Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Arachnus",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Torizo Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Torizo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Serris Soul Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Serris",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Genesis Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "GenesisKilled",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
                     "Tower Activated Door": {
                         "extra": {},
                         "requirement": {
@@ -3543,26 +3645,16 @@
                     "Bomb Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Bombs",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Use Bombs"
                         },
                         "lock": null
                     },
                     "Spider Ball Door": {
                         "extra": {},
                         "requirement": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Spider Ball",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Can Use Spider Ball"
                         },
                         "lock": null
                     },
@@ -3612,8 +3704,12 @@
                         "Tower Activated Door"
                     ],
                     "change_to": [
+                        "After Tester Door",
+                        "Arachnus Door",
                         "Bomb Door",
                         "Charge Beam Door",
+                        "Genesis Door",
+                        "Guardian Door",
                         "Ice Beam Door",
                         "Locked Door",
                         "Missile Door",
@@ -3621,9 +3717,12 @@
                         "Plasma Beam Door",
                         "Power Bomb Door",
                         "Screw Attack Door",
+                        "Serris Soul Door",
                         "Spazer Beam Door",
                         "Spider Ball Door",
                         "Super Missile Door",
+                        "Torizo Door",
+                        "Tower Activated Door",
                         "Wave Beam Door"
                     ]
                 }

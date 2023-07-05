@@ -12,6 +12,7 @@ from randovania.interface_common import update_checker, persisted_options
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import migration_lib
 
+
 T = TypeVar("T")
 
 
@@ -126,6 +127,8 @@ _SERIALIZER_FOR_FIELD = {
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
     "experimental_settings": Serializer(identity, bool),
+    "allow_crash_reporting": Serializer(identity, bool),
+    "use_user_for_crash_reporting": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "hidden_preset_uuids": Serializer(serialize_uuid_set, decode_uuid_set),
     "tracker_default_game": Serializer(lambda it: it.value if it is not None else None,
@@ -189,6 +192,8 @@ class Options:
     _auto_save_spoiler: bool | None = None
     _dark_mode: bool | None = None
     _experimental_settings: bool | None = None
+    _allow_crash_reporting: bool | None = None
+    _use_user_for_crash_reporting: bool | None = None
     _displayed_alerts: set[InfoAlert] | None = None
     _hidden_preset_uuids: set[uuid.UUID] | None = None
     _parent_for_presets: dict[uuid.UUID, uuid.UUID] | None = None
@@ -401,6 +406,22 @@ class Options:
     @experimental_settings.setter
     def experimental_settings(self, value: bool):
         self._edit_field("experimental_settings", value)
+
+    @property
+    def allow_crash_reporting(self) -> bool:
+        return _return_with_default(self._allow_crash_reporting, lambda: True)
+
+    @allow_crash_reporting.setter
+    def allow_crash_reporting(self, value: bool):
+        self._edit_field("allow_crash_reporting", value)
+
+    @property
+    def use_user_for_crash_reporting(self) -> bool:
+        return _return_with_default(self._use_user_for_crash_reporting, lambda: True)
+
+    @use_user_for_crash_reporting.setter
+    def use_user_for_crash_reporting(self, value):
+        self._edit_field("use_user_for_crash_reporting", value)
 
     @property
     def tracker_default_game(self) -> RandovaniaGame | None:

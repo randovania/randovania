@@ -15,16 +15,17 @@ class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
 @dataclasses.dataclass(frozen=True)
 class AM2RConfiguration(BaseConfiguration):
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
+    softlock_prevention_blocks: bool
     septogg_helpers: bool
-    change_level_design: bool   # TODO: requires changes in DB!
-    artifacts: AM2RArtifactConfig
+    change_level_design: bool
     skip_cutscenes: bool
     respawn_bomb_blocks: bool
-    remove_grave_grotto_blocks: bool
-    fusion_mode: bool # TODO: requires DB changes
-    nest_pipes: bool # TODO: requires DB changes
-    # TODO: more setting for individual block placements, like bombs to a3?
-
+    artifacts: AM2RArtifactConfig
+    fusion_mode: bool
+    grave_grotto_blocks: bool
+    nest_pipes: bool
+    # TODO: warp to start
+    a3_entrance_blocks: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

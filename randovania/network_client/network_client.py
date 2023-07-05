@@ -17,6 +17,7 @@ import sentry_sdk
 import socketio
 import socketio.exceptions
 
+import randovania
 from randovania.bitpacking import bitpacking, construct_pack
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
@@ -107,9 +108,10 @@ class NetworkClient:
     _connect_error: str | None = None
     _num_emit_failures: int = 0
     _sessions_interested_in: set[int]
+    _allow_reporting_username: bool = False
 
     def __init__(self, user_data_dir: Path, configuration: dict):
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger("NetworkClient")
 
         old_connect = aiohttp.ClientSession.ws_connect
 
@@ -189,12 +191,8 @@ class NetworkClient:
                 transports=['websocket'],
                 headers=connection_headers(),
             )
+            self.logger.info("sio.connect successful")
             await waiting_for_on_connect
-
-            # re-join rooms
-            for session_id in list(self._sessions_interested_in):
-                await self.server_call("multiplayer_listen_to_session", (session_id, True))
-
             self.logger.info("connected")
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
@@ -239,13 +237,19 @@ class NetworkClient:
                     "restore_user_session", persisted_session, handle_invalid_session=False
                 ))
 
+                # re-join rooms
+                self.logger.info("calling listen to session for %s", self._sessions_interested_in)
+                for session_id in list(self._sessions_interested_in):
+                    await self.server_call("multiplayer_listen_to_session", (session_id, True))
+
                 self.logger.info("session restored successful")
+
                 self.connection_state = ConnectionState.Connected
 
-            except (error.InvalidSession, error.UserNotAuthorized) as e:
+            except (error.InvalidSessionError, error.UserNotAuthorizedToUseServerError) as e:
                 self.logger.info(
                     "session not authorized, deleting"
-                    if isinstance(e, error.UserNotAuthorized) else
+                    if isinstance(e, error.UserNotAuthorizedToUseServerError) else
                     "invalid session, deleting"
                 )
                 self.connection_state = ConnectionState.ConnectedNotLogged
@@ -255,6 +259,7 @@ class NetworkClient:
             self.connection_state = ConnectionState.ConnectedNotLogged
 
     async def on_connect(self):
+        self.logger.debug("Received on_connect")
         error_message = None
         try:
             self._restore_session_task = asyncio.create_task(self._restore_session())
@@ -291,13 +296,7 @@ class NetworkClient:
 
     async def on_user_session_updated(self, new_session: dict):
         self._current_user = User.from_json(new_session["user"])
-
-        if self._current_user.discord_id is not None:
-            sentry_sdk.set_user({
-                "id": self._current_user.discord_id,
-                "username": self._current_user.name,
-                "server_id": self._current_user.id,
-            })
+        self._update_reported_username()
 
         if self.connection_state in (ConnectionState.ConnectedRestoringSession, ConnectionState.ConnectedNotLogged):
             self.connection_state = ConnectionState.Connected
@@ -407,7 +406,7 @@ class NetworkClient:
                 if self._num_emit_failures >= _TIMEOUTS_TO_DISCONNECT:
                     # If getting too many timeouts in a row, just disconnect so the user is aware something is wrong.
                     await self.disconnect_from_server()
-                raise error.RequestTimeout(f"Timeout after {request_time:.2f}s, with a timeout of {timeout}.")
+                raise error.RequestTimeoutError(f"Timeout after {request_time:.2f}s, with a timeout of {timeout}.")
 
         if result is None:
             return None
@@ -416,7 +415,7 @@ class NetworkClient:
         if possible_error is None:
             return result["result"]
         else:
-            if handle_invalid_session and isinstance(possible_error, error.InvalidSession):
+            if handle_invalid_session and isinstance(possible_error, error.InvalidSessionError):
                 self.logger.info("Received InvalidSession during a %s call", event)
                 await self.logout()
 
@@ -437,17 +436,17 @@ class NetworkClient:
         result = await self.server_call("multiplayer_create_session", session_name)
         return self._with_new_session(result)
 
-    async def join_multiplayer_session(self, session: MultiplayerSessionListEntry, password: str | None):
-        result = await self.server_call("multiplayer_join_session", (session.id, password))
+    async def join_multiplayer_session(self, session_id: int, password: str | None):
+        result = await self.server_call("multiplayer_join_session", (session_id, password))
         return self._with_new_session(result)
 
-    async def listen_to_session(self, session: MultiplayerSessionEntry, listen: bool):
-        result = await self.server_call("multiplayer_listen_to_session", (session.id, listen))
+    async def listen_to_session(self, session_id: int, listen: bool):
+        result = await self.server_call("multiplayer_listen_to_session", (session_id, listen))
         sessions = self._sessions_interested_in
         if listen:
-            sessions.add(session.id)
-        elif session.id in sessions:
-            sessions.remove(session.id)
+            sessions.add(session_id)
+        elif session_id in sessions:
+            sessions.remove(session_id)
         return result
 
     async def session_admin_global(self, session: MultiplayerSessionEntry,
@@ -479,9 +478,28 @@ class NetworkClient:
         self.logger.info("Logging out")
         self.session_data_path.unlink()
         self._current_user = None
-        sentry_sdk.set_user(None)
+        self._update_reported_username()
 
         if self.connection_state != ConnectionState.Connected:
             return
         self.connection_state = ConnectionState.ConnectedNotLogged
         await self.server_call("logout")
+
+    def _update_reported_username(self):
+        if self.allow_reporting_username and self._current_user and self._current_user.discord_id:
+            sentry_sdk.set_user({
+                "id": self._current_user.discord_id,
+                "username": self._current_user.name,
+                "server_id": self._current_user.id,
+            })
+        else:
+            sentry_sdk.set_user(None)
+
+    @property
+    def allow_reporting_username(self):
+        return self._allow_reporting_username or randovania.is_dev_version()
+
+    @allow_reporting_username.setter
+    def allow_reporting_username(self, value):
+        self._allow_reporting_username = value
+        self._update_reported_username()

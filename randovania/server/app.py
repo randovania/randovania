@@ -8,7 +8,6 @@ from flask_socketio import ConnectionRefusedError
 
 import randovania
 import randovania.server.multiplayer.world_api
-from randovania.network_common import error
 from randovania.server import user_session, database, client_check, multiplayer
 from randovania.server.multiplayer import world_api
 from randovania.server.server_app import ServerApp
@@ -20,18 +19,15 @@ class ServerLoggingFormatter(logging.Formatter):
     def format(self, record):
         if flask.has_request_context():
             who = flask.request.remote_addr
-
-            sio: ServerApp = flask.current_app.sio
             is_socketio = hasattr(flask.request, "sid")
 
             where = flask.request.url
 
             if is_socketio:
                 record.context = "SocketIO"
-                try:
-                    who = sio.get_current_user().name
-                except (error.NotLoggedIn, error.InvalidSession):
-                    pass
+                user = getattr(flask.request, "current_user", None)
+                if user is not None:
+                    who = user.name
                 where = getattr(flask.request, "message", where)
             else:
                 record.context = "Flask"
@@ -63,6 +59,12 @@ def create_app():
             'stream': 'ext://flask.logging.wsgi_errors_stream',
             'formatter': 'default'
         }},
+        'loggers': {
+            # Enable peewee logging to see the queries being made
+            # 'peewee': {
+            #     'level': 'DEBUG',
+            # },
+        },
         'root': {
             'level': 'INFO',
             'handlers': ['wsgi']

@@ -6,6 +6,7 @@ import logging
 import uuid
 from pathlib import Path
 from typing import Iterable, Self
+from PySide6.QtCore import Signal, QObject
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.interface_common.players_configuration import INVALID_UUID
@@ -56,9 +57,11 @@ class WorldData(JsonDataclass):
         )
 
 
-class WorldDatabase:
+class WorldDatabase(QObject):
     _all_data: dict[uuid.UUID, WorldData]
     _persist_path: Path
+
+    WorldDataUpdate = Signal()
 
     def __init__(self, persist_path: Path):
         super().__init__()
@@ -66,6 +69,7 @@ class WorldDatabase:
 
         persist_path.mkdir(parents=True, exist_ok=True)
         self._persist_path = persist_path
+        self.logger.info("Using %s as database path", persist_path)
 
         self._all_data = {}
         self._lock = asyncio.Lock()
@@ -112,6 +116,7 @@ class WorldDatabase:
                 if data != self._all_data.get(uid):
                     self._all_data[uid] = data
                     await self._write_data(uid, data)
+            self.WorldDataUpdate.emit()
 
     def get_locations_to_upload(self, uid: uuid.UUID) -> tuple[int, ...]:
         data = self.get_data_for(uid)

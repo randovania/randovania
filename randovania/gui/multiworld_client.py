@@ -4,7 +4,7 @@ import logging
 import uuid
 from pathlib import Path
 
-from PySide6.QtCore import QObject
+from PySide6 import QtCore
 from frozendict import frozendict
 from qasync import asyncSlot
 
@@ -12,24 +12,35 @@ from randovania.bitpacking import construct_pack
 from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
 from randovania.network_client.network_client import UnableToConnect, ConnectionState
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory, \
     MultiplayerSessionEntry
-from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
 from randovania.network_common.world_sync import ServerWorldSync, ServerSyncRequest
 
 
-class MultiworldClient(QObject):
+_ERRORS_THAT_STOP_SYNC = (
+    error.WorldDoesNotExistError,
+    error.WorldNotAssociatedError,
+    error.SessionInWrongStateError,
+)
+
+
+class MultiworldClient(QtCore.QObject):
     _persist_path: Path
     _sync_task: asyncio.Task | None = None
     _remote_games: dict[uuid.UUID, MultiplayerWorldPickups]
 
     _last_reported_status: dict[uuid.UUID, GameConnectionStatus]
     _recently_connected: bool = True
-    _blacklisted_worlds: dict[uuid.UUID, error.BaseNetworkError]
+    _world_sync_errors: dict[uuid.UUID, error.BaseNetworkError]
     _last_sync: ServerSyncRequest = ServerSyncRequest(worlds=frozendict({}))
+
+    _last_sync_exception: Exception | None = None
+
+    SyncFailure = QtCore.Signal()
 
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection, database: WorldDatabase):
         super().__init__()
@@ -40,7 +51,7 @@ class MultiworldClient(QObject):
         self.database = database
         self._remote_games = {}
         self._last_reported_status = {}
-        self._blacklisted_worlds = {}
+        self._world_sync_errors = {}
         self._pickups_lock = asyncio.Lock()
 
         self.game_connection.GameStateUpdated.connect(self.on_game_state_updated)
@@ -100,9 +111,10 @@ class MultiworldClient(QObject):
                     request_details=False,
                 )
 
-        for blacklisted in set(sync_requests.keys()) & set(self._blacklisted_worlds.keys()):
-            self.logger.debug("Not syncing %s: blacklisted", blacklisted)
-            sync_requests.pop(blacklisted)
+        for uid in set(sync_requests.keys()) & set(self._world_sync_errors.keys()):
+            if isinstance(self._world_sync_errors[uid], _ERRORS_THAT_STOP_SYNC):
+                self.logger.debug("Not syncing %s: had sync error", uid)
+                sync_requests.pop(uid)
 
         return ServerSyncRequest(
             worlds=frozendict(sync_requests),
@@ -128,15 +140,26 @@ class MultiworldClient(QObject):
 
             try:
                 result = await self.network_client.perform_world_sync(request)
-            except (Exception, UnableToConnect) as e:
-                message = f"Exception {type(e)} when attempting to sync locations."
-                if isinstance(e, (UnableToConnect, error.NotLoggedIn, error.InvalidSession, error.RequestTimeout)):
-                    self.logger.warning(message)
-                else:
-                    self.logger.exception(message)
-                await asyncio.sleep(5)
+
+            except (UnableToConnect, error.RequestTimeoutError, error.UnsupportedClientError) as e:
+                self._update_sync_exception(e)
+                self.logger.info("Can't sync worlds: Unable to connect to server: %s", e)
+                await asyncio.sleep(15)
                 continue
 
+            except (error.NotLoggedInError, error.InvalidSessionError) as e:
+                self._update_sync_exception(e)
+                self.logger.info("Can't sync worlds: Not logged in")
+                await asyncio.sleep(30)
+                continue
+
+            except Exception as e:
+                self._update_sync_exception(e)
+                self.logger.exception("Unexpected error syncing worlds: %s", e)
+                await asyncio.sleep(15)
+                continue
+
+            self._last_sync_exception = None
             modified_data: dict[uuid.UUID, WorldData] = {}
 
             def get_data(u: uuid.UUID):
@@ -149,6 +172,7 @@ class MultiworldClient(QObject):
                     continue
 
                 self._last_reported_status[uid] = world.status
+                self._world_sync_errors.pop(uid, None)
                 if world.collected_locations:
                     modified_data[uid] = get_data(uid).extend_uploaded_locations(
                         world.collected_locations
@@ -171,19 +195,12 @@ class MultiworldClient(QObject):
                     if uid not in result.errors
                 ])
             )
+
             if result.errors:
                 for uid, err in result.errors.items():
-                    if isinstance(err, (error.WorldDoesNotExistError, error.WorldNotAssociatedError)):
-                        self.logger.info("Blacklisting %s: received %s", uid, type(err))
-                        self._blacklisted_worlds[uid] = err
-                    else:
-                        # TODO: some better visibility for these errors would be great
-                        message = f"Exception {type(err)} when attempting to sync {uid}."
-                        if isinstance(err, (UnableToConnect, error.NotLoggedIn, error.InvalidSession,
-                                            error.RequestTimeout)):
-                            self.logger.warning(message)
-                        else:
-                            self.logger.exception(message)
+                    self.logger.info("When syncing %s, received %s", uid, err)
+                    self._world_sync_errors[uid] = err
+                self.SyncFailure.emit()
 
             if modified_data:
                 await self.database.set_many_data(modified_data)
@@ -214,16 +231,35 @@ class MultiworldClient(QObject):
 
     @asyncSlot(MultiplayerSessionEntry)
     async def on_session_meta_update(self, session: MultiplayerSessionEntry):
+        worlds_by_id = {world.id for world in session.worlds}
+        user_worlds = {}
+
         user = self.network_client.current_user
-        if user is None:
-            return
+        if user is not None:
+            user_details = session.users.get(user.id)
+            if user_details is not None:
+                user_worlds = user_details.worlds
 
-        user_details = session.users.get(user.id)
-        if user_details is None:
-            return
+        any_error_cleared = False
+        for uid, err in list(self._world_sync_errors.items()):
+            error_cleared = False
+            match type(err):
+                case error.WorldDoesNotExistError:
+                    error_cleared = uid in worlds_by_id
 
-        for uid in user_details.worlds.keys():
-            self._blacklisted_worlds.pop(uid, None)
+                case error.WorldNotAssociatedError:
+                    error_cleared = uid in user_worlds
+
+                case error.SessionInWrongStateError:
+                    assert isinstance(err, error.SessionInWrongStateError)
+                    error_cleared = uid in worlds_by_id and session.state == err.state
+
+            if error_cleared:
+                any_error_cleared = True
+                self._world_sync_errors.pop(uid)
+
+        if any_error_cleared:
+            self.SyncFailure.emit()
 
     @asyncSlot(MultiplayerWorldPickups)
     async def on_network_game_updated(self, pickups: MultiplayerWorldPickups):
@@ -240,3 +276,16 @@ class MultiworldClient(QObject):
         if state == ConnectionState.Connected:
             self._recently_connected = True
             self.start_server_sync_task()
+
+    @property
+    def last_sync_exception(self):
+        return self._last_sync_exception
+
+    def get_world_sync_error(self, uid: uuid.UUID) -> error.BaseNetworkError | None:
+        return self._world_sync_errors.get(uid)
+
+    def _update_sync_exception(self, err: Exception | None):
+        last = self._last_sync_exception
+        self._last_sync_exception = err
+        if last != err:
+            self.SyncFailure.emit()

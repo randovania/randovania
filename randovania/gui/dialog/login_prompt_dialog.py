@@ -2,8 +2,9 @@ from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 from qasync import asyncSlot
 
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.login_prompt_dialog_ui import Ui_LoginPromptDialog
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.multiplayer_session import User
@@ -58,14 +59,14 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
     @asyncSlot()
     @handle_network_errors
     async def on_login_as_guest_button(self):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setWindowTitle("Enter guest name")
-        dialog.setLabelText("Select a name for the guest account:")
-        if await async_dialog.execute_dialog(dialog) != QtWidgets.QDialog.DialogCode.Accepted:
-            return
-
-        await self.network_client.login_as_guest(dialog.textValue())
+        name = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter guest name",
+            description="Select a name for the guest account:",
+            is_modal=True,
+        )
+        if name is not None:
+            await self.network_client.login_as_guest(name)
 
     @asyncSlot()
     @handle_network_errors

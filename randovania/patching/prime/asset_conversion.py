@@ -17,7 +17,7 @@ from retro_data_structures.formats.pak import PakBody, PakFile
 from retro_data_structures.formats.pak_gc import PAK_GC
 from retro_data_structures.game_check import Game as RDSGame
 
-from randovania import get_data_path
+from randovania import get_data_path, monitoring
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
@@ -98,6 +98,7 @@ prime1_assets = {
 }
 
 
+@monitoring.trace_function
 def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_path: Path,
                            patch_data: dict, randomizer_data: dict, status_update: ProgressUpdateCallable):
     """"""
@@ -322,6 +323,7 @@ def _read_prime1_from_cache(assets_path: Path, updaters):
     return converted_assets, randomizer_data_additions
 
 
+@monitoring.trace_function
 def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: ProgressUpdateCallable):
     metafile = output_path.joinpath("meta.json")
     if get_asset_cache_version(output_path) >= ECHOES_MODELS_VERSION:
@@ -418,7 +420,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
                             if depb.type == "EVNT":
                                 if depb.id not in unique_evnt:
                                     unique_evnt.append(depb.id)
-                                    converted_dependencies[ancs.id].button(depb)
+                                    converted_dependencies[ancs.id].remove(depb)
                                     converted_dependencies[ancs.id].add(Dependency("EVNT", unique_anim[anim.id]))
                                 else:
                                     dont_delete.append(depb.id)

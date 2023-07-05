@@ -40,7 +40,12 @@ class AboutWidget(QtWidgets.QTextBrowser):
         about_document.setHtml(about_document.toHtml().replace("color:#0000ff;", ""))
         # Set links to open in a browser
         self.setOpenExternalLinks(True)
-        
+
+        # FIXME: For some reason, changing the cursor shape does not work here, as that changes the cursor of the
+        # scrollbar only.
+        # self.setCursor(QtCore.Qt.CursorShape.IBeamCursor)
+        self.setStyleSheet("border: none;")
+
         cursor = self.textCursor()
         cursor.setPosition(0)
         self.setTextCursor(cursor)

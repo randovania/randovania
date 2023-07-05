@@ -1,5 +1,5 @@
 import uuid
-from unittest.mock import MagicMock, PropertyMock, call, ANY
+from unittest.mock import MagicMock, PropertyMock, call
 
 import peewee
 import pytest
@@ -33,10 +33,28 @@ def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker
     mock_emit.assert_not_called()
 
 
+@pytest.mark.parametrize(("progression", "result"), [
+        (   # normal
+            [("Power", 1),],
+            ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fdaq')
+        ),
+        (   # negative
+            [("Missile", -5),],
+            ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35(E0^{')
+        ),
+        (   # progressive
+            [("DarkSuit", 1), ("LightSuit", 1)],
+            ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu368yy0`')
+        )
+])
 def test_emit_world_pickups_update_one_action(
         flask_app, two_player_session, generic_pickup_category,
         default_generator_params,
-        echoes_resource_database, mocker
+        echoes_resource_database, mocker,
+        progression, result
 ):
     # Setup
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
@@ -54,9 +72,13 @@ def test_emit_world_pickups_update_one_action(
 
     w1 = database.World.get_by_id(1)
 
+    progression = tuple(
+        (echoes_resource_database.get_item(item), amount)
+        for item, amount in progression
+    )
     pickup = PickupEntry("A", PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
                          generic_pickup_category, generic_pickup_category,
-                         progression=((echoes_resource_database.item[0], 1),),
+                         progression=progression,
                          generator_params=default_generator_params)
     mock_get_pickup_target.return_value = PickupTarget(pickup=pickup, player=0)
     mock_get_resource_database.return_value = echoes_resource_database
@@ -65,7 +87,7 @@ def test_emit_world_pickups_update_one_action(
     world_api.emit_world_pickups_update(sio, w1)
 
     # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
-    # from randovania.server.game_session import _base64_encode_pickup
+    # from randovania.server.multiplayer.world_api import _base64_encode_pickup
     # new_data = _base64_encode_pickup(pickup, echoes_resource_database)
     # assert new_data == b""
 
@@ -78,12 +100,11 @@ def test_emit_world_pickups_update_one_action(
             "game": "prime2",
             "pickups": [{
                 'provider_name': 'World 2',
-                'pickup': ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
-                           'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fdzm')
+                'pickup': result
             }],
             "world": "1179c986-758a-4170-9b07-fe4541d78db0"
         },
-        room=f"world-1179c986-758a-4170-9b07-fe4541d78db0"
+        room="world-1179c986-758a-4170-9b07-fe4541d78db0"
     )
 
 
@@ -202,14 +223,14 @@ def test_collect_locations_other(flask_app, two_player_session, echoes_resource_
 
 def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mock_emit_session_update):
     mock_leave_room = mocker.patch("flask_socketio.leave_room")
-    mock_join_room = mocker.patch("flask_socketio.join_room")
     mock_emit = mocker.patch("flask_socketio.emit")
     mock_emit_pickups = mocker.patch("randovania.server.multiplayer.world_api.emit_world_pickups_update")
     mock_emit_actions = mocker.patch("randovania.server.multiplayer.session_common.emit_session_actions_update")
     mock_emit_inventory = mocker.patch("randovania.server.multiplayer.session_common.emit_inventory_update")
 
     sio = MagicMock()
-    sio.get_current_user.return_value = database.User.get_by_id(1234)
+    user = database.User.get_by_id(1234)
+    sio.get_current_user.return_value = user
 
     w1 = database.World.get_by_id(1)
     w2 = database.World.get_by_id(2)
@@ -247,7 +268,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
         worlds=frozendict({
             w1.uuid: ServerWorldResponse(
                 world_name=w1.name,
-                session=session.create_list_entry(),
+                session=session.create_list_entry(user),
             ),
         }),
         errors=frozendict({
@@ -263,7 +284,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     assert a2.inventory is None
 
     sio.store_world_in_session.assert_called_once_with(w1)
-    mock_join_room.assert_called_once_with("world-1179c986-758a-4170-9b07-fe4541d78db0")
+    sio.ensure_in_room.assert_called_once_with("world-1179c986-758a-4170-9b07-fe4541d78db0")
     mock_leave_room.assert_called_once_with("world-6b5ac1a1-d250-4f05-a5fb-ae37e8a92165")
     mock_emit_pickups.assert_has_calls([call(sio, w1), call(sio, w2)], any_order=True)
     mock_emit_session_update.assert_called_once_with(session)

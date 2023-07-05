@@ -4,7 +4,7 @@ import shutil
 from pathlib import Path
 from typing import Callable
 
-from randovania import get_data_path
+from randovania import get_data_path, monitoring
 from randovania.games.prime2.patcher import csharp_subprocess
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.lib import status_update_lib, json_lib
@@ -98,6 +98,7 @@ _ECHOES_PAKS = tuple(
     + [f"Metroid{i}.pak" for i in range(1, 6)])
 
 
+@monitoring.trace_function
 def restore_pak_backups(
         game_root: Path,
         backup_files_path: Path,
@@ -119,6 +120,7 @@ def restore_pak_backups(
     files_folder.joinpath("menu_mod.txt").unlink(missing_ok=True)
 
 
+@monitoring.trace_function
 def create_pak_backups(
         game_root: Path,
         backup_files_path: Path,
@@ -133,6 +135,7 @@ def create_pak_backups(
         shutil.copy(files_folder.joinpath(pak), pak_folder.joinpath(pak))
 
 
+@monitoring.trace_function
 def add_menu_mod_to_files(
         game_root: Path,
         progress_update: ProgressUpdateCallable,
@@ -149,6 +152,7 @@ def add_menu_mod_to_files(
     files_folder.joinpath("menu_mod.txt").write_bytes(b"")
 
 
+@monitoring.trace_function
 def apply_patcher_file(game_root: Path,
                        patcher_data: dict,
                        randomizer_data: dict,

@@ -9,14 +9,13 @@ from pathlib import Path
 from random import Random
 
 import randovania
-from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
 from randovania.layout import game_patches_serializer, description_migration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.versioned_preset import VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset, InvalidPreset
 from randovania.lib import obfuscator, json_lib
 
 
@@ -25,12 +24,11 @@ class InvalidLayoutDescription(Exception):
 
 
 @lru_cache(maxsize=1)
-def _all_hash_words() -> dict[RandovaniaGame, list[str]]:
-    hash_words = json_lib.read_path(get_data_path() / "hash_words" / "hash_words.json")
-    return {
-        RandovaniaGame(key): words
-        for key, words in hash_words.items()
-    }
+def _all_hash_words() -> list[str]:
+    return list(itertools.chain.from_iterable(
+        game.hash_words for game in RandovaniaGame
+        if game.hash_words is not None
+    ))
 
 
 def shareable_hash(hash_bytes: bytes) -> str:
@@ -39,7 +37,6 @@ def shareable_hash(hash_bytes: bytes) -> str:
 
 def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
     rng = Random(sum(hash_byte * (2 ** 8) ** i for i, hash_byte in enumerate(hash_bytes)))
-    words = _all_hash_words()
 
     games_left = []
     selected_words = []
@@ -49,9 +46,9 @@ def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
         selected_game = rng.choice(games_left)
         games_left = [game for game in games_left if game != selected_game]
 
-        game_word_list = words.get(selected_game, [])
-        if not game_word_list:
-            game_word_list = list(itertools.chain.from_iterable(words.values()))
+        game_word_list = _all_hash_words()
+        if selected_game.hash_words is not None:
+            game_word_list = selected_game.hash_words
         selected_words.append(rng.choice(game_word_list))
 
     return " ".join(selected_words)
@@ -107,12 +104,20 @@ class LayoutDescription:
         if "game_modifications" not in json_dict:
             raise InvalidLayoutDescription("Unable to read details of a race game file")
 
+        def get_preset(i, p):
+            try:
+                return VersionedPreset(p).get_preset()
+            except InvalidPreset as e:
+                raise InvalidLayoutDescription(
+                    f"Invalid preset for world {i + 1}: {e}"
+                ) from e.original_exception
+
         generator_parameters = GeneratorParameters(
             seed_number=json_dict["info"]["seed"],
             spoiler=json_dict["info"]["has_spoiler"],
             presets=[
-                VersionedPreset(preset).get_preset()
-                for preset in json_dict["info"]["presets"]
+                get_preset(i, preset)
+                for i, preset in enumerate(json_dict["info"]["presets"])
             ],
         )
 

@@ -10,6 +10,7 @@ from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset, InvalidPreset
 from randovania.lib.migration_lib import UnsupportedVersion
+from randovania.network_common.multiplayer_session import MAX_WORLD_NAME_LENGTH, WORLD_NAME_RE
 
 
 class SelectPresetDialog(QtWidgets.QDialog, Ui_SelectPresetDialog):
@@ -40,6 +41,7 @@ class SelectPresetDialog(QtWidgets.QDialog, Ui_SelectPresetDialog):
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)
         self.world_name_edit.textEdited.connect(self.update_accept_button)
+        self.world_name_edit.setMaxLength(MAX_WORLD_NAME_LENGTH)
 
         self.create_preset_tree.update_items()
         self.valid_preset = False
@@ -66,9 +68,13 @@ class SelectPresetDialog(QtWidgets.QDialog, Ui_SelectPresetDialog):
         else:
             try:
                 raw_preset = preset.get_preset()
-                can_generate = True
-                description = f"<p style='font-weight:600;'>{raw_preset.name}</p><p>{raw_preset.description}</p>"
-                description += preset_describer.merge_categories(preset_describer.describe(raw_preset))
+                incompatible = raw_preset.settings_incompatible_with_multiworld()
+                if incompatible:
+                    description = "The following settings are incompatible with multiworld:\n" + "\n".join(incompatible)
+                else:
+                    can_generate = True
+                    description = f"<p style='font-weight:600;'>{raw_preset.name}</p><p>{raw_preset.description}</p>"
+                    description += preset_describer.merge_categories(preset_describer.describe(raw_preset))
 
             except InvalidPreset as e:
                 if not isinstance(e.original_exception, UnsupportedVersion):
@@ -87,6 +93,8 @@ class SelectPresetDialog(QtWidgets.QDialog, Ui_SelectPresetDialog):
         can_accept = self.valid_preset
 
         if self.include_world_name_prompt:
-            can_accept = can_accept and len(self.world_name_edit.text()) > 0
+            valid_name = WORLD_NAME_RE.match(self.world_name_edit.text()) is not None
+            common_qt_lib.set_error_border_stylesheet(self.world_name_edit, not valid_name)
+            can_accept = can_accept and valid_name
 
         self.accept_button.setEnabled(can_accept)

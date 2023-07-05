@@ -84,6 +84,21 @@ def add_validation(edit: QtWidgets.QLineEdit, validation: Callable[[], bool], po
     edit.textChanged.connect(field_validation)
 
 
+def romfs_validation(line: QtWidgets.QLineEdit):
+    if is_directory_validator(line):
+        return True
+
+    path = Path(line.text())
+    return not all(
+        p.is_file() for p in [
+            path.joinpath("system", "files.toc"),
+            path.joinpath("packs", "system", "system.pkg"),
+            path.joinpath("packs", "maps", "s010_cave", "s010_cave.pkg"),
+            path.joinpath("packs", "maps", "s020_magma", "s020_magma.pkg"),
+        ]
+    )
+
+
 class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
     @property
     def _game(self):
@@ -268,7 +283,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
     # Input file
 
     def _validate_input_file(self):
-        common_qt_lib.set_error_border_stylesheet(self.input_file_edit, is_directory_validator(self.input_file_edit))
+        common_qt_lib.set_error_border_stylesheet(self.input_file_edit, romfs_validation(self.input_file_edit))
 
     def _on_input_file_change(self):
         self._validate_input_file()

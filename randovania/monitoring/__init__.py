@@ -6,6 +6,7 @@ import typing
 from pathlib import Path
 
 import sentry_sdk
+import sentry_sdk.scrubber
 
 import randovania
 from randovania.version_hash import full_git_hash
@@ -63,16 +64,10 @@ def _filter_windows_home(data):
     return _filter_data(data, filter_home)
 
 
-def _before_send(event, hint):
-    _filter_windows_home(event["extra"])
-    if "logentry" in event:
-        _filter_windows_home(event["logentry"])
-    return event
-
-
-def _before_breadcrumb(event, hint):
-    _filter_windows_home(event)
-    return event
+class HomeEventScrubber(sentry_sdk.scrubber.EventScrubber):
+    def scrub_dict(self, d):
+        super().scrub_dict(d)
+        _filter_windows_home(d)
 
 
 def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, exclude_server_name: bool = False):
@@ -116,9 +111,8 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, ex
         environment="staging" if randovania.is_dev_version() else "production",
         traces_sampler=traces_sampler,
         server_name=server_name,
-        before_send=_before_send,
-        before_breadcrumb=_before_breadcrumb,
         auto_session_tracking=include_flask,
+        event_scrubber=HomeEventScrubber(),
     )
     sentry_sdk.set_context("os", {
         "name": platform.system(),
@@ -127,6 +121,10 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, ex
 
 
 def client_init():
+    if not randovania.is_frozen():
+        # TODO: It'd be nice to catch these running from source, but only for unmodified main.
+        return
+
     _init(False, _CLIENT_DEFAULT_URL,
           exclude_server_name=True)
     sentry_sdk.set_tag("frozen", randovania.is_frozen())
@@ -142,10 +140,25 @@ def bot_init():
 
 @contextlib.contextmanager
 def attach_patcher_data(patcher_data: dict):
-    with sentry_sdk.configure_scope() as scope:
+    with sentry_sdk.push_scope() as scope:
         scope.add_attachment(
             json.dumps(patcher_data).encode("utf-8"),
             filename="patcher.json",
             content_type="application/json",
         )
         yield
+
+
+trace_function = sentry_sdk.trace
+set_tag = sentry_sdk.set_tag
+
+
+def trace_block(description: str):
+    current_span = sentry_sdk.get_current_span()
+    if current_span is not None:
+        return current_span.start_child(
+            op=sentry_sdk.consts.OP.FUNCTION,
+            description=description,
+        )
+    else:
+        return contextlib.nullcontext()

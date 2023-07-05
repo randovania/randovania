@@ -17,6 +17,12 @@ from randovania.lib import json_lib
 
 class InvalidPreset(Exception):
     def __init__(self, original_exception: Exception):
+        if isinstance(original_exception, KeyError):
+            msg = f"Missing key {original_exception}"
+        else:
+            msg = original_exception
+
+        super().__init__(msg)
         self.original_exception = original_exception
 
 
