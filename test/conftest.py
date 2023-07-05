@@ -293,7 +293,6 @@ def pytest_addoption(parser):
 
 
 try:
-    import pytestqt
     import qasync
     import asyncio.events
 

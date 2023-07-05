@@ -2,7 +2,6 @@ from unittest.mock import MagicMock, AsyncMock
 
 import pytest
 import pytest_mock
-from PySide6 import QtWidgets
 
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 

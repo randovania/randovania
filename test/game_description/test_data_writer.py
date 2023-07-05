@@ -3,7 +3,6 @@ import pytest
 from randovania.game_description import data_reader, data_writer
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
-from randovania.lib import json_lib
 
 
 @pytest.mark.parametrize("game_enum", RandovaniaGame)
