@@ -51,7 +51,7 @@ def _filter_data(data, str_filter: typing.Callable[[str], str]) -> typing.Any | 
     return result
 
 
-_HOME_RE = re.compile(r"(:[/\\]Users[/\\])([^/\\]+)([/\\])")
+_HOME_RE = re.compile(r"(:?[/\\](?:home|Users)[/\\])([^/\\]+)([/\\])")
 
 
 def _filter_windows_home(data):
