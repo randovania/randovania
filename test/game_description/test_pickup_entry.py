@@ -1,7 +1,7 @@
 import pytest
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
 
 
