@@ -54,7 +54,7 @@ def _filter_data(data, str_filter: typing.Callable[[str], str]) -> typing.Any | 
 _HOME_RE = re.compile(r"(:?[/\\](?:home|Users)[/\\])([^/\\]+)([/\\])")
 
 
-def _filter_windows_home(data):
+def _filter_user_home(data):
     def filter_home(s: str) -> str:
         return _HOME_RE.sub(r"\1<redacted>\3", s)
 
@@ -64,7 +64,7 @@ def _filter_windows_home(data):
 class HomeEventScrubber(sentry_sdk.scrubber.EventScrubber):
     def scrub_dict(self, d):
         super().scrub_dict(d)
-        _filter_windows_home(d)
+        _filter_user_home(d)
 
 
 def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exclude_server_name: bool = False):
