@@ -2,15 +2,15 @@ import itertools
 import json
 import uuid
 from pathlib import Path
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import MagicMock, call, patch
 
 import pytest
 
 import randovania.interface_common.options
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
-from randovania.interface_common import update_checker, persisted_options
-from randovania.interface_common.options import Options, DecodeFailedException, InfoAlert
+from randovania.interface_common import persisted_options, update_checker
+from randovania.interface_common.options import DecodeFailedException, InfoAlert, Options
 from randovania.lib import migration_lib
 
 

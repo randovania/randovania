@@ -1,12 +1,12 @@
 import dataclasses
 from functools import partial
 
+from open_prime_rando.dol_patching.echoes.user_preferences import SoundMode
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import QColorDialog, QFrame, QLayout, QSizePolicy, QWidget, QCheckBox, QSlider, QLabel
+from PySide6.QtWidgets import QCheckBox, QColorDialog, QFrame, QLabel, QLayout, QSizePolicy, QSlider, QWidget
 
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from open_prime_rando.dol_patching.echoes.user_preferences import SoundMode
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog

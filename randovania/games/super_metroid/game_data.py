@@ -22,9 +22,9 @@ def _gui() -> game.GameGui:
 
 def _generator() -> game.GameGenerator:
     from randovania.games.super_metroid.generator.item_pool.pool_creator import super_metroid_specific_pool
-    from randovania.resolver.bootstrap import Bootstrap
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import AllJokesHintDistributor
+    from randovania.resolver.bootstrap import Bootstrap
 
     return game.GameGenerator(
         item_pool_creator=super_metroid_specific_pool,

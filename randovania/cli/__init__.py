@@ -8,7 +8,7 @@ import randovania
 
 
 def create_subparsers(root_parser):
-    from randovania.cli import layout, gui, database
+    from randovania.cli import database, gui, layout
     layout.create_subparsers(root_parser)
     database.create_subparsers(root_parser)
     gui.create_subparsers(root_parser)
@@ -51,8 +51,8 @@ def _run_args(parser, args):
 def run_pytest(argv):
     import pytest
     import pytest_asyncio.plugin
-    import pytest_mock.plugin
     import pytest_localftpserver.plugin
+    import pytest_mock.plugin
     sys.exit(pytest.main(argv[2:], plugins=[pytest_asyncio.plugin, pytest_mock.plugin,
                                             pytest_localftpserver.plugin]))
 

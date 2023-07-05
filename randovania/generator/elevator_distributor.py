@@ -2,13 +2,13 @@ import copy
 from collections import defaultdict
 from random import Random
 from typing import Optional
+
+from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
-
-from randovania.game_description.game_patches import ElevatorConnection
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.game_patches import ElevatorConnection
 
 
 class ElevatorHelper:

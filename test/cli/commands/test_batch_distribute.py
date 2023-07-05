@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, AsyncMock
+from unittest.mock import AsyncMock, MagicMock
 
 from randovania.cli.commands import batch_distribute
 from randovania.layout.generator_parameters import GeneratorParameters

@@ -3,10 +3,10 @@ import functools
 import json
 import math
 import typing
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
-from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
 from randovania.game_description.db.area import Area
@@ -33,7 +33,7 @@ from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterConfiguration
+from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib
@@ -749,7 +749,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             state.node = self._actions[-1]
 
         region_list = state.region_list
-        
+
         state.patches = state.patches.assign_dock_connections(
             (region_list.typed_node_by_identifier(teleporter, DockNode),
               region_list.default_node_for_area(combo.currentData()))

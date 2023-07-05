@@ -2,12 +2,12 @@ import collections
 import functools
 from pathlib import Path
 
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtGui, QtWidgets
 
 from randovania import get_data_path
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.connector.remote_connector import RemoteConnector
-from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
+from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib

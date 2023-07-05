@@ -1,8 +1,8 @@
 import dataclasses
-from typing import Iterator
+from collections.abc import Iterator
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game_description import default_database
 from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 

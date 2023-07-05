@@ -22,7 +22,7 @@ from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
 _NINTENDONT_RELEASES_URL = "https://api.github.com/repos/randovania/Nintendont/releases"
-zip_folder = "randovania-{}".format(VERSION)
+zip_folder = f"randovania-{VERSION}"
 
 
 def is_production():
@@ -154,7 +154,7 @@ def create_windows_zip(package_folder):
         with open_zip("windows") as release_zip:
             for f in package_folder.glob("**/*"):
                 print("Adding", f)
-                release_zip.write(f, "{}/{}".format(zip_folder, f.relative_to(package_folder)))
+                release_zip.write(f, f"{zip_folder}/{f.relative_to(package_folder)}")
 
             add_readme_to_zip(release_zip)
     else:

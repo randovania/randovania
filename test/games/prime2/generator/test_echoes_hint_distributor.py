@@ -1,11 +1,17 @@
-from unittest.mock import MagicMock, call, ANY
+from unittest.mock import ANY, MagicMock, call
 
 import pytest
 
-from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
-    HintDarkTemple
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.hint import (
+    Hint,
+    HintDarkTemple,
+    HintItemPrecision,
+    HintLocationPrecision,
+    HintType,
+    PrecisionPair,
+)
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.hint_distributor import PreFillParams

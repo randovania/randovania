@@ -2,9 +2,9 @@ from random import Random
 
 from randovania.game_description.db.dock import DockWeakness
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
 from randovania.layout.base.base_configuration import BaseConfiguration

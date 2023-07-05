@@ -1,7 +1,7 @@
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
-from randovania.lib import migration_lib, json_lib
+from randovania.lib import json_lib, migration_lib
 
 _FIRST_VERSION_IN_SUBFOLDER = 18
 

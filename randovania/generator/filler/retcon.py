@@ -2,24 +2,21 @@ from __future__ import annotations
 
 import math
 import pprint
+from collections.abc import Callable, Mapping, Set
 from random import Random
-from typing import (
-    AbstractSet, Mapping, Callable, )
 
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.node import NodeContext
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
-from randovania.generator.filler.filler_library import (
-    UnableToGenerate, UncollectedState
-)
+from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.player_state import PlayerState, WeightedLocations
 from randovania.generator.generator_reach import GeneratorReach
@@ -33,8 +30,8 @@ _LOGBOOKS_WEIGHT_MULTIPLIER = 1
 _VICTORY_WEIGHT = 1000
 
 
-def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[PickupIndex],
-                                         assigned_indices: AbstractSet[PickupIndex],
+def _calculate_uncollected_index_weights(uncollected_indices: Set[PickupIndex],
+                                         assigned_indices: Set[PickupIndex],
                                          considered_counts: Mapping[PickupIndex, int],
                                          indices_groups: list[set[PickupIndex]],
                                          ) -> dict[PickupIndex, float]:
@@ -443,10 +440,10 @@ def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: 
         hint_string = ""
 
     pickup_node = region_list.node_from_pickup_index(pickup_index)
-    return "{4}{0} at {3}{1}{2}".format(
+    return "{}{} at {}{}{}".format(
+        f"Player {owner_index + 1}'s " if add_indices else "",
         action.name,
+        f"player {player_index + 1}'s " if add_indices else "",
         region_list.node_name(pickup_node, with_region=True, distinguish_dark_aether=True),
         hint_string,
-        f"player {player_index + 1}'s " if add_indices else "",
-        f"Player {owner_index + 1}'s " if add_indices else "",
     )

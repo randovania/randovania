@@ -1,6 +1,6 @@
 import copy
+from collections.abc import Iterator
 from dataclasses import dataclass
-from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database

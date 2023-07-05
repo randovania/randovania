@@ -1,13 +1,13 @@
 import dataclasses
 import shutil
+from collections.abc import Callable
 from enum import Enum
 from pathlib import Path
-from typing import Callable
 
 import randovania
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.lib import status_update_lib, json_lib
+from randovania.lib import json_lib, status_update_lib
 
 
 class DreadModPlatform(Enum):
@@ -84,6 +84,6 @@ class DreadGameExporter(GameExporter):
                 export_params.input_path, export_params.output_path, patch_data,
                 lambda progress, msg: patcher_update(msg, progress),
             )
-            
+
         if export_params.post_export is not None:
             export_params.post_export(status_update_lib.OffsetProgressUpdate(progress_update, 0.75, 0.25))

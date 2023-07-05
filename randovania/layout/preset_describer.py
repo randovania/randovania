@@ -9,10 +9,9 @@ from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfigura
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.preset import Preset
-
 
 PresetDescription = tuple[str, list[str]]
 

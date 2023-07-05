@@ -2,7 +2,7 @@ import collections
 import dataclasses
 from functools import partial
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 
 import randovania.gui.lib.signal_handling
 from randovania.exporter import item_names

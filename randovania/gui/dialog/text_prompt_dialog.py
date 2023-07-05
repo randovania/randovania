@@ -3,7 +3,7 @@ import typing
 from PySide6 import QtWidgets
 
 from randovania.gui.generated.text_prompt_dialog_ui import Ui_TextPromptDialog
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import async_dialog, common_qt_lib
 
 
 class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):

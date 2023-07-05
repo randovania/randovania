@@ -4,22 +4,24 @@ import logging
 import uuid
 from pathlib import Path
 
-from PySide6 import QtCore
 from frozendict import frozendict
+from PySide6 import QtCore
 from qasync import asyncSlot
 
 from randovania.bitpacking import construct_pack
-from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
+from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
-from randovania.network_client.network_client import UnableToConnect, ConnectionState
+from randovania.network_client.network_client import ConnectionState, UnableToConnect
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory, \
-    MultiplayerSessionEntry
-from randovania.network_common.world_sync import ServerWorldSync, ServerSyncRequest
-
+from randovania.network_common.multiplayer_session import (
+    MultiplayerSessionEntry,
+    MultiplayerWorldPickups,
+    RemoteInventory,
+)
+from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldSync
 
 _ERRORS_THAT_STOP_SYNC = (
     error.WorldDoesNotExistError,

@@ -41,7 +41,7 @@
 
 """PySide6 port of the widgets/layouts/flowlayout example from Qt v6.x"""
 
-from PySide6.QtCore import Qt, QMargins, QPoint, QRect, QSize
+from PySide6.QtCore import QMargins, QPoint, QRect, QSize, Qt
 from PySide6.QtWidgets import QLayout, QSizePolicy, QWidgetItem
 
 
@@ -89,7 +89,7 @@ class FlowLayout(QLayout):
         return height
 
     def setGeometry(self, rect):
-        super(FlowLayout, self).setGeometry(rect)
+        super().setGeometry(rect)
         self._do_layout(rect, False)
 
     def sizeHint(self):

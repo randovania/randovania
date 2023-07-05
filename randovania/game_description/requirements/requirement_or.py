@@ -1,6 +1,6 @@
-from typing import Iterable
+from collections.abc import Iterable
 
-from randovania.game_description.requirements.array_base import RequirementArrayBase, mergeable_array, expand_items
+from randovania.game_description.requirements.array_base import RequirementArrayBase, expand_items, mergeable_array
 from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_set import RequirementSet

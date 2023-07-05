@@ -1,7 +1,8 @@
 import asyncio
-from unittest.mock import MagicMock, AsyncMock
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
+
 from randovania.game_connection.executor.dread_executor import DreadExecutor, DreadLuaException, PacketType
 
 
@@ -123,7 +124,7 @@ async def test_read_loop(executor):
     reader = MagicMock()
     reader.read = AsyncMock()
     handshake_answer = [b'\x01', b'\x00']
-    reader.read.side_effect = handshake_answer 
+    reader.read.side_effect = handshake_answer
 
     socket = MagicMock()
     socket.reader = reader
@@ -142,7 +143,7 @@ async def test_packet_types_with_signals(executor):
     executor._socket = MagicMock()
     executor._socket.reader = reader
     executor.signals = MagicMock()
-    
+
 
     # PACKET_LOG_MESSAGE
     answer = [b'\x02\x00\x00\x00', b'{}']

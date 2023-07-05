@@ -2,8 +2,11 @@ import pytest
 from PySide6 import QtCore
 
 from randovania.games.dread.gui.dialog.dread_cosmetic_patches_dialog import DreadCosmeticPatchesDialog
-from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadRoomGuiType, \
-    DreadMissileCosmeticType
+from randovania.games.dread.layout.dread_cosmetic_patches import (
+    DreadCosmeticPatches,
+    DreadMissileCosmeticType,
+    DreadRoomGuiType,
+)
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 

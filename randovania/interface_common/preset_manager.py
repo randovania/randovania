@@ -5,8 +5,8 @@ import os
 import time
 import typing
 import uuid
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
 import dulwich.porcelain
 import dulwich.repo
@@ -59,8 +59,8 @@ def _get_preset_at_version(repository: Path, commit_sha: bytes, file_path: Path)
 
 
 def _history_for_file(repository: Path, file_path: Path) -> Iterator[tuple[datetime.datetime, bytes]]:
-    from dulwich.walk import WalkEntry
     from dulwich.objects import Commit
+    from dulwich.walk import WalkEntry
 
     with dulwich.porcelain.open_repo_closing(repository) as r:
         r = typing.cast(dulwich.repo.Repo, r)

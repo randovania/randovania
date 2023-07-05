@@ -2,7 +2,7 @@ import dataclasses
 import datetime
 import uuid
 from enum import Enum
-from typing import NamedTuple, Optional
+from typing import NamedTuple
 
 import pytest
 
@@ -33,7 +33,7 @@ class D2(JsonDataclass):
 
 @dataclasses.dataclass()
 class D2OldSyntax(JsonDataclass):
-    a: Optional[A]
+    a: A | None
     b: D1
 
 
@@ -102,7 +102,7 @@ def test_from_json_missing_field_with_default():
 def test_has_dict():
     value = HasDict(10, {uuid.UUID("77000000-0000-1111-0000-000000000000"): 15},
                     [RandovaniaGame.BLANK], [None], {},
-                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc),
+                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC),
                     N(2403, True),
                     (60, RandovaniaGame.METROID_PRIME_ECHOES, "foo"))
     data = {

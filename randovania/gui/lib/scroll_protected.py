@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from PySide6.QtCore import Qt, QEvent
+from PySide6.QtCore import QEvent, Qt
 
 
 class ScrollProtectedSpinBox(QtWidgets.QSpinBox):

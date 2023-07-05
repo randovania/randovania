@@ -1,10 +1,10 @@
 import dataclasses
 
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

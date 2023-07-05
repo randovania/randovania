@@ -1,5 +1,5 @@
 import subprocess
-from unittest.mock import MagicMock, AsyncMock, call
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
 

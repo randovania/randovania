@@ -65,7 +65,7 @@ enum_lib.add_per_enum_field(DreadMissileCosmeticType, "colors", {
     DreadMissileCosmeticType.PRIDE: [MissileColor.RED, MissileColor.ORANGE, MissileColor.YELLOW, MissileColor.GREEN,
                                      MissileColor.BLUE, MissileColor.PURPLE],
     DreadMissileCosmeticType.TRANS: [MissileColor.WHITE, MissileColor.CYAN, MissileColor.PINK],
-    DreadMissileCosmeticType.NONBINARY: [MissileColor.YELLOW, MissileColor.WHITE, MissileColor.PURPLE, 
+    DreadMissileCosmeticType.NONBINARY: [MissileColor.YELLOW, MissileColor.WHITE, MissileColor.PURPLE,
                                          MissileColor.BLACK],
     DreadMissileCosmeticType.ASEXUAL: [MissileColor.BLACK, MissileColor.GRAY, MissileColor.WHITE, MissileColor.PURPLE],
     DreadMissileCosmeticType.BISEXUAL: [MissileColor.MAGENTA, MissileColor.PURPLE, MissileColor.BLUE],

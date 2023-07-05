@@ -3,7 +3,7 @@ from peewee import fn
 from randovania.network_common import error
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH
 from randovania.server import database
-from randovania.server.database import MultiplayerSession, MultiplayerMembership, User
+from randovania.server.database import MultiplayerMembership, MultiplayerSession, User
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
 

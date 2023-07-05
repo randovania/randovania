@@ -1,17 +1,13 @@
 import json
 from pathlib import Path
-from typing import Union
-from unittest.mock import patch, MagicMock, call, ANY
+from unittest.mock import ANY, MagicMock, call, patch
 
 import pytest
 import pytest_mock
 
 from randovania.games.prime2.patcher import claris_randomizer
 from randovania.interface_common import persistence
-from randovania.layout.layout_description import LayoutDescription
 from randovania.patching.patchers.exceptions import ExportFailure
-
-LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
 
 
 class CustomException(Exception):

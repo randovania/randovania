@@ -6,8 +6,8 @@ import typing
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.node_identifier import NodeIdentifier
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

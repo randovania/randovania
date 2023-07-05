@@ -1,6 +1,6 @@
 import logging
 import uuid
-from unittest.mock import AsyncMock, MagicMock, ANY
+from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
 from PySide6 import QtWidgets
@@ -9,7 +9,7 @@ from pytest_mock import MockerFixture
 from randovania.gui.lib import multiplayer_session_api
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.network_client.network_client import UnableToConnect
-from randovania.network_common import error, admin_actions
+from randovania.network_common import admin_actions, error
 
 
 @pytest.mark.parametrize("exception", [

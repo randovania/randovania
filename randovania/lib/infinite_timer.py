@@ -1,5 +1,5 @@
 import asyncio
-from typing import Callable, Awaitable
+from collections.abc import Awaitable, Callable
 
 import shiboken6
 from PySide6 import QtCore

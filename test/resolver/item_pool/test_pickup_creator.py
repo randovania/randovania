@@ -6,8 +6,9 @@ from randovania.game_description.pickup.standard_pickup import StandardPickupDef
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import (
     PickupEntry,
+    PickupGeneratorParams,
+    PickupModel,
     ResourceLock,
-    PickupModel, PickupGeneratorParams,
 )
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items

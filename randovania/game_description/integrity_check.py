@@ -1,9 +1,9 @@
 import re
-from typing import Iterator
+from collections.abc import Iterator
 
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockWeakness, DockType
+from randovania.game_description.db.dock import DockType, DockWeakness
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode

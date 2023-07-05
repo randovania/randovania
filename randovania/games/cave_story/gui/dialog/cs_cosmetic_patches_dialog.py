@@ -3,8 +3,13 @@ import dataclasses
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QWidget
 
-from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches, CSSong, MusicRandoType, MyChar, \
-    SongGame
+from randovania.games.cave_story.layout.cs_cosmetic_patches import (
+    CSCosmeticPatches,
+    CSSong,
+    MusicRandoType,
+    MyChar,
+    SongGame,
+)
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.cs_cosmetic_patches_dialog_ui import Ui_CSCosmeticPatchesDialog
 from randovania.gui.lib import signal_handling

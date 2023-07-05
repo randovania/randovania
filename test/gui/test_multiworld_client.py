@@ -1,6 +1,6 @@
 import datetime
 import uuid
-from unittest.mock import MagicMock, AsyncMock, call
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
 from frozendict import frozendict
@@ -15,8 +15,12 @@ from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry, MultiplayerUser, MultiplayerWorld
 from randovania.network_common.session_state import MultiplayerSessionState
-from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldSync, ServerSyncResponse, \
-    ServerWorldResponse
+from randovania.network_common.world_sync import (
+    ServerSyncRequest,
+    ServerSyncResponse,
+    ServerWorldResponse,
+    ServerWorldSync,
+)
 
 
 @pytest.fixture()
@@ -199,7 +203,7 @@ async def test_server_sync(client, mocker: MockerFixture):
     w1_session = MultiplayerSessionListEntry(
         id=567, name="The Session", has_password=False, state=MultiplayerSessionState.IN_PROGRESS,
         num_players=5, creator="Not You", creation_date=datetime.datetime(2019, 1, 3, 2, 50,
-                                                                          tzinfo=datetime.timezone.utc),
+                                                                          tzinfo=datetime.UTC),
         is_user_in_session=False,
     )
 

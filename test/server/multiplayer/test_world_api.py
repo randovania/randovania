@@ -10,8 +10,12 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldSync, ServerSyncResponse, \
-    ServerWorldResponse
+from randovania.network_common.world_sync import (
+    ServerSyncRequest,
+    ServerSyncResponse,
+    ServerWorldResponse,
+    ServerWorldSync,
+)
 from randovania.server import database
 from randovania.server.multiplayer import world_api
 

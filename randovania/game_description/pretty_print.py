@@ -1,5 +1,6 @@
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator, TextIO
+from typing import TextIO
 
 from randovania.game_description.data_writer import REGION_NAME_TO_FILE_NAME_RE
 from randovania.game_description.db.area import Area

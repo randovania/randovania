@@ -59,7 +59,7 @@ async def main():
         if sha is None:
             sha = os.environ["GITHUB_SHA"]
 
-        version = "sha-{}".format(sha[:8])
+        version = f"sha-{sha[:8]}"
 
     await deploy(
         remote_host=args.host,

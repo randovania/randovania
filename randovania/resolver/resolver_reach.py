@@ -2,7 +2,7 @@ import itertools
 import math
 import typing
 from collections import defaultdict
-from typing import Iterator
+from collections.abc import Iterator
 
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.resource_node import ResourceNode

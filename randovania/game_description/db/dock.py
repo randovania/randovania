@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import dataclasses
+from collections.abc import Iterator
 from dataclasses import dataclass
-from enum import unique, Enum
-from typing import Iterator
+from enum import Enum, unique
 
 from frozendict import frozendict
 
@@ -139,7 +139,7 @@ class DockWeaknessDatabase:
             dock_type
             for dock_type in self.dock_types if dock_type.extra.get("is_teleporter", False)
         ]
-    
+
     @property
     def all_ignore_hints_dock_types(self) -> list[DockType]:
         return [

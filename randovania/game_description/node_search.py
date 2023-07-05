@@ -1,11 +1,11 @@
-from randovania.game_description.db.dock import DockType
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.area import Area
+from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 def distances_to_node(region_list: RegionList,

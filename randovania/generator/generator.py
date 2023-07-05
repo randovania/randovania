@@ -1,33 +1,29 @@
 import asyncio
 import dataclasses
+from collections.abc import Callable
 from random import Random
-from typing import Callable
 
 import tenacity
 
-from randovania.game_description.assignment import (PickupTarget, PickupTargetAssociation)
+from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.generator import dock_weakness_distributor
-from randovania.generator.filler.filler_library import (
-    UnableToGenerate, filter_unassigned_pickup_nodes)
-from randovania.generator.filler.runner import (FillerResults, PlayerPool,
-                                                run_filler)
+from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
+from randovania.generator.filler.runner import FillerResults, PlayerPool, run_filler
 from randovania.generator.hint_distributor import PreFillParams
 from randovania.generator.pickup_pool import pool_creator
 from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 from randovania.resolver import resolver
-from randovania.resolver.exceptions import (GenerationFailure,
-                                            ImpossibleForSolver)
-from randovania.layout.exceptions import InvalidConfiguration
-
+from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
 DEFAULT_ATTEMPTS = 15
 
@@ -119,7 +115,7 @@ def _distribute_remaining_items(rng: Random,
     remaining_major_pickups: list[PickupTarget] = []
 
     assignments: dict[int, list[PickupTargetAssociation]] = {}
-    
+
     modes = [preset.configuration.available_locations.randomization_mode for preset in presets]
 
     for player, filler_result in filler_results.player_results.items():

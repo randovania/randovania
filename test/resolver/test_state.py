@@ -1,9 +1,9 @@
 import pytest
 
-from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.resolver import state
 from randovania.resolver.state import StateGameData
 

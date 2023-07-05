@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 
-from randovania.cli.commands.new_game import add_new_game_command, add_create_databases
+from randovania.cli.commands.new_game import add_create_databases, add_new_game_command
 from randovania.cli.commands.refresh_presets import add_refresh_presets_command
 
 __all__ = ["create_subparsers"]

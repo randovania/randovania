@@ -1,10 +1,10 @@
-from typing import Callable
+from collections.abc import Callable
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_starting_area_ui import Ui_PresetStartingArea
 from randovania.gui.lib.node_list_helper import NodeListHelper

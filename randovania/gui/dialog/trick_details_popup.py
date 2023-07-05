@@ -1,17 +1,17 @@
 import re
-from typing import Callable, Iterable
+from collections.abc import Callable, Iterable
 
 from PySide6.QtWidgets import QDialog, QWidget
 
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.region import Region
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.region import Region
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.window_manager import WindowManager

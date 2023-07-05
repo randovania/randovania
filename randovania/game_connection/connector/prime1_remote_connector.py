@@ -1,14 +1,14 @@
 import struct
 
-from ppc_asm import assembler
-
 from open_prime_rando.dol_patching import all_prime_dol_patches
 from open_prime_rando.dol_patching.prime1 import dol_patches
 from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
+from ppc_asm import assembler
+
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
 from randovania.game_description.db.region import Region
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
+from randovania.game_description.resources.item_resource_info import Inventory, ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.prime1.patcher import prime_items
 

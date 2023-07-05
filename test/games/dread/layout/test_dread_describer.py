@@ -3,7 +3,9 @@ import dataclasses
 import pytest
 
 from randovania.games.dread.layout.dread_configuration import (
-    DreadConfiguration, DreadArtifactConfig, DreadRavenBeakDamageMode
+    DreadArtifactConfig,
+    DreadConfiguration,
+    DreadRavenBeakDamageMode,
 )
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager

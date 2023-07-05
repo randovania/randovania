@@ -4,7 +4,7 @@ import dataclasses
 import hashlib
 import json
 import operator
-from typing import Iterator, Iterable
+from collections.abc import Iterable, Iterator
 
 import bitstruct
 import construct

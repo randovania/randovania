@@ -1,8 +1,8 @@
 import dataclasses
 
 from randovania.game_description.game_description import GameDescription
-from randovania.games.game import RandovaniaGame
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
@@ -68,7 +68,10 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
-        assert isinstance(config, (PrimeConfiguration, EchoesConfiguration, CorruptionConfiguration, AM2RConfiguration))
+        assert isinstance(
+            config,
+            PrimeConfiguration | EchoesConfiguration | CorruptionConfiguration | AM2RConfiguration
+        )
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 
         if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:

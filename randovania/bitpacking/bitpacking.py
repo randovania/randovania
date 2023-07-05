@@ -1,8 +1,9 @@
 import dataclasses
 import hashlib
 import math
+from collections.abc import Callable, Iterator
 from enum import Enum
-from typing import Iterator, TypeVar, Callable
+from typing import TypeVar
 
 import bitstruct
 

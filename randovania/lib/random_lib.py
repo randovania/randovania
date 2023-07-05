@@ -1,5 +1,6 @@
+from collections.abc import Callable, Iterator
 from random import Random
-from typing import Iterator, TypeVar, Any, Callable
+from typing import Any, TypeVar
 
 T = TypeVar('T')
 

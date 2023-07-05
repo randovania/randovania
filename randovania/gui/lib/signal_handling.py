@@ -1,5 +1,6 @@
 import functools
-from typing import Callable, TypeVar
+from collections.abc import Callable
+from typing import TypeVar
 
 from PySide6 import QtWidgets
 

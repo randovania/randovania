@@ -2,25 +2,25 @@ from __future__ import annotations
 
 import collections
 import re
-from typing import DefaultDict
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.db.region_list import RegionList
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import UncollectedState
 from randovania.generator.filler.pickup_list import (
+    PickupCombinations,
     get_pickups_that_solves_unreachable,
-    interesting_resources_for_reach, PickupCombinations,
+    interesting_resources_for_reach,
 )
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
@@ -34,8 +34,8 @@ class PlayerState:
     game: GameDescription
     pickups_left: list[PickupEntry]
     configuration: FillerConfiguration
-    pickup_index_considered_count: DefaultDict[PickupIndex, int]
-    hint_seen_count: DefaultDict[NodeIdentifier, int]
+    pickup_index_considered_count: collections.defaultdict[PickupIndex, int]
+    hint_seen_count: collections.defaultdict[NodeIdentifier, int]
     hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
     _unfiltered_potential_actions: tuple[PickupCombinations, tuple[ResourceNode, ...]]
     num_starting_pickups_placed: int
@@ -189,24 +189,24 @@ class PlayerState:
         ]
 
         return (
-            "At {0} after {1} actions and {2} pickups, with {3} collected locations, {7} safe nodes.\n\n"
-            "Pickups still available: {4}\n\n"
-            "Resources to progress: {5}\n\n"
-            "Paths to be opened:\n{8}\n\n"
-            "Accessible teleporters:\n{9}\n\n"
-            "Reachable nodes:\n{6}"
+            "At {} after {} actions and {} pickups, with {} collected locations, {} safe nodes.\n\n"
+            "Pickups still available: {}\n\n"
+            "Resources to progress: {}\n\n"
+            "Paths to be opened:\n{}\n\n"
+            "Accessible teleporters:\n{}\n\n"
+            "Reachable nodes:\n{}"
         ).format(
             self.game.region_list.node_name(self.reach.state.node, with_region=True, distinguish_dark_aether=True),
             self.num_actions,
             self.num_assigned_pickups,
             len(state.indices),
+            sum(1 for n in self.reach.iterate_nodes if self.reach.is_safe_node(n)),
             ", ".join(name if quantity == 1 else f"{name} x{quantity}"
                       for name, quantity in sorted(pickups_by_name_and_quantity.items())),
             ", ".join(sorted(to_progress)),
-            "\n".join(accessible_nodes) if len(accessible_nodes) < 15 else f"{len(accessible_nodes)} nodes total",
-            sum(1 for n in self.reach.iterate_nodes if self.reach.is_safe_node(n)),
             "\n".join(sorted(paths_to_be_opened)) or "None",
             "\n".join(teleporters) or "None",
+            "\n".join(accessible_nodes) if len(accessible_nodes) < 15 else f"{len(accessible_nodes)} nodes total",
         )
 
     def filter_usable_locations(self, locations_weighted: WeightedLocations,

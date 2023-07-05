@@ -6,7 +6,7 @@ import pytest
 
 from randovania.layout import description_migration
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.layout.layout_description import LayoutDescription, InvalidLayoutDescription
+from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 
 
 @pytest.mark.parametrize("value", LayoutTrickLevel)

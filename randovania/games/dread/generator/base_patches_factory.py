@@ -1,5 +1,5 @@
+from collections.abc import Iterator
 from random import Random
-from typing import Iterator
 
 from randovania.game_description.assignment import NodeConfigurationAssociation
 from randovania.game_description.db.configurable_node import ConfigurableNode

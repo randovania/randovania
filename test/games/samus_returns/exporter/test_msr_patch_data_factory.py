@@ -36,7 +36,7 @@ def test_create_patch_data(test_files_dir, rdvgame_filename,
 
     # Uncomment to easily view diff of failed test
     # json_lib.write_path(expected_results_path, data)
-                                
-    expected_data = json_lib.read_path(expected_results_path)                           
-    
+
+    expected_data = json_lib.read_path(expected_results_path)
+
     assert data == expected_data

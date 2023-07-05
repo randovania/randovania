@@ -1,13 +1,19 @@
 import io
 import os
 from pathlib import Path
-from unittest.mock import MagicMock, AsyncMock, ANY, call
+from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import discord
 
 from randovania.games.game import RandovaniaGame
-from randovania.server.discord.database_command import DatabaseCommandCog, SplitRegion, SelectSplitRegionItem, \
-    SelectAreaItem, AreaWidget, SelectNodesItem
+from randovania.server.discord.database_command import (
+    AreaWidget,
+    DatabaseCommandCog,
+    SelectAreaItem,
+    SelectNodesItem,
+    SelectSplitRegionItem,
+    SplitRegion,
+)
 
 
 async def test_add_commands():

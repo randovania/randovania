@@ -1,7 +1,6 @@
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock, MagicMock, call
 
 import frozendict
-from mock import call
 import pytest
 from PySide6 import QtCore
 
@@ -13,6 +12,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+
 
 @pytest.fixture(name="connector")
 def dread_remote_connector():
@@ -111,8 +111,8 @@ def spider_pickup(default_generator_params) -> PickupEntry:
         ),
         pickup_category=dread_pickup_database.pickup_categories["misc"],
         broad_category=dread_pickup_database.pickup_categories["misc"],
-        progression=((ItemResourceInfo(resource_index=24, long_name='Spider Magnet', 
-                                      short_name='Magnet', max_capacity=1, 
+        progression=((ItemResourceInfo(resource_index=24, long_name='Spider Magnet',
+                                      short_name='Magnet', max_capacity=1,
                                       extra=frozendict.frozendict({'item_id': 'ITEM_MAGNET_GLOVE'}))
                                       , 1),),
         generator_params=default_generator_params,

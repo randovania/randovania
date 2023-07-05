@@ -7,8 +7,12 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
-from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode, TeleporterList, \
-    TeleporterTargetList
+from randovania.layout.lib.teleporters import (
+    TeleporterConfiguration,
+    TeleporterList,
+    TeleporterShuffleMode,
+    TeleporterTargetList,
+)
 
 
 class Data(NamedTuple):

@@ -1,7 +1,7 @@
 import contextlib
 from dataclasses import dataclass
 from typing import TypeVar
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -17,8 +17,8 @@ from randovania.layout.base.available_locations import AvailableLocationsConfigu
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
-from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.lib.teleporters import TeleporterConfiguration
 

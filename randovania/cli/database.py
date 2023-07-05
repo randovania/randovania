@@ -9,7 +9,7 @@ from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
-from randovania.games import default_data, binary_data
+from randovania.games import binary_data, default_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
@@ -172,8 +172,7 @@ def view_area_command(sub_parsers):
 
 
 def update_human_readable_logic(args):
-    from randovania.game_description import pretty_print
-    from randovania.game_description import data_reader
+    from randovania.game_description import data_reader, pretty_print
     game = RandovaniaGame(args.game)
 
     path, data = default_data.read_json_then_binary(game)
@@ -193,8 +192,7 @@ def update_human_readable(sub_parsers):
 
 
 def write_game_descriptions(game_descriptions: dict[RandovaniaGame, GameDescription]):
-    from randovania.game_description import pretty_print
-    from randovania.game_description import data_writer
+    from randovania.game_description import data_writer, pretty_print
 
     for game, gd in game_descriptions.items():
         logging.info("Writing %s", game.long_name)
@@ -310,7 +308,7 @@ def list_paths_with_dangerous_logic(args):
                         if individual.negate:
                             area_had_resource = True
                             if not print_only_area:
-                                print("At {0}, from {1} to {2}:\n{3}\n".format(
+                                print("At {}, from {} to {}:\n{}\n".format(
                                     game.region_list.area_name(area),
                                     area,
                                     source.name,
@@ -374,7 +372,9 @@ def list_paths_with_resource_command(sub_parsers):
 def render_region_graph_logic(args):
     import hashlib
     import re
+
     import graphviz
+
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.requirements.base import Requirement
@@ -457,7 +457,7 @@ def render_region_graph_logic(args):
 
     def _cross_region_dock(node: DockNode):
         return node.default_connection.region_name != node.identifier.region_name
-            
+
     per_game_colors = {
         RandovaniaGame.METROID_PRIME_ECHOES: {
             "Agon Wastes": "#ffc61c",
@@ -499,7 +499,7 @@ def render_region_graph_logic(args):
 
         for area in region.areas:
             shape = None
-            if any(isinstance(node, DockNode) and _cross_region_dock(node) 
+            if any(isinstance(node, DockNode) and _cross_region_dock(node)
                    for node in area.nodes):
                 shape = "polygon"
 

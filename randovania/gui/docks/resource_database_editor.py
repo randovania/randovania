@@ -4,7 +4,7 @@ import functools
 import json
 import typing
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 
 from randovania.game_description.requirements.base import Requirement

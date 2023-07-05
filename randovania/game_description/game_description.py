@@ -1,17 +1,17 @@
 """Classes that describes the raw data of a game db."""
 import copy
 import dataclasses
-from typing import Iterator
-from randovania.game_description.db.dock_node import DockNode
+from collections.abc import Iterator
 
+from randovania.game_description.db.dock import DockWeaknessDatabase
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceCollection
+from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGainTuple, ResourceInfo
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.db.dock import DockWeaknessDatabase
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region_list import RegionList
 from randovania.games.game import RandovaniaGame
 
 

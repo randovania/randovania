@@ -7,8 +7,8 @@ from qasync import asyncSlot
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_description import default_database
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.generated.debug_connector_window_ui import Ui_DebugConnectorWindow
 from randovania.gui.lib import common_qt_lib, signal_handling
 

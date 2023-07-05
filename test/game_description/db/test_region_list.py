@@ -3,6 +3,14 @@ from unittest.mock import MagicMock
 
 from frozendict import frozendict
 
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.dock import DockLock, DockLockType, DockType, DockWeakness
+from randovania.game_description.db.dock_lock_node import DockLockNode
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -11,14 +19,6 @@ from randovania.game_description.resources.node_resource_info import NodeResourc
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.dock import DockWeakness, DockLockType, DockType, DockLock
-from randovania.game_description.db.dock_lock_node import DockLockNode
-from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import NodeContext
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region import Region
-from randovania.game_description.db.region_list import RegionList
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.layout import filtered_database
 

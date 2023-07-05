@@ -2,6 +2,7 @@ from randovania.games import game
 from randovania.games.am2r import layout
 from randovania.layout.preset_describer import GamePresetDescriber
 
+
 def _options():
     from randovania.interface_common.options import PerGameOptions
     return PerGameOptions

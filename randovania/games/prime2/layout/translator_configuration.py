@@ -1,11 +1,12 @@
 import copy
 import dataclasses
 import functools
+from collections.abc import Iterator
 from enum import Enum
-from typing import Iterator, Self
+from typing import Self
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame

@@ -5,7 +5,7 @@ import logging
 import typing
 import uuid
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.lib import async_dialog
 from randovania.gui.lib.qt_network_client import QtNetworkClient

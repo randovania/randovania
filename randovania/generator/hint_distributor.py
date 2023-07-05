@@ -1,23 +1,29 @@
 import copy
 import dataclasses
 from abc import ABC
+from collections.abc import Callable, Iterator
 from random import Random
-from typing import Iterator, Optional, Callable
 
 from randovania.game_description import node_search
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import (
-    Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision,
-    HintRelativeAreaName, RelativeDataArea, RelativeDataItem
-)
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.hint_node import HintNodeKind, HintNode
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import (
+    Hint,
+    HintItemPrecision,
+    HintLocationPrecision,
+    HintRelativeAreaName,
+    HintType,
+    PrecisionPair,
+    RelativeDataArea,
+    RelativeDataItem,
+)
+from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
@@ -25,7 +31,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib import random_lib
 from randovania.resolver import debug
 
-HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Optional[Hint]]
+HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Hint | None]
 
 
 def _not_empty(it: Iterator) -> bool:

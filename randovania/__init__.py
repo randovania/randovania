@@ -2,7 +2,8 @@ import json
 import sys
 from pathlib import Path
 
-from . import version as _version, version_hash
+from . import version as _version
+from . import version_hash
 
 CONFIGURATION_FILE_PATH: Path | None = None
 

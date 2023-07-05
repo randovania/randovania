@@ -1,6 +1,6 @@
 import random
 from random import Random
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -37,7 +37,7 @@ def test_try_randomize_elevators(seed_number: int,
     # Run
     result = elevator_distributor.try_randomize_elevators(
         rng,
-        elevator_distributor.create_elevator_database(echoes_game_description.region_list, 
+        elevator_distributor.create_elevator_database(echoes_game_description.region_list,
                                                       teleporters, [elevator_type]))
 
     connected_ids = [

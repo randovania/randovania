@@ -1,15 +1,14 @@
-from unittest.mock import MagicMock, call
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
-from mock import AsyncMock
+from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
 from retro_data_structures.game_check import Game as RDSGame
 
-from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperationException
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
 
 
 @pytest.fixture(name="version")
