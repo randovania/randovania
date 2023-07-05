@@ -24,6 +24,7 @@ class AM2RConfiguration(BaseConfiguration):
     skip_cutscenes: bool        # TODO: requires changes in DB!
     respawn_bomb_blocks: bool   # TODO: requires changes in DB!
     artifacts: AM2RArtifactConfig
+    grave_grotto_blocks: bool
     # TODO: warp to start
     a3_entrance_blocks: bool
 

@@ -15,7 +15,8 @@ _FIELDS = [
     "septogg_helpers",
     "change_level_design",
     "respawn_bomb_blocks",
-    "skip_cutscenes"
+    "skip_cutscenes",
+    # "grave_grotto_blocks" - TODO: Uncomment later when splitting the GUI stuff from the am2r exporter PR
 ]
 
 
