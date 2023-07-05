@@ -1,4 +1,5 @@
 from peewee import fn
+from peewee import Case
 
 from randovania.network_common import error
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH
@@ -11,11 +12,13 @@ from randovania.server.server_app import ServerApp
 def list_sessions(sio: ServerApp, limit: int | None):
     # Note: this query fails to list any session that has no memberships
     # But that's fine, because these sessions should've been deleted!
+    user = sio.get_current_user()
     sessions: list[MultiplayerSession] = list(
         MultiplayerSession.select(
             MultiplayerSession,
             User.name,
-            fn.COUNT(MultiplayerMembership.user_id).alias('num_players')
+            fn.COUNT(MultiplayerMembership.user_id).alias('num_players'),
+            fn.MAX(Case(MultiplayerMembership.user_id, ((user.id, 1),), 0)).alias('is_in_session')
         ).join(
             User, on=MultiplayerSession.creator
         ).join(
@@ -26,9 +29,7 @@ def list_sessions(sio: ServerApp, limit: int | None):
             MultiplayerSession.id.desc()
         ).limit(limit)
     )
-    user = sio.get_current_user()
     return [
-        # FIXME: is_user_in_session still causes one extra query
         session.create_list_entry(user).as_json
         for session in sessions
     ]

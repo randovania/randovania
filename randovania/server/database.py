@@ -172,11 +172,14 @@ class MultiplayerSession(BaseModel):
         return datetime.datetime.fromisoformat(self.creation_date)
 
     def is_user_in_session(self, user: User):
-        try:
-            MultiplayerMembership.get_by_ids(user, self.id)
-        except peewee.DoesNotExist:
-            return False
-        return True
+        is_in_session = getattr(self, "is_in_session", None)
+        if is_in_session is None:
+            try:
+                MultiplayerMembership.get_by_ids(user, self.id)
+            except peewee.DoesNotExist:
+                is_in_session = False
+            is_in_session = True
+        return is_in_session
 
     def create_list_entry(self, user: User):
         num_players = getattr(self, "num_players", None)
