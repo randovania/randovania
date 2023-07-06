@@ -71,7 +71,7 @@ def decode_uuid_set(data: list[str]) -> set[uuid.UUID]:
 
 
 def decode_uuid_list(data: list[str]) -> list[uuid.UUID]:
-    result = list()
+    result = []
     decode_uuid_container(data, result.append)
     return result
 

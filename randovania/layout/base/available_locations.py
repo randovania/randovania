@@ -45,7 +45,7 @@ class AvailableLocationsConfiguration(BitPackValue):
 
     @property
     def _sorted_indices(self) -> list[int]:
-        return list(sorted(item.index for item in self.excluded_indices))
+        return sorted(item.index for item in self.excluded_indices)
 
     @property
     def as_json(self) -> dict:

@@ -46,10 +46,7 @@ def _pickup_assignment_to_item_locations(region_list: RegionList,
         items_locations[region.correct_name(area.in_dark_aether)][region_list.node_name(node)] = item_name
 
     return {
-        region: {
-            area: item
-            for area, item in sorted(items_locations[region].items())
-        }
+        region: dict(sorted(items_locations[region].items()))
         for region in sorted(items_locations.keys())
     }
 
@@ -109,12 +106,9 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             identifier.as_string: data_writer.write_requirement(requirement)
             for identifier, requirement in patches.configurable_nodes.items()
         },
-        "locations": {
-            key: value
-            for key, value in _pickup_assignment_to_item_locations(region_list,
+        "locations": dict(_pickup_assignment_to_item_locations(region_list,
                                                                    patches.pickup_assignment,
-                                                                   num_players).items()
-        },
+                                                                   num_players).items()),
         "hints": {
             identifier.as_string: hint.as_json
             for identifier, hint in patches.hints.items()

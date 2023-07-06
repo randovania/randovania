@@ -206,7 +206,7 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
     assert result == PickupEntry(
         name="The Item",
         model=PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
-        progression=tuple(),
+        progression=(),
         extra_resources=(
             (ammo_a, ammo_count[0]),
         ),

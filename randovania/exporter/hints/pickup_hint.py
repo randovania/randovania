@@ -82,7 +82,7 @@ def create_pickup_hint(pickup_assignment: PickupAssignment,
         target = PickupTarget(
             pickup=PickupEntry(
                 name="Energy Transfer Module",
-                progression=tuple(),
+                progression=(),
                 model=PickupModel(
                     game=RandovaniaGame.METROID_PRIME_ECHOES,
                     name="EnergyTransferModule",

@@ -257,19 +257,19 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
         return
 
     for region in regions:
-        area_dock_nums = dict()
-        attached_areas = dict()
-        size_indices = dict()
-        candidates = list()
-        default_connections_node_name = dict()
-        dock_num_by_area_node = dict()
-        is_nonstandard = dict()
+        area_dock_nums = {}
+        attached_areas = {}
+        size_indices = {}
+        candidates = []
+        default_connections_node_name = {}
+        dock_num_by_area_node = {}
+        is_nonstandard = {}
         disabled_doors = set()
 
         # collect dock info for all areas
         for area in region.areas:
-            area_dock_nums[area.name] = list()
-            attached_areas[area.name] = list()
+            area_dock_nums[area.name] = []
+            attached_areas[area.name] = []
             dock_nodes = [node for node in area.nodes if isinstance(node, DockNode)]
             for node in dock_nodes:
                 if node.dock_type in dock_types_to_ignore:
@@ -290,7 +290,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                 candidates.append((area.name, index))
             size_indices[area.name] = area.extra["size_index"]
 
-        default_connections = dict()
+        default_connections = {}
         for (src_name, src_dock) in default_connections_node_name:
             (dst_name, dst_node_name) = default_connections_node_name[(src_name, src_dock)]
 
@@ -304,16 +304,16 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
         for area_name, dock_num in candidates:
             room = region_data[region.name]["rooms"][area_name]
             if "doors" not in room:
-                room["doors"] = dict()
+                room["doors"] = {}
 
             def helper(_dock_num):
                 dock_num_key = str(_dock_num)
 
                 if dock_num_key not in room["doors"]:
-                    room["doors"][dock_num_key] = dict()
+                    room["doors"][dock_num_key] = {}
 
                 if "destination" not in room["doors"][dock_num_key]:
-                    room["doors"][dock_num_key]["destination"] = dict()
+                    room["doors"][dock_num_key]["destination"] = {}
 
             helper(dock_num)
 
@@ -323,7 +323,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
         # Shuffle order which candidates are processed
         rng.shuffle(candidates)
 
-        used_room_pairings = list()
+        used_room_pairings = []
 
         def are_rooms_compatible(src_name, src_dock, dst_name, dst_dock, mode: RoomRandoMode):
             if src_name is None or dst_name is None:
@@ -421,7 +421,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
             # List containing:
             #   - set of len=2, each containing
             #       - tuple of len=2 for (room_name, dock)
-            shuffled = list()
+            shuffled = []
 
             def next_candidate(max_index):
                 for (src_name, src_dock) in candidates:
@@ -439,7 +439,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
             def remove_pair(shuffled_pair: set):
                 shuffled.remove(shuffled_pair)
 
-                shuffled_pair = sorted(list(shuffled_pair))
+                shuffled_pair = sorted(shuffled_pair)
                 assert len(shuffled_pair) == 2
                 a = shuffled_pair[0]
                 b = shuffled_pair[1]
@@ -451,8 +451,8 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                 (b_name, b_dock) = b
                 used_room_pairings.remove({a_name, b_name})
 
-                region_data[region.name]["rooms"][a_name]["doors"][str(a_dock)]["destination"] = dict()
-                region_data[region.name]["rooms"][b_name]["doors"][str(b_dock)]["destination"] = dict()
+                region_data[region.name]["rooms"][a_name]["doors"][str(a_dock)]["destination"] = {}
+                region_data[region.name]["rooms"][b_name]["doors"][str(b_dock)]["destination"] = {}
 
             # Randomly pick room sources, starting with the largest room first, then randomly
             # pick a compatible destination
@@ -499,7 +499,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                     import networkx
 
                     # Model as networkx graph object
-                    room_connections = list()
+                    room_connections = []
                     for room_name in region_data[region.name]["rooms"]:
                         room = region_data[region.name]["rooms"][room_name]
                         if "doors" not in room:
@@ -555,7 +555,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                         # pick one randomly
                         rng.shuffle(shuffled)
                         a = shuffled[-1]
-                        a = sorted(list(a))
+                        a = sorted(a)
                         (src_name_a, src_dock_a) = a[0]
                         (dst_name_a, dst_dock_a) = a[1]
                         a_component_num = component_number(src_name_a)
@@ -563,7 +563,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                         # pick a second which is not part of the same component
                         (src_name_b, src_dock_b, dst_name_b, dst_dock_b) = (None, None, None, None)
                         for b in shuffled:
-                            b = sorted(list(b))
+                            b = sorted(b)
                             (src_name, src_dock) = b[0]
                             (dst_name, dst_dock) = b[1]
                             if component_number(src_name) == a_component_num:
@@ -576,7 +576,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                         # remove a random room pairing (this can happen if rooms exempt from randomization
                         # are causing fractured connectivity)
                         if src_name_b is None:
-                            b = sorted(list(shuffled[0]))
+                            b = sorted(shuffled[0])
                             (src_name_b, src_dock_b) = b[0]
                             (dst_name_b, dst_dock_b) = b[1]
 
@@ -645,17 +645,17 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         elevator_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
 
         # Initialize serialized db data
-        level_data = dict()
+        level_data = {}
         for region in regions:
             level_data[region.name] = {
-                "transports": dict(),
-                "rooms": dict(),
+                "transports": {},
+                "rooms": {},
             }
 
             for area in region.areas:
                 level_data[region.name]["rooms"][area.name] = {
-                    "pickups": list(),
-                    "doors": dict(),
+                    "pickups": [],
+                    "doors": {},
                 }
 
         # serialize elevator modifications
@@ -755,14 +755,14 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                 if "Impact Crater" not in level_data:
                     level_data["Impact Crater"] = {
-                        "transports": dict(),
-                        "rooms": dict(),
+                        "transports": {},
+                        "rooms": {},
                     }
 
                 if "Crater Entry Point" not in level_data["Impact Crater"]["rooms"]:
                     level_data["Impact Crater"]["rooms"]["Crater Entry Point"] = {
-                        "pickups": list(),
-                        "doors": dict()
+                        "pickups": [],
+                        "doors": {}
                     }
 
                 level_data["Impact Crater"]["rooms"]["Crater Entry Point"]["extraScans"] = [

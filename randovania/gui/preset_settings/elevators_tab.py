@@ -228,10 +228,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
                                                            TeleporterShuffleMode.ECHOES_SHUFFLED,
                                                            TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
                                                            TeleporterShuffleMode.TWO_WAY_UNCHECKED)
-        static_nodes = {
-            teleporter
-            for teleporter in config_elevators.static_teleporters.keys()
-        }
+        static_nodes = set(config_elevators.static_teleporters.keys())
 
         for origin, destination in self._elevator_source_destination.items():
             origin_check = self._elevator_source_for_location[origin]

@@ -90,7 +90,7 @@ class DreadRemoteConnector(RemoteConnector):
 
     # reset all values on init, disconnect or after switching back to main menu
     def reset_values(self):
-        self.remote_pickups = tuple()
+        self.remote_pickups = ()
         self.last_inventory = {}
         self.in_cooldown = True
         self.received_pickups = None

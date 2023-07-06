@@ -129,7 +129,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     mock_req_lists.assert_called_once_with(
         reach.state, [possible_set, reach.game.victory_condition.as_set.return_value], {resource}
     )
-    assert result == tuple()
+    assert result == ()
 
 
 def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_database, echoes_game_patches):

@@ -92,7 +92,7 @@ def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to
         return '\n'.join(wrap(text, 18))
 
     # make list of all edges between rooms
-    room_connections = list()
+    room_connections = []
 
     # add edges which were not shuffled
     disabled_doors = set()

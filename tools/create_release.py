@@ -79,7 +79,7 @@ async def download_nintendont():
 
 
 def write_obfuscator_secret(path: Path, secret: bytes):
-    numbers = str([x for x in secret])
+    numbers = str(list(secret))
     path.write_text(f"""# Generated file
 secret = b"".join(
     bytes([x]) for x in

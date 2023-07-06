@@ -61,7 +61,7 @@ class PrimeRemoteConnector(RemoteConnector):
         self.executor = executor
         self.version = version
         self.game = default_database.game_description_for(_RDS_TO_RDV_GAME[version.game])
-        self.remote_pickups = tuple()
+        self.remote_pickups = ()
 
         self._timer = InfiniteTimer(self.update, self._dt)
 

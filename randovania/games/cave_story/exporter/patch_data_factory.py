@@ -47,7 +47,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
             PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
             USELESS_PICKUP_CATEGORY,
             USELESS_PICKUP_CATEGORY,
-            tuple(),
+            (),
             generator_params=PickupGeneratorParams(
                 preferred_location_category=LocationCategory.MAJOR,  # TODO
             ),

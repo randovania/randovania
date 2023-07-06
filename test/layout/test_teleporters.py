@@ -69,8 +69,8 @@ def _test_data(request):
         mode=TeleporterShuffleMode.VANILLA,
         skip_final_bosses=False,
         allow_unvisited_room_names=False,
-        excluded_teleporters=TeleporterList(tuple(), game),
-        excluded_targets=TeleporterTargetList(tuple(), game),
+        excluded_teleporters=TeleporterList((), game),
+        excluded_targets=TeleporterTargetList((), game),
     )
     return Data(
         reference=reference,

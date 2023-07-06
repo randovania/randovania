@@ -139,7 +139,7 @@ def _make_pickup(pickup_category: PickupCategory, generator_params: PickupGenera
         ),
         pickup_category=pickup_category,
         broad_category=pickup_category,
-        progression=tuple(),
+        progression=(),
         generator_params=generator_params,
     )
 

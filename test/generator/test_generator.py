@@ -70,7 +70,7 @@ def test_distribute_remaining_items_no_locations_left(echoes_game_description, e
         patches=echoes_game_patches,
         unassigned_pickups=[MagicMock()] * 1000,
     )
-    filler_results = FillerResults({0: player_result}, tuple())
+    filler_results = FillerResults({0: player_result}, ())
 
     # Run
     with pytest.raises(InvalidConfiguration,

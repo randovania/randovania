@@ -82,12 +82,12 @@ def create_convert_database_command(sub_parsers):
 
 def export_videos_command_logic(args):
     from randovania.cli.commands.export_db_videos import export_videos
-    games = list()
+    games = []
 
     if args.game is not None:
         games.append(RandovaniaGame(args.game))
     else:
-        games = [g for g in RandovaniaGame]
+        games = list(RandovaniaGame)
 
     for game in games:
         export_videos(game, args.output_dir)

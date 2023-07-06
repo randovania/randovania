@@ -81,7 +81,7 @@ def test_calculate_previous_versions(mocker):
     ])
 
     # Run
-    result = list(preset_history_dialog._calculate_previous_versions(preset_manager, preset_ref, tuple()))
+    result = list(preset_history_dialog._calculate_previous_versions(preset_manager, preset_ref, ()))
 
     # Assert
     preset_manager.get_previous_versions.assert_called_once_with(preset_ref)
