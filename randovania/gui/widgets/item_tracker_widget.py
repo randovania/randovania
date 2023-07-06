@@ -10,7 +10,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from randovania import get_data_path
 from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_entry import PickupEntry
-from randovania.game_description.resources.inventory import Inventory
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.pixmap_lib import paint_with_opacity
@@ -217,3 +217,108 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                             max_capacity=max_capacity,
                         )
                     )
+
+
+@dataclasses.dataclass()
+class CanvasElement:
+    position: QtCore.QPointF
+
+
+class ImageCanvasElement(CanvasElement):
+    image: QtGui.QImage
+    field_to_check: FieldToCheck
+
+    def draw(self, painter: QtGui.QPainter):
+        painter.drawImage(self.position, self.image)
+
+
+class TextCanvasElement(CanvasElement):
+    text: str
+    text_template: str
+
+    def draw(self, painter: QtGui.QPainter):
+        painter.drawText(self.position, self.text)
+
+
+class TrackerElement:
+    images: list[ImageCanvasElement]
+    label: TextCanvasElement
+    resources: list[ItemResourceInfo]
+
+    def update_state(self, inventory):
+        element = inventory
+        i = 0
+
+        satisfied = False
+        for image, resource in reversed(list(zip(self.images, self.resources, strict=True))):
+            current = inventory.get(resource, InventoryItem(0, 0))
+            fields = {"amount": current.amount, "capacity": current.capacity, "max_capacity": resource.max_capacity}
+
+            if fields[image.field_to_check.value] >= element.minimum_to_check:
+                # This tier is satisfied
+                satisfied = True
+                element.labels[i].setVisible(True)
+                element.labels[i].set_checked(True)
+            else:
+                element.labels[i].setVisible(False)
+
+        if not satisfied:
+            element.labels[0].setVisible(True)
+            element.labels[0].set_checked(False)
+
+
+class CanvasItemTrackerWidget(QtWidgets.QWidget):
+    elements: list[CanvasElement]
+
+    def __init__(self, tracker_config: dict):
+        super().__init__()
+        self.tracker_config = tracker_config
+        self.current_state = {}
+
+        game_enum = RandovaniaGame(tracker_config["game"])
+        resource_database = default_database.resource_database_for(game_enum)
+        self.resource_database = resource_database
+
+        self.elements = []
+
+        for element in tracker_config["elements"]:
+            if "image_path" in element:
+                paths = element["image_path"]
+                if not isinstance(paths, list):
+                    paths = [paths]
+
+                for path in paths:
+                    image_path = get_data_path().joinpath(path)
+                    image = QtGui.QImage(str(image_path))
+
+                self.elements.append(
+                    CanvasElement(image=image, position=QtCore.QPointF(element["column"] * 40, element["row"] * 40))
+                )
+
+            elif "label" in element:
+                pass
+                # label = QtWidgets.QLabel(self)
+                # label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                # text_template = element["label"]
+                # labels.append(label)
+
+            else:
+                raise ValueError(f"Invalid element: {element}")
+
+        self.setFixedSize(
+            max(int(element.position.x()) + element.image.width() for element in self.elements) + 10,
+            max(int(element.position.y()) + element.image.height() for element in self.elements) + 10,
+        )
+        self.repaint()
+
+    def paintEvent(self, event: QtGui.QPaintEvent) -> None:
+        painter = QtGui.QPainter(self)
+        painter.setRenderHint(QtGui.QPainter.RenderHint.Antialiasing)
+        painter.setPen(QtGui.Qt.GlobalColor.white)
+        painter.setFont(QtGui.QFont("Arial", 10))
+
+        for element in self.elements:
+            painter.drawImage(element.position, element.image)
+
+    def update_state(self, inventory: dict[ItemResourceInfo, InventoryItem]):
+        self.current_state = inventory

@@ -11,7 +11,7 @@ from randovania.game_description.resources.inventory import Inventory
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
+from randovania.gui.widgets.item_tracker_widget import CanvasItemTrackerWidget, ItemTrackerWidget
 from randovania.lib import json_lib
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
@@ -185,7 +185,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         else:
             tracker_details = json_lib.read_path(self.trackers[target_game][tracker_name])
 
-            self.item_tracker = ItemTrackerWidget(tracker_details)
+            self.item_tracker = CanvasItemTrackerWidget(tracker_details)
             self.gridLayout.addWidget(self.item_tracker, 0, 0, 1, 1)
             self.item_tracker.update_state(inventory)
 
