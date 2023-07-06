@@ -36,17 +36,17 @@ def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker
 @pytest.mark.parametrize(("progression", "result"), [
         (   # normal
             [("Power", 1),],
-            ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+            ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
              'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fPr8')
         ),
         (   # negative
             [("Missile", -5),],
-            ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+            ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
              'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35sC@#!')
         ),
         (   # progressive
             [("DarkSuit", 1), ("LightSuit", 1)],
-            ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+            ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
              'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu364TnIm')
         )
 ])
@@ -86,7 +86,7 @@ def test_emit_world_pickups_update_one_action(
     # Run
     world_api.emit_world_pickups_update(sio, w1)
 
-    # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
+    # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
     # from randovania.server.multiplayer.world_api import _base64_encode_pickup
     # new_data = _base64_encode_pickup(pickup, echoes_resource_database)
     # assert new_data == b""

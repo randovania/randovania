@@ -29,6 +29,7 @@ def _read_pickup_database_in_path(path: Path, game: RandovaniaGame) -> pickup_da
 
 def _write_pickup_database_in_path(pickup_db: pickup_database.PickupDatabase, path: Path):
     data = pickup_database.write_database(pickup_db)
+    path.mkdir(parents=True, exist_ok=True)
     json_lib.write_path(path.joinpath("pickup-database.json"), data)
 
 
