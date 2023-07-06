@@ -2,11 +2,12 @@ import copy
 from collections import defaultdict
 from random import Random
 from typing import Optional
+from randovania.game_description.db.dock import DockType
+from randovania.game_description.db.dock_node import DockNode
 
 from randovania.game_description.game_patches import ElevatorConnection
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.db.region_list import RegionList
 
 
@@ -133,6 +134,7 @@ def one_way_elevator_connections(rng: Random,
 
 def create_elevator_database(region_list: RegionList,
                              all_teleporters: list[NodeIdentifier],
+                             allowed_dock_types: list[DockType]
                              ) -> tuple[ElevatorHelper, ...]:
     """
     Creates a tuple of Elevator objects, exclude those that belongs to one of the areas provided.
@@ -141,10 +143,10 @@ def create_elevator_database(region_list: RegionList,
     :return:
     """
     all_helpers = [
-        ElevatorHelper(region_list.identifier_for_node(node), node.default_connection)
+        ElevatorHelper(region_list.identifier_for_node(node), node.default_connection.area_identifier)
 
         for region, area, node in region_list.all_regions_areas_nodes
-        if isinstance(node, TeleporterNode)
+        if isinstance(node, DockNode) and node.dock_type in allowed_dock_types
     ]
     return tuple(
         helper

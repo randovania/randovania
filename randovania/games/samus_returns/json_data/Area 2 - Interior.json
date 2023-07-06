@@ -97,7 +97,7 @@
                     }
                 },
                 "Elevator to Area 2 Exterior - Outer Hub": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -10195.63,
@@ -111,15 +111,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02A",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea02A"
+                        "start_point_actor_name": "ST_FromArea02A",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 2 - Exterior",
-                        "area": "Outer Hub"
+                        "area": "Outer Hub",
+                        "node": "Elevator to Area 2 Entrance - Transport to Area 2 Exterior"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",

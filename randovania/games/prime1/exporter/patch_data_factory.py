@@ -6,11 +6,11 @@ from randovania.exporter.hints import guaranteed_item_hint, credits_spoiler
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList, Region
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
@@ -250,7 +250,8 @@ def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
     ]
 
 
-def _serialize_dock_modifications(region_data, regions: list[Region], room_rando_mode: RoomRandoMode, rng: Random):
+def _serialize_dock_modifications(region_data, regions: list[Region], room_rando_mode: RoomRandoMode,
+                                  rng: Random, dock_types_to_ignore: list[DockType]):
     if room_rando_mode == RoomRandoMode.NONE:
         return
 
@@ -268,8 +269,9 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
         for area in region.areas:
             area_dock_nums[area.name] = list()
             attached_areas[area.name] = list()
-            for node in area.nodes:
-                if not isinstance(node, DockNode):
+            dock_nodes = [node for node in area.nodes if isinstance(node, DockNode)]
+            for node in dock_nodes:
+                if node.dock_type in dock_types_to_ignore:
                     continue
                 index = node.extra["dock_index"]
                 dock_num_by_area_node[(area.name, node.name)] = index
@@ -639,6 +641,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         )
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
+        elevator_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
 
         # Initialize serialized db data
         level_data = dict()
@@ -658,11 +661,13 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         for region in regions:
             for area in region.areas:
                 for node in area.nodes:
-                    if not isinstance(node, TeleporterNode) or not node.editable:
+                    is_teleporter = isinstance(node, DockNode) and node.dock_type in elevator_dock_types
+                    if not is_teleporter or not node.extra.get("editable", False):
                         continue
 
                     identifier = db.region_list.identifier_for_node(node)
-                    target = _name_for_location(db.region_list, self.patches.get_elevator_connection_for(node))
+                    target = _name_for_location(db.region_list,
+                                                self.patches.get_dock_connection_for(node).identifier.area_identifier)
 
                     source_name = prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[(
                         identifier.area_location.region_name,
@@ -706,7 +711,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         # serialize door modifications
         for region in regions:
             for area in region.areas:
-                dock_nodes = (node for node in area.nodes if isinstance(node, DockNode))
+                dock_nodes = (node for node in area.nodes
+                               if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types)
                 dock_nodes = sorted(dock_nodes, key=lambda n: n.extra["dock_index"])
                 for node in dock_nodes:
                     node: DockNode = node
@@ -726,7 +732,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     level_data[region.name]["rooms"][area.name]["doors"][str(dock_index)] = dock_data
 
         # serialize dock destination modifications
-        _serialize_dock_modifications(level_data, regions, self.configuration.room_rando, self.rng)
+        dock_types_to_ignore = self.game.dock_weakness_database.all_teleporter_dock_types
+        _serialize_dock_modifications(level_data, regions, self.configuration.room_rando,
+                                      self.rng, dock_types_to_ignore)
 
         # serialize text modifications
         if self.configuration.hints.phazon_suit != PhazonSuitHintMode.DISABLED:

@@ -1,4 +1,3 @@
-import uuid
 from mock import AsyncMock
 from mock import patch
 import pytest

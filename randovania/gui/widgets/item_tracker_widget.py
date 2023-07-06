@@ -54,6 +54,8 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
 
         for element in tracker_config["elements"]:
             text_template = ""
+            col_span = element.get("col_span", 1)
+            row_span = element.get("row_span", 1)
             minimum_to_check = element.get("minimum_to_check", 1)
             field_to_check = FieldToCheck(element.get("field_to_check", FieldToCheck.CAPACITY.value))
 
@@ -84,6 +86,10 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                 text_template = element["label"]
                 labels.append(label)
 
+            elif "progress_bar" in element:
+                label = QtWidgets.QProgressBar(self)
+                labels.append(label)
+
             else:
                 raise ValueError(f"Invalid element: {element}")
 
@@ -96,7 +102,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
 
             self.tracker_elements.append(Element(labels, resources, text_template, minimum_to_check, field_to_check))
             for label in labels:
-                self._layout.addWidget(label, element["row"], element["column"])
+                self._layout.addWidget(label, element["row"], element["column"], row_span, col_span)
 
         self.inventory_spacer = QtWidgets.QSpacerItem(5, 5, QtWidgets.QSizePolicy.Policy.Expanding,
                                                       QtWidgets.QSizePolicy.Policy.Expanding)
@@ -145,6 +151,11 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                     value_target = element.minimum_to_check
                     value = fields[element.field_to_check.value]
                     label.set_checked(max_capacity == 0 or value >= value_target)
+
+                elif isinstance(label, QtWidgets.QProgressBar):
+                    label.setMaximum(capacity)
+                    label.setValue(amount)
+
                 else:
                     label.setText(element.text_template.format(
                         amount=amount,

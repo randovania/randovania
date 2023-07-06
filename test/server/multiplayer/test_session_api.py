@@ -18,12 +18,22 @@ def test_list_sessions(clean_database, flask_app, limit):
     # Setup
     utc = datetime.timezone.utc
     someone = database.User.create(name="Someone")
-    database.MultiplayerSession.create(name="Debug", num_teams=1, creator=someone,
-                                       creation_date=datetime.datetime(2020, 10, 2, 10, 20, tzinfo=utc))
-    database.MultiplayerSession.create(name="Other", num_teams=2, creator=someone,
-                                       creation_date=datetime.datetime(2020, 1, 20, 5, 2, tzinfo=utc))
-    database.MultiplayerSession.create(name="Third", num_teams=2, creator=someone,
-                                       creation_date=datetime.datetime(2021, 1, 20, 5, 2, tzinfo=utc))
+    other = database.User.create(name="Other")
+    s1 = database.MultiplayerSession.create(
+        name="Debug", num_teams=1, creator=someone,
+        creation_date=datetime.datetime(2020, 10, 2, 10, 20, tzinfo=utc))
+    s2 = database.MultiplayerSession.create(
+        name="Other", num_teams=2, creator=someone,
+        creation_date=datetime.datetime(2020, 1, 20, 5, 2, tzinfo=utc))
+    s3 = database.MultiplayerSession.create(
+        name="Third", num_teams=2, creator=someone,
+        creation_date=datetime.datetime(2021, 1, 20, 5, 2, tzinfo=utc))
+
+    database.MultiplayerMembership.create(user=someone, session=s1)
+    database.MultiplayerMembership.create(user=someone, session=s3)
+    database.MultiplayerMembership.create(user=other, session=s2)
+    database.MultiplayerMembership.create(user=other, session=s3)
+
     state = MultiplayerSessionState.SETUP.value
 
     # Run
@@ -31,12 +41,12 @@ def test_list_sessions(clean_database, flask_app, limit):
 
     # Assert
     expected = [
-        {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_players': 0, 'creator': 'Someone',
-         'creation_date': '2021-01-20T05:02:00+00:00', 'is_user_in_session': False},
-        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 0, 'creator': 'Someone',
+        {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_players': 2, 'creator': 'Someone',
+         'creation_date': '2021-01-20T05:02:00+00:00', 'is_user_in_session': True},
+        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 1, 'creator': 'Someone',
          'creation_date': '2020-01-20T05:02:00+00:00', 'is_user_in_session': False},
-        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 0, 'creator': 'Someone',
-         'creation_date': '2020-10-02T10:20:00+00:00', 'is_user_in_session': False},
+        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 1, 'creator': 'Someone',
+         'creation_date': '2020-10-02T10:20:00+00:00', 'is_user_in_session': True},
     ]
     if limit == 2:
         expected = expected[:2]

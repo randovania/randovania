@@ -1,6 +1,5 @@
 import dataclasses
 from unittest.mock import PropertyMock, MagicMock
-from pathlib import Path
 
 import pytest
 

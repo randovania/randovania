@@ -9,9 +9,10 @@ import randovania
 from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.node import Node
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -134,6 +135,7 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
     capacities = [
         {'amount': 1 if item.short_name == "MorphBall" else 0, 'index': item.extra["item_id"]}
         for item in resource_db.item
+        if item.extra["item_id"] < 1000
     ]
 
     # Run
@@ -152,9 +154,10 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
 def test_create_elevators_field_no_elevator(empty_patches, echoes_game_description):
     # Setup
+    elevator_dock_types = echoes_game_description.dock_weakness_database.all_teleporter_dock_types
     # Run
     with pytest.raises(ValueError) as exp:
-        patch_data_factory._create_elevators_field(empty_patches, echoes_game_description)
+        patch_data_factory._create_elevators_field(empty_patches, echoes_game_description, elevator_dock_types)
 
     # Assert
     assert str(exp.value) == "Invalid elevator count. Expected 22, got 0."
@@ -166,12 +169,12 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
                                                      echoes_game_patches):
     # Setup
     wl = echoes_game_description.region_list
-    elevator_connection: list[tuple[TeleporterNode, AreaIdentifier]] = []
+    elevator_connection: list[tuple[DockNode, Node]] = []
 
     def add(region: str, area: str, node: str, target_world: str, target_area: str):
         elevator_connection.append((
-            wl.get_teleporter_node(NodeIdentifier.create(region, area, node)),
-            AreaIdentifier(target_world, target_area),
+            wl.typed_node_by_identifier(NodeIdentifier.create(region, area, node), DockNode),
+            wl.default_node_for_area(AreaIdentifier(target_world, target_area)),
         ))
 
     add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
@@ -183,10 +186,11 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
         add("Temple Grounds", "Sky Temple Gateway", "Teleport to Great Temple - Sky Temple Energy Controller",
             "Great Temple", "Sanctum")
 
-    patches = echoes_game_patches.assign_elevators(elevator_connection)
+    patches = echoes_game_patches.assign_dock_connections(elevator_connection)
+    elevator_dock_types = echoes_game_description.dock_weakness_database.all_teleporter_dock_types
 
     # Run
-    result = patch_data_factory._create_elevators_field(patches, echoes_game_description)
+    result = patch_data_factory._create_elevators_field(patches, echoes_game_description, elevator_dock_types)
 
     # Assert
     expected = [
@@ -568,6 +572,7 @@ def test_create_string_patches(
         namer,
         player_config,
         rng,
+        []
     )
 
     # Assert

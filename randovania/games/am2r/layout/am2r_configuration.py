@@ -15,17 +15,18 @@ class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
 @dataclasses.dataclass(frozen=True)
 class AM2RConfiguration(BaseConfiguration):
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
-    # TODO: add option for metroids and bosses to spawn pickups!
-    #include_metroid_pickups: bool
-    #include_boss_pickups: bool
-    # TODO: ability to go to credits sooner?
+    softlock_prevention_blocks: bool
     septogg_helpers: bool
-    change_level_design: bool   # TODO: requires changes in DB!
-    skip_cutscenes: bool        # TODO: requires changes in DB!
-    respawn_bomb_blocks: bool   # TODO: requires changes in DB!
+    change_level_design: bool
+    skip_cutscenes: bool
+    respawn_bomb_blocks: bool
+    screw_blocks: bool
     artifacts: AM2RArtifactConfig
+    fusion_mode: bool
+    grave_grotto_blocks: bool
+    nest_pipes: bool
     # TODO: warp to start
-
+    a3_entrance_blocks: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

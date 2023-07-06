@@ -2157,7 +2157,7 @@
                     }
                 },
                 "Tram to Dairon - Upper Transport to Burenia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 9000.0,
@@ -2174,15 +2174,22 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_aqua_000_platform",
                         "start_point_actor_name": "wagontrain_baselab_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "Upper Transport to Burenia"
+                        "area": "Upper Transport to Burenia",
+                        "node": "Tram to Burenia - Upper Transport to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Burenia Hub to Dairon": {
                             "type": "and",
@@ -2268,7 +2275,7 @@
                     }
                 },
                 "Tram to Dairon - Lower Transport to Burenia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 8800.0,
@@ -2285,15 +2292,22 @@
                         "elevator_component": "CTrainWithPortalUsableComponent",
                         "target_spawn_point": "wagontrain_aqua_001_platform",
                         "start_point_actor_name": "wagontrain_baselab_001_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "Lower Transport to Burenia"
+                        "area": "Lower Transport to Burenia",
+                        "node": "Tram to Burenia - Lower Transport to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Burenia Hub to Dairon": {
                             "type": "and",
@@ -2925,7 +2939,7 @@
                     }
                 },
                 "Elevator to Ghavoran - Transport to Burenia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2450.0,
@@ -2942,15 +2956,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_aqua_000_platform",
                         "start_point_actor_name": "elevator_forest_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ghavoran",
-                        "area": "Transport to Burenia"
+                        "area": "Transport to Burenia",
+                        "node": "Elevator to Burenia - Transport to Ghavoran"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station North": {
                             "type": "resource",
@@ -4777,7 +4798,7 @@
                     }
                 },
                 "Teleporter to Ferenia - Teleport to Burenia (Cyan)": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -5450.0,
@@ -4794,15 +4815,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleporter_000_platform",
                         "start_point_actor_name": "LE_Platform_Teleport_Secret",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ferenia",
-                        "area": "Teleport to Burenia (Cyan)"
+                        "area": "Teleport to Burenia (Cyan)",
+                        "node": "Teleporter to Burenia - Teleport to Ferenia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Main Hub Tower Top": {
                             "type": "and",
@@ -10929,7 +10957,7 @@
                     }
                 },
                 "Teleporter to Ghavoran - Teleport to Burenia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 550.0,
@@ -10946,15 +10974,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleporter_aqua_000_platform",
                         "start_point_actor_name": "teleporter_forest_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ghavoran",
-                        "area": "Teleport to Burenia"
+                        "area": "Teleport to Burenia",
+                        "node": "Teleporter to Burenia - Teleport to Ghavoran"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gravity Suit Tower": {
                             "type": "and",
@@ -11631,7 +11666,7 @@
                     }
                 },
                 "Elevator to Artaria - Transport to Burenia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 13350.0,
@@ -11648,15 +11683,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_aqua_000_platform",
                         "start_point_actor_name": "elevator_cave_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Artaria",
-                        "area": "Transport to Burenia"
+                        "area": "Transport to Burenia",
+                        "node": "Elevator to Burenia - Transport to Artaria"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Navigation Station South": {
                             "type": "and",

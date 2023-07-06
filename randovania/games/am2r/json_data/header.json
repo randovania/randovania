@@ -1,5 +1,5 @@
 {
-    "schema_version": 19,
+    "schema_version": 20,
     "game": "am2r",
     "resource_database": {
         "items": {
@@ -846,6 +846,18 @@
             },
             "GraveGrottoBlocks": {
                 "long_name": "Grave Grotto Blocks",
+                "extra": {}
+            },
+            "A3Entrance": {
+                "long_name": "Industrial Complex Entrance Blocks",
+                "extra": {}
+            },
+            "SoftlockPrevention": {
+                "long_name": "Softlock Prevention",
+                "extra": {}
+            },
+            "ScrewBlocks": {
+                "long_name": "Screw Attack Pipe Blocks",
                 "extra": {}
             }
         },
@@ -3331,6 +3343,71 @@
                         },
                         "lock": null
                     },
+                    "Guardian Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Guardian",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Arachnus Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Arachnus",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Torizo Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Torizo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Serris Soul Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Serris",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Genesis Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "GenesisKilled",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
                     "Tower Activated Door": {
                         "extra": {},
                         "requirement": {
@@ -3623,6 +3700,13 @@
                     "unlocked": "Normal Door",
                     "locked": "Locked Door",
                     "change_from": [
+                        "A5 Activation Tower Door",
+                        "A5 Near Activation Tower EMP Door",
+                        "A5 Near Pipe Hub EMP Door",
+                        "A5 Near Right Side EMP Door",
+                        "A5 Near Save EMP Door",
+                        "A5 Near Screw EMP Door",
+                        "A5 Robots Showcase EMP Door",
                         "After Tester Door",
                         "Missile Door",
                         "Normal Door",
@@ -3631,8 +3715,12 @@
                         "Tower Activated Door"
                     ],
                     "change_to": [
+                        "After Tester Door",
+                        "Arachnus Door",
                         "Bomb Door",
                         "Charge Beam Door",
+                        "Genesis Door",
+                        "Guardian Door",
                         "Ice Beam Door",
                         "Locked Door",
                         "Missile Door",
@@ -3640,9 +3728,12 @@
                         "Plasma Beam Door",
                         "Power Bomb Door",
                         "Screw Attack Door",
+                        "Serris Soul Door",
                         "Spazer Beam Door",
                         "Spider Ball Door",
                         "Super Missile Door",
+                        "Torizo Door",
+                        "Tower Activated Door",
                         "Wave Beam Door"
                     ]
                 }

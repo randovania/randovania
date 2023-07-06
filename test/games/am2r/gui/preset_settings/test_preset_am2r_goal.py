@@ -3,15 +3,16 @@ import pytest
 import uuid
 from unittest.mock import MagicMock
 
-from PySide6 import QtCore
 
 from randovania.games.am2r.gui.preset_settings.am2r_goal_tab import PresetAM2RGoal
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_editor import PresetEditor
 
-@pytest.mark.parametrize("prefer_metroids, prefer_bosses, expected_max_slider", [(False, False, 0), (False, True, 6), (True, False, 46), (True, True, 46)])
-def test_preferred_dna(skip_qtbot, am2r_game_description, preset_manager, prefer_metroids: bool, prefer_bosses: bool, expected_max_slider: int):
+@pytest.mark.parametrize("prefer_metroids, prefer_bosses, expected_max_slider", [
+    (False, False, 0), (False, True, 6), (True, False, 46), (True, True, 46)
+])
+def test_preferred_dna(skip_qtbot, am2r_game_description, preset_manager, prefer_metroids: bool,
+                       prefer_bosses: bool, expected_max_slider: int):
     # Setup
     game = am2r_game_description.game
     base = preset_manager.default_preset_for_game(game).get_preset()

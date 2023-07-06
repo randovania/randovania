@@ -60,7 +60,7 @@
             },
             "nodes": {
                 "Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2678.12,
@@ -74,15 +74,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea06A_01",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea06A_01"
+                        "start_point_actor_name": "ST_FromArea06A_01",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 5 - Entrance",
-                        "area": "Transport to Area 5 Interior (East)"
+                        "area": "Transport to Area 5 Interior (East)",
+                        "node": "Elevator to Area 5 Interior - Transport to Area 5 Entrance (East)"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport to Area 5 Exterior (East)": {
                             "type": "resource",
@@ -968,7 +975,7 @@
             },
             "nodes": {
                 "Transport to Area 5 Exterior - Tower": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -1616.52,
@@ -982,15 +989,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea06B_01",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea062B_01"
+                        "start_point_actor_name": "ST_FromArea062B_01",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 5 - Exterior",
-                        "area": "Tower"
+                        "area": "Tower",
+                        "node": "Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport to Area 5 Entrance (East)": {
                             "type": "and",
@@ -3278,7 +3292,7 @@
             },
             "nodes": {
                 "Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West)": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -12168.97,
@@ -3292,15 +3306,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea06A_02",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea06A_02"
+                        "start_point_actor_name": "ST_FromArea06A_02",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 5 - Entrance",
-                        "area": "Transport to Area 5 Interior (West)"
+                        "area": "Transport to Area 5 Interior (West)",
+                        "node": "Door to Pool West"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport Connector": {
                             "type": "and",
@@ -4725,7 +4746,7 @@
             },
             "nodes": {
                 "Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -8198.64,
@@ -4739,15 +4760,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea06B_02",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea06B_02"
+                        "start_point_actor_name": "ST_FromArea06B_02",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 5 - Exterior",
-                        "area": "Transport to Area 5 Interior"
+                        "area": "Transport to Area 5 Interior",
+                        "node": "Elevator to Area 5 Interior - Transport to Area 5 Exterior (West)"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Underwater Path": {
                             "type": "and",

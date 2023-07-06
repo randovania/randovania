@@ -231,10 +231,16 @@ async def qt_main(app: QtWidgets.QApplication, args):
         app.exit(1)
         return
 
+    import randovania
+    if options.allow_crash_reporting or randovania.is_dev_version():
+        import randovania.monitoring
+        randovania.monitoring.client_init()
+
     app.network_client = None
     logging.info("Loading server client...")
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     app.network_client = QtNetworkClient(options.data_dir)
+    app.network_client.allow_reporting_username = options.use_user_for_crash_reporting
     logging.info("Server client ready.")
 
     if args.login_as_guest:
@@ -285,9 +291,6 @@ def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState):
 
 
 def run(args):
-    import randovania.monitoring
-    randovania.monitoring.client_init()
-
     locale.setlocale(locale.LC_ALL, "")  # use system's default locale
     QtWidgets.QApplication.setAttribute(QtCore.Qt.ApplicationAttribute.AA_EnableHighDpiScaling, True)
 

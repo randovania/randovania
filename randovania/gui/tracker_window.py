@@ -12,11 +12,11 @@ from PySide6.QtCore import Qt
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -490,7 +490,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         elevators_config: TeleporterConfiguration = getattr(self.game_configuration, "elevators")
 
         region_list = self.game_description.region_list
-        nodes_by_region: dict[str, list[TeleporterNode]] = collections.defaultdict(list)
+        nodes_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
 
         areas_to_not_change = {
             "Sky Temple Gateway",
@@ -499,8 +499,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             "Aerie",
         }
         targets = {}
+        teleporter_dock_types = self.game_description.dock_weakness_database.all_teleporter_dock_types
         for region, area, node in region_list.all_regions_areas_nodes:
-            if isinstance(node, TeleporterNode) and node.editable and area.name not in areas_to_not_change:
+            if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types \
+                and node.extra.get("editable", False) and area.name not in areas_to_not_change:
                 name = region.correct_name(area.in_dark_aether)
                 nodes_by_region[name].append(node)
 
@@ -604,7 +606,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                                                                location_names, 0, False)
                 area_location = area_locations[location_names.index(selected_name[0])]
 
-            self._initial_state.node = region_list.resolve_teleporter_connection(area_location)
+            self._initial_state.node = region_list.area_by_area_location(area_location).default_node
 
         def is_resource_node_present(node: Node, state: State):
             if node.is_resource_node:
@@ -753,9 +755,12 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         if self._actions:
             state.node = self._actions[-1]
 
-        state.patches = state.patches.assign_elevators(
-            (state.region_list.get_teleporter_node(teleporter), combo.currentData())
-            for teleporter, combo in self._elevator_id_to_combo.items()
+        region_list = state.region_list
+        
+        state.patches = state.patches.assign_dock_connections(
+            (region_list.typed_node_by_identifier(teleporter, DockNode),
+              region_list.default_node_for_area(combo.currentData()))
+            for teleporter, combo in self._elevator_id_to_combo.items() if combo.currentData() is not None
         )
 
         for gate, item in self._translator_gate_to_combo.items():

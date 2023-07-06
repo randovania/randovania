@@ -103,16 +103,24 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     @asyncSlot()
     async def _world_rename(self, world_uid: uuid.UUID):
+        old_name = self._session.get_world(world_uid).name
         new_name = await TextPromptDialog.prompt(
             parent=self,
             title="Enter world name",
             description="Select a new name for the world:",
-            initial_value=self._session.get_world(world_uid).name,
+            initial_value=old_name,
             is_modal=True,
             max_length=MAX_WORLD_NAME_LENGTH,
             check_re=WORLD_NAME_RE,
         )
+        if new_name == old_name:
+            return
+
         if new_name is not None:
+            if any(new_name == world.name for world in self._session.worlds):
+                return await async_dialog.warning(
+                    self, "Name already exists", f"A world named '{new_name}' already exists.")
+
             await self._session_api.rename_world(world_uid, new_name)
 
     @asyncSlot()
@@ -216,7 +224,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             return
 
         preset = dialog.selected_preset
-        new_name = dialog.world_name_edit.text()
+        new_name = dialog.world_name_edit.text().strip()
+
+        if any(new_name == world.name for world in self._session.worlds):
+            return await async_dialog.warning(
+                self, "Name already exists", f"A world named '{new_name}' already exists.")
 
         # Temp
         await self._session_api.create_new_world(new_name, preset, user_id)

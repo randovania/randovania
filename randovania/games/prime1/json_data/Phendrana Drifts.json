@@ -58,7 +58,7 @@
                     }
                 },
                 "Elevator - Transport to Phendrana Drifts North": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -67,15 +67,22 @@
                     ],
                     "extra": {
                         "scan_asset_id": 769336033,
-                        "teleporter_instance_id": 45
+                        "teleporter_instance_id": 45,
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Magmoor Caverns",
-                        "area": "Transport to Phendrana Drifts North"
+                        "area": "Transport to Phendrana Drifts North",
+                        "node": "Elevator - Transport to Magmoor Caverns West"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Shoreline Entrance": {
                             "type": "and",
@@ -7780,7 +7787,7 @@
                     }
                 },
                 "Elevator - Transport to Phendrana Drifts South": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -7789,15 +7796,22 @@
                     ],
                     "extra": {
                         "scan_asset_id": 2570907624,
-                        "teleporter_instance_id": 1900634
+                        "teleporter_instance_id": 1900634,
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Magmoor Caverns",
-                        "area": "Transport to Phendrana Drifts South"
+                        "area": "Transport to Phendrana Drifts South",
+                        "node": "Elevator - Transport to Magmoor Caverns South"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to South Quarantine Tunnel": {
                             "type": "and",

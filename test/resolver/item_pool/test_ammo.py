@@ -21,7 +21,9 @@ def test_add_ammo(echoes_resource_database, mocker):
     })
 
     # Run
-    results = list(randovania.generator.pickup_pool.ammo_pickup.add_ammo_pickups(echoes_resource_database, ammo_configuration))
+    results = list(randovania.generator.pickup_pool.ammo_pickup.add_ammo_pickups(
+        echoes_resource_database, ammo_configuration
+    ))
 
     # Assert
     assert results == [mock_create_ammo_pickup.return_value, mock_create_ammo_pickup.return_value]

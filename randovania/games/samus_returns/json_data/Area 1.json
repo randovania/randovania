@@ -365,7 +365,7 @@
                     }
                 },
                 "Elevator to Surface East - Transport to Area 1": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -19805.42,
@@ -379,15 +379,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea00",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea00"
+                        "start_point_actor_name": "ST_FromArea00",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Surface - East",
-                        "area": "Transport to Area 1"
+                        "area": "Transport to Area 1",
+                        "node": "Elevator to Area 1 - Chozo Seal"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -399,7 +406,7 @@
                     }
                 },
                 "Elevator to Area 2 Entrance - Chozo Seal": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -12333.23,
@@ -413,15 +420,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea02"
+                        "start_point_actor_name": "ST_FromArea02",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 2 - Entrance",
-                        "area": "Chozo Seal"
+                        "area": "Chozo Seal",
+                        "node": "Elevator To Area 1 - Chozo Seal"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Above Bottom Elevator": {
                             "type": "or",

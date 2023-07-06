@@ -27,8 +27,8 @@ def _database() -> ResourceDatabase:
     return ResourceDatabase(
         game_enum=RandovaniaGame.METROID_PRIME_ECHOES,
         item=[
-            ItemResourceInfo(i, l, l, 1)
-            for i, l in enumerate("ABCDEF")
+            ItemResourceInfo(i, letter, letter, 1)
+            for i, letter in enumerate("ABCDEF")
         ],
         event=[],
         trick=[],

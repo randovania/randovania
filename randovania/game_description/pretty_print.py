@@ -11,7 +11,6 @@ from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
@@ -100,10 +99,6 @@ def pretty_print_node_type(node: Node, region_list: RegionList):
             message += ", ".join(weak.name for weak in node.incompatible_dock_weaknesses)
 
         return message
-
-    elif isinstance(node, TeleporterNode):
-        other = region_list.area_by_area_location(node.default_connection)
-        return f"Teleporter to {region_list.area_name(other)}"
 
     elif isinstance(node, PickupNode):
         return f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"

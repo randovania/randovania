@@ -298,12 +298,16 @@ Extra - map_name: rm_a5c08
   * Normal Door to Energy Distribution Activation/Door to Energy Distribution Emergency Exit
   * Extra - instance_id: 133805
   > Door to EMP Ball Introduction
-      Speed Booster
+      Any of the following:
+          Speed Booster
+          Morph Ball and Enabled Softlock Prevention
 
 > Door to EMP Ball Introduction; Heals? False
   * Layers: default
   * Normal Door to EMP Ball Introduction/Door to Energy Distribution Emergency Exit
   * Extra - instance_id: 133806
+  > Door to Energy Distribution Activation
+      Enabled Softlock Prevention and Hijump Tunnel Climb
   > Pickup (Super Missile Tank)
       Screw Attack
 
@@ -482,6 +486,8 @@ Extra - map_name: rm_a5c13
   * Layers: default
   * Normal Door to Distribution Facility Connecting Path/Door to Distribution Facility Tower West
   * Extra - instance_id: 134068
+  > Door to Pipe Hub
+      Disabled Screw Attack Pipe Blocks and Space Jump Wall
   > Near Middle Pipe
       Screw Attack
   > Pillar
@@ -491,6 +497,8 @@ Extra - map_name: rm_a5c13
   * Layers: default
   * Normal Door to Pipe Hub/Door to Distribution Facility Tower West
   * Extra - instance_id: 134069
+  > Door to Distribution Facility Connecting Path
+      Disabled Screw Attack Pipe Blocks
   > Pillar
       Screw Attack
 
@@ -935,7 +943,11 @@ Extra - map_name: rm_a5c22
   * Normal Door to Screw Attack Chamber Access/Door to Bullet Hell Room
   * Extra - instance_id: 134884
   > Door to Bullet Hell Room Access
-      Power Bombs and Space Jump Wall
+      All of the following:
+          Space Jump Wall
+          Any of the following:
+              # Get through screw blocks
+              Screw Attack or Enabled Softlock Prevention
 
 ----------------
 Screw Attack Chamber Access
@@ -1172,8 +1184,15 @@ Extra - map_name: rm_a5c31
   * Extra - instance_id: 135298
   > Pipe to Serris Arena Pipe
       All of the following:
-          Morph Ball and Destroy Ice Barrier
-          Mid-Air Morph (Beginner) or Power Grip Wall
+          Any of the following:
+              # Get to the pipe
+              Destroy Ice Barrier
+              All of the following:
+                  # Get through the top tunnel
+                  Enabled Softlock Prevention and Hijump Tunnel Climb
+          Any of the following:
+              # Get into the pipe
+              Mid-Air Morph (Beginner) or Power Grip Wall
 
 > Pipe to Serris Arena Pipe; Heals? False; Default Node
   * Layers: default
@@ -1724,6 +1743,23 @@ Extra - map_name: rm_a5a03
   * Layers: default
   * Normal Door to Gravity Area Corridor/Door to Gravity Area One-Way Route; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door
   * Extra - instance_id: 136529
+  > Door to Gravity Area Moto Room
+      All of the following:
+          Enabled Softlock Prevention
+          Any of the following:
+              # Items needed to get to top
+              Space Jump or Walljump (Intermediate) or Can Use Spider Ball
+              All of the following:
+                  # Items that only work with gravity
+                  Gravity Suit
+                  All of the following:
+                      # IBJ
+                      Infinite Bomb Jumping (Advanced) and Can Use Bombs
+              Hi-Jump Boots and Walljump (Beginner)
+              All of the following:
+                  # Shinespark up
+                  Speed Booster and Shinesparking Tricks (Beginner)
+                  Short Charge (Hypermode) or Disabled Entrance Rando
 
 > Door to Gravity Area Moto Room; Heals? False
   * Layers: default
@@ -1813,7 +1849,15 @@ Extra - map_name: rm_a5a06
   > Door to Gravity Area Shaft
       Any of the following:
           Can Use Power Bombs
-          Gravity Suit and Can Use Bombs
+          All of the following:
+              # Destroy Bomb blocks
+              Can Use Bombs
+              Any of the following:
+                  Gravity Suit
+                  Charged Bomb Jump (Beginner) and Can Use Charged Bomb Jump
+          All of the following:
+              # Option with bottom block gone
+              Morph Ball and Enabled Softlock Prevention
 
 > Door to Gravity Area Shaft; Heals? False
   * Layers: default
@@ -1823,6 +1867,7 @@ Extra - map_name: rm_a5a06
       Any of the following:
           Can Use Power Bombs
           Can Use Bombs and Hijump Tunnel Climb
+          Morph Ball and Enabled Softlock Prevention
 
 ----------------
 Gravity Chamber

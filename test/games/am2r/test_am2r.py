@@ -1,11 +1,6 @@
-import pytest
 from randovania.game_description import default_database
-from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
 
 resource_list = [

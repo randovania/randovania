@@ -61,7 +61,8 @@ async def test_create_patches(mock_distribute_remaining_items: MagicMock,
     )
 
 
-def test_distribute_remaining_items_no_locations_left(echoes_game_description, echoes_game_patches, default_echoes_preset):
+def test_distribute_remaining_items_no_locations_left(echoes_game_description, echoes_game_patches,
+                                                      default_echoes_preset):
     # Setup
     rng = MagicMock()
     player_result = FillerPlayerResult(

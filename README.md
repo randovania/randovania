@@ -212,6 +212,9 @@ In order to run the server:
    and fill both ids in `tools/dev-server-configuration.json`.  
    6. Run the server with `tools/start_dev_server.bat` and the client with `tools/start_debug_client.bat`.
 
+This repository uses [pre-commit](https://pre-commit.com/). The hook is automatically configured with 
+the `prepare_virtual_env` scripts.
+
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
 # Documentation
