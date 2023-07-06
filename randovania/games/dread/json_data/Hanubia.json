@@ -82,7 +82,7 @@
                     }
                 },
                 "Elevator to Ferenia - Transport to Hanubia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3450.0,
@@ -99,15 +99,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_shipyard_000_platform",
                         "start_point_actor_name": "elevator_sanctuary_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ferenia",
-                        "area": "Transport to Hanubia"
+                        "area": "Transport to Hanubia",
+                        "node": "Elevator to Hanubia - Transport to Ferenia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Ferenia Shortcut": {
                             "type": "and",
@@ -227,7 +234,7 @@
                     }
                 },
                 "Tram to Ghavoran - Transport to Hanubia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -11000.0,
@@ -244,15 +251,22 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_shipyard_000_platform",
                         "start_point_actor_name": "wagontrain_forest_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ghavoran",
-                        "area": "Transport to Hanubia"
+                        "area": "Transport to Hanubia",
+                        "node": "Tram to Hanubia - Transport to Ghavoran"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -2071,7 +2085,7 @@
                     }
                 },
                 "Elevator to Itorash - Transport to Hanubia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7300.0,
@@ -2088,15 +2102,22 @@
                         "elevator_component": "CCapsuleUsableComponent",
                         "target_spawn_point": "elevator_shipyard_000_platform",
                         "start_point_actor_name": "elevator_skybase_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Itorash",
-                        "area": "Transport to Hanubia"
+                        "area": "Transport to Hanubia",
+                        "node": "Elevator to Hanubia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gold Chozo Warrior Arena": {
                             "type": "and",

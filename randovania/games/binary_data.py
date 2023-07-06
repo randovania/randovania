@@ -177,7 +177,7 @@ class NodeAdapter(construct.Adapter):
 
 
 ConstructNode = NodeAdapter(Struct(
-    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, configurable_node=5,
+    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, event=4, configurable_node=5,
                              hint=6, teleporter_network=7),
     data=Switch(
         lambda this: this.node_type,
@@ -199,12 +199,6 @@ ConstructNode = NodeAdapter(Struct(
                 **NodeBaseFields,
                 pickup_index=VarInt,
                 location_category=construct.Enum(Byte, major=0, minor=1),
-            ),
-            "teleporter": Struct(
-                **NodeBaseFields,
-                destination=ConstructAreaIdentifier,
-                keep_name_when_vanilla=Flag,
-                editable=Flag,
             ),
             "event": Struct(
                 **NodeBaseFields,

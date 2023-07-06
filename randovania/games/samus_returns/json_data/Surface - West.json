@@ -452,7 +452,7 @@
                     }
                 },
                 "Elevator to Area 8 - Transport to Surface (West)": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -39894.99,
@@ -466,15 +466,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea10",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea10"
+                        "start_point_actor_name": "ST_FromArea10",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 1",
-                        "area": "Chozo Seal"
+                        "area": "Chozo Seal",
+                        "node": "Elevator to Surface East - Transport to Area 1"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Above Elevator": {
                             "type": "and",

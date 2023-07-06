@@ -13,7 +13,6 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import GenericNode, Node, \
     NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.db.region import Region
 from randovania.games.game import RandovaniaGame
 from randovania.resolver.state import State
@@ -21,7 +20,6 @@ from randovania.resolver.state import State
 _color_for_node: dict[type[Node], int] = {
     GenericNode: QtGui.Qt.red,
     DockNode: QtGui.Qt.green,
-    TeleporterNode: QtGui.Qt.blue,
     PickupNode: QtGui.Qt.cyan,
     EventNode: QtGui.Qt.magenta,
 }

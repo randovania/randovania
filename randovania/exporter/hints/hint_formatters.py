@@ -56,8 +56,10 @@ class RelativeFormatter(LocationFormatter):
 
     def _calculate_distance(self, source_location: PickupIndex, target: Area) -> int:
         source = self.region_list.node_from_pickup_index(source_location)
-        return node_search.distances_to_node(self.region_list, source,
-                                             patches=self.patches, ignore_elevators=False)[target]
+        dock_types_to_ignore = []
+
+        return node_search.distances_to_node(self.region_list, source, dock_types_to_ignore,
+                                             patches=self.patches)[target]
 
     def relative_format(self, pick_hint: PickupHint,
                         hint: Hint,

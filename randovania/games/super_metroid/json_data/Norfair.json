@@ -222,7 +222,7 @@
                     }
                 },
                 "Elevator - Warehouse Entrance": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 250.1780376868096,
@@ -235,15 +235,22 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": null
+                        "teleporter_instance_id": null,
+                        "keep_name_when_vanilla": false,
+                        "editable": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Brinstar",
-                        "area": "Warehouse Entrance"
+                        "area": "Warehouse Entrance",
+                        "node": "Door to Red Brinstar East Tunnel"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Ice Beam Gate Room": {
                             "type": "and",
@@ -7558,7 +7565,7 @@
                     }
                 },
                 "Elevator - Main Hall": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 252.97691894793343,
@@ -7571,15 +7578,22 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": null
+                        "teleporter_instance_id": null,
+                        "keep_name_when_vanilla": false,
+                        "editable": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Norfair",
-                        "area": "Main Hall"
+                        "area": "Main Hall",
+                        "node": "Elevator - Elevator to Lower Norfair"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Lava Dive": {
                             "type": "resource",
@@ -11912,7 +11926,7 @@
                     }
                 },
                 "Elevator - Elevator to Lower Norfair": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 2295.15771951727,
@@ -11925,15 +11939,22 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": null
+                        "teleporter_instance_id": null,
+                        "keep_name_when_vanilla": false,
+                        "editable": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Norfair",
-                        "area": "Elevator to Lower Norfair"
+                        "area": "Elevator to Lower Norfair",
+                        "node": "Elevator - Main Hall"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Acid Statue Room": {
                             "type": "resource",

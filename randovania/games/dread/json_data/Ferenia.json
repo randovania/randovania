@@ -82,7 +82,7 @@
                     }
                 },
                 "Elevator to Dairon - East Transport to Ferenia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -3500.0,
@@ -99,15 +99,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_sanctuary_000_platform",
                         "start_point_actor_name": "elevator_baselab_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "East Transport to Ferenia"
+                        "area": "East Transport to Ferenia",
+                        "node": "Elevator to Ferenia - East Transport to Darion"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Total Recharge Station": {
                             "type": "and",
@@ -1923,7 +1930,7 @@
                     }
                 },
                 "Teleporter to Burenia - Teleport to Ferenia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -13050.0,
@@ -1940,15 +1947,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "LE_Platform_Teleport_Secret",
                         "start_point_actor_name": "teleporter_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Burenia",
-                        "area": "Teleport to Ferenia"
+                        "area": "Teleport to Ferenia",
+                        "node": "Teleporter to Ferenia - Teleport to Burenia (Cyan)"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Tunnel to Separate Tunnels Room (Lower)": {
                             "type": "and",
@@ -2106,7 +2120,7 @@
                     }
                 },
                 "Elevator to Dairon - West Transport to Ferenia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -14950.0,
@@ -2123,15 +2137,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_sanctuary_001_platform",
                         "start_point_actor_name": "elevator_baselab_001_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "West Transport to Ferenia"
+                        "area": "West Transport to Ferenia",
+                        "node": "Elevator to Ferenia - Transport to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Fan Room": {
                             "type": "and",
@@ -5294,7 +5315,7 @@
                     }
                 },
                 "Tram to Ghavoran - Transport to Ferenia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -24000.0,
@@ -5311,15 +5332,22 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_sanctuary_000_platform",
                         "start_point_actor_name": "wagontrain_forest_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ghavoran",
-                        "area": "Transport to Ferenia"
+                        "area": "Transport to Ferenia",
+                        "node": "Tram to Ferenia - Transport to Ghavoran"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Space Jump Room": {
                             "type": "and",
@@ -10268,7 +10296,7 @@
                     }
                 },
                 "Elevator to Hanubia - Transport to Ferenia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -450.0,
@@ -10285,15 +10313,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_sanctuary_000_platform",
                         "start_point_actor_name": "elevator_shipyard_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Hanubia",
-                        "area": "Transport to Ferenia"
+                        "area": "Transport to Ferenia",
+                        "node": "Elevator to Ferenia - Transport to Hanubia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station North": {
                             "type": "and",

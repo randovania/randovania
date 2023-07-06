@@ -91,7 +91,7 @@
                     }
                 },
                 "Elevator To Area 1 - Chozo Seal": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 21255.22,
@@ -105,15 +105,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea01",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea01"
+                        "start_point_actor_name": "ST_FromArea01",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 1",
-                        "area": "Chozo Seal"
+                        "area": "Chozo Seal",
+                        "node": "Elevator to Surface East - Transport to Area 1"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -125,7 +132,7 @@
                     }
                 },
                 "Elevator to Area 3 Exterior - Transport to Area 2 Entrance": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 22570.14,
@@ -139,15 +146,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea03",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea03"
+                        "start_point_actor_name": "ST_FromArea03",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 2 Entrance"
+                        "area": "Transport to Area 2 Entrance",
+                        "node": "Elevator to Area 2 Entrance - Chozo Seal"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Chozo Seal": {
                             "type": "resource",
@@ -1061,7 +1075,7 @@
                     }
                 },
                 "Elevator to Area 2 Exterior - Outer Hub": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7288.02,
@@ -1075,15 +1089,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02A",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea02A"
+                        "start_point_actor_name": "ST_FromArea02A",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 2 - Exterior",
-                        "area": "Outer Hub"
+                        "area": "Outer Hub",
+                        "node": "Elevator to Area 2 Entrance - Transport to Area 2 Exterior"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Main Shaft (Top)": {
                             "type": "and",

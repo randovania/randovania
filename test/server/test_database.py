@@ -41,9 +41,9 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         s.layout_description = description
         s.save()
         game_details = GameDetails(
-            seed_hash='WAR56PWQ',
+            seed_hash='CXQTEVPI',
             spoiler=True,
-            word_hash='Charge Sandcanyon Abyss',
+            word_hash='Aether Honor Spreader',
         )
         worlds.append(MultiplayerWorld(id=w1.uuid, name="Prime 1", preset_raw=w1.preset))
         worlds.append(MultiplayerWorld(id=w2.uuid, name="Prime 2", preset_raw=w2.preset))
