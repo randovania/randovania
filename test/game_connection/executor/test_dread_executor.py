@@ -193,7 +193,7 @@ async def test_code_in_multiple_buffer(executor):
     executor.run_lua_code = AsyncMock()
     executor._read_response = AsyncMock()
     executor._socket = MagicMock()
-    executor._socket.buffer_size = 200
+    executor._socket.buffer_size = 4096
 
     await executor.bootstrap()
-    assert executor.run_lua_code.call_count == 7
+    assert executor.run_lua_code.call_count == 3

@@ -128,4 +128,6 @@ game_data: game.GameData = game.GameData(
     exporter=_exporter,
 
     multiple_start_nodes_per_area=True,
+
+    defaults_available_in_game_sessions=True,
 )

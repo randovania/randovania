@@ -9,6 +9,7 @@ from typing import Optional
 from PySide6.QtCore import Signal, QObject
 
 from randovania.game_description import default_database
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
 
@@ -50,9 +51,21 @@ class DreadExecutorToConnectorSignals(QObject):
 
 def get_bootstrapper_for(game: GameDescription) -> list[str]:
     all_code = [
+        # Pickup Locations
         textwrap.dedent("""
         Game.DoFile('actors/items/randomizer_powerup/scripts/randomizer_powerup.lua')
-        """).strip(),
+        RL.Pickups = {}
+        function RL.GetCollectedIndicesAndSend()
+            if not Scenario.CurrentScenarioID then return "not-in-game" end
+            local r,v,i,p = {},0,1,Game.GetPlayerBlackboardSectionName()
+            for _,t in ipairs(RL.Pickups) do
+                if Blackboard.GetProp(p,t) then v=v+i end
+                i=i*2;if i>=256 then table.insert(r,string.char(v));v=0;i=1 end
+            end
+            if i>1 then table.insert(r,string.char(v)) end
+            RL.SendIndices("locations:"..table.concat(r))
+        end""").strip(),
+        f"for i=1,{game.region_list.num_pickup_nodes} do RL.Pickups[i]='' end",
 
         # Inventory
         textwrap.dedent("""
@@ -76,6 +89,41 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
         function RL.InventoryIndex()
             local playerSection =  Game.GetPlayerBlackboardSectionName()
             return Blackboard.GetProp(playerSection, "InventoryIndex") or 0
+        end
+        function RL.ReceivedPickups()
+            local playerSection =  Game.GetPlayerBlackboardSectionName()
+            return Blackboard.GetProp(playerSection, "ReceivedPickups") or 0
+        end
+        function RL.GetReceivedPickupsAndSend(reset)
+            if reset then
+                RL.PendingPickup = nil
+            end
+            RL.SendReceivedPickups(tostring(RL.ReceivedPickups()))
+        end
+        function RL.GivePendingPickup()
+            if Scenario.IsUserInteractionEnabled(true) then
+                Scenario.QueueAsyncPopup(RL.PendingPickup.msg, 7.0)
+                Game.AddSF(7.5, "RL.GetReceivedPickupsAndSend", "b", true)
+                RL.ConfirmPickup()
+            else
+                Game.AddSF(0.5, "RL.GivePendingPickup", "")
+            end
+        end
+        function RL.ConfirmPickup()
+            RL.PendingPickup.cls.OnPickedUp(nil,RL.PendingPickup.progression)
+            Scenario.WriteToPlayerBlackboard("ReceivedPickups","f",RL.ReceivedPickups()+1)
+        end
+        function RL.ReceivePickup(msg,cls,progression_string,receivedPickupIndex,inventoryIndex)
+            if not RL.PendingPickup then
+                if receivedPickupIndex == RL.ReceivedPickups() and inventoryIndex == RL.InventoryIndex() then
+                    progression = assert(loadstring("return " .. progression_string))()
+                    RL.PendingPickup={cls=cls,progression=progression,msg=msg}
+                    Game.AddSF(0, "RL.GivePendingPickup", "")
+                else
+                    Game.AddSF(0, "RL.GetInventoryAndSend", "")
+                    Game.AddSF(0.05, "RL.GetReceivedPickupsAndSend", "b", false)
+                end
+            end
         end""").strip(),
 
         # Get game state
@@ -93,10 +141,37 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
         function RL.UpdateRDVClient(new_scenario)
             RL.GetGameStateAndSend()
             if Game.GetCurrentGameModeID() == 'INGAME' then
+                if new_scenario == true then
+                    RL.PendingPickup = nil
+                end
                 Game.AddSF(0, "RL.GetInventoryAndSend", "")
+                Game.AddSF(0.05, "RL.GetCollectedIndicesAndSend", "")
+                if RL.PendingPickup == nil then
+                    Game.AddSF(0.05, "RL.GetReceivedPickupsAndSend", "b", false)
+                end
             end
         end""").strip(),
     ]
+
+    for world in game.region_list.regions:
+        entries = []
+
+        for node in world.all_nodes:
+            if isinstance(node, PickupNode):
+                if "actor_name" in node.extra:
+                    key = node.extra["actor_name"]
+                else:
+                    key = node.extra["callback_function"]
+                entries.append(f'{key}={node.pickup_index.index + 1}')
+
+        if not entries:
+            continue
+
+        code = "for n,i in pairs{{{}}}do RL.Pickups[i]=RandomizerPowerup.PropertyForLocation({}..n) end".format(
+            ",".join(entries),
+            repr(world.extra["scenario_id"] + '_'),
+        )
+        all_code.append(code)
 
     all_code.append("RL.Bootstrap=true")
 

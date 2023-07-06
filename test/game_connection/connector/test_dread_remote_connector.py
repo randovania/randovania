@@ -1,10 +1,15 @@
-from unittest.mock import MagicMock
+from unittest.mock import AsyncMock, MagicMock
+
+import frozendict
+import pytest
 from PySide6 import QtCore
 
-import pytest
 from randovania.game_connection.connector.dread_remote_connector import DreadRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.executor.dread_executor import DreadExecutor, DreadExecutorToConnectorSignals
+from randovania.game_description import default_database
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
 
 @pytest.fixture(name="connector")
@@ -83,3 +88,68 @@ async def test_new_inventory_received(connector: DreadRemoteConnector):
     assert wave_beam_inv_item is None
 
     connector.InventoryUpdated.emit.assert_called_once()
+
+async def test_new_received_pickups_received(connector: DreadRemoteConnector):
+    connector.receive_remote_pickups = AsyncMock()
+    connector.in_cooldown = True
+
+    await connector.new_received_pickups_received("6")
+    assert connector.received_pickups == 6
+    assert connector.in_cooldown is False
+
+
+@pytest.fixture()
+def spider_pickup(default_generator_params) -> PickupEntry:
+    dread_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
+    return PickupEntry(
+        name="Spider Magnet",
+        model=PickupModel(
+            game=RandovaniaGame.METROID_DREAD,
+            name="powerup_spidermagnet",
+        ),
+        pickup_category=dread_pickup_database.pickup_categories["misc"],
+        broad_category=dread_pickup_database.pickup_categories["misc"],
+        progression=((ItemResourceInfo(resource_index=24, long_name='Spider Magnet', 
+                                      short_name='Magnet', max_capacity=1, 
+                                      extra=frozendict.frozendict({'item_id': 'ITEM_MAGNET_GLOVE'}))
+                                      , 1),),
+        generator_params=default_generator_params,
+        resource_lock=None,
+        unlocks_resource=False,
+    )
+
+async def test_set_remote_pickups(connector: DreadRemoteConnector, spider_pickup: PickupEntry):
+    connector.receive_remote_pickups = AsyncMock()
+    pickup_entry_with_owner = (("Dummy 1", spider_pickup), ("Dummy 2", spider_pickup))
+    await connector.set_remote_pickups(pickup_entry_with_owner)
+    assert connector.remote_pickups == pickup_entry_with_owner
+
+async def test_receive_remote_pickups(connector: DreadRemoteConnector, spider_pickup: PickupEntry):
+    connector.in_cooldown = False
+    pickup_entry_with_owner = (("Dummy 1", spider_pickup), ("Dummy 2", spider_pickup))
+    connector.remote_pickups = pickup_entry_with_owner
+    connector.executor.run_lua_code = AsyncMock()
+
+    connector.received_pickups = -1
+    connector.inventory_index = -1
+    await connector.receive_remote_pickups()
+    assert connector.in_cooldown is False
+
+    connector.received_pickups = 1
+    connector.inventory_index = -1
+    await connector.receive_remote_pickups()
+    assert connector.in_cooldown is False
+
+    connector.received_pickups = -1
+    connector.inventory_index = 1
+    await connector.receive_remote_pickups()
+    assert connector.in_cooldown is False
+
+    connector.received_pickups = 0
+    connector.inventory_index = 2
+    await connector.receive_remote_pickups()
+    assert connector.in_cooldown is True
+    execute_string = ("RL.ReceivePickup('Received Spider Magnet from Dummy 1.',"
+                      "RandomizerPowerup,'{\\n{\\n{\\nitem_id = "
+                      "\"ITEM_MAGNET_GLOVE\",\\nquantity = 1,\\n},\\n},\\n}',0,2)")
+    connector.executor.run_lua_code.assert_called_once_with(execute_string)
