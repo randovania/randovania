@@ -42,7 +42,7 @@ def test_get_version_failure_missing(mocker):
     mocker.patch("subprocess.run", side_effect=FileNotFoundError)
     from randovania.server.discord import preset_lookup
     result = preset_lookup.get_version("foo", b'J/A')
-    assert result == f"(Unknown version: 4a2f41)"
+    assert result == "(Unknown version: 4a2f41)"
 
 
 def test_get_version_failure_unknown(mocker):
@@ -77,7 +77,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple, is_dev_version
         mocked_git_describe = "v4.0.0"
         mocked_rdv_version = "4.0.0"
 
-    mock_git_describe = mocker.patch("randovania.server.discord.preset_lookup._git_describe",
+    mocker.patch("randovania.server.discord.preset_lookup._git_describe",
                                      return_value=mocked_git_describe)
 
     mock_describe: MagicMock = mocker.patch("randovania.layout.preset_describer.describe",
@@ -121,7 +121,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple, is_dev_version
     mock_embed.assert_called_once_with(
         title="`yu4abbceWfLI-`", description=f"{permalink_1.parameters.player_count} player multiworld permalink",
     )
-    suffix = f"Seed Hash: Elevator Key Checkpoint (LBMFQWCY)"
+    suffix = "Seed Hash: Elevator Key Checkpoint (LBMFQWCY)"
     if is_solo:
         split_desc = embed.description.split("\n")
         assert split_desc == [f"Metroid Prime 2: Echoes permalink for Randovania {mocked_rdv_version}", suffix]

@@ -306,7 +306,7 @@ def test_check_session_data_with_data(window: GameConnectionWindow):
     result = window._check_session_data(MagicMock())
 
     # assert
-    assert result is "Foo"
+    assert result == "Foo"
 
 
 async def test_attempt_join_no_login(window: GameConnectionWindow):

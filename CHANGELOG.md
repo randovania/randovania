@@ -5,7 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [?.?.0] - 2023-06-??
+## [6.0.1] - 2023-07-??
+
+- Added: Option for disabling crash reporting and monitoring.
+- Added: In multiworld sessions, you're prevented from selecting a preset that is incompatible with multiworld.
+- Added: In multiworld sessions, world names must now be unique.
+- Changed: The Privacy Policy has been updated to mention crash reporting and monitoring.
+- Changed: Tweaked the error reporting for generating and exporting games.
+- Fixed: Importing permalinks and spoilers in multiworld no longer fails.
+- Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
+- Fixed: Pickups providing negative resources can now be sent in multiworld games.
+- Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words. 
+- Fixed: In multiworld sessions, the copy permalink button is properly disabled before a game is available.
+
+## [6.0.0] - 2023-07-03
 
 - **Major** - Multiworld support has been significantly changed! New features include:
   *  Sessions now have Worlds instead of rows with users, and users can be associated with any number of Worlds.

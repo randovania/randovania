@@ -1,6 +1,7 @@
 import asyncio
 import dataclasses
 import uuid
+from importlib.util import find_spec
 from pathlib import Path
 from unittest.mock import MagicMock
 
@@ -186,6 +187,7 @@ def corruption_game_description(corruption_game_data) -> GameDescription:
 def dread_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_DREAD)
 
+
 @pytest.fixture(scope="session")
 def am2r_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.AM2R)
@@ -292,8 +294,7 @@ def pytest_addoption(parser):
                      default=False, help="Skips running tests that uses the echo tool")
 
 
-try:
-    import pytestqt
+if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
     import qasync
     import asyncio.events
 
@@ -325,7 +326,7 @@ try:
         yield loop
         loop.close()
 
-except ImportError:
+else:
     @pytest.fixture()
     def skip_qtbot(request):
         pytest.skip()

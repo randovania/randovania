@@ -87,7 +87,6 @@ def test_browser_discord_login_callback_with_sid(
     mock_emit.assert_called_once_with(
         "user_session_update", {
             'encoded_session_b85': b'Wo~0~d2n=PWB',
-            'sessions': [],
             'user': {'discord_id': 1234, 'id': 1, 'name': expected_name}
         },
         to="TheSid", namespace="/"
@@ -116,6 +115,30 @@ def test_browser_discord_login_callback_not_authorized(flask_app, mocker: pytest
     mock_render.assert_called_once_with(
         "unable_to_login.html",
         error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
+    )
+
+
+@pytest.mark.parametrize("via_value_error", [False, True])
+def test_browser_discord_login_callback_mismatching_state(flask_app, mocker: pytest_mock.MockerFixture,
+                                                          via_value_error):
+    mock_render = mocker.patch("flask.render_template")
+
+    sio = MagicMock()
+    sio.discord.callback.side_effect = (
+        ValueError('not enough values to unpack (expected 2, got 1)')
+        if via_value_error else
+        oauthlib.oauth2.rfc6749.errors.MismatchingStateError()
+    )
+
+    # Run
+    result = user_session.browser_discord_login_callback(sio)
+
+    # Assert
+    sio.discord.callback.assert_called_once_with()
+    assert result == (mock_render.return_value, 401)
+    mock_render.assert_called_once_with(
+        "unable_to_login.html",
+        error_message="You must finish the login with the same browser that you started it with.",
     )
 
 
@@ -165,7 +188,6 @@ def test_browser_discord_login_callback_invalid_sid(flask_app, mocker: pytest_mo
     # Run
     with flask_app.test_request_context():
         flask.session["sid"] = "TheSid"
-        # flask.session["DISCORD_OAUTH2_TOKEN"] = "The_Token"
         result = user_session.browser_discord_login_callback(sio)
 
     # Assert

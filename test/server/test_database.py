@@ -7,7 +7,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import multiplayer_session
-from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import GameDetails, MultiplayerWorld, MultiplayerSessionActions, \
     MultiplayerSessionAction
 from randovania.network_common.session_state import MultiplayerSessionState

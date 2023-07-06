@@ -129,23 +129,35 @@ class ServerApp:
             logger().debug("Starting call with args %s", args)
 
             with sentry_sdk.start_transaction(op="message", name=message) as span:
+                try:
+                    user = self.get_current_user()
+                    flask.request.current_user = user
+                    sentry_sdk.set_user({
+                        "id": user.discord_id,
+                        "username": user.name,
+                        "server_id": user.id,
+                    })
+                except (error.NotLoggedInError, error.InvalidSessionError):
+                    flask.request.current_user = None
+                    sentry_sdk.set_user(None)
+
                 if with_header_check:
                     error_msg = self.check_client_headers()
                     if error_msg is not None:
                         return error.UnsupportedClientError(error_msg).as_json
 
                 try:
-                    span.set_data("message.error", 0)
+                    span.set_tag("message.error", 0)
                     return {
                         "result": handler(self, *args),
                     }
 
                 except error.BaseNetworkError as err:
-                    span.set_data("message.error", err.code())
+                    span.set_tag("message.error", err.code())
                     return err.as_json
 
                 except (Exception, TypeError):
-                    span.set_data("message.error", error.ServerError.code())
+                    span.set_tag("message.error", error.ServerError.code())
                     logger().exception(
                         f"Unhandled exception while processing request for message {message}. Args: {args}"
                     )

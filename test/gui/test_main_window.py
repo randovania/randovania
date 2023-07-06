@@ -12,7 +12,9 @@ from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.main_window import MainWindow
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.gui.widgets.about_widget import AboutWidget
+from randovania.gui.widgets.dependencies_widget import DependenciesWidget
 from randovania.gui.widgets.randovania_help_widget import RandovaniaHelpWidget
+from randovania.gui.widgets.reporting_optout_widget import ReportingOptOutWidget
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -116,7 +118,7 @@ async def test_generate_seed_from_permalink(default_main_window, mocker):
     permalink = MagicMock(spec=Permalink)
     permalink.seed_hash = None
     permalink.parameters = MagicMock(spec=GeneratorParameters)
-    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout",
+    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout",
                                                    autospec=True)
     default_main_window.open_game_details = MagicMock()
     mock_open_for_background_task = mocker.patch(
@@ -213,6 +215,33 @@ def test_on_menu_action_about(default_main_window, monkeypatch):
     assert default_main_window.about_window is not None
     assert default_main_window.about_window.windowTitle() == "About Randovania"
     assert isinstance(default_main_window.about_window.centralWidget(), AboutWidget)
+    mock_show.assert_called_once_with()
+
+
+def test_on_menu_action_dependencies(default_main_window, monkeypatch):
+    mock_show = MagicMock()
+    monkeypatch.setattr(QtWidgets.QWidget, "show", mock_show)
+
+    # Run
+    default_main_window._on_menu_action_dependencies()
+
+    # Assert
+    assert default_main_window.dependencies_window is not None
+    assert default_main_window.dependencies_window.windowTitle() == "Dependencies"
+    assert isinstance(default_main_window.dependencies_window.centralWidget(), DependenciesWidget)
+    mock_show.assert_called_once_with()
+
+
+def test_on_menu_action_automatic_reporting(default_main_window, monkeypatch):
+    mock_show = MagicMock()
+    monkeypatch.setattr(QtWidgets.QWidget, "show", mock_show)
+
+    # Run
+    default_main_window._on_menu_action_automatic_reporting()
+
+    # Assert
+    assert default_main_window.reporting_widget is not None
+    assert isinstance(default_main_window.reporting_widget, ReportingOptOutWidget)
     mock_show.assert_called_once_with()
 
 

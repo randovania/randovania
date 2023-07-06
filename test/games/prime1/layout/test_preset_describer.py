@@ -72,7 +72,12 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
     }
 
     if use_enemy_attribute_randomizer:
-        expected["Game Changes"].insert(5, "Random Size within range 0.25 - 5.25, Random Health within range 2.25 - 8.23, Random Speed within range 0.15 - 7.25, Random Damage within range 1.25 - 100.25, Enemies will be stretched randomly")
+        expected["Game Changes"].insert(
+            5,
+            "Random Size within range 0.25 - 5.25, Random Health within range 2.25 - 8.23, "
+            "Random Speed within range 0.15 - 7.25, Random Damage within range 1.25 - 100.25, "
+            "Enemies will be stretched randomly"
+        )
     else:
         expected["Game Changes"].insert(2, "Random Boss Sizes")
 

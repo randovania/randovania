@@ -3,6 +3,7 @@ import uuid
 
 import flask_socketio
 import peewee
+import sentry_sdk
 
 from randovania.bitpacking import construct_pack
 from randovania.network_common import signals, error
@@ -75,20 +76,35 @@ def describe_session(session: MultiplayerSession, world: World | None = None) ->
 
 
 def emit_session_meta_update(session: MultiplayerSession):
-    logger().debug("multiplayer_session_meta_update for session %d (%s)", session.id, session.name)
-    emit_session_global_event(session, signals.SESSION_META_UPDATE, session.create_session_entry().as_json)
+    with sentry_sdk.start_span(op="emit", description="session_meta_update") as span:
+        span.set_data("session.id", session.id)
+        span.set_data("session.name", session.name)
+        logger().debug("multiplayer_session_meta_update for session %d (%s)", session.id, session.name)
+        emit_session_global_event(session, signals.SESSION_META_UPDATE, session.create_session_entry().as_json)
 
 
 def emit_session_actions_update(session: MultiplayerSession):
-    logger().debug("multiplayer_session_actions_update for session %d (%s)", session.id, session.name)
-    emit_session_global_event(session, signals.SESSION_ACTIONS_UPDATE,
-                              construct_pack.encode(session.describe_actions()))
+    with sentry_sdk.start_span(op="emit", description="session_actions_update") as span:
+        logger().debug("multiplayer_session_actions_update for session %d (%s)", session.id, session.name)
+        actions = session.describe_actions()
+
+        span.set_data("session.id", session.id)
+        span.set_data("session.name", session.name)
+        span.set_data("session.actions", len(actions.actions))
+        emit_session_global_event(session, signals.SESSION_ACTIONS_UPDATE,
+                                  construct_pack.encode(actions))
 
 
 def emit_session_audit_update(session: MultiplayerSession):
-    logger().debug("multiplayer_session_audit_update for session %d (%s)", session.id, session.name)
-    emit_session_global_event(session, signals.SESSION_AUDIT_UPDATE,
-                              construct_pack.encode(session.get_audit_log()))
+    with sentry_sdk.start_span(op="emit", description="session_audit_update") as span:
+        logger().debug("multiplayer_session_audit_update for session %d (%s)", session.id, session.name)
+        log = session.get_audit_log()
+
+        span.set_data("session.id", session.id)
+        span.set_data("session.name", session.name)
+        span.set_data("session.audit", len(log.entries))
+        emit_session_global_event(session, signals.SESSION_AUDIT_UPDATE,
+                                  construct_pack.encode(log))
 
 
 def add_audit_entry(sio: ServerApp, session: MultiplayerSession, message: str):

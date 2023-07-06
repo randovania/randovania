@@ -4,7 +4,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description import default_database
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.generator import generate_and_validate_description
 from randovania.interface_common.preset_editor import PresetEditor

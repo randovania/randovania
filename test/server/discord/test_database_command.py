@@ -102,7 +102,7 @@ async def test_on_database_area_selected(tmp_path, echoes_game_description, mock
 
     ctx = AsyncMock()
     ctx.response = AsyncMock(spec=discord.InteractionResponse)
-    item._selected_values = [f"area_1"]
+    item._selected_values = ["area_1"]
 
     # Run
     await item.callback(ctx)
