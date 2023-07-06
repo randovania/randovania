@@ -40,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Fixed: The Pseudo Wave Beam in Burenia Burenia Hub to Dairon now correctly requires Wide Beam.
+- Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
 
 ## [6.0.0] - 2023-07-03
 
