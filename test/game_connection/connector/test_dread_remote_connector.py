@@ -44,7 +44,7 @@ async def test_general_class_content(connector: DreadRemoteConnector):
 async def test_new_player_location(connector: DreadRemoteConnector):
     connector.PlayerLocationChanged = MagicMock(QtCore.SignalInstance)
 
-    assert connector.inventory_index == -1
+    assert connector.inventory_index is None
     connector.inventory_index = 1
     assert connector.inventory_index == 1
 
@@ -58,7 +58,7 @@ async def test_new_player_location(connector: DreadRemoteConnector):
 
     connector.PlayerLocationChanged = MagicMock(QtCore.SignalInstance)
     connector.new_player_location_received("MAINMENU")
-    assert connector.inventory_index == -1
+    assert connector.inventory_index is None
     connector.PlayerLocationChanged.emit.assert_called_once_with(PlayerLocationEvent(None, None))
 
 async def test_new_inventory_received(connector: DreadRemoteConnector):
@@ -69,7 +69,7 @@ async def test_new_inventory_received(connector: DreadRemoteConnector):
     assert connector.last_inventory == {}
     connector.InventoryUpdated.emit.assert_not_called()
 
-    assert connector.inventory_index == -1
+    assert connector.inventory_index is None
     connector.new_inventory_received('{"index": 69, "inventory": [0,1,0]}')
     assert connector.inventory_index == 69
     # check wide beam
@@ -132,17 +132,17 @@ async def test_receive_remote_pickups(connector: DreadRemoteConnector, spider_pi
     connector.remote_pickups = pickup_entry_with_owner
     connector.executor.run_lua_code = AsyncMock()
 
-    connector.received_pickups = -1
-    connector.inventory_index = -1
+    connector.received_pickups = None
+    connector.inventory_index = None
     await connector.receive_remote_pickups()
     assert connector.in_cooldown is False
 
     connector.received_pickups = 1
-    connector.inventory_index = -1
+    connector.inventory_index = None
     await connector.receive_remote_pickups()
     assert connector.in_cooldown is False
 
-    connector.received_pickups = -1
+    connector.received_pickups = None
     connector.inventory_index = 1
     await connector.receive_remote_pickups()
     assert connector.in_cooldown is False
@@ -161,7 +161,7 @@ async def test_new_collected_locations_received_wrong_answer(connector: DreadRem
     new_indices = b"Foo"
     connector.new_collected_locations_received(new_indices)
 
-    connector.logger.warning.assert_called_once_with(f"Unknown response: {new_indices}")
+    connector.logger.warning.assert_called_once_with("Unknown response: %s", new_indices)
 
 async def test_new_collected_locations_received(connector: DreadRemoteConnector):
     connector.logger = MagicMock()

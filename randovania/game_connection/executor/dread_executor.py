@@ -71,7 +71,7 @@ class DreadExecutorToConnectorSignals(QObject):
 
 def get_bootstrapper_for(game: GameDescription) -> list[str]:
     all_code = []
-    bootstrap_path = Path(__file__).parent.joinpath("bootstrap_code")
+    bootstrap_path = game.game.data_path.joinpath("assets", "lua")
     replacements = {
         "num_pickup_nodes": game.region_list.num_pickup_nodes,
         "inventory": "{{{}}}".format(",".join(
