@@ -1,14 +1,15 @@
 import struct
 
+from open_prime_rando.dol_patching import all_prime_dol_patches
+from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
+
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
 from randovania.game_description.db.region import Region
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory, InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items
-from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
-from open_prime_rando.dol_patching import all_prime_dol_patches
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -101,3 +102,31 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         resources_to_give.remove_resource(self.game.resource_database.get_item("Percent"))
 
         return item_name, resources_to_give
+
+    async def get_inventory(self) -> Inventory:
+        inventory = await super().get_inventory()
+
+        # mapWorldInfoAreas: 0x8c0
+        # mapWorldInfoAreas.areas: + 0x4
+        # mapWorldInfoAreas.areas.data: +0xc
+
+        arr_raw = await self.executor.perform_single_memory_operation(MemoryOperation(
+            address=self.version.cstate_manager_global + 0x8c0 + 0x4 + 0xc,
+            read_byte_count=4 * 32,
+            offset=0,
+        ))
+        arr = struct.unpack(">32L", arr_raw)
+
+        count = 0
+
+        for i in range(1024):
+            f0 = arr[i // 32]
+            f4 = 1 << (i % 32)
+            if f4 & f0 != 0:
+                count += 1
+
+        inventory[self.game.resource_database.get_item("ObjectCount")] = InventoryItem(
+            count, 1024
+        )
+
+        return inventory

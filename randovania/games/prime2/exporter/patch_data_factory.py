@@ -112,6 +112,7 @@ def _create_spawn_point_field(patches: GamePatches,
             "amount": starting_resources[item],
         }
         for item in game.resource_database.item
+        if item_id_for_item_resource(item) < 1000
     ]
 
     return {
