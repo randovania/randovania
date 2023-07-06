@@ -135,6 +135,7 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
     capacities = [
         {'amount': 1 if item.short_name == "MorphBall" else 0, 'index': item.extra["item_id"]}
         for item in resource_db.item
+        if item.extra["item_id"] < 1000
     ]
 
     # Run
