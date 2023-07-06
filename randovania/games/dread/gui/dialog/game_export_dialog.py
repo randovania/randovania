@@ -213,29 +213,23 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         self.update_accept_validation()
 
-    def save_options(self):
-        with self._options as options:
-            if self._has_spoiler:
-                options.auto_save_spoiler = self.auto_save_spoiler
+    def update_per_game_options(self, per_game: DreadPerGameOptions) -> DreadPerGameOptions:
+        selected_tab = self.output_tab_widget.currentWidget()
+        output_preference = json.dumps({
+            "selected_tab": next(tab_name for tab_name, the_tab in self._output_tab_by_name.items()
+                                 if selected_tab == the_tab),
+            "tab_options": {
+                tab_name: the_tab.serialize_options()
+                for tab_name, the_tab in self._output_tab_by_name.items()
+            }
+        })
 
-            per_game = options.options_for_game(self.game_enum())
-
-            selected_tab = self.output_tab_widget.currentWidget()
-            output_preference = json.dumps({
-                "selected_tab": next(tab_name for tab_name, the_tab in self._output_tab_by_name.items()
-                                     if selected_tab == the_tab),
-                "tab_options": {
-                    tab_name: the_tab.serialize_options()
-                    for tab_name, the_tab in self._output_tab_by_name.items()
-                }
-            })
-
-            options.set_options_for_game(self.game_enum(), DreadPerGameOptions(
-                cosmetic_patches=per_game.cosmetic_patches,
-                input_directory=self.input_file,
-                target_platform=self.target_platform,
-                output_preference=output_preference,
-            ))
+        return DreadPerGameOptions(
+            cosmetic_patches=per_game.cosmetic_patches,
+            input_directory=self.input_file,
+            target_platform=self.target_platform,
+            output_preference=output_preference,
+        )
 
     # Update
 

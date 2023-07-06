@@ -59,19 +59,13 @@ class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_
     def valid_output_file_types(self) -> list[str]:
         return ["smc", "sfc"]
 
-    def save_options(self):
-        with self._options as options:
-            if self._has_spoiler:
-                options.auto_save_spoiler = self.auto_save_spoiler
-
-            per_game = options.options_for_game(self.game_enum())
-            assert isinstance(per_game, SuperMetroidPerGameOptions)
-            options.set_options_for_game(self.game_enum(), dataclasses.replace(
-                per_game,
-                input_path=self.input_file,
-                output_directory=self.output_file.parent,
-                output_format=self._selected_output_format,
-            ))
+    def update_per_game_options(self, per_game: SuperMetroidPerGameOptions) -> SuperMetroidPerGameOptions:
+        return dataclasses.replace(
+            per_game,
+            input_path=self.input_file,
+            output_directory=self.output_file.parent,
+            output_format=self._selected_output_format,
+        )
 
     # Getters
     @property

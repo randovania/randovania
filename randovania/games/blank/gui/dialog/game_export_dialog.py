@@ -28,18 +28,12 @@ class BlankGameExportDialog(GameExportDialog):
     def auto_save_spoiler(self) -> bool:
         raise NotImplementedError("This method hasn't been implemented yet")
 
-    def save_options(self):
-        with self._options as options:
-            if self._has_spoiler:
-                options.auto_save_spoiler = self.auto_save_spoiler
-
-            per_game = options.options_for_game(self.game_enum())
-            assert isinstance(per_game, BlankPerGameOptions)
-            options.set_options_for_game(self.game_enum(), dataclasses.replace(
-                per_game,
-                input_path=self.input_file,
-                output_path=self.output_file,
-            ))
+    def update_per_game_options(self, per_game: BlankPerGameOptions) -> BlankPerGameOptions:
+        return dataclasses.replace(
+            per_game,
+            input_path=self.input_file,
+            output_path=self.output_file,
+        )
 
     def get_game_export_params(self) -> BlankGameExportParams:
         """Creates the GameExportParams for this specific game,

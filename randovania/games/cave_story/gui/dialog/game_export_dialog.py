@@ -39,17 +39,11 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
             }
         )
 
-    def save_options(self):
-        with self._options as options:
-            if self._has_spoiler:
-                options.auto_save_spoiler = self.auto_save_spoiler
-
-            per_game = options.options_for_game(self.game_enum())
-            assert isinstance(per_game, CSPerGameOptions)
-            options.set_options_for_game(self.game_enum(), dataclasses.replace(
-                per_game,
-                output_directory=self.output_file,
-            ))
+    def update_per_game_options(self, per_game: CSPerGameOptions) -> CSPerGameOptions:
+        return dataclasses.replace(
+            per_game,
+            output_directory=self.output_file,
+        )
 
     # Getters
     @property
