@@ -2,10 +2,11 @@ import asyncio
 import dataclasses
 from enum import IntEnum
 import logging
+from pathlib import Path
+import re
 import struct
 from asyncio import StreamReader, StreamWriter
-import textwrap
-from typing import Optional
+from typing import Any, Optional
 from PySide6.QtCore import Signal, QObject
 
 from randovania.game_description import default_database
@@ -40,6 +41,25 @@ class ClientInterests(IntEnum):
     LOGGING = b'1',
     MULTIWORLD = b'2',
 
+# FIXME: This is a copy of ODR's implementation just that the first param is a path instead of a name
+# for a file within ODR's template folder
+def replace_lua_template(file: Path, replacement: dict[str, Any], wrap_strings: bool = False) -> str:
+    from open_dread_rando.lua_util import lua_convert
+    code = file.read_text()
+    for key, content in replacement.items():
+        # Replace `TEMPLATE("key")`-style replacements
+        code = code.replace(f'TEMPLATE("{key}")', lua_convert(content, wrap_strings))
+        # Replace `T__key__T`-style replacements
+        code = code.replace(f'T__{key}__T', lua_convert(content, wrap_strings))
+
+    unknown_templates = re.findall(r'TEMPLATE\("([^"]+)"\)', code)
+    unknown_templates.extend(re.findall(r'T__(\w+)__T', code))
+
+    if unknown_templates:
+        raise ValueError("The following templates were left unfulfilled: " + str(unknown_templates))
+
+    return code
+
 # This is stupid but DreadExecutor defines a "connect" method which makes a lot of trouble if it would
 # inherit QObject
 class DreadExecutorToConnectorSignals(QObject):
@@ -50,109 +70,22 @@ class DreadExecutorToConnectorSignals(QObject):
     connection_lost = Signal()
 
 def get_bootstrapper_for(game: GameDescription) -> list[str]:
-    all_code = [
-        # Pickup Locations
-        textwrap.dedent("""
-        Game.DoFile('actors/items/randomizer_powerup/scripts/randomizer_powerup.lua')
-        RL.Pickups = {}
-        function RL.GetCollectedIndicesAndSend()
-            if not Scenario.CurrentScenarioID then return "not-in-game" end
-            local r,v,i,p = {},0,1,Game.GetPlayerBlackboardSectionName()
-            for _,t in ipairs(RL.Pickups) do
-                if Blackboard.GetProp(p,t) then v=v+i end
-                i=i*2;if i>=256 then table.insert(r,string.char(v));v=0;i=1 end
-            end
-            if i>1 then table.insert(r,string.char(v)) end
-            RL.SendIndices("locations:"..table.concat(r))
-        end""").strip(),
-        f"for i=1,{game.region_list.num_pickup_nodes} do RL.Pickups[i]='' end",
+    all_code = []
+    bootstrap_path = Path(__file__).parent.joinpath("bootstrap_code")
+    replacements = {
+        "num_pickup_nodes": game.region_list.num_pickup_nodes,
+        "inventory": "{{{}}}".format(",".join(
+                repr(r.extra["item_id"])
+                for r in game.resource_database.item
+                if "item_id" in r.extra
+            ))
+        }
+    
+    for i in range(4):
+        bootstrap_part = bootstrap_path.joinpath(f"bootstrap_part_{i}.lua")
+        all_code.append(replace_lua_template(bootstrap_part, replacements))
 
-        # Inventory
-        textwrap.dedent("""
-        function RL.GetInventoryAndSend()
-            local r={}
-            for i,n in ipairs(RL.InventoryItems) do
-                r[i]=RandomizerPowerup.GetItemAmount(n)
-            end
-            local inventory = string.format("[%s]",table.concat(r,","))
-            local currentIndex = string.format('"index": %s', RL.InventoryIndex())
-            RL.SendInventory(string.format('{%s,"inventory":%s}', currentIndex, inventory))
-        end""").strip(),
-        "RL.InventoryItems={{{}}}".format(",".join(
-            repr(r.extra["item_id"])
-            for r in game.resource_database.item
-            if "item_id" in r.extra
-        )),
-
-        # Receiving pickups
-        textwrap.dedent("""
-        function RL.InventoryIndex()
-            local playerSection =  Game.GetPlayerBlackboardSectionName()
-            return Blackboard.GetProp(playerSection, "InventoryIndex") or 0
-        end
-        function RL.ReceivedPickups()
-            local playerSection =  Game.GetPlayerBlackboardSectionName()
-            return Blackboard.GetProp(playerSection, "ReceivedPickups") or 0
-        end
-        function RL.GetReceivedPickupsAndSend(reset)
-            if reset then
-                RL.PendingPickup = nil
-            end
-            RL.SendReceivedPickups(tostring(RL.ReceivedPickups()))
-        end
-        function RL.GivePendingPickup()
-            if Scenario.IsUserInteractionEnabled(true) then
-                Scenario.QueueAsyncPopup(RL.PendingPickup.msg, 7.0)
-                Game.AddSF(7.5, "RL.GetReceivedPickupsAndSend", "b", true)
-                RL.ConfirmPickup()
-            else
-                Game.AddSF(0.5, "RL.GivePendingPickup", "")
-            end
-        end
-        function RL.ConfirmPickup()
-            RL.PendingPickup.cls.OnPickedUp(nil,RL.PendingPickup.progression)
-            Scenario.WriteToPlayerBlackboard("ReceivedPickups","f",RL.ReceivedPickups()+1)
-        end
-        function RL.ReceivePickup(msg,cls,progression_string,receivedPickupIndex,inventoryIndex)
-            if not RL.PendingPickup then
-                if receivedPickupIndex == RL.ReceivedPickups() and inventoryIndex == RL.InventoryIndex() then
-                    progression = assert(loadstring("return " .. progression_string))()
-                    RL.PendingPickup={cls=cls,progression=progression,msg=msg}
-                    Game.AddSF(0, "RL.GivePendingPickup", "")
-                else
-                    Game.AddSF(0, "RL.GetInventoryAndSend", "")
-                    Game.AddSF(0.05, "RL.GetReceivedPickupsAndSend", "b", false)
-                end
-            end
-        end""").strip(),
-
-        # Get game state
-        textwrap.dedent("""
-       function RL.GetGameStateAndSend()
-            local current_state = Game.GetCurrentGameModeID()
-            if current_state == 'INGAME' then
-                RL.SendNewGameState(Game.GetScenarioID())
-            else
-                RL.SendNewGameState(current_state)
-            end
-        end""").strip(),
-
-        textwrap.dedent("""
-        function RL.UpdateRDVClient(new_scenario)
-            RL.GetGameStateAndSend()
-            if Game.GetCurrentGameModeID() == 'INGAME' then
-                if new_scenario == true then
-                    RL.PendingPickup = nil
-                end
-                Game.AddSF(0, "RL.GetInventoryAndSend", "")
-                Game.AddSF(0.05, "RL.GetCollectedIndicesAndSend", "")
-                if RL.PendingPickup == nil then
-                    Game.AddSF(0.05, "RL.GetReceivedPickupsAndSend", "b", false)
-                end
-            end
-        end""").strip(),
-    ]
-
+    locations_lua = bootstrap_path.joinpath("bootstrap_locations.lua")
     for world in game.region_list.regions:
         entries = []
 
@@ -167,10 +100,9 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
         if not entries:
             continue
 
-        code = "for n,i in pairs{{{}}}do RL.Pickups[i]=RandomizerPowerup.PropertyForLocation({}..n) end".format(
-            ",".join(entries),
-            repr(world.extra["scenario_id"] + '_'),
-        )
+        replacements["pairs"] = "{{{}}}".format(",".join(entries))
+        replacements["location"] = "{}".format(repr(world.extra["scenario_id"] + '_'))
+        code = replace_lua_template(locations_lua, replacements)
         all_code.append(code)
 
     all_code.append("RL.Bootstrap=true")
@@ -203,36 +135,36 @@ class DreadExecutor():
 
         try:
             self._socket_error = None
-            self.logger.info(f"Connecting to {self._ip}:{self._port}.")
+            self.logger.info("Connecting to %s:%d.", self._ip, self._port)
             reader, writer = await asyncio.open_connection(self._ip, self._port)
             self._socket = DreadSocketHolder(reader, writer, int(1), int(4096), 0)
             self._socket.request_number = 0
 
             # Send interests
-            self.logger.info("Connection open, set interests.")
+            self.logger.debug("Connection open, set interests.")
             interests = ClientInterests.MULTIWORLD # | ClientInterests.LOGGING
             writer.write(self._build_packet(PacketType.PACKET_HANDSHAKE, interests.to_bytes(1, "little")))
             await asyncio.wait_for(writer.drain(), timeout=30)
             await self._read_response()
 
             # Send API details request
-            self.logger.info("Requesting API details.")
+            self.logger.debug("Requesting API details.")
             await self.run_lua_code("return string.format('%d,%d,%s,%s', RL.Version, RL.BufferSize,"
                                      "tostring(RL.Bootstrap), Init.sLayoutUUID)")
             await asyncio.wait_for(writer.drain(), timeout=30)
 
-            self.logger.info("Waiting for API details response.")
+            self.logger.debug("Waiting for API details response.")
             response = await self._read_response()
             api_version, buffer_size, bootstrap, self.layout_uuid_str = response.decode("ascii").split(",")
-            self.logger.info(f"Remote replied with API level {api_version}, buffer_size {buffer_size}, " 
-                             f"bootstrap {bootstrap} and layout_uuid {self.layout_uuid_str}, connection successful.")
+            self.logger.debug("Remote replied with API level %s, buffer_size %s, bootstrap %s and layout_uuid %s, "
+                              "connection successful.", api_version, buffer_size, bootstrap, self.layout_uuid_str)
             self._socket.api_version = int(api_version)
             self._socket.buffer_size = int(buffer_size)
 
             # always bootstrap, so we can change code with leaving the game open
-            self.logger.info("Send bootstrap code")
+            self.logger.debug("Send bootstrap code")
             await self.bootstrap()
-            self.logger.info("Bootstrap done")
+            self.logger.debug("Bootstrap done")
 
             await self.run_lua_code('Game.AddSF(2.0, RL.UpdateRDVClient, "")')
             await self._read_response()
@@ -240,6 +172,7 @@ class DreadExecutor():
             loop = asyncio.get_event_loop()
             loop.create_task(self._send_keep_alive())
             loop.create_task(self.read_loop())
+            self.logger.info("Connected")
 
             return None
 
@@ -285,10 +218,9 @@ class DreadExecutor():
                 recv_packet_type = response[0]
                 dread_received_bytes = struct.unpack("<l", response[1:4] + b"\x00")[0]
                 dread_should_bytes = struct.unpack("<l", response[5:8] + b"\x00")[0]
-                self.logger.warning(f"Dread received a malformed packet. "
-                                    f"Type {recv_packet_type}, "
-                                    f"received bytes {dread_received_bytes}, "
-                                    f"should receive bytes {dread_should_bytes}")
+                self.logger.warning("Dread received a malformed packet. Type %d, received bytes %d, "
+                                    "should receive bytes %d", recv_packet_type,
+                                    dread_received_bytes, dread_should_bytes)
                 raise DreadLuaException()
             case PacketType.PACKET_HANDSHAKE:
                 await self._check_header()
@@ -307,7 +239,7 @@ class DreadExecutor():
                 if is_success:
                     response = data
                 else:
-                    self.logger.warning("Running lua code throw an error. Try again.")
+                    self.logger.debug("Running lua code throw an error. Try again.")
                     raise DreadLuaException()
             case _:
                 response = await asyncio.wait_for(self._socket.reader.read(4), timeout=15)
@@ -339,7 +271,7 @@ class DreadExecutor():
                 await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
             except (OSError, asyncio.TimeoutError, AttributeError) as e:
                 self.logger.warning(
-                    f"Unable to send keep-alive packet to {self._ip}:{self._port}: {e} ({type(e)})"
+                    "Unable to send keep-alive packet to %s:%d: %s (%s)", self._ip, self._port, e, type(e)
                 )
                 self.disconnect()
 

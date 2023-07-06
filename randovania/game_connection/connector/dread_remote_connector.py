@@ -93,8 +93,8 @@ class DreadRemoteConnector(RemoteConnector):
         self.remote_pickups = tuple()
         self.last_inventory = {}
         self.in_cooldown = True
-        self.received_pickups = -1
-        self.inventory_index = -1
+        self.received_pickups = None
+        self.inventory_index = None
         self.current_region = None
 
     def new_player_location_received(self, state_or_region: str):
@@ -109,15 +109,16 @@ class DreadRemoteConnector(RemoteConnector):
 
     def new_collected_locations_received(self, new_indices: bytes):
         locations = set()
-        if new_indices.startswith(b"locations:"):
+        start_of_bytes = b"locations:"
+        if new_indices.startswith(start_of_bytes):
             index = 0
-            for c in new_indices[len(b"locations:"):]:
+            for c in new_indices[len(start_of_bytes):]:
                 for i in range(8):
                     if c & (1 << i):
                         locations.add(PickupIndex(index))
                     index += 1
         else:
-            self.logger.warning(f"Unknown response: {new_indices}")
+            self.logger.warning("Unknown response: %s", new_indices)
 
         for location in locations:
             self.PickupIndexCollected.emit(location)
@@ -128,7 +129,7 @@ class DreadRemoteConnector(RemoteConnector):
             self.inventory_index = inventory_json["index"]
             inventory_ints: list[int] = inventory_json["inventory"]
         except Exception as e:
-            self.logger.error(f"Unknown response: {json_string} (got {e})")
+            self.logger.error("Unknown response: %s (got %s)", json_string, e)
             return {}
 
         items = [r for r in self.game.resource_database.item if "item_id" in r.extra]
@@ -143,7 +144,7 @@ class DreadRemoteConnector(RemoteConnector):
     @asyncSlot()
     async def new_received_pickups_received(self, new_received_pickups: str):
         new_recv_as_int = int(new_received_pickups)
-        self.logger.warning(f"Received Pickups: {new_received_pickups}")
+        self.logger.debug("Received Pickups: %s", new_received_pickups)
         self.in_cooldown = False
         self.received_pickups = new_recv_as_int
         await self.receive_remote_pickups()
@@ -157,7 +158,7 @@ class DreadRemoteConnector(RemoteConnector):
         inventory = self.last_inventory
 
         # in that case we never received the numbers (at least 0) from the game
-        if self.received_pickups == -1 or self.inventory_index == -1:
+        if self.received_pickups is None or self.inventory_index is None:
             return
 
         num_pickups = self.received_pickups
@@ -170,14 +171,14 @@ class DreadRemoteConnector(RemoteConnector):
         provider_name, pickup = remote_pickups[num_pickups]
         item_name, items_list = resources_to_give_for_pickup(self.game.resource_database, pickup, inventory)
 
-        self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}")
+        self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
 
         from open_dread_rando.lua_util import lua_convert
         progression_as_lua = lua_convert(items_list, True)
         message = format_received_item(item_name, provider_name)
 
-        self.logger.info(f"{len(remote_pickups)} permanent pickups, magic {num_pickups}. "
-                         f"Next pickup: {message}")
+        self.logger.info("%d permanent pickups, magic %d. Next pickup: %s",
+                          len(remote_pickups), num_pickups, message)
 
         main_item_id = items_list[0][0]["item_id"]
         from open_dread_rando.lua_editor import LuaEditor

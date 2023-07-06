@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.1.0] - 2023-??-??
 
-- Added: Multiworld support for Dread.
+### Metroid Dread
+
+- **Major** - Added: Multiworld support for Dread.
 
 
 ## [6.0.1] - 2023-07-??
