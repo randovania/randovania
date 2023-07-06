@@ -31,7 +31,9 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
                                            "Teleport to Great Temple - Sky Temple Energy Controller")
         expected = expected.assign_dock_connections([
             (echoes_game_description.region_list.typed_node_by_identifier(node_ident, DockNode),
-            echoes_game_description.region_list.node_by_identifier(NodeIdentifier.create("Temple Grounds", "Credits", "Event - Dark Samus 3 and 4"))),
+            echoes_game_description.region_list.node_by_identifier(NodeIdentifier.create(
+            "Temple Grounds", "Credits", "Event - Dark Samus 3 and 4"
+            ))),
         ])
 
     config = default_echoes_configuration

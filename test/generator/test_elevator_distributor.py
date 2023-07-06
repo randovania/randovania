@@ -30,14 +30,16 @@ def test_try_randomize_elevators(seed_number: int,
         for region in echoes_game_description.region_list.regions
         for area in region.areas
         for node in area.nodes
-        if isinstance(node, DockNode) and node.dock_type in elevator_dock_types and node.extra.get("editable", False) and node.extra["teleporter_instance_id"] in expected_ids
+        if isinstance(node, DockNode) and node.dock_type in elevator_dock_types
+            and node.extra.get("editable", False) and node.extra["teleporter_instance_id"] in expected_ids
     ]
     teleporters.sort()
 
     # Run
     result = elevator_distributor.try_randomize_elevators(
         rng,
-        elevator_distributor.create_elevator_database(echoes_game_description.region_list, teleporters, elevator_dock_types))
+        elevator_distributor.create_elevator_database(echoes_game_description.region_list, 
+                                                      teleporters, elevator_dock_types))
 
     connected_ids = [
         echoes_game_description.region_list.node_by_identifier(elevator.connected_elevator.teleporter
