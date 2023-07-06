@@ -200,7 +200,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             if needs_starting_location:
                 starting_location = AreaIdentifier.from_json(previous_state["starting_location"])
 
-            # todo: I have no idea what this part is doing. Needs to be refactored???
             teleporters: dict[NodeIdentifier, AreaIdentifier | None] = {
                 NodeIdentifier.from_json(item["teleporter"]): (
                     AreaIdentifier.from_json(item["data"])
