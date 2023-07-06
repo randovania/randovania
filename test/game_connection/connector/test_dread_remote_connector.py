@@ -1,6 +1,7 @@
 from unittest.mock import AsyncMock, MagicMock
 
 import frozendict
+from mock import call
 import pytest
 from PySide6 import QtCore
 
@@ -10,6 +11,7 @@ from randovania.game_connection.executor.dread_executor import DreadExecutor, Dr
 from randovania.game_description import default_database
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 
 @pytest.fixture(name="connector")
@@ -153,3 +155,23 @@ async def test_receive_remote_pickups(connector: DreadRemoteConnector, spider_pi
                       "RandomizerPowerup,'{\\n{\\n{\\nitem_id = "
                       "\"ITEM_MAGNET_GLOVE\",\\nquantity = 1,\\n},\\n},\\n}',0,2)")
     connector.executor.run_lua_code.assert_called_once_with(execute_string)
+
+async def test_new_collected_locations_received_wrong_answer(connector: DreadRemoteConnector):
+    connector.logger = MagicMock()
+    new_indices = b"Foo"
+    connector.new_collected_locations_received(new_indices)
+
+    connector.logger.warning.assert_called_once_with(f"Unknown response: {new_indices}")
+
+async def test_new_collected_locations_received(connector: DreadRemoteConnector):
+    connector.logger = MagicMock()
+    connector.PickupIndexCollected = MagicMock()
+    new_indices = b"locations:1"
+    connector.new_collected_locations_received(new_indices)
+
+    connector.logger.warning.assert_not_called
+    connector.PickupIndexCollected.emit.assert_has_calls([
+        call(PickupIndex(0)),
+        call(PickupIndex(4)),
+        call(PickupIndex(5))
+    ])
