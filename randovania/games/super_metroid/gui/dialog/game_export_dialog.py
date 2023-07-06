@@ -15,15 +15,16 @@ from randovania.interface_common.options import Options
 
 
 class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_SuperMetroidGameExportDialog):
-    @property
-    def _game(self):
+
+    @classmethod
+    def game_enum(cls):
         return RandovaniaGame.SUPER_METROID
 
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
         self._base_output_name = f"SM Randomizer - {word_hash}"
-        per_game = options.options_for_game(self._game)
+        per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, SuperMetroidPerGameOptions)
 
         # Input
@@ -63,9 +64,9 @@ class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
 
-            per_game = options.options_for_game(self._game)
+            per_game = options.options_for_game(self.game_enum())
             assert isinstance(per_game, SuperMetroidPerGameOptions)
-            options.set_options_for_game(self._game, dataclasses.replace(
+            options.set_options_for_game(self.game_enum(), dataclasses.replace(
                 per_game,
                 input_path=self.input_file,
                 output_directory=self.output_file.parent,

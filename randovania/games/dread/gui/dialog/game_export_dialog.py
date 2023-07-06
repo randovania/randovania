@@ -100,14 +100,15 @@ def romfs_validation(line: QtWidgets.QLineEdit):
 
 
 class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
-    @property
-    def _game(self):
+
+    @classmethod
+    def game_enum(cls):
         return RandovaniaGame.METROID_DREAD
 
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
-        per_game = options.options_for_game(self._game)
+        per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, DreadPerGameOptions)
 
         self._validate_input_file()
@@ -217,7 +218,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
 
-            per_game = options.options_for_game(self._game)
+            per_game = options.options_for_game(self.game_enum())
 
             selected_tab = self.output_tab_widget.currentWidget()
             output_preference = json.dumps({
@@ -229,7 +230,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
                 }
             })
 
-            options.set_options_for_game(self._game, DreadPerGameOptions(
+            options.set_options_for_game(self.game_enum(), DreadPerGameOptions(
                 cosmetic_patches=per_game.cosmetic_patches,
                 input_directory=self.input_file,
                 target_platform=self.target_platform,

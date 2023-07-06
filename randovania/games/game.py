@@ -154,6 +154,7 @@ class GameData:
     multiple_start_nodes_per_area: bool = False
     """If this game allows multiple start nodes per area."""
 
+
 class RandovaniaGame(BitPackEnum, Enum):
     METROID_PRIME = "prime1"
     METROID_PRIME_ECHOES = "prime2"

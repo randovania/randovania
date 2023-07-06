@@ -60,8 +60,8 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
     _prompt_input_file: bool
     _use_prime_models: bool
 
-    @property
-    def _game(self):
+    @classmethod
+    def game_enum(cls):
         return RandovaniaGame.METROID_PRIME_ECHOES
 
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
@@ -71,7 +71,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         self._prompt_input_file = check_extracted_game(self.input_file_edit, self.input_file_button,
                                                        self._contents_file_path)
 
-        per_game = options.options_for_game(self._game)
+        per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, EchoesPerGameOptions)
 
         # Input
@@ -123,7 +123,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
 
-            per_game = options.options_for_game(self._game)
+            per_game = options.options_for_game(self.game_enum())
             assert isinstance(per_game, EchoesPerGameOptions)
 
             per_game_changes = {}
@@ -137,7 +137,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
                 else:
                     use_external_models.discard(RandovaniaGame.METROID_PRIME)
 
-            options.set_options_for_game(self._game, dataclasses.replace(
+            options.set_options_for_game(self.game_enum(), dataclasses.replace(
                 per_game,
                 output_directory=self.output_file.parent,
                 use_external_models=use_external_models,

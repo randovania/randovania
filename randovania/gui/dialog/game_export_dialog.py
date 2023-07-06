@@ -49,6 +49,11 @@ class GameExportDialog(QtWidgets.QDialog):
         if (btn := _try_get_field(self, "cancel_button", QtWidgets.QPushButton)) is not None:
             btn.clicked.connect(self.reject)
 
+    @classmethod
+    def game_enum(cls) -> RandovaniaGame:
+        """The game associated with this class."""
+        raise NotImplementedError()
+
     def save_options(self):
         """Ensure that the current state of the dialog is saved to options."""
         raise NotImplementedError()

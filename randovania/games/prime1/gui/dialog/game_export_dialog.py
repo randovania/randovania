@@ -19,8 +19,8 @@ from randovania.interface_common.options import Options
 class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
     _use_echoes_models: bool
 
-    @property
-    def _game(self):
+    @classmethod
+    def game_enum(cls):
         return RandovaniaGame.METROID_PRIME
 
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
@@ -29,7 +29,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         self.has_enemy_attribute_rando = patch_data["randEnemyAttributes"] is not None
 
         self._base_output_name = f"Prime Randomizer - {word_hash}"
-        per_game = options.options_for_game(self._game)
+        per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, PrimePerGameOptions)
 
         # Input
@@ -103,7 +103,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
 
-            per_game = options.options_for_game(self._game)
+            per_game = options.options_for_game(self.game_enum())
             assert isinstance(per_game, PrimePerGameOptions)
             use_external_models = per_game.use_external_models.copy()
             if not self.echoes_models_check.isHidden():
@@ -112,7 +112,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
                 else:
                     use_external_models.discard(RandovaniaGame.METROID_PRIME_ECHOES)
 
-            options.set_options_for_game(self._game, dataclasses.replace(
+            options.set_options_for_game(self.game_enum(), dataclasses.replace(
                 per_game,
                 input_path=self.input_file,
                 output_directory=self.output_file.parent,
