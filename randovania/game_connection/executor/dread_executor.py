@@ -100,7 +100,7 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
         if not entries:
             continue
 
-        replacements["pairs"] = "{{{}}}".format(",".join(entries))
+        replacements["pairs"] = "{}".format(",".join(entries))
         replacements["location"] = "{}".format(repr(world.extra["scenario_id"] + '_'))
         code = replace_lua_template(locations_lua, replacements)
         all_code.append(code)
