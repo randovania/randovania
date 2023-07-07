@@ -855,6 +855,13 @@ def _migrate_v55(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v56(preset: dict) -> dict:
+    if preset["game"] in {"dread", "samus_returns", "prime3"}:
+        preset["configuration"].pop("elevators")
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -911,6 +918,7 @@ _MIGRATIONS = [
     _migrate_v53,
     _migrate_v54,
     _migrate_v55,
+    _migrate_v56,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

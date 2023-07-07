@@ -2,19 +2,19 @@ from random import Random
 from typing import Iterator
 
 from randovania.game_description.assignment import NodeConfigurationAssociation
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
+from randovania.generator.base_patches_factory import BasePatchesFactory
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
+class DreadBasePatchesFactory(BasePatchesFactory):
     @property
     def num_joke_hints(self) -> int:
         return 0

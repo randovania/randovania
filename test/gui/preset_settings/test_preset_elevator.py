@@ -14,8 +14,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList
 
 
-@pytest.mark.parametrize("game", [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES,
-                                  RandovaniaGame.METROID_PRIME_CORRUPTION])
+@pytest.mark.parametrize("game", [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES])
 def test_on_preset_changed(skip_qtbot, preset_manager, game):
     # Setup
     base = preset_manager.default_preset_for_game(game).get_preset()
@@ -30,7 +29,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
     # Assert
     num_areas = len(TeleporterTargetList.nodes_list(preset.game))
     assert len(window._elevator_target_for_area) == num_areas
-    assert "Elevators"
+
 
 def test_check_credits(skip_qtbot, preset_manager):
     # Setup

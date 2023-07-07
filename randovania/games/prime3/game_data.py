@@ -26,14 +26,14 @@ def _gui() -> game.GameGui:
 
 def _generator() -> game.GameGenerator:
     from randovania.games.prime3.generator.item_pool.pool_creator import corruption_specific_pool
-    from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
+    from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import AllJokesHintDistributor
     from randovania.resolver.bootstrap import MetroidBootstrap
 
     return game.GameGenerator(
         item_pool_creator=corruption_specific_pool,
         bootstrap=MetroidBootstrap(),
-        base_patches_factory=PrimeTrilogyBasePatchesFactory(),
+        base_patches_factory=BasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
     )
 
@@ -61,13 +61,13 @@ game_data: game.GameData = game.GameData(
 
     faq=[
         (
-           "What causes the Hypermode vines in Corrupted Pool to disappear?",
-           "Collecting the ship item in Hangar Bay removes the vines."
+            "What causes the Hypermode vines in Corrupted Pool to disappear?",
+            "Collecting the ship item in Hangar Bay removes the vines."
         ),
         (
-           "While fighting Rundas, the game lags and there are pirates and turrets in the way. What causes this?",
-           "If you collect the ship item in Hangar Bay before fighting Rundas,"
-           " both Rundas and the pirate layers will be active at the same time."
+            "While fighting Rundas, the game lags and there are pirates and turrets in the way. What causes this?",
+            "If you collect the ship item in Hangar Bay before fighting Rundas,"
+            " both Rundas and the pirate layers will be active at the same time."
         ),
         (
             "I have Ship Missiles but I am unable to break the wall in Ancient Courtyard.",
