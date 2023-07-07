@@ -68,7 +68,6 @@ enum_lib.add_per_enum_field(TeleporterShuffleMode, "description", {
 })
 
 
-
 class TeleporterList(location_list.LocationList):
     @classmethod
     def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
@@ -78,8 +77,7 @@ class TeleporterList(location_list.LocationList):
         nodes = [
             region_list.identifier_for_node(node)
             for node in region_list.all_nodes
-            if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types 
-                and node.extra.get("editable", False)
+            if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types
         ]
         nodes.sort()
         return nodes
@@ -174,8 +172,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
             result = []
             for identifier in self.editable_teleporters:
                 node = region_list.node_by_identifier(identifier)
-                if (isinstance(node, DockNode) and node.dock_type in teleporter_dock_types
-                     and node.extra.get("editable", False)):
+                if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
                     # Valid destinations must be valid starting areas
                     area = region_list.nodes_to_area(node)
                     if area.has_start_node():

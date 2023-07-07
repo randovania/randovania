@@ -3,7 +3,6 @@ from random import Random
 from typing import Iterator, Callable
 
 import randovania
-from randovania.game_description.db.dock import DockType
 import randovania.games.prime2.exporter.hints
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints import credits_spoiler
@@ -12,6 +11,7 @@ from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -141,7 +141,7 @@ def _pretty_name_for_elevator(game: RandovaniaGame,
     return f"Transport to {elevators.get_elevator_or_area_name(game, region_list, connection, False)}"
 
 
-def _create_elevators_field(patches: GamePatches, game: GameDescription, elevator_dock_types: list[DockType]) -> list:
+def _create_elevators_field(patches: GamePatches, game: GameDescription, elevator_type: DockType) -> list:
     """
     Creates the elevator entries in the patcher file
     :param patches:
@@ -151,10 +151,9 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
     region_list = game.region_list
 
     elevator_fields = []
-    teleporter_dock_types = game.dock_weakness_database.all_teleporter_dock_types
 
     for node, connection in patches.all_dock_connections():
-        if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
+        if isinstance(node, DockNode) and node.dock_type == elevator_type:
             target_area_location = connection.identifier.area_location
             elevator_fields.append({
                 "instance_id": node.extra["teleporter_instance_id"],
@@ -162,18 +161,19 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
                 "target_location": _area_identifier_to_json(game.region_list, target_area_location),
                 "room_name": _pretty_name_for_elevator(game.game, region_list, node, target_area_location)
             })
-    num_teleporter_nodes = sum(1 for _ in _get_nodes_by_teleporter_id(region_list, elevator_dock_types))
-    if len(elevator_fields) != num_teleporter_nodes:
+
+    num_elevator_nodes = sum(1 for _ in _get_nodes_by_teleporter_id(region_list, elevator_type))
+    if len(elevator_fields) != num_elevator_nodes:
         raise ValueError("Invalid elevator count. Expected {}, got {}.".format(
-            num_teleporter_nodes, len(elevator_fields)
+            num_elevator_nodes, len(elevator_fields)
         ))
 
     return elevator_fields
 
 
-def _get_nodes_by_teleporter_id(region_list: RegionList, elevator_dock_types: list[DockType]) -> Iterator[DockNode]:
+def _get_nodes_by_teleporter_id(region_list: RegionList, elevator_dock_type: DockType) -> Iterator[DockNode]:
     for node in region_list.iterate_nodes():
-        if isinstance(node, DockNode) and node.dock_type in elevator_dock_types and node.extra.get("editable", False):
+        if isinstance(node, DockNode) and node.dock_type == elevator_dock_type:
             yield node
 
 
@@ -235,7 +235,8 @@ def _create_elevator_scan_port_patches(
             continue
 
         target_area_name = elevators.get_elevator_or_area_name(game, region_list,
-                                                               get_elevator_connection_for(node).identifier.area_identifier,
+                                                               get_elevator_connection_for(
+                                                                   node).identifier.area_identifier,
                                                                True)
         yield {
             "asset_id": node.extra["scan_asset_id"],
@@ -357,7 +358,7 @@ def _create_string_patches(hint_config: HintConfiguration,
                            namer: EchoesHintNamer,
                            players_config: PlayersConfiguration,
                            rng: Random,
-                           elevator_dock_types: list[DockType]
+                           elevator_dock_type: DockType
                            ) -> list:
     """
 
@@ -390,7 +391,7 @@ def _create_string_patches(hint_config: HintConfiguration,
     if not patches.configuration.use_new_patcher:
         string_patches.extend(_create_elevator_scan_port_patches(game.game, game.region_list,
                                                                  patches.get_dock_connection_for,
-                                                                 elevator_dock_types))
+                                                                 elevator_dock_type))
 
     string_patches.extend(_logbook_title_string_patches())
 
@@ -501,6 +502,9 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES
 
+    def elevator_dock_type(self):
+        return self.game.dock_weakness_database.find_type("elevator")
+
     def create_specific_patches(self):
         # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
         # we should disable hive_chamber_b_post_state
@@ -518,8 +522,6 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         }
 
     def create_data(self) -> dict:
-        elevator_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
-
         result = {}
         _add_header_data_to_result(self.description, result)
 
@@ -580,7 +582,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         # Add the elevators
         if not self.configuration.use_new_patcher:
-            result["elevators"] = _create_elevators_field(self.patches, self.game, elevator_dock_types)
+            result["elevators"] = _create_elevators_field(self.patches, self.game, self.elevator_dock_type())
         else:
             result["elevators"] = []
 
@@ -588,9 +590,10 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         result["translator_gates"] = _create_translator_gates_field(self.game, self.patches.configurable_nodes)
 
         # Scan hints
-        result["string_patches"] = _create_string_patches(self.configuration.hints, self.game,
-                                                          self.description.all_patches, self.namer,
-                                                          self.players_config, self.rng, elevator_dock_types)
+        result["string_patches"] = _create_string_patches(
+            self.configuration.hints, self.game,
+            self.description.all_patches, self.namer,
+            self.players_config, self.rng, self.elevator_dock_type())
 
         # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
         # we should disable hive_chamber_b_post_state
@@ -686,10 +689,11 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             dock_patch_data.update(changes)
 
     def add_new_patcher_elevators(self, regions_patch_data: dict):
+        elevator_type = self.elevator_dock_type()
         all_teleporters = [
             pair
             for pair in self.patches.all_dock_connections()
-            if pair[0].dock_type in self.patches.game.dock_weakness_database.all_teleporter_dock_types
+            if pair[0].dock_type == elevator_type
         ]
         for node, connection in all_teleporters:
             target_area_identifier = connection.identifier.area_identifier
@@ -801,7 +805,6 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             {"asset_id": 326, "connections": [124, 194, 241, 327], },
             {"asset_id": 327, "connections": [46, 275], },
         ]
-
 
 
 def generate_patcher_data(description: LayoutDescription,

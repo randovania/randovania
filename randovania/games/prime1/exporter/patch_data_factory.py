@@ -662,7 +662,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             for area in region.areas:
                 for node in area.nodes:
                     is_teleporter = isinstance(node, DockNode) and node.dock_type in elevator_dock_types
-                    if not is_teleporter or not node.extra.get("editable", False):
+                    if not is_teleporter:
                         continue
 
                     identifier = db.region_list.identifier_for_node(node)

@@ -39,7 +39,6 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         self.elevator_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.teleporter_types = game_description.dock_weakness_database.all_teleporter_dock_types
 
-
         descriptions = ["<p>Controls where each elevator connects to.</p>"]
         for value in enum_lib.iterate_enum(TeleporterShuffleMode):
             if value.usable_by_game(editor.game):

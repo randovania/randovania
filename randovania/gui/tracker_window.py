@@ -492,17 +492,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         region_list = self.game_description.region_list
         nodes_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)
 
-        areas_to_not_change = {
-            "Sky Temple Gateway",
-            "Sky Temple Energy Controller",
-            "Aerie Transport Station",
-            "Aerie",
-        }
         targets = {}
         teleporter_dock_types = self.game_description.dock_weakness_database.all_teleporter_dock_types
         for region, area, node in region_list.all_regions_areas_nodes:
-            if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types \
-                and node.extra.get("editable", False) and area.name not in areas_to_not_change:
+            if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
                 name = region.correct_name(area.in_dark_aether)
                 nodes_by_region[name].append(node)
 
