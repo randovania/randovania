@@ -37,7 +37,9 @@ from randovania.lib import json_lib
 _GAMES_PATH = Path(__file__).parents[2].joinpath("games")
 
 class_name_re = re.compile(r"\bBlank([A-Z][a-z])")
-short_name_re = re.compile(r"[A-Za-z0-9]+")
+enum_name_re = re.compile(r"^[A-Z][A-Z0-9_]+$")
+enum_value_re = re.compile(r"^[a-z0-9_]+$")
+short_name_re = re.compile(r"^[A-Z][A-Za-z0-9]+$")
 
 
 def update_game_py(enum_name: str, enum_value: str):
@@ -294,14 +296,22 @@ def new_game_command_logic(args):
     short_name: str = args.short_name
     long_name: str = args.long_name
 
-    if enum_name != enum_name.upper():
-        raise ValueError("Invalid enum name: must be all upper case")
+    try:
+        if enum_name_re.match(enum_name) is None:
+            raise ValueError(f"Enum name must match {enum_name_re.pattern}")
 
-    if short_name_re.match(short_name) is None:
-        raise ValueError("Short name must be only numbers and A-Z letters")
+        if enum_value_re.match(enum_value) is None:
+            raise ValueError(f"Enum value must match {enum_value_re.pattern}")
 
-    if '"' in long_name:
-        raise ValueError("Quotes not allowed in long name")
+        if short_name_re.match(short_name) is None:
+            raise ValueError(f"Short name must match {short_name_re.pattern}")
+
+        if '"' in long_name:
+            raise ValueError("Quotes not allowed in long name")
+
+    except ValueError as v:
+        print(f"Error! {v}")
+        raise SystemExit(1)
 
     copy_python_code(enum_name, enum_value, short_name, long_name)
     update_game_py(enum_name, enum_value)
@@ -323,6 +333,7 @@ def new_game_command_logic(args):
         ],
         check=True,
     )
+    print(f"{long_name} created successfully. New files can be found at {_GAMES_PATH.joinpath(enum_value)}")
 
 
 def create_new_database_logic(args):
