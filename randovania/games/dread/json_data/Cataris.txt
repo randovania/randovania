@@ -3193,14 +3193,14 @@ Extra - asset_id: collision_camera_044
 > Tunnel to Kraid Arena (top); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Kraid Arena/Tunnel to Diffusion Beam Room (Top)
-  > Event - Blob
-      Morph Ball and Shoot Diffusion or Wave
   > Tunnel to Teleport to Dairon
       All of the following:
           Morph Ball
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+  > Tunnel Corner
+      Morph Ball
 
 > Tunnel to Kraid Arena (bottom); Heals? False
   * Layers: default
@@ -3219,12 +3219,8 @@ Extra - asset_id: collision_camera_044
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Tunnel to Kraid Arena (top)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+  > Tunnel Corner
+      Varia Suit and Can Slide
 
 > Alcove; Heals? False
   * Layers: default
@@ -3234,6 +3230,13 @@ Extra - asset_id: collision_camera_044
       Grapple Beam
   > Tunnel to Kraid Arena (bottom)
       Can Slide Underwater
+
+> Tunnel Corner; Heals? False
+  * Layers: default
+  > Event - Blob
+      Shoot Diffusion or Wave
+  > Tunnel to Kraid Arena (top)
+      Morph Ball and Varia Suit
 
 ----------------
 Lava Button East Access
@@ -3626,7 +3629,7 @@ Extra - asset_id: collision_camera_051
 
 > Tunnel to Diffusion Beam Room; Heals? False
   * Layers: default
-  * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Teleport to Dairon
+  * Slide Tunnel to Diffusion Beam Room/Tunnel to Teleport to Dairon
   > Door to Diffusion Beam Room
       Any of the following:
           Varia Suit
