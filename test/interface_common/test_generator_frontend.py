@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
 
-from randovania.interface_common import simplified_patcher
+from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
 
@@ -11,14 +11,15 @@ def test_generate_layout(mocker):
     parameters: GeneratorParameters = MagicMock()
     progress_update = MagicMock()
 
-    mock_generate_layout = mocker.patch("randovania.interface_common.echoes.generate_description", autospec=True)
+    mock_generate_layout = mocker.patch("randovania.interface_common.generator_frontend.generate_in_another_process",
+                                        autospec=True)
     mock_constant_percentage_callback = mocker.patch(
-        "randovania.interface_common.simplified_patcher.ConstantPercentageCallback",
+        "randovania.interface_common.generator_frontend.ConstantPercentageCallback",
         autospec=False,  # TODO: pytest-qt bug
     )
 
     # Run
-    simplified_patcher.generate_layout(options, parameters, progress_update)
+    generator_frontend.generate_layout(options, parameters, progress_update)
 
     # Assert
     mock_constant_percentage_callback.assert_called_once_with(progress_update, -1)
@@ -47,7 +48,7 @@ def test_general_blank_layout(default_blank_preset):
     progress_update = MagicMock()
 
     # Run
-    result = simplified_patcher.generate_layout(options, parameters, progress_update)
+    result = generator_frontend.generate_layout(options, parameters, progress_update)
 
     # Assert
     assert result.generator_parameters == parameters

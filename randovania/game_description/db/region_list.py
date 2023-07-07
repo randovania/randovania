@@ -16,7 +16,6 @@ from randovania.game_description.db.node import Node, NodeContext, NodeIndex
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.node_provider import NodeProvider
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.db.region import Region
 
 NodeType = typing.TypeVar("NodeType", bound=Node)
@@ -147,22 +146,6 @@ class RegionList(NodeProvider):
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Node:
         return patches.get_dock_connection_for(node)
 
-    def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Node | None:
-        connection = patches.get_elevator_connection_for(node)
-        if connection is not None:
-            return self.resolve_teleporter_connection(connection)
-
-    def resolve_teleporter_connection(self, connection: AreaIdentifier) -> Node:
-        area = self.area_by_area_location(connection)
-        if area.default_node is None:
-            raise IndexError(f"Area '{area.name}' does not have a default_node")
-
-        node = area.node_with_name(area.default_node)
-        if node is None:
-            raise IndexError(f"Area '{area.name}' default_node ({area.default_node}) is missing")
-
-        return node
-
     def area_connections_from(self, node: Node) -> Iterator[tuple[Node, Requirement]]:
         """
         Queries all nodes from the same area you can go from a given node.
@@ -254,9 +237,6 @@ class RegionList(NodeProvider):
 
     def get_pickup_node(self, identifier: NodeIdentifier):
         return self.typed_node_by_identifier(identifier, PickupNode)
-
-    def get_teleporter_node(self, identifier: NodeIdentifier):
-        return self.typed_node_by_identifier(identifier, TeleporterNode)
 
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
         return self.region_and_area_by_area_identifier(location)[1]

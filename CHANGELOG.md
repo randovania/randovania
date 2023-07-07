@@ -5,10 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.0.1] - 2023-07-??
+## [6.X.X] - 2023-08-??
 
+### Metroid Prime 2: Echoes
+
+- Added: Tracker layout "Debug Info", which also shows details useful for investigating errors. 
+
+## [6.0.1] - 2023-07-04
+
+- Added: Option for disabling crash reporting and monitoring.
+- Added: In multiworld sessions, you're prevented from selecting a preset that is incompatible with multiworld.
+- Added: In multiworld sessions, world names must now be unique.
+- Changed: The Privacy Policy has been updated to mention crash reporting and monitoring.
+- Changed: Tweaked the error reporting for generating and exporting games.
 - Fixed: Importing permalinks and spoilers in multiworld no longer fails.
 - Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
+- Fixed: Pickups providing negative resources can now be sent in multiworld games.
+- Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words. 
+- Fixed: In multiworld sessions, the copy permalink button is properly disabled before a game is available.
 
 ### Metroid Dread
 

@@ -1,5 +1,5 @@
 import asyncio
-from unittest.mock import MagicMock, AsyncMock, call, patch
+from unittest.mock import MagicMock, AsyncMock, call
 
 import pytest
 

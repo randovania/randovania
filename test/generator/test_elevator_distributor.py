@@ -5,8 +5,8 @@ from unittest.mock import patch, MagicMock
 import pytest
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.generator import elevator_distributor
 from randovania.generator.elevator_distributor import ElevatorHelper
 
@@ -24,19 +24,21 @@ def test_try_randomize_elevators(seed_number: int,
                                  echoes_game_description):
     # Setup
     rng = Random(seed_number)
+    elevator_type = echoes_game_description.dock_weakness_database.find_type("elevator")
     teleporters = [
-        echoes_game_description.region_list.identifier_for_node(node)
-        for region in echoes_game_description.region_list.regions
-        for area in region.areas
-        for node in area.nodes
-        if isinstance(node, TeleporterNode) and node.editable and node.extra["teleporter_instance_id"] in expected_ids
+        node.identifier
+        for node in echoes_game_description.region_list.all_nodes
+        if isinstance(node, DockNode) and (
+                node.dock_type is elevator_type and node.extra["teleporter_instance_id"] in expected_ids
+        )
     ]
     teleporters.sort()
 
     # Run
     result = elevator_distributor.try_randomize_elevators(
         rng,
-        elevator_distributor.create_elevator_database(echoes_game_description.region_list, teleporters))
+        elevator_distributor.create_elevator_database(echoes_game_description.region_list, 
+                                                      teleporters, [elevator_type]))
 
     connected_ids = [
         echoes_game_description.region_list.node_by_identifier(elevator.connected_elevator.teleporter

@@ -1,20 +1,19 @@
 import re
 import struct
-from unittest.mock import AsyncMock, MagicMock
 import uuid
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-
+from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 from ppc_asm.assembler import BaseInstruction
 from retro_data_structures.game_check import Game as RDSGame
 
-from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 
@@ -76,13 +75,17 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
         op: struct.pack(">II", item.max_capacity, item.max_capacity)
         for op, item in zip(ops, connector.game.resource_database.item)
     }
+    connector.executor.perform_single_memory_operation.return_value = b"\x00\x00\x00\x00" * 32
+    _override = {
+        "ObjectCount": 0,
+    }
 
     # Run
     inventory = await connector.get_inventory()
 
     # Assert
     assert inventory == {
-        item: InventoryItem(item.max_capacity, item.max_capacity)
+        item: InventoryItem(_override.get(item.short_name, item.max_capacity), item.max_capacity)
         for item in connector.game.resource_database.item
     }
 
@@ -178,7 +181,7 @@ async def test_receive_remote_pickups_pending_location(connector: EchoesRemoteCo
 
 @pytest.mark.parametrize("in_cooldown", [False, True])
 async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion,
-                                                       mocker, in_cooldown):
+                                                  mocker, in_cooldown):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "open_prime_rando.dol_patching.all_prime_dol_patches.increment_item_capacity_patch")
@@ -338,4 +341,3 @@ async def test_receive_required_missile_launcher(connector: EchoesRemoteConnecto
 
     connector.execute_remote_patches.assert_awaited_once()
     assert len(connector.execute_remote_patches.call_args[0][0]) == 5
-

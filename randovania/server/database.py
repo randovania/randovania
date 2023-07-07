@@ -179,12 +179,16 @@ class MultiplayerSession(BaseModel):
         return True
 
     def create_list_entry(self, user: User):
+        num_players = getattr(self, "num_players", None)
+        if num_players is None:
+            num_players = len(self.members)
+
         return MultiplayerSessionListEntry(
             id=self.id,
             name=self.name,
             has_password=self.password is not None,
             state=self.state,
-            num_players=len(self.members),
+            num_players=num_players,
             creator=self.creator.name,
             creation_date=self.creation_datetime,
             is_user_in_session=self.is_user_in_session(user),
@@ -206,17 +210,18 @@ class MultiplayerSession(BaseModel):
         if not self.has_layout_description():
             return multiplayer_session.MultiplayerSessionActions(self.id, [])
 
+        # TODO: layout_description getter loads all worlds
         description: LayoutDescription = self.layout_description
 
         worlds = self.get_ordered_worlds()
         world_by_id = {
-            world.id: world
+            world.get_id(): world
             for world in worlds
         }
 
         def _describe_action(action: WorldAction) -> multiplayer_session.MultiplayerSessionAction:
-            provider = world_by_id[action.provider.id]
-            receiver = world_by_id[action.receiver.id]
+            provider = world_by_id[action.provider_id]
+            receiver = world_by_id[action.receiver_id]
 
             location_index = PickupIndex(action.location)
             target = description.all_patches[provider.order].pickup_assignment[location_index]
@@ -243,35 +248,37 @@ class MultiplayerSession(BaseModel):
         if self.game_details_json is not None:
             game_details = GameDetails.from_json(json.loads(self.game_details_json))
 
+        worlds = {
+            world.id: MultiplayerWorld(
+                id=world.uuid,
+                name=world.name,
+                preset_raw=world.preset,
+            )
+            for world in self.worlds
+        }
+
         return multiplayer_session.MultiplayerSessionEntry(
             id=self.id,
             name=self.name,
             state=self.state,
             users_list=[
                 MultiplayerUser(
-                    id=member.user.id,
+                    id=member.user_id,
                     name=member.user.name,
                     admin=member.admin,
                     worlds={
-                        association.world.uuid: UserWorldDetail(
+                        worlds[association.world_id].id: UserWorldDetail(
                             connection_state=association.connection_state,
                             last_activity=association.last_activity,
                         )
                         for association in WorldUserAssociation.find_all_for_user_in_session(
-                            member.user.id, self.id,
+                            member.user_id, self.id,
                         )
                     },
                 )
                 for member in self.members
             ],
-            worlds=[
-                MultiplayerWorld(
-                    id=world.uuid,
-                    name=world.name,
-                    preset_raw=world.preset,
-                )
-                for world in self.worlds
-            ],
+            worlds=list(worlds.values()),
             game_details=game_details,
             generation_in_progress=(self.generation_in_progress.id
                                     if self.generation_in_progress is not None else None),
@@ -279,11 +286,17 @@ class MultiplayerSession(BaseModel):
         )
 
     def get_audit_log(self) -> MultiplayerSessionAuditLog:
+        audit_log = MultiplayerAuditEntry.select(
+            MultiplayerAuditEntry, User.name
+        ).join(User).where(
+            MultiplayerAuditEntry.session == self
+        )
+
         return MultiplayerSessionAuditLog(
             session_id=self.id,
             entries=[
                 entry.as_entry()
-                for entry in self.audit_log
+                for entry in audit_log
             ]
         )
 
@@ -291,6 +304,7 @@ class MultiplayerSession(BaseModel):
 class World(BaseModel):
     id: int
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="worlds")
+    session_id: int
     uuid: uuid.UUID = peewee.UUIDField(default=uuid.uuid4, unique=True)
 
     name: str = peewee.CharField(max_length=MAX_WORLD_NAME_LENGTH)
@@ -330,7 +344,9 @@ class World(BaseModel):
 class WorldUserAssociation(BaseModel):
     """A given user's association to one given row."""
     world: World = peewee.ForeignKeyField(World, backref="associations")
+    world_id: int
     user: User = peewee.ForeignKeyField(User)
+    user_id: int
 
     connection_state: GameConnectionStatus = EnumField(
         choices=GameConnectionStatus, default=GameConnectionStatus.Disconnected
@@ -365,7 +381,9 @@ class WorldUserAssociation(BaseModel):
 
 class MultiplayerMembership(BaseModel):
     user: User = peewee.ForeignKeyField(User, backref="sessions")
+    user_id: int
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="members")
+    session_id: int
     admin: bool = peewee.BooleanField(default=False)
     join_date = peewee.DateTimeField(default=_datetime_now)
 
@@ -388,10 +406,13 @@ class MultiplayerMembership(BaseModel):
 
 class WorldAction(BaseModel):
     provider: World = peewee.ForeignKeyField(World, backref="actions")
+    provider_id: int
     location: int = peewee.IntegerField()
 
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession)
+    session_id: int
     receiver: World = peewee.ForeignKeyField(World)
+    receiver_id: int
     time: str = peewee.DateTimeField(default=_datetime_now)
 
     class Meta:

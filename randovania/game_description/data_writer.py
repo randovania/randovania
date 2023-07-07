@@ -15,7 +15,6 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.game_description import GameDescription, MinimalLogicData
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
@@ -281,13 +280,6 @@ def write_node(node: Node) -> dict:
         data.update(common_fields)
         data["pickup_index"] = node.pickup_index.index
         data["location_category"] = node.location_category.value
-
-    elif isinstance(node, TeleporterNode):
-        data["node_type"] = "teleporter"
-        data.update(common_fields)
-        data["destination"] = node.default_connection.as_json
-        data["keep_name_when_vanilla"] = node.keep_name_when_vanilla
-        data["editable"] = node.editable
 
     elif isinstance(node, EventNode):
         data["node_type"] = "event"

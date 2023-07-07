@@ -2134,7 +2134,7 @@
             },
             "nodes": {
                 "Elevator to Area 4 West - Chozo Seals": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -5344.31,
@@ -2151,12 +2151,17 @@
                         "start_point_actor_name": "ST_FromArea04"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 4 - West",
-                        "area": "Chozo Seals"
+                        "area": "Chozo Seals",
+                        "node": "Elevator to Area 3 Exterior - Transport to Area 4 West"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Diggernaut Chase Access": {
                             "type": "and",

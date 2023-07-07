@@ -5,7 +5,6 @@ from typing import Callable, TypeVar
 from randovania.game_description import game_migration
 from randovania.game_description.db import event_pickup
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import (
     DockRandoConfig, DockRandoParams, DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
@@ -23,7 +22,6 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -339,14 +337,6 @@ class RegionReader:
                     **generic_args,
                     pickup_index=PickupIndex(data["pickup_index"]),
                     location_category=LocationCategory(data["location_category"]),
-                )
-
-            elif node_type == "teleporter":
-                return TeleporterNode(
-                    **generic_args,
-                    default_connection=AreaIdentifier.from_json(data["destination"]),
-                    keep_name_when_vanilla=data["keep_name_when_vanilla"],
-                    editable=data["editable"],
                 )
 
             elif node_type == "event":

@@ -84,9 +84,9 @@ def test_decode(default_blank_preset, mocker, development, extra_data):
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
     if development:
-        encoded = b'0\x00\x00\x0f\xa3\x00\x00'
+        encoded = b' \x00\x00\x0f\xa3\x00\x00'
     else:
-        encoded = b'0\x00\x00\x0f\xa2\x00\x00x'
+        encoded = b' \x00\x00\x0f\xa2\x00\x00x'
     if extra_data:
         encoded += b"="
 
@@ -121,9 +121,9 @@ def test_decode(default_blank_preset, mocker, development, extra_data):
 
 
 @pytest.mark.parametrize(["encoded", "num_players"], [
-    (b'"\x00\x00\x0f\xa2\x00\x15\xe0', 1),
-    (b'B \x00\x00\xfa \x01@\x05x', 2),
-    (b'\x8c"""""\x00\x00\x0f\xa2\x00\x14\x00P\x01@\x05\x00\x14\x00P\x01@\x05\x00\x14\x00W\x80', 10),
+    (b'$\x00\x00\x0f\xa2\x00\x15\xe0', 1),
+    (b'D@\x00\x00\xfa \x01@\x05x', 2),
+    (b'\x8cDDDDD\x00\x00\x0f\xa2\x00\x14\x00P\x01@\x05\x00\x14\x00P\x01@\x05\x00\x14\x00W\x80', 10),
 ])
 def test_decode_mock_other(encoded, num_players, mocker):
     # We're mocking the database hash to avoid breaking tests every single time we change the database

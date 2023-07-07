@@ -29,6 +29,9 @@ from randovania.resolver.exceptions import (GenerationFailure,
 from randovania.layout.exceptions import InvalidConfiguration
 
 
+DEFAULT_ATTEMPTS = 15
+
+
 def _validate_item_pool_size(item_pool: list[PickupEntry], game: GameDescription,
                              configuration: BaseConfiguration) -> None:
     min_starting_items = configuration.standard_pickup_configuration.minimum_random_starting_pickups
@@ -225,7 +228,7 @@ async def generate_and_validate_description(generator_params: GeneratorParameter
                                             status_update: Callable[[str], None] | None,
                                             validate_after_generation: bool,
                                             timeout: int | None = 600,
-                                            attempts: int = 15,
+                                            attempts: int = DEFAULT_ATTEMPTS,
                                             ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the given Permalink.

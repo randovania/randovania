@@ -64,7 +64,7 @@
             },
             "nodes": {
                 "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Upper)": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -12013.91,
@@ -81,12 +81,17 @@
                         "start_point_actor_name": "ST_FromArea03A_01"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 3 Interior West (Upper)"
+                        "area": "Transport to Area 3 Interior West (Upper)",
+                        "node": "Elevator to Area 3 Interior West - Transport to Area 3 Exterior (Upper)"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Alpha+ Arena West": {
                             "type": "and",
@@ -4440,7 +4445,7 @@
             },
             "nodes": {
                 "Elevator to Area 3 Interior East - Transport to Area 3 Interior West": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7437.19,
@@ -4457,12 +4462,17 @@
                         "start_point_actor_name": "ST_FromArea03C"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 3 - Interior (East)",
-                        "area": "Transport to Area 3 Interior West"
+                        "area": "Transport to Area 3 Interior West",
+                        "node": "Elevator to Area 3 Interior West - Transport to Area 3 Interior East"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Shaft East": {
                             "type": "and",
@@ -5361,7 +5371,7 @@
             },
             "nodes": {
                 "Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Lower)": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -18533.97,
@@ -5378,12 +5388,17 @@
                         "start_point_actor_name": "ST_FromArea03A_02"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 3 Interior West (Lower)"
+                        "area": "Transport to Area 3 Interior West (Lower)",
+                        "node": "Elevator to Area 3 Interior West - Area 3 Exterior (Lower)"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Alpha+ Arena West": {
                             "type": "and",

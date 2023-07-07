@@ -1551,7 +1551,7 @@
             },
             "nodes": {
                 "Elevator to Area 3 Exterior - Outer Hub": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7375.31,
@@ -1568,12 +1568,17 @@
                         "start_point_actor_name": "ST_FromArea03A"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 3 - Exterior",
-                        "area": "Outer Hub"
+                        "area": "Outer Hub",
+                        "node": "Elevator to Area 3 Interior East - Transport to Area 3 Exterior"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Main Shaft": {
                             "type": "and",
@@ -2222,7 +2227,7 @@
                     }
                 },
                 "Elevator to Area 3 Interior West - Transport to Area 3 Interior East": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7302.33,
@@ -2239,12 +2244,17 @@
                         "start_point_actor_name": "ST_FromArea03B"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 3 - Interior (West)",
-                        "area": "Transport to Area 3 Interior East"
+                        "area": "Transport to Area 3 Interior East",
+                        "node": "Elevator to Area 3 Interior East - Transport to Area 3 Interior West"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gamma Arena South Access": {
                             "type": "and",

@@ -250,7 +250,7 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
 def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_pickup_category,
                        default_generator_params):
     data = (
-        "h^WxYK%Bzb$}<8Yw=%giys9}cw>h&ixhA)=I<_*yXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+"
+        "h^WxYK%Bzb%2NU&w=%giys9}cw>h&ixhA)=I<_*yXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+"
         "~(lQ#?s8v%E&;{=*rqdXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+~(lQ#?s8v%E&;{=*rpvSO"
     )
     expected_pickup = PickupEntry(
@@ -266,7 +266,7 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
     )
 
     # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
-    # from randovania.server.game_session import _base64_encode_pickup
+    # from randovania.server.multiplayer.world_api import _base64_encode_pickup
     # new_data = _base64_encode_pickup(expected_pickup, echoes_resource_database)
     # assert new_data == data; assert False
 

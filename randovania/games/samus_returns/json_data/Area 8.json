@@ -433,7 +433,7 @@
                     }
                 },
                 "Elevator to Surface West - Transport to Area 8": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6602.3,
@@ -450,12 +450,17 @@
                         "start_point_actor_name": "ST_FromAreaSurfaceB"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Surface - West",
-                        "area": "Transport to Area 8"
+                        "area": "Transport to Area 8",
+                        "node": "Elevator to Area 8 - Transport to Surface (West)"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "resource",
@@ -5540,7 +5545,7 @@
             },
             "nodes": {
                 "Elevator to Area 7 - Transport to Area 8": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -1372.0,
@@ -5557,12 +5562,17 @@
                         "start_point_actor_name": "ST_FromArea09"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 7",
-                        "area": "Transport to Area 8"
+                        "area": "Transport to Area 8",
+                        "node": "Elevator to Area 8 - Transport to Area 7"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",

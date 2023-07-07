@@ -1,5 +1,5 @@
 {
-    "schema_version": 19,
+    "schema_version": 20,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -449,6 +449,13 @@
                 "max_capacity": 1,
                 "extra": {
                     "item_id": 108
+                }
+            },
+            "ObjectCount": {
+                "long_name": "Object Count",
+                "max_capacity": 1024,
+                "extra": {
+                    "item_id": 1001
                 }
             }
         },
@@ -2666,7 +2673,9 @@
             },
             "portal": {
                 "name": "Portal",
-                "extra": {},
+                "extra": {
+                    "ignore_for_hints": true
+                },
                 "items": {
                     "Scan Portal": {
                         "extra": {},
@@ -2764,6 +2773,57 @@
                                 "name": "MorphBall",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": {
+                    "unlocked": null,
+                    "locked": null,
+                    "change_from": [],
+                    "change_to": []
+                }
+            },
+            "elevator": {
+                "name": "Elevator",
+                "extra": {
+                    "is_teleporter": true,
+                    "ignore_for_hints": true
+                },
+                "items": {
+                    "Elevator": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": {
+                    "unlocked": null,
+                    "locked": null,
+                    "change_from": [],
+                    "change_to": []
+                }
+            },
+            "teleporter": {
+                "name": "Teleporter",
+                "extra": {
+                    "ignore_for_hints": true
+                },
+                "items": {
+                    "Teleporter": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "lock": null

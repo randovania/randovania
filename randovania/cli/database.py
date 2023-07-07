@@ -375,7 +375,6 @@ def render_region_graph_logic(args):
     import hashlib
     import re
     import graphviz
-    from randovania.game_description.db.teleporter_node import TeleporterNode
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.requirements.base import Requirement
@@ -441,19 +440,24 @@ def render_region_graph_logic(args):
         )
         added_edges.add(dock_node.identifier)
 
-    def _add_teleporter(dot: graphviz.Digraph, teleporter_node: TeleporterNode):
+    def _add_teleporter(dot: graphviz.Digraph, teleporter_node: DockNode):
         source_region = gd.region_list.nodes_to_region(teleporter_node)
         source_area = gd.region_list.nodes_to_area(teleporter_node)
-        target_node = gd.region_list.resolve_teleporter_connection(teleporter_node.default_connection)
+        target_node = gd.region_list.node_by_identifier(teleporter_node.default_connection)
         target_region = gd.region_list.nodes_to_region(target_node)
         target_area = gd.region_list.nodes_to_area(target_node)
+        weak_name = _weakness_name(teleporter_node.default_dock_weakness.name)
+        color = vulnerabilities_colors.get(weak_name, _hash_to_color(weak_name))
 
         dot.edge(
             f"{source_region.name}-{source_area.name}",
             f"{target_region.name}-{target_area.name}",
-            "Elevator",
+            weak_name, color=color, fontcolor=color,
         )
 
+    def _cross_region_dock(node: DockNode):
+        return node.default_connection.region_name != node.identifier.region_name
+            
     per_game_colors = {
         RandovaniaGame.METROID_PRIME_ECHOES: {
             "Agon Wastes": "#ffc61c",
@@ -495,7 +499,8 @@ def render_region_graph_logic(args):
 
         for area in region.areas:
             shape = None
-            if any(isinstance(node, TeleporterNode) for node in area.nodes):
+            if any(isinstance(node, DockNode) and _cross_region_dock(node) 
+                   for node in area.nodes):
                 shape = "polygon"
 
             c = (dark_colors if area.in_dark_aether else colors)[region.name]
@@ -521,9 +526,9 @@ def render_region_graph_logic(args):
         print(f"Adding docks for {region.name}")
         for area in region.areas:
             for node in area.nodes:
-                if isinstance(node, DockNode):
+                if isinstance(node, DockNode) and not _cross_region_dock(node):
                     _add_connection(per_region_dot[region.name], node)
-                elif isinstance(node, TeleporterNode) and node.editable and args.include_teleporters:
+                elif isinstance(node, DockNode) and _cross_region_dock(node) and args.include_teleporters:
                     _add_teleporter(per_region_dot[region.name], node)
 
     if single_image:

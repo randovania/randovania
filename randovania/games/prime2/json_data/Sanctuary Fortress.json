@@ -48,7 +48,7 @@
                     }
                 },
                 "Elevator to Temple Grounds - Transport to Sanctuary Fortress": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -57,15 +57,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 585469310,
-                        "teleporter_instance_id": 38
+                        "teleporter_instance_id": 38,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Temple Grounds",
-                        "area": "Transport to Sanctuary Fortress"
+                        "area": "Transport to Sanctuary Fortress",
+                        "node": "Elevator to Sanctuary Fortress - Transport to Temple Grounds"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Temple Transport Access": {
                             "type": "and",
@@ -6735,7 +6741,7 @@
                     }
                 },
                 "Elevator to Agon Wastes - Transport to Sanctuary Fortress": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -6744,15 +6750,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 3282119661,
-                        "teleporter_instance_id": 1245332
+                        "teleporter_instance_id": 1245332,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Agon Wastes",
-                        "area": "Transport to Sanctuary Fortress"
+                        "area": "Transport to Sanctuary Fortress",
+                        "node": "Elevator to Sanctuary Fortress - Transport to Agon Wastes"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Agon Transport Access": {
                             "type": "and",
@@ -9463,7 +9475,7 @@
                     }
                 },
                 "Elevator to Torvus Bog - Transport to Sanctuary Fortress": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -9472,15 +9484,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 158293345,
-                        "teleporter_instance_id": 1638535
+                        "teleporter_instance_id": 1638535,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Torvus Bog",
-                        "area": "Transport to Sanctuary Fortress"
+                        "area": "Transport to Sanctuary Fortress",
+                        "node": "Elevator to Sanctuary Fortress - Transport to Torvus Bog"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Torvus Transport Access": {
                             "type": "and",
@@ -27836,7 +27854,7 @@
                     "connections": {}
                 },
                 "Elevator to Sanctuary Fortress - Aerie": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -27845,15 +27863,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 204865660
+                        "teleporter_instance_id": 204865660,
+                        "keep_name_when_vanilla": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Sanctuary Fortress",
-                        "area": "Aerie"
+                        "area": "Aerie",
+                        "node": "Dock to Aerie Access"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Checkpoint Station": {
                             "type": "and",
@@ -27972,7 +27996,7 @@
                     }
                 },
                 "Teleport to Great Temple - Main Energy Controller": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -27981,15 +28005,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 137822369
+                        "teleporter_instance_id": 137822369,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Great Temple",
-                        "area": "Main Energy Controller"
+                        "area": "Main Energy Controller",
+                        "node": "Door to Controller Transport"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -28001,7 +28031,7 @@
                     }
                 },
                 "Teleport to Agon Wastes - Agon Energy Controller": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -28010,15 +28040,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 137822376
+                        "teleporter_instance_id": 137822376,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Agon Wastes",
-                        "area": "Agon Energy Controller"
+                        "area": "Agon Energy Controller",
+                        "node": "Door to Controller Access"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -28030,7 +28066,7 @@
                     }
                 },
                 "Teleport to Torvus Bog - Torvus Energy Controller": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -28039,15 +28075,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 137822482
+                        "teleporter_instance_id": 137822482,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Torvus Bog",
-                        "area": "Torvus Energy Controller"
+                        "area": "Torvus Energy Controller",
+                        "node": "Door to Controller Access"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -30047,7 +30089,7 @@
                     }
                 },
                 "Elevator to Sanctuary Fortress - Aerie Transport Station": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -30056,15 +30098,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 4260106
+                        "teleporter_instance_id": 4260106,
+                        "keep_name_when_vanilla": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Sanctuary Fortress",
-                        "area": "Aerie Transport Station"
+                        "area": "Aerie Transport Station",
+                        "node": "Door to Checkpoint Station"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Bottom Floor": {
                             "type": "resource",

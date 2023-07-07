@@ -5,7 +5,6 @@ import pytest
 
 import randovania
 import randovania.server.client_check
-from randovania.network_common import error
 from randovania.server import app
 
 
@@ -44,7 +43,9 @@ def test_create_app(mocker, tmpdir):
     assert result.config["DISCORD_REDIRECT_URI"] == "https://somewhere.nice/login_callback"
     assert result.config["FERNET_KEY"] == b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
 
-    encrpyted_value = b'gAAAAABfSh6fY4FOiqfGWMHXdE9A4uNVEu5wfn8BAsgP8EZ0-f-lqbYDqYzdiblhT5xhk-wMmG8sOLgKNN-dUaiV7n6JCydn7Q=='
+    encrpyted_value = (
+        b'gAAAAABfSh6fY4FOiqfGWMHXdE9A4uNVEu5wfn8BAsgP8EZ0-f-lqbYDqYzdiblhT5xhk-wMmG8sOLgKNN-dUaiV7n6JCydn7Q=='
+    )
     assert result.sio.fernet_encrypt.decrypt(encrpyted_value) == b'banana'
 
 
@@ -53,10 +54,11 @@ def test_custom_formatter(flask_app, has_user):
     sio = MagicMock()
     if has_user:
         expected_name = "TheName"
-        sio.get_current_user.return_value.name = expected_name
+        user = MagicMock()
+        user.name = expected_name
     else:
         expected_name = None
-        sio.get_current_user.side_effect = error.NotLoggedInError()
+        user = None
 
     flask_app.sio = sio
     record = logging.LogRecord("Name", logging.DEBUG, "path", 10, "the msg",
@@ -65,6 +67,7 @@ def test_custom_formatter(flask_app, has_user):
     x = app.ServerLoggingFormatter('%(context)s [%(who)s] %(levelname)s in %(where)s: %(message)s')
 
     with flask_app.test_request_context() as context:
+        context.request.current_user = user
         context.request.sid = "THE_SID"
         context.request.message = "TheMessage"
 

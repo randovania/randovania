@@ -58,7 +58,7 @@
                     }
                 },
                 "Teleport to Artifact Temple": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -70,12 +70,17 @@
                         "teleporter_instance_id": 152
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Tallon Overworld",
-                        "area": "Artifact Temple"
+                        "area": "Artifact Temple",
+                        "node": "Door to Temple Lobby"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Crater Tunnel A": {
                             "type": "and",
@@ -2378,7 +2383,7 @@
                     }
                 },
                 "Teleporter to Credits": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -2391,12 +2396,17 @@
                         "different_strongly_connected_component": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "End of Game",
-                        "area": "Credits"
+                        "area": "Credits",
+                        "node": "Event - Credits"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Subchamber Five": {
                             "type": "and",

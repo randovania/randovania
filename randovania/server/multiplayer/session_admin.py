@@ -65,7 +65,7 @@ def verify_has_admin_or_claimed(sio: ServerApp, world: World) -> None:
 
 
 def _verify_world_has_session(world: World, session: MultiplayerSession):
-    if world.session.id != session.id:
+    if world.session_id != session.id:
         raise error.InvalidActionError("Wrong session")
 
 
@@ -110,6 +110,9 @@ def _create_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[str, d
 
     if WORLD_NAME_RE.match(name) is None:
         raise error.InvalidActionError("Invalid world name")
+
+    if any(name == world.name for world in session.worlds):
+        raise error.InvalidActionError("World name already exists")
 
     logger().info(f"{session_common.describe_session(session)}: Creating world {name}.")
 
@@ -161,6 +164,9 @@ def _rename_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.U
 
     if WORLD_NAME_RE.match(new_name) is None:
         raise error.InvalidActionError("Invalid world name")
+
+    if any(new_name == world.name for world in session.worlds):
+        raise error.InvalidActionError("World name already exists")
 
     with database.db.atomic():
         logger().info(f"{session_common.describe_session(session)}: Renaming {world.name} ({world_uid}) to {new_name}.")

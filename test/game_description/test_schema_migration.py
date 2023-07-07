@@ -1,5 +1,4 @@
 from randovania.game_description import data_reader, data_writer, game_migration
-from randovania.lib import json_lib
 
 
 def test_round_trip_small(test_files_dir):

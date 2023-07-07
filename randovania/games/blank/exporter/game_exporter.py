@@ -1,5 +1,14 @@
+import dataclasses
+from pathlib import Path
+
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.lib import status_update_lib
+
+
+@dataclasses.dataclass(frozen=True)
+class BlankGameExportParams(GameExportParams):
+    input_path: Path
+    output_path: Path
 
 
 class BlankGameExporter(GameExporter):
@@ -21,4 +30,5 @@ class BlankGameExporter(GameExporter):
 
     def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
                         progress_update: status_update_lib.ProgressUpdateCallable):
+        assert isinstance(export_params, BlankGameExportParams)
         raise RuntimeError("Needs to be implemented")

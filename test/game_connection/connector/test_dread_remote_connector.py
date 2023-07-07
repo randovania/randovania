@@ -28,8 +28,8 @@ async def test_general_class_content(connector: DreadRemoteConnector):
 
     connector.executor.is_connected = MagicMock()
     connector.executor.is_connected.side_effect = [False, True]
-    assert connector.is_disconnected() == True
-    assert connector.is_disconnected() == False
+    assert connector.is_disconnected() is True
+    assert connector.is_disconnected() is False
 
     await connector.current_game_status() == (False, None)
 
