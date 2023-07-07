@@ -154,10 +154,13 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
 def test_create_elevators_field_no_elevator(empty_patches, echoes_game_description):
     # Setup
-    elevator_dock_types = echoes_game_description.dock_weakness_database.all_teleporter_dock_types
     # Run
     with pytest.raises(ValueError) as exp:
-        patch_data_factory._create_elevators_field(empty_patches, echoes_game_description, elevator_dock_types)
+        patch_data_factory._create_elevators_field(
+            empty_patches,
+            echoes_game_description,
+            echoes_game_description.dock_weakness_database.find_type("elevator")
+        )
 
     # Assert
     assert str(exp.value) == "Invalid elevator count. Expected 22, got 0."
@@ -187,10 +190,12 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
             "Great Temple", "Sanctum")
 
     patches = echoes_game_patches.assign_dock_connections(elevator_connection)
-    elevator_dock_types = echoes_game_description.dock_weakness_database.all_teleporter_dock_types
 
     # Run
-    result = patch_data_factory._create_elevators_field(patches, echoes_game_description, elevator_dock_types)
+    result = patch_data_factory._create_elevators_field(
+        patches, echoes_game_description,
+        echoes_game_description.dock_weakness_database.find_type("elevator")
+    )
 
     # Assert
     expected = [

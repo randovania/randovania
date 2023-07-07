@@ -117,8 +117,7 @@ class GameDescription:
         connections = list(dock_connection)
         teleporter_dock_types = self.dock_weakness_database.all_teleporter_dock_types
         for source in region_list.iterate_nodes():
-            if (isinstance(source, DockNode) and source.dock_type in teleporter_dock_types
-                 and source.extra.get("editable", False)):
+            if isinstance(source, DockNode) and source.dock_type in teleporter_dock_types:
                 target = region_list.node_by_identifier(source.default_connection)
                 connections[source.node_index] = target.node_index
         return connections
