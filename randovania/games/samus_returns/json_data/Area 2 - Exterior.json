@@ -173,7 +173,7 @@
                     }
                 },
                 "Elevator to Area 2 Interior - Main Hub": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -10446.59,
@@ -187,15 +187,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02B",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea02B"
+                        "start_point_actor_name": "ST_FromArea02B",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 2 - Interior",
-                        "area": "Main Hub"
+                        "area": "Main Hub",
+                        "node": "Elevator to Area 2 Exterior - Outer Hub"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Teleporter": {
                             "type": "resource",
@@ -251,7 +258,7 @@
                     }
                 },
                 "Elevator to Area 2 Entrance - Transport to Area 2 Exterior": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7919.71,
@@ -265,15 +272,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea02C",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea02C"
+                        "start_point_actor_name": "ST_FromArea02C",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 2 - Entrance",
-                        "area": "Transport to Area 2 Exterior"
+                        "area": "Transport to Area 2 Exterior",
+                        "node": "Elevator to Area 2 Exterior - Outer Hub"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",

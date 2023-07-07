@@ -7026,7 +7026,7 @@
                     }
                 },
                 "Skytram to East Skytown - Skytram East": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -7035,15 +7035,22 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 2031842
+                        "teleporter_instance_id": 2031842,
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "SkyTown, Elysia - Pod",
-                        "area": "Skytram East"
+                        "area": "Skytram East",
+                        "node": "Skytram to Skytown - Skytram West"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Security Tube": {
                             "type": "and",

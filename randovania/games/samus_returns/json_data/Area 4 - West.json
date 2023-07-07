@@ -1570,7 +1570,7 @@
                     }
                 },
                 "Elevator to Area 3 Exterior - Transport to Area 4 West": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 11380.05,
@@ -1584,15 +1584,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea03",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea03"
+                        "start_point_actor_name": "ST_FromArea03",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 3 - Exterior",
-                        "area": "Transport to Area 4 West"
+                        "area": "Transport to Area 4 West",
+                        "node": "Elevator to Area 4 West - Chozo Seals"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Right of Left Elevator": {
                             "type": "and",
@@ -1604,7 +1611,7 @@
                     }
                 },
                 "Elevator to Area 4 East - Transport to Area 4 West": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 17643.52,
@@ -1618,15 +1625,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea05",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea05"
+                        "start_point_actor_name": "ST_FromArea05",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 4 - East",
-                        "area": "Transport to Area 4 West"
+                        "area": "Transport to Area 4 West",
+                        "node": "Elevator to Area 4 West - Chozo Seals"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Chozo Seal Right": {
                             "type": "and",
@@ -5516,7 +5530,7 @@
             },
             "nodes": {
                 "Elevator to Area 5 Entrance - Chozo Seal": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 13395.48,
@@ -5530,15 +5544,22 @@
                     "extra": {
                         "actor_name": "LE_Platform_Elevator_FromArea06",
                         "actor_type": "weightactivatedplatform",
-                        "start_point_actor_name": "ST_FromArea06"
+                        "start_point_actor_name": "ST_FromArea06",
+                        "keep_name_when_vanilla": false,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 5 - Entrance",
-                        "area": "Chozo Seal"
+                        "area": "Chozo Seal",
+                        "node": "Elevator to Area 4 West - Transport to Area 5 Entrance"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to The Big Gap": {
                             "type": "and",

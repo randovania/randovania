@@ -413,7 +413,7 @@
                     }
                 },
                 "Teleporter to Bryyo Cliffside": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 0.0,
@@ -426,15 +426,22 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": null
+                        "teleporter_instance_id": null,
+                        "keep_name_when_vanilla": true,
+                        "editable": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Bryyo - Reptilicus",
-                        "area": "Cliffside Airdock"
+                        "area": "Cliffside Airdock",
+                        "node": "Samus Ship"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {}
                 },
                 "Pickup (Hyper Ball)": {

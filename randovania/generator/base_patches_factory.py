@@ -2,6 +2,7 @@ from random import Random
 from collections.abc import Iterable
 
 from randovania.game_description.assignment import NodeConfigurationAssociation
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.hint import HintItemPrecision
@@ -107,14 +108,17 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
                                             patches: GamePatches) -> GamePatches:
         elevators = configuration.elevators
 
-        region_list = filtered_database.game_description_for_layout(configuration).region_list
+        game_description = filtered_database.game_description_for_layout(configuration)
+        region_list = game_description.region_list
         elevator_connection = {}
 
         if not elevators.is_vanilla:
             if rng is None:
                 raise MissingRng("Elevator")
 
-            elevator_db = elevator_distributor.create_elevator_database(region_list, elevators.editable_teleporters)
+            elevator_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
+            elevator_db = elevator_distributor.create_elevator_database(region_list, elevators.editable_teleporters,
+                                                                         elevator_dock_types)
             if elevators.mode == TeleporterShuffleMode.ECHOES_SHUFFLED:
                 connections = self.elevator_echoes_shuffled(configuration, patches, rng)
 
@@ -138,11 +142,11 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
             elevator_connection[teleporter] = destination
 
         assignment = [
-            (region_list.get_teleporter_node(identifier), target)
+            (region_list.typed_node_by_identifier(identifier, DockNode), region_list.default_node_for_area(target))
             for identifier, target in elevator_connection.items()
         ]
 
-        return patches.assign_elevators(assignment)
+        return patches.assign_dock_connections(assignment)
 
     def elevator_echoes_shuffled(self, configuration: TrilogyConfiguration, patches: GamePatches,
                                  rng: Random) -> ElevatorConnection:

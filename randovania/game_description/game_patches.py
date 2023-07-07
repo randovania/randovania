@@ -24,7 +24,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.assignment import (
-        PickupTarget, PickupTargetAssociation, TeleporterAssociation,
+        PickupTarget, PickupTargetAssociation,
         NodeConfigurationAssociation, DockWeaknessAssociation
     )
     from randovania.game_description.hint import Hint
@@ -32,7 +32,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.game_description.db.node import Node
-    from randovania.game_description.db.teleporter_node import TeleporterNode
     from randovania.game_description.db.dock_node import DockNode
 
 
@@ -43,7 +42,6 @@ class GamePatches:
     player_index: int
     configuration: BaseConfiguration
     pickup_assignment: dict[PickupIndex, PickupTarget]
-    elevator_connection: ElevatorConnection
     dock_connection: list[int | None]
     dock_weakness: list[DockWeakness | None]
     weaknesses_to_shuffle: list[bool]
@@ -72,8 +70,7 @@ class GamePatches:
         return GamePatches(
             game, player_index, configuration,
             pickup_assignment={},
-            elevator_connection=game.get_default_elevator_connection(),
-            dock_connection=[None] * len(game.region_list.all_nodes),
+            dock_connection=game.get_prefilled_docks(),
             dock_weakness=[None] * len(game.region_list.all_nodes),
             weaknesses_to_shuffle=[False] * len(game.region_list.all_nodes),
             configurable_nodes={},
@@ -128,22 +125,6 @@ class GamePatches:
         current = copy.copy(self.hints)
         current[identifier] = hint
         return dataclasses.replace(self, hints=current)
-
-    # Elevators
-    def assign_elevators(self, assignments: Iterable[TeleporterAssociation]) -> GamePatches:
-        elevator_connection = copy.copy(self.elevator_connection)
-
-        for teleporter, target in assignments:
-            elevator_connection[teleporter.identifier] = target
-
-        return dataclasses.replace(self, elevator_connection=elevator_connection)
-
-    def get_elevator_connection_for(self, node: TeleporterNode) -> AreaIdentifier | None:
-        return self.elevator_connection.get(node.identifier, node.default_connection)
-
-    def all_elevator_connections(self) -> Iterator[TeleporterAssociation]:
-        for identifier, target in self.elevator_connection.items():
-            yield self.game.region_list.get_teleporter_node(identifier), target
 
     # Dock Connection
     def assign_dock_connections(self, assignment: Iterable[tuple[DockNode, Node]]) -> GamePatches:

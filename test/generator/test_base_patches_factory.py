@@ -3,6 +3,7 @@ from random import Random
 from unittest.mock import MagicMock
 
 import pytest
+from randovania.game_description.db.dock_node import Node, DockNode
 from randovania.game_description.game_description import GameDescription
 
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -10,7 +11,6 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator import base_patches_factory
@@ -29,9 +29,11 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
     if skip_final_bosses:
         node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
                                            "Teleport to Great Temple - Sky Temple Energy Controller")
-        expected = expected.assign_elevators([
-            (echoes_game_description.region_list.get_teleporter_node(node_ident),
-             AreaIdentifier("Temple Grounds", "Credits")),
+        expected = expected.assign_dock_connections([
+            (echoes_game_description.region_list.typed_node_by_identifier(node_ident, DockNode),
+            echoes_game_description.region_list.node_by_identifier(NodeIdentifier.create(
+            "Temple Grounds", "Credits", "Event - Dark Samus 3 and 4"
+            ))),
         ])
 
     config = default_echoes_configuration
@@ -43,7 +45,8 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
     result = patches_factory.add_elevator_connections_to_patches(
         config,
         Random(0),
-        echoes_game_patches)
+        echoes_game_patches,
+    )
 
     # Assert
     assert result == expected
@@ -66,12 +69,13 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     )
 
     wl = echoes_game_description.region_list
-    elevator_connection: list[tuple[TeleporterNode, AreaIdentifier]] = []
+    elevator_connection: list[tuple[DockNode, Node]] = []
+    teleporter_dock_types = echoes_game_description.dock_weakness_database.all_teleporter_dock_types
 
     def ni(w: str, a: str, n: str, tw: str, ta: str):
         elevator_connection.append((
-            wl.get_teleporter_node(NodeIdentifier.create(w, a, n)),
-            AreaIdentifier(tw, ta),
+            wl.typed_node_by_identifier(NodeIdentifier.create(w, a, n), DockNode),
+            wl.default_node_for_area(AreaIdentifier(tw, ta)),
         ))
 
     ni("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
@@ -126,7 +130,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     ni("Sanctuary Fortress", "Aerie", "Elevator to Sanctuary Fortress - Aerie Transport Station",
        "Sanctuary Fortress", "Aerie Transport Station")
 
-    expected = echoes_game_patches.assign_elevators(elevator_connection)
+    expected = echoes_game_patches.assign_dock_connections(elevator_connection)
 
     # Run
     result = patches_factory.add_elevator_connections_to_patches(
@@ -136,8 +140,13 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     )
 
     # Assert
-    result_conn = set(result.all_elevator_connections())
-    expected_conn = set(expected.all_elevator_connections())
+    def generator(give_me_a_type):
+        return [
+            (dock_node, node)
+            for dock_node, node in give_me_a_type.all_dock_connections() if dock_node.dock_type in teleporter_dock_types
+        ]
+    result_conn = set(generator(result))
+    expected_conn = set(generator(expected))
 
     assert len(result_conn) == len(expected_conn)
     assert result_conn == expected_conn

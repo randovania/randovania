@@ -1,5 +1,5 @@
 {
-    "schema_version": 19,
+    "schema_version": 20,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -2663,7 +2663,9 @@
             },
             "portal": {
                 "name": "Portal",
-                "extra": {},
+                "extra": {
+                    "ignore_for_hints": true
+                },
                 "items": {
                     "Scan Portal": {
                         "extra": {},
@@ -2792,6 +2794,32 @@
                         "extra": {},
                         "requirement": {
                             "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": {
+                    "unlocked": null,
+                    "locked": null,
+                    "change_from": [],
+                    "change_to": []
+                }
+            },
+            "teleporter": {
+                "name": "Teleporter",
+                "extra": {
+                    "is_teleporter": true,
+                    "ignore_for_hints": true
+                },
+                "items": {
+                    "Teleporter": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
@@ -5592,7 +5620,7 @@
                             }
                         },
                         "Elevator to Torvus Bog - Transport to Temple Grounds": {
-                            "node_type": "teleporter",
+                            "node_type": "dock",
                             "heal": false,
                             "coordinates": null,
                             "description": "",
@@ -5601,15 +5629,22 @@
                             ],
                             "extra": {
                                 "scan_asset_id": 3917689266,
-                                "teleporter_instance_id": 1966093
+                                "teleporter_instance_id": 1966093,
+                                "keep_name_when_vanilla": false,
+                                "editable": true
                             },
                             "valid_starting_location": true,
-                            "destination": {
+                            "dock_type": "teleporter",
+                            "default_connection": {
                                 "region": "Torvus Bog",
-                                "area": "Transport to Temple Grounds"
+                                "area": "Transport to Temple Grounds",
+                                "node": "Elevator to Temple Grounds - Transport to Torvus Bog"
                             },
-                            "keep_name_when_vanilla": false,
-                            "editable": true,
+                            "default_dock_weakness": "Teleporter",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
                             "connections": {
                                 "Door to Torvus Transport Access": {
                                     "type": "and",
@@ -7031,7 +7066,7 @@
                             }
                         },
                         "Elevator to Temple Grounds - Transport to Torvus Bog": {
-                            "node_type": "teleporter",
+                            "node_type": "dock",
                             "heal": false,
                             "coordinates": null,
                             "description": "",
@@ -7040,15 +7075,22 @@
                             ],
                             "extra": {
                                 "scan_asset_id": 3964483773,
-                                "teleporter_instance_id": 129
+                                "teleporter_instance_id": 129,
+                                "keep_name_when_vanilla": false,
+                                "editable": true
                             },
                             "valid_starting_location": true,
-                            "destination": {
+                            "dock_type": "teleporter",
+                            "default_connection": {
                                 "region": "Temple Grounds",
-                                "area": "Transport to Torvus Bog"
+                                "area": "Transport to Torvus Bog",
+                                "node": "Elevator to Torvus Bog - Transport to Temple Grounds"
                             },
-                            "keep_name_when_vanilla": false,
-                            "editable": true,
+                            "default_dock_weakness": "Teleporter",
+                            "exclude_from_dock_rando": false,
+                            "incompatible_dock_weaknesses": [],
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
                             "connections": {
                                 "Door to Temple Transport Access": {
                                     "type": "and",

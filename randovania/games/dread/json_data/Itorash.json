@@ -476,7 +476,7 @@
                     }
                 },
                 "Elevator to Hanubia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -3850.0,
@@ -493,15 +493,22 @@
                         "elevator_component": "CCapsuleUsableComponent",
                         "target_spawn_point": "elevator_skybase_000_platform",
                         "start_point_actor_name": "elevator_shipyard_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Hanubia",
-                        "area": "Transport to Itorash"
+                        "area": "Transport to Itorash",
+                        "node": "Elevator to Itorash - Transport to Hanubia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -846,7 +853,7 @@
                     }
                 },
                 "Elevator to Raven Beak Arena": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5050.0,
@@ -861,15 +868,22 @@
                         "actor_name": "commander_elevator",
                         "actor_def": "actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad",
                         "start_point_actor_name": "weightactivatedplatform_commanderelevator_000",
-                        "start_point_actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad",
+                        "keep_name_when_vanilla": false,
+                        "editable": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Itorash",
-                        "area": "Raven Beak Arena"
+                        "area": "Raven Beak Arena",
+                        "node": "Before Fight"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station": {
                             "type": "and",
@@ -1328,7 +1342,7 @@
                     }
                 },
                 "Escape Sequence": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": true,
                     "coordinates": {
                         "x": 5736.34,
@@ -1339,14 +1353,22 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "destination": {
-                        "region": "Hanubia",
-                        "area": "Raven Beak X Arena"
+                    "extra": {
+                        "keep_name_when_vanilla": false,
+                        "editable": false
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Hanubia",
+                        "area": "Raven Beak X Arena",
+                        "node": "Raven Beak X Checkpoint"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }

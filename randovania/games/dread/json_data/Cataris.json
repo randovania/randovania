@@ -261,7 +261,7 @@
                     }
                 },
                 "Elevator to Artaria - Transport to Cataris": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 12500.0,
@@ -278,15 +278,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "LE_Platform_Elevator_FromMagma",
                         "start_point_actor_name": "LE_Platform_Elevator_FromCave",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Artaria",
-                        "area": "Transport to Cataris"
+                        "area": "Transport to Cataris",
+                        "node": "Elevator to Cataris - Transport to Artaria"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Artaria Transport Access": {
                             "type": "and",
@@ -5392,7 +5399,7 @@
                     }
                 },
                 "Teleporter to Artaria - Screw Attack Room": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 17950.0,
@@ -5409,15 +5416,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleporter_magma_000_platform",
                         "start_point_actor_name": "teleporter_cave_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Artaria",
-                        "area": "Screw Attack Room"
+                        "area": "Screw Attack Room",
+                        "node": "Teleporter to Cataris"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Event - East Blob, below": {
                             "type": "or",
@@ -11838,7 +11852,7 @@
                     }
                 },
                 "Teleporter to Artaria - Teleport to Cataris": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -17950.0,
@@ -11855,15 +11869,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "LE_Platform_Teleport_FromMagma",
                         "start_point_actor_name": "LE_Platform_Teleport_FromCave",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Artaria",
-                        "area": "Teleport to Cataris"
+                        "area": "Teleport to Cataris",
+                        "node": "Teleporter to Cataris - Teleport to Artaria (Red)"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to West Teleport Access": {
                             "type": "or",
@@ -12163,7 +12184,7 @@
                     }
                 },
                 "Teleporter to Ghavoran - Teleport to Cataris": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -15450.0,
@@ -12180,15 +12201,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleporter_magma_000_platform",
                         "start_point_actor_name": "teleporter_forest_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ghavoran",
-                        "area": "Golzuna Tower"
+                        "area": "Golzuna Tower",
+                        "node": "Teleporter to Cataris"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Grapple Block": {
                             "type": "and",
@@ -17771,7 +17799,7 @@
                     }
                 },
                 "Elevator to Dairon - Transport to Cataris": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -4800.0,
@@ -17788,15 +17816,22 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_magma_000_platform",
                         "start_point_actor_name": "wagontrain_baselab_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "Transport to Cataris"
+                        "area": "Transport to Cataris",
+                        "node": "Elevator to Cataris - Transport to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Dairon Transport Access": {
                             "type": "and",
@@ -22285,7 +22320,7 @@
                     }
                 },
                 "Teleporter to Dairon - Teleport to Cataris": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -7350.0,
@@ -22302,15 +22337,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleport_magma_000_platform",
                         "start_point_actor_name": "teleport_baselab_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "Teleport to Cataris"
+                        "area": "Teleport to Cataris",
+                        "node": "Teleporter to Cataris - Teleport to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Green EMMI Introduction Access": {
                             "type": "or",

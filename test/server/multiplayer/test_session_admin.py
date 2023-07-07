@@ -43,9 +43,9 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
         {'id': 1, 'name': 'Debug', 'state': 'in-progress', 'users_list': [], 'worlds': [],
-         'game_details': {'seed_hash': 'WAR56PWQ',
+         'game_details': {'seed_hash': 'CXQTEVPI',
                           'spoiler': True,
-                          'word_hash': 'Charge Sandcanyon Abyss'},
+                          'word_hash': 'Aether Honor Spreader'},
          'generation_in_progress': None,
          'allowed_games': ANY, },
         room='multiplayer-session-1',

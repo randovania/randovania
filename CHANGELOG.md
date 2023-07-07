@@ -5,14 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.1.0] - 2023-??-??
+## [6.X.X] - 2023-08-??
+
+### Metroid Prime 2: Echoes
+
+- Added: Tracker layout "Debug Info", which also shows details useful for investigating errors. 
 
 ### Metroid Dread
 
-- **Major** - Added: Multiworld support for Dread.
+- **Major** - Added: Multiworld support for Dread. 
 
-
-## [6.0.1] - 2023-07-??
+## [6.0.1] - 2023-07-04
 
 - Added: Option for disabling crash reporting and monitoring.
 - Added: In multiworld sessions, you're prevented from selecting a preset that is incompatible with multiworld.

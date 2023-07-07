@@ -302,7 +302,9 @@ class HintDistributor(ABC):
         """
         target_node = node_search.pickup_index_to_node(region_list, target)
         target_area = region_list.nodes_to_area(target_node)
-        distances = node_search.distances_to_node(region_list, target_node, patches=patches, cutoff=max_distance)
+        dock_types_to_ignore = patches.game.dock_weakness_database.all_ignore_hints_dock_types
+        distances = node_search.distances_to_node(region_list, target_node, dock_types_to_ignore,
+                                                  patches=patches, cutoff=max_distance)
 
         def _major_pickups(area: Area) -> Iterator[PickupIndex]:
             for index in area.pickup_indices:

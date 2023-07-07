@@ -4396,7 +4396,7 @@
                     }
                 },
                 "Teleporter to Dairon - Teleport to Artaria": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6350.0,
@@ -4413,15 +4413,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleport_cave_000_platform",
                         "start_point_actor_name": "teleport_baselab_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "Teleport to Artaria"
+                        "area": "Teleport to Artaria",
+                        "node": "Teleporter to Artaria - Teleport to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to EMMI Zone Exit North (Upper)": {
                             "type": "and",
@@ -7225,7 +7232,7 @@
                     }
                 },
                 "Teleporter to Cataris - Teleport to Artaria (Red)": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -10200.0,
@@ -7242,15 +7249,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "LE_Platform_Teleport_FromCave",
                         "start_point_actor_name": "LE_Platform_Teleport_FromMagma",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Teleport to Artaria (Red)"
+                        "area": "Teleport to Artaria (Red)",
+                        "node": "Teleporter to Artaria - Teleport to Cataris"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station West": {
                             "type": "and",
@@ -15460,7 +15474,7 @@
                     }
                 },
                 "Elevator to Dairon": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1650.0,
@@ -15477,15 +15491,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_cave_000_platform",
                         "start_point_actor_name": "elevator_baselab_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "Transport to Artaria"
+                        "area": "Transport to Artaria",
+                        "node": "Elevator to Artaria - Transport to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Spider Beam Tower": {
                             "type": "and",
@@ -23898,7 +23919,7 @@
                     }
                 },
                 "Elevator to Cataris - Transport to Artaria": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 32800.0,
@@ -23915,15 +23936,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "LE_Platform_Elevator_FromCave",
                         "start_point_actor_name": "LE_Platform_Elevator_FromMagma",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Transport to Artaria"
+                        "area": "Transport to Artaria",
+                        "node": "Elevator to Artaria - Transport to Cataris"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Hot Cataris Shortcut": {
                             "type": "and",
@@ -25004,7 +25032,7 @@
                     }
                 },
                 "Elevator to Burenia - Transport to Artaria": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -25250.0,
@@ -25021,15 +25049,22 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_cave_000_platform",
                         "start_point_actor_name": "elevator_aqua_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Burenia",
-                        "area": "Transport to Artaria"
+                        "area": "Transport to Artaria",
+                        "node": "Elevator to Artaria - Transport to Burenia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Screw Attack Room": {
                             "type": "and",
@@ -26061,7 +26096,7 @@
                     }
                 },
                 "Teleporter to Cataris": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -20700.0,
@@ -26078,15 +26113,22 @@
                         "elevator_component": "CTeleporterUsableComponent",
                         "target_spawn_point": "teleporter_cave_000_platform",
                         "start_point_actor_name": "teleporter_magma_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad",
+                        "keep_name_when_vanilla": true,
+                        "editable": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Teleport to Artaria (Blue)"
+                        "area": "Teleport to Artaria (Blue)",
+                        "node": "Teleporter to Artaria - Screw Attack Room"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Screw Attack Grapple Block": {
                             "type": "resource",

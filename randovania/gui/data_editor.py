@@ -19,7 +19,6 @@ from randovania.game_description.db.node import Node, GenericNode, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.editor import Editor
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -459,15 +458,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 node.default_connection.as_string,
                 node.default_connection.node_name,
             )
-
-        elif isinstance(node, TeleporterNode):
-            try:
-                other = self.region_list.area_by_area_location(node.default_connection)
-                name = self.region_list.area_name(other, separator="/", distinguish_dark_aether=False)
-                pretty_name = msg.replace("Teleporter to ", "")
-                msg = f'Teleporter to <a href="area://{name}">{pretty_name}</a>'
-            except Exception as e:
-                msg = f'Teleporter to {node.default_connection} (Unknown area due to {e}).'
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
