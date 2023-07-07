@@ -847,6 +847,14 @@ def _migrate_v54(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v55(preset: dict) -> dict:
+    game = preset["game"]
+    if game in {"blank", "cave_story", "am2r"}:
+        return preset
+    preset["configuration"]["dock_rando"]["types_state"]["teleporter"] = {"can_change_from": [],"can_change_to": []}
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -902,6 +910,7 @@ _MIGRATIONS = [
     _migrate_v52,
     _migrate_v53,
     _migrate_v54,
+    _migrate_v55,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

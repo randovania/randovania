@@ -7,12 +7,14 @@ from textwrap import wrap
 
 import py_randomprime
 from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
-
+from open_prime_rando.dol_patching import all_prime_dol_patches
 from ppc_asm import assembler
 from retro_data_structures.game_check import Game as RDSGame
 
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
+from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.region import Region
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
@@ -21,7 +23,6 @@ from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 from randovania.patching.prime import asset_conversion
-from open_prime_rando.dol_patching import all_prime_dol_patches
 
 
 @dataclasses.dataclass(frozen=True)
@@ -83,7 +84,7 @@ def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepat
     pyplot.clf()
 
 
-def make_one_map(filepath: Path, level_data: dict, region: Region):
+def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to_ignore: list[DockType]):
     from randovania.game_description.db.dock_node import DockNode
 
     def wrap_text(text):
@@ -96,8 +97,9 @@ def make_one_map(filepath: Path, level_data: dict, region: Region):
     disabled_doors = set()
 
     for area in region.areas:
-        for node in area.nodes:
-            if not isinstance(node, DockNode):
+        dock_nodes = [node for node in area.nodes if isinstance(node, DockNode)]
+        for node in dock_nodes:
+            if node.dock_type in dock_types_to_ignore:
                 continue
 
             src_name = area.name
@@ -144,12 +146,15 @@ class PrimeGameExporter(GameExporter):
         """
         return False
 
+    @monitoring.trace_function
     def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict):
-        rl = default_database.game_description_for(RandovaniaGame.METROID_PRIME).region_list
+        game_description = default_database.game_description_for(RandovaniaGame.METROID_PRIME)
+        rl = game_description.region_list
+        dock_types_to_ignore = game_description.dock_weakness_database.all_teleporter_dock_types
 
         for region_name in level_data.keys():
             filepath = directory.with_name(f"{base_filename} {region_name}.png")
-            make_one_map(filepath, level_data, rl.region_with_name(region_name))
+            make_one_map(filepath, level_data, rl.region_with_name(region_name), dock_types_to_ignore)
 
     def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
                         progress_update: status_update_lib.ProgressUpdateCallable) -> None:

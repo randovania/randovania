@@ -154,7 +154,9 @@ class GameData:
     multiple_start_nodes_per_area: bool = False
     """If this game allows multiple start nodes per area."""
 
+
 class RandovaniaGame(BitPackEnum, Enum):
+    BLANK = "blank"
     METROID_PRIME = "prime1"
     METROID_PRIME_ECHOES = "prime2"
     METROID_PRIME_CORRUPTION = "prime3"
@@ -163,7 +165,6 @@ class RandovaniaGame(BitPackEnum, Enum):
     METROID_SAMUS_RETURNS = "samus_returns"
     CAVE_STORY = "cave_story"
     AM2R = "am2r"
-    BLANK = "blank"
 
     @property
     def data(self) -> GameData:

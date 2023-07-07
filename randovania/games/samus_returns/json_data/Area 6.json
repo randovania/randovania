@@ -105,7 +105,7 @@
                     }
                 },
                 "Elevator to Area 7 - Transport to Area 6": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -13102.68,
@@ -122,12 +122,17 @@
                         "start_point_actor_name": "ST_FromArea09"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 7",
-                        "area": "Transport to Area 6"
+                        "area": "Transport to Area 6",
+                        "node": "Elevator to Area 6 - Transport to Area 7"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Before Diggernaut Area": {
                             "type": "and",
@@ -5480,7 +5485,7 @@
             },
             "nodes": {
                 "Elevator to Area 5 Entrance - Chozo Seal": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 18857.44,
@@ -5497,12 +5502,17 @@
                         "start_point_actor_name": "ST_FromArea06"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 5 - Entrance",
-                        "area": "Chozo Seal"
+                        "area": "Chozo Seal",
+                        "node": "Elevator to Area 4 West - Transport to Area 5 Entrance"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Save Station": {
                             "type": "or",

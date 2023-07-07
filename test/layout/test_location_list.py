@@ -4,7 +4,6 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib.location_list import LocationList

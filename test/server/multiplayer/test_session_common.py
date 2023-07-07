@@ -1,15 +1,16 @@
 import datetime
-import datetime
 import uuid
-from unittest.mock import MagicMock, call
+from unittest.mock import MagicMock
 
 import pytest
 from pytest_mock import MockerFixture
 
 from randovania.bitpacking import construct_pack
 from randovania.network_common import multiplayer_session
-from randovania.network_common.multiplayer_session import MultiplayerSessionAuditLog, \
+from randovania.network_common.multiplayer_session import (
+    MultiplayerSessionAuditLog,
     MultiplayerSessionAuditEntry
+)
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.multiplayer import session_common

@@ -3097,7 +3097,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Event - A2BottomWaterTurbine": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3108,6 +3108,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -3303,7 +3312,7 @@
                             }
                         },
                         "Dock to Water Turbine Station Pipe": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3314,6 +3323,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -3492,7 +3510,7 @@
                             }
                         },
                         "Dock to Lower Hydro Station Pipe": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3503,6 +3521,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -3739,7 +3766,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Water Turbine Station": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3750,6 +3777,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -4439,7 +4475,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Middle": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -4450,6 +4486,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -4494,7 +4539,7 @@
                             }
                         },
                         "Dock to Lower Hydro Station Pipe": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -4505,6 +4550,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -5655,10 +5709,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": false,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -5756,10 +5807,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": true,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {

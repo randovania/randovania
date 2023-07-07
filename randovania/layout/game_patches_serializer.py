@@ -95,10 +95,6 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             equipment_name: equipment_value,
         },
         "starting_location": patches.starting_location.as_string,
-        "teleporters": {
-            source.identifier.as_string: connection.as_string
-            for source, connection in patches.all_elevator_connections()
-        },
         "dock_connections": {
             dock.identifier.as_string: target.identifier.as_string
             for dock, target in patches.all_dock_connections()
@@ -190,29 +186,26 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
                 pickup = _get_pickup_from_pool(player_pool.to_place, starting)
             starting_equipment.append(pickup)
 
-    # Elevators
-    elevator_connection = [
-        (region_list.get_teleporter_node(NodeIdentifier.from_string(source_name)),
-         AreaIdentifier.from_string(target_name))
-        for source_name, target_name in game_modifications["teleporters"].items()
-    ]
-
     # Dock Connection
-    def get_dock(ni: NodeIdentifier):
+    def get_dock_source(ni: NodeIdentifier):
         result = game.region_list.node_by_identifier(ni)
         assert isinstance(result, DockNode)
         return result
 
+    def get_dock_target(ni: NodeIdentifier):
+        result = game.region_list.node_by_identifier(ni)
+        return result
+
     dock_connections = [
-        (get_dock(NodeIdentifier.from_string(source_name)),
-         get_dock(NodeIdentifier.from_string(target_name)))
+        (get_dock_source(NodeIdentifier.from_string(source_name)),
+         get_dock_target(NodeIdentifier.from_string(target_name)))
         for source_name, target_name in game_modifications["dock_connections"].items()
     ]
 
     # Dock Weakness
 
     dock_weakness = [
-        (get_dock(NodeIdentifier.from_string(source_name)),
+        (get_dock_source(NodeIdentifier.from_string(source_name)),
          weakness_db.get_by_weakness(
              weakness_data["type"],
              weakness_data["name"],
@@ -267,7 +260,6 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     patches = GamePatches.create_from_game(game, player_index, configuration)
     patches = patches.assign_dock_connections(dock_connections)
     patches = patches.assign_dock_weakness(dock_weakness)
-    patches = patches.assign_elevators(elevator_connection)
     return dataclasses.replace(
         patches,
         pickup_assignment=pickup_assignment,  # PickupAssignment

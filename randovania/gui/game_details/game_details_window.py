@@ -19,7 +19,7 @@ from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.game_validator_widget import GameValidatorWidget
-from randovania.interface_common import simplified_patcher
+from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import preset_describer
@@ -359,7 +359,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
     def enable_buttons_with_background_tasks(self, value: bool):
         self.stop_background_process_button.setEnabled(not value and self._can_stop_background_process)
         self.export_iso_button.setEnabled(value)
-        simplified_patcher.export_busy = not value
+        generator_frontend.export_busy = not value
 
     def update_progress(self, message: str, percentage: int):
         self.progress_label.setText(message)

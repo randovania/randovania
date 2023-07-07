@@ -37,16 +37,15 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
 
     @property
     def text_value(self) -> str:
-        return self.prompt_edit.text()
+        return self.prompt_edit.text().strip()
 
     def _on_text_changed(self, value: str):
         error_message = None
-        common_qt_lib.set_edit_if_different(self.prompt_edit, self.prompt_edit.text().strip())
 
         if self.check_re is not None:
-            if self.check_re.match(self.prompt_edit.text()) is None:
+            if self.check_re.match(self.text_value) is None:
                 error_message = "Input does not match rules"
-        elif not self.prompt_edit.text():
+        elif not self.text_value:
             error_message = "Input required"
 
         common_qt_lib.set_error_border_stylesheet(self.prompt_edit, error_message is not None)

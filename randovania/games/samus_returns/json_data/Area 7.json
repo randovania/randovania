@@ -3908,7 +3908,7 @@
                     }
                 },
                 "Elevator to Area 6 - Transport to Area 7": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -2414.29,
@@ -3925,12 +3925,17 @@
                         "start_point_actor_name": "ST_FromArea07"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 6",
-                        "area": "Transport to Area 7"
+                        "area": "Transport to Area 7",
+                        "node": "Save Station"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Below Hidden Pickup": {
                             "type": "and",
@@ -7308,7 +7313,7 @@
             },
             "nodes": {
                 "Elevator to Area 8 - Transport to Area 7": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -30200.0,
@@ -7325,12 +7330,17 @@
                         "start_point_actor_name": "ST_FromArea10"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 8",
-                        "area": "Transport to Area 7"
+                        "area": "Transport to Area 7",
+                        "node": "Elevator to Area 7 - Transport to Area 8"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Exit Puzzle Room 2": {
                             "type": "and",

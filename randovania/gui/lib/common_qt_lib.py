@@ -193,9 +193,11 @@ def set_edit_if_different(edit: QtWidgets.QLineEdit, new_text: str):
     if edit.text() != new_text:
         edit.setText(new_text)
 
+
 def set_edit_if_different_text(edit: QtWidgets.QTextEdit, new_text: str):
     if edit.toPlainText() != new_text:
         edit.setPlainText(new_text)
+
 
 def get_network_client():
     from randovania.gui.lib.qt_network_client import QtNetworkClient

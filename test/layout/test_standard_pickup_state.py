@@ -18,8 +18,10 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
         {"encoded": b'\x842', "bit_count": 15, "json": {"num_shuffled_pickups": 3, "priority": 2.5}},
 
         # Energy Tank
-        {"encoded": b'\x92\x88', "bit_count": 13, "progression": "EnergyTank", "json": {"num_shuffled_pickups": 6,
-                                                                                        "num_included_in_starting_pickups": 10}},
+        {"encoded": b'\x92\x88', "bit_count": 13, "progression": "EnergyTank", "json": {
+            "num_shuffled_pickups": 6,
+            "num_included_in_starting_pickups": 10
+        }},
 
         # Ammo
         {"encoded": b'\x1b\x80', "bit_count": 9, "ammo_index": ("PowerBomb",), "json": {"included_ammo": [7]}},

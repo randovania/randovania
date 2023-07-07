@@ -21,7 +21,7 @@ def _state_game_data(empty_patches) -> StateGameData:
 def test_collected_pickup_indices(state_game_data, empty_patches):
     # Setup
     db = state_game_data.resource_database
-    starting = state_game_data.region_list.resolve_teleporter_connection(empty_patches.game.starting_location)
+    starting = state_game_data.region_list.node_by_identifier(empty_patches.game.starting_location)
     pickup_nodes = [node for node in empty_patches.game.region_list.all_nodes
                     if isinstance(node, PickupNode)]
 
@@ -48,7 +48,7 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
 def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_category, default_generator_params):
     # Starting State
     db = state_game_data.resource_database
-    starting_node = state_game_data.region_list.resolve_teleporter_connection(empty_patches.game.starting_location)
+    starting_node = state_game_data.region_list.node_by_identifier(empty_patches.game.starting_location)
     s = state.State(ResourceCollection(), (), 99, starting_node, empty_patches, None, state_game_data)
 
     resource_a = db.item[0]
@@ -75,7 +75,7 @@ def test_assign_pickup_to_starting_items(empty_patches, state_game_data, generic
                                          default_generator_params):
     # Setup
     db = state_game_data.resource_database
-    starting_node = state_game_data.region_list.resolve_teleporter_connection(empty_patches.game.starting_location)
+    starting_node = state_game_data.region_list.node_by_identifier(empty_patches.game.starting_location)
     starting = state.State(ResourceCollection(), (), 99, starting_node, empty_patches, None, state_game_data)
 
     resource_a = db.get_item("Ammo")

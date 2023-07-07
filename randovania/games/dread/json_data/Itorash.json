@@ -476,7 +476,7 @@
                     }
                 },
                 "Elevator to Hanubia": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -3850.0,
@@ -496,12 +496,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Hanubia",
-                        "area": "Transport to Itorash"
+                        "area": "Transport to Itorash",
+                        "node": "Elevator to Itorash - Transport to Hanubia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -846,7 +851,7 @@
                     }
                 },
                 "Elevator to Raven Beak Arena": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5050.0,
@@ -864,12 +869,17 @@
                         "start_point_actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "other",
+                    "default_connection": {
                         "region": "Itorash",
-                        "area": "Raven Beak Arena"
+                        "area": "Raven Beak Arena",
+                        "node": "Before Fight"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station": {
                             "type": "and",
@@ -1328,25 +1338,30 @@
                     }
                 },
                 "Escape Sequence": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": true,
                     "coordinates": {
                         "x": 5736.34,
                         "y": 2267.28,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "To the escape sequence",
                     "layers": [
                         "default"
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "other",
+                    "default_connection": {
                         "region": "Hanubia",
-                        "area": "Raven Beak X Arena"
+                        "area": "Raven Beak X Arena",
+                        "node": "Raven Beak X Checkpoint"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {}
                 }
             }

@@ -26,12 +26,12 @@ class TeleporterDetailsTab(BaseConnectionDetailsTab):
                                      region_list: RegionList,
                                      patches: GamePatches,
                                      ):
-        for source, destination_loc in patches.all_elevator_connections():
+        for source, destination_loc in patches.all_dock_connections():
             source_region = region_list.region_by_area_location(source.identifier.area_identifier)
             source_name = elevators.get_elevator_or_area_name(self.game_enum, region_list,
                                                               source.identifier.area_identifier, True)
 
             per_region[source_region.name][source_name] = elevators.get_elevator_or_area_name(
                 self.game_enum, region_list,
-                destination_loc, True
+                destination_loc.identifier.area_identifier, True
             )

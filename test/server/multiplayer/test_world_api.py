@@ -1,5 +1,5 @@
 import uuid
-from unittest.mock import MagicMock, PropertyMock, call, ANY
+from unittest.mock import MagicMock, PropertyMock, call
 
 import peewee
 import pytest
@@ -33,10 +33,28 @@ def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker
     mock_emit.assert_not_called()
 
 
+@pytest.mark.parametrize(("progression", "result"), [
+        (   # normal
+            [("Power", 1),],
+            ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fPr8')
+        ),
+        (   # negative
+            [("Missile", -5),],
+            ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35sC@#!')
+        ),
+        (   # progressive
+            [("DarkSuit", 1), ("LightSuit", 1)],
+            ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu364TnIm')
+        )
+])
 def test_emit_world_pickups_update_one_action(
         flask_app, two_player_session, generic_pickup_category,
         default_generator_params,
-        echoes_resource_database, mocker
+        echoes_resource_database, mocker,
+        progression, result
 ):
     # Setup
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
@@ -54,9 +72,13 @@ def test_emit_world_pickups_update_one_action(
 
     w1 = database.World.get_by_id(1)
 
+    progression = tuple(
+        (echoes_resource_database.get_item(item), amount)
+        for item, amount in progression
+    )
     pickup = PickupEntry("A", PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
                          generic_pickup_category, generic_pickup_category,
-                         progression=((echoes_resource_database.item[0], 1),),
+                         progression=progression,
                          generator_params=default_generator_params)
     mock_get_pickup_target.return_value = PickupTarget(pickup=pickup, player=0)
     mock_get_resource_database.return_value = echoes_resource_database
@@ -64,8 +86,8 @@ def test_emit_world_pickups_update_one_action(
     # Run
     world_api.emit_world_pickups_update(sio, w1)
 
-    # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
-    # from randovania.server.game_session import _base64_encode_pickup
+    # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
+    # from randovania.server.multiplayer.world_api import _base64_encode_pickup
     # new_data = _base64_encode_pickup(pickup, echoes_resource_database)
     # assert new_data == b""
 
@@ -78,12 +100,11 @@ def test_emit_world_pickups_update_one_action(
             "game": "prime2",
             "pickups": [{
                 'provider_name': 'World 2',
-                'pickup': ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
-                           'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fdzm')
+                'pickup': result
             }],
             "world": "1179c986-758a-4170-9b07-fe4541d78db0"
         },
-        room=f"world-1179c986-758a-4170-9b07-fe4541d78db0"
+        room="world-1179c986-758a-4170-9b07-fe4541d78db0"
     )
 
 

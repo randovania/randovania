@@ -325,6 +325,17 @@ def _migrate_v17(json_dict: dict) -> dict:
 
     return json_dict
 
+def _migrate_v18(data: dict) -> dict:
+    for game in data["game_modifications"]:
+        game_name = game["game"]
+        if game_name not in {"blank", "cave_story", "am2r"}:
+            default_node_per_area = migration_data.get_raw_data(RandovaniaGame(game_name))["default_node_per_area"]
+            # remove teleporters and add to dock_connections
+            for source, target in game["teleporters"].items():
+                target_node = default_node_per_area[target]
+                game["teleporters"][source] = f"{target}/{target_node}"
+        game["dock_connections"].update(game.pop("teleporters"))
+    return data
 
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
@@ -344,6 +355,7 @@ _MIGRATIONS = [
     _migrate_v15,
     _migrate_v16,
     _migrate_v17,
+    _migrate_v18,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

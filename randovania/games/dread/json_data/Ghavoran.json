@@ -131,7 +131,7 @@
                     }
                 },
                 "Elevator to Burenia - Transport to Ghavoran": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -9500.0,
@@ -151,12 +151,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Burenia",
-                        "area": "Transport to Ghavoran"
+                        "area": "Transport to Ghavoran",
+                        "node": "Elevator to Ghavoran - Transport to Burenia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Right Entrance": {
                             "type": "and",
@@ -9636,7 +9641,7 @@
                     }
                 },
                 "Teleporter to Cataris": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 4450.0,
@@ -9656,12 +9661,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Teleport to Ghavoran"
+                        "area": "Teleport to Ghavoran",
+                        "node": "Teleporter to Ghavoran - Teleport to Cataris"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Above Pulse Radar": {
                             "type": "and",
@@ -10172,7 +10182,7 @@
             },
             "nodes": {
                 "Teleporter to Burenia - Teleport to Ghavoran": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5750.0,
@@ -10192,12 +10202,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Burenia",
-                        "area": "Teleport to Ghavoran"
+                        "area": "Teleport to Ghavoran",
+                        "node": "Teleporter to Ghavoran - Teleport to Burenia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door from Total Recharge Station North": {
                             "type": "template",
@@ -12195,7 +12210,7 @@
             },
             "nodes": {
                 "Tram to Ferenia - Transport to Ghavoran": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 15200.0,
@@ -12215,12 +12230,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Ferenia",
-                        "area": "Transport to Ghavoran"
+                        "area": "Transport to Ghavoran",
+                        "node": "Tram to Ghavoran - Transport to Ferenia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Total Recharge Station North": {
                             "type": "and",
@@ -14232,7 +14252,7 @@
                     }
                 },
                 "Tram to Hanubia - Transport to Ghavoran": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 17400.0,
@@ -14252,12 +14272,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Hanubia",
-                        "area": "Transport to Ghavoran"
+                        "area": "Transport to Ghavoran",
+                        "node": "Tram to Ghavoran - Transport to Hanubia"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Cross Bomb Tutorial": {
                             "type": "and",
@@ -14999,7 +15024,7 @@
                     "connections": {}
                 },
                 "Tram to Elun - Transport to Ghavoran": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 7400.0,
@@ -15019,12 +15044,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Elun",
-                        "area": "Transport to Ghavoran"
+                        "area": "Transport to Ghavoran",
+                        "node": "Tram to Ghavoran - Transport to Elun"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Elun Transport Access": {
                             "type": "and",
@@ -15110,7 +15140,7 @@
                     }
                 },
                 "Elevator to Dairon - Transport to Ghavoran": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 5100.0,
@@ -15130,12 +15160,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "Transport to Ghavoran"
+                        "area": "Transport to Ghavoran",
+                        "node": "Elevator to Ghavoran - Transport to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Dairon Transport Access": {
                             "type": "and",

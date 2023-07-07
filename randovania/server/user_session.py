@@ -11,7 +11,7 @@ import peewee
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
 
 from randovania.network_common import error
-from randovania.server.database import User, UserAccessToken, MultiplayerMembership
+from randovania.server.database import User, UserAccessToken
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
@@ -25,16 +25,8 @@ def _encrypt_session_for_user(sio: ServerApp, session: dict) -> bytes:
 def _create_client_side_session_raw(sio: ServerApp, user: User) -> dict:
     logger().info(f"Client at {sio.current_client_ip()} is user {user.name} ({user.id}).")
 
-    memberships: list[MultiplayerMembership] = list(
-        MultiplayerMembership.select().where(MultiplayerMembership.user == user)
-    )
-
     return {
         "user": user.as_json,
-        "sessions": [
-            membership.session.create_list_entry(user).as_json
-            for membership in memberships
-        ],
     }
 
 
@@ -212,7 +204,14 @@ def browser_login_with_discord(sio: ServerApp):
 
 def browser_discord_login_callback(sio: ServerApp):
     try:
-        sio.discord.callback()
+        try:
+            sio.discord.callback()
+
+        except ValueError as v:
+            if v.args == ('not enough values to unpack (expected 2, got 1)',):
+                raise oauthlib.oauth2.rfc6749.errors.MismatchingStateError()
+            else:
+                raise
 
         sid = flask.session.get("sid")
         user = _create_session_with_discord_token(sio, sid)
@@ -246,6 +245,14 @@ def browser_discord_login_callback(sio: ServerApp):
             "unable_to_login.html",
             error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
         ), 403
+
+    except oauthlib.oauth2.rfc6749.errors.MismatchingStateError:
+        return flask.render_template(
+            "unable_to_login.html",
+            error_message=(
+                "You must finish the login with the same browser that you started it with."
+            ),
+        ), 401
 
     except oauthlib.oauth2.rfc6749.errors.OAuth2Error as err:
         if isinstance(err, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):

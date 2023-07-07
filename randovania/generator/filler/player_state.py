@@ -5,13 +5,13 @@ import re
 from typing import DefaultDict
 
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
@@ -170,9 +170,11 @@ class PlayerState:
                 ))
 
         teleporters = []
+        teleporter_dock_types = self.reach.game.dock_weakness_database.all_teleporter_dock_types
         for node in wl.iterate_nodes():
-            if isinstance(node, TeleporterNode) and self.reach.is_reachable_node(node):
-                other = wl.resolve_teleporter_node(node, s.patches)
+            if (isinstance(node, DockNode) and node.dock_type in teleporter_dock_types
+                 and self.reach.is_reachable_node(node)):
+                other = wl.resolve_dock_node(node, s.patches)
                 teleporters.append("* {} to {}".format(
                     elevators.get_elevator_or_area_name(self.game.game, wl,
                                                         wl.identifier_for_node(node).area_location, True),

@@ -5,7 +5,6 @@ import open_dread_rando.dread_patcher
 import pytest
 
 from randovania.games.dread.exporter.game_exporter import DreadGameExporter, DreadGameExportParams, DreadModPlatform
-from randovania.lib import json_lib
 
 
 @pytest.mark.parametrize("patch_data_name", ["starter_preset", "custom_start"])

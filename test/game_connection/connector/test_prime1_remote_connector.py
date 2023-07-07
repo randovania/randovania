@@ -9,7 +9,6 @@ from randovania.game_connection.connector.prime1_remote_connector import Prime1R
 from randovania.game_connection.executor.memory_operation import MemoryOperationException
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
 
 

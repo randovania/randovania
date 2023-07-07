@@ -14,14 +14,15 @@ from randovania.interface_common.options import Options
 
 
 class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
-    @property
-    def _game(self):
+
+    @classmethod
+    def game_enum(cls):
         return RandovaniaGame.CAVE_STORY
 
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
-        per_game = options.options_for_game(self._game)
+        per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, CSPerGameOptions)
 
         # Output
@@ -38,17 +39,11 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
             }
         )
 
-    def save_options(self):
-        with self._options as options:
-            if self._has_spoiler:
-                options.auto_save_spoiler = self.auto_save_spoiler
-
-            per_game = options.options_for_game(self._game)
-            assert isinstance(per_game, CSPerGameOptions)
-            options.set_options_for_game(self._game, dataclasses.replace(
-                per_game,
-                output_directory=self.output_file,
-            ))
+    def update_per_game_options(self, per_game: CSPerGameOptions) -> CSPerGameOptions:
+        return dataclasses.replace(
+            per_game,
+            output_directory=self.output_file,
+        )
 
     # Getters
     @property

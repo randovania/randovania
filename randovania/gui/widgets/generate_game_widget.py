@@ -20,7 +20,7 @@ from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
-from randovania.interface_common import simplified_patcher
+from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout import preset_describer
@@ -384,7 +384,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
     async def generate_layout_from_permalink(self, permalink: Permalink, retries: int | None = None):
         def work(progress_update: ProgressUpdateCallable):
-            return simplified_patcher.generate_layout(progress_update=progress_update,
+            return generator_frontend.generate_layout(progress_update=progress_update,
                                                       parameters=permalink.parameters,
                                                       options=self._options,
                                                       retries=retries)
