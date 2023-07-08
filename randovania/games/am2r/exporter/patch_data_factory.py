@@ -145,8 +145,12 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "respawn_bomb_blocks": self.patches.configuration.respawn_bomb_blocks,
             "skip_cutscenes": self.patches.configuration.skip_cutscenes,
             "energy_per_tank": self.patches.configuration.energy_per_tank,
-            "remove_grave_grotto_blocks": self.patches.configuration.remove_grave_grotto_blocks,
+            "grave_grotto_blocks": self.patches.configuration.grave_grotto_blocks,
             "fusion_mode": self.patches.configuration.fusion_mode,
+            "nest_pipes": self.patches.configuration.nest_pipes,
+            "softlock_prevention_blocks": self.patches.configuration.softlock_prevention_blocks,
+            "a3_entrance_blocks": self.patches.configuration.a3_entrance_blocks,
+            # TODO: uncomment after rebasing/merging main "screw_blocks": self.patches.configuration.screw_blocks,
         }
         for item, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
             launcher_text = ""
@@ -171,17 +175,24 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             }
         return locks
 
-    def _create_dna_hints(self):
+    def _create_hints(self):
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
-        artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+        artifacts.append(self.game.resource_database.get_item("Ice Beam"))
+        hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             self.description.all_patches,
             self.players_config,
-            #HintNamer(self.description.all_patches, self.players_config),
             AM2RHintNamer(self.description.all_patches, self.players_config),
-            True,
+            False,   # TODO: make this configurable based on option
             artifacts,
-            True
+            False   # TODO: set this to true, when patcher supports setting colors!
         )
+        # TODO: seperate ice beam hint setting from dna hint settings!
+        foo = {
+            key.long_name: value
+            for key, value in hints.items()
+        }
+        return foo
+
         print("remove me when done")
 
 
@@ -215,6 +226,6 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "rooms": self._create_room_dict(),
             "game_patches": self._create_game_patches(),
             "door_locks": self._create_door_locks(),
-            "dna_hints": self._create_dna_hints()
+            "hints": self._create_hints()
             # TODO: add cosmetic field and decide what to even put in there.
         }

@@ -8,21 +8,31 @@ from randovania.exporter.hints.relative_item_formatter import RelativeItemFormat
 from randovania.games.game import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.exporter.hints.pickup_hint import PickupHint
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region_list import RegionList
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.game_description.game_patches import GamePatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
-# TODO: revist this completely, this is wrong
 class AM2RColor(Enum):
-    WHITE = "{c0}"
-    YELLOW = "{c1}"
-    RED = "{c2}"
-    PINK = "{c3}"
-    GREEN = "{c4}"
-    BLUE = "{c5}"
-    LIGHT_BLUE = "{c6}"
-    DIM_BLUE = "{c7}"
+    WHITE = "{white}"
+    YELLOW = "{yellow}"
+    RED = "{red}"
+    PINK = "{pink}"
+    GREEN = "{green}"
+    BLUE = "{blue}"
+    LIGHT_BLUE = "{light_blue}"
+    DIM_BLUE = "{dim_blue}"
+
+
+def _area_name(region_list: RegionList, pickup_node: PickupNode, hide_region: bool) -> str:
+    area = region_list.nodes_to_area(pickup_node)
+    if hide_region:
+        return area.name
+    else:
+        return region_list.area_name(area)
+
 
 def colorize_text(color: AM2RColor, text: str, with_color: bool):
     if with_color:
@@ -56,7 +66,7 @@ class AM2RHintNamer(HintNamer):
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
         if resource.short_name.startswith("Metroid DNA "):
-            return f'The hunter already started with {resource.long_name}'
+            return f'The Hunter already started with {resource.long_name}'
 
         return "{} has no need to be located.".format(
             colorize_text(self.color_item, resource.long_name, with_color)
@@ -73,10 +83,6 @@ class AM2RHintNamer(HintNamer):
 
         region_list = default_database.game_description_for(location.game).region_list
         node = region_list.node_from_pickup_index(location.location)
-        # TODO!
-        if (boss_hint_name := node.extra.get("boss_hint_name")) is not None:
-            fmt = "{} is guarded by {}{}."
-            location_name = colorize_text(AM2RColor.RED, boss_hint_name, with_color)
 
         return fmt.format(
             colorize_text(self.color_item, resource.long_name, with_color),
@@ -98,6 +104,11 @@ class AM2RHintNamer(HintNamer):
     def format_region(self, location: PickupLocation, with_color: bool) -> str:
         region_list = default_database.game_description_for(location.game).region_list
         result = region_list.region_name_from_node(region_list.node_from_pickup_index(location.location), True)
+        return colorize_text(self.color_location, result, with_color)
+
+    def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
+        region_list = default_database.game_description_for(location.game).region_list
+        result = _area_name(region_list, region_list.node_from_pickup_index(location.location), not with_region)
         return colorize_text(self.color_location, result, with_color)
 
     def format_player(self, name: str, with_color: bool) -> str:
