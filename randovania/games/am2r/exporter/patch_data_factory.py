@@ -9,6 +9,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
+from randovania.games.am2r.layout.hint_configuration import ArtifactHintMode, IceBeamHintMode
 
 
 class AM2RItemInfo:
@@ -177,23 +178,40 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
 
     def _create_hints(self):
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
-        artifacts.append(self.game.resource_database.get_item("Ice Beam"))
-        hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
-            self.description.all_patches,
-            self.players_config,
-            AM2RHintNamer(self.description.all_patches, self.players_config),
-            False,   # TODO: make this configurable based on option
-            artifacts,
-            False   # TODO: set this to true, when patcher supports setting colors!
-        )
-        # TODO: seperate ice beam hint setting from dna hint settings!
-        foo = {
+        ice = [(self.game.resource_database.get_item("Ice Beam"))]
+        artifact_hints = {}
+        hint_config = self.patches.configuration.hints
+        if hint_config.artifacts != ArtifactHintMode.DISABLED:
+            artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                AM2RHintNamer(self.description.all_patches, self.players_config),
+                hint_config.artifacts == ArtifactHintMode.HIDE_AREA,
+                artifacts,
+                False   # TODO: set this to true, when patcher supports setting colors!
+            )
+        else:
+            artifact_hints = {k: f"{k.long_name} is hidden somewhere on SR-388." for k in artifacts}
+
+        ice_hint = {}
+        if hint_config.ice_beam != IceBeamHintMode.DISABLED:
+            ice_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                AM2RHintNamer(self.description.all_patches, self.players_config),
+                hint_config.ice_beam == IceBeamHintMode.HIDE_AREA,
+                ice,
+                False   # TODO: set this to true, when patcher supports setting colors!
+            )
+        else:
+            ice_hint = {k: "Ice Beam is located somewhere on SR-388." for k in ice}
+
+        hints = artifact_hints | ice_hint
+
+        return {
             key.long_name: value
             for key, value in hints.items()
         }
-        return foo
-
-        print("remove me when done")
 
 
     def game_enum(self) -> RandovaniaGame:
