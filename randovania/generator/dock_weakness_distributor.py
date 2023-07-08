@@ -67,7 +67,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
             docks_to_unlock.extend([
                 (node, weakness_database.dock_rando_params[node.dock_type].unlocked)
                 for node, target in all_docks.items()
-                if node not in unlocked and target in unlocked
+                if node not in unlocked and target in unlocked and node.dock_type is target.dock_type
             ])
         patches = patches.assign_weaknesses_to_shuffle([(node, True) for node, _ in docks_to_unlock])
         return patches.assign_dock_weakness(docks_to_unlock)

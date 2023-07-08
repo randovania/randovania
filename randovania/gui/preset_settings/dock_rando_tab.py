@@ -32,11 +32,6 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         # Types
         self.type_checks = {}
         for dock_type, type_params in game_description.dock_weakness_database.dock_rando_params.items():
-            if (
-                    type_params.locked is None or type_params.unlocked is None
-                    or not type_params.change_from or not type_params.change_to
-            ):
-                continue
             self._add_dock_type(dock_type, type_params)
 
     @classmethod
