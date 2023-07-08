@@ -191,6 +191,9 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
     def is_enabled(self) -> bool:
         return self.mode != DockRandoMode.VANILLA
 
+    def can_shuffle(self, dock_type: DockType) -> bool:
+        return dock_type in self.weakness_database.dock_rando_params and self.types_state[dock_type].can_shuffle
+
     def settings_incompatible_with_multiworld(self) -> list[str]:
         danger = []
         if self.mode == DockRandoMode.DOCKS:

@@ -204,12 +204,9 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
 
 
 def write_dock_rando_params(dock_rando: DockRandoParams) -> dict:
-    def name_or_none(weak: DockWeakness):
-        return weak.name if weak is not None else weak
-
     return {
-        "unlocked": name_or_none(dock_rando.unlocked),
-        "locked": name_or_none(dock_rando.locked),
+        "unlocked": dock_rando.unlocked.name,
+        "locked": dock_rando.locked.name,
         "change_from": sorted(weakness.name for weakness in dock_rando.change_from),
         "change_to": sorted(weakness.name for weakness in dock_rando.change_to),
     }
@@ -225,7 +222,10 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
                     name: write_dock_weakness(weakness)
                     for name, weakness in database.weaknesses[dock_type].items()
                 },
-                "dock_rando": write_dock_rando_params(database.dock_rando_params[dock_type]),
+                "dock_rando": (
+                    write_dock_rando_params(database.dock_rando_params[dock_type])
+                    if dock_type in database.dock_rando_params else None
+                ),
             }
             for dock_type in database.dock_types
         },
