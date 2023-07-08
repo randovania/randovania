@@ -3,14 +3,20 @@ from PySide6 import QtWidgets, QtCore
 from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 
 
-class ChangeLogWidget(QtWidgets.QTabWidget):
+class ChangeLogWidget(QtWidgets.QWidget):
     def __init__(self, all_change_logs: dict[str, str]):
         super().__init__()
-        # VerticalTabBar doesn't work as expected in Qt 6, so it's disabled for now
-        # self.setTabBar(VerticalTabBar())
-        self.setTabPosition(QtWidgets.QTabWidget.West)
-        self.tabBar().setUsesScrollButtons(True)
-        self.tabBar().setElideMode(QtCore.Qt.ElideNone)
+
+        layout = QtWidgets.QVBoxLayout()
+        self.setLayout(layout)
+
+        self.select_version = QtWidgets.QComboBox(self)
+        self.select_version.currentIndexChanged.connect(lambda: self.select_version_index_changed())
+
+        layout.addWidget(self.select_version)
+
+        self.changelog = QtWidgets.QStackedWidget(self)
+        layout.addWidget(self.changelog)
 
         for version_name, version_text in all_change_logs.items():
             scroll_area = QtWidgets.QScrollArea()
@@ -25,4 +31,15 @@ class ChangeLogWidget(QtWidgets.QTabWidget):
             label.setWordWrap(True)
 
             scroll_area.setWidget(label)
-            self.addTab(scroll_area, version_name)
+            self.changelog.addWidget(scroll_area)
+
+            self.select_version.addItem(version_name)
+        
+        self.changelog.setCurrentIndex(0)
+    
+    def select_version_index_changed(self):
+
+        selected_widget: QtWidgets.QScrollArea = self.findChild(QtWidgets.QScrollArea, 
+                                                                f"scroll_area {self.select_version.currentText()}")
+
+        self.changelog.setCurrentWidget(selected_widget)
