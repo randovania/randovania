@@ -41,22 +41,26 @@ def test_am2r_pool_creator(am2r_game_description, preset_manager):
         wl.identifier_for_node(wl.node_from_pickup_index(index))
         for index in results.assignment.keys()
     ]
+
+    # Uncomment to easily see locations
+    # assert locations == []
+
     assert locations == [
-        c("The Nest", "Hideout Alpha Nest", "Pickup (Alpha)"),
-        c("Main Caves", "Research Site", "Pickup (Left Alpha)"),
-        c("Golden Temple", "Exterior Alpha Nest", "Pickup (Alpha)"),
-        c("Industrial Complex", "Exterior Gamma Nest", "Pickup (Gamma)"),
-        c("Golden Temple", "Breeding Grounds South East", "Pickup (Alpha)"),
-        c("Distribution Center", "Alpha Squad Nest", "Pickup (Left Middle Alpha)"),
-        c("Industrial Complex", "Breeding Grounds Gamma Nest East", "Pickup (Gamma)"),
-        c("The Nest", "Hideout Omega Nest", "Pickup (Omega)"),
-        c("Industrial Complex", "Lower Factory Gamma Nest", "Pickup (Gamma)"),
-        c("The Nest", "Depths Omega Nest East", "Pickup (Omega)"),
-        c("The Tower", "Exterior Zeta Nest West", "Pickup (Zeta)"),
+        c("Hydro Station", "Hydro Station Entrance", "Pickup (Alpha)"),
+        c("The Tower", "Exterior Zeta Nest East", "Pickup (Zeta)"),
         c("Main Caves", "Mines Alpha Nest", "Pickup (Alpha)"),
-        c("The Tower", "Gamma Nest South East", "Pickup (Gamma)"),
+        c("Distribution Center", "Alpha Squad Nest", "Pickup (Left Top Alpha)"),
         c("The Nest", "Depths Omega Nest South West", "Pickup (Omega)"),
-        c("Hydro Station", "Exterior Alpha Nest", "Pickup (Alpha)"),
+        c("Industrial Complex", "Breeding Grounds Alpha Nest", "Pickup (Alpha)"),
+        c("Distribution Center", "Alpha Squad Nest", "Pickup (Left Bottom Alpha)"),
+        c("Industrial Complex", "Upper Factory Alpha Nest", "Pickup (Alpha)"),
+        c("Distribution Center", "Alpha Squad Nest", "Pickup (Left Middle Alpha)"),
+        c("Main Caves", "Surface Alpha Nest", "Pickup (Alpha)"),
+        c("Industrial Complex", "Breeding Grounds Gamma Nest Top", "Pickup (Gamma)"),
+        c("Industrial Complex", "Breeding Grounds Gamma Nest East", "Pickup (Gamma)"),
+        c("Golden Temple", "Breeding Grounds North East", "Pickup (Alpha)"),
+        c("The Nest", "Hideout Omega Nest", "Pickup (Omega)"),
+        c("Industrial Complex", "Breeding Grounds Gamma Nest Middle", "Pickup (Gamma)"),
     ]
 
     assert len(results.to_place) == wl.num_pickup_nodes - 31 - len(results.assignment)
