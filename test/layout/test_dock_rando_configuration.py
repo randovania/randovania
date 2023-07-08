@@ -101,18 +101,6 @@ def test_prime_thing(default_prime_configuration):
                     "Super Missile Blast Shield",
                     "Wave Door"
                 ]
-            },
-            "morph_ball": {
-                "can_change_from": [],
-                "can_change_to": []
-            },
-            "teleporter": {
-                "can_change_from": [],
-                "can_change_to": []
-            },
-            "other": {
-                "can_change_from": [],
-                "can_change_to": []
             }
         }
     }

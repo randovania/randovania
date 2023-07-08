@@ -51,7 +51,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
         for node in all_docks.keys()
         if (
                 patches.has_default_weakness(node)  # don't randomize anything that was already modified
-                and dock_rando.types_state[node.dock_type].can_shuffle
+                and dock_rando.can_shuffle(node.dock_type)
                 and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
                 and not node.exclude_from_dock_rando
         )
@@ -92,7 +92,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
 
         all_mapping: dict[DockWeakness, DockWeakness] = {}
         for dock_type, type_state in dock_rando.types_state.items():
-            if not type_state.can_shuffle:
+            if not dock_rando.can_shuffle(dock_type):
                 continue
 
             source_weaknesses = sorted(type_state.can_change_from)
