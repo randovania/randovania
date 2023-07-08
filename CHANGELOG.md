@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Tracker layout "Debug Info", which also shows details useful for investigating errors. 
 
+### Metroid Dread
+
+- **Major** - Added: Multiworld support for Dread. 
+
 ## [6.0.1] - 2023-07-04
 
 - Added: Option for disabling crash reporting and monitoring.
