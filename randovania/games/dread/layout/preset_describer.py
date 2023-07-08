@@ -77,9 +77,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                     "Progressive Spin": has_shuffled_item(standard_pickups, "Progressive Spin")
                 }
             ],
-            "Gameplay": [
-                {f"Elevators/Shuttles: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
-            ],
+            "Gameplay": [],
             "Goal": describe_artifacts(configuration.artifacts),
             "Game Changes": [
                 message_for_required_mains(

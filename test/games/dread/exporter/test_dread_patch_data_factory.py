@@ -50,7 +50,7 @@ def test_create_patch_data(test_files_dir, rdvgame_filename,
     expected_data = json_lib.read_path(expected_results_path)
 
     # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_path, data)
+    # json_lib.write_path(expected_results_path, data); assert False
 
     assert data == expected_data
 
@@ -298,5 +298,8 @@ def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardo
 
     # Expected Result
     expected_data = test_files_dir.read_json("patcher_data", "dread", "custom_start.json")
+
+    # Update the file
+    # json_lib.write_path(test_files_dir.joinpath("patcher_data", "dread", "custom_start.json"), data); assert False
 
     assert data == expected_data

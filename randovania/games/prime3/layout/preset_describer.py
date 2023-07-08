@@ -24,9 +24,7 @@ class CorruptionPresetDescriber(GamePresetDescriber):
             "Difficulty": [
                 {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
             ],
-            "Gameplay": [
-                {f"Teleporters: {configuration.elevators.description()}": not configuration.elevators.is_vanilla},
-            ],
+            "Gameplay": [],
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
@@ -35,7 +33,6 @@ class CorruptionPresetDescriber(GamePresetDescriber):
                         "Ship Missiles needs Main": "Ship Missile Expansion",
                     }
                 ),
-                {"Final bosses removed": configuration.elevators.skip_final_bosses},
             ]
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)

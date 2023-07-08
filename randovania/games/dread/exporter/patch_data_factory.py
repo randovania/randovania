@@ -447,8 +447,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         energy_per_tank = self.configuration.energy_per_tank if self.configuration.immediate_energy_parts else 100.0
 
-        teleporter_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
-
         return {
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
@@ -459,13 +457,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 for pickup_item in pickup_list
                 if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
-            "elevators": [
-                {
-                    "teleporter": self._teleporter_ref_for(source),
-                    "destination": self._start_point_ref_for(target),
-                }
-                for source, target in self.patches.all_dock_connections() if source.dock_type in teleporter_dock_types
-            ],
+            "elevators": [],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler(),
