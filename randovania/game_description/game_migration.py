@@ -223,6 +223,7 @@ def _migrate_v18(data: dict) -> dict:
     data["resource_database"].pop("multiworld_magic_item_index")
     return data
 
+
 def _migrate_v19(data: dict) -> dict:
     game = data["game"]
     if game in {"blank", "cave_story", "am2r"}:
@@ -295,6 +296,15 @@ def _migrate_v19(data: dict) -> dict:
 
     return data
 
+
+def _migrate_v20(data: dict) -> dict:
+    for type_data in data["dock_weakness_database"]["types"].values():
+        if type_data["dock_rando"] is not None and type_data["dock_rando"]["locked"] is None:
+            type_data["dock_rando"] = None
+
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -315,6 +325,7 @@ _MIGRATIONS = [
     _migrate_v17,
     _migrate_v18,
     _migrate_v19,
+    _migrate_v20,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
