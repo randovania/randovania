@@ -10,8 +10,7 @@ from frozendict import frozendict
 
 from randovania.game_description import data_writer, pretty_print, default_database
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.dock import DockWeaknessDatabase, DockType, DockWeakness, DockRandoConfig, \
-    DockRandoParams
+from randovania.game_description.db.dock import DockWeaknessDatabase, DockType, DockWeakness, DockRandoConfig
 from randovania.game_description.db.node import GenericNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region import Region
@@ -142,15 +141,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
                 "Not Determined": impossible_weak,
             },
         },
-        dock_rando_params={
-            dock_type: DockRandoParams(
-                unlocked=None,
-                locked=None,
-                change_from=set(),
-                change_to=set(),
-            )
-            for dock_type in dock_types
-        },
+        dock_rando_params={},
         default_weakness=(dock_types[1], impossible_weak),
         dock_rando_config=DockRandoConfig(
             force_change_two_way=False,
@@ -321,7 +312,7 @@ def new_game_command_logic(args):
         {}
     )
 
-    subprocess.run(
+    raise SystemExit(subprocess.run(
         [
             sys.executable,
             "-m",
@@ -331,9 +322,7 @@ def new_game_command_logic(args):
             "--game",
             enum_value,
         ],
-        check=True,
-    )
-    print(f"{long_name} created successfully. New files can be found at {_GAMES_PATH.joinpath(enum_value)}")
+    ).returncode)
 
 
 def create_new_database_logic(args):
@@ -345,6 +334,7 @@ def create_new_database_logic(args):
     )
     pickup_db = create_pickup_database(new_enum)
     copy_presets(load_presets(RandovaniaGame.BLANK), game_db, pickup_db)
+    print(f"{new_enum.long_name} created successfully. New files can be found at {new_enum.data_path}")
 
 
 def add_new_game_command(sub_parsers):
