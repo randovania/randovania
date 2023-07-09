@@ -139,7 +139,15 @@ async def look_for_permalinks(message: discord.Message):
         content = None
         if multiple_permalinks:
             content = "Multiple permalinks found, using only the first."
-        await message.reply(content=content, embed=embed, view=view, mention_author=False)
+
+        try:
+            await message.reply(content=content, embed=embed, view=view, mention_author=False)
+        except discord.errors.HTTPException:
+            logging.exception("Unable to describe a preset. Embed: %s", str(embed.to_dict()))
+
+            embed.clear_fields()
+            content += "\nUnable to include a description."
+            await message.reply(content=content, embed=embed, mention_author=False)
 
 
 async def reply_for_preset(message: discord.Message, versioned_preset: VersionedPreset):
@@ -154,7 +162,17 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
     embed = discord.Embed(title=preset.name,
                           description=preset.description)
     _add_preset_description_to_embed(embed, preset)
-    await message.reply(embed=embed, mention_author=False)
+
+    try:
+        await message.reply(embed=embed, mention_author=False)
+    except discord.errors.HTTPException:
+        embed.description = "[Preset description too long to include]"
+        try:
+            await message.reply(embed=embed, mention_author=False)
+        except discord.errors.HTTPException:
+            logging.exception("Unable to describe a preset. Embed: %s", str(embed.to_dict()))
+            embed.clear_fields()
+            await message.reply(content="Unable to include a description", embed=embed, mention_author=False)
 
 
 async def reply_for_layout_description(message: discord.Message, description: LayoutDescription):
