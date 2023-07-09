@@ -1,3 +1,4 @@
+from random import Random
 from typing import NamedTuple
 
 from randovania.game_description import default_database
@@ -207,7 +208,7 @@ class Bootstrap:
 
         return game, starting_state
 
-    def assign_pool_results(self, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
+    def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         target_assignment = [
             (index, PickupTarget(pickup, patches.player_index))
             for index, pickup in pool_results.assignment.items()

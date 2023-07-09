@@ -26,7 +26,7 @@ def _generator() -> game.GameGenerator:
     from randovania.generator.hint_distributor import AllJokesHintDistributor
 
     return game.GameGenerator(
-        item_pool_creator=generator.pool_creator,
+        pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.MSRBootstrap(),
         base_patches_factory=generator.MSRBasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),

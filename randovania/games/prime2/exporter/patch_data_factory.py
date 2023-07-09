@@ -19,11 +19,14 @@ from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.pickup import pickup_category
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupModel
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
@@ -825,7 +828,7 @@ def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: 
                         game: GameDescription,
                         patches: GamePatches, players_config: PlayersConfiguration,
                         rng: Random):
-    useless_target = PickupTarget(pickup_creator.create_echoes_useless_pickup(game.resource_database),
+    useless_target = PickupTarget(create_echoes_useless_pickup(game.resource_database),
                                   players_config.player_index)
 
     if cosmetic_patches.disable_hud_popup:
@@ -938,3 +941,26 @@ def adjust_model_name(patcher_data: dict, randomizer_data: dict):
         pickup["model_index"] = mapping.index[model_name]
         pickup["sound_index"] = mapping.sound_index.get(model_name, 0)
         pickup["jingle_index"] = mapping.jingle_index.get(model_name, 0)
+
+
+def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
+    """
+    Creates an Energy Transfer Module pickup.
+    :param resource_database:
+    :return:
+    """
+    return PickupEntry(
+        name="Energy Transfer Module",
+        progression=(
+            (resource_database.get_item(echoes_items.USELESS_PICKUP_ITEM), 1),
+        ),
+        model=PickupModel(
+            game=resource_database.game_enum,
+            name=echoes_items.USELESS_PICKUP_MODEL,
+        ),
+        pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
+        broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
+        generator_params=PickupGeneratorParams(
+            preferred_location_category=LocationCategory.MAJOR,  # TODO
+        ),
+    )

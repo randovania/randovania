@@ -33,10 +33,10 @@ def _generator() -> game.GameGenerator:
     from randovania.games.prime2.generator.base_patches_factory import EchoesBasePatchesFactory
     from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
     from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
-    from randovania.games.prime2.generator.item_pool.pool_creator import echoes_specific_pool
+    from randovania.games.prime2.generator.pickup_pool.pool_creator import echoes_specific_pool
 
     return game.GameGenerator(
-        item_pool_creator=echoes_specific_pool,
+        pickup_pool_creator=echoes_specific_pool,
         bootstrap=EchoesBootstrap(),
         base_patches_factory=EchoesBasePatchesFactory(),
         hint_distributor=EchoesHintDistributor(),

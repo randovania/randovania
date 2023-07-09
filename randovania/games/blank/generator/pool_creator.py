@@ -1,7 +1,5 @@
-from random import Random
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
@@ -28,8 +26,7 @@ def create_victory_key(resource_database: ResourceDatabase):
     )
 
 
-def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription,
-                 base_patches: GamePatches, rng: Random) -> None:
+def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
     assert isinstance(configuration, BlankConfiguration)
 
     results.to_place.append(

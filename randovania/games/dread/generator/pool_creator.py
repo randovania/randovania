@@ -1,54 +1,49 @@
-from random import Random
-from typing import TYPE_CHECKING
-
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration
+from randovania.game_description.pickup import pickup_category
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig, DreadConfiguration
 from randovania.generator.pickup_pool import PoolResults
-from randovania.generator.pickup_pool.pickup_creator import create_dread_artifact
 from randovania.layout.base.base_configuration import BaseConfiguration
 
-if TYPE_CHECKING:
-    from randovania.game_description.resources.pickup_entry import PickupEntry
-    from randovania.game_description.resources.pickup_index import PickupIndex
+DREAD_ARTIFACT_CATEGORY = pickup_category.PickupCategory(
+    name="dna",
+    long_name="Metroid DNA",
+    hint_details=("some ", "Metroid DNA"),
+    hinted_as_major=False,
+    is_key=True
+)
 
 
-def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription,
-                 base_patches: GamePatches, rng: Random) -> None:
+def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
     assert isinstance(configuration, DreadConfiguration)
 
-    results.extend_with(artifact_pool(game, configuration, rng))
+    results.extend_with(artifact_pool(game, configuration.artifacts))
 
 
-def artifact_pool(game: GameDescription, configuration: DreadConfiguration, rng: Random) -> PoolResults:
-    config = configuration.artifacts
-
-    new_assignment: dict[PickupIndex, PickupEntry] = {}
-
-    keys: list[PickupEntry] = [create_dread_artifact(i, game.resource_database) for i in range(12)]
-
+def artifact_pool(game: GameDescription, config: DreadArtifactConfig) -> PoolResults:
+    keys = [create_dread_artifact(i, game.resource_database) for i in range(12)]
     keys_to_shuffle = keys[:config.required_artifacts]
     starting_keys = keys[config.required_artifacts:]
 
-    locations: list[PickupNode] = []
-    for node in game.region_list.all_nodes:
-        if isinstance(node, PickupNode) and "boss_hint_name" in node.extra:
-            if node.extra["pickup_type"] == "emmi":
-                if config.prefer_emmi:
-                    locations.append(node)
-            else:
-                if config.prefer_major_bosses:
-                    locations.append(node)
+    return PoolResults(keys_to_shuffle, {}, starting_keys)
 
-    item_pool = keys_to_shuffle
 
-    if rng is not None:
-        rng.shuffle(locations)
-        new_assignment = {
-            location.pickup_index: key
-            for location, key in zip(locations, keys_to_shuffle)
-        }
-        item_pool = [key for key in keys_to_shuffle if key not in new_assignment.values()]
-
-    return PoolResults(item_pool, new_assignment, starting_keys)
+def create_dread_artifact(artifact_number: int,
+                          resource_database: ResourceDatabase,
+                          ) -> PickupEntry:
+    return PickupEntry(
+        name=f"Metroid DNA {artifact_number + 1}",
+        progression=((resource_database.get_item(f"Artifact{artifact_number + 1}"), 1),),
+        model=PickupModel(
+            game=resource_database.game_enum,
+            name=f"DNA_{artifact_number + 1}"
+        ),
+        pickup_category=DREAD_ARTIFACT_CATEGORY,
+        broad_category=pickup_category.GENERIC_KEY_CATEGORY,
+        generator_params=PickupGeneratorParams(
+            preferred_location_category=LocationCategory.MAJOR,
+            probability_offset=0.25,
+        ),
+    )

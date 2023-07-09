@@ -25,10 +25,6 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     EIGHT = 8
     NINE = 9
 
-    @classmethod
-    def default(cls) -> "LayoutSkyTempleKeyMode":
-        return cls.NINE
-
     @property
     def num_keys(self):
         if self == self.ALL_BOSSES:

@@ -62,11 +62,8 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
         rng_required=rng_required
     )
 
-    pool_results = pool_creator.calculate_pool_results(
-        configuration, game, base_patches,
-        rng, rng_required=rng_required
-    )
-    patches = game_generator.bootstrap.assign_pool_results(base_patches, pool_results)
+    pool_results = pool_creator.calculate_pool_results(configuration, game)
+    patches = game_generator.bootstrap.assign_pool_results(rng, base_patches, pool_results)
 
     return PlayerPool(
         game=game,

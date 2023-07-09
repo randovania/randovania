@@ -33,7 +33,7 @@ def _generator():
     from randovania.generator.base_patches_factory import BasePatchesFactory
 
     return game.GameGenerator(
-        item_pool_creator=pool_creator,
+        pickup_pool_creator=pool_creator,
         bootstrap=CSBootstrap(),
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=CSHintDistributor(),

@@ -12,12 +12,10 @@ from randovania.bitpacking.bitpacking import BitPackEnum
 if typing.TYPE_CHECKING:
     from collections.abc import Callable, Iterable
     from pathlib import Path
-    from random import Random
 
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import BasePatchDataFactory
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.game_patches import GamePatches
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
     from randovania.generator.pickup_pool import PoolResults
@@ -79,8 +77,8 @@ class GameGui:
 
 @dataclass(frozen=True)
 class GameGenerator:
-    item_pool_creator: Callable[[PoolResults, BaseConfiguration, GameDescription, GamePatches, Random], None]
-    """Extends the base item pools with any specific item pools such as Artifacts."""
+    pickup_pool_creator: Callable[[PoolResults, BaseConfiguration, GameDescription], None]
+    """Extends the base pickup pools with any specific item pools such as Artifacts."""
 
     bootstrap: Bootstrap
     """Modifies the resource database and starting resources before generation."""
