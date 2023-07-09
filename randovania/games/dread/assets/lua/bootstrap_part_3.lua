@@ -10,6 +10,11 @@ end
 function RL.UpdateRDVClient(new_scenario)
     RL.GetGameStateAndSend()
     if Game.GetCurrentGameModeID() == 'INGAME' then
+        local playerSection =  Game.GetPlayerBlackboardSectionName()
+        local currentSaveRandoIdentifier = Blackboard.GetProp(playerSection, "THIS_RANDO_IDENTIFIER")
+        if currentSaveRandoIdentifier ~= Init.sThisRandoIdentifier then
+            return
+        end
         if new_scenario == true then
             RL.PendingPickup = nil
         end

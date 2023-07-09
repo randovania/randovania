@@ -187,20 +187,32 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         # target.
 
         alt_model = _ALTERNATIVE_MODELS.get(detail.model.name, [detail.model.name])
+        model_names = alt_model
 
-        if detail.model.game != RandovaniaGame.METROID_DREAD or alt_model[0] == "itemsphere":
+        if detail.other_player:
+            if detail.model.game != RandovaniaGame.METROID_DREAD:
+                base_icon = "unknown"
+                model_names = ["itemsphere"]
+            else:
+                base_icon = detail.model.name
+
             map_icon = {
                 # TODO: more specific icons for pickups in other games
+                "custom_icon": {
+                    "label": detail.name.upper(),
+                    "base_icon": base_icon
+                }
+            }
+        elif alt_model[0] == "itemsphere":
+            map_icon = {
                 "custom_icon": {
                     "label": detail.original_pickup.name.upper(),
                 }
             }
-            model_names = ["itemsphere"]
         else:
             map_icon = {
                 "icon_id": detail.model.name
             }
-            model_names = alt_model
 
         resources = get_resources_for_details(detail)
 
