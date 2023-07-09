@@ -1,4 +1,5 @@
 import dataclasses
+import re
 import typing
 
 from PySide6 import QtCore, QtWidgets, QtGui
@@ -291,12 +292,15 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
             if not any(preset.configuration.should_hide_generation_log() for preset in description.all_presets):
                 action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
+                player_re = re.compile(r"[pP]layer (\d+)")
+
+                def get_name(m: re.Match):
+                    return players[int(m.group(1)) - 1]
+
                 for item_order in description.item_order:
                     # update player names in the generation order
                     if numbered_players != players:
-                        for player, number in zip(players, numbered_players):
-                            item_order = item_order.replace(number, player)
-                            item_order = item_order.replace(number.lower(), player)
+                        item_order = player_re.sub(get_name, item_order)
                     action_list_widget.addItem(item_order)
 
                 self.layout_info_tab.addTab(action_list_widget, "Spoiler: Generation Order")
