@@ -1,6 +1,7 @@
 from random import Random
 from typing import NamedTuple
 
+from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.location_category import LocationCategory
@@ -11,6 +12,7 @@ from randovania.generator.pickup_pool.ammo_pickup import add_ammo_pickups
 from randovania.generator.pickup_pool.standard_pickup import add_standard_pickups
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.exceptions import InvalidConfiguration
 
 
 def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
@@ -49,6 +51,25 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
         layout_configuration.game.generator.item_pool_creator(
             base_results, layout_configuration, game, base_patches, rng,
         )
+
+        pickup_database = default_database.pickup_database_for_game(game.resource_database.game_enum)
+        for category, options in pickup_database.default_pickups.items():
+            options_names = {opt.name for opt in options}
+            all_pickups = [pickup for pickup in base_results.starting + base_results.to_place
+                           if pickup.name in options_names]
+
+            default_for_cat = layout_configuration.standard_pickup_configuration.default_pickups[category]
+            if default_for_cat is None:
+                if not all_pickups:
+                    raise InvalidConfiguration(f"Preset has no valid starting {category.name}")
+
+                if rng is None:
+                    raise MissingRng()
+                new_starting = rng.choice(all_pickups)
+                if new_starting not in base_results.starting:
+                    base_results.to_place.remove(new_starting)
+                    base_results.starting.append(new_starting)
+
     except MissingRng:
         if rng_required:
             raise

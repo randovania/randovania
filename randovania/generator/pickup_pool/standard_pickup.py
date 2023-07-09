@@ -20,9 +20,9 @@ def _find_ammo_for(ammo_names: tuple[str, ...],
 
 
 def add_standard_pickups(resource_database: ResourceDatabase,
-                    standard_pickup_configuration: StandardPickupConfiguration,
-                    ammo_pickup_configuration: AmmoPickupConfiguration,
-                    ) -> PoolResults:
+                         standard_pickup_configuration: StandardPickupConfiguration,
+                         ammo_pickup_configuration: AmmoPickupConfiguration,
+                         ) -> PoolResults:
     """
 
     :param resource_database:
