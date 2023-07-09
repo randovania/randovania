@@ -35,7 +35,7 @@ class PrimeBootstrap(MetroidBootstrap):
         for name, index in logical_patches.items():
             if getattr(configuration, name):
                 enabled_resources.add(index)
-        
+
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("dock_rando")
 

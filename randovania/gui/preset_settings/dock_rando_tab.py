@@ -1,11 +1,11 @@
 import dataclasses
 from collections import defaultdict
-from typing import Callable
+from collections.abc import Callable
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.db.dock import DockRandoParams, DockType, DockWeakness
+from randovania.game_description.game_description import GameDescription
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.foldable import Foldable

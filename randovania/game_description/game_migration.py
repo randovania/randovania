@@ -1,5 +1,6 @@
 from randovania.lib import migration_lib
 
+
 def _migrate_v6(data: dict) -> dict:
     lore_types = {
         "luminoth-lore": "requires-item",
@@ -228,14 +229,14 @@ def _migrate_v19(data: dict) -> dict:
     game = data["game"]
     if game in {"blank", "cave_story", "am2r"}:
         return data
-    
+
     # changes TeleporterNode to DockNode
     def change_node(node_to_change, regions_data: dict):
         node_to_change["node_type"] = "dock"
         node_to_change["default_connection"] = node_to_change.pop("destination")
 
         # find the default node
-        target_region_data = next(region for region in regions_data if region["name"] 
+        target_region_data = next(region for region in regions_data if region["name"]
                                   == node_to_change["default_connection"]["region"])
         area_data = target_region_data["areas"][node_to_change["default_connection"]["area"]]
         node_to_change["default_connection"]["node"] = area_data["default_node"]

@@ -6,12 +6,6 @@ import pytest
 
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.hint import (
-    Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair,
-    RelativeDataItem, RelativeDataArea, HintRelativeAreaName, HintDarkTemple,
-)
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.hint_node import HintNode
@@ -19,6 +13,19 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.hint import (
+    Hint,
+    HintDarkTemple,
+    HintItemPrecision,
+    HintLocationPrecision,
+    HintRelativeAreaName,
+    HintType,
+    PrecisionPair,
+    RelativeDataArea,
+    RelativeDataItem,
+)
+from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.patcher import echoes_items

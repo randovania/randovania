@@ -7,8 +7,12 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import multiplayer_session
-from randovania.network_common.multiplayer_session import GameDetails, MultiplayerWorld, MultiplayerSessionActions, \
-    MultiplayerSessionAction
+from randovania.network_common.multiplayer_session import (
+    GameDetails,
+    MultiplayerSessionAction,
+    MultiplayerSessionActions,
+    MultiplayerWorld,
+)
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 
@@ -31,7 +35,7 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
     worlds = []
     actions = []
     if has_description:
-        dt = datetime.datetime(2023, 6, 10, 23, 27, 25, 357120, tzinfo=datetime.timezone.utc)
+        dt = datetime.datetime(2023, 6, 10, 23, 27, 25, 357120, tzinfo=datetime.UTC)
         w1 = database.World.create_for(session=s, name="Prime 1", order=0,
                                        preset=VersionedPreset.with_preset(description.get_preset(0)))
         w2 = database.World.create_for(session=s, name="Prime 2", order=1,
@@ -97,4 +101,4 @@ def test_multiplayer_session_defaults_to_now(clean_database):
     database.MultiplayerSession.create(name="Debug", num_teams=1, creator=someone)
 
     session: database.MultiplayerSession = database.MultiplayerSession.get_by_id(1)
-    assert (datetime.datetime.now(datetime.timezone.utc) - session.creation_datetime) < datetime.timedelta(seconds=5)
+    assert (datetime.datetime.now(datetime.UTC) - session.creation_datetime) < datetime.timedelta(seconds=5)

@@ -1,8 +1,8 @@
 import copy
 import itertools
 from collections import defaultdict
-from heapq import heappush, heappop
-from typing import Iterator, Callable
+from collections.abc import Callable, Iterator
+from heapq import heappop, heappush
 
 from randovania.game_description.requirements.requirement_set import RequirementSet
 

@@ -2,8 +2,8 @@ import collections
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration

@@ -2,11 +2,11 @@ import dataclasses
 import logging
 from enum import Enum
 
-from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania import get_data_path
 from randovania.game_description import default_database
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, InventoryItem
+from randovania.game_description.resources.item_resource_info import InventoryItem, ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame

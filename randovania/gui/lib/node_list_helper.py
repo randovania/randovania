@@ -1,7 +1,7 @@
 import functools
-from typing import Callable, Sequence
+from collections.abc import Callable, Sequence
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier

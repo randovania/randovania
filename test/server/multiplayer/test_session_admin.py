@@ -3,7 +3,7 @@ import dataclasses
 import itertools
 import json
 import uuid
-from unittest.mock import MagicMock, PropertyMock, ANY, call
+from unittest.mock import ANY, MagicMock, PropertyMock, call
 
 import peewee
 import pytest
@@ -14,7 +14,7 @@ from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeti
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import error
-from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
+from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.multiplayer import session_admin

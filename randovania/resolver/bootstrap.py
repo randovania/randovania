@@ -1,12 +1,12 @@
 from typing import NamedTuple
 
 from randovania.game_description import default_database
+from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGain, ResourceCollection
-from randovania.game_description.db.node import NodeContext
-from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel

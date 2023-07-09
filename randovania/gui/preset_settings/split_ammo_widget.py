@@ -1,5 +1,6 @@
 import math
-from typing import Iterable, NamedTuple
+from collections.abc import Iterable
+from typing import NamedTuple
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt

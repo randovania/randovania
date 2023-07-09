@@ -1,5 +1,6 @@
 import dataclasses
-from typing import Iterator, Self, Iterable
+from collections.abc import Iterable, Iterator
+from typing import Self
 
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import Node, NodeContext
@@ -12,7 +13,7 @@ from randovania.game_description.resources.node_resource_info import NodeResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
+from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 
 

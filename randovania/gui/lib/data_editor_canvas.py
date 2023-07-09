@@ -3,17 +3,16 @@ import math
 import os
 from typing import NamedTuple
 
-from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import QPointF, QRectF, QSizeF, Signal
 
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.node import GenericNode, Node, \
-    NodeLocation
+from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
+from randovania.game_description.requirements.base import Requirement
 from randovania.games.game import RandovaniaGame
 from randovania.resolver.state import State
 

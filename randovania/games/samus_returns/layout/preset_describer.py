@@ -3,7 +3,10 @@ from randovania.games.samus_returns.layout.msr_configuration import MSRConfigura
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
-    fill_template_strings_from_tree, message_for_required_mains, handle_progressive_expected_counts, has_shuffled_item,
+    fill_template_strings_from_tree,
+    handle_progressive_expected_counts,
+    has_shuffled_item,
+    message_for_required_mains,
 )
 
 

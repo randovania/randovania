@@ -10,15 +10,15 @@ import typing
 from functools import partial
 from pathlib import Path
 
-from PySide6 import QtCore, QtWidgets, QtGui
-from PySide6.QtCore import QUrl, Signal, Qt
+from PySide6 import QtCore, QtGui, QtWidgets
+from PySide6.QtCore import Qt, QUrl, Signal
 from qasync import asyncSlot
 
 import randovania
 from randovania import VERSION, get_readme_section
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
-from randovania.gui.lib import common_qt_lib, async_dialog, theme
+from randovania.gui.lib import async_dialog, common_qt_lib, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
@@ -29,15 +29,15 @@ from randovania.lib import enum_lib, json_lib
 from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
+    from randovania.gui.multiworld_client import MultiworldClient
+    from randovania.gui.widgets.game_connection_window import GameConnectionWindow
+    from randovania.interface_common.preset_manager import PresetManager
+    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
     from randovania.layout.permalink import Permalink
     from randovania.layout.preset import Preset
-    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
-    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-    from randovania.gui.widgets.game_connection_window import GameConnectionWindow
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
-    from randovania.gui.multiworld_client import MultiworldClient
-    from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
-    from randovania.interface_common.preset_manager import PresetManager
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -153,8 +153,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.game_menus = []
         self.menu_action_edits = []
 
-        from randovania.gui.lib.flow_layout import FlowLayout
         from randovania.gui.lib.clickable_label import ClickableLabel
+        from randovania.gui.lib.flow_layout import FlowLayout
         self.play_flow_layout = FlowLayout(self.game_list_contents, True)
         self.play_flow_layout.setSpacing(15)
         self.play_flow_layout.setAlignment(Qt.AlignHCenter)
@@ -340,8 +340,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     # Generate Seed
     async def generate_seed_from_permalink(self, permalink: Permalink):
-        from randovania.lib.status_update_lib import ProgressUpdateCallable
         from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
+        from randovania.lib.status_update_lib import ProgressUpdateCallable
 
         def work(progress_update: ProgressUpdateCallable):
             from randovania.interface_common import generator_frontend
@@ -525,7 +525,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self._data_editor.show()
 
     async def open_map_tracker(self, configuration: Preset):
-        from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
+        from randovania.gui.tracker_window import InvalidLayoutForTracker, TrackerWindow
 
         try:
             self._map_tracker = await TrackerWindow.create_new(self._options.tracker_files_path, configuration)

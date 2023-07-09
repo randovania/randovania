@@ -3,14 +3,15 @@ import logging
 import pprint
 import shutil
 import time
+from collections.abc import Iterator
 from pathlib import Path
-from typing import NamedTuple, Iterator
+from typing import NamedTuple
 
 import open_prime_rando.echoes.custom_assets
 from retro_data_structures.asset_manager import AssetManager, IsoFileProvider
 from retro_data_structures.conversion import conversions
 from retro_data_structures.conversion.asset_converter import AssetConverter, ConvertedAsset
-from retro_data_structures.dependencies import all_converted_dependencies, Dependency
+from retro_data_structures.dependencies import Dependency, all_converted_dependencies
 from retro_data_structures.exceptions import InvalidAssetId, UnknownAssetId
 from retro_data_structures.formats import format_for
 from retro_data_structures.formats.pak import PakBody, PakFile
@@ -21,7 +22,7 @@ from randovania import get_data_path, monitoring
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.lib import status_update_lib, json_lib
+from randovania.lib import json_lib, status_update_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 PRIME_MODELS_VERSION = 1

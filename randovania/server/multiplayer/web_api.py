@@ -6,7 +6,7 @@ from randovania.bitpacking import construct_pack
 from randovania.game_description import default_database
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.multiplayer_session import RemoteInventory
-from randovania.server.database import MultiplayerSession, WorldUserAssociation, World
+from randovania.server.database import MultiplayerSession, World, WorldUserAssociation
 from randovania.server.server_app import ServerApp
 
 

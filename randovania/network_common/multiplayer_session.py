@@ -16,7 +16,6 @@ from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.session_state import MultiplayerSessionState
 
-
 MAX_SESSION_NAME_LENGTH = 50
 MAX_WORLD_NAME_LENGTH = 30
 
@@ -158,7 +157,7 @@ class User:
     discord_id: int | None = None
 
     @classmethod
-    def from_json(cls, data) -> "User":
+    def from_json(cls, data) -> User:
         return cls(
             id=data["id"],
             name=data["name"],

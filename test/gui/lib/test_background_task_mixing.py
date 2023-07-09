@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin, AbortBackgroundTask
+from randovania.gui.lib.background_task_mixin import AbortBackgroundTask, BackgroundTaskMixin
 
 
 @pytest.fixture(name="force_sync_mixin")

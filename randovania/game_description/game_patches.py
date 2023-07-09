@@ -6,11 +6,11 @@ import typing
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node_identifier import NodeIdentifier
 
 ElevatorConnection = dict[NodeIdentifier, AreaIdentifier]
 StartingEquipment = list[PickupEntry] | ResourceCollection
@@ -21,18 +21,20 @@ class IncompatibleStartingEquipment(Exception):
 
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.assignment import (
-        PickupTarget, PickupTargetAssociation,
-        NodeConfigurationAssociation, DockWeaknessAssociation
+        DockWeaknessAssociation,
+        NodeConfigurationAssociation,
+        PickupTarget,
+        PickupTargetAssociation,
     )
+    from randovania.game_description.db.dock import DockWeakness
+    from randovania.game_description.db.dock_node import DockNode
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.hint import Hint
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.game_description.db.node import Node
-    from randovania.game_description.db.dock_node import DockNode
 
 
 @dataclass(frozen=True, slots=True)
@@ -55,7 +57,7 @@ class GamePatches:
     )
 
     def __post_init__(self):
-        if isinstance(self.starting_equipment, (ResourceCollection, list)):
+        if isinstance(self.starting_equipment, ResourceCollection | list):
             if isinstance(self.starting_equipment, ResourceCollection):
                 for resource, _ in self.starting_equipment.as_resource_gain():
                     if resource.resource_type != ResourceType.ITEM:

@@ -8,7 +8,7 @@ from randovania.network_common.session_state import MultiplayerSessionState
 
 async def test_attempt_join(skip_qtbot):
     # Setup
-    utc = datetime.timezone.utc
+    utc = datetime.UTC
     network_client = MagicMock()
     network_client.attempt_join_with_password_check = AsyncMock()
 

@@ -1,6 +1,6 @@
 import asyncio
 import itertools
-from typing import Callable, Iterable
+from collections.abc import Callable, Iterable
 
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
@@ -81,7 +81,7 @@ def _should_check_if_action_is_safe(state: State,
     :return:
     """
     return not _is_action_dangerous(state, action, dangerous_resources) \
-        and (isinstance(action, (EventNode, EventPickupNode))
+        and (isinstance(action, EventNode | EventPickupNode)
              or _is_major_or_key_pickup_node(action, state))
 
 
@@ -178,7 +178,7 @@ async def _inner_advance_depth(state: State,
             dangerous_actions.append(action_tuple)
         elif _is_major_or_key_pickup_node(action, state):
             major_pickup_actions.append(action_tuple)
-        elif isinstance(action, (DockLockNode, EventNode, EventPickupNode)):
+        elif isinstance(action, DockLockNode | EventNode | EventPickupNode):
             lock_actions.append(action_tuple)
         else:
             rest_of_actions.append(action_tuple)

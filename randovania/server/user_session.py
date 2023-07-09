@@ -102,7 +102,7 @@ def start_discord_login_flow(sio: ServerApp):
 
 def _get_now():
     # For mocking in tests
-    return datetime.datetime.now(datetime.timezone.utc)
+    return datetime.datetime.now(datetime.UTC)
 
 
 def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
@@ -151,7 +151,7 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, _old_session_
                     user=user,
                     name=session["rdv-access-token"],
                 )
-                access_token.last_used = datetime.datetime.now(datetime.timezone.utc)
+                access_token.last_used = datetime.datetime.now(datetime.UTC)
                 access_token.save()
 
                 result = _create_client_side_session_raw(sio, user)

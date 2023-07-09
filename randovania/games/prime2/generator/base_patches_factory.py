@@ -4,19 +4,19 @@ from collections.abc import Iterable
 from random import Random
 
 from randovania.game_description.assignment import NodeConfigurationAssociation
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import DockWeakness
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches, ElevatorConnection
+from randovania.game_description.game_patches import ElevatorConnection, GamePatches
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.generator.base_patches_factory import (PrimeTrilogyBasePatchesFactory, MissingRng)
+from randovania.generator.base_patches_factory import MissingRng, PrimeTrilogyBasePatchesFactory
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 

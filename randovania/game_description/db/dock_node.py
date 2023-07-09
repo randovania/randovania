@@ -3,13 +3,13 @@ from __future__ import annotations
 import dataclasses
 import typing
 
+from randovania.game_description.db.dock import DockLockType, DockType, DockWeakness
+from randovania.game_description.db.node import Node, NodeContext
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.db.dock import DockType, DockWeakness, DockLockType
-from randovania.game_description.db.node import Node, NodeContext
-from randovania.game_description.db.node_identifier import NodeIdentifier
 
 
 def _requirement_from_back(context: NodeContext, target_node: Node) -> ResourceRequirement | None:

@@ -16,7 +16,7 @@ def main():
             "guest_secret": Fernet.generate_key().decode("ascii"),
             "discord_client_id": "",
             "server_config": {
-                "secret_key": "dev-server-{}".format(random.randint(1000, 9999)),
+                "secret_key": f"dev-server-{random.randint(1000, 9999)}",
                 "fernet_key": Fernet.generate_key().decode("ascii"),
                 "client_version_checking": "ignore",
                 "database_path": os.fspath(_FOLDER.joinpath("data.db")),

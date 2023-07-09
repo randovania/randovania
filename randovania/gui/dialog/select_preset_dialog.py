@@ -8,7 +8,7 @@ from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
-from randovania.layout.versioned_preset import VersionedPreset, InvalidPreset
+from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.network_common.multiplayer_session import MAX_WORLD_NAME_LENGTH, WORLD_NAME_RE
 

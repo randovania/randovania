@@ -5,9 +5,8 @@ from randovania.game_description.assignment import NodeConfigurationAssociation
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches, ElevatorConnection
-from randovania.game_description.hint import HintItemPrecision
-from randovania.game_description.hint import HintLocationPrecision
+from randovania.game_description.game_patches import ElevatorConnection, GamePatches
+from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration

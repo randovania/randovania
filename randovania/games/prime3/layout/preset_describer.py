@@ -3,8 +3,10 @@ from randovania.games.prime3.layout.corruption_configuration import CorruptionCo
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
-    fill_template_strings_from_tree, has_shuffled_item,
-    message_for_required_mains, handle_progressive_expected_counts,
+    fill_template_strings_from_tree,
+    handle_progressive_expected_counts,
+    has_shuffled_item,
+    message_for_required_mains,
 )
 
 

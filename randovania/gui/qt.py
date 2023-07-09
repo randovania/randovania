@@ -16,8 +16,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence
 
 if typing.TYPE_CHECKING:
-    from randovania.interface_common.preset_manager import PresetManager
     from randovania.interface_common.options import Options
+    from randovania.interface_common.preset_manager import PresetManager
 
 logger = logging.getLogger(__name__)
 
@@ -72,8 +72,8 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
     multiworld_client: MultiworldClient = app.multiworld_client
 
     async def attempt_login():
-        from randovania.network_client.network_client import UnableToConnect
         from randovania.gui.lib import async_dialog
+        from randovania.network_client.network_client import UnableToConnect
 
         try:
             if not await network_client.ensure_logged_in(None):
@@ -177,8 +177,8 @@ def add_options_cli_args(parser: ArgumentParser):
 
 async def _load_options(args) -> Options | None:
     logger.info("Loading up user preferences code...")
-    from randovania.interface_common.options import Options
     from randovania.gui.lib import startup_tools, theme
+    from randovania.interface_common.options import Options
 
     logger.info("Restoring saved user preferences...")
     options = Options(args.local_data, args.user_data)
@@ -186,8 +186,8 @@ async def _load_options(args) -> Options | None:
         return None
 
     logger.info("Creating user preferences folder")
-    import dulwich.repo
     import dulwich.errors
+    import dulwich.repo
     try:
         dulwich.repo.Repo(os.fspath(options.user_dir))
 
@@ -255,7 +255,7 @@ async def qt_main(app: QtWidgets.QApplication, args):
     logging.info("Creating the global game connection")
     from randovania.game_connection.game_connection import GameConnection
     app.game_connection = GameConnection(options, app.world_database)
-    
+
     logging.info("Creating the global multiworld client")
     from randovania.gui.multiworld_client import MultiworldClient
     app.multiworld_client = MultiworldClient(app.network_client, app.game_connection,

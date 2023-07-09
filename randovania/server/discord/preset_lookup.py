@@ -9,14 +9,14 @@ import re
 import subprocess
 import time
 import typing
-from typing import Callable
+from collections.abc import Callable
 
 import discord
 from discord.ui import Button
 
 import randovania
 from randovania.generator import generator
-from randovania.layout import preset_describer, layout_description
+from randovania.layout import layout_description, preset_describer
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink, UnsupportedPermalink

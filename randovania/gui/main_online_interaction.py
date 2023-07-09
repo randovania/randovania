@@ -8,7 +8,7 @@ from randovania.gui.dialog.online_game_list_dialog import OnlineGameListDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, wait_dialog
-from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
+from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager

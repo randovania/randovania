@@ -1,18 +1,18 @@
 import os
-from typing import Iterator
+from collections.abc import Iterator
 
-from randovania.exporter import pickup_exporter, item_names
+from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area import Area
+from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.node import Node
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import Node
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
@@ -324,7 +324,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 return cc_name, "Burenia Main Hub"
             if cc_name == "collision_camera_023_B":
                 return "collision_camera_023", area_name
-            
+
         if scenario_name == "s050_forest":
             if cc_name == "collision_camera_024":
                 return cc_name, "Golzuna Tower"
@@ -336,7 +336,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         if scenario_name == "s070_basesanc":
             if cc_name == "collision_camera_038_A":
                 return "collision_camera_038", area.name
-            
+
         return cc_name, area.name
 
     def _build_area_name_dict(self) -> dict[str, dict[str, str]]:

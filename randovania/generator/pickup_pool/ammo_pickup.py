@@ -1,4 +1,4 @@
-from typing import Iterator
+from collections.abc import Iterator
 
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase

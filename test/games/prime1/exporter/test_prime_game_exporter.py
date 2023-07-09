@@ -1,6 +1,6 @@
 import json
 import os
-from unittest.mock import MagicMock, ANY, call
+from unittest.mock import ANY, MagicMock, call
 
 import pytest
 

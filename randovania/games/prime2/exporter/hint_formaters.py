@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 
 from randovania.exporter.hints.hint_formatters import LocationFormatter
 from randovania.exporter.hints.pickup_hint import PickupHint

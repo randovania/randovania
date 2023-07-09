@@ -1,11 +1,11 @@
 import functools
 import json
+from collections.abc import Iterator
 from dataclasses import dataclass
 from random import Random
-from typing import Iterator
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager

@@ -16,7 +16,7 @@ from randovania.server.server_app import ServerApp
 @pytest.mark.parametrize("limit", [None, 2, 3])
 def test_list_sessions(clean_database, flask_app, limit):
     # Setup
-    utc = datetime.timezone.utc
+    utc = datetime.UTC
     someone = database.User.create(name="Someone")
     other = database.User.create(name="Other")
     s1 = database.MultiplayerSession.create(

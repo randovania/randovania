@@ -4,7 +4,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.blank.layout.blank_configuration import BlankConfiguration
 from randovania.generator.pickup_pool import PoolResults

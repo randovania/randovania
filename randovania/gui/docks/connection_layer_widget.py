@@ -4,7 +4,7 @@ from qasync import asyncSlot
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.gui.lib import file_prompts, async_dialog, signal_handling
+from randovania.gui.lib import async_dialog, file_prompts, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel

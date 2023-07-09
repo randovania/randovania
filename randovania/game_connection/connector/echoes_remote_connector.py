@@ -6,7 +6,7 @@ from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
 from randovania.game_description.db.region import Region
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory, InventoryItem
+from randovania.game_description.resources.item_resource_info import Inventory, InventoryItem, ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items

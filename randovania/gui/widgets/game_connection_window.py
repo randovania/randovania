@@ -3,7 +3,7 @@ import functools
 import uuid
 
 import wiiload
-from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt
 from qasync import asyncSlot
 
@@ -21,8 +21,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.debug_backend_window import DebugConnectorWindow
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.game_connection_window_ui import Ui_GameConnectionWindow
-from randovania.gui.lib import common_qt_lib, async_dialog
-from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
+from randovania.gui.lib import async_dialog, common_qt_lib
+from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.gui.main_window import MainWindow
 from randovania.gui.multiworld_client import MultiworldClient
 from randovania.interface_common.options import Options

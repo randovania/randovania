@@ -1,18 +1,20 @@
 import asyncio
 import dataclasses
-from enum import IntEnum
 import logging
-from pathlib import Path
 import re
 import struct
 from asyncio import StreamReader, StreamWriter
-from typing import Any, Optional
-from PySide6.QtCore import Signal, QObject
+from enum import IntEnum
+from pathlib import Path
+from typing import Any
+
+from PySide6.QtCore import QObject, Signal
 
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
+
 
 class DreadLuaException(Exception):
     pass
@@ -80,7 +82,7 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
                 if "item_id" in r.extra
             ))
         }
-    
+
     for i in range(4):
         bootstrap_part = bootstrap_path.joinpath(f"bootstrap_part_{i}.lua")
         all_code.append(replace_lua_template(bootstrap_part, replacements))
@@ -110,7 +112,7 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
     return all_code
 
 
-class DreadExecutor():
+class DreadExecutor:
     _port = 6969
     _socket: DreadSocketHolder | None = None
     _socket_error: Exception | None = None
@@ -176,7 +178,7 @@ class DreadExecutor():
 
             return None
 
-        except (OSError, AttributeError, asyncio.TimeoutError, struct.error, 
+        except (OSError, AttributeError, asyncio.TimeoutError, struct.error,
                 UnicodeError, RuntimeError, DreadLuaException, ValueError) as e:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
@@ -194,7 +196,7 @@ class DreadExecutor():
     def is_connected(self) -> bool:
         return self._socket is not None
 
-    def _build_packet(self, type: PacketType, msg: Optional[bytes]) -> bytes:
+    def _build_packet(self, type: PacketType, msg: bytes | None) -> bytes:
         retBytes: bytearray = bytearray()
         retBytes.append(type.value)
         if type == PacketType.PACKET_REMOTE_LUA_EXEC:

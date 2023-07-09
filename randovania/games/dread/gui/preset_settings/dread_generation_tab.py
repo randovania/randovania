@@ -1,6 +1,6 @@
-from typing import Iterable
+from collections.abc import Iterable
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_type import ResourceType

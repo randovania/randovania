@@ -6,6 +6,7 @@ from randovania.games.samus_returns.layout.msr_configuration import MSRConfigura
 from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
 
+
 def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription,
                  base_patches: GamePatches, rng: Random) -> None:
     assert isinstance(configuration, MSRConfiguration)

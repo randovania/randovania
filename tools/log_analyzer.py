@@ -7,11 +7,14 @@ import math
 import os
 import re
 import statistics
+from collections.abc import Iterable
 from pathlib import Path
 from statistics import stdev
-from typing import Dict, Tuple, Optional, List, Iterable, Set
 
 from randovania.layout.layout_description import LayoutDescription
+
+# This is not a serious file
+# ruff: noqa: C901
 
 NON_MAJOR_PROGRESSION = [
     "Missile Expansion",
@@ -82,8 +85,8 @@ def _filter_item_name(name: str) -> str:
 
 
 def accumulate_results(game_modifications: dict,
-                       items: Dict[str, Dict[str, int]],
-                       locations: Dict[str, Dict[str, int]],
+                       items: dict[str, dict[str, int]],
+                       locations: dict[str, dict[str, int]],
                        major_progression_items_only: bool,
                        ):
     for world_name, world_data in game_modifications["locations"].items():
@@ -100,7 +103,7 @@ def sort_by_count(d: dict[str, int]) -> dict[str, int]:
     return dict(sorted(d.items(), key=lambda t: t[1], reverse=True))
 
 
-def calculate_pickup_count(items: Dict[str, Dict[str, int]]) -> Dict[str, int]:
+def calculate_pickup_count(items: dict[str, dict[str, int]]) -> dict[str, int]:
     return {
         name: sum(data.values())
         for name, data in items.items()
@@ -117,7 +120,7 @@ def sort_by_contents(data: dict) -> dict:
     }
 
 
-def calculate_stddev(pickup_count: Dict[str, int], item_counts: Dict[str, float]) -> Optional[float]:
+def calculate_stddev(pickup_count: dict[str, int], item_counts: dict[str, float]) -> float | None:
     balanced_freq = {
         item: count / pickup_count[item]
         for item, count in item_counts.items()
@@ -134,8 +137,8 @@ def first_key(d: dict):
         return key
 
 
-def get_items_order(all_items: Iterable[str], item_order: List[str], major_progression_items_only: bool) -> Tuple[
-    Dict[str, int], Set[str], Set[str], Set[str]]:
+def get_items_order(all_items: Iterable[str], item_order: list[str], major_progression_items_only: bool) -> tuple[
+    dict[str, int], set[str], set[str], set[str]]:
     locations = set()
     no_key = set()
     progression_items = set()
@@ -170,7 +173,7 @@ def _region_only_starting_loc(locations: dict[str, int]) -> dict[str, int]:
     return result
 
 
-def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_percentage: bool,
+def create_report(seeds_dir: str, output_file: str, csv_dir: str | None, use_percentage: bool,
                   major_progression_items_only: bool):
     def item_creator():
         return collections.defaultdict(int)

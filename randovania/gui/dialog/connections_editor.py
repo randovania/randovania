@@ -3,9 +3,7 @@ import typing
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIntValidator
-from PySide6.QtWidgets import QDialog
-from PySide6.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QHBoxLayout, QComboBox, \
-    QLineEdit
+from PySide6.QtWidgets import QComboBox, QDialog, QGroupBox, QHBoxLayout, QLineEdit, QPushButton, QVBoxLayout, QWidget
 
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement

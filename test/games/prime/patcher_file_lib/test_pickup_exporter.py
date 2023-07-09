@@ -7,19 +7,24 @@ import pytest
 from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
-    ConditionalResources, ResourceConversion
+from randovania.game_description.resources.pickup_entry import (
+    ConditionalResources,
+    PickupEntry,
+    PickupModel,
+    ResourceConversion,
+    ResourceLock,
+)
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 
 
 def test_get_single_hud_text_all_standard_pickups(echoes_pickup_database, echoes_resource_database):

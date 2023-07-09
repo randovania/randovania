@@ -2,7 +2,7 @@ import dataclasses
 
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
-from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterList
+from randovania.layout.lib.teleporters import TeleporterList, TeleporterShuffleMode
 
 
 def test_should_keep_elevator_sounds_vanilla(default_echoes_configuration):

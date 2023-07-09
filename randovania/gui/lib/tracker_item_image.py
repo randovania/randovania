@@ -1,4 +1,4 @@
-from PySide6.QtGui import QPixmap, QMouseEvent
+from PySide6.QtGui import QMouseEvent, QPixmap
 from PySide6.QtWidgets import QLabel, QWidget
 
 

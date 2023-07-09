@@ -1,8 +1,8 @@
 import asyncio
 import multiprocessing
+from collections.abc import Callable
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing.connection import Connection
-from typing import Callable
 
 import sentry_sdk
 
@@ -11,7 +11,7 @@ from randovania.interface_common.options import Options
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
+from randovania.lib.status_update_lib import ConstantPercentageCallback, ProgressUpdateCallable
 from randovania.resolver import debug
 
 export_busy = False

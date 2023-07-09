@@ -5,10 +5,10 @@ import os
 import sys
 
 from PySide6.QtCore import QCoreApplication
+
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
-
 from randovania.game_connection.game_connection import GameConnection
 from randovania.network_common.game_connection_status import GameConnectionStatus
 

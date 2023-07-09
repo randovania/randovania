@@ -4,9 +4,9 @@ import pytest
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 
+from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.main_online_interaction import OnlineInteractions
 from randovania.interface_common.options import Options
-from randovania.gui.lib.qt_network_client import QtNetworkClient
 
 
 @pytest.fixture(name="default_online_interactions")

@@ -1,9 +1,9 @@
 import dataclasses
 import uuid
 from unittest.mock import MagicMock
-from PySide6 import QtCore
 
 import pytest
+from PySide6 import QtCore
 
 from randovania.game_description import default_database
 from randovania.game_description.db.area_identifier import AreaIdentifier

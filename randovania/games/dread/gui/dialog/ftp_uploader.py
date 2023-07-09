@@ -1,9 +1,9 @@
 import dataclasses
 import ftplib
+from collections.abc import Callable
 from contextlib import contextmanager
 from ftplib import FTP
 from pathlib import Path
-from typing import Callable
 
 from randovania.lib import status_update_lib
 

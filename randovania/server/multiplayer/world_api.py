@@ -15,16 +15,17 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.layout.layout_description import LayoutDescription
-from randovania.network_common import signals, error
+from randovania.network_common import error, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import MultiplayerSessionState
-from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse, ServerWorldResponse, \
-    ServerWorldSync
-from randovania.server.database import (
-    World, WorldUserAssociation, MultiplayerSession,
-    WorldAction, User
+from randovania.network_common.world_sync import (
+    ServerSyncRequest,
+    ServerSyncResponse,
+    ServerWorldResponse,
+    ServerWorldSync,
 )
+from randovania.server.database import MultiplayerSession, User, World, WorldAction, WorldUserAssociation
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
@@ -130,7 +131,7 @@ def update_association(user: User, world: World, inventory: bytes | None,
         new_inventory = True
 
     if association.is_dirty():
-        association.last_activity = datetime.datetime.now(datetime.timezone.utc)
+        association.last_activity = datetime.datetime.now(datetime.UTC)
         association.save()
 
         if new_inventory:

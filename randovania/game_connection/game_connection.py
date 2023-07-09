@@ -4,7 +4,7 @@ import functools
 import logging
 import uuid
 
-from PySide6.QtCore import Signal, QObject
+from PySide6.QtCore import QObject, Signal
 
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption

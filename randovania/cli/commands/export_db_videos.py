@@ -1,6 +1,6 @@
 import datetime
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 from randovania.game_description import default_database
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -21,7 +21,7 @@ HTML_HEADER_FORMAT = '''
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>%s</title>
         <style type="text/css">
-    
+
             body{
                 margin:30px auto;max-width:1000px;line-height:1.6;font-size:19px;padding:0 10px
             }

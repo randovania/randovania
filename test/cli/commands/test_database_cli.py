@@ -1,5 +1,5 @@
 import itertools
-from unittest.mock import MagicMock, patch, ANY, call
+from unittest.mock import ANY, MagicMock, call, patch
 
 import pytest
 
@@ -50,8 +50,7 @@ def test_list_paths_with_resource_logic(mock_load_game_description: MagicMock,
 
 
 def test_write_game_descriptions(mocker):
-    from randovania.game_description import pretty_print
-    from randovania.game_description import data_writer
+    from randovania.game_description import data_writer, pretty_print
     mock_write_human_readable_game: MagicMock = mocker.patch.object(pretty_print, "write_human_readable_game")
     mock_write_game_description: MagicMock = mocker.patch.object(data_writer, "write_game_description")
     mock_write_as_split_files: MagicMock = mocker.patch.object(data_writer, "write_as_split_files")
@@ -80,8 +79,7 @@ def test_refresh_game_description_logic(check, mocker):
     args = MagicMock()
     args.integrity_check = check
 
-    from randovania.game_description import integrity_check
-    from randovania.game_description import default_database
+    from randovania.game_description import default_database, integrity_check
 
     mock_find_database_errors = mocker.patch.object(integrity_check, "find_database_errors",
                                                     return_value=["An error"])

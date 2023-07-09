@@ -13,7 +13,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
 from randovania.games.blank.layout import BlankConfiguration
@@ -295,8 +295,9 @@ def pytest_addoption(parser):
 
 
 if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
-    import qasync
     import asyncio.events
+
+    import qasync
 
 
     class EventLoopWithRunningFlag(qasync.QEventLoop):

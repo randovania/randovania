@@ -1,9 +1,9 @@
 import hashlib
 
+from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.db.area_identifier import AreaIdentifier
 
 LAYOUT_LETTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ(){}[]<>=,.!#^-+?"
 ITEM_NAME_TO_INDEX = {

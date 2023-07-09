@@ -1,8 +1,9 @@
+from collections.abc import Callable, Iterable, Iterator
 from dataclasses import dataclass
-from typing import Iterator, Callable, TypeVar, Iterable
+from typing import TypeVar
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game_description import default_database
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.node import Node

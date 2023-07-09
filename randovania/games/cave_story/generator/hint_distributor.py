@@ -1,13 +1,13 @@
 from random import Random
 
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import HintLocationPrecision, PrecisionPair, HintItemPrecision
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, PrecisionPair
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
-from randovania.generator.hint_distributor import HintDistributor, PreFillParams, HintTargetPrecision
+from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision, PreFillParams
 
 USE_GUARANTEED_HINTS = False
 

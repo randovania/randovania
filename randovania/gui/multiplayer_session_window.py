@@ -5,8 +5,8 @@ import random
 import uuid
 from typing import Self
 
-from PySide6 import QtWidgets, QtGui, QtCore
-from qasync import asyncSlot, asyncClose
+from PySide6 import QtCore, QtGui, QtWidgets
+from qasync import asyncClose, asyncSlot
 
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
@@ -15,11 +15,11 @@ from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
-from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, layout_loader
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin, BackgroundTaskInProgressError
+from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader
+from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
-from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
+from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
@@ -35,8 +35,13 @@ from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, MultiplayerUser, MultiplayerSessionActions, MultiplayerSessionAuditLog,
-    MultiplayerSessionAction, WorldUserInventory, MAX_SESSION_NAME_LENGTH
+    MAX_SESSION_NAME_LENGTH,
+    MultiplayerSessionAction,
+    MultiplayerSessionActions,
+    MultiplayerSessionAuditLog,
+    MultiplayerSessionEntry,
+    MultiplayerUser,
+    WorldUserInventory,
 )
 from randovania.network_common.session_state import MultiplayerSessionState
 

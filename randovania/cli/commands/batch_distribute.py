@@ -6,7 +6,7 @@ import math
 import time
 import typing
 from argparse import ArgumentParser
-from concurrent.futures import ProcessPoolExecutor, Future, CancelledError
+from concurrent.futures import CancelledError, Future, ProcessPoolExecutor
 from pathlib import Path
 
 from randovania.cli import cli_lib

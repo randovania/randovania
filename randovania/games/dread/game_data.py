@@ -1,9 +1,7 @@
 from randovania.games import game
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
-from randovania.games.dread.layout.preset_describer import (
-    DreadPresetDescriber
-)
+from randovania.games.dread.layout.preset_describer import DreadPresetDescriber
 
 
 def _options():
@@ -38,8 +36,8 @@ def _exporter():
 def _generator() -> game.GameGenerator:
     from randovania.games.dread.generator.base_patches_factory import DreadBasePatchesFactory
     from randovania.games.dread.generator.bootstrap import DreadBootstrap
-    from randovania.games.dread.generator.pool_creator import pool_creator
     from randovania.games.dread.generator.hint_distributor import DreadHintDistributor
+    from randovania.games.dread.generator.pool_creator import pool_creator
 
     return game.GameGenerator(
         item_pool_creator=pool_creator,
@@ -92,21 +90,21 @@ game_data: game.GameData = game.GameData(
             "When reporting issues, your first step is always to reproduce the issue without mods, "
             "**no matter how simple** the mod is."
         ),
-        ( 	
+        (
             "I picked up the Speed Booster / Phantom Cloak / Storm Missile but can't use them!",
-            "Press ZL + ZR + D-Pad Up to fix the issue." 
+            "Press ZL + ZR + D-Pad Up to fix the issue."
             " Check the entry 'Crashing after suit upgrade' in 'Known Crashes' tab"
             " for important rules of when to use this button combination.\n\n"
             "You can also save and reload your game."
         ),
-        ( 	
+        (
             "I entered the arena for Golzuna/Experiment Z-57 but it isn't there!",
-            "Golzuna and Experiment Z-57 will not appear unless the X have been released from Elun.\n" 
+            "Golzuna and Experiment Z-57 will not appear unless the X have been released from Elun.\n"
             "To activate the fight against Experiment Z-57, you must use the Morph Ball Launcher to enter the arena."
         ),
-        ( 	
+        (
             "I opened the Wide Beam door in Dairon's Teleport to Cataris, but it won't let me through!",
-            "Unlocking this door before turning on the power will render it unopenable.\n" 
+            "Unlocking this door before turning on the power will render it unopenable.\n"
             "To fix this, simply save and reload the game."
         ),
     ],

@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, call, ANY
+from unittest.mock import ANY, MagicMock, call
 
 import pytest
 from PySide6.QtCore import QPoint

@@ -1,6 +1,6 @@
 import collections
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode

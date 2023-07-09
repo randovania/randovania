@@ -1,6 +1,7 @@
+from open_prime_rando.dol_patching.echoes.user_preferences import SoundMode
+
 from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from open_prime_rando.dol_patching.echoes.user_preferences import SoundMode
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 
 

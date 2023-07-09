@@ -3,8 +3,11 @@ import dataclasses
 import struct
 from asyncio import StreamReader, StreamWriter
 
-from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
-    MemoryOperationExecutor
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
+)
 
 
 @dataclasses.dataclass(frozen=True)

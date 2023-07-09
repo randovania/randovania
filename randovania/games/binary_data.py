@@ -3,13 +3,25 @@ from pathlib import Path
 from typing import BinaryIO
 
 import construct
-from construct import (Struct, Int32ub, Const, Byte, Float32b, Flag,
-                       Short, PrefixedArray, Switch, VarInt, Float64b, Compressed)
+from construct import (
+    Byte,
+    Compressed,
+    Const,
+    Flag,
+    Float32b,
+    Float64b,
+    Int32ub,
+    PrefixedArray,
+    Short,
+    Struct,
+    Switch,
+    VarInt,
+)
 
 from randovania.game_description import game_migration
 from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.games.game import RandovaniaGame
-from randovania.lib.construct_lib import String, convert_to_raw_python, OptionalValue, ConstructDict, JsonEncodedValue
+from randovania.lib.construct_lib import ConstructDict, JsonEncodedValue, OptionalValue, String, convert_to_raw_python
 
 current_format_version = 10
 

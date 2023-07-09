@@ -1,10 +1,10 @@
 import dataclasses
-from typing import Callable
+from collections.abc import Callable
 
 from PySide6 import QtCore
 
 from randovania.game_description.game_description import GameDescription
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig
+from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig, DreadConfiguration
 from randovania.gui.generated.preset_dread_goal_ui import Ui_PresetDreadGoal
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.window_manager import WindowManager
@@ -31,7 +31,7 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
     @classmethod
     def uses_patches_tab(cls) -> bool:
         return False
-    
+
     def _update_slider_max(self):
         self.dna_slider.setMaximum(self.num_preferred_locations)
         self.dna_slider.setEnabled(self.num_preferred_locations > 0)
@@ -45,7 +45,7 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
                 "artifacts",
                 call(config.artifacts)
             )
-    
+
     @property
     def num_preferred_locations(self) -> int:
         preferred = 0

@@ -3,14 +3,14 @@ from random import Random
 from unittest.mock import MagicMock
 
 import pytest
-from randovania.game_description.db.dock_node import Node, DockNode
-from randovania.game_description.game_description import GameDescription
 
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_node import DockNode, Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator import base_patches_factory

@@ -18,9 +18,9 @@ def test_gui(skip_qtbot, game_enum):
 
 
 def test_generator(game_enum):
-    from randovania.resolver.bootstrap import Bootstrap
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
+    from randovania.resolver.bootstrap import Bootstrap
 
     # Run
     g = game_enum.generator

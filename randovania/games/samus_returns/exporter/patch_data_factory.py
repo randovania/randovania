@@ -1,16 +1,17 @@
 import os
 
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.exporter import pickup_exporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.node import Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
+
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
@@ -52,7 +53,7 @@ class MSRPatchDataFactory(BasePatchDataFactory):
             }
         else:
             return {}
-        
+
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
 
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
@@ -68,7 +69,7 @@ class MSRPatchDataFactory(BasePatchDataFactory):
         }
 
         return details
-    
+
     def _node_for(self, identifier: AreaIdentifier | NodeIdentifier) -> Node:
         if isinstance(identifier, NodeIdentifier):
             return self.game.region_list.node_by_identifier(identifier)

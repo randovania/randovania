@@ -2,7 +2,7 @@ import dataclasses
 import re
 import typing
 
-from PySide6 import QtCore, QtWidgets, QtGui
+from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 import randovania
@@ -17,11 +17,11 @@ from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
-from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
+from randovania.gui.lib.common_qt_lib import prompt_user_for_output_game_log, set_default_window_icon
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.game_validator_widget import GameValidatorWidget
 from randovania.interface_common import generator_frontend
-from randovania.interface_common.options import Options, InfoAlert
+from randovania.interface_common.options import InfoAlert, Options
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
@@ -146,10 +146,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._trick_usage_popup.open()
 
     async def _show_dialog_for_prime3_layout(self):
-        from randovania.games.prime3.patcher import gollop_corruption_patcher
-        from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
-        from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
         from randovania.game_description import default_database
+        from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
+        from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
+        from randovania.games.prime3.patcher import gollop_corruption_patcher
 
         cosmetic = typing.cast(
             CorruptionCosmeticPatches,

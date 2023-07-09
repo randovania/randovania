@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import functools
 import inspect
-from collections.abc import Mapping, Callable
+from collections.abc import Callable, Mapping
 from typing import TypeVar
 
 import flask

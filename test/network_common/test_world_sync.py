@@ -4,7 +4,7 @@ import uuid
 from frozendict import frozendict
 
 from randovania.bitpacking import construct_pack
-from randovania.network_common import world_sync, error
+from randovania.network_common import error, world_sync
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
 from randovania.network_common.session_state import MultiplayerSessionState
@@ -53,7 +53,7 @@ def test_encode_sync_response():
                     state=MultiplayerSessionState.IN_PROGRESS,
                     num_players=2,
                     creator="Not You",
-                    creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc),
+                    creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
                     is_user_in_session=True,
                 ),
             ),

@@ -1,10 +1,10 @@
 import dataclasses
+from collections.abc import Callable, Iterator
 from random import Random
-from typing import Iterator, Callable
 
 import randovania
 import randovania.games.prime2.exporter.hints
-from randovania.exporter import pickup_exporter, item_names
+from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
@@ -534,7 +534,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
                 filtered_session,
             )[:40]
         else:
-            result["banner_name"] = "Metroid Prime 2: Randomizer - {}".format(self.description.shareable_hash)
+            result["banner_name"] = f"Metroid Prime 2: Randomizer - {self.description.shareable_hash}"
 
         result["publisher_id"] = "0R"
         if self.configuration.menu_mod:

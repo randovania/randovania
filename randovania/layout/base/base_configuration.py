@@ -9,8 +9,8 @@ from randovania.layout.base.available_locations import AvailableLocationsConfigu
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
+from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
-from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.lib import location_list
 

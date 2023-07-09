@@ -2,7 +2,7 @@ import dataclasses
 import functools
 import uuid
 
-from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
@@ -11,12 +11,16 @@ from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
-from randovania.interface_common.options import Options, InfoAlert
+from randovania.interface_common.options import InfoAlert, Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerWorld, \
-    MAX_WORLD_NAME_LENGTH, WORLD_NAME_RE
+from randovania.network_common.multiplayer_session import (
+    MAX_WORLD_NAME_LENGTH,
+    WORLD_NAME_RE,
+    MultiplayerSessionEntry,
+    MultiplayerWorld,
+)
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
