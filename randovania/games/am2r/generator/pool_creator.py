@@ -7,7 +7,6 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_am2r_artifact
-from randovania.generator.pickup_pool.pool_creator import _extend_pool_results
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 
@@ -20,7 +19,7 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
                  base_patches: GamePatches, rng: Random) -> None:
     assert isinstance(configuration, AM2RConfiguration)
 
-    _extend_pool_results(results, artifact_pool(game, configuration, rng))
+    results.extend_with(artifact_pool(game, configuration, rng))
 
 
 def artifact_pool(game: GameDescription, configuration: AM2RConfiguration, rng: Random) -> PoolResults:

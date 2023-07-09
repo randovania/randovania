@@ -13,12 +13,6 @@ from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
-    base_results.to_place.extend(extension.to_place)
-    base_results.assignment.update(extension.assignment)
-    base_results.starting.extend(extension.starting)
-
-
 def calculate_pool_results(layout_configuration: BaseConfiguration,
                            game: GameDescription,
                            base_patches: GamePatches = None,
@@ -38,9 +32,9 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     base_results = PoolResults([], {}, [])
 
     # Adding standard pickups to the pool
-    _extend_pool_results(base_results, add_standard_pickups(game.resource_database,
-                                                            layout_configuration.standard_pickup_configuration,
-                                                            layout_configuration.ammo_pickup_configuration))
+    base_results.extend_with(add_standard_pickups(game.resource_database,
+                                                  layout_configuration.standard_pickup_configuration,
+                                                  layout_configuration.ammo_pickup_configuration))
 
     # Adding ammo to the pool
     base_results.to_place.extend(add_ammo_pickups(game.resource_database,

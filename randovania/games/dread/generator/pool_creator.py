@@ -7,7 +7,6 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_dread_artifact
-from randovania.generator.pickup_pool.pool_creator import _extend_pool_results
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 if TYPE_CHECKING:
@@ -19,7 +18,7 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
                  base_patches: GamePatches, rng: Random) -> None:
     assert isinstance(configuration, DreadConfiguration)
 
-    _extend_pool_results(results, artifact_pool(game, configuration, rng))
+    results.extend_with(artifact_pool(game, configuration, rng))
 
 
 def artifact_pool(game: GameDescription, configuration: DreadConfiguration, rng: Random) -> PoolResults:

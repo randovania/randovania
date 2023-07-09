@@ -1,12 +1,14 @@
 from typing import NamedTuple
 
 from randovania.game_description import default_database
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
+from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -84,7 +86,6 @@ class Bootstrap:
     def calculate_starting_state(self, game: GameDescription, patches: GamePatches,
                                  configuration: BaseConfiguration) -> "State":
         starting_node = game.region_list.node_by_identifier(patches.starting_location)
-
 
         initial_resources = patches.starting_resources()
 
@@ -205,6 +206,17 @@ class Bootstrap:
         game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
         return game, starting_state
+
+    def assign_pool_results(self, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
+        target_assignment = [
+            (index, PickupTarget(pickup, patches.player_index))
+            for index, pickup in pool_results.assignment.items()
+        ]
+        return patches.assign_new_pickups(
+            target_assignment
+        ).assign_extra_starting_pickups(
+            pool_results.starting
+        )
 
 
 class MetroidBootstrap(Bootstrap):
