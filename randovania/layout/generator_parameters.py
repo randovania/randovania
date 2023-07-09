@@ -130,7 +130,7 @@ class GeneratorParameters(BitPackValue):
         return result
 
     @property
-    def player_count(self) -> int:
+    def world_count(self) -> int:
         return len(self.presets)
 
     def get_preset(self, index: int) -> Preset:

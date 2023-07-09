@@ -1,4 +1,5 @@
 import asyncio
+import itertools
 import json
 import logging
 import random
@@ -522,11 +523,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         else:
             source_name = "game file"
 
-        if parameters.player_count != len(self._session.worlds):
+        if parameters.world_count > len(self._session.worlds):
             await async_dialog.warning(
                 self, "Incompatible permalink",
-                f"Given {source_name} is for {parameters.player_count} players, but "
-                f"this session only have {len(self._session.worlds)} rows.")
+                f"Given {source_name} is for {parameters.world_count} worlds, but "
+                f"this session has {len(self._session.worlds)} rows.")
             return False
 
         if any(not preset_p.is_same_configuration(preset_s.preset)
@@ -540,6 +541,26 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             )
             if response != async_dialog.StandardButton.Yes:
                 return False
+
+        all_names = {world.name for world in self._session.worlds}
+        for i in range(len(self._session.worlds), parameters.world_count):
+            name = f"World {i + 1}"
+            for suffix in itertools.count():
+                if name not in all_names:
+                    break
+                name = f"World {i + 1} ({suffix + 1})"
+
+            await self.game_session_api.create_unclaimed_world(
+                name,
+                VersionedPreset.with_preset(parameters.get_preset(i))
+            )
+
+        if parameters.world_count < len(self._session.worlds):
+            await async_dialog.warning(
+                self, "Temporary error",
+                f"New worlds created to fit the imported {source_name}. Please import it again."
+            )
+            return False
 
         return True
 

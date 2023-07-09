@@ -170,6 +170,23 @@ async def test_create_new_world(session_api, caplog, preset_manager):
     ]
 
 
+async def test_create_unclaimed_world(session_api, caplog, preset_manager):
+    # Run
+    await session_api.create_unclaimed_world("a friend", preset_manager.default_preset)
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        (1234,
+         admin_actions.SessionAdminGlobalAction.CREATE_WORLD.value,
+         ("a friend", preset_manager.default_preset.as_json)),
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         "[Session 1234] Creating unclaimed world named 'a friend' with Starter Preset")
+    ]
+
+
 async def test_create_patcher_file(session_api, caplog):
     uid = uuid.UUID('487fd145-d590-4984-b761-056974ce7d6d')
 

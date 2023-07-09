@@ -261,29 +261,29 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         numbered_players = [
             f"Player {i + 1}"
-            for i in range(description.player_count)
+            for i in range(description.world_count)
         ]
         if players is None:
             players = numbered_players
         self._player_names = dict(enumerate(players))
         assert len(self._player_names) == len(players)
 
-        self.export_iso_button.setEnabled(description.player_count == 1 or not randovania.is_frozen())
-        if description.player_count > 1:
+        self.export_iso_button.setEnabled(description.world_count == 1 or not randovania.is_frozen())
+        if description.world_count > 1:
             self.export_iso_button.setToolTip("Multiworld games can only be exported from a game session")
         else:
             self.export_iso_button.setToolTip("")
 
-        self.customize_user_preferences_button.setVisible(description.player_count == 1)
+        self.customize_user_preferences_button.setVisible(description.world_count == 1)
 
         self.player_index_combo.clear()
-        for i in range(description.player_count):
+        for i in range(description.world_count):
             self.player_index_combo.addItem(self._player_names[i], i)
         self.player_index_combo.setCurrentIndex(0)
-        self.player_index_combo.setVisible(description.player_count > 1)
+        self.player_index_combo.setVisible(description.world_count > 1)
 
         if description.has_spoiler:
-            if description.player_count == 1:
+            if description.world_count == 1:
                 if self.validator_widget is not None:
                     self.validator_widget.stop_validator()
 

@@ -252,8 +252,8 @@ def _change_layout_description(sio: ServerApp, session: MultiplayerSession, desc
         description = LayoutDescription.from_json_dict(description_json)
         worlds = session.get_ordered_worlds()
 
-        if description.player_count != len(worlds):
-            raise error.InvalidActionError(f"Description is for a {description.player_count} players,"
+        if description.world_count != len(worlds):
+            raise error.InvalidActionError(f"Description is for a {description.world_count} players,"
                                            f" while the session is for {len(worlds)}.")
 
         if any(world.order is None for world in worlds):

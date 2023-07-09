@@ -32,7 +32,7 @@ def generate_layout(options: Options,
     """
     with sentry_sdk.start_transaction(op="task", name="generate_layout") as span:
         games = {preset.game.short_name for preset in parameters.presets}
-        span.set_tag("num_worlds", parameters.player_count)
+        span.set_tag("num_worlds", parameters.world_count)
         span.set_tag("game", next(iter(games)) if len(games) == 1 else "cross-game")
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)

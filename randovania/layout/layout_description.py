@@ -150,8 +150,8 @@ class LayoutDescription:
         return self.generator_parameters.spoiler
 
     @property
-    def player_count(self) -> int:
-        return self.generator_parameters.player_count
+    def world_count(self) -> int:
+        return self.generator_parameters.world_count
 
     @property
     def all_presets(self) -> typing.Iterable[Preset]:

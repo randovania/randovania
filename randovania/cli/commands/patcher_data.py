@@ -16,7 +16,7 @@ async def patcher_data_command_logic_async(args):
     players_config = PlayersConfiguration(
         args.player_index,
         {i: f"Player {i + 1}"
-         for i in range(layout_description.player_count)},
+         for i in range(layout_description.world_count)},
     )
     preset = layout_description.get_preset(players_config.player_index)
 

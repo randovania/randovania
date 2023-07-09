@@ -13,7 +13,7 @@ def validate_command_logic(args):
     debug.set_level(args.debug)
 
     description = LayoutDescription.from_file(args.layout_file)
-    if description.player_count != 1:
+    if description.world_count != 1:
         raise ValueError("Validator does not support layouts with more than 1 player.")
 
     output_file = None
