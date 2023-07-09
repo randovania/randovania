@@ -527,7 +527,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             await async_dialog.warning(
                 self, "Incompatible permalink",
                 f"Given {source_name} is for {parameters.world_count} worlds, but "
-                f"this session has {len(self._session.worlds)} rows.")
+                f"this session has {len(self._session.worlds)} worlds.")
             return False
 
         if any(not preset_p.is_same_configuration(preset_s.preset)
