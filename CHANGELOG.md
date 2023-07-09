@@ -9,13 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: The generation order for multiworld session now correctly handles any kind of names.
 
-### Metroid Prime 2: Echoes
-
-- Added: Tracker layout "Debug Info", which also shows details useful for investigating errors. 
-
 ### Metroid Dread
 
-- **Major** - Added: Multiworld support for Dread. 
+- **Major** - Added: Multiworld support for Dread.
+
+#### Logic Database
+
+- Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
+- Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
+
+### Metroid Prime 2: Echoes
+
+- Added: Tracker layout "Debug Info", which also shows details useful for investigating errors.
 
 ## [6.0.1] - 2023-07-04
 
@@ -29,12 +34,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Pickups providing negative resources can now be sent in multiworld games.
 - Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words. 
 - Fixed: In multiworld sessions, the copy permalink button is properly disabled before a game is available.
-
-### Metroid Dread
-
-#### Logic Database
-
-- Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 
 ## [6.0.0] - 2023-07-03
 
