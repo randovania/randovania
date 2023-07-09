@@ -31,6 +31,7 @@ def client(skip_qtbot, tmp_path):
 
 async def test_start(client):
     game_connection = client.game_connection
+    client.start_server_sync_task = MagicMock()
 
     # Run
     await client.start()
@@ -38,6 +39,7 @@ async def test_start(client):
     # Assert
     game_connection.GameStateUpdated.connect.assert_called_once_with(client.on_game_state_updated)
     client.network_client.WorldPickupsUpdated.connect.assert_called_once_with(client.on_network_game_updated)
+    client.start_server_sync_task.assert_called_once_with()
 
 
 async def test_stop(client: MultiworldClient):
@@ -50,6 +52,18 @@ async def test_stop(client: MultiworldClient):
     # Assert
     sync_task.cancel.assert_called_once_with()
     assert client._sync_task is None
+
+
+async def test_start_server_sync_task(client):
+    client._server_sync = AsyncMock()
+
+    # Run
+    client.start_server_sync_task()
+    await client._sync_task
+
+    # Assert
+    client._server_sync.assert_awaited_once_with()
+    assert client._sync_task.done()
 
 
 @pytest.mark.parametrize("exists", [False, True, "invalid"])
