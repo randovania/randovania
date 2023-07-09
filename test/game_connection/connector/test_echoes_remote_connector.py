@@ -75,7 +75,7 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
         op: struct.pack(">II", item.max_capacity, item.max_capacity)
         for op, item in zip(ops, connector.game.resource_database.item)
     }
-    connector.executor.perform_single_memory_operation.return_value = b"\x00\x00\x00\x00" * 32
+    connector.executor.perform_single_memory_operation.return_value = b"\x00\x00\x00\x00" * 16
     _override = {
         "ObjectCount": 0,
     }
