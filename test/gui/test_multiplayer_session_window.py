@@ -424,7 +424,7 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
     )
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
-    permalink.parameters.player_count = 2 + (end_state == "wrong_count")
+    permalink.parameters.world_count = 2 + (end_state == "wrong_count")
     permalink.parameters.presets = [MagicMock(), MagicMock()]
     permalink.parameters.presets[0].is_same_configuration.return_value = False
 
@@ -471,7 +471,7 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
 
     preset = MagicMock()
     preset.is_same_configuration.return_value = True
-    layout.generator_parameters.player_count = 2 + (end_state == "wrong_count")
+    layout.generator_parameters.world_count = 2 + (end_state == "wrong_count")
     layout.parameters.presets = [preset, preset]
 
     session = MagicMock()

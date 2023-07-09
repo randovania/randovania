@@ -180,7 +180,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
         title=f"Spoiler file for Randovania {description.randovania_version_text}",
     )
 
-    if description.player_count == 1:
+    if description.world_count == 1:
         preset = description.get_preset(0)
         embed.description = "{}, with preset {}.\nSeed Hash: {}\nPermalink: {}".format(
             preset.game.long_name, preset.name,
@@ -199,7 +199,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
         games_text += last_game
 
         embed.description = "{} player multiworld for {}.\nSeed Hash: {}\nPermalink: {}".format(
-            description.player_count,
+            description.world_count,
             games_text,
             description.shareable_word_hash,
             description.permalink.as_base64_str,

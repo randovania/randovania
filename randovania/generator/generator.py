@@ -194,7 +194,7 @@ async def _create_description(generator_params: GeneratorParameters,
 
     presets = [
         generator_params.get_preset(i)
-        for i in range(generator_params.player_count)
+        for i in range(generator_params.world_count)
     ]
     if not presets:
         raise InvalidConfiguration("Must have at least one World")
@@ -248,7 +248,7 @@ async def generate_and_validate_description(generator_params: GeneratorParameter
         raise GenerationFailure("Could not generate a game with the given settings",
                                 generator_params=generator_params, source=e) from e
 
-    if validate_after_generation and generator_params.player_count == 1:
+    if validate_after_generation and generator_params.world_count == 1:
         final_state_async = resolver.resolve(
             configuration=generator_params.get_preset(0).configuration,
             patches=result.all_patches[0],

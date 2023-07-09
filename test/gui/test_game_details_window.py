@@ -68,7 +68,7 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
 
     options = MagicMock()
     description = MagicMock(spec=LayoutDescription)
-    description.player_count = 1
+    description.world_count = 1
     description.shareable_hash = "12345"
     description.shareable_word_hash = "Some Hash Words"
     description.randovania_version_text = "v1.2.4"
