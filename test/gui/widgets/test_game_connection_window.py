@@ -2,6 +2,7 @@ from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, ANY
 
 import pytest
+import pytest_mock
 from PySide6 import QtWidgets
 from pytest_mock import MockerFixture
 
@@ -114,10 +115,14 @@ async def test_add_connector_builder_debug(window: GameConnectionWindow, abort):
 
 
 @pytest.mark.parametrize("abort", [False, True])
-async def test_add_connector_builder_dread(window: GameConnectionWindow, abort):
+async def test_add_connector_builder_dread(window: GameConnectionWindow, abort, mocker: pytest_mock.MockerFixture):
     # Setup
     window.game_connection.add_connection_builder = MagicMock()
-    window._prompt_for_text = AsyncMock(return_value=None if abort else "my_ip")
+    mocker.patch(
+        "randovania.games.dread.gui.dialog.dread_connector_prompt_dialog.DreadConnectorPromptDialog.prompt",
+        new_callable=AsyncMock,
+        return_value=None if abort else "my_ip"
+    )
 
     # Run
     await window._add_connector_builder(ConnectorBuilderChoice.DREAD)

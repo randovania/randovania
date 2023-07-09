@@ -16,6 +16,7 @@ from randovania.game_connection.connector.debug_remote_connector import DebugRem
 from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_connection.game_connection import GameConnection
+from randovania.games.dread.gui.dialog.dread_connector_prompt_dialog import DreadConnectorPromptDialog
 from randovania.games.game import RandovaniaGame
 from randovania.gui.debug_backend_window import DebugConnectorWindow
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
@@ -180,10 +181,12 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             args["ip"] = new_ip
 
         if choice == ConnectorBuilderChoice.DREAD:
-            new_ip = await self._prompt_for_text(
-                "Enter Ryujinx's/Switch's IP",
-                "Enter the IP address of your Switch or use \"localhost\" for Ryujinx."
-                "You can check the IP address in the system settings."
+            new_ip = await DreadConnectorPromptDialog.prompt(
+                parent=self,
+                is_modal=True,
+
+                title="Select Ryujinx or Switch to connect to",
+                description="Enter the IP address of your Switch. It can be found in the system settings."
             )
             if new_ip is None:
                 return
