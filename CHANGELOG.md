@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.X.X] - 2023-08-??
 
+- Fixed: The generation order for multiworld session now correctly handles any kind of names.
+
 ### Metroid Prime 2: Echoes
 
 - Added: Tracker layout "Debug Info", which also shows details useful for investigating errors. 
