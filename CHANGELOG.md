@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - **Major** - Added: Multiworld support for Dread.
+- Changed: Ryujinx (Legacy) is disabled when auto-tracker support is on, or in a multiworld.
 
 #### Logic Database
 
