@@ -11,7 +11,7 @@ from randovania.game_description.db.area import Area
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources
+from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
@@ -55,15 +55,15 @@ def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
         yield {"item_id": item_id, "quantity": quantity}
 
 
-def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]:
-    pickup = detail.original_pickup
+def get_resources_for_details(pickup: PickupEntry, conditional_resources: list[ConditionalResources],
+                              other_player: bool) -> list[list[dict]]:
     resources = [
         list(convert_conditional_resource(conditional_resource))
-        for conditional_resource in detail.conditional_resources
+        for conditional_resource in conditional_resources
     ]
 
     # don't add more resources for multiworld items
-    if detail.other_player:
+    if other_player:
         return resources
 
     if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
@@ -214,7 +214,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "icon_id": detail.model.name
             }
 
-        resources = get_resources_for_details(detail)
+        resources = get_resources_for_details(detail.original_pickup, detail.conditional_resources, detail.other_player)
 
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
