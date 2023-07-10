@@ -107,21 +107,21 @@
                         5
                     ],
                     "pickup_count": 44,
-                    "requires_main_item": false
+                    "requires_main_item": true
                 },
                 "Super Missile Expansion": {
                     "ammo_count": [
                         2
                     ],
                     "pickup_count": 9,
-                    "requires_main_item": false
+                    "requires_main_item": true
                 },
                 "Power Bomb Expansion": {
                     "ammo_count": [
                         2
                     ],
                     "pickup_count": 9,
-                    "requires_main_item": false
+                    "requires_main_item": true
                 }
             }
         },
@@ -136,7 +136,13 @@
             "mode": "vanilla",
             "types_state": {
                 "door": {
-                    "can_change_from": [],
+                    "can_change_from":
+                    [
+                        "Normal Door",
+                        "Missile Door",
+                        "Power Bomb Door",
+                        "Super Missile Door"
+                    ],
                     "can_change_to": []
                 }
             }
@@ -147,13 +153,13 @@
         "softlock_prevention_blocks": true,
         "septogg_helpers": true,
         "change_level_design": false,
-        "skip_cutscenes": false,
+        "skip_cutscenes": true,
         "respawn_bomb_blocks": false,
         "screw_blocks": false,
         "artifacts": {
             "prefer_metroids": true,
             "prefer_bosses": false,
-            "required_artifacts": 15
+            "required_artifacts": 10
         },
         "fusion_mode": false,
         "grave_grotto_blocks": false,
