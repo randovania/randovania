@@ -146,7 +146,7 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
             name = QtGui.QStandardItem(session.name)
             state = QtGui.QStandardItem(session.state.user_friendly_name)
             num_players = QtGui.QStandardItem()
-            num_players.setData(session.num_players, Qt.ItemDataRole.DisplayRole)
+            num_players.setData(session.num_users, Qt.ItemDataRole.DisplayRole)
             has_password = QtGui.QStandardItem("Yes" if session.has_password else "No")
             creator = QtGui.QStandardItem(session.creator)
             creation_date = QtGui.QStandardItem()

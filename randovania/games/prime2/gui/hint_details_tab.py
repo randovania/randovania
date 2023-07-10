@@ -10,7 +10,7 @@ from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout import filtered_database
-from randovania.lib.dict_lib import iterate_key_sorted
+from randovania.lib.container_lib import iterate_key_sorted
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches

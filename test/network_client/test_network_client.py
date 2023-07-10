@@ -177,6 +177,29 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
         assert client._sessions_interested_in == set()
 
 
+@pytest.mark.parametrize("was_listening", [False, True])
+@pytest.mark.parametrize("listen", [False, True])
+async def test_world_track_inventory(client: NetworkClient, listen, was_listening):
+    uid = uuid.UUID('8b8b9269-1e54-42fe-9e5f-82875ef986e2')
+
+    client.server_call = AsyncMock()
+    client._tracking_worlds.add((uid, 9999))
+    if was_listening:
+        client._tracking_worlds.add((uid, 4567))
+
+    # Run
+    await client.world_track_inventory(uid, 4567, listen)
+
+    # Assert
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_watch_inventory", (str(uid), 4567, listen, True)
+    )
+    if listen:
+        assert client._tracking_worlds == {(uid, 9999), (uid, 4567)}
+    else:
+        assert client._tracking_worlds == {(uid, 9999)}
+
+
 async def test_emit_with_result_timeout(client: NetworkClient):
     # Setup
     client._connection_state = ConnectionState.Connected

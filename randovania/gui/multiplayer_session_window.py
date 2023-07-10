@@ -834,8 +834,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         preset = VersionedPreset.from_str(world.preset_raw)
 
         if preset.game not in self._trackers:
-            return async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information,
-                                            "Unsupported Game", f"No tracker available for {preset.game.long_name}")
+            return await async_dialog.message_box(
+                self, QtWidgets.QMessageBox.Icon.Information,
+                "Unsupported Game",
+                f"No tracker available for {preset.game.long_name}"
+            )
 
         tracker_window = ItemTrackerPopupWindow(
             f"{self._session.name} Tracker: {world.name}", self._trackers[preset.game],

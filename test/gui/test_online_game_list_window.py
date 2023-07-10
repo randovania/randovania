@@ -16,13 +16,13 @@ async def test_attempt_join(skip_qtbot):
 
     session_a = MultiplayerSessionListEntry(
         id=1, name="A Game", has_password=True, state=MultiplayerSessionState.FINISHED,
-        num_players=1, creator="You", is_user_in_session=True,
+        num_users=1, num_worlds=0, creator="You", is_user_in_session=True,
         creation_date=datetime.datetime(year=2015, month=5, day=1, tzinfo=utc),
     )
     session_b = MultiplayerSessionListEntry(
         id=2, name="B Game", has_password=True,
         state=MultiplayerSessionState.IN_PROGRESS,
-        num_players=1, creator="You", is_user_in_session=True,
+        num_users=1, num_worlds=0, creator="You", is_user_in_session=True,
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=4),
     )
 

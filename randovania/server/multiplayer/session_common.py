@@ -1,5 +1,4 @@
 import hashlib
-import uuid
 
 import flask_socketio
 import peewee
@@ -8,7 +7,7 @@ import sentry_sdk
 from randovania.bitpacking import construct_pack
 from randovania.network_common import error, signals
 from randovania.server import database
-from randovania.server.database import MultiplayerAuditEntry, MultiplayerSession, World, WorldUserAssociation
+from randovania.server.database import MultiplayerAuditEntry, MultiplayerSession, World
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
@@ -22,14 +21,6 @@ def emit_session_global_event(session: MultiplayerSession, name: str, data):
     flask_socketio.emit(name, data, room=room_name_for(session.id), namespace="/")
 
 
-def get_inventory_room_name_raw(world_uuid: uuid.UUID, user_id: int):
-    return f"multiplayer-{world_uuid}-{user_id}-inventory"
-
-
-def get_inventory_room_name(association: WorldUserAssociation):
-    return get_inventory_room_name_raw(association.world.uuid, association.user.id)
-
-
 def get_membership_for(sio_or_user: ServerApp | database.User | int, session: int | database.MultiplayerSession
                        ) -> database.MultiplayerMembership:
     if isinstance(sio_or_user, ServerApp):
@@ -41,30 +32,6 @@ def get_membership_for(sio_or_user: ServerApp | database.User | int, session: in
         return database.MultiplayerMembership.get_by_ids(user, session)
     except peewee.DoesNotExist:
         raise error.NotAuthorizedForActionError
-
-
-def emit_inventory_update(association: WorldUserAssociation):
-    if association.inventory is None:
-        return
-
-    flask_socketio.emit(signals.WORLD_BINARY_INVENTORY,
-                        (str(association.world.uuid), association.user.id, association.inventory),
-                        room=get_inventory_room_name(association),
-                        namespace="/")
-    # try:
-    #     inventory: RemoteInventory = construct_pack.decode(association.inventory, RemoteInventory)
-    #     flask_socketio.emit(
-    #         signals.WORLD_JSON_INVENTORY,
-    #         (association.world.uuid, association.user.id, {
-    #             name: {"amount": item.amount, "capacity": item.capacity}
-    #             for name, item in inventory.items()
-    #         }),
-    #         room=get_inventory_room_name(association),
-    #         namespace="/"
-    #     )
-    # except construct.ConstructError as e:
-    #     logger().warning("Unable to encode inventory for world %s, user %d: %s",
-    #                      association.world.uuid, association.user.id, str(e))
 
 
 def describe_session(session: MultiplayerSession, world: World | None = None) -> str:
