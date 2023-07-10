@@ -90,7 +90,7 @@ def test_pickup_data_for_pb_expansion(locked, dread_game_description, preset_man
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = get_resources_for_details(details)
+    result = get_resources_for_details(details.original_pickup, details.conditional_resources, details.other_player)
 
     # Assert
     assert result == [
@@ -121,7 +121,7 @@ def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager)
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = get_resources_for_details(details)
+    result = get_resources_for_details(details.original_pickup, details.conditional_resources, details.other_player)
 
     # Assert
     assert result == [
