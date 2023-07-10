@@ -431,10 +431,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
     def _tilegroup_patches(self):
         return [
             # beam blocks -> speedboost blocks in Artaria EMMI zone Speed Booster puzzle to prevent softlock
-            dict(
-                actor=dict(scenario="s010_cave",layer="breakables",actor="breakabletilegroup_060"),
-                tiletype="SPEEDBOOST"
-            )
+            {
+                "actor": {"scenario": "s010_cave","layer": "breakables","actor": "breakabletilegroup_060"},
+                "tiletype": "SPEEDBOOST"
+            }
         ]
 
     def create_data(self) -> dict:

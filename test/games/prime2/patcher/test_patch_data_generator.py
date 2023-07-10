@@ -364,7 +364,7 @@ def test_get_single_hud_text_locked_pbs():
     # Run
     result = pickup_exporter._get_single_hud_text("Locked Power Bomb Expansion",
                                                   patch_data_factory._simplified_memo_data(),
-                                                  tuple())
+                                                  ())
 
     # Assert
     assert result == "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."

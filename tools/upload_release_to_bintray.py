@@ -14,7 +14,7 @@ PACKAGE = 'randovania'
 
 
 async def main():
-    release_files = [f for f in _ROOT_FOLDER.joinpath("dist").glob("randovania-*.*")]
+    release_files = list(_ROOT_FOLDER.joinpath("dist").glob("randovania-*.*"))
     print(f"Found {len(release_files)} files at {_ROOT_FOLDER.joinpath('dist')}:")
     for f in release_files:
         print(f"* {f}")

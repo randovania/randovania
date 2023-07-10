@@ -346,7 +346,7 @@ def create_visual_etm() -> PickupEntry:
     """
     return PickupEntry(
         name="Unknown item",
-        progression=tuple(),
+        progression=(),
         model=PickupModel(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name=echoes_items.USELESS_PICKUP_MODEL,

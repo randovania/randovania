@@ -124,7 +124,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
                                         (resource_a, 5)),
                            generator_params=default_generator_params, )
     pickup_c = PickupEntry("P-C", model_2, AMMO_PICKUP_CATEGORY, generic_pickup_category,
-                           progression=tuple(),
+                           progression=(),
                            extra_resources=((resource_b, 2), (resource_a, 1)),
                            unlocks_resource=True,
                            resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
@@ -238,16 +238,16 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     useless_model = PickupModel(game=RandovaniaGame.METROID_PRIME_CORRUPTION, name="Useless")
 
     pickup_a = PickupEntry("A", model_1, generic_pickup_category, generic_pickup_category,
-                           progression=tuple(),
+                           progression=(),
                            generator_params=default_generator_params, )
     pickup_b = PickupEntry("B", model_2, generic_pickup_category, generic_pickup_category,
                            progression=((resource_b, 1), (resource_b, 1)),
                            generator_params=default_generator_params, )
     pickup_c = PickupEntry("C", model_2, generic_pickup_category, generic_pickup_category,
-                           progression=tuple(),
+                           progression=(),
                            generator_params=default_generator_params, )
     useless_pickup = PickupEntry("Useless", useless_model, USELESS_PICKUP_CATEGORY, USELESS_PICKUP_CATEGORY,
-                                 progression=tuple(),
+                                 progression=(),
                                  generator_params=default_generator_params, )
 
     patches = dataclasses.replace(empty_patches, game=MagicMock())
@@ -473,7 +473,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
         description="Scan Text",
         collection_text=['Sent The Name to Someone!'],
         conditional_resources=[
-            ConditionalResources(None, None, tuple()),
+            ConditionalResources(None, None, ()),
         ],
         conversion=[],
         model=model,

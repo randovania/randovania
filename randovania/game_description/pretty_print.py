@@ -44,7 +44,7 @@ def pretty_print_requirement_array(requirement: RequirementArrayBase,
         pretty_print_resource_requirement(item)
         for item in sorted(resource_requirements)
     ]
-    sorted_templates = list(sorted(item.template_name for item in template_requirements))
+    sorted_templates = sorted(item.template_name for item in template_requirements)
 
     if isinstance(requirement, RequirementOr):
         title = "Any"

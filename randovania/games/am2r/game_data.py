@@ -16,8 +16,8 @@ def _gui() -> game.GameGui:
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.AM2RCosmeticPatchesDialog,
         export_dialog=gui.AM2RGameExportDialog,
-        progressive_item_gui_tuples=tuple(),
-        spoiler_visualizer=tuple(),
+        progressive_item_gui_tuples=(),
+        spoiler_visualizer=(),
     )
 
 

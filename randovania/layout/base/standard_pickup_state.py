@@ -46,7 +46,7 @@ class StandardPickupState:
     num_shuffled_pickups: int = 0
     num_included_in_starting_pickups: int = 0
     priority: float = 1.0
-    included_ammo: tuple[int, ...] = tuple()
+    included_ammo: tuple[int, ...] = ()
 
     def check_consistency(self, pickup: StandardPickupDefinition):
         db = default_database.resource_database_for(pickup.game)

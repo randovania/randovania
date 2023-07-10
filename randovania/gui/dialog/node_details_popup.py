@@ -51,9 +51,7 @@ class DockWeaknessListModel(QtCore.QAbstractListModel):
     def change_type(self, new_type: DockType):
         self.type = new_type
         self.items = []
-        self.delegate.items = [
-            it for it in self.db.weaknesses[self.type].keys()
-        ]
+        self.delegate.items = list(self.db.weaknesses[self.type].keys())
 
     def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
         return len(self.items) + 1

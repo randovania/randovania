@@ -121,10 +121,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
             locations[world_name][game.region_list.node_name(node)] = game_patches_serializer._ETM_NAME
 
     data["locations"] = {
-        region: {
-            area: item
-            for area, item in sorted(locations[region].items())
-        }
+        region: dict(sorted(locations[region].items()))
         for region in sorted(locations.keys())
     }
 

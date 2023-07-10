@@ -112,10 +112,7 @@ def calculate_pickup_count(items: dict[str, dict[str, int]]) -> dict[str, int]:
 
 def sort_by_contents(data: dict) -> dict:
     return {
-        item: {
-            location: count
-            for location, count in sorted(data[item].items(), key=lambda t: t[1], reverse=True)
-        }
+        item: dict(sorted(data[item].items(), key=lambda t: t[1], reverse=True))
         for item in sorted(data.keys())
     }
 
@@ -233,8 +230,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: str | None, use_per
         for location in locations.keys()
     }
 
-    regions = dict()
-    region_totals = dict()
+    regions = {}
+    region_totals = {}
 
     total_progression_item_count = 0
     for location in locations:
@@ -255,7 +252,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: str | None, use_per
         regions[region] += count
 
     # probability that any given location in this region contains progression
-    regions_weighted = dict()
+    regions_weighted = {}
     for region in regions:
         regions_weighted[region] = (regions[region] / seed_count) / region_totals[region]
 
@@ -265,10 +262,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: str | None, use_per
     location_progression_count = sort_by_count(progression_count_for_location)
     location_progression_no_key_count = sort_by_count(progression_no_key_count_for_location)
 
-    stddev_by_location = {
-        location: stddev
-        for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1] or math.inf, reverse=True)
-    }
+    stddev_by_location = dict(sorted(stddev_by_location.items(), key=lambda t: t[1] or math.inf, reverse=True))
 
     # Average standardized deviances for all locations
     accumulated_stddev = 0
@@ -383,7 +377,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: str | None, use_per
             for potential_values in data.values():
                 possible_columns |= set(potential_values.keys())
 
-            possible_columns = list(sorted(possible_columns))
+            possible_columns = sorted(possible_columns)
             possible_columns.insert(0, "row_name")
 
             with open(os.path.join(csv_dir, field + ".csv"), "w", newline='') as csv_file:

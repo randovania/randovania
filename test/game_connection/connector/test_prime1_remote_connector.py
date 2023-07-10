@@ -42,7 +42,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
     else:
         extra = (db.energy_tank, db.energy_tank.max_capacity)
 
-    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=tuple(),
+    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=(),
                          generator_params=default_generator_params,
                          extra_resources=(
                              extra,

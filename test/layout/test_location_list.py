@@ -29,7 +29,7 @@ def _location_with_data(request, mocker, echoes_game_description):
          if area.has_start_node() and node.valid_starting_location), 15))
 
     mocker.patch("randovania.layout.lib.location_list.LocationList.nodes_list",
-                 return_value=list(sorted(nodes)))
+                 return_value=sorted(nodes))
     return request.param["encoded"], LocationList.from_json(request.param["json"], RandovaniaGame.METROID_PRIME_ECHOES)
 
 

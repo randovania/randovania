@@ -7,7 +7,7 @@ from randovania.games.game import RandovaniaGame
 
 
 class DebugRemoteConnector(RemoteConnector):
-    remote_pickups: tuple[PickupEntryWithOwner, ...] = tuple()
+    remote_pickups: tuple[PickupEntryWithOwner, ...] = ()
     _finished: bool = False
 
     RemotePickupsUpdated = Signal()

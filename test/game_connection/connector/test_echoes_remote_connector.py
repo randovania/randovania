@@ -245,7 +245,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
             (db.get_item("Percent"), 1),
         ]
 
-    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=tuple(),
+    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=(),
                          generator_params=default_generator_params,
                          extra_resources=(
                              (db.energy_tank, db.energy_tank.max_capacity),

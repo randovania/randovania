@@ -261,7 +261,7 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
         ),
         pickup_category=generic_pickup_category,
         broad_category=generic_pickup_category,
-        progression=tuple(),
+        progression=(),
         generator_params=default_generator_params,
     )
 

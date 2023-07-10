@@ -42,8 +42,8 @@ def test_distribute_pre_fill_weaknesses_swap(empty_patches):
     result = dock_weakness_distributor.distribute_pre_fill_weaknesses(
         patches, rng,
     )
-    docks = dict(((n.identifier.area_name, n.name), w.name)
-                 for n, w in result.all_dock_weaknesses())
+    docks = {(n.identifier.area_name, n.name): w.name
+                 for n, w in result.all_dock_weaknesses()}
 
     assert docks == {
         ('Back-Only Lock Room', 'Door to Starting Area'): 'Explosive Door',
@@ -79,8 +79,8 @@ def test_distribute_pre_fill_weaknesses_swap_force_two_way(empty_patches, force_
     result = dock_weakness_distributor.distribute_pre_fill_weaknesses(
         patches, rng,
     )
-    docks = dict(((n.identifier.area_name, n.name), w.name)
-                 for n, w in result.all_dock_weaknesses())
+    docks = {(n.identifier.area_name, n.name): w.name
+                 for n, w in result.all_dock_weaknesses()}
 
     assert docks == {
         ('Back-Only Lock Room', 'Door to Starting Area'): 'Back-Only Door',
@@ -115,8 +115,8 @@ def test_distribute_pre_fill_docks(empty_patches, monkeypatch):
     result = dock_weakness_distributor.distribute_pre_fill_weaknesses(
         patches, rng,
     )
-    docks = dict(((n.identifier.area_name, n.name), w.name)
-                 for n, w in result.all_dock_weaknesses())
+    docks = {(n.identifier.area_name, n.name): w.name
+                 for n, w in result.all_dock_weaknesses()}
     to_shuffle = [
         (n.identifier.area_name, n.name)
         for n in result.all_weaknesses_to_shuffle()

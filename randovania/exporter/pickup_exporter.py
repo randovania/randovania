@@ -229,7 +229,7 @@ class PickupExporterMulti(PickupExporter):
                 conditional_resources=[ConditionalResources(
                     name=None,
                     item=None,
-                    resources=tuple(),
+                    resources=(),
                 )],
                 conversion=[],
                 model=model,

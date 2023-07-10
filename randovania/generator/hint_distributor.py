@@ -237,8 +237,8 @@ class HintDistributor(ABC):
                 raise UnableToGenerate("Not enough PickupNodes in the game to fill all hint locations.")
 
         # Get an stable order
-        ordered_possible_indices = list(sorted(possible_indices))
-        ordered_potential_hint_locations = list(sorted(potential_hint_locations))
+        ordered_possible_indices = sorted(possible_indices)
+        ordered_potential_hint_locations = sorted(potential_hint_locations)
 
         num_logbooks: dict[PickupIndex, int] = {
             index: sum(1 for indices in hint_initial_pickups.values() if index in indices)

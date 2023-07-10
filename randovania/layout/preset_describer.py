@@ -177,7 +177,7 @@ def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_name
 
 
 def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]):
-    item_names = [item for item in message_to_item.values()]
+    item_names = list(message_to_item.values())
     main_required = _require_majors_check(ammo_configuration, item_names)
     return dict(zip(message_to_item.keys(), main_required))
 
