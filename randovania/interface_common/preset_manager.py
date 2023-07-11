@@ -1,7 +1,6 @@
 import asyncio
 import datetime
 import logging
-import os
 import time
 import typing
 import uuid
@@ -35,7 +34,7 @@ def _commit(message: str, file_path: Path, repository: Path, remove: bool):
         try:
             r.open_index()
         except Exception:
-            os.remove(r.index_path())
+            Path(r.index_path()).unlink()
             r.reset_index()
 
     author = "randovania <nobody@example.com>"
@@ -156,7 +155,7 @@ class PresetManager:
     def delete_preset(self, preset: VersionedPreset):
         del self.custom_presets[preset.uuid]
         path = self._file_name_for_preset(preset)
-        os.remove(path)
+        path.unlink()
         self._commit(f"Remove preset '{preset.name}'", path, True)
 
     def included_preset_with(self, game: RandovaniaGame, name: str) -> VersionedPreset | None:

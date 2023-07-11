@@ -1,6 +1,5 @@
 import argparse
 import logging
-import os
 import sys
 from pathlib import Path
 
@@ -21,7 +20,8 @@ def create_subparsers(root_parser):
 def _print_version(args):
     print("Randovania {} from {}".format(
         randovania.VERSION,
-        os.path.dirname(randovania.__file__)))
+        Path(randovania.__file__).parent
+    ))
 
 
 def _create_parser():
