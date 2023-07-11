@@ -1,8 +1,11 @@
-from argparse import ArgumentParser
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 
 def describe_command_logic(args):

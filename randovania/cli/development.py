@@ -1,7 +1,11 @@
-from argparse import ArgumentParser
+
+from typing import TYPE_CHECKING
 
 from randovania.cli.commands.new_game import add_create_databases, add_new_game_command
 from randovania.cli.commands.refresh_presets import add_refresh_presets_command
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 __all__ = ["create_subparsers"]
 

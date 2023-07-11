@@ -1,4 +1,4 @@
-from collections.abc import Callable
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, call, patch
 
 import pytest
@@ -7,6 +7,9 @@ from randovania.generator import generator
 from randovania.generator.filler.runner import FillerPlayerResult, FillerResults
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 @patch("randovania.generator.generator._validate_item_pool_size", autospec=True)

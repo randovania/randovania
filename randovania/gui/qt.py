@@ -6,7 +6,6 @@ import logging.handlers
 import os
 import sys
 import typing
-from argparse import ArgumentParser
 from pathlib import Path
 
 from PySide6 import QtCore, QtWidgets
@@ -16,6 +15,10 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence
 
 if typing.TYPE_CHECKING:
+    from argparse import ArgumentParser
+
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.multiworld_client import MultiworldClient
     from randovania.interface_common.options import Options
     from randovania.interface_common.preset_manager import PresetManager
 
@@ -65,10 +68,8 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
     _migrate_old_base_preset_uuid(preset_manager, options)
     logger.info("Finished loading presets!")
 
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
     network_client: QtNetworkClient = app.network_client
 
-    from randovania.gui.multiworld_client import MultiworldClient
     multiworld_client: MultiworldClient = app.multiworld_client
 
     async def attempt_login():

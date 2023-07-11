@@ -1,13 +1,16 @@
 from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_sky_temple_key
 from randovania.layout.exceptions import InvalidConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 def add_sky_temple_key_distribution_logic(game: GameDescription,

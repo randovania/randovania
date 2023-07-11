@@ -1,6 +1,7 @@
 import collections
 import dataclasses
 from functools import partial
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
@@ -12,7 +13,6 @@ from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
@@ -31,6 +31,9 @@ from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
     "For a total of {total} from this source."

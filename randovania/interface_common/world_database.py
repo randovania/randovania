@@ -4,15 +4,17 @@ import asyncio
 import dataclasses
 import logging
 import uuid
-from collections.abc import Iterable
-from pathlib import Path
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
 from PySide6.QtCore import QObject, Signal
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib import json_lib, migration_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from pathlib import Path
 
 _MIGRATIONS = [
     # lambda data: data,

@@ -3,13 +3,13 @@ import itertools
 import json
 import logging
 import traceback
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 from qasync import asyncSlot
 
 from randovania.game_description import integrity_check
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
 from randovania.game_description.db.dock_node import DockNode
@@ -17,7 +17,6 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region import Region
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
@@ -30,6 +29,10 @@ from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.widgets.combo_box_item_delegate import ComboBoxItemDelegate
 from randovania.lib import enum_lib, frozen_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.region import Region
 
 
 def refresh_if_needed(combo: QtWidgets.QComboBox, func):

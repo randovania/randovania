@@ -3,7 +3,6 @@ from __future__ import annotations
 import copy
 import dataclasses
 import typing
-from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
@@ -21,6 +20,8 @@ class IncompatibleStartingEquipment(Exception):
 
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
     from randovania.game_description.assignment import (
         DockWeaknessAssociation,
         NodeConfigurationAssociation,

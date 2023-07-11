@@ -1,4 +1,5 @@
-from argparse import ArgumentParser
+
+from typing import TYPE_CHECKING
 
 from randovania.cli.commands.batch_distribute import add_batch_distribute_command
 from randovania.cli.commands.decribe_layout import add_describe_command
@@ -6,6 +7,9 @@ from randovania.cli.commands.generate import add_generate_commands
 from randovania.cli.commands.patcher_data import add_patcher_data_command
 from randovania.cli.commands.permalink import add_permalink_command
 from randovania.cli.commands.validate import add_validate_command
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 __all__ = ["create_subparsers"]
 

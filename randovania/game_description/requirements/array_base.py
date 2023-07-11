@@ -1,16 +1,17 @@
 from __future__ import annotations
 
 import typing
-from collections.abc import Iterable
 
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Iterable
+
     from randovania.game_description.requirements.requirement_and import RequirementAnd
     from randovania.game_description.requirements.requirement_or import RequirementOr
     from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
 
 
 class RequirementArrayBase(Requirement):

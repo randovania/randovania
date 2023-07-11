@@ -1,11 +1,14 @@
 import argparse
 import logging
+from typing import TYPE_CHECKING
 
 from randovania.game_description import data_reader, data_writer, pretty_print
 from randovania.game_description.editor import Editor
-from randovania.game_description.requirements.base import Requirement
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from randovania.game_description.requirements.base import Requirement
 
 
 def bulk_move_node_logic(args):
