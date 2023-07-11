@@ -4,8 +4,8 @@ from randovania.games.super_metroid.gui.preset_settings import super_metroid_pre
 from randovania.games.super_metroid.gui.super_metroid_game_tab import SuperMetroidGameTabWidget
 
 __all__ = [
-    SuperMetroidGameExportDialog,
-    SuperCosmeticPatchesDialog,
-    super_metroid_preset_tabs,
-    SuperMetroidGameTabWidget,
+    "SuperMetroidGameExportDialog",
+    "SuperCosmeticPatchesDialog",
+    "super_metroid_preset_tabs",
+    "SuperMetroidGameTabWidget",
 ]

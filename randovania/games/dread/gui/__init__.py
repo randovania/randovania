@@ -5,9 +5,9 @@ from randovania.games.dread.gui.hint_details_tab import DreadHintDetailsTab
 from randovania.games.dread.gui.preset_settings import dread_preset_tabs
 
 __all__ = [
-    DreadCosmeticPatchesDialog,
-    DreadGameExportDialog,
-    DreadGameTabWidget,
-    DreadHintDetailsTab,
-    dread_preset_tabs,
+    "DreadCosmeticPatchesDialog",
+    "DreadGameExportDialog",
+    "DreadGameTabWidget",
+    "DreadHintDetailsTab",
+    "dread_preset_tabs",
 ]

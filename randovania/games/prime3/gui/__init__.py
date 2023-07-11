@@ -4,8 +4,8 @@ from randovania.games.prime3.gui.dialog.game_export_dialog import CorruptionGame
 from randovania.games.prime3.gui.preset_settings import prime3_preset_tabs
 
 __all__ = [
-    CorruptionGameTabWidget,
-    CorruptionCosmeticPatchesDialog,
-    CorruptionGameExportDialog,
-    prime3_preset_tabs,
+    "CorruptionGameTabWidget",
+    "CorruptionCosmeticPatchesDialog",
+    "CorruptionGameExportDialog",
+    "prime3_preset_tabs",
 ]
