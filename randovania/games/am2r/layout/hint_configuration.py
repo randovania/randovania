@@ -12,7 +12,7 @@ class ItemHintMode(BitPackEnum, Enum):
     PRECISE = "precise"
 
     @classmethod
-    def default(cls) -> "ArtifactHintMode":
+    def default(cls) -> "ItemHintMode":
         return cls.PRECISE
 
 

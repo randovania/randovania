@@ -20,9 +20,9 @@ class PresetAM2RHints(PresetTab, Ui_PresetAM2RHints):
 
         self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
 
-        for i, art_hint_mode in enumerate(ItemHintMode):
-            self.hint_artifact_combo.setItemData(i, art_hint_mode)
-            self.ice_beam_hint_combo.setItemData(i, ibeam_hint_mode)
+        for i, item_hint_mode in enumerate(ItemHintMode):
+            self.hint_artifact_combo.setItemData(i, item_hint_mode)
+            self.ice_beam_hint_combo.setItemData(i, item_hint_mode)
 
         self.hint_artifact_combo.currentIndexChanged.connect(self._on_art_combo_changed)
         self.ice_beam_hint_combo.currentIndexChanged.connect(self._on_ibeam_combo_changed)
