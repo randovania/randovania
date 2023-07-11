@@ -98,20 +98,20 @@ class PrimeFamilyHintNamer(HintNamer):
         )
 
     def format_temple_name(self, temple_name: str, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def color_joke(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def color_item(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def color_player(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def color_location(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError

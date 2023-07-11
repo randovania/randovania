@@ -53,14 +53,14 @@ class GameExportDialog(QtWidgets.QDialog):
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         """The game associated with this class."""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def auto_save_spoiler(self) -> bool:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def save_options(self):
         with self._options as options:
@@ -72,7 +72,7 @@ class GameExportDialog(QtWidgets.QDialog):
 
     def get_game_export_params(self) -> GameExportParams:
         """Get the export params defined by the user. It'll be sent over to the `GameExporter`."""
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 def _prompt_for_output_common(parent: QtWidgets.QWidget, suggested_name: str,

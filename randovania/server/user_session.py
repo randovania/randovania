@@ -82,7 +82,7 @@ def _create_session_with_discord_token(sio: ServerApp, sid: str | None) -> User:
     if sio.enforce_role is not None:
         if not sio.enforce_role.verify_user(discord_user.id):
             logger().info("User %s is not authorized for connecting to the server", discord_user.name)
-            raise error.UserNotAuthorizedToUseServerError()
+            raise error.UserNotAuthorizedToUseServerError
 
     user = _create_user_from_discord(discord_user)
 
@@ -107,12 +107,12 @@ def _get_now():
 
 def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
     if sio.guest_encrypt is None:
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
     try:
         login_request_bytes = sio.guest_encrypt.decrypt(encrypted_login_request)
     except cryptography.fernet.InvalidToken:
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
     try:
         login_request = json.loads(login_request_bytes.decode("utf-8"))
@@ -122,7 +122,7 @@ def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
         raise error.InvalidActionError(str(e))
 
     if _get_now() - date > datetime.timedelta(days=1):
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
     user: User = User.create(name=f"Guest: {name}")
 
@@ -170,12 +170,12 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, _old_session_
         sio.save_session({})
         logger().info("Client at %s was unable to restore session: (%s) %s",
                       sio.current_client_ip(), str(type(e)), str(e))
-        raise error.InvalidSessionError()
+        raise error.InvalidSessionError
 
     except Exception:
         sio.save_session({})
         logger().exception("Error decoding user session")
-        raise error.InvalidSessionError()
+        raise error.InvalidSessionError
 
 
 def logout(sio: ServerApp):
@@ -209,7 +209,7 @@ def browser_discord_login_callback(sio: ServerApp):
 
         except ValueError as v:
             if v.args == ('not enough values to unpack (expected 2, got 1)',):
-                raise oauthlib.oauth2.rfc6749.errors.MismatchingStateError()
+                raise oauthlib.oauth2.rfc6749.errors.MismatchingStateError
             else:
                 raise
 

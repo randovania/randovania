@@ -22,7 +22,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         self.logger = logging.getLogger(type(self).__name__)
 
     def create_executor(self) -> MemoryOperationExecutor:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def get_status_message(self) -> str | None:
         return self._last_status_message
@@ -101,7 +101,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
 
     @property
     def connector_builder_choice(self) -> ConnectorBuilderChoice:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def configuration_params(self) -> dict:
-        raise NotImplementedError()
+        raise NotImplementedError

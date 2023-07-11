@@ -10,8 +10,8 @@ class BaseCosmeticPatchesDialog(QDialog):
         self.reset_button.clicked.connect(self.reset)
 
     def reset(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def cosmetic_patches(self) -> BaseCosmeticPatches:
-        raise NotImplementedError()
+        raise NotImplementedError

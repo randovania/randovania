@@ -37,7 +37,7 @@ class BasePatchDataFactory:
         self.game = filtered_database.game_description_for_layout(self.configuration)
 
     def game_enum(self) -> RandovaniaGame:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def create_data(self) -> dict:
-        raise NotImplementedError()
+        raise NotImplementedError

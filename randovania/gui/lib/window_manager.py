@@ -25,35 +25,35 @@ class WindowManager(QtWidgets.QMainWindow):
 
     @property
     def preset_manager(self) -> PresetManager:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def multiworld_client(self) -> MultiworldClient:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     async def open_map_tracker(self, configuration: Preset):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def open_data_visualizer_at(self, region_name: str | None, area_name: str | None, game: RandovaniaGame,
                                 trick_levels: TrickLevelConfiguration | None = None):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def open_game_details(self, layout: LayoutDescription, players: list[str] | None = None):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def open_game_connection_window(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def set_games_selector_visible(self, visible: bool):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def main_window(self) -> QtWidgets.QMainWindow:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def is_preview_mode(self) -> bool:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def track_window(self, window: CloseEventWidget):
         def remove_window():
@@ -65,4 +65,4 @@ class WindowManager(QtWidgets.QMainWindow):
     async def ensure_multiplayer_session_window(self, network_client: QtNetworkClient,
                                                 session_id: int, options: Options
                                                 ):
-        raise NotImplementedError()
+        raise NotImplementedError

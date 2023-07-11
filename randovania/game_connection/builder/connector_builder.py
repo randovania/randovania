@@ -14,15 +14,15 @@ class ConnectorBuilder(QtCore.QObject):
 
     async def build_connector(self) -> RemoteConnector | None:
         """Attempts to build a connector based on the rules of the concrete implementation."""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def get_status_message(self) -> str | None:
         """Returns a message indicating the status of the last build_connector call, or why it has returned None."""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def connector_builder_choice(self) -> ConnectorBuilderChoice:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def configuration_params(self) -> dict:
-        raise NotImplementedError()
+        raise NotImplementedError

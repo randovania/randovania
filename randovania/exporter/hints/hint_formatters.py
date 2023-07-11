@@ -14,7 +14,7 @@ from randovania.layout import filtered_database
 
 class LocationFormatter:
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 class TemplatedFormatter(LocationFormatter):
@@ -79,7 +79,7 @@ class RelativeFormatter(LocationFormatter):
                 f" can be found {colored_dist} away from {other_name}.")
 
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 class RelativeAreaFormatter(RelativeFormatter):

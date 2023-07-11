@@ -91,7 +91,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
     def _asset_id_format(self):
         """struct.unpack format string for decoding an asset id"""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def world_by_asset_id(self, asset_id: int) -> Region | None:
         for region in self.game.region_list.regions:
@@ -121,15 +121,15 @@ class PrimeRemoteConnector(RemoteConnector):
         return self.world_by_asset_id(asset_id)
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     async def _memory_op_for_items(self, items: list[ItemResourceInfo],
                                    ) -> list[MemoryOperation]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def multiworld_magic_item(self) -> ItemResourceInfo:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     async def get_inventory(self) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
@@ -259,7 +259,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory
                                   ) -> tuple[list[list[assembler.BaseInstruction]], str]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
         overhead_size = 6  # 2 bytes for an extra char to differentiate sizes

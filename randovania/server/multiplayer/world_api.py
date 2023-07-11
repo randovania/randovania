@@ -170,7 +170,7 @@ def _check_user_is_associated(user: User, world: World):
             user_id=user.id,
         )
     except peewee.DoesNotExist:
-        raise error.WorldNotAssociatedError()
+        raise error.WorldNotAssociatedError
 
 
 @sentry_sdk.trace

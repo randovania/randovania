@@ -32,7 +32,7 @@ async def test_run_in_background_success(force_sync_mixin):
 async def test_run_in_background_async_cancelled(force_sync_mixin):
     # Setup
     def target(progress_update):
-        raise AbortBackgroundTask()
+        raise AbortBackgroundTask
 
     # Run
     with pytest.raises(CancelledError):

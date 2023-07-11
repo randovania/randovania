@@ -27,23 +27,23 @@ class NodeProvider:
         return AreaIdentifier(region_name=region.name, area_name=area.name)
 
     def region_with_name(self, name: str) -> Region:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def region_with_area(self, area: Area) -> Region:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def all_areas(self) -> Iterator[Area]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def iterate_nodes(self) -> tuple[Node, ...]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def nodes_to_region(self, node: Node) -> Region:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def nodes_to_area(self, node: Node) -> Area:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def potential_nodes_from(self, node: Node, patches: GamePatches) -> Iterator[tuple[Node, Requirement]]:
         """
@@ -52,7 +52,7 @@ class NodeProvider:
         :param patches:
         :return: Generator of pairs Node + Requirement for going to that node
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
         area = self.area_by_area_location(identifier.area_location)

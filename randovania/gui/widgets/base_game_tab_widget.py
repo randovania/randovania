@@ -56,11 +56,11 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
         self._update_quick_generate_text()
 
     def setup_ui(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def game(cls) -> RandovaniaGame:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _on_intro_label_link_clicked(self, link: str):
         if (info := re.match(r"^tab://(.+)$", link)) is not None:
