@@ -32,7 +32,7 @@ def _check_user_associated_with(sio: ServerApp, world: World):
             WorldUserAssociation.user == sio.get_current_user(),
         )
     except peewee.DoesNotExist:
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
 
 def verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None,
@@ -54,7 +54,7 @@ def verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None,
                 is_boolean(MultiplayerMembership.admin, True)
         ).count() == 0:
             return
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
 
 def verify_has_admin_or_claimed(sio: ServerApp, world: World) -> None:

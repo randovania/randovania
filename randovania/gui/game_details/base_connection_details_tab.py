@@ -21,14 +21,14 @@ class BaseConnectionDetailsTab(GameDetailsTab):
         return self.tree_widget
 
     def tab_title(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _fill_per_region_connections(self,
                                      per_region: dict[str, dict[str, str | dict[str, str]]],
                                      region_list: RegionList,
                                      patches: GamePatches,
                                      ):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
                        players: PlayersConfiguration):

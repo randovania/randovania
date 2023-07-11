@@ -13,4 +13,4 @@ class BaseCosmeticPatches(JsonDataclass):
 
     @classmethod
     def game(cls):
-        raise NotImplementedError()
+        raise NotImplementedError

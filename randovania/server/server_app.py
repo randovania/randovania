@@ -108,9 +108,9 @@ class ServerApp:
         try:
             return User.get_by_id(self.get_session()["user-id"])
         except KeyError:
-            raise error.NotLoggedInError()
+            raise error.NotLoggedInError
         except peewee.DoesNotExist:
-            raise error.InvalidSessionError()
+            raise error.InvalidSessionError
 
     def store_world_in_session(self, world: World):
         with self.session() as sio_session:

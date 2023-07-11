@@ -4,8 +4,8 @@ from randovania.games.prime1.gui.preset_settings import prime1_preset_tabs
 from randovania.games.prime1.gui.prime_game_tab import PrimeGameTabWidget
 
 __all__ = [
-    PrimeGameExportDialog,
-    PrimeCosmeticPatchesDialog,
-    prime1_preset_tabs,
-    PrimeGameTabWidget,
+    "PrimeGameExportDialog",
+    "PrimeCosmeticPatchesDialog",
+    "prime1_preset_tabs",
+    "PrimeGameTabWidget",
 ]

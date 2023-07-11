@@ -143,7 +143,7 @@ class CaverMusic:
         return CaverMusicDefault()
 
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def get_shuffled_mapping(cls, rng: Random, cosmetic: CSCosmeticPatches) -> dict[str, dict[str, str]]:

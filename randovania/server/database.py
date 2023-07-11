@@ -329,7 +329,7 @@ class World(BaseModel):
         try:
             return cls.get(World.uuid == uid)
         except peewee.DoesNotExist:
-            raise error.WorldDoesNotExistError()
+            raise error.WorldDoesNotExistError
 
     @classmethod
     def get_by_order(cls, session_id: int, order: int) -> World:

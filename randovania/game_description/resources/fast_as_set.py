@@ -40,7 +40,7 @@ def _internal_fast_as(req: Requirement, db: ResourceDatabase) -> typing.Iterable
                 multiply.append(list(_internal_fast_as(it, db)))
 
             else:
-                raise UnableToAvoidError()
+                raise UnableToAvoidError
 
         if multiply:
             for m in itertools.product(*multiply):
@@ -53,7 +53,7 @@ def _internal_fast_as(req: Requirement, db: ResourceDatabase) -> typing.Iterable
             yield from _internal_fast_as(it, db)
 
     else:
-        raise UnableToAvoidError()
+        raise UnableToAvoidError
 
 
 def fast_as_alternatives(req: Requirement, db: ResourceDatabase) -> typing.Iterable[RequirementList]:

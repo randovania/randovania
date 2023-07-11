@@ -158,7 +158,7 @@ class HintDistributor(ABC):
         :param player_state:
         :return:
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
         return pickup.pickup_category.hinted_as_major
@@ -290,7 +290,7 @@ class HintDistributor(ABC):
         })
 
     def precision_pair_weighted_list(self) -> list[PrecisionPair]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def add_relative_hint(self, region_list: RegionList,
                           patches: GamePatches,
@@ -362,7 +362,7 @@ class HintDistributor(ABC):
         return _wrapper
 
     def _get_relative_hint_providers(self) -> list[HintProvider]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def add_hints_precision(self,
                             player_state: PlayerState,

@@ -65,7 +65,7 @@ class ResourceRequirement(Requirement):
 
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         """Checks if a given resource collection satisfies this requirement"""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
         return self

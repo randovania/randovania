@@ -5,7 +5,7 @@ from randovania.interface_common.options import PerGameOptions
 
 class MSRGameExportDialog(GameExportDialog):
     def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def get_game_export_params(self) -> GameExportParams:
-        raise NotImplementedError()
+        raise NotImplementedError

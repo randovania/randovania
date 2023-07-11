@@ -254,7 +254,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         }
 
         for url in event.mimeData().urls():
-            ext = os.path.splitext(url.toLocalFile())[1]
+            ext = Path(url.toLocalFile()).suffix
             if ext in valid_extensions_with_dot:
                 event.acceptProposedAction()
                 return

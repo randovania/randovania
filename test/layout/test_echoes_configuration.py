@@ -32,7 +32,7 @@ class DummyValue(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
-        raise cls()
+        raise cls
 
 
 def empty_bit_pack_encode(*args):

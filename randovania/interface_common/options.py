@@ -117,7 +117,7 @@ class PerGameOptions:
 
     @classmethod
     def from_json(cls, value: dict) -> "PerGameOptions":
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 _SERIALIZER_FOR_FIELD = {

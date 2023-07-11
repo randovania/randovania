@@ -64,11 +64,11 @@ class BitPackDecoder:
 
 class BitPackValue:
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def bit_pack_skip_if_equals(cls):

@@ -40,7 +40,7 @@ def get_membership_for(sio_or_user: ServerApp | database.User | int, session: in
     try:
         return database.MultiplayerMembership.get_by_ids(user, session)
     except peewee.DoesNotExist:
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
 
 def emit_inventory_update(association: WorldUserAssociation):

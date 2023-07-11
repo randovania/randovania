@@ -11,14 +11,14 @@ class GameDetailsTab:
         self.game_enum = game
 
     def widget(self) -> QtWidgets.QWidget:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def tab_title(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
                        players: PlayersConfiguration):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def should_appear_for(cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],

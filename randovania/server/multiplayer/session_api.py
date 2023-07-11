@@ -63,9 +63,9 @@ def join_session(sio: ServerApp, session_id: int, password: str | None):
     if not session.is_user_in_session(user):
         if session.password is not None:
             if password is None or session_common.hash_password(password) != session.password:
-                raise error.WrongPasswordError()
+                raise error.WrongPasswordError
         elif password is not None:
-            raise error.WrongPasswordError()
+            raise error.WrongPasswordError
 
     MultiplayerMembership.get_or_create(user=sio.get_current_user(), session=session)
     session_common.join_room(sio, session)

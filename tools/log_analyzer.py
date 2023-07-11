@@ -4,7 +4,6 @@ import copy
 import csv
 import json
 import math
-import os
 import re
 import statistics
 from collections.abc import Iterable
@@ -12,6 +11,7 @@ from pathlib import Path
 from statistics import stdev
 
 from randovania.layout.layout_description import LayoutDescription
+from randovania.lib import json_lib
 
 # This is not a serious file
 # ruff: noqa: C901
@@ -170,7 +170,7 @@ def _region_only_starting_loc(locations: dict[str, int]) -> dict[str, int]:
     return result
 
 
-def create_report(seeds_dir: str, output_file: str, csv_dir: str | None, use_percentage: bool,
+def create_report(seeds_dir: Path, output_file: Path, csv_dir: Path | None, use_percentage: bool,
                   major_progression_items_only: bool):
     def item_creator():
         return collections.defaultdict(int)
@@ -187,8 +187,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: str | None, use_per
     progression_items = None
     starting_locations = []
 
-    seed_files = list(Path(seeds_dir).glob(f"**/*.{LayoutDescription.file_extension()}"))
-    seed_files.extend(Path(seeds_dir).glob("**/*.json"))
+    seed_files = list(seeds_dir.glob(f"**/*.{LayoutDescription.file_extension()}"))
+    seed_files.extend(seeds_dir.glob("**/*.json"))
     for seed in iterate_with_log(seed_files):
         try:
             seed_data = read_json(seed)
@@ -363,7 +363,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: str | None, use_per
         locations[location]["Progression Probability"] = location_progression_no_key_count[location]
 
     if csv_dir is not None:
-        os.makedirs(csv_dir, exist_ok=True)
+        csv_dir.mkdir(parents=True, exist_ok=True)
         for field in "items", "locations", "regions":
             data = final_results[field]
 
@@ -380,7 +380,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: str | None, use_per
             possible_columns = sorted(possible_columns)
             possible_columns.insert(0, "row_name")
 
-            with open(os.path.join(csv_dir, field + ".csv"), "w", newline='') as csv_file:
+            with csv_dir.joinpath(field + ".csv").open("w", newline='') as csv_file:
                 writer = csv.DictWriter(csv_file, fieldnames=possible_columns)
                 writer.writeheader()
 
@@ -389,15 +389,14 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: str | None, use_per
                     row_data["row_name"] = column
                     writer.writerow(row_data)
 
-    with open(output_file, "w") as output:
-        json.dump(final_results, output, indent=4, separators=(',', ': '))
+    json_lib.write_path(output_file, final_results)
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--csv-dir")
-    parser.add_argument("seeds_dir")
-    parser.add_argument("output_file")
+    parser.add_argument("--csv-dir", type=Path)
+    parser.add_argument("seeds_dir", type=Path)
+    parser.add_argument("output_file", type=Path)
     parser.add_argument('--use-percentage', action='store_true')
     parser.add_argument('--major-progression-only', action='store_true')
     args = parser.parse_args()

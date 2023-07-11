@@ -26,10 +26,10 @@ class RequirementArrayBase(Requirement):
         self._cached_hash = None
 
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
                            database: ResourceDatabase) -> Requirement:
@@ -39,10 +39,10 @@ class RequirementArrayBase(Requirement):
         )
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def as_set(self, database: ResourceDatabase) -> RequirementSet:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def sorted(self) -> tuple[Requirement, ...]:
@@ -72,11 +72,11 @@ class RequirementArrayBase(Requirement):
 
     @classmethod
     def combinator(cls):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def _str_no_items(cls):
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 def mergeable_array(req: RequirementAnd | RequirementOr, keep_comments: bool) -> bool:

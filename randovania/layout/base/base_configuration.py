@@ -54,7 +54,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def game(self):

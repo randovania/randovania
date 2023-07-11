@@ -208,7 +208,7 @@ class DreadExecutor:
     async def _read_response(self) -> bytes | None:
         packet_type: bytes =  await asyncio.wait_for(self._socket.reader.read(1), None)
         if len(packet_type) == 0:
-            raise OSError()
+            raise OSError
         return await self._parse_packet(packet_type[0])
 
     async def _parse_packet(self, packet_type: int) -> bytes | None:
@@ -223,7 +223,7 @@ class DreadExecutor:
                 self.logger.warning("Dread received a malformed packet. Type %d, received bytes %d, "
                                     "should receive bytes %d", recv_packet_type,
                                     dread_received_bytes, dread_should_bytes)
-                raise DreadLuaException()
+                raise DreadLuaException
             case PacketType.PACKET_HANDSHAKE:
                 await self._check_header()
                 self._socket.request_number = (self._socket.request_number + 1) % 256
@@ -242,7 +242,7 @@ class DreadExecutor:
                     response = data
                 else:
                     self.logger.debug("Running lua code throw an error. Try again.")
-                    raise DreadLuaException()
+                    raise DreadLuaException
             case _:
                 response = await asyncio.wait_for(self._socket.reader.read(4), timeout=15)
                 length_data = response[0:4]

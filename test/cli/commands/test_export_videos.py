@@ -14,5 +14,5 @@ def test_export_videos(tmp_path):
     database.export_videos_command_logic(args)
 
     # Check
-    magmoor_caverns_sz = os.path.getsize(os.path.join(tmp_path, "Metroid Prime", "Magmoor Caverns.html"))
+    magmoor_caverns_sz = os.path.getsize(tmp_path.joinpath("Metroid Prime", "Magmoor Caverns.html"))
     assert magmoor_caverns_sz > 5000
