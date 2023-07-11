@@ -3,7 +3,7 @@ import dataclasses
 from PySide6 import QtCore
 
 from randovania.game_description.game_description import GameDescription
-from randovania.games.am2r.layout.hint_configuration import ArtifactHintMode, IceBeamHintMode
+from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.gui.generated.preset_am2r_hints_ui import Ui_PresetAM2RHints
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.window_manager import WindowManager
@@ -20,13 +20,12 @@ class PresetAM2RHints(PresetTab, Ui_PresetAM2RHints):
 
         self.hint_layout.setAlignment(QtCore.Qt.AlignTop)
 
-        for i, art_hint_mode in enumerate(ArtifactHintMode):
+        for i, art_hint_mode in enumerate(ItemHintMode):
             self.hint_artifact_combo.setItemData(i, art_hint_mode)
-        self.hint_artifact_combo.currentIndexChanged.connect(self._on_art_combo_changed)
+            self.ice_beam_hint_combo.setItemData(i, ibeam_hint_mode)
 
-        for i, psuit_hint_mode in enumerate(IceBeamHintMode):
-            self.ice_beam_hint_combo.setItemData(i, psuit_hint_mode)
-        self.ice_beam_hint_combo.currentIndexChanged.connect(self._on_psuit_combo_changed)
+        self.hint_artifact_combo.currentIndexChanged.connect(self._on_art_combo_changed)
+        self.ice_beam_hint_combo.currentIndexChanged.connect(self._on_ibeam_combo_changed)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -43,7 +42,7 @@ class PresetAM2RHints(PresetTab, Ui_PresetAM2RHints):
                 dataclasses.replace(editor.configuration.hints,
                                     artifacts=self.hint_artifact_combo.currentData()))
 
-    def _on_psuit_combo_changed(self, new_index: int):
+    def _on_ibeam_combo_changed(self, new_index: int):
         with self._editor as editor:
             editor.set_configuration_field(
                 "hints",

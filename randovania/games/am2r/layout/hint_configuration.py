@@ -6,7 +6,7 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 
 
-class ArtifactHintMode(BitPackEnum, Enum):
+class ItemHintMode(BitPackEnum, Enum):
     DISABLED = "disabled"
     HIDE_AREA = "hide-area"
     PRECISE = "precise"
@@ -16,17 +16,7 @@ class ArtifactHintMode(BitPackEnum, Enum):
         return cls.PRECISE
 
 
-class IceBeamHintMode(BitPackEnum, Enum):
-    DISABLED = "disabled"
-    HIDE_AREA = "hide-area"
-    PRECISE = "precise"
-
-    @classmethod
-    def default(cls) -> "IceBeamHintMode":
-        return cls.PRECISE
-
-
 @dataclasses.dataclass(frozen=True)
 class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCheck):
-    artifacts: ArtifactHintMode
-    ice_beam: IceBeamHintMode
+    artifacts: ItemHintMode
+    ice_beam: ItemHintMode
