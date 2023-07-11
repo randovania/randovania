@@ -10,7 +10,12 @@ build-backend = "setuptools.build_meta"
 
 [tool.ruff]
 line-length = 120
-select = ["E", "F", "W", "C90", "I", "UP", "C4"]
+select = [
+    "E", "F", "W", "C90", "I", "UP", "C4",
+
+    # No empty TYPE_CHECKING blocks, neither runtime imports there
+    "TCH004", "TCH005"
+]
 
 # Version to target for generated code.
 target-version = "py311"

@@ -3,9 +3,10 @@ from __future__ import annotations
 from collections.abc import Iterator
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.area_identifier import AreaIdentifier
+
 if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
