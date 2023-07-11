@@ -1,11 +1,11 @@
 from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -13,6 +13,9 @@ from randovania.games.common.prime_family.exporter.hint_namer import colorize_te
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.patcher import echoes_items
 from randovania.interface_common.players_configuration import PlayersConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.node_identifier import NodeIdentifier
 
 
 def create_simple_logbook_hint(asset_id: int, hint: str) -> dict:

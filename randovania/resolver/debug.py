@@ -3,13 +3,13 @@ from __future__ import annotations
 import contextlib
 import typing
 
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.requirements.requirement_list import RequirementList
-from randovania.game_description.requirements.requirement_set import RequirementSet
 
 if typing.TYPE_CHECKING:
+    from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.requirement_list import RequirementList
+    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.resolver.resolver_reach import ResolverReach
     from randovania.resolver.state import State
 

@@ -1,12 +1,15 @@
 import asyncio
 import time
-from argparse import ArgumentParser
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania.cli import cli_lib
 from randovania.cli.cli_lib import add_debug_argument
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, resolver
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 
 def validate_command_logic(args):

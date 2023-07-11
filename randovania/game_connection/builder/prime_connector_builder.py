@@ -1,4 +1,5 @@
 import logging
+from typing import TYPE_CHECKING
 
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.connector.remote_connector import RemoteConnector
@@ -8,6 +9,9 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperationException,
     MemoryOperationExecutor,
 )
+
+if TYPE_CHECKING:
+    from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 
 
 class PrimeConnectorBuilder(ConnectorBuilder):
@@ -32,7 +36,6 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
         from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
         from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
-        from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 
         executor = self.create_executor()
 

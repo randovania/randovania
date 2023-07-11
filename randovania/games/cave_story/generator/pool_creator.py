@@ -1,14 +1,17 @@
 from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
 def pool_creator(results: PoolResults,

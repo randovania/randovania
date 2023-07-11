@@ -2,20 +2,14 @@ from __future__ import annotations
 
 import collections
 import re
+from typing import TYPE_CHECKING
 
-from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
-from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import UncollectedState
 from randovania.generator.filler.pickup_list import (
     PickupCombinations,
@@ -26,7 +20,16 @@ from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.patching.prime import elevators
 from randovania.resolver import debug
-from randovania.resolver.state import State
+
+if TYPE_CHECKING:
+    from randovania.game_description.assignment import PickupTarget
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.generator.filler.filler_configuration import FillerConfiguration
+    from randovania.resolver.state import State
 
 
 class PlayerState:

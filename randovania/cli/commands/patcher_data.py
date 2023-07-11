@@ -1,7 +1,10 @@
 import asyncio
 import json
-from argparse import ArgumentParser
 from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 
 def patcher_data_command_logic(args):

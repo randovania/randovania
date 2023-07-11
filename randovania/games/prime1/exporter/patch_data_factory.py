@@ -1,4 +1,5 @@
 from random import Random
+from typing import TYPE_CHECKING
 
 import randovania
 from randovania.exporter import item_names, pickup_exporter
@@ -11,7 +12,6 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import Region, RegionList
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.game import RandovaniaGame
@@ -23,6 +23,9 @@ from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticP
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.layout_description import LayoutDescription
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 

@@ -4,13 +4,12 @@ import json
 import logging
 import random
 import uuid
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncClose, asyncSlot
 
 from randovania.game_description import default_database
-from randovania.games.game import RandovaniaGame
 from randovania.gui.auto_tracker_window import load_trackers_configuration
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
@@ -45,6 +44,9 @@ from randovania.network_common.multiplayer_session import (
     WorldUserInventory,
 )
 from randovania.network_common.session_state import MultiplayerSessionState
+
+if TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
 
 logger = logging.getLogger(__name__)
 

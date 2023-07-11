@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 import copy
-import io
 import json
-from pathlib import Path
+from typing import TYPE_CHECKING
 from uuid import UUID
 
 import aiofiles
@@ -13,6 +12,10 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout import preset_migration
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    import io
+    from pathlib import Path
 
 
 class InvalidPreset(Exception):

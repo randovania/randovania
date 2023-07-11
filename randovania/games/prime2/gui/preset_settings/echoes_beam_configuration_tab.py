@@ -1,7 +1,7 @@
 import dataclasses
 import functools
+from typing import TYPE_CHECKING
 
-from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QComboBox
 
@@ -12,6 +12,9 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
 
 _BEAMS = {
     "power": "Power Beam",

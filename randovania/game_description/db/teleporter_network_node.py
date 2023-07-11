@@ -3,13 +3,15 @@ from __future__ import annotations
 import dataclasses
 import typing
 
-from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.resources.resource_info import ResourceGain
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_info import ResourceGain
 
 
 def _all_nodes_in_network(context: NodeContext, network_name: str) -> typing.Iterator[TeleporterNetworkNode]:

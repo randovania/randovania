@@ -1,4 +1,5 @@
 import dataclasses
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 from frozendict import frozendict
@@ -11,7 +12,6 @@ from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -21,6 +21,9 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.layout import filtered_database
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
 
 
 def test_connections_from_dock_blast_shield(empty_patches):

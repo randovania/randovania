@@ -10,7 +10,10 @@ build-backend = "setuptools.build_meta"
 
 [tool.ruff]
 line-length = 120
-select = ["E", "F", "W", "C90", "I", "UP", "C4"]
+select = [
+    "E", "F", "W", "C90", "I", "UP", "C4",
+    "TCH"
+]
 
 # Version to target for generated code.
 target-version = "py311"
@@ -19,3 +22,6 @@ target-version = "py311"
 # Flag errors (`C901`) whenever the complexity level exceeds 25.
 # Defaults to 10, but we're being very flexible right now
 max-complexity = 25
+
+[tool.ruff.flake8-type-checking]
+runtime-evaluated-base-classes = ["randovania.bitpacking.json_dataclass.JsonDataclass"]

@@ -3,15 +3,18 @@ from __future__ import annotations
 import functools
 import logging
 import typing
-import uuid
 
 from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.lib import async_dialog
-from randovania.gui.lib.qt_network_client import QtNetworkClient
-from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import admin_actions, error
+
+if typing.TYPE_CHECKING:
+    import uuid
+
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.layout.versioned_preset import VersionedPreset
 
 Param = typing.ParamSpec("Param")
 RetType = typing.TypeVar("RetType")

@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import dataclasses
-from collections.abc import Iterator
 from dataclasses import dataclass
 from enum import Enum, unique
+from typing import TYPE_CHECKING
 
-from frozendict import frozendict
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
-from randovania.game_description.requirements.base import Requirement
+    from frozendict import frozendict
+
+    from randovania.game_description.requirements.base import Requirement
 
 
 @unique

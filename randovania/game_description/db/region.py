@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import dataclasses
 import typing
-from collections.abc import Iterator
 
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node import Node
-from randovania.game_description.resources.pickup_index import PickupIndex
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
