@@ -24,7 +24,7 @@ from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
-from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget
+from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget, connect_to
 from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -112,6 +112,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.generate_game_menu.addAction(self.import_layout_action)
         self.generate_game_button.setMenu(self.generate_game_menu)
 
+        self.export_game_menu = QtWidgets.QMenu(self.export_game_button)
+
         self.tracker_windows = {}
 
     def connect_to_events(self):
@@ -123,6 +125,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.import_layout_action.triggered.connect(self.import_layout)
         self.generate_game_button.clicked.connect(self.generate_game_button_clicked)
         self.session_status_button.clicked.connect(self._session_status_button_clicked)
+        self.export_game_button.clicked.connect(self.export_game_button_clicked)
 
         # Session Admin
         self.rename_session_action.triggered.connect(self.rename_session)
@@ -272,7 +275,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     def update_game_tab(self):
         session = self._session
-        self_is_admin = session.users[self.network_client.current_user.id].admin
+        own_entry = session.users[self.network_client.current_user.id]
+        self_is_admin = own_entry.admin
 
         self.update_background_process_button()
         self.update_generate_game_button()
@@ -291,10 +295,26 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if session.game_details is None:
             self.generate_game_label.setText("<Game not generated>")
             self.view_game_details_button.setEnabled(False)
+            self.export_game_button.setEnabled(False)
         else:
             game_details = session.game_details
             self.generate_game_label.setText(f"Seed hash: {game_details.word_hash} ({game_details.seed_hash})")
             self.view_game_details_button.setEnabled(game_details.spoiler)
+            if len(own_entry.worlds) > 1:
+                self.export_game_button.setEnabled(True)
+                self.export_game_menu.clear()
+                self.export_game_button.setMenu(self.export_game_menu)
+
+                for world_uid in own_entry.worlds.keys():
+                    connect_to(self.export_game_menu.addAction(
+                        session.get_world(world_uid).name
+                    ), self.users_widget.world_export, world_uid)
+
+            elif len(own_entry.worlds) == 1:
+                self.export_game_button.setEnabled(True)
+                self.export_game_button.setMenu(None)
+            else:
+                self.export_game_button.setEnabled(False)
 
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
@@ -623,6 +643,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             await self.finish_session()
         else:
             raise RuntimeError(f"Unknown session state: {state}")
+
+    @asyncSlot()
+    async def export_game_button_clicked(self):
+        own_entry = self._session.users[self.network_client.current_user.id]
+        if len(own_entry.worlds) != 1:
+            raise RuntimeError("Can only click this button when there's exactly one world")
+
+        world_uid = next(iter(own_entry.worlds.keys()))
+        await self.users_widget.world_export(world_uid)
 
     @asyncSlot()
     async def game_export_listener(self, world_id: uuid.UUID, patch_data: dict):
