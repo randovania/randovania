@@ -7,19 +7,24 @@ import pytest
 from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
-    ConditionalResources, ResourceConversion
+from randovania.game_description.resources.pickup_entry import (
+    ConditionalResources,
+    PickupEntry,
+    PickupModel,
+    ResourceConversion,
+    ResourceLock,
+)
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 
 
 def test_get_single_hud_text_all_standard_pickups(echoes_pickup_database, echoes_resource_database):
@@ -119,7 +124,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
                                         (resource_a, 5)),
                            generator_params=default_generator_params, )
     pickup_c = PickupEntry("P-C", model_2, AMMO_PICKUP_CATEGORY, generic_pickup_category,
-                           progression=tuple(),
+                           progression=(),
                            extra_resources=((resource_b, 2), (resource_a, 1)),
                            unlocks_resource=True,
                            resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
@@ -233,16 +238,16 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     useless_model = PickupModel(game=RandovaniaGame.METROID_PRIME_CORRUPTION, name="Useless")
 
     pickup_a = PickupEntry("A", model_1, generic_pickup_category, generic_pickup_category,
-                           progression=tuple(),
+                           progression=(),
                            generator_params=default_generator_params, )
     pickup_b = PickupEntry("B", model_2, generic_pickup_category, generic_pickup_category,
                            progression=((resource_b, 1), (resource_b, 1)),
                            generator_params=default_generator_params, )
     pickup_c = PickupEntry("C", model_2, generic_pickup_category, generic_pickup_category,
-                           progression=tuple(),
+                           progression=(),
                            generator_params=default_generator_params, )
     useless_pickup = PickupEntry("Useless", useless_model, USELESS_PICKUP_CATEGORY, USELESS_PICKUP_CATEGORY,
-                                 progression=tuple(),
+                                 progression=(),
                                  generator_params=default_generator_params, )
 
     patches = dataclasses.replace(empty_patches, game=MagicMock())
@@ -468,7 +473,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
         description="Scan Text",
         collection_text=['Sent The Name to Someone!'],
         conditional_resources=[
-            ConditionalResources(None, None, tuple()),
+            ConditionalResources(None, None, ()),
         ],
         conversion=[],
         model=model,

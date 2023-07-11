@@ -1,6 +1,6 @@
 import logging
 import multiprocessing
-from typing import Callable
+from collections.abc import Callable
 
 from PySide6 import QtCore, QtWidgets
 from qasync import asyncSlot

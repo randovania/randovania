@@ -6,7 +6,9 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
-    fill_template_strings_from_tree, message_for_required_mains, handle_progressive_expected_counts,
+    fill_template_strings_from_tree,
+    handle_progressive_expected_counts,
+    message_for_required_mains,
 )
 
 
@@ -111,7 +113,7 @@ def get_ingame_hash(hash_bytes: bytes) -> list[int]:
     num = int.from_bytes(hash_bytes, 'big', signed=False)
     num %= NUM_HASH_ITEMS ** 5
 
-    out = list()
+    out = []
     for i in range(5):
         out.append((num % NUM_HASH_ITEMS) + 1)
         num //= NUM_HASH_ITEMS

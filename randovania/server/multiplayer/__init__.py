@@ -1,4 +1,4 @@
-from randovania.server.multiplayer import session_api, session_admin, web_api, world_api
+from randovania.server.multiplayer import session_admin, session_api, web_api, world_api
 from randovania.server.server_app import ServerApp
 
 

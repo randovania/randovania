@@ -1,18 +1,18 @@
 import os
-from typing import Iterator
+from collections.abc import Iterator
 
-from randovania.exporter import pickup_exporter, item_names
+from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area import Area
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import Node
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
@@ -55,15 +55,15 @@ def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
         yield {"item_id": item_id, "quantity": quantity}
 
 
-def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]:
-    pickup = detail.original_pickup
+def get_resources_for_details(pickup: PickupEntry, conditional_resources: list[ConditionalResources],
+                              other_player: bool) -> list[list[dict]]:
     resources = [
         list(convert_conditional_resource(conditional_resource))
-        for conditional_resource in detail.conditional_resources
+        for conditional_resource in conditional_resources
     ]
 
     # don't add more resources for multiworld items
-    if detail.other_player:
+    if other_player:
         return resources
 
     if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
@@ -187,22 +187,34 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         # target.
 
         alt_model = _ALTERNATIVE_MODELS.get(detail.model.name, [detail.model.name])
+        model_names = alt_model
 
-        if detail.model.game != RandovaniaGame.METROID_DREAD or alt_model[0] == "itemsphere":
+        if detail.other_player:
+            if detail.model.game != RandovaniaGame.METROID_DREAD:
+                base_icon = "unknown"
+                model_names = ["itemsphere"]
+            else:
+                base_icon = detail.model.name
+
             map_icon = {
                 # TODO: more specific icons for pickups in other games
+                "custom_icon": {
+                    "label": detail.name.upper(),
+                    "base_icon": base_icon
+                }
+            }
+        elif alt_model[0] == "itemsphere":
+            map_icon = {
                 "custom_icon": {
                     "label": detail.original_pickup.name.upper(),
                 }
             }
-            model_names = ["itemsphere"]
         else:
             map_icon = {
                 "icon_id": detail.model.name
             }
-            model_names = alt_model
 
-        resources = get_resources_for_details(detail)
+        resources = get_resources_for_details(detail.original_pickup, detail.conditional_resources, detail.other_player)
 
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
@@ -312,7 +324,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 return cc_name, "Burenia Main Hub"
             if cc_name == "collision_camera_023_B":
                 return "collision_camera_023", area_name
-            
+
         if scenario_name == "s050_forest":
             if cc_name == "collision_camera_024":
                 return cc_name, "Golzuna Tower"
@@ -324,7 +336,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         if scenario_name == "s070_basesanc":
             if cc_name == "collision_camera_038_A":
                 return "collision_camera_038", area.name
-            
+
         return cc_name, area.name
 
     def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
@@ -419,10 +431,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
     def _tilegroup_patches(self):
         return [
             # beam blocks -> speedboost blocks in Artaria EMMI zone Speed Booster puzzle to prevent softlock
-            dict(
-                actor=dict(scenario="s010_cave",layer="breakables",actor="breakabletilegroup_060"),
-                tiletype="SPEEDBOOST"
-            )
+            {
+                "actor": {"scenario": "s010_cave","layer": "breakables","actor": "breakabletilegroup_060"},
+                "tiletype": "SPEEDBOOST"
+            }
         ]
 
     def create_data(self) -> dict:
@@ -464,7 +476,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
-            "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker,
+            "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker or self.players_config.is_multiworld,
             "constant_environment_damage": {
                 "heat": self.configuration.constant_heat_damage,
                 "cold": self.configuration.constant_cold_damage,

@@ -1,5 +1,5 @@
 import subprocess
-from unittest.mock import MagicMock, AsyncMock, call
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
 
@@ -60,7 +60,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple, is_dev_version
     permalink_1 = MagicMock()
     permalink_1.seed_hash = b"XXXXX"
     permalink_1.randovania_version = randovania.GIT_HASH
-    permalink_1.parameters.player_count = 1 if is_solo else 2
+    permalink_1.parameters.world_count = 1 if is_solo else 2
     permalink_1.parameters.get_preset.return_value = preset
     permalink_1.parameters.presets = [preset] if is_solo else [preset, preset]
     permalink_2 = MagicMock()
@@ -119,7 +119,7 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple, is_dev_version
         mock_describe.assert_not_called()
 
     mock_embed.assert_called_once_with(
-        title="`yu4abbceWfLI-`", description=f"{permalink_1.parameters.player_count} player multiworld permalink",
+        title="`yu4abbceWfLI-`", description=f"{permalink_1.parameters.world_count} player multiworld permalink",
     )
     suffix = "Seed Hash: Elevator Key Checkpoint (LBMFQWCY)"
     if is_solo:

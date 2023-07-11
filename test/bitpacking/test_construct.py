@@ -35,7 +35,7 @@ def test_encode_uuid():
 
 
 def test_encode_datetime():
-    data = datetime.datetime(2020, 1, 30, 14, 20, 50, 253, tzinfo=datetime.timezone.utc)
+    data = datetime.datetime(2020, 1, 30, 14, 20, 50, 253, tzinfo=datetime.UTC)
 
     encoded = construct_pack.encode(data)
     decoded = construct_pack.decode(encoded, datetime.datetime)
@@ -113,7 +113,7 @@ def test_encode_complex_dataclass():
         a=10,
         b=None,
         c=[uuid.UUID("00000000-0000-1111-0000-000000000001")],
-        d=datetime.datetime(2020, 1, 30, 14, 20, tzinfo=datetime.timezone.utc),
+        d=datetime.datetime(2020, 1, 30, 14, 20, tzinfo=datetime.UTC),
         e=K(
             a="foo",
             b=-1,

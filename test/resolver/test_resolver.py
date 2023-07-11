@@ -1,7 +1,7 @@
 import pytest
 
 from randovania.layout.layout_description import LayoutDescription
-from randovania.resolver import resolver, debug
+from randovania.resolver import debug, resolver
 
 
 @pytest.mark.skip_resolver_tests

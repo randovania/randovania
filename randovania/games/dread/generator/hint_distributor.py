@@ -1,10 +1,7 @@
 from random import Random
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import (
-    HintLocationPrecision, HintItemPrecision,
-    PrecisionPair
-)
+from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, PrecisionPair
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
 from randovania.generator.hint_distributor import HintDistributor

@@ -10,15 +10,17 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import data_writer
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.hint import Hint
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_entry import (
-    PickupEntry, ResourceLock, PickupModel,
+    PickupEntry,
+    PickupModel,
+    ResourceLock,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
@@ -119,10 +121,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
             locations[world_name][game.region_list.node_name(node)] = game_patches_serializer._ETM_NAME
 
     data["locations"] = {
-        region: {
-            area: item
-            for area, item in sorted(locations[region].items())
-        }
+        region: dict(sorted(locations[region].items()))
         for region in sorted(locations.keys())
     }
 

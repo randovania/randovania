@@ -8,9 +8,9 @@ from pathlib import Path
 
 from frozendict import frozendict
 
-from randovania.game_description import data_writer, pretty_print, default_database
+from randovania.game_description import data_writer, default_database, pretty_print
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.dock import DockWeaknessDatabase, DockType, DockWeakness, DockRandoConfig
+from randovania.game_description.db.dock import DockRandoConfig, DockType, DockWeakness, DockWeaknessDatabase
 from randovania.game_description.db.node import GenericNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region import Region

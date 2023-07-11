@@ -6,8 +6,9 @@ from randovania.game_description.pickup.standard_pickup import StandardPickupDef
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import (
     PickupEntry,
+    PickupGeneratorParams,
+    PickupModel,
     ResourceLock,
-    PickupModel, PickupGeneratorParams,
 )
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items
@@ -205,7 +206,7 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
     assert result == PickupEntry(
         name="The Item",
         model=PickupModel(echoes_resource_database.game_enum, "AmmoModel"),
-        progression=tuple(),
+        progression=(),
         extra_resources=(
             (ammo_a, ammo_count[0]),
         ),

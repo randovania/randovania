@@ -2,7 +2,7 @@ import asyncio
 import datetime
 import json
 import uuid
-from unittest.mock import MagicMock, AsyncMock, ANY, call
+from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import pytest
 import pytest_mock
@@ -20,8 +20,15 @@ from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, MultiplayerUser, User, MultiplayerSessionAction,
-    MultiplayerSessionActions, GameDetails, MultiplayerWorld, MultiplayerSessionAuditLog, MultiplayerSessionAuditEntry,
+    GameDetails,
+    MultiplayerSessionAction,
+    MultiplayerSessionActions,
+    MultiplayerSessionAuditEntry,
+    MultiplayerSessionAuditLog,
+    MultiplayerSessionEntry,
+    MultiplayerUser,
+    MultiplayerWorld,
+    User,
     UserWorldDetail,
 )
 from randovania.network_common.session_state import MultiplayerSessionState
@@ -58,7 +65,7 @@ def sample_session(preset_manager):
         users_list=[
             MultiplayerUser(12, "Player A", True, worlds={
                 u1: UserWorldDetail(GameConnectionStatus.InGame,
-                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc))
+                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC))
             }),
         ],
         game_details=None,
@@ -94,7 +101,7 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
         users_list=[
             MultiplayerUser(12, "Player A", True, worlds={
                 u1: UserWorldDetail(GameConnectionStatus.InGame,
-                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc))
+                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC))
             }),
             MultiplayerUser(24, "Player B", False, {}),
         ],
@@ -417,7 +424,7 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
     )
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
-    permalink.parameters.player_count = 2 + (end_state == "wrong_count")
+    permalink.parameters.world_count = 2 + (end_state == "wrong_count")
     permalink.parameters.presets = [MagicMock(), MagicMock()]
     permalink.parameters.presets[0].is_same_configuration.return_value = False
 
@@ -464,7 +471,7 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
 
     preset = MagicMock()
     preset.is_same_configuration.return_value = True
-    layout.generator_parameters.player_count = 2 + (end_state == "wrong_count")
+    layout.generator_parameters.world_count = 2 + (end_state == "wrong_count")
     layout.parameters.presets = [preset, preset]
 
     session = MagicMock()

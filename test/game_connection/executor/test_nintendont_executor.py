@@ -1,10 +1,10 @@
 import asyncio
-from unittest.mock import MagicMock, AsyncMock, call
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
 
-from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation
-from randovania.game_connection.executor.nintendont_executor import NintendontExecutor, SocketHolder, RequestBatch
+from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException
+from randovania.game_connection.executor.nintendont_executor import NintendontExecutor, RequestBatch, SocketHolder
 
 
 @pytest.fixture(name="executor")

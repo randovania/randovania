@@ -6,7 +6,7 @@ from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
 from randovania.game_description.db.region import Region
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, Inventory, InventoryItem
+from randovania.game_description.resources.item_resource_info import Inventory, InventoryItem, ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items
@@ -110,12 +110,17 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         # mapWorldInfoAreas.areas: + 0x4
         # mapWorldInfoAreas.areas.data: +0xc
 
-        arr_raw = await self.executor.perform_single_memory_operation(MemoryOperation(
-            address=self.version.cstate_manager_global + 0x8c0 + 0x4 + 0xc,
-            read_byte_count=4 * 32,
-            offset=0,
-        ))
-        arr = struct.unpack(">32L", arr_raw)
+        # multiple passes are required, as 128 bytes is too much at once for Nintendont
+        PASSES = 2
+        arr_raws = [
+            await self.executor.perform_single_memory_operation(MemoryOperation(
+                address=self.version.cstate_manager_global + 0x8c0 + 0x4 + 0xc,
+                read_byte_count=4 * (32 // PASSES),
+                offset=i * 4 * (32 // PASSES),
+            ))
+            for i in range(PASSES)
+        ]
+        arr = struct.unpack(">32L", b''.join(arr_raws))
 
         count = 0
 

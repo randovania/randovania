@@ -5,11 +5,11 @@ from unittest.mock import MagicMock, PropertyMock
 import pytest
 
 from randovania.exporter import pickup_exporter
-from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
+from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter import game_exporter
-from randovania.games.prime1.exporter.patch_data_factory import prime1_pickup_details_to_patcher, PrimePatchDataFactory
+from randovania.games.prime1.exporter.patch_data_factory import PrimePatchDataFactory, prime1_pickup_details_to_patcher
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription

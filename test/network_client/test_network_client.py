@@ -1,6 +1,6 @@
 import uuid
 from pathlib import Path
-from unittest.mock import MagicMock, AsyncMock, call
+from unittest.mock import AsyncMock, MagicMock, call
 
 import aiohttp.client_exceptions
 import pytest
@@ -11,7 +11,7 @@ from randovania.bitpacking import construct_pack
 from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.network_client.network_client import NetworkClient, ConnectionState, _decode_pickup, UnableToConnect
+from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
 from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
@@ -261,7 +261,7 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
         ),
         pickup_category=generic_pickup_category,
         broad_category=generic_pickup_category,
-        progression=tuple(),
+        progression=(),
         generator_params=default_generator_params,
     )
 

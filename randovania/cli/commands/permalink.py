@@ -6,9 +6,9 @@ from randovania.games.game import RandovaniaGame
 
 
 def create_permalink(args):
-    from randovania.layout.permalink import Permalink
-    from randovania.layout.generator_parameters import GeneratorParameters
     from randovania.interface_common.preset_manager import PresetManager
+    from randovania.layout.generator_parameters import GeneratorParameters
+    from randovania.layout.permalink import Permalink
 
     game: RandovaniaGame = RandovaniaGame(args.game)
     preset_manager = PresetManager(None)

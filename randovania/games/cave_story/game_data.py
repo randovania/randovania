@@ -2,7 +2,8 @@ from randovania.games import game
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import (
-    get_ingame_hash_str, CSPresetDescriber,
+    CSPresetDescriber,
+    get_ingame_hash_str,
 )
 
 

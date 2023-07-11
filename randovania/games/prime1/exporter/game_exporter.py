@@ -6,9 +6,9 @@ from pathlib import Path
 from textwrap import wrap
 
 import py_randomprime
-from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
 from open_prime_rando.dol_patching import all_prime_dol_patches
 from ppc_asm import assembler
+from Random_Enemy_Attributes.Random_Enemy_Attributes import PyRandom_Enemy_Attributes
 from retro_data_structures.game_check import Game as RDSGame
 
 from randovania import monitoring
@@ -56,9 +56,10 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
 
 
 def create_map_using_matplotlib(room_connections: list[tuple[str, str]], filepath: Path):
+    import logging
+
     import networkx
     import numpy
-    import logging
 
     for name in ["matplotlib", "matplotlib.font", "matplotlib.pyplot"]:
         logger = logging.getLogger(name)
@@ -91,7 +92,7 @@ def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to
         return '\n'.join(wrap(text, 18))
 
     # make list of all edges between rooms
-    room_connections = list()
+    room_connections = []
 
     # add edges which were not shuffled
     disabled_doors = set()

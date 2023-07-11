@@ -9,10 +9,9 @@ from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfigura
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.preset import Preset
-
 
 PresetDescription = tuple[str, list[str]]
 
@@ -178,7 +177,7 @@ def _require_majors_check(ammo_configuration: AmmoPickupConfiguration, ammo_name
 
 
 def message_for_required_mains(ammo_configuration: AmmoPickupConfiguration, message_to_item: dict[str, str]):
-    item_names = [item for item in message_to_item.values()]
+    item_names = list(message_to_item.values())
     main_required = _require_majors_check(ammo_configuration, item_names)
     return dict(zip(message_to_item.keys(), main_required))
 

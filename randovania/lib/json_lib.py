@@ -1,6 +1,7 @@
 import json
+from collections.abc import Hashable
 from pathlib import Path
-from typing import Any, Hashable
+from typing import Any
 
 import aiofiles
 

@@ -3,10 +3,10 @@ import dataclasses
 import pytest
 
 from randovania.game_description import data_reader
-from randovania.game_description.editor import Editor
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.editor import Editor
+from randovania.game_description.requirements.base import Requirement
 
 
 @pytest.fixture(name="game_editor")

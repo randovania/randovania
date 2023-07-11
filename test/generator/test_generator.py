@@ -1,12 +1,12 @@
-from typing import Callable
-from unittest.mock import MagicMock, patch, call, AsyncMock
+from collections.abc import Callable
+from unittest.mock import AsyncMock, MagicMock, call, patch
 
 import pytest
 
 from randovania.generator import generator
 from randovania.generator.filler.runner import FillerPlayerResult, FillerResults
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.exceptions import InvalidConfiguration
+from randovania.layout.layout_description import LayoutDescription
 
 
 @patch("randovania.generator.generator._validate_item_pool_size", autospec=True)
@@ -70,7 +70,7 @@ def test_distribute_remaining_items_no_locations_left(echoes_game_description, e
         patches=echoes_game_patches,
         unassigned_pickups=[MagicMock()] * 1000,
     )
-    filler_results = FillerResults({0: player_result}, tuple())
+    filler_results = FillerResults({0: player_result}, ())
 
     # Run
     with pytest.raises(InvalidConfiguration,

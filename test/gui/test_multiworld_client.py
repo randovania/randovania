@@ -1,6 +1,6 @@
 import datetime
 import uuid
-from unittest.mock import MagicMock, AsyncMock, call
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
 from frozendict import frozendict
@@ -15,8 +15,12 @@ from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry, MultiplayerUser, MultiplayerWorld
 from randovania.network_common.session_state import MultiplayerSessionState
-from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldSync, ServerSyncResponse, \
-    ServerWorldResponse
+from randovania.network_common.world_sync import (
+    ServerSyncRequest,
+    ServerSyncResponse,
+    ServerWorldResponse,
+    ServerWorldSync,
+)
 
 
 @pytest.fixture()
@@ -27,6 +31,7 @@ def client(skip_qtbot, tmp_path):
 
 async def test_start(client):
     game_connection = client.game_connection
+    client.start_server_sync_task = MagicMock()
 
     # Run
     await client.start()
@@ -34,6 +39,7 @@ async def test_start(client):
     # Assert
     game_connection.GameStateUpdated.connect.assert_called_once_with(client.on_game_state_updated)
     client.network_client.WorldPickupsUpdated.connect.assert_called_once_with(client.on_network_game_updated)
+    client.start_server_sync_task.assert_called_once_with()
 
 
 async def test_stop(client: MultiworldClient):
@@ -46,6 +52,18 @@ async def test_stop(client: MultiworldClient):
     # Assert
     sync_task.cancel.assert_called_once_with()
     assert client._sync_task is None
+
+
+async def test_start_server_sync_task(client):
+    client._server_sync = AsyncMock()
+
+    # Run
+    client.start_server_sync_task()
+    await client._sync_task
+
+    # Assert
+    client._server_sync.assert_awaited_once_with()
+    assert client._sync_task.done()
 
 
 @pytest.mark.parametrize("exists", [False, True, "invalid"])
@@ -199,7 +217,7 @@ async def test_server_sync(client, mocker: MockerFixture):
     w1_session = MultiplayerSessionListEntry(
         id=567, name="The Session", has_password=False, state=MultiplayerSessionState.IN_PROGRESS,
         num_players=5, creator="Not You", creation_date=datetime.datetime(2019, 1, 3, 2, 50,
-                                                                          tzinfo=datetime.timezone.utc),
+                                                                          tzinfo=datetime.UTC),
         is_user_in_session=False,
     )
 

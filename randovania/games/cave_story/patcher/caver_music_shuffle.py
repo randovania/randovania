@@ -1,8 +1,8 @@
+from collections.abc import Iterable
 from dataclasses import dataclass
 from random import Random
-from typing import Iterable
 
-from randovania.games.cave_story.layout.cs_cosmetic_patches import CSSong, CSCosmeticPatches, MusicRandoType, SONGS
+from randovania.games.cave_story.layout.cs_cosmetic_patches import SONGS, CSCosmeticPatches, CSSong, MusicRandoType
 
 
 @dataclass(frozen=True)

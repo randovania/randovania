@@ -4,7 +4,7 @@ from pathlib import Path
 from caver import patcher as caver_patcher
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.lib import status_update_lib, json_lib
+from randovania.lib import json_lib, status_update_lib
 
 
 @dataclasses.dataclass(frozen=True)

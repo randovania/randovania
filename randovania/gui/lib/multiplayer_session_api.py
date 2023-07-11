@@ -5,7 +5,7 @@ import logging
 import typing
 import uuid
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.lib import async_dialog
 from randovania.gui.lib.qt_network_client import QtNetworkClient
@@ -174,6 +174,14 @@ class MultiplayerSessionApi(QtCore.QObject):
         self.logger.info("Creating world named '%s' with %s for %d", name, preset.name, owner)
         await self._session_admin_player(
             owner, admin_actions.SessionAdminUserAction.CREATE_WORLD_FOR,
+            (name, preset.as_json)
+        )
+
+    @handle_network_errors
+    async def create_unclaimed_world(self, name: str, preset: VersionedPreset):
+        self.logger.info("Creating unclaimed world named '%s' with %s", name, preset.name)
+        await self._session_admin_global(
+            admin_actions.SessionAdminGlobalAction.CREATE_WORLD,
             (name, preset.as_json)
         )
 

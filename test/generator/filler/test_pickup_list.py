@@ -4,12 +4,12 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.generator import generator, reach_lib
 from randovania.generator.filler import pickup_list
 from randovania.generator.pickup_pool import pickup_creator
@@ -129,7 +129,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     mock_req_lists.assert_called_once_with(
         reach.state, [possible_set, reach.game.victory_condition.as_set.return_value], {resource}
     )
-    assert result == tuple()
+    assert result == ()
 
 
 def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_database, echoes_game_patches):

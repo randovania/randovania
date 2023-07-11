@@ -1,10 +1,10 @@
 from random import Random
 from typing import NamedTuple
 
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.ammo_pickup import add_ammo_pickups

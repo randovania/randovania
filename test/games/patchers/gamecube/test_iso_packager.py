@@ -1,7 +1,7 @@
-from unittest.mock import patch, MagicMock, ANY, call
+import os
+from unittest.mock import ANY, MagicMock, call, patch
 
 import pytest
-import os
 
 from randovania.patching.patchers.gamecube import iso_packager
 

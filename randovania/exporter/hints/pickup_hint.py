@@ -3,12 +3,12 @@ import dataclasses
 
 from randovania.exporter.hints.determiner import Determiner
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
+from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.hint import HintItemPrecision
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.region_list import RegionList
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
@@ -82,7 +82,7 @@ def create_pickup_hint(pickup_assignment: PickupAssignment,
         target = PickupTarget(
             pickup=PickupEntry(
                 name="Energy Transfer Module",
-                progression=tuple(),
+                progression=(),
                 model=PickupModel(
                     game=RandovaniaGame.METROID_PRIME_ECHOES,
                     name="EnergyTransferModule",

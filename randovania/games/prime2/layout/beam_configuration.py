@@ -1,7 +1,8 @@
 import dataclasses
-from typing import Iterator
+from collections.abc import Iterator
 
 from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
+
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck

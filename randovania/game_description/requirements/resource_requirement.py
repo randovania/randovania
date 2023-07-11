@@ -4,12 +4,12 @@ import dataclasses
 import functools
 from math import ceil
 
-from randovania.game_description.requirements.base import Requirement, MAX_DAMAGE
+from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
+from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 
 

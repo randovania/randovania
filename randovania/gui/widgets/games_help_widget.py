@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtGui, QtWidgets
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget

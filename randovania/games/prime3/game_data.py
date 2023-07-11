@@ -1,9 +1,7 @@
 from randovania.games import game
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
-from randovania.games.prime3.layout.preset_describer import (
-    CorruptionPresetDescriber
-)
+from randovania.games.prime3.layout.preset_describer import CorruptionPresetDescriber
 
 
 def _options():
@@ -12,8 +10,8 @@ def _options():
 
 
 def _gui() -> game.GameGui:
-    from randovania.games.prime3.pickup_database import progressive_items
     from randovania.games.prime3 import gui
+    from randovania.games.prime3.pickup_database import progressive_items
 
     return game.GameGui(
         tab_provider=gui.prime3_preset_tabs,

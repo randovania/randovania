@@ -12,7 +12,7 @@ this_file = Path(__file__)
 parent = this_file.parents[1]
 custom_env = {
     **os.environ,
-    "CUSTOM_COMPILE_COMMAND": "python {}".format(this_file.relative_to(parent).as_posix()),
+    "CUSTOM_COMPILE_COMMAND": f"python {this_file.relative_to(parent).as_posix()}",
 }
 
 is_quiet = "--quiet" in sys.argv

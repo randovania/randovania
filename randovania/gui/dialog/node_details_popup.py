@@ -4,28 +4,28 @@ import json
 import logging
 import traceback
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 from qasync import asyncSlot
 
 from randovania.game_description import integrity_check
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.node import GenericNode, Node, NodeLocation
+from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock import DockWeakness, DockWeaknessDatabase, DockType
-from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNodeKind, HintNode
-from randovania.game_description.db.node import Node, GenericNode, NodeLocation
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.db.region import Region
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
-from randovania.gui.lib import common_qt_lib, async_dialog, signal_handling
+from randovania.gui.lib import async_dialog, common_qt_lib, signal_handling
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.widgets.combo_box_item_delegate import ComboBoxItemDelegate
@@ -51,9 +51,7 @@ class DockWeaknessListModel(QtCore.QAbstractListModel):
     def change_type(self, new_type: DockType):
         self.type = new_type
         self.items = []
-        self.delegate.items = [
-            it for it in self.db.weaknesses[self.type].keys()
-        ]
+        self.delegate.items = list(self.db.weaknesses[self.type].keys())
 
     def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
         return len(self.items) + 1

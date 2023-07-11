@@ -7,9 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.X.X] - 2023-08-??
 
+- Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
+- Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
+- Fixed: The generation order for multiworld session now correctly handles any kind of names.
+- Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
+
+### Metroid Dread
+
+- **Major** - Added: Multiworld support for Dread.
+- Changed: Ryujinx (Legacy) is disabled when auto-tracker support is on, or in a multiworld.
+
+#### Logic Database
+
+- Added: Slide from right to left in Cataris - Total Recharge Station South
+- Changed: Make it possible to get to the Diffusion Beam location without Morph Ball.
+- Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
+- Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
+- Removed: In Cataris - Green EMMI Introduction, the advanced Pseudo Wave Beam to break the blob from below is removed.
+
 ### Metroid Prime 2: Echoes
 
-- Added: Tracker layout "Debug Info", which also shows details useful for investigating errors. 
+- Added: Tracker layout "Debug Info", which also shows details useful for investigating errors.
 
 ## [6.0.1] - 2023-07-04
 
@@ -23,12 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Pickups providing negative resources can now be sent in multiworld games.
 - Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words. 
 - Fixed: In multiworld sessions, the copy permalink button is properly disabled before a game is available.
-
-### Metroid Dread
-
-#### Logic Database
-
-- Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 
 ## [6.0.0] - 2023-07-03
 

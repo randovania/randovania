@@ -80,9 +80,12 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exc
         AioHttpIntegration(),
     ]
 
+    profiles_sample_rate = sampling_rate
     if include_flask:
         from sentry_sdk.integrations.flask import FlaskIntegration
         integrations.append(FlaskIntegration())
+    else:
+        profiles_sample_rate = 0.0
 
     server_name = None
     if exclude_server_name:
@@ -106,6 +109,7 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exc
         release=full_git_hash,
         environment="staging" if randovania.is_dev_version() else "production",
         traces_sampler=traces_sampler,
+        profiles_sample_rate=profiles_sample_rate,
         server_name=server_name,
         auto_session_tracking=include_flask,
         event_scrubber=HomeEventScrubber(),

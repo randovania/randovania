@@ -1,13 +1,13 @@
 import dataclasses
+from collections.abc import Iterator
 from enum import Enum
-from typing import Iterator
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
 from randovania.game_description import default_database
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 
 
@@ -45,7 +45,7 @@ class AvailableLocationsConfiguration(BitPackValue):
 
     @property
     def _sorted_indices(self) -> list[int]:
-        return list(sorted(item.index for item in self.excluded_indices))
+        return sorted(item.index for item in self.excluded_indices)
 
     @property
     def as_json(self) -> dict:

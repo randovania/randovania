@@ -6,12 +6,16 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.pickup_entry import (PickupEntry, ConditionalResources, PickupModel,
-                                                                ResourceConversion)
+from randovania.game_description.resources.pickup_entry import (
+    ConditionalResources,
+    PickupEntry,
+    PickupModel,
+    ResourceConversion,
+)
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceGainTuple
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
+from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
 
 
 def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalResources]:
@@ -225,7 +229,7 @@ class PickupExporterMulti(PickupExporter):
                 conditional_resources=[ConditionalResources(
                     name=None,
                     item=None,
-                    resources=tuple(),
+                    resources=(),
                 )],
                 conversion=[],
                 model=model,

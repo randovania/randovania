@@ -1,6 +1,7 @@
 import os.path
+from collections.abc import Callable
 from pathlib import Path
-from typing import TypeVar, Callable
+from typing import TypeVar
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox
@@ -204,7 +205,7 @@ def output_input_intersection_validator(output_edit: QtWidgets.QLineEdit, input_
     output_path = output_path.absolute()
     input_path = input_path.absolute()
     try:
-        shared_root = Path(os.path.commonpath(([output_path, input_path])))
+        shared_root = Path(os.path.commonpath([output_path, input_path]))
     except ValueError:
         # Not in same drive
         return False

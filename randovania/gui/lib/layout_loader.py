@@ -5,7 +5,7 @@ from pathlib import Path
 from PySide6 import QtWidgets
 
 from randovania.gui.lib import async_dialog, file_prompts
-from randovania.layout.layout_description import LayoutDescription, InvalidLayoutDescription
+from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 from randovania.lib.migration_lib import UnsupportedVersion
 
 

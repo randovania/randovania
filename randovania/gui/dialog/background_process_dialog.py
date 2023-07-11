@@ -3,7 +3,7 @@ import asyncio
 from PySide6.QtWidgets import QDialog
 
 from randovania.gui.generated.background_process_dialog_ui import Ui_BackgroundProcessDialog
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 
 

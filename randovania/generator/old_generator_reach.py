@@ -1,13 +1,14 @@
 import copy
-from typing import Iterator, NamedTuple
+from collections.abc import Iterator
+from typing import NamedTuple
 
+from randovania.game_description.db.node import Node, NodeContext
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.db.node import Node, NodeContext
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.generator import graph as graph_module
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver.state import State

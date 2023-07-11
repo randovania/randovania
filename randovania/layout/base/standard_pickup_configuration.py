@@ -1,9 +1,10 @@
 import copy
 import dataclasses
-from typing import Iterator, TypeVar, Iterable
+from collections.abc import Iterable, Iterator
+from typing import TypeVar
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition

@@ -1,9 +1,9 @@
 import re
-from typing import Iterator
+from collections.abc import Iterator
 
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockWeakness, DockType
+from randovania.game_description.db.dock import DockType, DockWeakness
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
@@ -137,7 +137,7 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
     # make sure only one start node exists per area like before refacor. this can be removed later if a game supports it
     start_nodes = area.get_start_nodes()
     if len(start_nodes) > 1 and not game.game.data.multiple_start_nodes_per_area:
-        names = list(node.name for node in start_nodes)
+        names = [node.name for node in start_nodes]
         yield f"{area.name} has multiple valid start nodes {names}, but is not allowed for {game.game.long_name}"
 
     if area.default_node is not None and area.node_with_name(area.default_node) is None:

@@ -3,7 +3,7 @@ import logging
 from PySide6 import QtWidgets
 
 from randovania.gui.lib import async_dialog
-from randovania.interface_common.options import Options, DecodeFailedException
+from randovania.interface_common.options import DecodeFailedException, Options
 
 
 async def load_options_from_disk(options: Options) -> bool:

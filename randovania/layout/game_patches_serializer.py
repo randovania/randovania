@@ -2,23 +2,22 @@ import collections
 import dataclasses
 import re
 import typing
-from typing import DefaultDict
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
-from randovania.generator.pickup_pool import pool_creator, PoolResults
+from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import Hint
+from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.search import find_resource_info_with_long_name
+from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -29,7 +28,7 @@ def _pickup_assignment_to_item_locations(region_list: RegionList,
                                          pickup_assignment: PickupAssignment,
                                          num_players: int,
                                          ) -> dict[str, dict[str, str]]:
-    items_locations: DefaultDict[str, dict[str, str]] = collections.defaultdict(dict)
+    items_locations: collections.defaultdict[str, dict[str, str]] = collections.defaultdict(dict)
 
     for region, area, node in region_list.all_regions_areas_nodes:
         if not node.is_resource_node or not isinstance(node, PickupNode):
@@ -47,10 +46,7 @@ def _pickup_assignment_to_item_locations(region_list: RegionList,
         items_locations[region.correct_name(area.in_dark_aether)][region_list.node_name(node)] = item_name
 
     return {
-        region: {
-            area: item
-            for area, item in sorted(items_locations[region].items())
-        }
+        region: dict(sorted(items_locations[region].items()))
         for region in sorted(items_locations.keys())
     }
 
@@ -110,12 +106,9 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             identifier.as_string: data_writer.write_requirement(requirement)
             for identifier, requirement in patches.configurable_nodes.items()
         },
-        "locations": {
-            key: value
-            for key, value in _pickup_assignment_to_item_locations(region_list,
+        "locations": dict(_pickup_assignment_to_item_locations(region_list,
                                                                    patches.pickup_assignment,
-                                                                   num_players).items()
-        },
+                                                                   num_players).items()),
         "hints": {
             identifier.as_string: hint.as_json
             for identifier, hint in patches.hints.items()

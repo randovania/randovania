@@ -2,13 +2,13 @@ import copy
 import dataclasses
 import functools
 
-from PySide6 import QtWidgets, QtCore
-from randovania.game_description.db.dock_node import DockNode
+from PySide6 import QtCore, QtWidgets
 
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.patch_data_factory import should_keep_elevator_sounds
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -18,8 +18,12 @@ from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList, \
-    TeleporterConfiguration
+from randovania.layout.lib.teleporters import (
+    TeleporterConfiguration,
+    TeleporterList,
+    TeleporterShuffleMode,
+    TeleporterTargetList,
+)
 from randovania.layout.preset import Preset
 from randovania.lib import enum_lib
 from randovania.patching.prime import elevators
@@ -143,7 +147,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
             other_locations = [
                 node.default_connection
                 for node in node_identifiers[location].nodes
-                if isinstance(node, DockNode) and node.dock_type in self.teleporter_types 
+                if isinstance(node, DockNode) and node.dock_type in self.teleporter_types
                 and region_list.identifier_for_node(node) == location
             ]
             assert len(other_locations) == 1
@@ -224,10 +228,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
                                                            TeleporterShuffleMode.ECHOES_SHUFFLED,
                                                            TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
                                                            TeleporterShuffleMode.TWO_WAY_UNCHECKED)
-        static_nodes = {
-            teleporter
-            for teleporter in config_elevators.static_teleporters.keys()
-        }
+        static_nodes = set(config_elevators.static_teleporters.keys())
 
         for origin, destination in self._elevator_source_destination.items():
             origin_check = self._elevator_source_for_location[origin]

@@ -1627,6 +1627,10 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Next to Thermal Door": {
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 },
@@ -8711,41 +8715,16 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "template",
+                                                    "data": "Shoot Diffusion Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Pseudo",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Diffusion Beam"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Pseudo",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -19859,27 +19838,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Blob": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Diffusion or Wave"
-                                    }
-                                ]
-                            }
-                        },
                         "Tunnel to Teleport to Dairon": {
                             "type": "and",
                             "data": {
@@ -19938,6 +19896,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Tunnel Corner": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -20089,61 +20056,22 @@
                                 ]
                             }
                         },
-                        "Tunnel to Kraid Arena (top)": {
+                        "Tunnel Corner": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Morph",
+                                            "name": "Varia",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 100,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -20204,6 +20132,53 @@
                         "Tunnel to Kraid Arena (bottom)": {
                             "type": "template",
                             "data": "Can Slide Underwater"
+                        }
+                    }
+                },
+                "Tunnel Corner": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11036.569579288025,
+                        "y": -5387.297734627831,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Blob": {
+                            "type": "template",
+                            "data": "Shoot Diffusion or Wave"
+                        },
+                        "Tunnel to Kraid Arena (top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -22450,7 +22425,7 @@
                         "area": "Diffusion Beam Room",
                         "node": "Tunnel to Teleport to Dairon"
                     },
-                    "default_dock_weakness": "Morph Ball Tunnel",
+                    "default_dock_weakness": "Slide Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

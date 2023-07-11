@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import dataclasses
 from enum import Enum
-from typing import Optional
 
 import pytest
 
@@ -34,7 +33,7 @@ class D2(JsonDataclass):
 
 @dataclasses.dataclass()
 class D2OldSyntax(JsonDataclass):
-    a: Optional[A]
+    a: A | None
     b: D1
 
 

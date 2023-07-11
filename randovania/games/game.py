@@ -1,13 +1,13 @@
 from __future__ import annotations
-import json
 
+import json
 import typing
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from enum import Enum
 from functools import cached_property
 from pathlib import Path
 from random import Random
-from typing import Callable, Iterable
 
 import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum
@@ -15,8 +15,8 @@ from randovania.bitpacking.bitpacking import BitPackEnum
 if typing.TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import BasePatchDataFactory
-    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
     from randovania.generator.pickup_pool import PoolResults
@@ -72,7 +72,7 @@ class GameGui:
     """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long
     names replaced by the progressive item."""
 
-    spoiler_visualizer: tuple[type[GameDetailsTab], ...] = tuple()
+    spoiler_visualizer: tuple[type[GameDetailsTab], ...] = ()
     """Tuple of specializations of GameDetailsTab for providing extra details when visualizing a LayoutDescription."""
 
 

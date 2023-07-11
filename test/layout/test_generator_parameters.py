@@ -1,7 +1,7 @@
 import contextlib
 import dataclasses
 import uuid
-from unittest.mock import patch, MagicMock, ANY, call
+from unittest.mock import ANY, MagicMock, call, patch
 
 import pytest
 

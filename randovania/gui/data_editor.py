@@ -5,17 +5,21 @@ from typing import Self
 
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QRadioButton, QDialog, QFileDialog, QInputDialog, QMessageBox
+from PySide6.QtWidgets import QDialog, QFileDialog, QInputDialog, QMainWindow, QMessageBox, QRadioButton
 from qasync import asyncSlot
 
 from randovania.game_description import (
-    data_reader, data_writer, pretty_print, integrity_check,
-    derived_nodes, default_database
+    data_reader,
+    data_writer,
+    default_database,
+    derived_nodes,
+    integrity_check,
+    pretty_print,
 )
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.node import Node, GenericNode, NodeLocation
+from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
@@ -24,7 +28,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
+from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
@@ -712,7 +716,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             default_dock_weakness=dock_weakness,
             exclude_from_dock_rando=False,
             override_default_open_requirement=None, override_default_lock_requirement=None,
-            incompatible_dock_weaknesses=tuple(),
+            incompatible_dock_weaknesses=(),
         )
 
         new_node_other_area = DockNode(
@@ -724,7 +728,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             default_dock_weakness=dock_weakness,
             exclude_from_dock_rando=False,
             override_default_open_requirement=None, override_default_lock_requirement=None,
-            incompatible_dock_weaknesses=tuple(),
+            incompatible_dock_weaknesses=(),
         )
 
         self.editor.add_node(current_area, new_node_this_area)

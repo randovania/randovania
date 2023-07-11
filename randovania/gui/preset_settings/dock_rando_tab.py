@@ -1,11 +1,11 @@
 import dataclasses
 from collections import defaultdict
-from typing import Callable
+from collections.abc import Callable
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.db.dock import DockRandoParams, DockType, DockWeakness
+from randovania.game_description.game_description import GameDescription
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.foldable import Foldable
@@ -32,11 +32,6 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         # Types
         self.type_checks = {}
         for dock_type, type_params in game_description.dock_weakness_database.dock_rando_params.items():
-            if (
-                    type_params.locked is None or type_params.unlocked is None
-                    or not type_params.change_from or not type_params.change_to
-            ):
-                continue
             self._add_dock_type(dock_type, type_params)
 
     @classmethod

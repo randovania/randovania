@@ -1,4 +1,5 @@
-from typing import Callable, TypeVar
+from collections.abc import Callable
+from typing import TypeVar
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement

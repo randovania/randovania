@@ -11,8 +11,13 @@ from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
-    GameExportDialog, prompt_for_output_file, prompt_for_input_file,
-    add_field_validation, output_file_validator, spoiler_path_for, update_validation
+    GameExportDialog,
+    add_field_validation,
+    output_file_validator,
+    prompt_for_input_file,
+    prompt_for_output_file,
+    spoiler_path_for,
+    update_validation,
 )
 from randovania.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
 from randovania.interface_common import game_workdir

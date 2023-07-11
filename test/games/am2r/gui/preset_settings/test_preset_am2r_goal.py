@@ -1,12 +1,13 @@
 import dataclasses
-import pytest
 import uuid
 from unittest.mock import MagicMock
 
+import pytest
 
 from randovania.games.am2r.gui.preset_settings.am2r_goal_tab import PresetAM2RGoal
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.interface_common.preset_editor import PresetEditor
+
 
 @pytest.mark.parametrize("prefer_metroids, prefer_bosses, expected_max_slider", [
     (False, False, 0), (False, True, 6), (True, False, 46), (True, True, 46)

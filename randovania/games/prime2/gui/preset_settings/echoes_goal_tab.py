@@ -1,7 +1,7 @@
 from PySide6 import QtCore
 
 from randovania.game_description.game_description import GameDescription
-from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode, EchoesConfiguration
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.gui.generated.preset_echoes_goal_ui import Ui_PresetEchoesGoal
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.window_manager import WindowManager

@@ -1,8 +1,9 @@
 import dataclasses
 import hashlib
 import math
+from collections.abc import Callable, Iterator
 from enum import Enum
-from typing import Iterator, TypeVar, Callable
+from typing import TypeVar
 
 import bitstruct
 
@@ -279,7 +280,7 @@ def pack_array_element(element: T, array: list[T]) -> Iterator[tuple[int, int]]:
 
 
 def _is_sorted(array: list[T]) -> bool:
-    return array == list(sorted(array))
+    return array == sorted(array)
 
 
 def _limits_for_size(remaining_size: int) -> tuple[int, ...]:

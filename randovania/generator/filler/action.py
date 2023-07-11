@@ -1,9 +1,9 @@
-from typing import Union, Iterable
+from collections.abc import Iterable
 
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.resources.pickup_entry import PickupEntry
 
-ActionStep = Union[ResourceNode, PickupEntry]
+ActionStep = ResourceNode | PickupEntry
 
 
 class Action:

@@ -3,28 +3,31 @@ import logging
 import struct
 import uuid
 
+from open_prime_rando.dol_patching import all_prime_dol_patches
+from ppc_asm import assembler
 from retro_data_structures.game_check import Game as RDSGame
 
-from ppc_asm import assembler
-from randovania.game_connection.connector.remote_connector import RemoteConnector, PickupEntryWithOwner, \
-    PlayerLocationEvent
+from randovania.game_connection.connector.remote_connector import (
+    PickupEntryWithOwner,
+    PlayerLocationEvent,
+    RemoteConnector,
+)
 from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.executor.memory_operation import (
-    MemoryOperationException, MemoryOperation, MemoryOperationExecutor
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
 )
 from randovania.game_description import default_database
+from randovania.game_description.db.region import Region
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, InventoryItem, Inventory
+from randovania.game_description.resources.item_resource_info import Inventory, InventoryItem, ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import (
-    ResourceCollection
-)
-from randovania.game_description.db.region import Region
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib.infinite_timer import InfiniteTimer
-from open_prime_rando.dol_patching import all_prime_dol_patches
 
 
 @dataclasses.dataclass(frozen=True)
@@ -58,7 +61,7 @@ class PrimeRemoteConnector(RemoteConnector):
         self.executor = executor
         self.version = version
         self.game = default_database.game_description_for(_RDS_TO_RDV_GAME[version.game])
-        self.remote_pickups = tuple()
+        self.remote_pickups = ()
 
         self._timer = InfiniteTimer(self.update, self._dt)
 

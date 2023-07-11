@@ -2,7 +2,7 @@ import dataclasses
 import functools
 import uuid
 
-from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
@@ -11,12 +11,16 @@ from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
-from randovania.interface_common.options import Options, InfoAlert
+from randovania.interface_common.options import InfoAlert, Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerWorld, \
-    MAX_WORLD_NAME_LENGTH, WORLD_NAME_RE
+from randovania.network_common.multiplayer_session import (
+    MAX_WORLD_NAME_LENGTH,
+    WORLD_NAME_RE,
+    MultiplayerSessionEntry,
+    MultiplayerWorld,
+)
 from randovania.network_common.session_state import MultiplayerSessionState
 
 
@@ -198,7 +202,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         preset.save_to_file(path)
 
     @asyncSlot()
-    async def _world_export(self, world_uid: uuid.UUID):
+    async def world_export(self, world_uid: uuid.UUID):
         options = self._options
 
         if not options.is_alert_displayed(InfoAlert.MULTIWORLD_FAQ):
@@ -260,7 +264,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         self._session = game_session
         in_setup = self._session.state == MultiplayerSessionState.SETUP
+        in_generation = self._session.generation_in_progress is not None
         has_layout = self._session.game_details is not None
+        can_change_preset = not has_layout and not in_generation
 
         world_by_id: dict[uuid.UUID, MultiplayerWorld] = {
             game.id: game
@@ -288,14 +294,14 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             if owner == self.your_id or self.is_admin():
                 # TODO: Customize preset button
                 # customize_action = preset_menu.addAction("Customize")
-                # customize_action.setEnabled(not has_layout)
+                # customize_action.setEnabled(can_change_preset)
                 # connect_to(customize_action,
                 #            self._preset_customize, world_details.id)
 
                 connect_to(
                     preset_menu.addAction("Replace with"),
                     self._world_replace_preset, world_details.id,
-                ).setEnabled(not has_layout)
+                ).setEnabled(can_change_preset)
 
             export_menu = preset_menu.addMenu("Export preset")
             connect_to(export_menu.addAction("Save copy of preset"), self._world_save_preset_copy, world_details.id)
@@ -304,7 +310,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             if owner == self.your_id:
                 export_action = world_menu.addAction("Export game")
                 export_action.setEnabled(has_layout)
-                connect_to(export_action, self._world_export, world_details.id)
+                connect_to(export_action, self.world_export, world_details.id)
 
                 connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic,
                            world_details.id)
@@ -330,7 +336,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 world_menu.addSeparator()
                 connect_to(world_menu.addAction("Rename"), self._world_rename, world_details.id)
                 delete_action = world_menu.addAction("Delete")
-                delete_action.setEnabled(not has_layout)
+                delete_action.setEnabled(can_change_preset)
                 connect_to(delete_action, self._world_delete, world_details.id)
 
             if owner is not None:
@@ -366,6 +372,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 new_game_item = QtWidgets.QTreeWidgetItem(item)
                 tool = make_tool("New world")
                 tool.clicked.connect(functools.partial(self._new_world, player.id))
+                tool.setEnabled(not in_generation)
                 self.setItemWidget(new_game_item, 0, tool)
 
         missing_games = set(world_by_id.keys()) - used_worlds

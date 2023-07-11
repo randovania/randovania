@@ -1,10 +1,10 @@
-from typing import Sequence
+from collections.abc import Sequence
 
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceQuantity
 from randovania.games.game import RandovaniaGame
@@ -346,7 +346,7 @@ def create_visual_etm() -> PickupEntry:
     """
     return PickupEntry(
         name="Unknown item",
-        progression=tuple(),
+        progression=(),
         model=PickupModel(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name=echoes_items.USELESS_PICKUP_MODEL,

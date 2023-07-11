@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import uuid as uuid_module
-from typing import Iterator
+from collections.abc import Iterator
 
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
@@ -70,7 +70,7 @@ class Preset(BitPackValue):
             configuration=reference.configuration.bit_pack_unpack(decoder, {"reference": reference.configuration}),
         )
 
-    def fork(self) -> "Preset":
+    def fork(self) -> Preset:
         return dataclasses.replace(
             self, name=f"{self.name} Copy",
             description=f"A copy version of {self.name}.",

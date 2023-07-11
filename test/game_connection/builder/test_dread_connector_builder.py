@@ -1,10 +1,12 @@
-from mock import AsyncMock
-from mock import patch
+from unittest.mock import AsyncMock, patch
+
 import pytest
+
 from randovania.game_connection.builder.dread_connector_builder import DreadConnectorBuilder
 from randovania.game_connection.connector.dread_remote_connector import DreadRemoteConnector
-from randovania.game_connection.executor.dread_executor import DreadExecutor, DreadExecutorToConnectorSignals
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+from randovania.game_connection.executor.dread_executor import DreadExecutor, DreadExecutorToConnectorSignals
+
 
 async def test_general_class_content():
     builder = DreadConnectorBuilder("localhost")

@@ -1,7 +1,7 @@
+from randovania.game_description.db.node import Node
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.db.node import Node
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 

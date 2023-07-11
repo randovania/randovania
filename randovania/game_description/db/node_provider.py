@@ -1,16 +1,17 @@
 from __future__ import annotations
 
-from typing import Iterator, TYPE_CHECKING
+from collections.abc import Iterator
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.requirements.base import Requirement
 
 
 class NodeProvider:

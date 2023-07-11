@@ -1,8 +1,8 @@
 import asyncio
 import multiprocessing
+from collections.abc import Callable
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing.connection import Connection
-from typing import Callable
 
 import sentry_sdk
 
@@ -11,7 +11,7 @@ from randovania.interface_common.options import Options
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
+from randovania.lib.status_update_lib import ConstantPercentageCallback, ProgressUpdateCallable
 from randovania.resolver import debug
 
 export_busy = False
@@ -32,7 +32,7 @@ def generate_layout(options: Options,
     """
     with sentry_sdk.start_transaction(op="task", name="generate_layout") as span:
         games = {preset.game.short_name for preset in parameters.presets}
-        span.set_tag("num_worlds", parameters.player_count)
+        span.set_tag("num_worlds", parameters.world_count)
         span.set_tag("game", next(iter(games)) if len(games) == 1 else "cross-game")
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)

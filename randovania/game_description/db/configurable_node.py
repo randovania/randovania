@@ -1,7 +1,7 @@
 import dataclasses
 
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.db.node import Node, NodeContext
+from randovania.game_description.requirements.base import Requirement
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

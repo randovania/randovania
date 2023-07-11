@@ -1,6 +1,6 @@
 import re
 
-from PySide6 import QtWidgets, QtCore, QtGui
+from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 from randovania.games.game import RandovaniaGame

@@ -4,14 +4,21 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
-    RelativeDataArea, RelativeDataItem
-from randovania.game_description.pickup.pickup_category import PickupCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.hint import (
+    Hint,
+    HintItemPrecision,
+    HintLocationPrecision,
+    HintType,
+    PrecisionPair,
+    RelativeDataArea,
+    RelativeDataItem,
+)
+from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.filler import runner
@@ -132,7 +139,7 @@ def _make_pickup(pickup_category: PickupCategory, generator_params: PickupGenera
         ),
         pickup_category=pickup_category,
         broad_category=pickup_category,
-        progression=tuple(),
+        progression=(),
         generator_params=generator_params,
     )
 

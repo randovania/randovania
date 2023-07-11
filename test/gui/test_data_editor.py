@@ -1,5 +1,5 @@
 from pathlib import Path
-from unittest.mock import AsyncMock, patch, ANY, MagicMock
+from unittest.mock import ANY, AsyncMock, MagicMock, patch
 
 import pytest
 from PySide6 import QtWidgets

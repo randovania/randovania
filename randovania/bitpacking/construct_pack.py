@@ -89,10 +89,10 @@ class DatetimeAdapter(construct.Adapter):
         super().__init__(construct.ZigZag)
 
     def _decode(self, obj: int, context, path) -> datetime.datetime:
-        return datetime.datetime.fromtimestamp(obj / 10000000, tz=datetime.timezone.utc)
+        return datetime.datetime.fromtimestamp(obj / 10000000, tz=datetime.UTC)
 
     def _encode(self, obj: datetime.datetime, context, path) -> int:
-        if obj.tzinfo != datetime.timezone.utc:
+        if obj.tzinfo != datetime.UTC:
             raise construct.ConstructError(f"{obj} is not an UTC datetime", path)
 
         return int(obj.timestamp() * 10000000)

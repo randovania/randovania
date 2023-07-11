@@ -10,7 +10,7 @@ from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
-from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation
+from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException
 from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -75,7 +75,7 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
         op: struct.pack(">II", item.max_capacity, item.max_capacity)
         for op, item in zip(ops, connector.game.resource_database.item)
     }
-    connector.executor.perform_single_memory_operation.return_value = b"\x00\x00\x00\x00" * 32
+    connector.executor.perform_single_memory_operation.return_value = b"\x00\x00\x00\x00" * 16
     _override = {
         "ObjectCount": 0,
     }
@@ -245,7 +245,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
             (db.get_item("Percent"), 1),
         ]
 
-    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=tuple(),
+    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=(),
                          generator_params=default_generator_params,
                          extra_resources=(
                              (db.energy_tank, db.energy_tank.max_capacity),

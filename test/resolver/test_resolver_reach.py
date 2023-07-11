@@ -28,7 +28,7 @@ def test_possible_actions_no_resources():
 
     # Run
     reach = ResolverReach({0: 1, 1: 1}, {}, frozenset(), logic)
-    options = list(action for action, damage in reach.possible_actions(state))
+    options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
     assert options == []
@@ -51,7 +51,7 @@ def test_possible_actions_with_event():
 
     # Run
     reach = ResolverReach({0: 1}, {}, frozenset(), logic)
-    options = list(action for action, damage in reach.possible_actions(state))
+    options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
     assert options == [event]

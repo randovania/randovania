@@ -1,11 +1,14 @@
 import json
-from unittest.mock import MagicMock, ANY
+from unittest.mock import ANY, MagicMock
 
 import pytest
 import pytest_mock
 
-from randovania.games.prime2.exporter.game_exporter import EchoesGameExporter, EchoesGameExportParams, \
-    decode_randomizer_data
+from randovania.games.prime2.exporter.game_exporter import (
+    EchoesGameExporter,
+    EchoesGameExportParams,
+    decode_randomizer_data,
+)
 
 
 @pytest.mark.parametrize("has_input_iso", [False, True])

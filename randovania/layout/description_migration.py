@@ -148,7 +148,7 @@ def _migrate_v6(json_dict: dict) -> dict:
         for area_name, identify_game in area_name_heuristic.items():
             if area_name in game["locations"]:
                 if identify_game == "prime1":
-                    game["locations"]["Frigate Orpheon"] = dict()
+                    game["locations"]["Frigate Orpheon"] = {}
                     game["teleporters"][
                         "Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"
                     ] = "Tallon Overworld/Landing Site"

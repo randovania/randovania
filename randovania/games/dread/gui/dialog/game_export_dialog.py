@@ -3,8 +3,8 @@ import logging
 import os
 import platform
 import string
+from collections.abc import Callable, Iterator
 from pathlib import Path
-from typing import Iterator, Callable
 
 from PySide6 import QtGui, QtWidgets
 
@@ -14,9 +14,14 @@ from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
-    GameExportDialog, prompt_for_output_directory, prompt_for_input_directory,
-    is_directory_validator, path_in_edit, spoiler_path_for_directory, update_validation,
-    output_input_intersection_validator
+    GameExportDialog,
+    is_directory_validator,
+    output_input_intersection_validator,
+    path_in_edit,
+    prompt_for_input_directory,
+    prompt_for_output_directory,
+    spoiler_path_for_directory,
+    update_validation,
 )
 from randovania.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.gui.lib import common_qt_lib
@@ -127,6 +132,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.atmosphere_radio.toggled.connect(self._on_update_target_platform)
         self.ryujinx_radio.toggled.connect(self._on_update_target_platform)
         self.ryujinx_legacy_radio.toggled.connect(self._on_update_target_platform)
+        self.ryujinx_legacy_radio.setEnabled(not patch_data.get("enable_remote_lua"))
         self._on_update_target_platform()
 
         # Output to SD

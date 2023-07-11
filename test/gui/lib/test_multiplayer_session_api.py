@@ -1,6 +1,6 @@
 import logging
 import uuid
-from unittest.mock import AsyncMock, MagicMock, ANY
+from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
 from PySide6 import QtWidgets
@@ -9,7 +9,7 @@ from pytest_mock import MockerFixture
 from randovania.gui.lib import multiplayer_session_api
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.network_client.network_client import UnableToConnect
-from randovania.network_common import error, admin_actions
+from randovania.network_common import admin_actions, error
 
 
 @pytest.mark.parametrize("exception", [
@@ -167,6 +167,23 @@ async def test_create_new_world(session_api, caplog, preset_manager):
     assert caplog.record_tuples == [
         ('MultiplayerSessionApi', logging.INFO,
          "[Session 1234] Creating world named 'a friend' with Starter Preset for 50")
+    ]
+
+
+async def test_create_unclaimed_world(session_api, caplog, preset_manager):
+    # Run
+    await session_api.create_unclaimed_world("a friend", preset_manager.default_preset)
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        (1234,
+         admin_actions.SessionAdminGlobalAction.CREATE_WORLD.value,
+         ("a friend", preset_manager.default_preset.as_json)),
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         "[Session 1234] Creating unclaimed world named 'a friend' with Starter Preset")
     ]
 
 

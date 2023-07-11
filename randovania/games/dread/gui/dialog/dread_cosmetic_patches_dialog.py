@@ -3,7 +3,9 @@ import dataclasses
 from PySide6.QtWidgets import QWidget
 
 from randovania.games.dread.layout.dread_cosmetic_patches import (
-    DreadCosmeticPatches, DreadRoomGuiType, DreadMissileCosmeticType
+    DreadCosmeticPatches,
+    DreadMissileCosmeticType,
+    DreadRoomGuiType,
 )
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.dread_cosmetic_patches_dialog_ui import Ui_DreadCosmeticPatchesDialog
@@ -20,7 +22,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
 
         for room_gui_type in DreadRoomGuiType:
             self.room_names_dropdown.addItem(room_gui_type.long_name, room_gui_type)
-        
+
         for missile_cosmetic_type in DreadMissileCosmeticType:
             self.missile_cosmetic_dropdown.addItem(missile_cosmetic_type.long_name, missile_cosmetic_type)
 
@@ -57,13 +59,13 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
             )
 
         return persist
-    
+
     def _on_room_name_mode_update(self):
         self._cosmetic_patches = dataclasses.replace(
             self._cosmetic_patches,
             show_room_names=self.room_names_dropdown.currentData()
         )
-    
+
     def _on_missile_cosmetic_update(self):
         self._cosmetic_patches = dataclasses.replace(
             self._cosmetic_patches,

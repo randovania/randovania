@@ -1,4 +1,4 @@
-from randovania.game_description import derived_nodes, default_database
+from randovania.game_description import default_database, derived_nodes
 from randovania.game_description.game_description import GameDescription
 from randovania.layout.base.base_configuration import BaseConfiguration
 

@@ -3,8 +3,8 @@ from __future__ import annotations
 import copy
 import io
 import json
-from uuid import UUID
 from pathlib import Path
+from uuid import UUID
 
 import aiofiles
 import slugify
@@ -114,7 +114,7 @@ class VersionedPreset:
         return VersionedPreset(json_lib.read_path(path))
 
     @classmethod
-    def with_preset(cls, preset: Preset) -> "VersionedPreset":
+    def with_preset(cls, preset: Preset) -> VersionedPreset:
         result = VersionedPreset(None)
         result._preset = preset
         return result

@@ -8,8 +8,8 @@ from randovania.layout.layout_description import LayoutDescription
 def describe_command_logic(args):
     description = LayoutDescription.from_file(args.layout_file)
 
-    print(f"{description.player_count} players")
-    for player in range(description.player_count):
+    print(f"{description.world_count} players")
+    for player in range(description.world_count):
         preset = description.get_preset(player)
 
         print(f"## Player {player + 1} - {preset.game.long_name}")

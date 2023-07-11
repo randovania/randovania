@@ -10,7 +10,12 @@ build-backend = "setuptools.build_meta"
 
 [tool.ruff]
 line-length = 120
+select = ["E", "F", "W", "C90", "I", "UP", "C4"]
 
-ignore = [
-    "F405",  # star import, using in pseudo-ppc assembly
-]
+# Version to target for generated code.
+target-version = "py311"
+
+[tool.ruff.mccabe]
+# Flag errors (`C901`) whenever the complexity level exceeds 25.
+# Defaults to 10, but we're being very flexible right now
+max-complexity = 25

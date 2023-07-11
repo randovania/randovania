@@ -1,7 +1,7 @@
 from random import Random
 
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.game_patches import GamePatches
 from randovania.generator.pickup_pool import pool_creator
 
 
