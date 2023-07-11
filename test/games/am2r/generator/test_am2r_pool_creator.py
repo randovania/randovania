@@ -52,14 +52,10 @@ def test_am2r_pool_creator(am2r_game_description, preset_manager):
         c("The Nest", "Hideout Omega Nest", "Pickup (Omega)"),
         c("Industrial Complex", "Lower Factory Gamma Nest", "Pickup (Gamma)"),
         c("The Nest", "Depths Omega Nest East", "Pickup (Omega)"),
-        c("The Tower", "Exterior Zeta Nest West", "Pickup (Zeta)"),
-        c("Main Caves", "Mines Alpha Nest", "Pickup (Alpha)"),
-        c("The Tower", "Gamma Nest South East", "Pickup (Gamma)"),
-        c("The Nest", "Depths Omega Nest South West", "Pickup (Omega)"),
-        c("Hydro Station", "Exterior Alpha Nest", "Pickup (Alpha)"),
     ]
 
-    assert len(results.to_place) == wl.num_pickup_nodes - 31 - len(results.assignment)
+    # 46 is total number of metroids
+    assert len(results.to_place) == wl.num_pickup_nodes - (46 - len(locations)) - len(results.assignment)
 
 
 @pytest.mark.parametrize("metroids, bosses, artifacts", [
