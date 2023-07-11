@@ -1,7 +1,7 @@
 import dataclasses
 from enum import Enum
 
-from randovania.exporter.hints.hint_formatters import LocationFormatter, TemplatedFormatter, RelativeAreaFormatter
+from randovania.exporter.hints.hint_formatters import LocationFormatter, RelativeAreaFormatter, TemplatedFormatter
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
