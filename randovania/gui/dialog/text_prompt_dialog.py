@@ -20,6 +20,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
         self.check_re = check_re
 
         self.accept_button.setEnabled(False)
+        self.accept_button.setDefault(True)
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)
 
