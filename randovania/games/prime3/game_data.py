@@ -23,13 +23,13 @@ def _gui() -> game.GameGui:
 
 
 def _generator() -> game.GameGenerator:
-    from randovania.games.prime3.generator.item_pool.pool_creator import corruption_specific_pool
+    from randovania.games.prime3.generator.pickup_pool.pool_creator import corruption_specific_pool
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import AllJokesHintDistributor
     from randovania.resolver.bootstrap import MetroidBootstrap
 
     return game.GameGenerator(
-        item_pool_creator=corruption_specific_pool,
+        pickup_pool_creator=corruption_specific_pool,
         bootstrap=MetroidBootstrap(),
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),

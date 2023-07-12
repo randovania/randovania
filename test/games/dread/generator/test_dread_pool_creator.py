@@ -1,36 +1,24 @@
-from random import Random
+import pytest
 
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.game_patches import GamePatches
-from randovania.generator.pickup_pool import pool_creator
+from randovania.games.dread.generator import pool_creator
+from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig
+from randovania.generator.pickup_pool import PoolResults
 
 
-def test_dread_pool_creator(dread_game_description, preset_manager):
-    # Setup
-    preset = preset_manager.default_preset_for_game(dread_game_description.game).get_preset()
-    patches = GamePatches.create_from_game(dread_game_description, 0, preset.configuration)
+@pytest.mark.parametrize("count", [0, 1, 6, 11, 12])
+def test_artifact_pool(dread_game_description, dread_configuration, count: int):
+    db = dread_game_description.resource_database
 
     # Run
-    results = pool_creator.calculate_pool_results(
-        preset.configuration,
-        dread_game_description,
-        patches,
-        Random(5000),
-        True,
-    )
+    results = pool_creator.artifact_pool(dread_game_description, DreadArtifactConfig(True, True, count))
 
     # Assert
-    wl = dread_game_description.region_list
-    c = NodeIdentifier.create
-
-    locations = [
-        wl.identifier_for_node(wl.node_from_pickup_index(index))
-        for index in results.assignment.keys()
-    ]
-    assert locations == [
-        c("Ghavoran", "Central Unit Access", "Pickup (Ice Missile)"),
-        c("Ghavoran", "Golzuna Arena", "Pickup (Cross Bomb)"),
-        c("Ferenia", "Purple EMMI Arena", "Pickup (Wave Beam)"),
-    ]
-
-    assert len(results.to_place) == wl.num_pickup_nodes - 1 - len(results.assignment)
+    assert results == PoolResults(
+        to_place=[
+            pool_creator.create_dread_artifact(i, db) for i in range(count)
+        ],
+        assignment={},
+        starting=[
+            pool_creator.create_dread_artifact(i, db) for i in range(count, 12)
+        ],
+    )
