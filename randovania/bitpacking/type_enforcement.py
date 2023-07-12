@@ -1,14 +1,24 @@
+from __future__ import annotations
+
 import dataclasses
 import types
+import typing
 
 from randovania.lib import type_lib
 
 
 class DataclassPostInitTypeCheck:
     def __post_init__(self):
+        resolved_types = typing.get_type_hints(type(self))
+
         for f in dataclasses.fields(self):
             v = getattr(self, f.name)
-            resolved_type, optional = type_lib.resolve_optional(f.type)
+
+            f_type = f.type
+            if isinstance(f_type, str):
+                f_type = resolved_types[f.name]
+
+            resolved_type, optional = type_lib.resolve_optional(f_type)
             if optional and v is None:
                 continue
 
@@ -19,7 +29,7 @@ class DataclassPostInitTypeCheck:
                 type_args = None
 
             if not isinstance(v, resolved_type):
-                raise ValueError(f"Unexpected type for field {f.name} ({v}): Got {type(v)}, expected {f.type}.")
+                raise ValueError(f"Unexpected type for field {f.name} ({v}): Got {type(v)}, expected {f_type}.")
 
             if resolved_type is dict and type_args is not None:
                 assert isinstance(v, dict)

@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 import dataclasses
 import hashlib
 import math
-from collections.abc import Callable, Iterator
+import typing
 from enum import Enum
-from typing import TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 import bitstruct
 
 from randovania.lib import type_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
 
 T = TypeVar("T")
 
@@ -192,6 +197,7 @@ def _get_bit_pack_value_for(value, dataclass_type: type):
 
 class BitPackDataclass(BitPackValue):
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+        resolved_types = typing.get_type_hints(type(self))
         reference = metadata.get("reference")
 
         for field in dataclasses.fields(self):
@@ -199,8 +205,9 @@ class BitPackDataclass(BitPackValue):
                 continue
 
             item = getattr(self, field.name)
+            field_type = resolved_types[field.name]
 
-            resolved_type, optional = type_lib.resolve_optional(field.type)
+            resolved_type, optional = type_lib.resolve_optional(field_type)
             if optional:
                 yield from encode_bool(item is not None)
                 if item is None:
@@ -236,6 +243,7 @@ class BitPackDataclass(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
+        resolved_types = typing.get_type_hints(cls)
         reference = metadata.get("reference")
         args = {}
 
@@ -243,7 +251,7 @@ class BitPackDataclass(BitPackValue):
             if not field.init:
                 continue
 
-            resolved_type, optional = type_lib.resolve_optional(field.type)
+            resolved_type, optional = type_lib.resolve_optional(resolved_types[field.name])
 
             if optional:
                 should_decode = decode_bool(decoder)
