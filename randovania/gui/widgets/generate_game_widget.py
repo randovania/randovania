@@ -409,7 +409,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             if code == async_dialog.StandardButton.Save:
                 layout = e.layout
             elif code == async_dialog.StandardButton.Retry:
-                raise RetryGeneration()
+                raise RetryGeneration
             else:
                 self._background_task.progress_update_signal.emit("Solver Error", 0)
                 return

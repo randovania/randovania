@@ -5,9 +5,9 @@ from randovania.games.cave_story.gui.hint_details_tab import CSHintDetailsTab
 from randovania.games.cave_story.gui.preset_settings import cs_preset_tabs
 
 __all__ = [
-    CSGameTabWidget,
-    CSCosmeticPatchesDialog,
-    CSGameExportDialog,
-    CSHintDetailsTab,
-    cs_preset_tabs,
+    "CSGameTabWidget",
+    "CSCosmeticPatchesDialog",
+    "CSGameExportDialog",
+    "CSHintDetailsTab",
+    "cs_preset_tabs",
 ]

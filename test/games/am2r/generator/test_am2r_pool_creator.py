@@ -63,7 +63,8 @@ def test_am2r_pool_creator(am2r_game_description, preset_manager):
         c("Industrial Complex", "Breeding Grounds Gamma Nest Middle", "Pickup (Gamma)"),
     ]
 
-    assert len(results.to_place) == wl.num_pickup_nodes - 31 - len(results.assignment)
+    # 46 is total number of metroids
+    assert len(results.to_place) == wl.num_pickup_nodes - (46 - len(locations)) - len(results.assignment)
 
 
 @pytest.mark.parametrize("metroids, bosses, artifacts", [

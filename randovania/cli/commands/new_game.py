@@ -3,8 +3,8 @@ import re
 import subprocess
 import sys
 import uuid
-from argparse import ArgumentParser
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
@@ -32,6 +32,9 @@ from randovania.layout.base.standard_pickup_configuration import StandardPickupC
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 _GAMES_PATH = Path(__file__).parents[2].joinpath("games")
 

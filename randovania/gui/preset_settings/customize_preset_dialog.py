@@ -1,15 +1,19 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from PySide6 import QtGui, QtWidgets
 
 from randovania.gui import game_specific_gui
 from randovania.gui.generated.customize_preset_dialog_ui import Ui_CustomizePresetDialog
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout import filtered_database
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.preset_settings.preset_tab import PresetTab
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetTabRoot(QtWidgets.QWidget):

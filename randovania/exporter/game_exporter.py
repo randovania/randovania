@@ -18,21 +18,21 @@ class GameExporter:
         """
         Checks if the exporter is busy right now
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def export_can_be_aborted(self) -> bool:
         """
         Checks if export_game can be aborted
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _before_export(self):
         pass
 
     def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
                         progress_update: status_update_lib.ProgressUpdateCallable) -> None:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _after_export(self):
         pass

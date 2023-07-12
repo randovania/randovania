@@ -6,6 +6,7 @@ import typing
 from pathlib import Path
 
 from randovania.layout.layout_description import LayoutDescription
+from randovania.lib import json_lib
 
 
 def iterate_with_log(x):
@@ -30,7 +31,7 @@ def _filter_item_name(name: str) -> str:
     return _PLAYER_MATCH.sub("", _KEY_MATCH.sub("Key", name))
 
 
-def create_report(seeds_dir: str, output_file: str):
+def create_report(seeds_dir: str, output_file: Path):
     def item_creator():
         return collections.defaultdict(list)
 
@@ -67,14 +68,13 @@ def create_report(seeds_dir: str, output_file: str):
         for item_name, locations in sorted(item_name_to_location.items(), key=lambda it: it[0])
     }
 
-    with open(output_file, "w") as output:
-        json.dump(final_results, output, indent=4, separators=(',', ': '))
+    json_lib.write_path(output_file, final_results)
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("seeds_dir")
-    parser.add_argument("output_file")
+    parser.add_argument("output_file", type=Path)
     args = parser.parse_args()
     create_report(args.seeds_dir, args.output_file)
 

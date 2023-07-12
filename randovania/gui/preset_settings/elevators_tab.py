@@ -1,10 +1,10 @@
 import copy
 import dataclasses
 import functools
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -27,6 +27,9 @@ from randovania.layout.lib.teleporters import (
 from randovania.layout.preset import Preset
 from randovania.lib import enum_lib
 from randovania.patching.prime import elevators
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
 
 
 class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):

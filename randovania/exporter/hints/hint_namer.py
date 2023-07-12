@@ -14,32 +14,32 @@ class PickupLocation(NamedTuple):
 
 class HintNamer:
     def format_joke(self, joke: str, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def format_player(self, name: str, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def format_region(self, location: PickupLocation, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
                                    location: PickupLocation, hide_area: bool, with_color: bool) -> str:
         """Used when for indicating where a given resource can be found."""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     # Echoes only
     def format_temple_name(self, temple_name: str, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     # Helper
     def format_location(self, location: PickupLocation, with_region: bool, with_area: bool, with_color: bool) -> str:

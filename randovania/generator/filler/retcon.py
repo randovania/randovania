@@ -2,26 +2,30 @@ from __future__ import annotations
 
 import math
 import pprint
-from collections.abc import Callable, Mapping, Set
-from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.node import NodeContext
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
-from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
 from randovania.generator.filler.filler_logging import debug_print_collect_event
-from randovania.generator.filler.player_state import PlayerState, WeightedLocations
-from randovania.generator.generator_reach import GeneratorReach
 from randovania.lib.random_lib import select_element_with_weight
 from randovania.resolver import debug
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Mapping, Set
+    from random import Random
+
+    from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.generator.filler.action import Action
+    from randovania.generator.filler.player_state import PlayerState, WeightedLocations
+    from randovania.generator.generator_reach import GeneratorReach
 
 _DANGEROUS_ACTION_MULTIPLIER = 0.75
 _EVENTS_WEIGHT_MULTIPLIER = 0.5

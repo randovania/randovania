@@ -1,7 +1,11 @@
+from typing import TYPE_CHECKING
+
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
+
+if TYPE_CHECKING:
+    from randovania.game_description.requirements.requirement_set import RequirementSet
 
 
 class RequirementTemplate(Requirement):

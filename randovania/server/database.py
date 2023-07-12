@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 import datetime
-import enum
 import json
 import uuid
 import zlib
-from collections.abc import Iterable
-from typing import Any, Self
+from typing import TYPE_CHECKING, Any, Self
 
 import cachetools
 import peewee
@@ -31,6 +29,10 @@ from randovania.network_common.multiplayer_session import (
     UserWorldDetail,
 )
 from randovania.network_common.session_state import MultiplayerSessionState
+
+if TYPE_CHECKING:
+    import enum
+    from collections.abc import Iterable
 
 
 class MonitoredDb(peewee.SqliteDatabase):
@@ -327,7 +329,7 @@ class World(BaseModel):
         try:
             return cls.get(World.uuid == uid)
         except peewee.DoesNotExist:
-            raise error.WorldDoesNotExistError()
+            raise error.WorldDoesNotExistError
 
     @classmethod
     def get_by_order(cls, session_id: int, order: int) -> World:

@@ -22,7 +22,6 @@ from randovania.gui.lib import async_dialog, common_qt_lib, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
-from randovania.interface_common.options import Options
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import enum_lib, json_lib
@@ -34,10 +33,12 @@ if typing.TYPE_CHECKING:
     from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
     from randovania.gui.multiworld_client import MultiworldClient
     from randovania.gui.widgets.game_connection_window import GameConnectionWindow
+    from randovania.interface_common.options import Options
     from randovania.interface_common.preset_manager import PresetManager
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
     from randovania.layout.permalink import Permalink
     from randovania.layout.preset import Preset
+    from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -253,7 +254,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         }
 
         for url in event.mimeData().urls():
-            ext = os.path.splitext(url.toLocalFile())[1]
+            ext = Path(url.toLocalFile()).suffix
             if ext in valid_extensions_with_dot:
                 event.acceptProposedAction()
                 return
@@ -341,7 +342,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     # Generate Seed
     async def generate_seed_from_permalink(self, permalink: Permalink):
         from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
-        from randovania.lib.status_update_lib import ProgressUpdateCallable
 
         def work(progress_update: ProgressUpdateCallable):
             from randovania.interface_common import generator_frontend

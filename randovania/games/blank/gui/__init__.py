@@ -4,8 +4,8 @@ from randovania.games.blank.gui.dialog.game_export_dialog import BlankGameExport
 from randovania.games.blank.gui.preset_settings import preset_tabs
 
 __all__ = [
-    BlankGameTabWidget,
-    BlankCosmeticPatchesDialog,
-    BlankGameExportDialog,
-    preset_tabs,
+    "BlankGameTabWidget",
+    "BlankCosmeticPatchesDialog",
+    "BlankGameExportDialog",
+    "preset_tabs",
 ]

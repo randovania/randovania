@@ -1,6 +1,10 @@
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from typing import TYPE_CHECKING
+
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.generator.pickup_pool import PoolResults, pickup_creator
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
 def add_dark_temple_keys(resource_database: ResourceDatabase,

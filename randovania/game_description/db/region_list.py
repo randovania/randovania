@@ -253,16 +253,6 @@ class RegionList(NodeProvider):
         region, area = self.region_and_area_by_area_identifier(identifier)
         return f"{region.correct_name(area.in_dark_aether)} - {area.name}"
 
-    def identifier_for_area(self, area: Area) -> AreaIdentifier:
-        region = self.region_with_area(area)
-        return AreaIdentifier(region_name=region.name, area_name=area.name)
-
-    def node_to_area_location(self, node: Node) -> AreaIdentifier:
-        return AreaIdentifier(
-            region_name=self.nodes_to_region(node).name,
-            area_name=self.nodes_to_area(node).name,
-        )
-
     def node_from_pickup_index(self, index: PickupIndex) -> PickupNode:
         self.ensure_has_node_cache()
         return self._pickup_index_to_node[index]

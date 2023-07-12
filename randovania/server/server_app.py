@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import functools
 import inspect
-from collections.abc import Callable, Mapping
-from typing import TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 import flask
 import flask_discord
@@ -11,7 +10,6 @@ import flask_socketio
 import peewee
 import requests
 import sentry_sdk
-import socketio.exceptions
 from cryptography.fernet import Fernet
 from prometheus_flask_exporter import PrometheusMetrics
 
@@ -21,6 +19,11 @@ from randovania.server import client_check
 from randovania.server.custom_discord_oauth import CustomDiscordOAuth2Session
 from randovania.server.database import User, World
 from randovania.server.lib import logger
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Mapping
+
+    import socketio.exceptions
 
 T = TypeVar("T")
 R = TypeVar("R")
@@ -105,9 +108,9 @@ class ServerApp:
         try:
             return User.get_by_id(self.get_session()["user-id"])
         except KeyError:
-            raise error.NotLoggedInError()
+            raise error.NotLoggedInError
         except peewee.DoesNotExist:
-            raise error.InvalidSessionError()
+            raise error.InvalidSessionError
 
     def store_world_in_session(self, world: World):
         with self.session() as sio_session:

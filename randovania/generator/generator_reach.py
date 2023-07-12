@@ -13,13 +13,13 @@ class GeneratorReach:
                          game: GameDescription,
                          initial_state: State,
                          ) -> "GeneratorReach":
-        raise NotImplementedError()
+        raise NotImplementedError
 
     # Game related methods
 
     @property
     def game(self) -> GameDescription:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def victory_condition_satisfied(self):
         return self.game.victory_condition.satisfied(self.state.resources, self.state.energy,
@@ -33,15 +33,15 @@ class GeneratorReach:
 
     @property
     def state(self) -> State:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def advance_to(self, new_state: State,
                    is_safe: bool = False,
                    ) -> None:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def act_on(self, node: ResourceNode) -> None:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def node_context(self) -> NodeContext:
         return self.state.node_context()
@@ -49,7 +49,7 @@ class GeneratorReach:
     # Node stuff
 
     def is_reachable_node(self, node: Node) -> bool:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def connected_nodes(self) -> Iterator[Node]:
@@ -57,18 +57,18 @@ class GeneratorReach:
         An iterator of all nodes there's an path from the reach's starting point. Similar to is_reachable_node
         :return:
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def nodes(self) -> Iterator[Node]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def safe_nodes(self) -> Iterator[Node]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def is_safe_node(self, node: Node) -> bool:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
-        raise NotImplementedError()
+        raise NotImplementedError

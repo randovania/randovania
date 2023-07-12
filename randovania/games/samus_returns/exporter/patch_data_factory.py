@@ -1,5 +1,3 @@
-import os
-
 from randovania.exporter import pickup_exporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.pickup_exporter import ExportedPickupDetails
@@ -20,6 +18,7 @@ def get_item_id_for_item(item: ItemResourceInfo) -> str:
         return item.extra["item_id"]
     except KeyError as e:
         raise KeyError(f"{item.long_name} has no item ID.") from e
+
 
 class MSRPatchDataFactory(BasePatchDataFactory):
     def __init__(self, *args, **kwargs):
@@ -44,7 +43,7 @@ class MSRPatchDataFactory(BasePatchDataFactory):
 
     def _start_point_ref_for(self, node: Node) -> dict:
         region = self.game.region_list.nodes_to_region(node)
-        level_name: str = os.path.splitext(os.path.split(region.extra["asset_id"])[1])[0]
+        level_name: str = region.extra["scenario_id"]
 
         if "start_point_actor_name" in node.extra:
             return {
@@ -109,6 +108,7 @@ class MSRPatchDataFactory(BasePatchDataFactory):
             ],
             "energy_per_tank": energy_per_tank,
         }
+
 
 class MSRAcquiredMemo(dict):
     def __missing__(self, key):

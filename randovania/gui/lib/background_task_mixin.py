@@ -36,7 +36,7 @@ class BackgroundTaskMixin:
 
             if self.abort_background_task_requested:
                 self.progress_update_signal.emit(f"{message} - Aborted", int(progress * 100))
-                raise AbortBackgroundTask()
+                raise AbortBackgroundTask
             else:
                 self.progress_update_signal.emit(message, int(progress * 100))
 

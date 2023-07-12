@@ -98,7 +98,6 @@ def set_attempts(value: int):
 
 
 def get_attempts() -> int:
-    global attempts
     return attempts
 
 

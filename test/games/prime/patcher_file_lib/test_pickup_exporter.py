@@ -367,11 +367,11 @@ def test_pickup_scan_for_progressive_suit(echoes_pickup_database, echoes_resourc
     assert result == "Provides the following in order: Dark Suit, Light Suit."
 
 
-@pytest.mark.parametrize(["item", "ammo", "result"], [
-    ("Beam Ammo Expansion", [4, 20], "Beam Ammo Expansion. Provides 4 Dark Ammo, 20 Light Ammo and 1 Item Percentage"),
-    ("Missile Expansion", [4], "Missile Expansion. Provides 4 Missiles and 1 Item Percentage"),
+@pytest.mark.parametrize(["item", "ammo", "expected"], [
+    ("Beam Ammo Expansion", [4, 20], "Provides 4 Dark Ammo, 20 Light Ammo and 1 Item Percentage."),
+    ("Missile Expansion", [4], "Provides 4 Missiles and 1 Item Percentage."),
 ])
-def test_pickup_scan_for_ammo_expansion(echoes_pickup_database, echoes_resource_database, item, ammo, result):
+def test_pickup_scan_for_ammo_expansion(echoes_pickup_database, echoes_resource_database, item, ammo, expected):
     # Setup
     expansion = echoes_pickup_database.ammo_pickups[item]
     pickup = pickup_creator.create_ammo_pickup(expansion, ammo, False, echoes_resource_database)
@@ -380,7 +380,7 @@ def test_pickup_scan_for_ammo_expansion(echoes_pickup_database, echoes_resource_
     result = pickup_exporter._pickup_description(pickup)
 
     # Assert
-    assert result == result
+    assert result == expected
 
 
 @pytest.fixture(name="pickup_for_create_pickup_data")

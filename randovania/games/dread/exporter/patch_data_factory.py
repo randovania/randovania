@@ -1,4 +1,3 @@
-import os
 from collections.abc import Iterator
 
 from randovania.exporter import item_names, pickup_exporter
@@ -146,7 +145,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _start_point_ref_for(self, node: Node) -> dict:
         region = self.game.region_list.nodes_to_region(node)
-        level_name: str = os.path.splitext(os.path.split(region.extra["asset_id"])[1])[0]
+        level_name: str = region.extra["scenario_id"]
 
         if "start_point_actor_name" in node.extra:
             return {
@@ -161,7 +160,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _level_name_for(self, node: Node) -> str:
         region = self.game.region_list.nodes_to_region(node)
-        return os.path.splitext(os.path.split(region.extra["asset_id"])[1])[0]
+        return region.extra["scenario_id"]
 
     def _teleporter_ref_for(self, node: Node, actor_key: str = "actor_name") -> dict:
         try:
