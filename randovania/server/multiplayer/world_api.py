@@ -1,9 +1,7 @@
-from __future__ import annotations
-
 import base64
 import datetime
 import logging
-from typing import TYPE_CHECKING
+import uuid
 
 import flask_socketio
 import peewee
@@ -12,7 +10,11 @@ from frozendict import frozendict
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
+from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import error, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
@@ -26,15 +28,7 @@ from randovania.network_common.world_sync import (
 from randovania.server.database import MultiplayerSession, User, World, WorldAction, WorldUserAssociation
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
-
-if TYPE_CHECKING:
-    import uuid
-
-    from randovania.game_description.assignment import PickupTarget
-    from randovania.game_description.resources.pickup_entry import PickupEntry
-    from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.layout.layout_description import LayoutDescription
-    from randovania.server.server_app import ServerApp
+from randovania.server.server_app import ServerApp
 
 
 def _get_world_room(world: World):

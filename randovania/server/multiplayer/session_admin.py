@@ -1,8 +1,5 @@
-from __future__ import annotations
-
 import json
 import uuid
-from typing import TYPE_CHECKING
 
 import peewee
 
@@ -25,9 +22,7 @@ from randovania.server.database import (
 )
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
-
-if TYPE_CHECKING:
-    from randovania.server.server_app import ServerApp
+from randovania.server.server_app import ServerApp
 
 
 def _check_user_associated_with(sio: ServerApp, world: World):

@@ -1,9 +1,6 @@
-from __future__ import annotations
-
 import base64
 import datetime
 import json
-from typing import TYPE_CHECKING
 
 import cryptography.fernet
 import flask
@@ -17,9 +14,7 @@ from randovania.network_common import error
 from randovania.server.database import User, UserAccessToken
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
-
-if TYPE_CHECKING:
-    from randovania.server.server_app import ServerApp
+from randovania.server.server_app import ServerApp
 
 
 def _encrypt_session_for_user(sio: ServerApp, session: dict) -> bytes:
