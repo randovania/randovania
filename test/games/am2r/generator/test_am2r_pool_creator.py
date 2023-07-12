@@ -56,11 +56,6 @@ def test_am2r_pool_creator(am2r_game_description, preset_manager):
         c("Industrial Complex", "Upper Factory Alpha Nest", "Pickup (Alpha)"),
         c("Distribution Center", "Alpha Squad Nest", "Pickup (Left Middle Alpha)"),
         c("Main Caves", "Surface Alpha Nest", "Pickup (Alpha)"),
-        c("Industrial Complex", "Breeding Grounds Gamma Nest Top", "Pickup (Gamma)"),
-        c("Industrial Complex", "Breeding Grounds Gamma Nest East", "Pickup (Gamma)"),
-        c("Golden Temple", "Breeding Grounds North East", "Pickup (Alpha)"),
-        c("The Nest", "Hideout Omega Nest", "Pickup (Omega)"),
-        c("Industrial Complex", "Breeding Grounds Gamma Nest Middle", "Pickup (Gamma)"),
     ]
 
     # 46 is total number of metroids
