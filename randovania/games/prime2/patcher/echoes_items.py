@@ -10,9 +10,9 @@ DARK_TEMPLE_KEY_NAMES = [
     "Ing Hive Key {0}"
 ]
 DARK_TEMPLE_KEY_ITEMS = [
-    ["AgonKey1", "AgonKey2", "AgonKey3", ],
-    ["TorvusKey1", "TorvusKey2", "TorvusKey3", ],
-    ["HiveKey1", "HiveKey2", "HiveKey3", ],
+    ["AgonKey1", "AgonKey2", "AgonKey3" ],
+    ["TorvusKey1", "TorvusKey2", "TorvusKey3" ],
+    ["HiveKey1", "HiveKey2", "HiveKey3" ],
 ]
 SKY_TEMPLE_KEY_MODEL = "SkyTempleKey"
 SKY_TEMPLE_KEY_ITEMS = [

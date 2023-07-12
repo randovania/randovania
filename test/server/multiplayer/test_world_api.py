@@ -44,12 +44,12 @@ def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker
 
 @pytest.mark.parametrize(("progression", "result"), [
         (   # normal
-            [("Power", 1),],
+            [("Power", 1)],
             ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
              'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fPr8')
         ),
         (   # negative
-            [("Missile", -5),],
+            [("Missile", -5)],
             ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
              'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35sC@#!')
         ),

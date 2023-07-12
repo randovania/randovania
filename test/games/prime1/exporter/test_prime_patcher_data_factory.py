@@ -76,7 +76,7 @@ def _test_preset(rdvgame_file: Path, expected_results_file: Path, mocker):
     description = LayoutDescription.from_file(rdvgame_file)
     players_config = PlayersConfiguration(0, {0: "Prime", 1: "Echoes"})
     cosmetic_patches = PrimeCosmeticPatches(use_hud_color=True, hud_color=(255, 0, 0),
-                                            suit_color_rotations=(0, 40, 350, 12), pickup_markers=True, )
+                                            suit_color_rotations=(0, 40, 350, 12), pickup_markers=True )
 
     mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
                  new_callable=PropertyMock,

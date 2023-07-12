@@ -122,7 +122,7 @@ def collect_locations(sio: ServerApp, source_world: World, pickup_locations: tup
 
 @sentry_sdk.trace
 def update_association(user: User, world: World, inventory: bytes | None,
-                       connection_state: GameConnectionStatus, ) -> int | None:
+                       connection_state: GameConnectionStatus ) -> int | None:
     association = WorldUserAssociation.get_by_instances(world=world, user=user)
     session = world.session
 
