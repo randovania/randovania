@@ -155,7 +155,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                     label.set_checked(max_capacity == 0 or value >= value_target)
 
                 elif isinstance(label, QtWidgets.QProgressBar):
-                    label.setMaximum(capacity)
+                    label.setMaximum(max(capacity, 1))
                     label.setValue(amount)
 
                 else:
