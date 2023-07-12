@@ -295,7 +295,7 @@ def _limits_for_size(remaining_size: int) -> tuple[int, ...]:
     if remaining_size > 4:
         return 4, remaining_size
     elif remaining_size > 0:
-        return remaining_size,
+        return (remaining_size,)
     else:
         return ()
 
