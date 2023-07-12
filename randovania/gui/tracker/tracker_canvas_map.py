@@ -9,9 +9,9 @@ from randovania.gui.lib.data_editor_canvas import DataEditorCanvas
 from randovania.gui.tracker.tracker_component import TrackerComponent
 
 if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.world.area import Area
-    from randovania.game_description.world.world import World
     from randovania.generator.filler.runner import PlayerPool
     from randovania.gui.tracker.tracker_state import TrackerState
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -53,24 +53,24 @@ class TrackerCanvasMap(TrackerComponent):
         self.map_canvas.select_game(self.game_description.game)
 
         # Connect
-        for world in sorted(self.game_description.world_list.worlds, key=lambda x: x.name):
-            self.map_world_combo.addItem(world.name, userData=world)
+        for region in sorted(self.game_description.region_list.regions, key=lambda x: x.name):
+            self.map_world_combo.addItem(region.name, userData=region)
 
-        self.on_map_world_combo(0)
-        self.map_world_combo.currentIndexChanged.connect(self.on_map_world_combo)
+        self.on_map_region_combo(0)
+        self.map_world_combo.currentIndexChanged.connect(self.on_map_region_combo)
         self.map_area_combo.currentIndexChanged.connect(self.on_map_area_combo)
         self.map_canvas.set_edit_mode(False)
         self.map_canvas.SelectAreaRequest.connect(self.focus_on_area)
 
     # Events
 
-    def on_map_world_combo(self, _):
-        world: World = self.map_world_combo.currentData()
+    def on_map_region_combo(self, _):
+        region: Region = self.map_world_combo.currentData()
         self.map_area_combo.clear()
-        for area in sorted(world.areas, key=lambda x: x.name):
+        for area in sorted(region.areas, key=lambda x: x.name):
             self.map_area_combo.addItem(area.name, userData=area)
 
-        self.map_canvas.select_world(world)
+        self.map_canvas.select_region(region)
         self.on_map_area_combo(0)
 
     def on_map_area_combo(self, _):
@@ -98,9 +98,9 @@ class TrackerCanvasMap(TrackerComponent):
         self.map_canvas.set_state(tracker_state.state)
         self.map_canvas.set_visible_nodes(set(tracker_state.nodes_in_reach))
 
-    def focus_on_world(self, world: World):
-        signal_handling.set_combo_with_value(self.map_world_combo, world)
-        self.on_map_world_combo(0)
+    def focus_on_region(self, region: Region):
+        signal_handling.set_combo_with_value(self.map_world_combo, region)
+        self.on_map_region_combo(0)
 
     def focus_on_area(self, area: Area):
         signal_handling.set_combo_with_value(self.map_area_combo, area)

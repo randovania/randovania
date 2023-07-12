@@ -4,11 +4,11 @@ from typing import TYPE_CHECKING, Any
 
 from PySide6 import QtWidgets
 
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout import translator_configuration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
