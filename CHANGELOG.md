@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Multiworld support for Dread.
 - Changed: Ryujinx (Legacy) is disabled when auto-tracker support is on, or in a multiworld.
+- Fixed: Dairon - Navigation Station North can no longer be assigned a hint, which would then be replaced with DNA Hints.
 
 #### Logic Database
 

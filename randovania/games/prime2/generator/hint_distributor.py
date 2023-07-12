@@ -25,7 +25,7 @@ class EchoesHintDistributor(HintDistributor):
     def num_joke_hints(self) -> int:
         return 2
 
-    async def get_guranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
+    async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         def g(index, loc):
             return (
                 PickupIndex(index),
