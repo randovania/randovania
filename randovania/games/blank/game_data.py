@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import randovania
 from randovania.games import game
 from randovania.games.blank import layout

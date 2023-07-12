@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import base64
 import hashlib
 import itertools
@@ -5,18 +7,21 @@ import json
 import typing
 from dataclasses import dataclass
 from functools import lru_cache
-from pathlib import Path
 from random import Random
 
 import randovania
-from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
 from randovania.layout import description_migration, game_patches_serializer
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib, obfuscator
+
+if typing.TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.layout.preset import Preset
 
 
 class InvalidLayoutDescription(Exception):

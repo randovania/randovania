@@ -1,23 +1,29 @@
+from __future__ import annotations
+
 import asyncio
 import itertools
-from collections.abc import Callable, Iterable
+from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
-from randovania.resolver.state import State
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+
+    from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.state import State
 
 
 def _simplify_requirement_list(self: RequirementList, state: State,

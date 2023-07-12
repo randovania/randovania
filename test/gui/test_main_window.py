@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import os
 import subprocess
 from pathlib import Path
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
@@ -16,10 +19,12 @@ from randovania.gui.widgets.dependencies_widget import DependenciesWidget
 from randovania.gui.widgets.randovania_help_widget import RandovaniaHelpWidget
 from randovania.gui.widgets.reporting_optout_widget import ReportingOptOutWidget
 from randovania.interface_common.options import Options
-from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.network_common.multiplayer_session import MultiplayerSessionEntry
+
+if TYPE_CHECKING:
+    from randovania.interface_common.preset_manager import PresetManager
 
 
 def create_window(options: Options | MagicMock,

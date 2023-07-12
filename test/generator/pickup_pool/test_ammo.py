@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock, call
 
 import randovania.generator.pickup_pool.ammo_pickup

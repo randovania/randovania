@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches

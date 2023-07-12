@@ -1,6 +1,9 @@
-from typing import NamedTuple
+from __future__ import annotations
 
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from typing import TYPE_CHECKING, NamedTuple
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
 class DamageReduction(NamedTuple):

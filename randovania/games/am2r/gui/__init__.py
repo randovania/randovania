@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games.am2r.gui.am2r_game_tab import AM2RGameTabWidget
 from randovania.games.am2r.gui.dialog.cosmetic_patches_dialog import AM2RCosmeticPatchesDialog
 from randovania.games.am2r.gui.dialog.game_export_dialog import AM2RGameExportDialog

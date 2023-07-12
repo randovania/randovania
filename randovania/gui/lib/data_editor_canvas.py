@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import functools
 import math
 import os
-from typing import NamedTuple
+from typing import TYPE_CHECKING, NamedTuple
 
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import QPointF, QRectF, QSizeF, Signal
@@ -11,10 +13,12 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region import Region
 from randovania.game_description.requirements.base import Requirement
-from randovania.games.game import RandovaniaGame
-from randovania.resolver.state import State
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.region import Region
+    from randovania.games.game import RandovaniaGame
+    from randovania.resolver.state import State
 
 _color_for_node: dict[type[Node], int] = {
     GenericNode: QtGui.Qt.red,
@@ -38,7 +42,7 @@ class BoundsFloat(NamedTuple):
     max_y: float
 
     @classmethod
-    def from_bounds(cls, data: dict[str, float]) -> "BoundsFloat":
+    def from_bounds(cls, data: dict[str, float]) -> BoundsFloat:
         return BoundsFloat(data["x1"], data["y1"], data["x2"], data["y2"])
 
     @property

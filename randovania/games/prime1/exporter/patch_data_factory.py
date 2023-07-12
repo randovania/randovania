@@ -1,4 +1,5 @@
-from random import Random
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 import randovania
@@ -6,26 +7,28 @@ from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import Region, RegionList
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode, PrimeConfiguration, RoomRandoMode
-from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.dock import DockType
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region_list import Region, RegionList
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
+    from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
+    from randovania.layout.layout_description import LayoutDescription
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6.QtWidgets import QApplication, QDialog
 
 from randovania.gui.generated.permalink_dialog_ui import Ui_PermalinkDialog

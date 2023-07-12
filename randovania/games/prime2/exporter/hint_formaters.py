@@ -1,10 +1,16 @@
-from collections.abc import Callable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.exporter.hints.hint_formatters import LocationFormatter
-from randovania.exporter.hints.pickup_hint import PickupHint
-from randovania.game_description.hint import Hint
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game_description.hint import Hint
+    from randovania.games.game import RandovaniaGame
 
 
 class GuardianFormatter(LocationFormatter):

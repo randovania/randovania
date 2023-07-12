@@ -1,10 +1,16 @@
+from __future__ import annotations
+
 import dataclasses
-from collections.abc import Iterator
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game_description import default_database
-from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 
 
 @dataclasses.dataclass(frozen=True)
@@ -47,7 +53,7 @@ class AmmoPickupState(BitPackValue):
             yield from bitpacking.encode_bool(self.requires_main_item)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "AmmoPickupState":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> AmmoPickupState:
         ammo: AmmoPickupDefinition = metadata["ammo"]
         db = default_database.resource_database_for(ammo.game)
 
@@ -90,7 +96,7 @@ class AmmoPickupState(BitPackValue):
         return result
 
     @classmethod
-    def from_json(cls, value: dict) -> "AmmoPickupState":
+    def from_json(cls, value: dict) -> AmmoPickupState:
         kwargs = {}
 
         for field in dataclasses.fields(cls):

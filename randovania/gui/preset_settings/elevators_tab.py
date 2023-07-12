@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import functools
@@ -5,31 +7,31 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.patch_data_factory import should_keep_elevator_sounds
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.lib.teleporters import (
     TeleporterConfiguration,
     TeleporterList,
     TeleporterShuffleMode,
     TeleporterTargetList,
 )
-from randovania.layout.preset import Preset
 from randovania.lib import enum_lib
 from randovania.patching.prime import elevators
 
 if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):

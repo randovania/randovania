@@ -1,14 +1,20 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.games.game import RandovaniaGame
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class EchoesPresetItemPool(MetroidPresetItemPool):

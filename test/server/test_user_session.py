@@ -1,18 +1,23 @@
+from __future__ import annotations
+
 import datetime
 import json
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import flask
 import flask_discord
 import oauthlib.oauth2.rfc6749.errors
 import pytest
-import pytest_mock
-from pytest_mock import MockerFixture
 
 from randovania.network_common import error
 from randovania.network_common.error import InvalidSessionError
 from randovania.server import user_session
 from randovania.server.database import User
+
+if TYPE_CHECKING:
+    import pytest_mock
+    from pytest_mock import MockerFixture
 
 
 def test_setup_app():

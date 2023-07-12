@@ -1,6 +1,9 @@
-from typing import TypeVar
+from __future__ import annotations
 
-from randovania.game_description.resources.resource_type import ResourceType
+from typing import TYPE_CHECKING, TypeVar
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_type import ResourceType
 
 
 class MissingResource(ValueError):

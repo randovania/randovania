@@ -1,21 +1,27 @@
+from __future__ import annotations
+
 import collections
 import functools
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
 
 from randovania import get_data_path
-from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.connector.remote_connector import RemoteConnector
-from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
-from randovania.interface_common.options import Options
 from randovania.lib import json_lib
 from randovania.network_common.game_connection_status import GameConnectionStatus
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.game_connection.builder.connector_builder import ConnectorBuilder
+    from randovania.game_connection.connector.remote_connector import RemoteConnector
+    from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.options import Options
 
 
 def load_trackers_configuration() -> dict[RandovaniaGame, dict[str, Path]]:

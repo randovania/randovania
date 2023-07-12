@@ -1,6 +1,12 @@
-from randovania.exporter.game_exporter import GameExportParams
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.gui.dialog.game_export_dialog import GameExportDialog
-from randovania.interface_common.options import PerGameOptions
+
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import PerGameOptions
 
 
 class AM2RGameExportDialog(GameExportDialog):

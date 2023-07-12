@@ -1,18 +1,24 @@
-from collections.abc import Callable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.game_description import GameDescription
-from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_starting_area_ui import Ui_PresetStartingArea
 from randovania.gui.lib.node_list_helper import NodeListHelper
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.base_configuration import StartingLocationList
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_description import GameDescription
+    from randovania.games.game import RandovaniaGame
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
@@ -49,7 +55,7 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
                                                                         self._starting_location_on_select_default)
 
     def _quick_fill_button(self, text: str,
-                           connection: Callable[["PresetStartingArea"], None]) -> QtWidgets.QPushButton:
+                           connection: Callable[[PresetStartingArea], None]) -> QtWidgets.QPushButton:
         self._num_quick_fill_buttons += 1
         button = QtWidgets.QPushButton(text)
         self.starting_area_quick_fill_layout.addWidget(button)

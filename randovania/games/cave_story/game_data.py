@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches

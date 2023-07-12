@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import construct
 import flask
 from playhouse import flask_utils
@@ -7,7 +11,9 @@ from randovania.game_description import default_database
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.multiplayer_session import RemoteInventory
 from randovania.server.database import MultiplayerSession, World, WorldUserAssociation
-from randovania.server.server_app import ServerApp
+
+if TYPE_CHECKING:
+    from randovania.server.server_app import ServerApp
 
 
 def admin_sessions(user):

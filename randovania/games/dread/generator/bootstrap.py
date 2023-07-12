@@ -1,16 +1,22 @@
-from random import Random
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.games.dread.generator.pool_creator import DREAD_ARTIFACT_CATEGORY
 from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig, DreadConfiguration
-from randovania.generator.pickup_pool import PoolResults
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.generator.pickup_pool import PoolResults
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 def all_dna_locations(game: GameDescription, config: DreadArtifactConfig):

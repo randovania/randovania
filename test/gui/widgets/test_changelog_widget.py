@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.gui.widgets.changelog_widget import ChangeLogWidget
 
 

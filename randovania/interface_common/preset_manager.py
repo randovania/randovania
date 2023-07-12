@@ -1,10 +1,10 @@
+from __future__ import annotations
+
 import asyncio
 import datetime
 import logging
 import time
 import typing
-import uuid
-from collections.abc import Iterator
 from pathlib import Path
 
 import dulwich.porcelain
@@ -15,6 +15,10 @@ import randovania
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
+
+if typing.TYPE_CHECKING:
+    import uuid
+    from collections.abc import Iterator
 
 
 def read_preset_list() -> list[Path]:

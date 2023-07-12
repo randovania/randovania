@@ -1,11 +1,17 @@
-from collections.abc import Iterable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.game_description.requirements.array_base import RequirementArrayBase, expand_items, mergeable_array
 from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
 
 
 def _halt_damage_on_zero(items: Iterable[Requirement], current_resources: ResourceCollection,
@@ -78,7 +84,7 @@ class RequirementOr(RequirementArrayBase):
 
         return RequirementOr(final_items, comment=self.comment)
 
-    def as_set(self, database: ResourceDatabase) -> "RequirementSet":
+    def as_set(self, database: ResourceDatabase) -> RequirementSet:
         alternatives = set()
         for item in self.items:
             alternatives |= item.as_set(database).alternatives

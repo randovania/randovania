@@ -1,18 +1,24 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
-from random import Random
+from typing import TYPE_CHECKING
 
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.damage_resource_info import DamageReduction
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
-from randovania.generator.pickup_pool import PoolResults
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.generator.pickup_pool import PoolResults
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class EchoesBootstrap(MetroidBootstrap):

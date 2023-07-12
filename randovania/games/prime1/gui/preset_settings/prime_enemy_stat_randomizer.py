@@ -1,12 +1,17 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.game_description.game_description import GameDescription
+import dataclasses
+from typing import TYPE_CHECKING
+
 from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 from randovania.gui.generated.preset_prime_enemy_stat_randomizer_ui import Ui_EnemyAttributeRandomizer
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):

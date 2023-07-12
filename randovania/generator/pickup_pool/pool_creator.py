@@ -1,13 +1,17 @@
-from typing import NamedTuple
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.ammo_pickup import add_ammo_pickups
 from randovania.generator.pickup_pool.standard_pickup import add_standard_pickups
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 def calculate_pool_results(layout_configuration: BaseConfiguration, game: GameDescription) -> PoolResults:

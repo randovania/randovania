@@ -1,13 +1,18 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
+import dataclasses
+from typing import TYPE_CHECKING
+
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import Node, NodeIndex
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.base import Requirement
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.node import Node, NodeIndex
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.base import Requirement
 
 
 class Editor:

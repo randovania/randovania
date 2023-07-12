@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games.blank.gui.dialog.cosmetic_patches_dialog import BlankCosmeticPatchesDialog
 from randovania.games.blank.layout import BlankCosmeticPatches
 

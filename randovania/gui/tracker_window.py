@@ -1,27 +1,22 @@
+from __future__ import annotations
+
 import collections
 import functools
 import json
 import math
 import typing
-from collections.abc import Iterator
-from pathlib import Path
 
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region import Region
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout import translator_configuration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -32,15 +27,25 @@ from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode
-from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib
 from randovania.patching.prime import elevators
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State, add_pickup_to_state
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
+    from pathlib import Path
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.preset import Preset
 
 
 class InvalidLayoutForTracker(Exception):
@@ -93,7 +98,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     _during_setup = False
 
     @classmethod
-    async def create_new(cls, persistence_path: Path, preset: Preset) -> "TrackerWindow":
+    async def create_new(cls, persistence_path: Path, preset: Preset) -> TrackerWindow:
         result = cls(persistence_path, preset)
         await result.configure()
         return result

@@ -1,9 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import pytest
 
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.generator.pickup_pool import PoolResults
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def _create_pool_with(shuffled_count: int, db: ResourceDatabase):

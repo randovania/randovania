@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from randovania.game_description.pickup import migrations
 from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
 
 
 @dataclass(frozen=True)

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import logging
@@ -5,15 +7,18 @@ import re
 import struct
 from asyncio import StreamReader, StreamWriter
 from enum import IntEnum
-from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from PySide6.QtCore import QObject, Signal
 
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.game_description.game_description import GameDescription
 
 
 class DreadLuaException(Exception):

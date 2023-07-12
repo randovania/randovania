@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import dataclasses
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
@@ -13,6 +15,9 @@ from randovania.layout.base.pickup_model import PickupModelDataSource, PickupMod
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.lib import location_list
+
+if TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
 
 
 class StartingLocationList(location_list.LocationList):

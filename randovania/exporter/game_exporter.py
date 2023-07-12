@@ -1,10 +1,16 @@
+from __future__ import annotations
+
 import dataclasses
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import sentry_sdk
 
 from randovania import monitoring
-from randovania.lib import status_update_lib
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.lib import status_update_lib
 
 
 @dataclasses.dataclass(frozen=True)

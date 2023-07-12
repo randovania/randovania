@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.prime1.hint_distributor import PrimeHintDistributor
 from randovania.games.prime1.layout.preset_describer import (

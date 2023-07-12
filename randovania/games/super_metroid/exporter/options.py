@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
 
@@ -21,7 +23,7 @@ class SuperMetroidPerGameOptions(PerGameOptions):
         }
 
     @classmethod
-    def from_json(cls, value: dict) -> "SuperMetroidPerGameOptions":
+    def from_json(cls, value: dict) -> SuperMetroidPerGameOptions:
         game = RandovaniaGame.SUPER_METROID
         cosmetic_patches = game.data.layout.cosmetic_patches.from_json(value["cosmetic_patches"])
         return cls(

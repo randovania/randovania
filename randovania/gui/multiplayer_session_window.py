@@ -1,9 +1,10 @@
+from __future__ import annotations
+
 import asyncio
 import itertools
 import json
 import logging
 import random
-import uuid
 from typing import TYPE_CHECKING, Self
 
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -20,18 +21,14 @@ from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressErr
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
-from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget, connect_to
 from randovania.interface_common import generator_frontend
-from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.multiplayer_session import (
@@ -46,7 +43,13 @@ from randovania.network_common.multiplayer_session import (
 from randovania.network_common.session_state import MultiplayerSessionState
 
 if TYPE_CHECKING:
+    import uuid
+
     from randovania.games.game import RandovaniaGame
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
+    from randovania.interface_common.options import Options
+    from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 logger = logging.getLogger(__name__)
 

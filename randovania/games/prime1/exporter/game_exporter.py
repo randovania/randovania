@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import json
 import os
-from pathlib import Path
 from textwrap import wrap
+from typing import TYPE_CHECKING
 
 import py_randomprime
 from open_prime_rando.dol_patching import all_prime_dol_patches
@@ -14,15 +16,19 @@ from retro_data_structures.game_check import Game as RDSGame
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
-from randovania.game_description.db.dock import DockType
-from randovania.game_description.db.region import Region
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
-from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 from randovania.patching.prime import asset_conversion
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.game_description.db.dock import DockType
+    from randovania.game_description.db.region import Region
+    from randovania.lib import status_update_lib
 
 
 @dataclasses.dataclass(frozen=True)

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY, AmmoPickupDefinition

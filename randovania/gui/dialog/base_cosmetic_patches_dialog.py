@@ -1,6 +1,11 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6.QtWidgets import QDialog
 
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+if TYPE_CHECKING:
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 
 class BaseCosmeticPatchesDialog(QDialog):

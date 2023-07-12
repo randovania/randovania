@@ -1,17 +1,17 @@
+from __future__ import annotations
+
 import asyncio
 import datetime
 import json
 import uuid
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import pytest
-import pytest_mock
 from PySide6 import QtWidgets
-from pytest_mock import MockerFixture
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.games.game import RandovaniaGame
-from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -32,6 +32,12 @@ from randovania.network_common.multiplayer_session import (
     UserWorldDetail,
 )
 from randovania.network_common.session_state import MultiplayerSessionState
+
+if TYPE_CHECKING:
+    import pytest_mock
+    from pytest_mock import MockerFixture
+
+    from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 
 
 @pytest.fixture()

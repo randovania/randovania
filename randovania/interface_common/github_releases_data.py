@@ -1,12 +1,17 @@
+from __future__ import annotations
+
 import datetime
 import json
 import logging
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import aiofiles
 import aiohttp
 
 from randovania.interface_common import persistence
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 _RELEASES_URL = "https://api.github.com/repos/randovania/randovania/releases"
 

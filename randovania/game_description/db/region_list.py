@@ -1,22 +1,27 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import typing
-from collections.abc import Iterable, Iterator
 
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockWeakness, DockWeaknessDatabase
-from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node, NodeContext, NodeIndex
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.node_provider import NodeProvider
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region import Region
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.dock import DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.dock_node import DockNode
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
 
 NodeType = typing.TypeVar("NodeType", bound=Node)
 

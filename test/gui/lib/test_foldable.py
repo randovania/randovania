@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.gui.lib.foldable import Foldable
 
 

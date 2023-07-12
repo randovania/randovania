@@ -1,10 +1,10 @@
+from __future__ import annotations
+
 import dataclasses
 import shutil
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from PySide6.QtWidgets import QLineEdit, QPushButton
-
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.common.prime_family.gui.export_validator import is_prime1_iso_validator, is_prime2_iso_validator
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
@@ -21,7 +21,12 @@ from randovania.gui.dialog.game_export_dialog import (
 )
 from randovania.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
 from randovania.interface_common import game_workdir
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from PySide6.QtWidgets import QLineEdit, QPushButton
+
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 _VALID_GAME_TEXT = "(internal game copy)"
 

@@ -1,19 +1,25 @@
-import re
-from collections.abc import Iterator
+from __future__ import annotations
 
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockType, DockWeakness
+import re
+from typing import TYPE_CHECKING
+
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region import Region
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_info import ResourceCollection
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.dock import DockType, DockWeakness
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_suffix_re = re.compile(r" \([^()]+?\)$")

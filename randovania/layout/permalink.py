@@ -1,20 +1,26 @@
+from __future__ import annotations
+
 import base64
 import binascii
 import dataclasses
 import hashlib
 import json
 import operator
-from collections.abc import Iterable, Iterator
+from typing import TYPE_CHECKING
 
 import bitstruct
 import construct
 
 import randovania
 from randovania.bitpacking.bitpacking import single_byte_hash
-from randovania.games.game import RandovaniaGame
 from randovania.layout import generator_parameters
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.lib.construct_lib import is_path_not_equals_to
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
+    from randovania.games.game import RandovaniaGame
 
 _CURRENT_SCHEMA_VERSION = 13
 _PERMALINK_MAX_VERSION = 256
@@ -122,7 +128,7 @@ class Permalink:
         return randovania.GIT_HASH
 
     @classmethod
-    def from_parameters(cls, parameters: GeneratorParameters, seed_hash: bytes | None = None) -> "Permalink":
+    def from_parameters(cls, parameters: GeneratorParameters, seed_hash: bytes | None = None) -> Permalink:
         return Permalink(
             parameters=parameters,
             seed_hash=seed_hash,
@@ -145,7 +151,7 @@ class Permalink:
             return f"Unable to create Permalink: {e}"
 
     @classmethod
-    def from_str(cls, param: str) -> "Permalink":
+    def from_str(cls, param: str) -> Permalink:
         encoded_param = param.encode("utf-8")
         encoded_param += b"=" * ((4 - len(encoded_param)) % 4)
 

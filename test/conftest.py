@@ -1,20 +1,20 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import uuid
 from importlib.util import find_spec
 from pathlib import Path
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
 
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup.pickup_category import PickupCategory
-from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
 from randovania.games.blank.layout import BlankConfiguration
 from randovania.games.game import RandovaniaGame
@@ -24,6 +24,11 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class TestFilesDir:

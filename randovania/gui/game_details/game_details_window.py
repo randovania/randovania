@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import re
 import typing
@@ -11,21 +13,23 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.game_details.dock_lock_details_tab import DockLockDetailsTab
-from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.gui.lib.common_qt_lib import prompt_user_for_output_game_log, set_default_window_icon
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.game_validator_widget import GameValidatorWidget
 from randovania.interface_common import generator_frontend
 from randovania.interface_common.options import InfoAlert, Options
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import preset_describer
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
+
+if typing.TYPE_CHECKING:
+    from randovania.gui.game_details.game_details_tab import GameDetailsTab
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.layout.layout_description import LayoutDescription
 
 
 def _unique(iterable):

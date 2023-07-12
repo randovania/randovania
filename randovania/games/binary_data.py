@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 import copy
-from pathlib import Path
-from typing import BinaryIO
+from typing import TYPE_CHECKING, BinaryIO
 
 import construct
 from construct import (
@@ -22,6 +23,9 @@ from randovania.game_description import game_migration
 from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.games.game import RandovaniaGame
 from randovania.lib.construct_lib import ConstructDict, JsonEncodedValue, OptionalValue, String, convert_to_raw_python
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 current_format_version = 10
 

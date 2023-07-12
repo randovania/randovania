@@ -1,16 +1,22 @@
+from __future__ import annotations
+
 import dataclasses
-from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
-from randovania.game_description.game_description import GameDescription
 from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig, AM2RConfiguration
 from randovania.gui.generated.preset_am2r_goal_ui import Ui_PresetAM2RGoal
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):

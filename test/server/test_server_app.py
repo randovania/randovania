@@ -1,12 +1,17 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import flask
 import pytest
-import pytest_mock
 
 from randovania.network_common import error
 from randovania.server import database
 from randovania.server.server_app import EnforceDiscordRole
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 def test_session(server_app):

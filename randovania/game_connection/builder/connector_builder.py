@@ -1,7 +1,12 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtCore
 
-from randovania.game_connection.connector.remote_connector import RemoteConnector
-from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+if TYPE_CHECKING:
+    from randovania.game_connection.connector.remote_connector import RemoteConnector
+    from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 
 
 class ConnectorBuilder(QtCore.QObject):

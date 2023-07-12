@@ -1,18 +1,24 @@
 """Classes that describes the raw data of a game db."""
+from __future__ import annotations
+
 import copy
 import dataclasses
-from collections.abc import Iterator
+from typing import TYPE_CHECKING
 
-from randovania.game_description.db.dock import DockWeaknessDatabase
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGainTuple, ResourceInfo
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.dock import DockWeaknessDatabase
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGainTuple, ResourceInfo
+    from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+    from randovania.games.game import RandovaniaGame
 
 
 def _calculate_dangerous_resources_in_db(
@@ -133,7 +139,7 @@ class GameDescription:
 
         return self._dangerous_resources
 
-    def get_mutable(self) -> "GameDescription":
+    def get_mutable(self) -> GameDescription:
         if self.mutable:
             return self
         else:

@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 import dataclasses
 import shutil
-from collections.abc import Callable
 from enum import Enum
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import randovania
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.lib import json_lib, status_update_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
 
 
 class DreadModPlatform(Enum):

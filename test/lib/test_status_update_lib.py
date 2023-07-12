@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock, call
 
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate

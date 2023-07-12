@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.am2r import layout
 from randovania.layout.preset_describer import GamePresetDescriber

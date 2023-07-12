@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import datetime
 
@@ -25,7 +27,7 @@ class RaceEntry:
     game: RandovaniaGame
 
     @classmethod
-    def from_json(cls, data, game) -> "RaceEntry":
+    def from_json(cls, data, game) -> RaceEntry:
         return RaceEntry(
             name=data["name"],
             status=data["status"]["value"],

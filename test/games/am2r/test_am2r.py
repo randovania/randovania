@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.game_description import default_database
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement

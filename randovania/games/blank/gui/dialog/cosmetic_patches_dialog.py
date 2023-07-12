@@ -1,9 +1,15 @@
-from PySide6.QtWidgets import QWidget
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.games.blank.layout.blank_cosmetic_patches import BlankCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.blank_cosmetic_patches_dialog_ui import Ui_BlankCosmeticPatchesDialog
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+
+if TYPE_CHECKING:
+    from PySide6.QtWidgets import QWidget
+
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 
 class BlankCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_BlankCosmeticPatchesDialog):

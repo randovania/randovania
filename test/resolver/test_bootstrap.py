@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 
 from randovania.game_description import default_database

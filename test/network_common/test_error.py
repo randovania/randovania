@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.network_common import error
 
 

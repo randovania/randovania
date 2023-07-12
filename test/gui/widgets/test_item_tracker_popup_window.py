@@ -1,9 +1,14 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
-import pytest_mock
 from PySide6 import QtWidgets
 
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 def test_change_tracker_layout(skip_qtbot, mocker: pytest_mock.MockerFixture,

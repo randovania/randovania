@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.item_configuration_widget import StandardPickupWidget
 from randovania.layout.base.standard_pickup_state import StandardPickupState, StandardPickupStateCase

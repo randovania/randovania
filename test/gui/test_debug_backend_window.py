@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6 import QtCore
 
 from randovania.games.super_metroid.gui.dialog.super_cosmetic_patches_dialog import SuperCosmeticPatchesDialog

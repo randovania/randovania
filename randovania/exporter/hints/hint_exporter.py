@@ -1,12 +1,18 @@
-from random import Random
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.exporter.hints import pickup_hint
-from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.hints.temple_key_hint import create_temple_key_hint
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
-from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import filtered_database
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.exporter.hints.hint_namer import HintNamer
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 class HintExporter:

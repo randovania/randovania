@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 
 from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration

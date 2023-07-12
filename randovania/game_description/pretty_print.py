@@ -1,18 +1,14 @@
-from collections.abc import Iterator
-from pathlib import Path
-from typing import TextIO
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, TextIO
 
 from randovania.game_description.data_writer import REGION_NAME_TO_FILE_NAME_RE
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
@@ -20,6 +16,15 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.trick_level import LayoutTrickLevel
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+    from pathlib import Path
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
 
 
 def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.samus_returns import layout
 from randovania.layout.preset_describer import GamePresetDescriber

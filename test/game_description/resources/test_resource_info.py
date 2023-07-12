@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.game_description.resources.resource_info import ResourceCollection
 
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.games.dread.generator import pool_creator

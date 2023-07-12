@@ -1,10 +1,16 @@
+from __future__ import annotations
+
 import functools
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania import get_data_path
 from randovania.game_description import data_reader
 from randovania.games import binary_data
-from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.games.game import RandovaniaGame
 
 
 @functools.lru_cache

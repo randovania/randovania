@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import dataclasses
 from random import Random
+from typing import TYPE_CHECKING
 
 import pytest
 
@@ -13,9 +16,11 @@ from randovania.games.cave_story.generator.bootstrap import (
     STRONG_WEAPONS,
     CSBootstrap,
 )
-from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.base.trick_level import LayoutTrickLevel
+
+if TYPE_CHECKING:
+    from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 
 
 @pytest.mark.parametrize("puppies", [False, True])

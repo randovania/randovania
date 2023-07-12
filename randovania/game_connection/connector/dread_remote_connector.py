@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import json
 import logging
 import uuid
+from typing import TYPE_CHECKING
 
 from qasync import asyncSlot
 
@@ -10,16 +13,18 @@ from randovania.game_connection.connector.remote_connector import (
     PlayerLocationEvent,
     RemoteConnector,
 )
-from randovania.game_connection.executor.dread_executor import DreadExecutor
 from randovania.game_description import default_database
-from randovania.game_description.db.region import Region
 from randovania.game_description.resources.item_resource_info import Inventory, InventoryItem
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.dread.exporter.patch_data_factory import get_resources_for_details
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from randovania.game_connection.executor.dread_executor import DreadExecutor
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def format_received_item(item_name: str, player_name: str) -> str:

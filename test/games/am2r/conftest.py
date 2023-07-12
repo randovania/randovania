@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.games.am2r.layout import AM2RConfiguration

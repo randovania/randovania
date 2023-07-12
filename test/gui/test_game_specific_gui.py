@@ -1,10 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
-from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout import filtered_database
+
+if TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
 
 
 def test_preset_editor_tabs_for(skip_qtbot, game_enum: RandovaniaGame, preset_manager):

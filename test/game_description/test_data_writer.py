@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.game_description import data_reader, data_writer
