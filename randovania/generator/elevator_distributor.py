@@ -1,20 +1,25 @@
+from __future__ import annotations
+
 import copy
 from collections import defaultdict
-from random import Random
-from typing import Optional
+from typing import TYPE_CHECKING
 
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.game_patches import ElevatorConnection
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.dock import DockType
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_patches import ElevatorConnection
 
 
 class ElevatorHelper:
     teleporter: NodeIdentifier
     destination: AreaIdentifier
-    connected_elevator: Optional["ElevatorHelper"]
+    connected_elevator: ElevatorHelper | None
 
     def __init__(self, teleporter: NodeIdentifier, destination: AreaIdentifier):
         self.teleporter = teleporter
@@ -29,7 +34,7 @@ class ElevatorHelper:
     def area_name(self):
         return self.teleporter.area_location.area_name
 
-    def connect_to(self, other: "ElevatorHelper"):
+    def connect_to(self, other: ElevatorHelper):
         self.destination = other.teleporter.area_location
         other.destination = self.teleporter.area_location
         self.connected_elevator = other

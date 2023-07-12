@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
@@ -85,7 +87,7 @@ class DreadCosmeticPatches(BaseCosmeticPatches):
     missile_cosmetic: DreadMissileCosmeticType = DreadMissileCosmeticType.NONE
 
     @classmethod
-    def default(cls) -> "DreadCosmeticPatches":
+    def default(cls) -> DreadCosmeticPatches:
         return cls()
 
     @classmethod

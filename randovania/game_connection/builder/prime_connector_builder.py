@@ -1,9 +1,9 @@
+from __future__ import annotations
+
 import logging
 from typing import TYPE_CHECKING
 
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.connector.remote_connector import RemoteConnector
-from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_connection.executor.memory_operation import (
     MemoryOperation,
     MemoryOperationException,
@@ -12,6 +12,8 @@ from randovania.game_connection.executor.memory_operation import (
 
 if TYPE_CHECKING:
     from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
+    from randovania.game_connection.connector.remote_connector import RemoteConnector
+    from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 
 
 class PrimeConnectorBuilder(ConnectorBuilder):

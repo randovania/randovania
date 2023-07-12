@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 
 from randovania.games.game import RandovaniaGame
@@ -20,7 +22,7 @@ class EchoesCosmeticPatches(BaseCosmeticPatches):
     hud_color: tuple[int, int, int] = DEFAULT_HUD_COLOR
 
     @classmethod
-    def default(cls) -> "EchoesCosmeticPatches":
+    def default(cls) -> EchoesCosmeticPatches:
         return cls()
 
     @classmethod

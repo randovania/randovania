@@ -1,17 +1,22 @@
+from __future__ import annotations
+
 import collections
 import random
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
 from randovania.exporter.hints.hint_exporter import HintExporter
-from randovania.game_description.game_patches import GamePatches
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
-from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
-from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib.dict_lib import iterate_key_sorted
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class DreadHintDetailsTab(GameDetailsTab):

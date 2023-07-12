@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.common.prime_family.gui.export_validator import is_prime1_iso_validator, is_prime2_iso_validator
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
@@ -18,7 +20,10 @@ from randovania.gui.dialog.game_export_dialog import (
 )
 from randovania.gui.generated.prime_game_export_dialog_ui import Ui_PrimeGameExportDialog
 from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 
 class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGameExportDialog):

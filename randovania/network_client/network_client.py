@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import base64
 import functools
@@ -7,7 +9,7 @@ import ssl
 import time
 import uuid
 from enum import Enum
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import aiofiles
 import aiohttp
@@ -40,6 +42,9 @@ from randovania.network_common.multiplayer_session import (
     WorldUserInventory,
 )
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 class ConnectionState(Enum):

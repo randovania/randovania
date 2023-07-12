@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6 import QtWidgets
 
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog

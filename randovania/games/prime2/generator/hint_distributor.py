@@ -1,7 +1,7 @@
-from random import Random
+from __future__ import annotations
 
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.game_patches import GamePatches
+from typing import TYPE_CHECKING
+
 from randovania.game_description.hint import (
     Hint,
     HintDarkTemple,
@@ -13,10 +13,16 @@ from randovania.game_description.hint import (
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.generator.filler.player_state import PlayerState
-from randovania.generator.filler.runner import PlayerPool
 from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision, PreFillParams
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.generator.filler.player_state import PlayerState
+    from randovania.generator.filler.runner import PlayerPool
 
 
 class EchoesHintDistributor(HintDistributor):

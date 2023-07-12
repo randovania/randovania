@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExportParams
 from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
@@ -15,7 +17,10 @@ from randovania.gui.dialog.game_export_dialog import (
 )
 from randovania.gui.generated.super_metroid_game_export_dialog_ui import Ui_SuperMetroidGameExportDialog
 from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 
 class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_SuperMetroidGameExportDialog):

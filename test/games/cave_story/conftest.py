@@ -1,9 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import pytest
 
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.layout.preset import Preset
 
 
 @pytest.fixture(scope="session")

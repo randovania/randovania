@@ -1,15 +1,20 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
-from collections.abc import Iterable, Iterator
-from typing import TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game_description import default_database
-from randovania.game_description.pickup.pickup_category import PickupCategory
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-from randovania.games.game import RandovaniaGame
 from randovania.layout.base.standard_pickup_state import StandardPickupState
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
+    from randovania.game_description.pickup.pickup_category import PickupCategory
+    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.games.game import RandovaniaGame
 
 T = TypeVar("T")
 
@@ -62,7 +67,7 @@ class StandardPickupConfiguration(BitPackValue):
         }
 
     @classmethod
-    def from_json(cls, value: dict, game: RandovaniaGame) -> "StandardPickupConfiguration":
+    def from_json(cls, value: dict, game: RandovaniaGame) -> StandardPickupConfiguration:
         pickup_database = default_database.pickup_database_for_game(game)
 
         pickups_state = {}
@@ -112,7 +117,7 @@ class StandardPickupConfiguration(BitPackValue):
         yield from bitpacking.encode_big_int(self.maximum_random_starting_pickups)
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "StandardPickupConfiguration":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> StandardPickupConfiguration:
         reference: StandardPickupConfiguration = metadata["reference"]
 
         name_to_pickup: dict[str, StandardPickupDefinition] = {
@@ -151,13 +156,13 @@ class StandardPickupConfiguration(BitPackValue):
         raise KeyError(name)
 
     def replace_state_for_pickup(self, pickup: StandardPickupDefinition, state: StandardPickupState,
-                                 ) -> "StandardPickupConfiguration":
+                                 ) -> StandardPickupConfiguration:
         return self.replace_states({
             pickup: state
         })
 
     def replace_states(self, new_states: dict[StandardPickupDefinition, StandardPickupState],
-                       ) -> "StandardPickupConfiguration":
+                       ) -> StandardPickupConfiguration:
         """
         Creates a copy of this MajorItemsConfiguration where the state of all given pickups are replaced by the given
         states.
@@ -172,7 +177,7 @@ class StandardPickupConfiguration(BitPackValue):
         return dataclasses.replace(self, pickups_state=pickups_state)
 
     def replace_default_pickup(self, category: PickupCategory, pickup: StandardPickupDefinition,
-                               ) -> "StandardPickupConfiguration":
+                               ) -> StandardPickupConfiguration:
         """
         Creates a copy of this MajorItemsConfiguration where the default pickup for the given category
         is replaced by the given pickup.

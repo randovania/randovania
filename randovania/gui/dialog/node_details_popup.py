@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import collections
 import itertools
 import json
@@ -11,14 +13,12 @@ from qasync import asyncSlot
 
 from randovania.game_description import integrity_check
 from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -32,7 +32,9 @@ from randovania.lib import enum_lib, frozen_lib
 
 if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
+    from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
     from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
 
 
 def refresh_if_needed(combo: QtWidgets.QComboBox, func):

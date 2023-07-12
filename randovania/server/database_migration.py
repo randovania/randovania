@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 def apply_migrations():
     import playhouse.migrate
 

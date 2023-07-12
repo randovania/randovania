@@ -1,14 +1,19 @@
+from __future__ import annotations
+
 import itertools
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, call, patch
 
 import pytest
 
 from randovania.cli import database
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
 
 
 @pytest.mark.parametrize("expected_resource", [0, 1, 2])

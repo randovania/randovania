@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.games.am2r.generator.pool_creator import artifact_pool, create_am2r_artifact

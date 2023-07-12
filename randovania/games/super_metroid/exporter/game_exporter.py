@@ -1,11 +1,17 @@
+from __future__ import annotations
+
 import dataclasses
 from io import BytesIO
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import SuperDuperMetroid.ROM_Patcher
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.lib import status_update_lib
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.lib import status_update_lib
 
 
 @dataclasses.dataclass(frozen=True)

@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 import typing
-import uuid
 
 from PySide6 import QtCore
 
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.region import Region
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
+
+if typing.TYPE_CHECKING:
+    import uuid
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.region import Region
+    from randovania.games.game import RandovaniaGame
 
 PickupEntryWithOwner = tuple[str, PickupEntry]
 

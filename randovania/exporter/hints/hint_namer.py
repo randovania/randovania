@@ -1,10 +1,13 @@
-from typing import NamedTuple
+from __future__ import annotations
 
-from randovania.exporter.hints.pickup_hint import PickupHint
-from randovania.game_description.hint import Hint
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
+from typing import TYPE_CHECKING, NamedTuple
+
+if TYPE_CHECKING:
+    from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game_description.hint import Hint
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.games.game import RandovaniaGame
 
 
 class PickupLocation(NamedTuple):

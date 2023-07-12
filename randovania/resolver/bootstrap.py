@@ -1,20 +1,25 @@
-from random import Random
-from typing import NamedTuple
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
-from randovania.generator.pickup_pool import PoolResults
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver.state import State, StateGameData
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.generator.pickup_pool import PoolResults
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
+    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
 class EnergyConfig(NamedTuple):
@@ -85,7 +90,7 @@ class Bootstrap:
         return EnergyConfig(99, 100)
 
     def calculate_starting_state(self, game: GameDescription, patches: GamePatches,
-                                 configuration: BaseConfiguration) -> "State":
+                                 configuration: BaseConfiguration) -> State:
         starting_node = game.region_list.node_by_identifier(patches.starting_location)
 
         initial_resources = patches.starting_resources()

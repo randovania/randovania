@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import dataclasses
 import re
 from pathlib import Path
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
@@ -16,15 +18,11 @@ from randovania.game_description import (
     integrity_check,
     pretty_print,
 )
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region import Region
-from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.editor import Editor
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
@@ -42,6 +40,12 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer, create_tree_items_for_requirement
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
 
 SHOW_REGION_MIN_MAX_SPINNER = False
 

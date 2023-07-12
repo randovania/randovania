@@ -1,6 +1,10 @@
-from collections.abc import Callable, Iterator
-from random import Random
-from typing import Any, TypeVar
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any, TypeVar
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+    from random import Random
 
 T = TypeVar('T')
 

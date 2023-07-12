@@ -1,9 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime3.patcher import corruption_items
 from randovania.generator.pickup_pool import PoolResults
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 ENERGY_CELL_CATEGORY = pickup_category.PickupCategory(
     name="energy_cell",

@@ -1,11 +1,17 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.games.prime1.layout.hint_configuration import PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode, PrimeConfiguration, RoomRandoMode
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
     message_for_required_mains,
 )
+
+if TYPE_CHECKING:
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.MAJOR: "Major cutscene removal",

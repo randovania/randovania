@@ -1,17 +1,23 @@
-import datetime
+from __future__ import annotations
+
 import difflib
 import json
-from collections.abc import Iterator
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui.generated.preset_history_dialog_ui import Ui_PresetHistoryDialog
 from randovania.gui.lib import common_qt_lib, file_prompts
-from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
+
+if TYPE_CHECKING:
+    import datetime
+    from collections.abc import Iterator
+
+    from randovania.interface_common.preset_manager import PresetManager
 
 
 def _get_old_preset(preset_str: str) -> Preset | str:

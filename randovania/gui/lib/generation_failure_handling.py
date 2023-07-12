@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import logging
 import multiprocessing
-from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 from qasync import asyncSlot
@@ -10,6 +12,9 @@ from randovania.gui.lib import async_dialog, common_qt_lib, error_message_box
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.exceptions import GenerationFailure
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class GenerationFailureHandler(QtWidgets.QWidget):

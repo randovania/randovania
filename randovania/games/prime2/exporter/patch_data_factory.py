@@ -1,48 +1,54 @@
+from __future__ import annotations
+
 import dataclasses
-from collections.abc import Callable, Iterator
-from random import Random
+from typing import TYPE_CHECKING
 
 import randovania
 import randovania.games.prime2.exporter.hints
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler
-from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.default_database import default_prime2_memo_data
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup import pickup_category
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import string_lib
 from randovania.patching.prime import elevators
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+    from random import Random
+
+    from randovania.exporter.hints.hint_namer import HintNamer
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.dock import DockType
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+    from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.layout_description import LayoutDescription
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192

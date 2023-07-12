@@ -1,18 +1,24 @@
+from __future__ import annotations
+
 import dataclasses
-from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.am2r.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.am2r.layout import AM2RConfiguration
-from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig
-from randovania.generator.pickup_pool import PoolResults
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
+    from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig
+    from randovania.generator.pickup_pool import PoolResults
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 def all_dna_locations(game: GameDescription, config: AM2RArtifactConfig):

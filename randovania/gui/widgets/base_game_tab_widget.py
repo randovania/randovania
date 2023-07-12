@@ -1,14 +1,19 @@
+from __future__ import annotations
+
 import re
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
-from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import faq_lib, hints_text
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
+    from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
+    from randovania.interface_common.options import Options
 
 
 class BaseGameTabWidget(QtWidgets.QTabWidget):

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches

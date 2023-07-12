@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6 import QtCore, QtWidgets
 
 
@@ -50,7 +52,7 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
             body: str,
             buttons: QtWidgets.QMessageBox.StandardButtons,
             default_button: QtWidgets.QMessageBox.StandardButton = QtWidgets.QMessageBox.StandardButton.Ok,
-    ) -> "ScrollMessageBox":
+    ) -> ScrollMessageBox:
         box = cls(icon, title, body, buttons, parent)
         box.setDefaultButton(default_button)
         return box

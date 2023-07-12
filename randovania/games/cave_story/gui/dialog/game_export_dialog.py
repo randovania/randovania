@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.game import RandovaniaGame
@@ -13,7 +15,10 @@ from randovania.gui.dialog.game_export_dialog import (
     spoiler_path_for_directory,
 )
 from randovania.gui.generated.cs_game_export_dialog_ui import Ui_CSGameExportDialog
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 
 class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):

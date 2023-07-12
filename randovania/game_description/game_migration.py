@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.lib import migration_lib
 
 

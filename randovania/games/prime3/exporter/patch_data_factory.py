@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.games.game import RandovaniaGame
 

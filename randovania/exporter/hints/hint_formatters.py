@@ -1,15 +1,21 @@
-from collections.abc import Callable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.exporter.hints.determiner import Determiner
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.game_description import node_search
-from randovania.game_description.db.area import Area
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision, HintRelativeAreaName, RelativeDataArea
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.layout import filtered_database
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.games.game import RandovaniaGame
 
 
 class LocationFormatter:

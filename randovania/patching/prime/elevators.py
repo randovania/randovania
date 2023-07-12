@@ -1,8 +1,14 @@
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.region_list import RegionList
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.patcher import prime1_elevators
 from randovania.games.prime2.patcher import echoes_elevators
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.region_list import RegionList
 
 SHORT_CUSTOM_NAMES_FOR_ELEVATORS = {
     RandovaniaGame.METROID_PRIME: prime1_elevators.SHORT_UI_CUSTOM_NAMES,

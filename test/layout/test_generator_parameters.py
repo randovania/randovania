@@ -1,15 +1,20 @@
+from __future__ import annotations
+
 import contextlib
 import dataclasses
 import uuid
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, call, patch
 
 import pytest
 
-from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.bitpacking.bitpacking import BitPackDecoder
 
 
 def test_invalid_seed_range(default_blank_preset):

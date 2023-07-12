@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import datetime
+from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog, QDialogButtonBox, QPushButton, QTableWidgetItem
@@ -7,9 +10,11 @@ from qasync import asyncSlot
 from randovania.gui.generated.multiplayer_session_browser_dialog_ui import Ui_MultiplayerSessionBrowserDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
-from randovania.network_client.network_client import ConnectionState
-from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerSessionListEntry
 from randovania.network_common.session_state import MultiplayerSessionState
+
+if TYPE_CHECKING:
+    from randovania.network_client.network_client import ConnectionState
+    from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerSessionListEntry
 
 
 class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):

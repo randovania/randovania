@@ -1,11 +1,13 @@
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
 
 if TYPE_CHECKING:
     from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
 
 
 class RequirementTemplate(Requirement):
@@ -36,7 +38,7 @@ class RequirementTemplate(Requirement):
     def simplify(self, keep_comments: bool = False) -> Requirement:
         return self
 
-    def as_set(self, database: ResourceDatabase) -> "RequirementSet":
+    def as_set(self, database: ResourceDatabase) -> RequirementSet:
         return self.template_requirement(database).as_set(database)
 
     def __eq__(self, other):

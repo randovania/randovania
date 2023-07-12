@@ -1,9 +1,15 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtWidgets
 
 import randovania
 from randovania.gui.generated.reporting_optout_widget_ui import Ui_ReportingOptOutWidget
 from randovania.gui.lib import common_qt_lib, signal_handling
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from randovania.interface_common.options import Options
 
 
 class ReportingOptOutWidget(QtWidgets.QWidget, Ui_ReportingOptOutWidget):

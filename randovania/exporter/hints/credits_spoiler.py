@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 import collections
 import math
-from typing import NamedTuple
+from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 
 
 class OwnedPickupLocation(NamedTuple):

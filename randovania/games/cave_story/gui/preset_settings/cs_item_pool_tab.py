@@ -1,10 +1,16 @@
-from randovania.game_description.game_description import GameDescription
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.games.cave_story.layout.cs_configuration import CSObjective
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class CSPresetItemPool(PresetItemPool):

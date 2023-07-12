@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import json
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 
@@ -10,6 +12,9 @@ from randovania.games.prime2.layout.translator_configuration import LayoutTransl
 from randovania.gui import tracker_window
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.layout.versioned_preset import VersionedPreset
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 @pytest.fixture(params=[{},

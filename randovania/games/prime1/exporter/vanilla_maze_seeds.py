@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 VANILLA_MAZE_SEEDS = [
     0x38BF30F8,
     0x0FC40F11,

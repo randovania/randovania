@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import traceback
 
 from PySide6 import QtWidgets

@@ -1,8 +1,13 @@
-from collections.abc import Iterable
+from __future__ import annotations
+
 from dataclasses import dataclass
-from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.games.cave_story.layout.cs_cosmetic_patches import SONGS, CSCosmeticPatches, CSSong, MusicRandoType
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from random import Random
 
 
 @dataclass(frozen=True)
@@ -133,7 +138,7 @@ class CaverMusic:
     )
 
     @classmethod
-    def get_randomizer(cls, rando_type: MusicRandoType) -> "CaverMusic":
+    def get_randomizer(cls, rando_type: MusicRandoType) -> CaverMusic:
         if rando_type == MusicRandoType.SHUFFLE:
             return CaverMusicShuffle()
         if rando_type == MusicRandoType.RANDOM:

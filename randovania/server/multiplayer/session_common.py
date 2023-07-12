@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import hashlib
-import uuid
+from typing import TYPE_CHECKING
 
 import flask_socketio
 import peewee
@@ -11,6 +13,9 @@ from randovania.server import database
 from randovania.server.database import MultiplayerAuditEntry, MultiplayerSession, World, WorldUserAssociation
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
+
+if TYPE_CHECKING:
+    import uuid
 
 
 def room_name_for(session_id: int) -> str:

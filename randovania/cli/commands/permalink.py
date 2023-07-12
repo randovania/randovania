@@ -1,8 +1,13 @@
+from __future__ import annotations
+
 import asyncio
 import random
-from argparse import ArgumentParser
+from typing import TYPE_CHECKING
 
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 
 def create_permalink(args):

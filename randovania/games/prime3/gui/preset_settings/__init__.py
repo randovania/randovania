@@ -1,5 +1,10 @@
-from randovania.gui.lib.window_manager import WindowManager
-from randovania.interface_common.preset_editor import PresetEditor
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
 
 
 def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):

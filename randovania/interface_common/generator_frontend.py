@@ -1,18 +1,24 @@
+from __future__ import annotations
+
 import asyncio
 import multiprocessing
-from collections.abc import Callable
 from concurrent.futures import ProcessPoolExecutor
-from multiprocessing.connection import Connection
+from typing import TYPE_CHECKING
 
 import sentry_sdk
 
 from randovania.generator import generator
-from randovania.interface_common.options import Options
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
-from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ConstantPercentageCallback, ProgressUpdateCallable
 from randovania.resolver import debug
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from multiprocessing.connection import Connection
+
+    from randovania.interface_common.options import Options
+    from randovania.layout.generator_parameters import GeneratorParameters
+    from randovania.layout.layout_description import LayoutDescription
 
 export_busy = False
 

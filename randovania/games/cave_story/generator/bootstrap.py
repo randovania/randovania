@@ -1,13 +1,19 @@
-from random import Random
+from __future__ import annotations
 
-from randovania.game_description.game_patches import GamePatches
+from typing import TYPE_CHECKING
+
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
-from randovania.generator.pickup_pool import PoolResults
 from randovania.resolver.bootstrap import Bootstrap, EnergyConfig
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.generator.pickup_pool import PoolResults
 
 
 class CSBootstrap(Bootstrap):

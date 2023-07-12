@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest.mock import AsyncMock
 
 from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog

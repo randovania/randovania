@@ -1,8 +1,13 @@
+from __future__ import annotations
+
 import logging
+from typing import TYPE_CHECKING
 
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+
+if TYPE_CHECKING:
+    from randovania.game_connection.connector.remote_connector import RemoteConnector
 
 
 class DreadConnectorBuilder(ConnectorBuilder):

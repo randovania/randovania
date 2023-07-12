@@ -1,15 +1,21 @@
-from collections.abc import Sequence
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.game_description.pickup import pickup_category
-from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceQuantity
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher import echoes_items
-from randovania.layout.base.standard_pickup_state import StandardPickupState
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceQuantity
+    from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 def create_standard_pickup(

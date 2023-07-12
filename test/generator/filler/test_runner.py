@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 from random import Random
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -16,13 +19,15 @@ from randovania.game_description.hint import (
     RelativeDataArea,
     RelativeDataItem,
 )
-from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
+
+if TYPE_CHECKING:
+    from randovania.game_description.pickup.pickup_category import PickupCategory
 
 
 async def test_run_filler(echoes_game_description,

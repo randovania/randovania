@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6 import QtWidgets
 from PySide6.QtCore import QEvent, Qt
 

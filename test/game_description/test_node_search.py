@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.game_description import node_search
 
 

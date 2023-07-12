@@ -1,11 +1,17 @@
+from __future__ import annotations
+
 import os
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import nod
 
 from randovania import monitoring
 from randovania.interface_common.game_workdir import validate_game_files_path
-from randovania.lib.status_update_lib import ProgressUpdateCallable
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 @monitoring.trace_function

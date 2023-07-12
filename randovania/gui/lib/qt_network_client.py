@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import asyncio
 import datetime
 import functools
 import json
 import webbrowser
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QWidget
@@ -23,6 +25,9 @@ from randovania.network_common.multiplayer_session import (
     User,
     WorldUserInventory,
 )
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 def handle_network_errors(fn):

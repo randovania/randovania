@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import copy
-from pathlib import Path
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, PropertyMock
 
 import pytest
@@ -14,6 +16,9 @@ from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticP
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 @pytest.mark.parametrize("other_player", [False, True])

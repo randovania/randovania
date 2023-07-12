@@ -1,11 +1,11 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import itertools
 import time
-from collections.abc import Callable
 from functools import lru_cache
-from random import Random
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
 from frozendict import frozendict
 
@@ -13,20 +13,25 @@ from randovania.game_description import default_database
 from randovania.game_description.db.dock import DockLock, DockLockType, DockRandoParams, DockWeakness
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import NodeContext
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.generator.filler.filler_library import UnableToGenerate
-from randovania.generator.filler.runner import FillerResults
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import random_lib
 from randovania.resolver import debug, resolver
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
-from randovania.resolver.state import State
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from random import Random
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.generator.filler.runner import FillerResults
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.state import State
 
 
 def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):

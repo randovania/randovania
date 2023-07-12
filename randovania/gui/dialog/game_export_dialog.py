@@ -1,16 +1,21 @@
+from __future__ import annotations
+
 import os.path
-from collections.abc import Callable
 from pathlib import Path
-from typing import TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox
 
-from randovania.exporter.game_exporter import GameExportParams
-from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import common_qt_lib
-from randovania.interface_common.options import Options, PerGameOptions
 from randovania.layout.layout_description import LayoutDescription
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.options import Options, PerGameOptions
 
 T = TypeVar("T")
 

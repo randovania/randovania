@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
 
@@ -23,7 +25,7 @@ class PrimePerGameOptions(PerGameOptions):
         }
 
     @classmethod
-    def from_json(cls, value: dict) -> "PrimePerGameOptions":
+    def from_json(cls, value: dict) -> PrimePerGameOptions:
         game = RandovaniaGame.METROID_PRIME
         cosmetic_patches = game.data.layout.cosmetic_patches.from_json(value["cosmetic_patches"])
         return cls(

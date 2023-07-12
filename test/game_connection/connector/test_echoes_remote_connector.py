@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 import re
 import struct
 import uuid
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 from ppc_asm.assembler import BaseInstruction
 from retro_data_structures.game_check import Game as RDSGame
 
@@ -16,6 +18,9 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.standard_pickup_state import StandardPickupState
+
+if TYPE_CHECKING:
+    from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 
 
 @pytest.fixture(name="version")

@@ -1,14 +1,19 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.exceptions import InvalidConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 SKY_TEMPLE_KEY_CATEGORY = pickup_category.PickupCategory(
     name="sky_temple_key",

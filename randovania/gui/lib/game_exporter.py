@@ -1,15 +1,21 @@
+from __future__ import annotations
+
 import asyncio
 import logging
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
-from PySide6.QtCore import Signal
 
-from randovania.exporter.game_exporter import GameExporter
-from randovania.gui.dialog.game_export_dialog import GameExportDialog
 from randovania.gui.lib import async_dialog, error_message_box
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.status_update_lib import ProgressUpdateCallable
+
+if TYPE_CHECKING:
+    from PySide6.QtCore import Signal
+
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.gui.dialog.game_export_dialog import GameExportDialog
+    from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+    from randovania.layout.layout_description import LayoutDescription
+    from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 async def export_game(

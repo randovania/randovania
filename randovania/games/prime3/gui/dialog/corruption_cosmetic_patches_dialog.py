@@ -1,11 +1,15 @@
-import dataclasses
+from __future__ import annotations
 
-from PySide6.QtWidgets import QWidget
+import dataclasses
+from typing import TYPE_CHECKING
 
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches, CorruptionSuit
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.corruption_cosmetic_patches_dialog_ui import Ui_CorruptionCosmeticPatchesDialog
 from randovania.gui.lib.signal_handling import set_combo_with_value
+
+if TYPE_CHECKING:
+    from PySide6.QtWidgets import QWidget
 
 
 class CorruptionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CorruptionCosmeticPatchesDialog):

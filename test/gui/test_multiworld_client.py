@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 import datetime
 import uuid
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
 from frozendict import frozendict
-from pytest_mock import MockerFixture
 
 from randovania.game_connection.game_connection import ConnectedGameState
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -21,6 +23,9 @@ from randovania.network_common.world_sync import (
     ServerWorldResponse,
     ServerWorldSync,
 )
+
+if TYPE_CHECKING:
+    from pytest_mock import MockerFixture
 
 
 @pytest.fixture()

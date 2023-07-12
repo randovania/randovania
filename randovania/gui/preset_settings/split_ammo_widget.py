@@ -1,14 +1,19 @@
+from __future__ import annotations
+
 import math
-from collections.abc import Iterable
-from typing import NamedTuple
+from typing import TYPE_CHECKING, NamedTuple
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.ammo_pickup_state import AmmoPickupState
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class AmmoPickupWidgets(NamedTuple):

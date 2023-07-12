@@ -1,10 +1,15 @@
-from collections.abc import Iterator
+from __future__ import annotations
 
-from randovania.game_description.db.node import Node, NodeContext
-from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.resolver.state import State
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.resolver.state import State
 
 
 class GeneratorReach:
@@ -12,7 +17,7 @@ class GeneratorReach:
     def reach_from_state(cls,
                          game: GameDescription,
                          initial_state: State,
-                         ) -> "GeneratorReach":
+                         ) -> GeneratorReach:
         raise NotImplementedError
 
     # Game related methods

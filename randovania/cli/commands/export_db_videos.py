@@ -1,16 +1,22 @@
+from __future__ import annotations
+
 import datetime
-from collections.abc import Iterable
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania.game_description import default_database
 from randovania.game_description.requirements.array_base import RequirementArrayBase
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.game import RandovaniaGame
 from randovania.layout.base.trick_level import LayoutTrickLevel
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from pathlib import Path
+
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.games.game import RandovaniaGame
 
 # (tab title, page title, time)
 HTML_HEADER_FORMAT = '''

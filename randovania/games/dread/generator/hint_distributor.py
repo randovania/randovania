@@ -1,12 +1,18 @@
-from random import Random
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintItemPrecision, HintLocationPrecision, HintType, PrecisionPair
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.generator.filler.player_state import PlayerState
-from randovania.generator.filler.runner import PlayerPool
 from randovania.generator.hint_distributor import HintDistributor, PreFillParams
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.generator.filler.player_state import PlayerState
+    from randovania.generator.filler.runner import PlayerPool
 
 
 class DreadHintDistributor(HintDistributor):

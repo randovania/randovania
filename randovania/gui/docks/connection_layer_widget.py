@@ -1,16 +1,22 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtWidgets
 from PySide6.QtCore import Signal
 from qasync import asyncSlot
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.gui.lib import async_dialog, file_prompts, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+    from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
 class ConnectionLayerWidget(QtWidgets.QDockWidget):
