@@ -81,7 +81,7 @@ def update_hints_text(game: RandovaniaGame,
             item.broad_category.hint_details[1],
         ))
 
-    for name, pickup_category, broad_category in _GAME_SPECIFIC.get(game, lambda: [])():
+    for name, pickup_category, broad_category in _GAME_SPECIFIC.get(game, list)():
         rows.append((
             name,
             pickup_category.hint_details[1],

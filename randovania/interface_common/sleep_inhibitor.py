@@ -23,7 +23,6 @@ class InhibitorSource:
         """
         Cancels a previous call to `inhibit`.
         """
-        pass
 
 
 class WindowsInhibitorSource(InhibitorSource):
