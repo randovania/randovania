@@ -77,6 +77,8 @@ class AM2RBootstrap(MetroidBootstrap):
                 f"Has {len(all_dna)} DNA in the pool, but only {len(locations)} valid locations."
             )
 
+        rng.shuffle(all_dna)
+
         for dna, location in zip(all_dna, locations, strict=False):
             pool_results.to_place.remove(dna)
             pool_results.assignment[location.pickup_index] = dna
