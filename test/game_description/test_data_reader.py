@@ -14,7 +14,8 @@ def test_invalid_node_type():
     reader.current_region_name = "World"
     reader.current_area_name = "Area"
 
-    with pytest.raises(Exception) as e:
+    with pytest.raises(Exception,
+                       match="In node Broken Node, got error: Unknown type: something that doesn't exist"):
         reader.read_node("Broken Node", {
             "heal": True,
             "coordinates": None,
@@ -24,8 +25,6 @@ def test_invalid_node_type():
             "node_type": "something that doesn't exist",
             "valid_starting_location": False
         })
-
-    assert str(e.value) == "In node Broken Node, got error: Unknown type: something that doesn't exist"
 
 
 def test_area_with_invalid_connections():

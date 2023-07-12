@@ -21,8 +21,8 @@ class CustomException(Exception):
         raise CustomException("test exception")
 
 
-@pytest.fixture(name="valid_tmp_game_root")
-def _valid_tmp_game_root(tmp_path):
+@pytest.fixture()
+def valid_tmp_game_root(tmp_path):
     game_root = tmp_path.joinpath("game_root")
     game_root.joinpath("files").mkdir(parents=True)
     game_root.joinpath("sys").mkdir()

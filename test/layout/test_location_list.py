@@ -20,8 +20,8 @@ from randovania.layout.lib.location_list import LocationList
             {"region": "Temple Grounds", "area": "Path of Eyes", "node": "Portal from Abandoned Base"}
         ]},
     ],
-    name="location_with_data")
-def _location_with_data(request, mocker, echoes_game_description):
+)
+def location_with_data(request, mocker, echoes_game_description):
     region_list = echoes_game_description.region_list
     nodes = list(itertools.islice(
         (NodeIdentifier.create(region.name, area.name, node.name)

@@ -34,8 +34,10 @@ def test_get_single_hud_text_all_standard_pickups(echoes_pickup_database, echoes
 
     # Run
     for item in echoes_pickup_database.standard_pickups.values():
-        pickup = pickup_creator.create_standard_pickup(item, StandardPickupState(), echoes_resource_database, None,
-                                                       False)
+        pickup = pickup_creator.create_standard_pickup(
+            item, StandardPickupState(included_ammo=tuple(0 for _ in item.ammo)),
+            echoes_resource_database, None,
+            False)
 
         result = pickup_exporter._get_all_hud_text(pickup_exporter._conditional_resources_for_pickup(pickup),
                                                    memo_data)
@@ -124,17 +126,17 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     pickup_b = PickupEntry("P-B", model_2, generic_pickup_category, generic_pickup_category,
                            progression=((resource_b, 1),
                                         (resource_a, 5)),
-                           generator_params=default_generator_params )
+                           generator_params=default_generator_params)
     pickup_c = PickupEntry("P-C", model_2, AMMO_PICKUP_CATEGORY, generic_pickup_category,
                            progression=(),
                            extra_resources=((resource_b, 2), (resource_a, 1)),
                            unlocks_resource=True,
                            resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
-                           generator_params=default_generator_params )
+                           generator_params=default_generator_params)
 
     useless_pickup = PickupEntry("P-Useless", model_0, USELESS_PICKUP_CATEGORY, USELESS_PICKUP_CATEGORY,
                                  progression=((useless_resource, 1),),
-                                 generator_params=default_generator_params )
+                                 generator_params=default_generator_params)
     patches = patches.assign_new_pickups([
         (PickupIndex(0), PickupTarget(pickup_a, 0)),
         (PickupIndex(2), PickupTarget(pickup_b, 0)),
@@ -241,16 +243,16 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 
     pickup_a = PickupEntry("A", model_1, generic_pickup_category, generic_pickup_category,
                            progression=(),
-                           generator_params=default_generator_params )
+                           generator_params=default_generator_params)
     pickup_b = PickupEntry("B", model_2, generic_pickup_category, generic_pickup_category,
                            progression=((resource_b, 1), (resource_b, 1)),
-                           generator_params=default_generator_params )
+                           generator_params=default_generator_params)
     pickup_c = PickupEntry("C", model_2, generic_pickup_category, generic_pickup_category,
                            progression=(),
-                           generator_params=default_generator_params )
+                           generator_params=default_generator_params)
     useless_pickup = PickupEntry("Useless", useless_model, USELESS_PICKUP_CATEGORY, USELESS_PICKUP_CATEGORY,
                                  progression=(),
-                                 generator_params=default_generator_params )
+                                 generator_params=default_generator_params)
 
     patches = dataclasses.replace(empty_patches, game=MagicMock())
     patches = patches.assign_new_pickups([
@@ -369,7 +371,7 @@ def test_pickup_scan_for_progressive_suit(echoes_pickup_database, echoes_resourc
     assert result == "Provides the following in order: Dark Suit, Light Suit."
 
 
-@pytest.mark.parametrize(["item", "ammo", "expected"], [
+@pytest.mark.parametrize(("item", "ammo", "expected"), [
     ("Beam Ammo Expansion", [4, 20], "Provides 4 Dark Ammo, 20 Light Ammo and 1 Item Percentage."),
     ("Missile Expansion", [4], "Provides 4 Missiles and 1 Item Percentage."),
 ])
@@ -385,8 +387,8 @@ def test_pickup_scan_for_ammo_expansion(echoes_pickup_database, echoes_resource_
     assert result == expected
 
 
-@pytest.fixture(name="pickup_for_create_pickup_data")
-def _create_pickup_data(generic_pickup_category, default_generator_params):
+@pytest.fixture()
+def pickup_for_create_pickup_data(generic_pickup_category, default_generator_params):
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
     return PickupEntry("Cake", 1, generic_pickup_category, generic_pickup_category,

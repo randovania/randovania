@@ -31,8 +31,8 @@ def test_parse_args_valid(args):
     try:
         cli._create_parser().parse_args(args)
 
-    except SystemExit as value:
-        assert value is None
+    except SystemExit:
+        pytest.fail("should not have raised SystemExit")
 
 
 @pytest.mark.parametrize("args", [

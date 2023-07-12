@@ -19,8 +19,8 @@ from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfigura
          "pickups_state": {"Missile Expansion": {"ammo_count": [15], "pickup_count": 12}}},
         {"game": RandovaniaGame.METROID_PRIME_CORRUPTION, "encoded": b'\x00', "pickups_state": {}},
     ],
-    name="config_with_data")
-def _config_with_data(request, test_files_dir):
+)
+def config_with_data(request, test_files_dir):
     game: RandovaniaGame = request.param["game"]
 
     default_data = test_files_dir.read_json("pickup_database", f"{game.value}_default_state", "ammo-pickups.json")

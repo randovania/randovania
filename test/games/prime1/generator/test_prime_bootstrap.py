@@ -7,7 +7,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.generator.bootstrap import PrimeBootstrap
 
 
-@pytest.mark.parametrize(["expected", "suits"], [
+@pytest.mark.parametrize(("expected", "suits"), [
     (1.0, []),
     (0.9, ["Varia Suit"]),
     (0.9, ["Gravity Suit"]),
@@ -33,7 +33,7 @@ def test_prime1_progressive_damage_reduction(prime1_resource_database, expected,
     assert result == expected
 
 
-@pytest.mark.parametrize(["expected", "suits"], [
+@pytest.mark.parametrize(("expected", "suits"), [
     (1.0, []),
     (0.9, ["Varia Suit"]),
     (0.8, ["Gravity Suit"]),

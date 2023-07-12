@@ -36,8 +36,8 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
         {"encoded": b'\x1b\x9b ', "bit_count": 22, "ammo_index": ("DarkAmmo", "LightAmmo"),
          "json": {"included_ammo": [230, 200]}},
     ],
-    name="standard_pickup_state")
-def _standard_pickup_state(request, echoes_pickup_database, generic_pickup_category):
+)
+def standard_pickup_state(request, echoes_pickup_database, generic_pickup_category):
     encoded: bytes = request.param["encoded"]
 
     pickup = StandardPickupDefinition(

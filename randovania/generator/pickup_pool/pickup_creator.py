@@ -13,6 +13,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
     from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceQuantity
     from randovania.layout.base.standard_pickup_state import StandardPickupState
@@ -35,9 +36,9 @@ def create_standard_pickup(
     :return:
     """
 
-    extra_resources = [
+    extra_resources: list[tuple[ItemResourceInfo, int]] = [
         (resource_database.get_item(ammo_name), ammo_count)
-        for ammo_name, ammo_count in zip(pickup.ammo, state.included_ammo)
+        for ammo_name, ammo_count in zip(pickup.ammo, state.included_ammo, strict=True)
     ]
     extra_resources.extend(
         (resource_database.get_item(item), count)

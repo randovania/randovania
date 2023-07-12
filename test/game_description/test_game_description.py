@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.base import Requirement
 
 
-@pytest.mark.parametrize(["danger_a", "danger_b", "expected_result"], [
+@pytest.mark.parametrize(("danger_a", "danger_b", "expected_result"), [
     ([], [], []),
     (["a"], [], ["a"]),
     ([], ["b"], ["b"]),

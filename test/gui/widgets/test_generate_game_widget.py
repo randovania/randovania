@@ -13,8 +13,8 @@ from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
 
 
-@pytest.fixture(name="tab")
-def _tab(skip_qtbot, preset_manager, game_enum):
+@pytest.fixture()
+def tab(skip_qtbot, preset_manager, game_enum):
     window_manager = MagicMock()
     window_manager.preset_manager = preset_manager
 
@@ -96,7 +96,7 @@ def test_click_on_preset_tree(tab, skip_qtbot, tmp_path):
     assert tab._current_preset_data.get_preset() == preset.get_preset()
 
 
-@pytest.mark.parametrize(["has_unsupported", "abort_generate"], [
+@pytest.mark.parametrize(("has_unsupported", "abort_generate"), [
     (False, False),
     (True, False),
     (True, True),

@@ -41,8 +41,8 @@ def _create_config_for(test_files_dir, game: RandovaniaGame, replace: dict):
             }
         }},
     ],
-    name="prime2_data")
-def _prime2_data(request, test_files_dir):
+)
+def prime2_data(request, test_files_dir):
     return (
         request.param["encoded"],
         *_create_config_for(test_files_dir, RandovaniaGame.METROID_PRIME_ECHOES, request.param["replace"])
@@ -53,8 +53,8 @@ def _prime2_data(request, test_files_dir):
     params=[
         {"encoded": b'\x00\x00', "replace": {}},
     ],
-    name="prime3_data")
-def _prime3_data(request, test_files_dir):
+)
+def prime3_data(request, test_files_dir):
     return (
         request.param["encoded"],
         *_create_config_for(test_files_dir, RandovaniaGame.METROID_PRIME_CORRUPTION, request.param["replace"]))

@@ -12,7 +12,7 @@ from randovania.games.dread.layout.dread_cosmetic_patches import (
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 
-@pytest.mark.parametrize(["widget_field", "field_name"], [
+@pytest.mark.parametrize(("widget_field", "field_name"), [
     ("show_boss_life", "show_boss_lifebar"),
     ("show_enemy_life", "show_enemy_life"),
     ("show_enemy_damage", "show_enemy_damage"),

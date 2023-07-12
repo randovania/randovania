@@ -13,8 +13,8 @@ from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
 from randovania.interface_common.preset_editor import PresetEditor
 
 
-@pytest.fixture(name="pickup_node")
-def _pickup_node():
+@pytest.fixture()
+def pickup_node():
     return PickupNode(
         identifier=NodeIdentifier.create("W", "A", "Pickup (Ultra Beam)"),
         node_index=0,

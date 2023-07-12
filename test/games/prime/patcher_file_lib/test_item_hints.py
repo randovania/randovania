@@ -34,8 +34,8 @@ from randovania.games.prime2.patcher import echoes_items
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
-@pytest.fixture(name="players_config")
-def _players_configuration() -> PlayersConfiguration:
+@pytest.fixture()
+def players_config() -> PlayersConfiguration:
     return PlayersConfiguration(
         player_index=0,
         player_names={0: "Player 1"},
@@ -65,8 +65,8 @@ def _create_region_list(asset_id: int, pickup_index: PickupIndex):
     return logbook_node, pickup_node, region_list
 
 
-@pytest.fixture(name="echoes_hint_exporter")
-def _echoes_hint_exporter(echoes_game_patches) -> HintExporter:
+@pytest.fixture()
+def echoes_hint_exporter(echoes_game_patches) -> HintExporter:
     namer = EchoesHintNamer(
         {0: echoes_game_patches},
         PlayersConfiguration(0, {0: "You"})
@@ -131,7 +131,7 @@ def test_create_hints_item_joke(empty_patches, players_config):
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
 
 
-@pytest.mark.parametrize(["indices", "expected_message"], [
+@pytest.mark.parametrize(("indices", "expected_message"), [
     ((0, 1, 2), "The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; can "
                 "all be found in &push;&main-color=#FF3333;Temple Grounds&pop;."),
     ((0, 1, 118), "The keys to &push;&main-color=#FF6705B3;Dark Torvus Temple&pop; can "
@@ -378,12 +378,12 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
 
 
-@pytest.mark.parametrize(["reference_precision", "reference_name"], [
+@pytest.mark.parametrize(("reference_precision", "reference_name"), [
     (HintItemPrecision.DETAILED, "the Reference Pickup"),
     (HintItemPrecision.PRECISE_CATEGORY, "a suit"),
     (HintItemPrecision.BROAD_CATEGORY, "a life support system"),
 ])
-@pytest.mark.parametrize(["distance_precise", "distance_text"], [
+@pytest.mark.parametrize(("distance_precise", "distance_text"), [
     (1, "up to"),
     (0, "up to"),
     (None, "exactly"),
@@ -418,7 +418,7 @@ def test_create_message_for_hint_relative_item(echoes_game_patches, blank_pickup
                       f'rooms&pop; away from {reference_name}.')
 
 
-@pytest.mark.parametrize(["offset", "distance_text"], [
+@pytest.mark.parametrize(("offset", "distance_text"), [
     (2, "up to"),
     (None, "exactly"),
 ])

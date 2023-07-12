@@ -165,7 +165,7 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
     ]
 
 
-@pytest.mark.parametrize(["generation_in_progress", "game_details", "expected_text"], [
+@pytest.mark.parametrize(('generation_in_progress', 'game_details', 'expected_text'), [
     (True, None, "Abort generation"),
     (None, None, "Generate game"),
     (None, True, "Clear generated game"),
@@ -245,7 +245,7 @@ async def test_update_logic_settings_window(window: MultiplayerSessionWindow, mo
 
 
 @pytest.mark.parametrize("accept", [QtWidgets.QDialog.DialogCode.Accepted, QtWidgets.QDialog.DialogCode.Rejected])
-@pytest.mark.parametrize(["action", "method_name"], [
+@pytest.mark.parametrize(('action', 'method_name'), [
     (SessionAdminGlobalAction.CHANGE_TITLE, "rename_session"),
     (SessionAdminGlobalAction.CHANGE_PASSWORD, "change_password"),
     (SessionAdminGlobalAction.DUPLICATE_SESSION, "duplicate_session"),

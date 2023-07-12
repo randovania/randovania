@@ -8,8 +8,8 @@ import pytest
 from randovania.gui.lib.background_task_mixin import AbortBackgroundTask, BackgroundTaskMixin
 
 
-@pytest.fixture(name="force_sync_mixin")
-def _force_sync_mixin():
+@pytest.fixture()
+def force_sync_mixin():
     mixin = BackgroundTaskMixin()
 
     def run_in_background_thread(work, starting_message):
