@@ -1,12 +1,7 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
 
 import flask_discord
 from flask_discord import types
-
-if TYPE_CHECKING:
-    from requests_oauthlib import OAuth2Session
+from requests_oauthlib import OAuth2Session
 
 
 class CustomDiscordOAuth2Session(flask_discord.DiscordOAuth2Session):

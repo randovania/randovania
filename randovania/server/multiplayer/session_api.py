@@ -1,6 +1,3 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
 
 from peewee import fn
 
@@ -9,9 +6,7 @@ from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGT
 from randovania.server import database
 from randovania.server.database import MultiplayerMembership, MultiplayerSession, User
 from randovania.server.multiplayer import session_common
-
-if TYPE_CHECKING:
-    from randovania.server.server_app import ServerApp
+from randovania.server.server_app import ServerApp
 
 
 def list_sessions(sio: ServerApp, limit: int | None):
