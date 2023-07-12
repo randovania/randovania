@@ -15,10 +15,6 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class DreadBasePatchesFactory(BasePatchesFactory):
-    @property
-    def num_joke_hints(self) -> int:
-        return 0
-
     def configurable_node_assignment(self, configuration: DreadConfiguration, game: GameDescription,
                                      rng: Random) -> Iterator[NodeConfigurationAssociation]:
         result = []

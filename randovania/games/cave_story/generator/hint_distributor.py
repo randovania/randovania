@@ -32,7 +32,7 @@ class CSHintDistributor(HintDistributor):
             c("Plantation", "Statue Chamber", "Hint - Numahachi 2"): p(HintLocationPrecision.NUMAHACHI),
         }
 
-    async def get_guranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
+    async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         if USE_GUARANTEED_HINTS:
             assert isinstance(patches.configuration, CSConfiguration)
             # TODO: assign base hints *after* generation?

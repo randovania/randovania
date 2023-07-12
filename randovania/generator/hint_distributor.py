@@ -85,13 +85,13 @@ class HintDistributor(ABC):
 
         return patches
 
-    async def get_guranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
+    async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         return []
 
     async def assign_guaranteed_indices_hints(self, patches: GamePatches, identifiers: list[NodeIdentifier],
                                               prefill: PreFillParams) -> GamePatches:
         # Specific Pickup/any HintNode
-        indices_with_hint = await self.get_guranteed_hints(patches, prefill)
+        indices_with_hint = await self.get_guaranteed_hints(patches, prefill)
         prefill.rng.shuffle(indices_with_hint)
 
         all_hint_identifiers = [identifier for identifier in identifiers if identifier not in patches.hints]

@@ -1,10 +1,12 @@
 from random import Random
 
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, PrecisionPair
+from randovania.game_description.hint import Hint, HintItemPrecision, HintLocationPrecision, HintType, PrecisionPair
+from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
-from randovania.generator.hint_distributor import HintDistributor
+from randovania.generator.hint_distributor import HintDistributor, PreFillParams
 
 
 class DreadHintDistributor(HintDistributor):
@@ -19,3 +21,13 @@ class DreadHintDistributor(HintDistributor):
     async def assign_precision_to_hints(self, patches: GamePatches, rng: Random,
                                         player_pool: PlayerPool, player_state: PlayerState) -> GamePatches:
         return self.add_hints_precision(player_state, patches, rng)
+
+    async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
+        assert isinstance(prefill.configuration, DreadConfiguration)
+        if prefill.configuration.artifacts.required_artifacts > 0:
+            patches = patches.assign_hint(
+                NodeIdentifier.create("Dairon", "Navigation Station North", "Save Station"),
+                Hint(HintType.JOKE, None)
+            )
+
+        return await super().assign_specific_location_hints(patches, prefill)
