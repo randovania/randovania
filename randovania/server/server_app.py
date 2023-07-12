@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import functools
 import inspect
+import typing
 from typing import TYPE_CHECKING, TypeVar
 
 import flask
@@ -171,12 +172,13 @@ class ServerApp:
         return self.sio.on(message, namespace)(metric_wrapper(_handler))
 
     def on_with_wrapper(self, message: str, handler: Callable[[ServerApp, T], R]):
+        types = typing.get_type_hints(handler)
         arg_spec = inspect.getfullargspec(handler)
 
         @functools.wraps(handler)
         def _handler(sio: ServerApp, arg: bytes) -> bytes:
-            decoded_arg = construct_pack.decode(arg, arg_spec.annotations[arg_spec.args[1]])
-            return construct_pack.encode(handler(sio, decoded_arg))
+            decoded_arg = construct_pack.decode(arg, types[arg_spec.args[1]])
+            return construct_pack.encode(handler(sio, decoded_arg), types["return"])
 
         return self.on(message, _handler, with_header_check=True)
 
