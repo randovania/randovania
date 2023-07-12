@@ -61,7 +61,7 @@ class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatc
 
     def _on_music_option_changed(self, option: MusicMode, value: bool):
         if value:
-            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{"music": option})
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, music=option)
 
     @property
     def cosmetic_patches(self) -> SuperMetroidCosmeticPatches:
