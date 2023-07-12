@@ -122,7 +122,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
 
     def _key_error_for_start_node(self, node: Node):
-        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has neither a " +
+        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has neither a "
                         "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
 
     def _get_or_create_spawn_point(self, node: Node, level_name: str):

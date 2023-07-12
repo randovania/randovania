@@ -37,7 +37,7 @@ async def test_perform_memory_operations_success(executor: NintendontExecutor):
     # Assert
     executor._socket.writer.drain.assert_has_awaits([call(), call()])
     executor._socket.writer.write.assert_has_calls([
-        call(b'\x00\x02\x01\x01\x00\x00\x10\x00' + b'\x80\x32' + b'\xd0\x1e\x00\n' + (b"1" * 30)),
+        call(b'\x00\x02\x01\x01\x00\x00\x10\x00\x80\x32\xd0\x1e\x00\n' + (b"1" * 30)),
         call(b'\x00\x01\x01\x01\x00\x00\x10\x00\x80\x3c'),
     ])
     assert result == ops
@@ -89,8 +89,8 @@ async def test_perform_single_giant_memory_operation(executor: NintendontExecuto
     # Assert
     executor._socket.writer.drain.assert_has_awaits([call(), call()])
     executor._socket.writer.write.assert_has_calls([
-        call(b'\x00\x01\x01\x01\x00\x00\x10\x00' + b'\x40\x64' + (b"1" * 100)),
-        call(b'\x00\x01\x01\x01\x00\x00\x10\x64' + b'\x40\x64' + (b"1" * 100)),
+        call(b'\x00\x01\x01\x01\x00\x00\x10\x00\x40\x64' + (b"1" * 100)),
+        call(b'\x00\x01\x01\x01\x00\x00\x10\x64\x40\x64' + (b"1" * 100)),
     ])
     assert result is None
     executor._socket.reader.read.assert_has_awaits([call(1024), call(1024)])
