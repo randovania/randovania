@@ -430,7 +430,7 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
     )
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
-    permalink.parameters.world_count = 2 + (end_state == "wrong_count")
+    permalink.parameters.world_count = 2 - (end_state == "wrong_count")
     permalink.parameters.presets = [MagicMock(), MagicMock()]
     permalink.parameters.presets[0].is_same_configuration.return_value = False
 
@@ -479,7 +479,8 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
     preset = MagicMock()
     preset.is_same_configuration.return_value = True
     layout.generator_parameters.world_count = 2 + (end_state == "wrong_count")
-    layout.parameters.presets = [preset, preset]
+    layout.generator_parameters.presets = [preset, preset]
+    layout.generator_parameters.get_preset = MagicMock(return_value=preset)
 
     session = MagicMock()
     session.worlds = [MagicMock(), MagicMock()]
@@ -488,6 +489,8 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
     window._session = session
     window.generate_game_with_permalink = AsyncMock()
 
+    window.game_session_api.create_unclaimed_world = AsyncMock()
+
     # Run
     await window.import_layout()
 
@@ -495,9 +498,16 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
     mock_load_layout.assert_awaited_once_with(window)
 
     if end_state == "wrong_count":
-        mock_warning.assert_awaited_once_with(window, "Incompatible permalink", ANY)
+        window.game_session_api.create_unclaimed_world.assert_awaited_once_with("World 3", ANY)
+        assert window.game_session_api.create_unclaimed_world.await_args[0][1]._preset is preset
+        mock_warning.assert_awaited_once_with(
+            window,
+            "Temporary error",
+            "New worlds created to fit the imported game file. Please import it again."
+        )
     else:
         mock_warning.assert_not_awaited()
+        window.game_session_api.create_unclaimed_world.assert_not_awaited()
 
     if end_state == "import":
         layout.save_to_file.assert_called_once_with(
