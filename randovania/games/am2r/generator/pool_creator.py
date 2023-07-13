@@ -35,9 +35,6 @@ def artifact_pool(game: GameDescription, configuration: AM2RConfiguration, rng: 
     new_assignment: dict[PickupIndex, PickupEntry] = {}
 
     keys: list[PickupEntry] = [create_am2r_artifact(i, game.resource_database) for i in range(46)]
-    # Try to shuffle DNA first, for better hints
-    if rng is not None:
-        rng.shuffle(keys)
 
     keys_to_shuffle = keys[:config.required_artifacts]
     starting_keys = keys[config.required_artifacts:]

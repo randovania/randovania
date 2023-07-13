@@ -3,7 +3,6 @@ from randovania.games.am2r.gui.dialog.cosmetic_patches_dialog import AM2RCosmeti
 from randovania.games.am2r.gui.dialog.game_export_dialog import AM2RGameExportDialog
 from randovania.games.am2r.gui.preset_settings import preset_tabs
 
-
 __all__ = [
     AM2RGameTabWidget,
     AM2RCosmeticPatchesDialog,
