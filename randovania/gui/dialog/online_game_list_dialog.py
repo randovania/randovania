@@ -9,7 +9,7 @@ from PySide6.QtWidgets import QDialog, QDialogButtonBox, QPushButton, QTableWidg
 from qasync import asyncSlot
 
 from randovania.gui.generated.multiplayer_session_browser_dialog_ui import Ui_MultiplayerSessionBrowserDialog
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import common_qt_lib, model_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.network_common.session_state import MultiplayerSessionState
 
@@ -145,18 +145,15 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         for i, session in enumerate(visible_sessions):
             name = QtGui.QStandardItem(session.name)
             state = QtGui.QStandardItem(session.state.user_friendly_name)
-            num_players = QtGui.QStandardItem()
-            num_players.setData(session.num_users, Qt.ItemDataRole.DisplayRole)
+            num_users = model_lib.create_int_item(session.num_users)
             has_password = QtGui.QStandardItem("Yes" if session.has_password else "No")
             creator = QtGui.QStandardItem(session.creator)
-            creation_date = QtGui.QStandardItem()
-            creation_date.setData(QtCore.QDateTime.fromSecsSinceEpoch(int(session.creation_date.timestamp())),
-                                  Qt.ItemDataRole.DisplayRole)
+            creation_date = model_lib.create_date_item(session.creation_date)
 
             name.setData(session, Qt.ItemDataRole.UserRole)
             self.item_model.setItem(i, 0, name)
             self.item_model.setItem(i, 1, state)
-            self.item_model.setItem(i, 2, num_players)
+            self.item_model.setItem(i, 2, num_users)
             self.item_model.setItem(i, 3, has_password)
             self.item_model.setItem(i, 4, creator)
             self.item_model.setItem(i, 5, creation_date)

@@ -204,7 +204,7 @@ async def _load_options(args) -> Options | None:
 
 def start_logger(data_dir: Path, is_preview: bool):
     # Ensure the log dir exists early on
-    log_dir = data_dir.joinpath("logs")
+    log_dir = data_dir.joinpath("logs", randovania.VERSION)
     log_dir.mkdir(parents=True, exist_ok=True)
 
     randovania.setup_logging('DEBUG' if is_preview else 'INFO', log_dir.joinpath("logger.log"))

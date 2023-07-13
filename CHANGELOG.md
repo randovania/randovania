@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Import rdvgames for games that uses certain features, like Sky Temple Keys on Bosses or Metroid DNA in Dread, now works properly.
 - Fixed: Session Browser now properly sorts by creation date and user count. It also now properly defaults to showing recent sessions first.
 - Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
+- Fixed: Sorting the session history and audit log now works properly.
 
 ### Metroid Dread
 

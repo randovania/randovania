@@ -16,7 +16,7 @@ from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
-from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader
+from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader, model_lib
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
@@ -88,6 +88,16 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.tabWidget.removeTab(0)
         self.tabWidget.insertTab(0, self.users_widget, "Players")
         self.tabWidget.setCurrentIndex(0)
+
+        self.audit_item_model = QtGui.QStandardItemModel(0, 3, self)
+        self.audit_item_model.setHorizontalHeaderLabels(["User", "Message", "Time"])
+        self.tab_audit.setModel(self.audit_item_model)
+        self.tab_audit.sortByColumn(2, QtCore.Qt.SortOrder.AscendingOrder)
+
+        self.history_item_model = QtGui.QStandardItemModel(0, 5, self)
+        self.history_item_model.setHorizontalHeaderLabels(["Provider", "Receiver", "Pickup", "Location", "Time"])
+        self.tab_history.setModel(self.history_item_model)
+        self.tab_history.sortByColumn(4, QtCore.Qt.SortOrder.AscendingOrder)
 
         # Advanced Options
         self.advanced_options_menu = QtWidgets.QMenu(self.advanced_options_tool)
@@ -345,16 +355,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     def update_session_actions(self, actions: MultiplayerSessionActions):
         scrollbar = self.tab_history.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
-        self.tab_history.horizontalHeader().setVisible(True)
-        self.tab_history.setRowCount(len(actions.actions))
+        self.history_item_model.setRowCount(len(actions.actions))
 
         for i, action in enumerate(actions.actions):
             provider_name, receiver_name, location_name = self._describe_action(action)
-            self.tab_history.setItem(i, 0, QtWidgets.QTableWidgetItem(provider_name))
-            self.tab_history.setItem(i, 1, QtWidgets.QTableWidgetItem(receiver_name))
-            self.tab_history.setItem(i, 2, QtWidgets.QTableWidgetItem(action.pickup))
-            self.tab_history.setItem(i, 3, QtWidgets.QTableWidgetItem(location_name))
-            self.tab_history.setItem(i, 4, QtWidgets.QTableWidgetItem(action.time.astimezone().strftime("%c")))
+            self.history_item_model.setItem(i, 0, QtGui.QStandardItem(provider_name))
+            self.history_item_model.setItem(i, 1, QtGui.QStandardItem(receiver_name))
+            self.history_item_model.setItem(i, 2, QtGui.QStandardItem(action.pickup))
+            self.history_item_model.setItem(i, 3, QtGui.QStandardItem(location_name))
+            self.history_item_model.setItem(i, 4, model_lib.create_date_item(action.time))
 
         if autoscroll:
             self.tab_history.scrollToBottom()
@@ -362,16 +371,17 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     def update_session_audit_log(self, audit_log: MultiplayerSessionAuditLog):
         scrollbar = self.tab_audit.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
-        self.tab_audit.horizontalHeader().setVisible(True)
-        self.tab_audit.setRowCount(len(audit_log.entries))
+        # self.tab_audit.horizontalHeader().setVisible(True)
+        self.audit_item_model.setRowCount(len(audit_log.entries))
 
         for i, entry in enumerate(audit_log.entries):
-            self.tab_audit.setItem(i, 0, QtWidgets.QTableWidgetItem(entry.user))
-            self.tab_audit.setItem(i, 1, QtWidgets.QTableWidgetItem(entry.message))
-            self.tab_audit.setItem(i, 2, QtWidgets.QTableWidgetItem(entry.time.astimezone().strftime("%c")))
+            self.audit_item_model.setItem(i, 0, QtGui.QStandardItem(entry.user))
+            self.audit_item_model.setItem(i, 1, QtGui.QStandardItem(entry.message))
+            self.audit_item_model.setItem(i, 2, model_lib.create_date_item(entry.time))
 
         if autoscroll:
             self.tab_audit.scrollToBottom()
+            self.tab_audit.resizeColumnToContents(1)
 
     async def update_logic_settings_window(self):
         if self._logic_settings_window is not None:
