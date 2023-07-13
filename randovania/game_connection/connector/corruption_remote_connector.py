@@ -7,6 +7,7 @@ from open_prime_rando.dol_patching import all_prime_dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch, PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
+from randovania.game_description.resources.item_resource_info import InventoryItem
 
 if TYPE_CHECKING:
     from open_prime_rando.dol_patching.corruption.dol_patches import CorruptionDolVersion
@@ -113,9 +114,21 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         raise RuntimeError("Unable to prepare dol patches for hud display in Corruption")
 
     async def receive_remote_pickups(self, inventory: Inventory, remote_pickups: tuple[tuple[str, PickupEntry], ...]) \
-          -> None:
+            -> None:
         # Not yet implemented
         return
 
     async def execute_remote_patches(self, patches: list[DolRemotePatch]) -> None:
         raise RuntimeError("Unable to execute remote patches in Corruption")
+
+    async def get_inventory(self) -> Inventory:
+        item = self.game.resource_database.get_item("SuitType")
+        inventory = await super().get_inventory()
+
+        old_state = inventory[item]
+        inventory[item] = InventoryItem(
+            old_state.amount >= 5,
+            old_state.capacity >= 5,
+        )
+
+        return inventory
