@@ -9,7 +9,7 @@ from PySide6 import QtWidgets
 from randovania.games.cave_story.exporter.patch_data_factory import get_hints
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout import filtered_database
-from randovania.lib.dict_lib import iterate_key_sorted
+from randovania.lib.container_lib import iterate_key_sorted
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches

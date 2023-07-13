@@ -33,7 +33,8 @@ class MultiplayerSessionListEntry(JsonDataclass):
     name: str
     has_password: bool
     state: MultiplayerSessionState
-    num_players: int
+    num_users: int
+    num_worlds: int  # TODO: currently always 0
     creator: str
     creation_date: datetime.datetime
     is_user_in_session: bool

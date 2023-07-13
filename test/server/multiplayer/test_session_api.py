@@ -46,12 +46,12 @@ def test_list_sessions(clean_database, flask_app, limit):
 
     # Assert
     expected = [
-        {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_players': 2, 'creator': 'Someone',
-         'creation_date': '2021-01-20T05:02:00+00:00', 'is_user_in_session': True},
-        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 1, 'creator': 'Someone',
-         'creation_date': '2020-01-20T05:02:00+00:00', 'is_user_in_session': False},
-        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 1, 'creator': 'Someone',
-         'creation_date': '2020-10-02T10:20:00+00:00', 'is_user_in_session': True},
+        {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_users': 2, 'creator': 'Someone',
+         'num_worlds': 0, 'creation_date': '2021-01-20T05:02:00+00:00', 'is_user_in_session': True},
+        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_users': 1, 'creator': 'Someone',
+         'num_worlds': 0, 'creation_date': '2020-01-20T05:02:00+00:00', 'is_user_in_session': False},
+        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_users': 1, 'creator': 'Someone',
+         'num_worlds': 0, 'creation_date': '2020-10-02T10:20:00+00:00', 'is_user_in_session': True},
     ]
     if limit == 2:
         expected = expected[:2]

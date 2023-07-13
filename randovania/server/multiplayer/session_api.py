@@ -16,7 +16,7 @@ def list_sessions(sio: ServerApp, limit: int | None):
         MultiplayerSession.select(
             MultiplayerSession,
             User.name,
-            fn.COUNT(MultiplayerMembership.user_id).alias('num_players')
+            fn.COUNT(MultiplayerMembership.user_id).alias('num_users')
         ).join(
             User, on=MultiplayerSession.creator
         ).join(

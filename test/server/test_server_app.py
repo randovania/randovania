@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock
 
 import flask
@@ -9,9 +8,6 @@ import pytest
 from randovania.network_common import error
 from randovania.server import database
 from randovania.server.server_app import EnforceDiscordRole
-
-if TYPE_CHECKING:
-    import pytest_mock
 
 
 def test_session(server_app):
@@ -189,16 +185,18 @@ def test_request_sid_from_request(server_app):
 
 
 @pytest.mark.parametrize("expected", [False, True])
-def test_ensure_in_room(server_app, mocker: pytest_mock.MockerFixture, expected):
-    mock_room = mocker.patch("flask_socketio.rooms", return_value=[] if expected else ["the_room"])
-    mock_join = mocker.patch("flask_socketio.join_room")
+def test_ensure_in_room(server_app, expected):
+    server_app.sio.server.rooms = MagicMock(return_value=[] if expected else ["the_room"])
+    server_app.sio.server.enter_room = MagicMock()
 
     # Run
-    result = server_app.ensure_in_room("the_room")
+    with server_app.app.test_request_context() as ctx:
+        ctx.request.sid = "THE_SID"
+        result = server_app.ensure_in_room("the_room")
 
     # Assert
-    mock_room.assert_called_once_with()
-    mock_join.assert_called_once_with("the_room")
+    server_app.sio.server.rooms.assert_called_once_with("THE_SID", namespace="/")
+    server_app.sio.server.enter_room.assert_called_once_with("THE_SID", "the_room", namespace="/")
     assert result is expected
 
 

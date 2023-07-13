@@ -227,6 +227,12 @@ class ServerApp:
         """
         Ensures the client is connected to the given room, and returns if we had to join.
         """
-        all_rooms = flask_socketio.rooms()
-        flask_socketio.join_room(room_name)
+        sid = self.request_sid
+        all_rooms = self.get_server().rooms(sid, namespace="/")
+        self.get_server().enter_room(sid, room_name, namespace="/")
         return room_name not in all_rooms
+
+    def is_room_not_empty(self, room_name: str, namespace: str = "/") -> bool:
+        for _ in self.get_server().manager.get_participants(namespace=namespace, room=room_name):
+            return True
+        return False

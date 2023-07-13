@@ -7,7 +7,7 @@ from PySide6 import QtWidgets
 
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout import filtered_database
-from randovania.lib.dict_lib import iterate_key_sorted
+from randovania.lib.container_lib import iterate_key_sorted
 
 if TYPE_CHECKING:
     from randovania.game_description.db.region_list import RegionList
