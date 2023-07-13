@@ -9,15 +9,14 @@ import aiohttp.client_exceptions
 import pytest
 import socketio.exceptions
 
-from randovania.bitpacking import construct_pack
-from randovania.game_description.resources.item_resource_info import InventoryItem
+from randovania.game_description.resources.item_resource_info import InventoryItem, ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
-from randovania.network_common import connection_headers
+from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
-from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory, WorldUserInventory
+from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -348,14 +347,16 @@ async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mo
 async def test_on_world_user_inventory_raw(client: NetworkClient):
     client.on_world_user_inventory = AsyncMock()
     uid = "00000000-0000-1111-0000-000000000000"
+    item = ItemResourceInfo(0, "Super Key", "MyKey", 1)
+
     inventory = {
-        "MyKey": InventoryItem(1, 4)
+        item: InventoryItem(1, 4)
     }
-    encoded = construct_pack.encode(inventory, RemoteInventory)
+    encoded = remote_inventory.inventory_to_encoded_remote(inventory)
 
     await client._on_world_user_inventory_raw(uid, 1234, encoded)
     client.on_world_user_inventory.assert_called_once_with(WorldUserInventory(
         world_id=uuid.UUID(uid),
         user_id=1234,
-        inventory=inventory,
+        inventory={"MyKey": 4},
     ))

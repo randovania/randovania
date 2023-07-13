@@ -9,17 +9,15 @@ from frozendict import frozendict
 from PySide6 import QtCore
 from qasync import asyncSlot
 
-from randovania.bitpacking import construct_pack
 from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
 from randovania.network_client.network_client import ConnectionState, UnableToConnect
-from randovania.network_common import error
+from randovania.network_common import error, remote_inventory
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry,
     MultiplayerWorldPickups,
-    RemoteInventory,
 )
 from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldSync
 
@@ -27,7 +25,6 @@ if TYPE_CHECKING:
     import uuid
     from pathlib import Path
 
-    from randovania.game_description.resources.item_resource_info import Inventory
     from randovania.gui.lib.qt_network_client import QtNetworkClient
 
 _ERRORS_THAT_STOP_SYNC = (
@@ -35,14 +32,6 @@ _ERRORS_THAT_STOP_SYNC = (
     error.WorldNotAssociatedError,
     error.SessionInWrongStateError,
 )
-
-
-def _encode_inventory_for_upload(inventory: Inventory) -> bytes:
-    return construct_pack.encode(
-        {item.short_name: item_state
-         for item, item_state in inventory.items()},
-        RemoteInventory
-    )
 
 
 class MultiworldClient(QtCore.QObject):
@@ -101,7 +90,7 @@ class MultiworldClient(QtCore.QObject):
                 status=state.status,
                 collected_locations=self.database.get_locations_to_upload(state.id),
                 inventory=(
-                    _encode_inventory_for_upload(state.current_inventory)
+                    remote_inventory.inventory_to_encoded_remote(state.current_inventory)
                     if state.status == GameConnectionStatus.InGame
                     else None
                 ),
