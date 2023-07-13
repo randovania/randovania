@@ -264,18 +264,18 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     def is_admin(self) -> bool:
         return self._session.users[self.your_id].admin
 
-    def update_state(self, game_session: MultiplayerSessionEntry):
+    def update_state(self, session: MultiplayerSessionEntry):
         self.clear()
 
-        self._session = game_session
+        self._session = session
         in_setup = self._session.state == MultiplayerSessionState.SETUP
         in_generation = self._session.generation_in_progress is not None
         has_layout = self._session.game_details is not None
         can_change_preset = not has_layout and not in_generation
 
         world_by_id: dict[uuid.UUID, MultiplayerWorld] = {
-            game.id: game
-            for game in game_session.worlds
+            world.id: world
+            for world in session.worlds
         }
         used_worlds = set()
 
@@ -352,7 +352,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
             self.setItemWidget(world_item, 3, world_tool)
 
-        for player in game_session.users.values():
+        for player in session.users.values():
             item = QtWidgets.QTreeWidgetItem(self)
             item.setExpanded(True)
             item.setText(0, player.name)
@@ -380,14 +380,15 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 tool.setEnabled(not in_generation)
                 self.setItemWidget(new_game_item, 0, tool)
 
-        missing_games = set(world_by_id.keys()) - used_worlds
-        if missing_games:
-            missing_game_item = QtWidgets.QTreeWidgetItem(self)
-            missing_game_item.setExpanded(True)
-            missing_game_item.setText(0, "Unclaimed Games")
+        unclaimed_worlds = set(world_by_id.keys()) - used_worlds
+        if unclaimed_worlds:
+            unclaime_world_item = QtWidgets.QTreeWidgetItem(self)
+            unclaime_world_item.setExpanded(True)
+            unclaime_world_item.setText(0, "Unclaimed Games")
 
-            for world_uid in missing_games:
-                _add_world(world_by_id[world_uid], missing_game_item, None, "Abandoned")
+            for world_uid, world in world_by_id.items():
+                if world_uid in unclaimed_worlds:
+                    _add_world(world_by_id[world_uid], unclaime_world_item, None, "Abandoned")
 
         self.resizeColumnToContents(0)
         self.resizeColumnToContents(1)
