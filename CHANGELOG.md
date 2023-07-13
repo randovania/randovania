@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Multiworld support for Dread.
 - Changed: Ryujinx (Legacy) is disabled when auto-tracker support is on, or in a multiworld.
 - Fixed: Dairon - Navigation Station North can no longer be assigned a hint, which would then be replaced with DNA Hints.
+- Added: A new auto-tracker layout featuring progressive items.
 
 #### Logic Database
 
@@ -45,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Importing permalinks and spoilers in multiworld no longer fails.
 - Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
 - Fixed: Pickups providing negative resources can now be sent in multiworld games.
-- Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words. 
+- Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words.
 - Fixed: In multiworld sessions, the copy permalink button is properly disabled before a game is available.
 
 ## [6.0.0] - 2023-07-03
