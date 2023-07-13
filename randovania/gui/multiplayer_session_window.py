@@ -621,8 +621,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, [])
 
     async def _upload_layout_description(self, layout: LayoutDescription):
+        last_multiplayer = self._options.data_dir.joinpath(f"last_multiplayer_{self._session.id}.rdvgame")
+        if layout.has_spoiler:
+            layout.save_to_file(last_multiplayer)
+
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
                                         layout.as_json(force_spoiler=True))
+
+        if layout.has_spoiler:
+            last_multiplayer.unlink()
 
     async def start_session(self):
         await self._admin_global_action(SessionAdminGlobalAction.START_SESSION, None)
