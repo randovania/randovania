@@ -553,9 +553,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         else:
             source_name = "game file"
 
-        if parameters.world_count > len(self._session.worlds):
+        if parameters.world_count < len(self._session.worlds):
             await async_dialog.warning(
-                self, "Incompatible permalink",
+                self, f"Incompatible {source_name}",
                 f"Given {source_name} is for {parameters.world_count} worlds, but "
                 f"this session has {len(self._session.worlds)} worlds.")
             return False
@@ -585,7 +585,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 VersionedPreset.with_preset(parameters.get_preset(i))
             )
 
-        if parameters.world_count < len(self._session.worlds):
+        if parameters.world_count != len(self._session.worlds):
             await async_dialog.warning(
                 self, "Temporary error",
                 f"New worlds created to fit the imported {source_name}. Please import it again."
