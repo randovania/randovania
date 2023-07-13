@@ -1,0 +1,31 @@
+{
+    "game": "blank",
+    "elements": [
+        { "row": 1, "column": 1, "col_span": 2, "resources": ["Weapon"], "image_path": "gui_assets/tracker/game-images/blank/Weapon.png"},
+        { "row": 1, "column": 3, "col_span": 2, "label": "Shooty", "resources": [] },
+        {
+            "row": 2, "column": 1,
+            "resources": ["Missile"],
+            "image_path": "gui_assets/tracker/game-images/blank/Ammo.png",
+            "disabled_image_path": "gui_assets/tracker/game-images/blank/No Ammo.png"
+        },
+        {
+            "row": 2, "column": 2, "resources": ["Missile"], "image_path": "gui_assets/tracker/game-images/blank/Shiny Ammo.png",
+            "minimum_to_check": 69, "field_to_check": "capacity"
+        },
+        { "row": 2, "column": 3, "col_span": 2, "label": "{capacity}/{max_capacity} Shooties", "resources": ["Missile"] },
+        { "row": 4, "column": 1, "col_span": 2, "resources": ["Explosive"], "image_path": "gui_assets/tracker/game-images/blank/Explosive.png"},
+        { "row": 4, "column": 3, "col_span": 2, "label": "Boomy", "resources": [] },
+        { "row": 5, "column": 1, "col_span": 2, "resources": ["Blue Key", "Victory Key"], "image_path": [
+            "gui_assets/tracker/game-images/blank/Blue Key.png",
+            "gui_assets/tracker/game-images/blank/Victory Key.png"
+        ]},
+        { "row": 5, "column": 3, "col_span": 2, "label": "Unlocky", "resources": [] },
+        { "row": 6, "column": 1, "col_span": 2, "progress_bar": true, "resources": [
+            "Weapon", "Explosive", "Blue Key"
+        ]},
+        { "row": 6, "column": 3, "col_span": 2, "label": "{amount}/{max_capacity} majors!", "resources": [
+            "Weapon", "Explosive", "Blue Key"
+        ] }
+    ]
+}
