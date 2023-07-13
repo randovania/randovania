@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from random import Random
 
 from randovania.generator.filler import retcon

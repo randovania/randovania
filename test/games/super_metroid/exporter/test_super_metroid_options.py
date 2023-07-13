@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games.game import RandovaniaGame
 from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
 

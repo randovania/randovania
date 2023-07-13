@@ -1,16 +1,21 @@
+from __future__ import annotations
+
 import contextlib
 import datetime
 import uuid
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
-from pytest_mock import MockerFixture
 
 from randovania.network_common import error
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.multiplayer import session_api
 from randovania.server.server_app import ServerApp
+
+if TYPE_CHECKING:
+    from pytest_mock import MockerFixture
 
 
 @pytest.mark.parametrize("limit", [None, 2, 3])

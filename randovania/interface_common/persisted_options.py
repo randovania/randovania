@@ -1,7 +1,12 @@
-from collections.abc import Iterator
-from pathlib import Path
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.lib import json_lib, migration_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+    from pathlib import Path
 
 _FIRST_VERSION_IN_SUBFOLDER = 18
 

@@ -1,16 +1,21 @@
+from __future__ import annotations
+
 import logging
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.select_preset_dialog_ui import Ui_SelectPresetDialog
 from randovania.gui.lib import common_qt_lib, signal_handling
-from randovania.interface_common.options import Options
-from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.network_common.multiplayer_session import MAX_WORLD_NAME_LENGTH, WORLD_NAME_RE
+
+if TYPE_CHECKING:
+    from randovania.interface_common.options import Options
+    from randovania.interface_common.preset_manager import PresetManager
 
 
 class SelectPresetDialog(QtWidgets.QDialog, Ui_SelectPresetDialog):

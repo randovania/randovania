@@ -1,13 +1,19 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtCore
 
-from randovania.game_description.game_description import GameDescription
 from randovania.games.cave_story.layout.cs_configuration import CSObjective
 from randovania.gui.generated.preset_cs_objective_ui import Ui_PresetCSObjective
 from randovania.gui.lib.signal_handling import set_combo_with_value
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetCSObjective(PresetTab, Ui_PresetCSObjective):

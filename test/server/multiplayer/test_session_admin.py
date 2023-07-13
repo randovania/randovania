@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import contextlib
 import dataclasses
 import itertools
@@ -47,7 +49,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
                           'spoiler': True,
                           'word_hash': 'Aether Honor Spreader'},
          'generation_in_progress': None,
-         'allowed_games': ANY, },
+         'allowed_games': ANY },
         room='multiplayer-session-1',
         namespace='/',
     )
@@ -91,7 +93,7 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
               'preset_raw': '{}'}
          ],
          'game_details': None, 'generation_in_progress': None,
-         'allowed_games': ANY, },
+         'allowed_games': ANY },
         room='multiplayer-session-1',
         namespace='/',
     )
@@ -119,7 +121,7 @@ def test_admin_player_create_world_for(mock_emit_session_update: MagicMock, mock
     mock_audit.assert_has_calls([
         call(sio, session, "Created new world New World"),
         call(sio, session, "Associated new world New World for The Name"),
-    ]),
+    ])
 
 
 def test_admin_player_claim(flask_app, two_player_session, mock_audit,

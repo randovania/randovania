@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches

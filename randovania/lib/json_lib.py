@@ -1,9 +1,13 @@
+from __future__ import annotations
+
 import json
-from collections.abc import Hashable
-from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import aiofiles
+
+if TYPE_CHECKING:
+    from collections.abc import Hashable
+    from pathlib import Path
 
 
 def _hook_for_raise_on_duplicate_keys(ordered_pairs: list[tuple[Hashable, Any]]) -> dict:

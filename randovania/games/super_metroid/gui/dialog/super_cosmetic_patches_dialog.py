@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 import dataclasses
 import functools
-
-from PySide6.QtWidgets import QWidget
+from typing import TYPE_CHECKING
 
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import MusicMode, SuperMetroidCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.super_cosmetic_patches_dialog_ui import Ui_SuperCosmeticPatchesDialog
+
+if TYPE_CHECKING:
+    from PySide6.QtWidgets import QWidget
 
 
 class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatchesDialog):
@@ -57,7 +61,7 @@ class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatc
 
     def _on_music_option_changed(self, option: MusicMode, value: bool):
         if value:
-            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{"music": option})
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, music=option)
 
     @property
     def cosmetic_patches(self) -> SuperMetroidCosmeticPatches:

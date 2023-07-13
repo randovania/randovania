@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from random import Random
 from unittest.mock import MagicMock
@@ -122,17 +124,17 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     pickup_b = PickupEntry("P-B", model_2, generic_pickup_category, generic_pickup_category,
                            progression=((resource_b, 1),
                                         (resource_a, 5)),
-                           generator_params=default_generator_params, )
+                           generator_params=default_generator_params )
     pickup_c = PickupEntry("P-C", model_2, AMMO_PICKUP_CATEGORY, generic_pickup_category,
                            progression=(),
                            extra_resources=((resource_b, 2), (resource_a, 1)),
                            unlocks_resource=True,
                            resource_lock=ResourceLock(resource_a, resource_a, useless_resource),
-                           generator_params=default_generator_params, )
+                           generator_params=default_generator_params )
 
     useless_pickup = PickupEntry("P-Useless", model_0, USELESS_PICKUP_CATEGORY, USELESS_PICKUP_CATEGORY,
                                  progression=((useless_resource, 1),),
-                                 generator_params=default_generator_params, )
+                                 generator_params=default_generator_params )
     patches = patches.assign_new_pickups([
         (PickupIndex(0), PickupTarget(pickup_a, 0)),
         (PickupIndex(2), PickupTarget(pickup_b, 0)),
@@ -239,16 +241,16 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 
     pickup_a = PickupEntry("A", model_1, generic_pickup_category, generic_pickup_category,
                            progression=(),
-                           generator_params=default_generator_params, )
+                           generator_params=default_generator_params )
     pickup_b = PickupEntry("B", model_2, generic_pickup_category, generic_pickup_category,
                            progression=((resource_b, 1), (resource_b, 1)),
-                           generator_params=default_generator_params, )
+                           generator_params=default_generator_params )
     pickup_c = PickupEntry("C", model_2, generic_pickup_category, generic_pickup_category,
                            progression=(),
-                           generator_params=default_generator_params, )
+                           generator_params=default_generator_params )
     useless_pickup = PickupEntry("Useless", useless_model, USELESS_PICKUP_CATEGORY, USELESS_PICKUP_CATEGORY,
                                  progression=(),
-                                 generator_params=default_generator_params, )
+                                 generator_params=default_generator_params )
 
     patches = dataclasses.replace(empty_patches, game=MagicMock())
     patches = patches.assign_new_pickups([

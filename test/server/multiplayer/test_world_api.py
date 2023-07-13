@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 import uuid
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, PropertyMock, call
 
 import peewee
 import pytest
 from frozendict import frozendict
-from pytest_mock import MockerFixture
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
@@ -18,6 +20,9 @@ from randovania.network_common.world_sync import (
 )
 from randovania.server import database
 from randovania.server.multiplayer import world_api
+
+if TYPE_CHECKING:
+    from pytest_mock import MockerFixture
 
 
 def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker):
@@ -39,12 +44,12 @@ def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker
 
 @pytest.mark.parametrize(("progression", "result"), [
         (   # normal
-            [("Power", 1),],
+            [("Power", 1)],
             ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
              'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fPr8')
         ),
         (   # negative
-            [("Missile", -5),],
+            [("Missile", -5)],
             ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
              'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35sC@#!')
         ),

@@ -1,31 +1,54 @@
-from random import Random
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
+from randovania.game_description.pickup import pickup_category
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
+from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig, AM2RConfiguration
 from randovania.generator.pickup_pool import PoolResults
-from randovania.generator.pickup_pool.pickup_creator import create_am2r_artifact
-from randovania.generator.pickup_pool.pool_creator import _extend_pool_results
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
-    from randovania.game_description.resources.pickup_entry import PickupEntry
-    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.layout.base.base_configuration import BaseConfiguration
+
+METROID_DNA_CATEGORY = pickup_category.PickupCategory(
+    name="dna",
+    long_name="Metroid DNA",
+    hint_details=("some ", "Metroid DNA"),
+    hinted_as_major=False,
+    is_key=True
+)
 
 
-def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription,
-                 base_patches: GamePatches, rng: Random) -> None:
+def create_am2r_artifact(artifact_number: int,
+                         resource_database: ResourceDatabase,
+                         ) -> PickupEntry:
+    return PickupEntry(
+        name=f"Metroid DNA {artifact_number + 1}",
+        progression=((resource_database.get_item(f"Metroid DNA {artifact_number + 1}"), 1),),
+        model=PickupModel(
+            game=resource_database.game_enum,
+            name="Metroid DNA"
+        ),
+        pickup_category=METROID_DNA_CATEGORY,
+        broad_category=pickup_category.GENERIC_KEY_CATEGORY,
+        generator_params=PickupGeneratorParams(
+            preferred_location_category=LocationCategory.MAJOR,
+            probability_offset=0.25,
+        ),
+    )
+
+
+def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
     assert isinstance(configuration, AM2RConfiguration)
 
-    _extend_pool_results(results, artifact_pool(game, configuration, rng))
+    results.extend_with(artifact_pool(game, configuration.artifacts))
 
 
-def artifact_pool(game: GameDescription, configuration: AM2RConfiguration, rng: Random) -> PoolResults:
-    config = configuration.artifacts
-
+def artifact_pool(game: GameDescription, config: AM2RArtifactConfig) -> PoolResults:
     # Check whether we have valid artifact requirements in configuration
     max_artifacts = 0
     if config.prefer_metroids:
@@ -35,45 +58,8 @@ def artifact_pool(game: GameDescription, configuration: AM2RConfiguration, rng: 
     if config.required_artifacts > max_artifacts:
         raise InvalidConfiguration("More Metroid DNA than allowed!")
 
-    new_assignment: dict[PickupIndex, PickupEntry] = {}
-
     keys: list[PickupEntry] = [create_am2r_artifact(i, game.resource_database) for i in range(46)]
-    # Try to shuffle DNA first, for better hints
-    if rng is not None:
-        rng.shuffle(keys)
-
     keys_to_shuffle = keys[:config.required_artifacts]
     starting_keys = keys[config.required_artifacts:]
 
-    locations: list[PickupNode] = []
-    for node in game.region_list.all_nodes:
-        if isinstance(node, PickupNode):
-            # Metroid pickups
-            name = node.extra["object_name"]
-            if config.prefer_metroids and name.startswith("oItemDNA_"):
-                locations.append(node)
-            # Pickups guarded by bosses
-            elif config.prefer_bosses and name in _boss_items:
-                locations.append(node)
-
-    item_pool = keys_to_shuffle
-
-    if rng is not None:
-        rng.shuffle(locations)
-        new_assignment = {
-            location.pickup_index: key
-            for location, key in zip(locations, keys_to_shuffle)
-        }
-        item_pool = [key for key in keys_to_shuffle if key not in new_assignment.values()]
-
-    return PoolResults(item_pool, new_assignment, starting_keys)
-
-
-_boss_items = [
-    "oItemM_111",
-    "oItemJumpBall",
-    "oItemSpaceJump",
-    "oItemPBeam",
-    "oItemIBeam",
-    "oItemETank_50"
-]
+    return PoolResults(keys_to_shuffle, {}, starting_keys)

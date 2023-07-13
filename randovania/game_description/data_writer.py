@@ -1,34 +1,39 @@
+from __future__ import annotations
+
 import copy
 import re
-from collections.abc import Callable, Iterator
-from pathlib import Path
-from typing import TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 from randovania.game_description import game_migration
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock import DockLock, DockRandoParams, DockWeakness, DockWeaknessDatabase
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region import Region
-from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.game_description import GameDescription, MinimalLogicData
-from randovania.game_description.requirements.array_base import RequirementArrayBase
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.lib import frozen_lib, json_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+    from pathlib import Path
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.dock import DockLock, DockRandoParams, DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription, MinimalLogicData
+    from randovania.game_description.requirements.array_base import RequirementArrayBase
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
+    from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 REGION_NAME_TO_FILE_NAME_RE = re.compile(r'[^a-zA-Z0-9\- ]')
 

@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 import uuid
 from pathlib import Path
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, call
 
 import aiohttp.client_exceptions
 import pytest
-import pytest_mock
 import socketio.exceptions
 
 from randovania.bitpacking import construct_pack
@@ -16,6 +18,9 @@ from randovania.network_common import connection_headers
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory, WorldUserInventory
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 @pytest.fixture(name="client")

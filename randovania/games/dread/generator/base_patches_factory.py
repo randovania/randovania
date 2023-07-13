@@ -1,24 +1,26 @@
-from collections.abc import Iterator
-from random import Random
+from __future__ import annotations
 
-from randovania.game_description.assignment import NodeConfigurationAssociation
+from typing import TYPE_CHECKING
+
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.base_patches_factory import BasePatchesFactory
-from randovania.layout.base.base_configuration import BaseConfiguration
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+    from random import Random
+
+    from randovania.game_description.assignment import NodeConfigurationAssociation
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class DreadBasePatchesFactory(BasePatchesFactory):
-    @property
-    def num_joke_hints(self) -> int:
-        return 0
-
     def configurable_node_assignment(self, configuration: DreadConfiguration, game: GameDescription,
                                      rng: Random) -> Iterator[NodeConfigurationAssociation]:
         result = []

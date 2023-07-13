@@ -1,16 +1,22 @@
-from collections.abc import Iterable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.gui.dialog.trick_details_popup import ResourceDetailsPopup
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetDreadGeneration(PresetGeneration):

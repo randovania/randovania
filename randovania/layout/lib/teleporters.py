@@ -1,19 +1,24 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
+from typing import TYPE_CHECKING
 
 import randovania
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node import Node
 
 
 class TeleporterShuffleMode(BitPackEnum, Enum):
@@ -86,10 +91,10 @@ class TeleporterList(location_list.LocationList):
     def element_type(cls):
         return NodeIdentifier
 
-    def ensure_has_location(self, area_location: NodeIdentifier, enabled: bool) -> "TeleporterList":
+    def ensure_has_location(self, area_location: NodeIdentifier, enabled: bool) -> TeleporterList:
         return super().ensure_has_location(area_location, enabled)
 
-    def ensure_has_locations(self, area_locations: list[NodeIdentifier], enabled: bool) -> "TeleporterList":
+    def ensure_has_locations(self, area_locations: list[NodeIdentifier], enabled: bool) -> TeleporterList:
         return super().ensure_has_locations(area_locations, enabled)
 
 

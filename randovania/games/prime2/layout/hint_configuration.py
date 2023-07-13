@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
@@ -11,7 +13,7 @@ class SkyTempleKeyHintMode(BitPackEnum, Enum):
     PRECISE = "precise"
 
     @classmethod
-    def default(cls) -> "SkyTempleKeyHintMode":
+    def default(cls) -> SkyTempleKeyHintMode:
         return cls.PRECISE
 
 
@@ -21,7 +23,7 @@ class HintConfiguration(BitPackDataclass, DataclassPostInitTypeCheck):
     sky_temple_keys: SkyTempleKeyHintMode = SkyTempleKeyHintMode.default()
 
     @classmethod
-    def default(cls) -> "HintConfiguration":
+    def default(cls) -> HintConfiguration:
         return cls()
 
     @property
@@ -32,7 +34,7 @@ class HintConfiguration(BitPackDataclass, DataclassPostInitTypeCheck):
         }
 
     @classmethod
-    def from_json(cls, value: dict) -> "HintConfiguration":
+    def from_json(cls, value: dict) -> HintConfiguration:
         params = {}
 
         if "sky_temple_keys" in value:

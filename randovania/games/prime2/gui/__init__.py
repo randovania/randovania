@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
 from randovania.games.prime2.gui.dialog.game_export_dialog import EchoesGameExportDialog
 from randovania.games.prime2.gui.echoes_game_tab import EchoesGameTabWidget

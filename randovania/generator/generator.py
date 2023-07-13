@@ -1,15 +1,13 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
-from collections.abc import Callable
-from random import Random
+from typing import TYPE_CHECKING
 
 import tenacity
 
 from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
 from randovania.generator.filler.runner import FillerResults, PlayerPool, run_filler
@@ -17,13 +15,21 @@ from randovania.generator.hint_distributor import PreFillParams
 from randovania.generator.pickup_pool import pool_creator
 from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
-from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
 from randovania.resolver import resolver
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from random import Random
+
+    from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.generator_parameters import GeneratorParameters
+    from randovania.layout.preset import Preset
 
 DEFAULT_ATTEMPTS = 15
 
@@ -62,16 +68,8 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
         rng_required=rng_required
     )
 
-    pool_results = pool_creator.calculate_pool_results(configuration,
-                                                       game,
-                                                       base_patches,
-                                                       rng,
-                                                       rng_required=rng_required)
-    target_assignment = [
-        (index, PickupTarget(pickup, player_index))
-        for index, pickup in pool_results.assignment.items()
-    ]
-    patches = base_patches.assign_new_pickups(target_assignment).assign_extra_starting_pickups(pool_results.starting)
+    pool_results = pool_creator.calculate_pool_results(configuration, game)
+    patches = game_generator.bootstrap.assign_pool_results(rng, base_patches, pool_results)
 
     return PlayerPool(
         game=game,

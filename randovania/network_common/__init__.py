@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import randovania
 
 SERVER_API_VERSION = 8

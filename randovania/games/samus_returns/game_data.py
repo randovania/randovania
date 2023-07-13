@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.samus_returns import layout
 from randovania.layout.preset_describer import GamePresetDescriber
@@ -26,7 +28,7 @@ def _generator() -> game.GameGenerator:
     from randovania.generator.hint_distributor import AllJokesHintDistributor
 
     return game.GameGenerator(
-        item_pool_creator=generator.pool_creator,
+        pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.MSRBootstrap(),
         base_patches_factory=generator.MSRBasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),

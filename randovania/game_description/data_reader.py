@@ -1,7 +1,7 @@
+from __future__ import annotations
+
 import copy
-from collections.abc import Callable
-from pathlib import Path
-from typing import TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 from randovania.game_description import game_migration
 from randovania.game_description.db import event_pickup
@@ -27,7 +27,6 @@ from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_description import GameDescription, IndexWithReason, MinimalLogicData
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
@@ -38,13 +37,19 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_id
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.lib import frozen_lib, json_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
+
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -172,7 +177,7 @@ def read_optional_requirement(data: dict | None, resource_database: ResourceData
 
 # Resource Gain
 
-def read_single_resource_gain(item: dict, database: "ResourceDatabase") -> tuple[ResourceInfo, int]:
+def read_single_resource_gain(item: dict, database: ResourceDatabase) -> tuple[ResourceInfo, int]:
     resource = database.get_by_type_and_index(ResourceType.from_str(item["resource_type"]),
                                               item["resource_name"])
     amount = item["amount"]
@@ -180,7 +185,7 @@ def read_single_resource_gain(item: dict, database: "ResourceDatabase") -> tuple
     return resource, amount
 
 
-def read_resource_gain_tuple(data: list[dict], database: "ResourceDatabase") -> ResourceGainTuple:
+def read_resource_gain_tuple(data: list[dict], database: ResourceDatabase) -> ResourceGainTuple:
     return tuple(
         read_single_resource_gain(item, database)
         for item in data

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock, PropertyMock
 
 from randovania.game_description.db.event_node import EventNode

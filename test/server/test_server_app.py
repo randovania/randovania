@@ -1,12 +1,17 @@
-from unittest.mock import MagicMock
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+from unittest.mock import ANY, MagicMock
 
 import flask
 import pytest
-import pytest_mock
 
 from randovania.network_common import error
 from randovania.server import database
 from randovania.server.server_app import EnforceDiscordRole
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 def test_session(server_app):
@@ -195,3 +200,21 @@ def test_ensure_in_room(server_app, mocker: pytest_mock.MockerFixture, expected)
     mock_room.assert_called_once_with()
     mock_join.assert_called_once_with("the_room")
     assert result is expected
+
+
+def test_on_with_wrapper(server_app):
+    def my_function(sio, arg: bytes) -> list[int]:
+        return list(arg)
+
+    def on(message, handler, with_header_check):
+        return handler
+
+    server_app.on = MagicMock(side_effect=on)
+
+    # Run
+    wrapped = server_app.on_with_wrapper("my_func", my_function)
+
+    # Assert
+    result = wrapped(server_app, b"\x041234")
+    assert result == b'\x04bdfh'
+    server_app.on.assert_called_once_with("my_func", ANY, with_header_check=True)

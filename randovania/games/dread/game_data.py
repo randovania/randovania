@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
@@ -40,7 +42,7 @@ def _generator() -> game.GameGenerator:
     from randovania.games.dread.generator.pool_creator import pool_creator
 
     return game.GameGenerator(
-        item_pool_creator=pool_creator,
+        pickup_pool_creator=pool_creator,
         base_patches_factory=DreadBasePatchesFactory(),
         bootstrap=DreadBootstrap(),
         hint_distributor=DreadHintDistributor(),

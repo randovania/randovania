@@ -1,13 +1,19 @@
-from random import Random
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, PrecisionPair
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
-from randovania.generator.filler.player_state import PlayerState
-from randovania.generator.filler.runner import PlayerPool
 from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision, PreFillParams
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.generator.filler.player_state import PlayerState
+    from randovania.generator.filler.runner import PlayerPool
 
 USE_GUARANTEED_HINTS = False
 
@@ -32,7 +38,7 @@ class CSHintDistributor(HintDistributor):
             c("Plantation", "Statue Chamber", "Hint - Numahachi 2"): p(HintLocationPrecision.NUMAHACHI),
         }
 
-    async def get_guranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
+    async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         if USE_GUARANTEED_HINTS:
             assert isinstance(patches.configuration, CSConfiguration)
             # TODO: assign base hints *after* generation?

@@ -1,11 +1,16 @@
+from __future__ import annotations
+
 import collections
+from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.game_patches import GamePatches
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.game_details.base_connection_details_tab import BaseConnectionDetailsTab
-from randovania.interface_common.players_configuration import PlayersConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 class PortalDetailsTab(BaseConnectionDetailsTab):

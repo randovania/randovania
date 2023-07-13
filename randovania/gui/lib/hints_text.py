@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import collections
 
 from PySide6 import QtCore, QtWidgets
@@ -5,12 +7,12 @@ from PySide6 import QtCore, QtWidgets
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.game import RandovaniaGame
-from randovania.generator.pickup_pool import pickup_creator
 
 
 def prime1_hint_text():
     db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME)
-    artifact = pickup_creator.create_artifact(0, 0, db)
+    from randovania.games.prime1.generator.pickup_pool import artifacts
+    artifact = artifacts.create_artifact(0, 0, db)
 
     result = [(
         "Artifact",
@@ -21,19 +23,20 @@ def prime1_hint_text():
 
 
 def prime2_hint_text():
+    from randovania.games.prime2.generator.pickup_pool import dark_temple_keys, sky_temple_keys
     db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
     result = []
 
     for temple in range(3):
-        key = pickup_creator.create_dark_temple_key(0, temple, db)
+        key = dark_temple_keys.create_dark_temple_key(0, temple, db)
         result.append((
             key.name.replace(" 1", "").strip(),
             key.pickup_category,
             key.broad_category,
         ))
 
-    key = pickup_creator.create_sky_temple_key(0, db)
+    key = sky_temple_keys.create_sky_temple_key(0, db)
     result.append((
         "Sky Temple Key",
         key.pickup_category,
@@ -45,7 +48,8 @@ def prime2_hint_text():
 
 def prime3_hint_text():
     db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
-    cell = pickup_creator.create_energy_cell(0, db)
+    from randovania.games.prime3.generator.pickup_pool import energy_cells
+    cell = energy_cells.create_energy_cell(0, db)
 
     result = [(
         "Energy Cell",
@@ -77,7 +81,7 @@ def update_hints_text(game: RandovaniaGame,
             item.broad_category.hint_details[1],
         ))
 
-    for name, pickup_category, broad_category in _GAME_SPECIFIC.get(game, lambda: [])():
+    for name, pickup_category, broad_category in _GAME_SPECIFIC.get(game, list)():
         rows.append((
             name,
             pickup_category.hint_details[1],

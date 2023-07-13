@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
@@ -27,7 +29,7 @@ def _generator() -> game.GameGenerator:
     from randovania.resolver.bootstrap import Bootstrap
 
     return game.GameGenerator(
-        item_pool_creator=super_metroid_specific_pool,
+        pickup_pool_creator=super_metroid_specific_pool,
         bootstrap=Bootstrap(),
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),

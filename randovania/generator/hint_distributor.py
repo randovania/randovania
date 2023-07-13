@@ -1,16 +1,15 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 from abc import ABC
 from collections.abc import Callable, Iterator
 from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.game_description import node_search
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
     Hint,
@@ -22,14 +21,20 @@ from randovania.game_description.hint import (
     RelativeDataArea,
     RelativeDataItem,
 )
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import PlayerState
-from randovania.generator.filler.runner import PlayerPool
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib import random_lib
 from randovania.resolver import debug
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.generator.filler.runner import PlayerPool
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Hint | None]
 
@@ -85,13 +90,13 @@ class HintDistributor(ABC):
 
         return patches
 
-    async def get_guranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
+    async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         return []
 
     async def assign_guaranteed_indices_hints(self, patches: GamePatches, identifiers: list[NodeIdentifier],
                                               prefill: PreFillParams) -> GamePatches:
         # Specific Pickup/any HintNode
-        indices_with_hint = await self.get_guranteed_hints(patches, prefill)
+        indices_with_hint = await self.get_guaranteed_hints(patches, prefill)
         prefill.rng.shuffle(indices_with_hint)
 
         all_hint_identifiers = [identifier for identifier in identifiers if identifier not in patches.hints]

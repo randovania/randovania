@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.generator.pickup_pool import pickup_creator
 
 

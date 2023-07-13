@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
 

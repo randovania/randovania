@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import string
 
 valid_chars = set(string.ascii_lowercase + string.ascii_uppercase + string.digits + ' -')

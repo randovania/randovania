@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import json
 from typing import TYPE_CHECKING
@@ -494,8 +496,7 @@ def test_create_pickup_all_from_pool(echoes_game_description,
                                      default_echoes_configuration,
                                      disable_hud_popup: bool
                                      ):
-    item_pool = pool_creator.calculate_pool_results(default_echoes_configuration,
-                                                    echoes_game_description)
+    item_pool = pool_creator.calculate_pool_results(default_echoes_configuration, echoes_game_description)
     index = PickupIndex(0)
     if disable_hud_popup:
         memo_data = patch_data_factory._simplified_memo_data()

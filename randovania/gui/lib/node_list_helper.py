@@ -1,15 +1,21 @@
+from __future__ import annotations
+
 import functools
-from collections.abc import Callable, Sequence
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region import Region
-from randovania.game_description.game_description import GameDescription
 from randovania.patching.prime import elevators
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Sequence
+
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
 
 
 def dark_name_flags(region: Region):

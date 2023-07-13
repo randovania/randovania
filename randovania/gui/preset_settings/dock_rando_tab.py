@@ -1,19 +1,25 @@
+from __future__ import annotations
+
 import dataclasses
 from collections import defaultdict
-from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.db.dock import DockRandoParams, DockType, DockWeakness
-from randovania.game_description.game_description import GameDescription
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.foldable import Foldable
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.game_description.db.dock import DockRandoParams, DockType, DockWeakness
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetDockRando(PresetTab, Ui_PresetDockRando):

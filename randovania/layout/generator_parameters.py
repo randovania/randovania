@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import functools
 import json
-from collections.abc import Iterator
 from dataclasses import dataclass
 from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
@@ -10,6 +12,9 @@ from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 _PERMALINK_MAX_SEED = 2 ** 31
 _PERMALINK_PLAYER_COUNT_LIMITS = (2, 256)
@@ -84,7 +89,7 @@ class GeneratorParameters(BitPackValue):
                 yield game_db_hash(game), 256
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "GeneratorParameters":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> GeneratorParameters:
         games = decode_game_list(decoder)
         seed_number = decoder.decode_single(_PERMALINK_MAX_SEED)
         spoiler = bitpacking.decode_bool(decoder)
@@ -123,7 +128,7 @@ class GeneratorParameters(BitPackValue):
         return Random(self.seed_number if self.development else self.as_bytes)
 
     @classmethod
-    def from_bytes(cls, b: bytes) -> "GeneratorParameters":
+    def from_bytes(cls, b: bytes) -> GeneratorParameters:
         decoder = BitPackDecoder(b)
         result = GeneratorParameters.bit_pack_unpack(decoder, {})
         decoder.ensure_data_end()

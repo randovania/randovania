@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.interface_common import preset_manager

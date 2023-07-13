@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games.cave_story.layout.cs_configuration import CSObjective
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches, MusicRandoType, MyChar
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash, get_ingame_hash_str

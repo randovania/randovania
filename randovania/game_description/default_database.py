@@ -1,13 +1,19 @@
+from __future__ import annotations
+
 import functools
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania.game_description import data_reader
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.pickup import pickup_database
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:

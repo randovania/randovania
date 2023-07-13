@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
@@ -20,7 +22,7 @@ class CorruptionCosmeticPatches(BaseCosmeticPatches):
     player_suit: CorruptionSuit = CorruptionSuit.VARIA
 
     @classmethod
-    def default(cls) -> "CorruptionCosmeticPatches":
+    def default(cls) -> CorruptionCosmeticPatches:
         return cls()
 
     @classmethod

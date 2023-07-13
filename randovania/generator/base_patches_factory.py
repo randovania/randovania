@@ -1,10 +1,8 @@
-from collections.abc import Iterable
-from random import Random
+from __future__ import annotations
 
-from randovania.game_description.assignment import NodeConfigurationAssociation
+from typing import TYPE_CHECKING
+
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import ElevatorConnection, GamePatches
 from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -13,9 +11,17 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.generator import elevator_distributor
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from random import Random
+
+    from randovania.game_description.assignment import NodeConfigurationAssociation
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_description import GameDescription
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class MissingRng(Exception):

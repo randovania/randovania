@@ -1,14 +1,19 @@
+from __future__ import annotations
+
 import dataclasses
+from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import MusicMode, SuperMetroidCosmeticPatches
 from randovania.generator.pickup_pool import pickup_creator
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 
 _multiplier_for_item = {
     "Energy Tank": 100, "Reserve Tank": 100,

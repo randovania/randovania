@@ -1,3 +1,4 @@
+
 from peewee import fn
 
 from randovania.network_common import error

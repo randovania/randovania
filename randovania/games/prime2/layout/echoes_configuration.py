@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
@@ -24,10 +26,6 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     SEVEN = 7
     EIGHT = 8
     NINE = 9
-
-    @classmethod
-    def default(cls) -> "LayoutSkyTempleKeyMode":
-        return cls.NINE
 
     @property
     def num_keys(self):

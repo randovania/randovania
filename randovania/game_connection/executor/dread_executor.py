@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import logging
@@ -5,15 +7,18 @@ import re
 import struct
 from asyncio import StreamReader, StreamWriter
 from enum import IntEnum
-from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from PySide6.QtCore import QObject, Signal
 
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from randovania.game_description.game_description import GameDescription
 
 
 class DreadLuaException(Exception):
@@ -29,19 +34,21 @@ class DreadSocketHolder:
 
 
 class PacketType(IntEnum):
-    PACKET_HANDSHAKE = b'1',
-    PACKET_LOG_MESSAGE = b'2',
+    PACKET_HANDSHAKE = b'1'
+    PACKET_LOG_MESSAGE = b'2'
     PACKET_REMOTE_LUA_EXEC = b'3'
     PACKET_KEEP_ALIVE = b'4'
     PACKET_NEW_INVENTORY = b'5'
     PACKET_COLLECTED_INDICES = b'6'
     PACKET_RECEIVED_PICKUPS = b'7'
-    PACKET_GAME_STATE  = b'8',
-    PACKET_MALFORMED  = b'9',
+    PACKET_GAME_STATE = b'8'
+    PACKET_MALFORMED = b'9'
+
 
 class ClientInterests(IntEnum):
-    LOGGING = b'1',
-    MULTIWORLD = b'2',
+    LOGGING = b'1'
+    MULTIWORLD = b'2'
+
 
 # FIXME: This is a copy of ODR's implementation just that the first param is a path instead of a name
 # for a file within ODR's template folder

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import uuid
 
 from randovania.interface_common.world_database import WorldData, WorldDatabase

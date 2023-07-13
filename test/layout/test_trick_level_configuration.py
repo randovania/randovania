@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.bitpacking import bitpacking
@@ -62,7 +64,7 @@ def test_encode_no_tricks_are_removed():
 
     decoder = BitPackDecoder(encoded)
     decoded = TrickLevelConfiguration.bit_pack_unpack(
-        decoder, {"reference": TrickLevelConfiguration(False, {}, RandovaniaGame.METROID_PRIME_ECHOES), })
+        decoder, {"reference": TrickLevelConfiguration(False, {}, RandovaniaGame.METROID_PRIME_ECHOES) })
 
     assert decoded.specific_levels == {}
 

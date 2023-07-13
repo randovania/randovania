@@ -1,3 +1,4 @@
+
 def apply_migrations():
     import playhouse.migrate
 

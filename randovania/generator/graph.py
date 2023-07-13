@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 import copy
 import itertools
 from collections import defaultdict
-from collections.abc import Callable, Iterator
 from heapq import heappop, heappush
+from typing import TYPE_CHECKING
 
-from randovania.game_description.requirements.requirement_set import RequirementSet
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+
+    from randovania.game_description.requirements.requirement_set import RequirementSet
 
 
 class BaseGraph:

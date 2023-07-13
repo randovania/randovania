@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import argparse
 import collections
 import copy
@@ -6,12 +8,15 @@ import json
 import math
 import re
 import statistics
-from collections.abc import Iterable
 from pathlib import Path
 from statistics import stdev
+from typing import TYPE_CHECKING
 
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 # This is not a serious file
 # ruff: noqa: C901

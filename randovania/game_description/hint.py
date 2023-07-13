@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from enum import Enum
 
@@ -79,7 +81,7 @@ class RelativeData:
     distance_offset: int | None
 
     @classmethod
-    def from_json(cls, param: dict) -> "RelativeData":
+    def from_json(cls, param: dict) -> RelativeData:
         if "area_location" in param:
             return RelativeDataArea.from_json(param)
         else:

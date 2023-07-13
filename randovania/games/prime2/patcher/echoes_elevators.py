@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 CUSTOM_NAMES = {
     # Great Temple
     ("Great Temple", "Temple Transport A"): "Temple Transport Emerald",

@@ -1,22 +1,28 @@
-from collections.abc import Iterator
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
-from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import Node
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
+    from randovania.game_description.resources.resource_info import ResourceCollection
+    from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 
 _ALTERNATIVE_MODELS = {
     "Nothing": ["itemsphere"],
@@ -116,7 +122,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
 
     def _key_error_for_start_node(self, node: Node):
-        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has neither a " +
+        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has neither a "
                         "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
 
     def _get_or_create_spawn_point(self, node: Node, level_name: str):

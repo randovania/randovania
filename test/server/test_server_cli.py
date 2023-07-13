@@ -1,9 +1,14 @@
+from __future__ import annotations
+
 import argparse
+from typing import TYPE_CHECKING
 
 import pytest
-import pytest_mock
 
 from randovania.cli import server
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 def test_server_command_logic(mocker: pytest_mock.MockerFixture):

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 

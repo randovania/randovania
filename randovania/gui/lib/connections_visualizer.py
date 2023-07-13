@@ -1,11 +1,17 @@
+from __future__ import annotations
+
 import re
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QGridLayout, QWidget
 
 from randovania.game_description import pretty_print
-from randovania.game_description.requirements.base import Requirement
+
+if TYPE_CHECKING:
+    from PySide6.QtWidgets import QGridLayout, QWidget
+
+    from randovania.game_description.requirements.base import Requirement
 
 
 def create_tree_items_for_requirement(

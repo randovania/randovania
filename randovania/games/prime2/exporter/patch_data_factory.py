@@ -1,45 +1,54 @@
+from __future__ import annotations
+
 import dataclasses
-from collections.abc import Callable, Iterator
-from random import Random
+from typing import TYPE_CHECKING
 
 import randovania
 import randovania.games.prime2.exporter.hints
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler
-from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.default_database import default_prime2_memo_data
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.pickup import pickup_category
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupModel
-from randovania.game_description.resources.resource_info import ResourceGain
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import string_lib
 from randovania.patching.prime import elevators
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+    from random import Random
+
+    from randovania.exporter.hints.hint_namer import HintNamer
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.dock import DockType
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+    from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.layout_description import LayoutDescription
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
@@ -784,26 +793,26 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
     def create_logbook_patches(self):
         return [
-            {"asset_id": 25, "connections": [81, 166, 195], },
-            {"asset_id": 38, "connections": [4, 33, 120, 251, 364], },
-            {"asset_id": 60, "connections": [38, 74, 154, 196], },
-            {"asset_id": 74, "connections": [59, 75, 82, 102, 260], },
-            {"asset_id": 81, "connections": [148, 151, 156], },
-            {"asset_id": 119, "connections": [60, 254, 326], },
-            {"asset_id": 124, "connections": [35, 152, 355], },
-            {"asset_id": 129, "connections": [29, 118, 367], },
-            {"asset_id": 154, "connections": [169, 200, 228, 243, 312, 342], },
-            {"asset_id": 166, "connections": [45, 303, 317], },
-            {"asset_id": 194, "connections": [1, 6], },
-            {"asset_id": 195, "connections": [159, 221, 231], },
-            {"asset_id": 196, "connections": [17, 19, 23, 162, 183, 379], },
-            {"asset_id": 233, "connections": [58, 191, 373], },
-            {"asset_id": 241, "connections": [223, 284], },
-            {"asset_id": 254, "connections": [129, 233, 319], },
-            {"asset_id": 318, "connections": [119, 216, 277, 343], },
-            {"asset_id": 319, "connections": [52, 289, 329], },
-            {"asset_id": 326, "connections": [124, 194, 241, 327], },
-            {"asset_id": 327, "connections": [46, 275], },
+            {"asset_id": 25, "connections": [81, 166, 195] },
+            {"asset_id": 38, "connections": [4, 33, 120, 251, 364] },
+            {"asset_id": 60, "connections": [38, 74, 154, 196] },
+            {"asset_id": 74, "connections": [59, 75, 82, 102, 260] },
+            {"asset_id": 81, "connections": [148, 151, 156] },
+            {"asset_id": 119, "connections": [60, 254, 326] },
+            {"asset_id": 124, "connections": [35, 152, 355] },
+            {"asset_id": 129, "connections": [29, 118, 367] },
+            {"asset_id": 154, "connections": [169, 200, 228, 243, 312, 342] },
+            {"asset_id": 166, "connections": [45, 303, 317] },
+            {"asset_id": 194, "connections": [1, 6] },
+            {"asset_id": 195, "connections": [159, 221, 231] },
+            {"asset_id": 196, "connections": [17, 19, 23, 162, 183, 379] },
+            {"asset_id": 233, "connections": [58, 191, 373] },
+            {"asset_id": 241, "connections": [223, 284] },
+            {"asset_id": 254, "connections": [129, 233, 319] },
+            {"asset_id": 318, "connections": [119, 216, 277, 343] },
+            {"asset_id": 319, "connections": [52, 289, 329] },
+            {"asset_id": 326, "connections": [124, 194, 241, 327] },
+            {"asset_id": 327, "connections": [46, 275] },
         ]
 
 
@@ -825,7 +834,7 @@ def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: 
                         game: GameDescription,
                         patches: GamePatches, players_config: PlayersConfiguration,
                         rng: Random):
-    useless_target = PickupTarget(pickup_creator.create_echoes_useless_pickup(game.resource_database),
+    useless_target = PickupTarget(create_echoes_useless_pickup(game.resource_database),
                                   players_config.player_index)
 
     if cosmetic_patches.disable_hud_popup:
@@ -892,7 +901,7 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
             rng.randint(0, _EASTER_EGG_RUN_VALIDATED_CHANCE) == 0):
         hud_text = ["Run validated!"]
 
-    multiworld_tuple = (multiworld_item, details.index.index + 1),
+    multiworld_tuple = ((multiworld_item, details.index.index + 1),)
 
     return {
         "pickup_index": details.index.index,
@@ -938,3 +947,26 @@ def adjust_model_name(patcher_data: dict, randomizer_data: dict):
         pickup["model_index"] = mapping.index[model_name]
         pickup["sound_index"] = mapping.sound_index.get(model_name, 0)
         pickup["jingle_index"] = mapping.jingle_index.get(model_name, 0)
+
+
+def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
+    """
+    Creates an Energy Transfer Module pickup.
+    :param resource_database:
+    :return:
+    """
+    return PickupEntry(
+        name="Energy Transfer Module",
+        progression=(
+            (resource_database.get_item(echoes_items.USELESS_PICKUP_ITEM), 1),
+        ),
+        model=PickupModel(
+            game=resource_database.game_enum,
+            name=echoes_items.USELESS_PICKUP_MODEL,
+        ),
+        pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
+        broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
+        generator_params=PickupGeneratorParams(
+            preferred_location_category=LocationCategory.MAJOR,  # TODO
+        ),
+    )

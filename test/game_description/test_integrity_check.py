@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.game_description import data_reader, default_database, integrity_check
@@ -9,7 +11,6 @@ _acceptable_database_errors = {
     RandovaniaGame.METROID_PRIME_ECHOES: True,
     RandovaniaGame.METROID_PRIME_CORRUPTION: True,
     RandovaniaGame.SUPER_METROID: True,
-    RandovaniaGame.METROID_DREAD: True,
     RandovaniaGame.METROID_SAMUS_RETURNS: True,
 }
 

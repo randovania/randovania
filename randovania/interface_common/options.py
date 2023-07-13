@@ -1,17 +1,22 @@
+from __future__ import annotations
+
 import dataclasses
 import json
 import uuid
-from collections.abc import Callable
 from distutils.version import StrictVersion
 from enum import Enum
-from pathlib import Path
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persisted_options, update_checker
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import migration_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
+
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 T = TypeVar("T")
 
@@ -112,11 +117,11 @@ class PerGameOptions:
         }
 
     @classmethod
-    def default_for_game(cls, game: RandovaniaGame) -> "PerGameOptions":
+    def default_for_game(cls, game: RandovaniaGame) -> PerGameOptions:
         return cls(cosmetic_patches=game.data.layout.cosmetic_patches())
 
     @classmethod
-    def from_json(cls, value: dict) -> "PerGameOptions":
+    def from_json(cls, value: dict) -> PerGameOptions:
         raise NotImplementedError
 
 

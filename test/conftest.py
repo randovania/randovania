@@ -1,23 +1,22 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import uuid
 from importlib.util import find_spec
 from pathlib import Path
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
 
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup.pickup_category import PickupCategory
-from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
 from randovania.games.blank.layout import BlankConfiguration
-from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.exporter.game_exporter import decode_randomizer_data
@@ -25,6 +24,11 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class TestFilesDir:
@@ -130,17 +134,6 @@ def default_prime_configuration() -> PrimeConfiguration:
 @pytest.fixture()
 def prime_game_patches(default_prime_configuration, prime_game_description) -> GamePatches:
     return GamePatches.create_from_game(prime_game_description, 0, default_prime_configuration)
-
-
-@pytest.fixture(scope="session")
-def default_cs_preset() -> Preset:
-    return PresetManager(None).default_preset_for_game(RandovaniaGame.CAVE_STORY).get_preset()
-
-
-@pytest.fixture(scope="session")
-def default_cs_configuration(default_cs_preset) -> CSConfiguration:
-    assert isinstance(default_cs_preset.configuration, CSConfiguration)
-    return default_cs_preset.configuration
 
 
 @pytest.fixture(scope="session")

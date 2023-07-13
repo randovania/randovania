@@ -1,6 +1,10 @@
+from __future__ import annotations
 
-from randovania.gui.lib.window_manager import WindowManager
-from randovania.interface_common.preset_editor import PresetEditor
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager):

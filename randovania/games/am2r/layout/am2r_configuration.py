@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
@@ -12,6 +14,7 @@ class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_metroids: bool
     prefer_bosses: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 46, "precision": 1})
+
 
 @dataclasses.dataclass(frozen=True)
 class AM2RConfiguration(BaseConfiguration):

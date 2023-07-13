@@ -1,11 +1,17 @@
-from collections.abc import Callable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.exporter.hints.hint_formatters import RelativeFormatter
 from randovania.exporter.hints.pickup_hint import PickupHint, create_pickup_hint
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, RelativeDataItem
-from randovania.games.game import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 class RelativeItemFormatter(RelativeFormatter):

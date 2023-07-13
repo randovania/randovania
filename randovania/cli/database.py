@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import argparse
 import logging
 import typing
@@ -6,13 +8,15 @@ from pathlib import Path
 from typing import Any
 
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.games import binary_data, default_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 def _get_sorted_list_of_names(input_list: list[Any], prefix: str = "") -> list[str]:

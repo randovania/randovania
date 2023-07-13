@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 
 import pytest
@@ -8,7 +10,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
-from randovania.generator.pickup_pool import pickup_creator
+from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
@@ -53,14 +55,14 @@ def test_create_hints_all_placed(hide_area: bool, multiworld: bool,
 
     patches = echoes_game_patches.assign_new_pickups([
         (PickupIndex(17 + key),
-         PickupTarget(pickup_creator.create_sky_temple_key(key, echoes_game.resource_database), 0))
+         PickupTarget(sky_temple_keys.create_sky_temple_key(key, echoes_game.resource_database), 0))
         for key in range(5 if multiworld else 9)
     ])
     patches = dataclasses.replace(patches, configuration=default_echoes_configuration)
 
     other_patches = prime_game_patches.assign_new_pickups([
         (PickupIndex(17 + key),
-         PickupTarget(pickup_creator.create_sky_temple_key(key, echoes_game.resource_database), 0))
+         PickupTarget(sky_temple_keys.create_sky_temple_key(key, echoes_game.resource_database), 0))
         for key in range(5, 9)
     ])
     other_patches = dataclasses.replace(other_patches, configuration=default_prime_configuration)
@@ -114,7 +116,7 @@ def test_create_hints_all_starting(hide_area: bool, multiworld: bool, empty_patc
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
     patches = empty_patches.assign_extra_starting_pickups([
-        (pickup_creator.create_sky_temple_key(key, echoes_game_description.resource_database))
+        (sky_temple_keys.create_sky_temple_key(key, echoes_game_description.resource_database))
         for key in range(9)
     ])
     patches = dataclasses.replace(patches, configuration=default_echoes_configuration)
@@ -142,9 +144,11 @@ def test_create_hints_all_starting(hide_area: bool, multiworld: bool, empty_patc
     ]
 
     # Run
-    result = randovania.games.prime2.exporter.hints.create_stk_hints({0: patches}, players_config,
-                                                                     echoes_game_description.resource_database,
-                                                                     namer, hide_area)
+    result = randovania.games.prime2.exporter.hints.create_stk_hints(
+        {0: patches}, players_config,
+        echoes_game_description.resource_database,
+        namer, hide_area
+    )
 
     # Assert
     assert result == expected

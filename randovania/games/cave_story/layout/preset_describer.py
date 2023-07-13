@@ -1,15 +1,20 @@
-from collections import defaultdict
+from __future__ import annotations
 
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+from collections import defaultdict
+from typing import TYPE_CHECKING
+
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
     handle_progressive_expected_counts,
     message_for_required_mains,
 )
+
+if TYPE_CHECKING:
+    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class CSPresetDescriber(GamePresetDescriber):

@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import dataclasses
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, PropertyMock
 
 import pytest
@@ -20,8 +23,10 @@ from randovania.layout.base.ammo_pickup_state import AmmoPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from randovania.layout.preset import Preset
 
 
 @pytest.mark.parametrize(

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6 import QtCore
 
 from randovania.games.cave_story.gui.dialog.cs_cosmetic_patches_dialog import CSCosmeticPatchesDialog

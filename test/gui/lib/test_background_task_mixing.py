@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from asyncio import CancelledError
 from unittest.mock import MagicMock
 

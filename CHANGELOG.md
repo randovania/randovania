@@ -12,11 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Text prompts now default to accepting when pressing enter.
 - Fixed: The generation order for multiworld session now correctly handles any kind of names.
 - Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
+- Fixed: Import rdvgames for games that uses certain features, like Sky Temple Keys on Bosses or Metroid DNA in Dread, now works properly.
 
 ### Metroid Dread
 
 - **Major** - Added: Multiworld support for Dread.
 - Changed: Ryujinx (Legacy) is disabled when auto-tracker support is on, or in a multiworld.
+- Fixed: Dairon - Navigation Station North can no longer be assigned a hint, which would then be replaced with DNA Hints.
 
 #### Logic Database
 

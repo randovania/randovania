@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 import asyncio
 import time
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui.generated.game_validator_widget_ui import Ui_GameValidatorWidget
 from randovania.gui.lib import common_qt_lib
-from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, resolver
+
+if TYPE_CHECKING:
+    from randovania.layout.layout_description import LayoutDescription
 
 
 async def _run_validator(write_to_log, debug_level: int, layout: LayoutDescription):

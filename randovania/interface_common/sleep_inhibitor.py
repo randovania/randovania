@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import platform
 from abc import abstractmethod
@@ -21,7 +23,6 @@ class InhibitorSource:
         """
         Cancels a previous call to `inhibit`.
         """
-        pass
 
 
 class WindowsInhibitorSource(InhibitorSource):

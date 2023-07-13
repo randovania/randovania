@@ -1,8 +1,14 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.interface_common.players_configuration import PlayersConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 def find_locations_that_gives_items(

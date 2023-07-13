@@ -1,5 +1,10 @@
+from __future__ import annotations
+
 import statistics
-from argparse import ArgumentParser
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 
 def add_debug_argument(parser: ArgumentParser):

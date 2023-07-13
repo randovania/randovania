@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from unittest.mock import MagicMock
 
@@ -14,7 +16,7 @@ def _editor() -> PresetEditor:
 
 _sample_layout_configurations = [
     {
-        "sky_temple_keys": LayoutSkyTempleKeyMode.default(),
+        "sky_temple_keys": LayoutSkyTempleKeyMode.NINE,
         "menu_mod": False,
     }
 ]

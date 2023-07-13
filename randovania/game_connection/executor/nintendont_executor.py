@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import struct
@@ -27,7 +29,7 @@ class RequestBatch:
         self.num_read_bytes = 0
         self.addresses = []
 
-    def copy(self) -> "RequestBatch":
+    def copy(self) -> RequestBatch:
         new = RequestBatch()
         new.data = self.data
         new.ops = list(self.ops)

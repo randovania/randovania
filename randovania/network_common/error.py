@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Self
 
 from randovania.network_common.session_state import MultiplayerSessionState

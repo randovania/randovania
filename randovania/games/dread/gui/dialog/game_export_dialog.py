@@ -1,14 +1,15 @@
+from __future__ import annotations
+
 import json
 import logging
 import os
 import platform
 import string
-from collections.abc import Callable, Iterator
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
 
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
@@ -25,7 +26,12 @@ from randovania.gui.dialog.game_export_dialog import (
 )
 from randovania.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.gui.lib import common_qt_lib
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 
 def get_path_to_ryujinx() -> Path:
