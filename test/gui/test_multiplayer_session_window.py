@@ -153,7 +153,7 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
     )
 
     texts = [
-        window.tab_history.item(0, i).text()
+        window.history_item_model.item(0, i).text()
         for i in range(5)
     ]
     assert texts == [
@@ -161,7 +161,7 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
         'W2',
         'Bombs',
         'Temple Grounds/Hive Chamber A/Pickup (Missile)',
-        timestamp.strftime("%c")
+        '2020-01-05T00:00:00.000',
     ]
 
 
@@ -648,8 +648,8 @@ def test_update_session_audit_log(window: MultiplayerSessionWindow):
     window.update_session_audit_log(log)
     assert scrollbar.value() == scrollbar.maximum()
 
-    assert window.tab_audit.item(0, 0).text() == "You"
-    assert window.tab_audit.item(0, 1).text() == "Did something for the 0-th time."
+    assert window.audit_item_model.item(0, 0).text() == "You"
+    assert window.audit_item_model.item(0, 1).text() == "Did something for the 0-th time."
 
     window.tab_audit.scrollToTop()
     window.update_session_audit_log(log)
