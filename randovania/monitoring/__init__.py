@@ -8,6 +8,7 @@ import typing
 from pathlib import Path
 
 import sentry_sdk
+import sentry_sdk.integrations.logging
 import sentry_sdk.scrubber
 
 import randovania
@@ -130,6 +131,10 @@ def client_init():
     _init(False, _CLIENT_DEFAULT_URL,
           exclude_server_name=True)
     sentry_sdk.set_tag("frozen", randovania.is_frozen())
+
+    # Ignore the "packet queue is empty, aborting" message
+    # It causes a disconnect, but we smoothly reconnect in that case.
+    sentry_sdk.integrations.logging.ignore_logger("engineio.client")
 
 
 def server_init(sampling_rate: float):
