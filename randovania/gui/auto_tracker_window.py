@@ -24,15 +24,21 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-def load_trackers_configuration() -> dict[RandovaniaGame, dict[str, Path]]:
+def load_trackers_configuration(for_solo: bool) -> dict[RandovaniaGame, dict[str, Path]]:
     data = json_lib.read_path(
         get_data_path().joinpath("gui_assets/tracker/trackers.json")
     )
+
+    if for_solo:
+        exclude_trackers = {}
+    else:
+        exclude_trackers = data["solo_only"]
 
     return {
         RandovaniaGame(game): {
             name: get_data_path().joinpath("gui_assets/tracker", file_name)
             for name, file_name in trackers.items()
+            if name not in exclude_trackers.get(game, [])
         }
         for game, trackers in data["trackers"].items()
     }
@@ -57,13 +63,13 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         self.options = options
         common_qt_lib.set_default_window_icon(self)
 
-        self.trackers = load_trackers_configuration()
+        self.trackers = load_trackers_configuration(for_solo=True)
         self._tracker_actions = collections.defaultdict(list)
         self.connected_game_state_label.setText(GameConnectionStatus.Disconnected.pretty_text)
 
         self._current_tracker_game = options.tracker_default_game
         default_game_action_group = QtGui.QActionGroup(self.menu_default_game)
-        default_game_action = self.menu_default_game.addAction("None")
+        default_game_action: QtGui.QAction = self.menu_default_game.addAction("None")
         default_game_action.setCheckable(True)
         default_game_action.setChecked(options.tracker_default_game is None)
         default_game_action.triggered.connect(functools.partial(self._on_action_default_game, None))
@@ -189,6 +195,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
 
     def update_sources_combo(self):
         old_builder = self.selected_builder()
+        self.select_game_combo.currentIndexChanged.disconnect(self.on_select_game_combo)
         self.select_game_combo.clear()
 
         index_to_select = None
@@ -204,8 +211,10 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             self.select_game_combo.addItem(
                 "No sources available"
             )
+
         if index_to_select is not None:
             self.select_game_combo.setCurrentIndex(index_to_select)
+        self.select_game_combo.currentIndexChanged.connect(self.on_select_game_combo)
 
         self.create_tracker()
 
