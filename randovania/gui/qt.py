@@ -283,7 +283,7 @@ async def qt_main(app: QtWidgets.QApplication, args):
 
 
 def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState):
-    logger.info("New application state: %s", new_state)
+    logger.debug("New application state: %s", new_state)
     import sentry_sdk
     if new_state == QtCore.Qt.ApplicationState.ApplicationActive:
         sentry_sdk.Hub.current.start_session(session_mode="application")
