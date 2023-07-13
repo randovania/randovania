@@ -469,6 +469,7 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
     mock_load_layout = mocker.patch("randovania.gui.lib.layout_loader.prompt_and_load_layout_description",
                                     new_callable=AsyncMock)
     layout = mock_load_layout.return_value
+    layout.save_to_file = MagicMock()
     layout.as_json = MagicMock()
     if end_state == "reject":
         mock_load_layout.return_value = None
@@ -499,6 +500,9 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
         mock_warning.assert_not_awaited()
 
     if end_state == "import":
+        layout.save_to_file.assert_called_once_with(
+            window._options.data_dir.joinpath(f"last_multiplayer_{session.id}.rdvgame")
+        )
         window._admin_global_action.assert_has_awaits([
             call(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, ["uid1", "uid2"]),
             call(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION, layout.as_json.return_value),
