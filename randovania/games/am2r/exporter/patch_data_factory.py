@@ -1,9 +1,9 @@
 from __future__ import annotations
-from random import Random
+
+from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
 from randovania.exporter.hints import guaranteed_item_hint
-
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
@@ -11,6 +11,9 @@ from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from random import Random
 
 
 class AM2RPatchDataFactory(BasePatchDataFactory):

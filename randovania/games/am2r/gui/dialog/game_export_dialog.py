@@ -1,20 +1,18 @@
 from __future__ import annotations
+
 import json
-
-from PySide6.QtCore import QCoreApplication
-from randovania.exporter.game_exporter import GameExportParams
-from randovania.games.game import RandovaniaGame
-
-
 from typing import TYPE_CHECKING
 
+from PySide6.QtCore import QCoreApplication
+
+from randovania.exporter.game_exporter import GameExportParams
 from randovania.gui.dialog.game_export_dialog import GameExportDialog
 from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RGameExportDialog
-from randovania.interface_common.options import Options
 
 if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExportParams
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.options import Options, PerGameOptions
 
 
 class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):

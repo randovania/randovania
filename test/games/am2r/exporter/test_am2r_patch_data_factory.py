@@ -1,6 +1,7 @@
 from unittest.mock import PropertyMock
 
 import pytest
+
 from randovania.games.am2r.exporter.patch_data_factory import AM2RPatchDataFactory
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
