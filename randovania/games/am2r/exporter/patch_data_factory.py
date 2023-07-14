@@ -25,7 +25,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 pickup_list["text"]["header"] == header and not for_other_player and
                 rng.randint(0, self._EASTER_EGG_SHINY) == 0)
 
-    def _create_pickups_dict(self, pickup_list, item_info, rng: Random):
+    def _create_pickups_dict(self, pickup_list, item_info, memo_data, rng: Random):
         pickup_map_dict = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1]
@@ -39,7 +39,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 "quantity": quantity,
                 "text": {
                     "header": item_info[pickup.model.name]["text_header"],
-                    "description": item_info[pickup.name]["text_desc"]
+                    "description": memo_data[pickup.name]
                 }
             }
             # Shiny Missiles
@@ -213,7 +213,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "configuration_identifier": self._create_hash_dict(),
             "starting_items": self._create_starting_items_dict(),
             "starting_location": self._create_starting_location(),
-            "pickups": self._create_pickups_dict(pickup_list, item_data, self.rng),
+            "pickups": self._create_pickups_dict(pickup_list, item_data, memo_data, self.rng),
             "rooms": self._create_room_dict(),
             "game_patches": self._create_game_patches(),
             "door_locks": self._create_door_locks(),
