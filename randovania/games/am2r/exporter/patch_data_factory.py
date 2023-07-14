@@ -151,8 +151,6 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
         for i in range(1, 47):
             item_data[f"Metroid DNA {i}"] = item_data["Metroid DNA"]
 
-        # TODO: use correct speed for launchers, they are not 0.2
-
         item_data["Missiles"] = item_data["Missile Expansion"]
         item_data["Super Missiles"] = item_data["Super Missile Expansion"]
         item_data["Power Bombs"] = item_data["Power Bomb Expansion"]
