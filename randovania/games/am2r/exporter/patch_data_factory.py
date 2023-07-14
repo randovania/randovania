@@ -19,6 +19,12 @@ if TYPE_CHECKING:
 class AM2RPatchDataFactory(BasePatchDataFactory):
     _EASTER_EGG_SHINY = 1024
 
+    def _does_pickup_have_shiny_values(self, pickup_list, item_effect: str, sprite_details: str, header: str,
+                                       for_other_player: bool, rng: Random) -> bool:
+        return (pickup_list["item_effect"] == item_effect and pickup_list["sprite_details"] == sprite_details and
+                pickup_list["text"]["header"] == header and not for_other_player and
+                rng.randint(0, self._EASTER_EGG_SHINY) == 0)
+
     def _create_pickups_dict(self, pickup_list, item_info, rng: Random):
         pickup_map_dict = {}
         for pickup in pickup_list:
@@ -36,14 +42,29 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                     "description": item_info[pickup.name]["text_desc"]
                 }
             }
-            if (pickup_map_dict[object_name]["item_effect"] == "Missile Expansion" and
-                    pickup_map_dict[object_name]["sprite_details"]["name"] == "sItemMissile" and
-                    pickup_map_dict[object_name]["text"]["header"] == "Got Missile Tank" and not pickup.other_player and
-                    rng.randint(0, self._EASTER_EGG_SHINY) == 0):
+            # Shiny Missiles
+            if (self._does_pickup_have_shiny_values(pickup_map_dict[object_name], "Missile Expansion", "sItemMissile",
+                                                    "Got Missile Tank", pickup.other_player, rng)):
                 pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyMissile"
                 pickup_map_dict[object_name]["text"]["header"] = "Got Shiny Missile Tank"
 
-            # TODO: add screw shiny and hijump shiny
+            # Shiny Hijump
+            elif (self._does_pickup_have_shiny_values(pickup_map_dict[object_name], "Hi-Jump Boots", "sItemHijump",
+                                                      "Hi-Jump Boots acquired", pickup.other_player, rng)):
+                pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyHijump"
+                pickup_map_dict[object_name]["text"]["header"] = "Shiny Air Jordan Boots acquired"
+
+            # Shiny Screw
+            elif (self._does_pickup_have_shiny_values(pickup_map_dict[object_name], "Screw Attack", "sItemScrewAttack",
+                                                      "Screw Attack acquired", pickup.other_player, rng)):
+                pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyScrewAttack"
+                pickup_map_dict[object_name]["text"]["header"] = "Shiny Screw Attacker acquired"
+
+            # Shiny Ice
+            elif (self._does_pickup_have_shiny_values(pickup_map_dict[object_name], "Ice Beam", "sItemIceBeam",
+                                                      "Ice Beam acquired", pickup.other_player, rng)):
+                pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyIceBeam"
+                pickup_map_dict[object_name]["text"]["header"] = "Shiny Ice Cream acquired"
 
         return pickup_map_dict
 
