@@ -23,6 +23,7 @@ class AmmoPickupDefinition(JsonDataclass):
     game: RandovaniaGame = dataclasses.field(metadata={"init_from_extra": True})
     name: str = dataclasses.field(metadata={"init_from_extra": True})
     model_name: str
+    offworld_models: dict[RandovaniaGame, str]
     items: tuple[str, ...]
     preferred_location_category: LocationCategory
     broad_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
