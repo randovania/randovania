@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import collections
 import datetime
 import json
 import uuid
@@ -262,6 +263,7 @@ class MultiplayerSession(BaseModel):
         if self.game_details_json is not None:
             game_details = GameDetails.from_json(json.loads(self.game_details_json))
 
+        # Get the worlds explicitly, as we return them and would also need for the user assocations
         worlds = {
             world.id: MultiplayerWorld(
                 id=world.uuid,
@@ -270,6 +272,33 @@ class MultiplayerSession(BaseModel):
             )
             for world in self.worlds
         }
+
+        # Fetch the members, with a Join to also fetch the member name
+        members: Iterable[MultiplayerMembership] = MultiplayerMembership.select(
+            MultiplayerMembership.admin,
+            User.id,
+            User.name,
+        ).join(
+            User
+        ).where(
+            MultiplayerMembership.session == self.id,
+        )
+
+        # Fetch all user associations up-front, then split per user
+        associations: Iterable[WorldUserAssociation] = WorldUserAssociation.select(
+            WorldUserAssociation.user,
+            WorldUserAssociation.world,
+            WorldUserAssociation.connection_state,
+            WorldUserAssociation.last_activity,
+        ).join(
+            World
+        ).where(
+            World.session == self.id,
+        )
+
+        association_by_user: dict[int, list[WorldUserAssociation]] = collections.defaultdict(list)
+        for association in associations:
+            association_by_user[association.user_id].append(association)
 
         return multiplayer_session.MultiplayerSessionEntry(
             id=self.id,
@@ -285,12 +314,10 @@ class MultiplayerSession(BaseModel):
                             connection_state=association.connection_state,
                             last_activity=association.last_activity,
                         )
-                        for association in WorldUserAssociation.find_all_for_user_in_session(
-                            member.user_id, self.id,
-                        )
+                        for association in association_by_user[member.user_id]
                     },
                 )
-                for member in self.members
+                for member in members
             ],
             worlds=list(worlds.values()),
             game_details=game_details,
