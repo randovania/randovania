@@ -30,6 +30,7 @@ from randovania.network_common import (
     error,
     multiplayer_session,
     pickup_serializer,
+    remote_inventory,
     signals,
 )
 from randovania.network_common.multiplayer_session import (
@@ -38,7 +39,6 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry,
     MultiplayerSessionListEntry,
     MultiplayerWorldPickups,
-    RemoteInventory,
     User,
     WorldUserInventory,
 )
@@ -378,11 +378,12 @@ class NetworkClient:
         self.logger.info("world %s, num pickups: %d", pickups.world_id, len(pickups.pickups))
 
     async def _on_world_user_inventory_raw(self, entry_id: str, user_id: int, raw_inventory: bytes):
-        try:
-            inventory = construct_pack.decode(raw_inventory, RemoteInventory)
-        except construct.ConstructError as e:
-            self.logger.debug("Unable to parse inventory for entry %d: %s", entry_id, str(e))
+        inventory_or_error = remote_inventory.decode_remote_inventory(raw_inventory)
+        if isinstance(inventory_or_error, construct.ConstructError):
+            self.logger.debug("Unable to parse inventory for entry %d: %s", entry_id, str(inventory_or_error))
             return
+        else:
+            inventory = inventory_or_error
 
         session_inventory = WorldUserInventory(
             world_id=uuid.UUID(entry_id),

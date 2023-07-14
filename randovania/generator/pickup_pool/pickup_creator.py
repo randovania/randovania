@@ -45,9 +45,7 @@ def create_standard_pickup(
     )
 
     def _create_resources(base_resource: str | None) -> ResourceQuantity:
-        # FIXME: hacky quantity for Hazard Shield
-        quantity = 5 if pickup.name == "Hazard Shield" else 1
-        return resource_database.get_item(base_resource), quantity
+        return resource_database.get_item(base_resource), 1
 
     return PickupEntry(
         name=pickup.name,
