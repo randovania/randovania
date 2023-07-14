@@ -3,7 +3,7 @@ from __future__ import annotations
 import datetime
 import json
 import uuid
-from unittest.mock import MagicMock, PropertyMock
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -98,8 +98,8 @@ def session_update(clean_database, mocker):
     target = mock_layout.all_patches.__getitem__.return_value.pickup_assignment.__getitem__.return_value
     target.pickup.name = "The Pickup"
 
-    mocker.patch("randovania.server.database.MultiplayerSession.layout_description",
-                 new_callable=PropertyMock, return_value=mock_layout)
+    mocker.patch("randovania.server.database.MultiplayerSession._get_layout_description",
+                 return_value=mock_layout)
 
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")

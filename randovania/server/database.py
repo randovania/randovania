@@ -151,13 +151,16 @@ class MultiplayerSession(BaseModel):
     def has_layout_description(self) -> bool:
         return self.layout_description_json is not None
 
+    def _get_layout_description(self, ordered_worlds: list[World]) -> LayoutDescription:
+        return _decode_layout_description(
+            self.layout_description_json,
+            tuple(world.preset for world in ordered_worlds)
+        )
+
     @property
     def layout_description(self) -> LayoutDescription | None:
         if self.layout_description_json is not None:
-            return _decode_layout_description(
-                self.layout_description_json,
-                tuple(world.preset for world in self.get_ordered_worlds())
-            )
+            return self._get_layout_description(self.get_ordered_worlds())
         else:
             return None
 
@@ -222,10 +225,8 @@ class MultiplayerSession(BaseModel):
         if not self.has_layout_description():
             return multiplayer_session.MultiplayerSessionActions(self.id, [])
 
-        # TODO: layout_description getter loads all worlds
-        description: LayoutDescription = self.layout_description
-
         worlds = self.get_ordered_worlds()
+        description: LayoutDescription = self._get_layout_description(worlds)
         world_by_id = {
             world.get_id(): world
             for world in worlds
@@ -250,8 +251,9 @@ class MultiplayerSession(BaseModel):
             self.id,
             [
                 _describe_action(action)
-                for action in WorldAction.select().where(WorldAction.session == self
-                                                         ).order_by(WorldAction.time.asc())
+                for action in WorldAction.select().where(
+                    WorldAction.session == self
+                ).order_by(WorldAction.time.asc())
             ],
         )
 
@@ -389,6 +391,7 @@ class WorldUserAssociation(BaseModel):
 
     class Meta:
         primary_key = peewee.CompositeKey('world', 'user')
+        only_save_dirty = True
 
 
 class MultiplayerMembership(BaseModel):
