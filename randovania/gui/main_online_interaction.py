@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import asyncio
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from qasync import asyncSlot
@@ -6,13 +9,15 @@ from qasync import asyncSlot
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.online_game_list_dialog import OnlineGameListDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
-from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, wait_dialog
-from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
-from randovania.gui.lib.window_manager import WindowManager
-from randovania.interface_common.options import Options
-from randovania.interface_common.preset_manager import PresetManager
+from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH
+
+if TYPE_CHECKING:
+    from randovania.gui.generated.main_window_ui import Ui_MainWindow
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.options import Options
+    from randovania.interface_common.preset_manager import PresetManager
 
 
 class OnlineInteractions(QtWidgets.QWidget):

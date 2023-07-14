@@ -1,25 +1,28 @@
-import os
-from typing import Iterator
+from __future__ import annotations
 
-from randovania.exporter import pickup_exporter, item_names
+from typing import TYPE_CHECKING
+
+from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
-from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.area import Area
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources
-from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
+    from randovania.game_description.resources.resource_info import ResourceCollection
+    from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 
 _ALTERNATIVE_MODELS = {
     "Nothing": ["itemsphere"],
@@ -57,15 +60,15 @@ def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
         yield {"item_id": item_id, "quantity": quantity}
 
 
-def get_resources_for_details(detail: ExportedPickupDetails) -> list[list[dict]]:
-    pickup = detail.original_pickup
+def get_resources_for_details(pickup: PickupEntry, conditional_resources: list[ConditionalResources],
+                              other_player: bool) -> list[list[dict]]:
     resources = [
         list(convert_conditional_resource(conditional_resource))
-        for conditional_resource in detail.conditional_resources
+        for conditional_resource in conditional_resources
     ]
 
     # don't add more resources for multiworld items
-    if detail.other_player:
+    if other_player:
         return resources
 
     if pickup.resource_lock is not None and not pickup.respects_lock and not pickup.unlocks_resource:
@@ -115,20 +118,11 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         result.extend(items)
         return result
 
-    def _node_for(self, identifier: AreaIdentifier | NodeIdentifier) -> Node:
-        if isinstance(identifier, NodeIdentifier):
-            return self.game.region_list.node_by_identifier(identifier)
-        else:
-            area = self.game.region_list.area_by_area_location(identifier)
-            node = area.node_with_name(area.default_node)
-            assert node is not None
-            return node
-
     def _key_error_for_node(self, node: Node, err: KeyError):
         return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has no extra {err}")
 
     def _key_error_for_start_node(self, node: Node):
-        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has neither a " +
+        return KeyError(f"{self.game.region_list.node_name(node, with_region=True)} has neither a "
                         "start_point_actor_name nor the area has a collision_camera_name for a custom start point")
 
     def _get_or_create_spawn_point(self, node: Node, level_name: str):
@@ -157,7 +151,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _start_point_ref_for(self, node: Node) -> dict:
         region = self.game.region_list.nodes_to_region(node)
-        level_name: str = os.path.splitext(os.path.split(region.extra["asset_id"])[1])[0]
+        level_name: str = region.extra["scenario_id"]
 
         if "start_point_actor_name" in node.extra:
             return {
@@ -172,7 +166,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _level_name_for(self, node: Node) -> str:
         region = self.game.region_list.nodes_to_region(node)
-        return os.path.splitext(os.path.split(region.extra["asset_id"])[1])[0]
+        return region.extra["scenario_id"]
 
     def _teleporter_ref_for(self, node: Node, actor_key: str = "actor_name") -> dict:
         try:
@@ -198,22 +192,34 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         # target.
 
         alt_model = _ALTERNATIVE_MODELS.get(detail.model.name, [detail.model.name])
+        model_names = alt_model
 
-        if detail.model.game != RandovaniaGame.METROID_DREAD or alt_model[0] == "itemsphere":
+        if detail.other_player:
+            if detail.model.game != RandovaniaGame.METROID_DREAD:
+                base_icon = "unknown"
+                model_names = ["itemsphere"]
+            else:
+                base_icon = detail.model.name
+
             map_icon = {
                 # TODO: more specific icons for pickups in other games
+                "custom_icon": {
+                    "label": detail.name.upper(),
+                    "base_icon": base_icon
+                }
+            }
+        elif alt_model[0] == "itemsphere":
+            map_icon = {
                 "custom_icon": {
                     "label": detail.original_pickup.name.upper(),
                 }
             }
-            model_names = ["itemsphere"]
         else:
             map_icon = {
                 "icon_id": detail.model.name
             }
-            model_names = alt_model
 
-        resources = get_resources_for_details(detail)
+        resources = get_resources_for_details(detail.original_pickup, detail.conditional_resources, detail.other_player)
 
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
@@ -323,7 +329,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 return cc_name, "Burenia Main Hub"
             if cc_name == "collision_camera_023_B":
                 return "collision_camera_023", area_name
-            
+
         if scenario_name == "s050_forest":
             if cc_name == "collision_camera_024":
                 return cc_name, "Golzuna Tower"
@@ -335,7 +341,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         if scenario_name == "s070_basesanc":
             if cc_name == "collision_camera_038_A":
                 return "collision_camera_038", area.name
-            
+
         return cc_name, area.name
 
     def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
@@ -430,14 +436,15 @@ class DreadPatchDataFactory(BasePatchDataFactory):
     def _tilegroup_patches(self):
         return [
             # beam blocks -> speedboost blocks in Artaria EMMI zone Speed Booster puzzle to prevent softlock
-            dict(
-                actor=dict(scenario="s010_cave",layer="breakables",actor="breakabletilegroup_060"),
-                tiletype="SPEEDBOOST"
-            )
+            {
+                "actor": {"scenario": "s010_cave","layer": "breakables","actor": "breakabletilegroup_060"},
+                "tiletype": "SPEEDBOOST"
+            }
         ]
 
     def create_data(self) -> dict:
-        starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
+        starting_location_node = self.game.region_list.node_by_identifier(self.patches.starting_location)
+        starting_location = self._start_point_ref_for(starting_location_node)
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = [self._starting_inventory_text()]
 
@@ -467,20 +474,14 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 for pickup_item in pickup_list
                 if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
-            "elevators": [
-                {
-                    "teleporter": self._teleporter_ref_for(source),
-                    "destination": self._start_point_ref_for(self._node_for(target)),
-                }
-                for source, target in self.patches.all_elevator_connections()
-            ],
+            "elevators": [],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler(),
             "cosmetic_patches": self._cosmetic_patch_data(),
             "energy_per_tank": energy_per_tank,
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
-            "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker,
+            "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker or self.players_config.is_multiworld,
             "constant_environment_damage": {
                 "heat": self.configuration.constant_heat_damage,
                 "cold": self.configuration.constant_cold_damage,

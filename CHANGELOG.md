@@ -5,7 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.0.1] - 2023-07-??
+## [6.X.X] - 2023-08-??
+
+- Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
+- Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
+- Changed: Text prompts now default to accepting when pressing enter.
+- Fixed: The generation order for multiworld session now correctly handles any kind of names.
+- Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
+- Fixed: Import rdvgames for games that uses certain features, like Sky Temple Keys on Bosses or Metroid DNA in Dread, now works properly.
+- Fixed: Session Browser now properly sorts by creation date and user count. It also now properly defaults to showing recent sessions first.
+- Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
+- Fixed: Sorting the session history and audit log now works properly.
+
+### Metroid Dread
+
+- **Major** - Added: Multiworld support for Dread.
+- Changed: Ryujinx (Legacy) is disabled when auto-tracker support is on, or in a multiworld.
+- Fixed: Dairon - Navigation Station North can no longer be assigned a hint, which would then be replaced with DNA Hints.
+- Added: A new auto-tracker layout featuring progressive items.
+
+#### Logic Database
+
+- Added: Slide from right to left in Cataris - Total Recharge Station South.
+- Added: Grapple Movement to get from Lower Door to Wide Beam Block Room to Upper Door in Artaria - EMMI Zone Hub.
+- Changed: Make it possible to get to the Diffusion Beam location without Morph Ball.
+- Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
+- Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
+- Removed: In Cataris - Green EMMI Introduction, the advanced Pseudo Wave Beam to break the blob from below is removed.
+
+### Metroid Prime 2: Echoes
+
+- Added: Tracker layout "Debug Info", which also shows details useful for investigating errors.
+
+## [6.0.1] - 2023-07-04
 
 - Added: Option for disabling crash reporting and monitoring.
 - Added: In multiworld sessions, you're prevented from selecting a preset that is incompatible with multiworld.
@@ -15,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Importing permalinks and spoilers in multiworld no longer fails.
 - Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
 - Fixed: Pickups providing negative resources can now be sent in multiworld games.
-- Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words. 
+- Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words.
 - Fixed: In multiworld sessions, the copy permalink button is properly disabled before a game is available.
 
 ## [6.0.0] - 2023-07-03
@@ -136,12 +168,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Fixed: Re-Added Vanilla Method to access Storage C to logic.
+- Changed: Movement trick level for reaching the door to Security Station B from Bioenergy Production with a NSJ Screw jump extension from Advanced to Beginner.
+- Changed: Combat/Scan Dash trick level for reaching the door to Security Station B from Bioenergy Production with a Scan Dash from Expert to Intermediate.
 - Added: 142 videos to the logic database
 - Added: Method to climb Forgotten Bridge with Jump Off Enemy (Advanced)
 - Added: Scan Dash to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash (Intermediate)
 - Added: Method to collect the pickup in Reactor Core using the top Rezbit, Bombs, Bomb Space Jump (Advanced), Standable Terrain (Advanced), Movement (Advanced), and Jump Off Enemies (Expert).
 - Added: Method to reach the top cannon in Sanctuary Entrance using Bombs, Space Jump Boots, Bomb Space Jump (Advanced), and Standable Terrain (Advanced).
 - Added: Method to collect the pickup in Abandoned Worksite using just Screw Attack, and Screw Attack into Tunnels/Openings (Advanced).
+- Added: Method to collect the pickup in Bioenergy Production using Boost Ball, Spider Ball, Screw Attack, and Movement (Advanced).
 
 ## [5.8.0] - 2023-06-05
 

@@ -1,41 +1,42 @@
+from __future__ import annotations
+
 import dataclasses
 import functools
 from random import Random
+from typing import TYPE_CHECKING
 
 import pytest
 
-from randovania.game_description import derived_nodes, default_database
+from randovania.game_description import default_database, derived_nodes
+from randovania.game_description.db.area import Area
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.db.dock import DockWeaknessDatabase
+from randovania.game_description.db.node import GenericNode, Node
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.region import Region
+from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock import DockWeaknessDatabase
-from randovania.game_description.db.node import GenericNode, Node
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.db.region import Region
-from randovania.game_description.db.region_list import RegionList
 from randovania.games.game import RandovaniaGame
 from randovania.generator import reach_lib
-from randovania.generator.generator_reach import (
-    GeneratorReach
-)
-from randovania.generator.pickup_pool import pool_creator
 from randovania.generator.old_generator_reach import OldGeneratorReach
-from randovania.generator.reach_lib import (
-    advance_reach_with_possible_unsafe_resources
-)
+from randovania.generator.pickup_pool import pool_creator
+from randovania.generator.reach_lib import advance_reach_with_possible_unsafe_resources
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.layout.preset import Preset
-from randovania.resolver.state import State, add_pickup_to_state, StateGameData
+from randovania.resolver.state import State, StateGameData, add_pickup_to_state
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.generator.generator_reach import GeneratorReach
+    from randovania.layout.preset import Preset
 
 
 def run_bootstrap(preset: Preset, include_tricks: set[tuple[str, LayoutTrickLevel]]):

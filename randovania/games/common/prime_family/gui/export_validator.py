@@ -1,9 +1,14 @@
+from __future__ import annotations
+
 import logging
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import nod
 
 from randovania.gui.dialog.game_export_dialog import is_file_validator
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 def discover_game(iso_path: Path) -> tuple[str, str] | None:

@@ -1,11 +1,13 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 
 
 @pytest.fixture(

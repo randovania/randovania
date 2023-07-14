@@ -1,20 +1,26 @@
-from typing import Callable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.exporter.hints.determiner import Determiner
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.game_description import node_search
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintLocationPrecision, RelativeDataArea, HintRelativeAreaName
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.area import Area
-from randovania.games.game import RandovaniaGame
+from randovania.game_description.hint import Hint, HintLocationPrecision, HintRelativeAreaName, RelativeDataArea
 from randovania.layout import filtered_database
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.games.game import RandovaniaGame
 
 
 class LocationFormatter:
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 class TemplatedFormatter(LocationFormatter):
@@ -56,8 +62,10 @@ class RelativeFormatter(LocationFormatter):
 
     def _calculate_distance(self, source_location: PickupIndex, target: Area) -> int:
         source = self.region_list.node_from_pickup_index(source_location)
-        return node_search.distances_to_node(self.region_list, source,
-                                             patches=self.patches, ignore_elevators=False)[target]
+        dock_types_to_ignore = []
+
+        return node_search.distances_to_node(self.region_list, source, dock_types_to_ignore,
+                                             patches=self.patches)[target]
 
     def relative_format(self, pick_hint: PickupHint,
                         hint: Hint,
@@ -77,7 +85,7 @@ class RelativeFormatter(LocationFormatter):
                 f" can be found {colored_dist} away from {other_name}.")
 
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 class RelativeAreaFormatter(RelativeFormatter):

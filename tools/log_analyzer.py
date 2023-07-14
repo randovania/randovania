@@ -1,17 +1,25 @@
+from __future__ import annotations
+
 import argparse
 import collections
 import copy
 import csv
 import json
 import math
-import os
 import re
 import statistics
 from pathlib import Path
 from statistics import stdev
-from typing import Dict, Tuple, Optional, List, Iterable, Set
+from typing import TYPE_CHECKING
 
 from randovania.layout.layout_description import LayoutDescription
+from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+# This is not a serious file
+# ruff: noqa: C901
 
 NON_MAJOR_PROGRESSION = [
     "Missile Expansion",
@@ -82,8 +90,8 @@ def _filter_item_name(name: str) -> str:
 
 
 def accumulate_results(game_modifications: dict,
-                       items: Dict[str, Dict[str, int]],
-                       locations: Dict[str, Dict[str, int]],
+                       items: dict[str, dict[str, int]],
+                       locations: dict[str, dict[str, int]],
                        major_progression_items_only: bool,
                        ):
     for world_name, world_data in game_modifications["locations"].items():
@@ -100,7 +108,7 @@ def sort_by_count(d: dict[str, int]) -> dict[str, int]:
     return dict(sorted(d.items(), key=lambda t: t[1], reverse=True))
 
 
-def calculate_pickup_count(items: Dict[str, Dict[str, int]]) -> Dict[str, int]:
+def calculate_pickup_count(items: dict[str, dict[str, int]]) -> dict[str, int]:
     return {
         name: sum(data.values())
         for name, data in items.items()
@@ -109,15 +117,12 @@ def calculate_pickup_count(items: Dict[str, Dict[str, int]]) -> Dict[str, int]:
 
 def sort_by_contents(data: dict) -> dict:
     return {
-        item: {
-            location: count
-            for location, count in sorted(data[item].items(), key=lambda t: t[1], reverse=True)
-        }
+        item: dict(sorted(data[item].items(), key=lambda t: t[1], reverse=True))
         for item in sorted(data.keys())
     }
 
 
-def calculate_stddev(pickup_count: Dict[str, int], item_counts: Dict[str, float]) -> Optional[float]:
+def calculate_stddev(pickup_count: dict[str, int], item_counts: dict[str, float]) -> float | None:
     balanced_freq = {
         item: count / pickup_count[item]
         for item, count in item_counts.items()
@@ -134,8 +139,8 @@ def first_key(d: dict):
         return key
 
 
-def get_items_order(all_items: Iterable[str], item_order: List[str], major_progression_items_only: bool) -> Tuple[
-    Dict[str, int], Set[str], Set[str], Set[str]]:
+def get_items_order(all_items: Iterable[str], item_order: list[str], major_progression_items_only: bool) -> tuple[
+    dict[str, int], set[str], set[str], set[str]]:
     locations = set()
     no_key = set()
     progression_items = set()
@@ -170,7 +175,7 @@ def _region_only_starting_loc(locations: dict[str, int]) -> dict[str, int]:
     return result
 
 
-def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_percentage: bool,
+def create_report(seeds_dir: Path, output_file: Path, csv_dir: Path | None, use_percentage: bool,
                   major_progression_items_only: bool):
     def item_creator():
         return collections.defaultdict(int)
@@ -187,8 +192,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     progression_items = None
     starting_locations = []
 
-    seed_files = list(Path(seeds_dir).glob(f"**/*.{LayoutDescription.file_extension()}"))
-    seed_files.extend(Path(seeds_dir).glob("**/*.json"))
+    seed_files = list(seeds_dir.glob(f"**/*.{LayoutDescription.file_extension()}"))
+    seed_files.extend(seeds_dir.glob("**/*.json"))
     for seed in iterate_with_log(seed_files):
         try:
             seed_data = read_json(seed)
@@ -230,8 +235,8 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         for location in locations.keys()
     }
 
-    regions = dict()
-    region_totals = dict()
+    regions = {}
+    region_totals = {}
 
     total_progression_item_count = 0
     for location in locations:
@@ -252,7 +257,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         regions[region] += count
 
     # probability that any given location in this region contains progression
-    regions_weighted = dict()
+    regions_weighted = {}
     for region in regions:
         regions_weighted[region] = (regions[region] / seed_count) / region_totals[region]
 
@@ -262,10 +267,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     location_progression_count = sort_by_count(progression_count_for_location)
     location_progression_no_key_count = sort_by_count(progression_no_key_count_for_location)
 
-    stddev_by_location = {
-        location: stddev
-        for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1] or math.inf, reverse=True)
-    }
+    stddev_by_location = dict(sorted(stddev_by_location.items(), key=lambda t: t[1] or math.inf, reverse=True))
 
     # Average standardized deviances for all locations
     accumulated_stddev = 0
@@ -366,7 +368,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         locations[location]["Progression Probability"] = location_progression_no_key_count[location]
 
     if csv_dir is not None:
-        os.makedirs(csv_dir, exist_ok=True)
+        csv_dir.mkdir(parents=True, exist_ok=True)
         for field in "items", "locations", "regions":
             data = final_results[field]
 
@@ -380,10 +382,10 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
             for potential_values in data.values():
                 possible_columns |= set(potential_values.keys())
 
-            possible_columns = list(sorted(possible_columns))
+            possible_columns = sorted(possible_columns)
             possible_columns.insert(0, "row_name")
 
-            with open(os.path.join(csv_dir, field + ".csv"), "w", newline='') as csv_file:
+            with csv_dir.joinpath(field + ".csv").open("w", newline='') as csv_file:
                 writer = csv.DictWriter(csv_file, fieldnames=possible_columns)
                 writer.writeheader()
 
@@ -392,15 +394,14 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
                     row_data["row_name"] = column
                     writer.writerow(row_data)
 
-    with open(output_file, "w") as output:
-        json.dump(final_results, output, indent=4, separators=(',', ': '))
+    json_lib.write_path(output_file, final_results)
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--csv-dir")
-    parser.add_argument("seeds_dir")
-    parser.add_argument("output_file")
+    parser.add_argument("--csv-dir", type=Path)
+    parser.add_argument("seeds_dir", type=Path)
+    parser.add_argument("output_file", type=Path)
     parser.add_argument('--use-percentage', action='store_true')
     parser.add_argument('--major-progression-only', action='store_true')
     args = parser.parse_args()

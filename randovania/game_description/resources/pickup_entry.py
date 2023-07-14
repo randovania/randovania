@@ -1,15 +1,23 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import Iterator
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.resource_info import (
-    ResourceGainTuple, ResourceGain, ResourceQuantity,
-    ResourceCollection,
-)
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.pickup.pickup_category import PickupCategory
+    from randovania.game_description.resources.location_category import LocationCategory
+    from randovania.game_description.resources.resource_info import (
+        ResourceCollection,
+        ResourceGain,
+        ResourceGainTuple,
+        ResourceQuantity,
+    )
 
 
 @dataclass(frozen=True)
@@ -66,7 +74,7 @@ class PickupEntry:
     broad_category: PickupCategory
     progression: ResourceGainTuple
     generator_params: PickupGeneratorParams
-    extra_resources: ResourceGainTuple = tuple()
+    extra_resources: ResourceGainTuple = ()
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True
@@ -123,7 +131,7 @@ class PickupEntry:
         if self.unlocks_resource and self.resource_lock is not None:
             return (self.resource_lock.unlock_conversion(),)
         else:
-            return tuple()
+            return ()
 
     def conditional_for_resources(self, current_resources: ResourceCollection) -> ConditionalResources:
         last_conditional: ConditionalResources | None = None

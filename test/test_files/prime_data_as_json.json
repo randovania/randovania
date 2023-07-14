@@ -1,5 +1,5 @@
 {
-    "schema_version": 19,
+    "schema_version": 21,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -147,16 +147,13 @@
                         }
                     }
                 },
-                "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
-                }
+                "dock_rando": null
             },
             "portal": {
                 "name": "Portal",
-                "extra": {},
+                "extra": {
+                    "ignore_for_hints": true
+                },
                 "items": {
                     "Scan Portal": {
                         "extra": {},
@@ -178,23 +175,13 @@
                         "lock": null
                     }
                 },
-                "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
-                }
+                "dock_rando": null
             },
             "morph_ball": {
                 "name": "Morph Ball Door",
                 "extra": {},
                 "items": {},
-                "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
-                }
+                "dock_rando": null
             },
             "other": {
                 "name": "Other",
@@ -223,12 +210,28 @@
                         "lock": null
                     }
                 },
-                "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
-                }
+                "dock_rando": null
+            },
+            "teleporter": {
+                "name": "Teleporter",
+                "extra": {
+                    "is_teleporter": true,
+                    "ignore_for_hints": true
+                },
+                "items": {
+                    "Teleporter": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
             }
         },
         "default_weakness": {

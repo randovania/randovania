@@ -1,12 +1,18 @@
-from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.generator.pickup_pool import PoolResults
 from randovania.generator.pickup_pool.pickup_creator import create_standard_pickup
-from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
-from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
+
+if TYPE_CHECKING:
+    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
+    from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 
 
 def _find_ammo_for(ammo_names: tuple[str, ...],

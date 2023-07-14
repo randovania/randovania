@@ -1,10 +1,16 @@
-from typing import Callable, TypeVar
+from __future__ import annotations
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.base import Requirement
+from typing import TYPE_CHECKING, TypeVar
+
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.layout.base.trick_level import LayoutTrickLevel
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 T = TypeVar("T")
 

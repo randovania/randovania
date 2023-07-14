@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import json
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 
@@ -10,6 +12,9 @@ from randovania.games.prime2.layout.translator_configuration import LayoutTransl
 from randovania.gui import tracker_window
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.layout.versioned_preset import VersionedPreset
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 @pytest.fixture(params=[{},
@@ -203,6 +208,15 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
                             'node': 'Elevator to Temple Grounds - Temple Transport B',
                             'region': 'Great Temple'}},
             {'data': None,
+             'teleporter': {'area': 'Aerie',
+                            'node': 'Elevator to Sanctuary Fortress - Aerie '
+                                    'Transport Station',
+                            'region': 'Sanctuary Fortress'}},
+            {'data': None,
+             'teleporter': {'area': 'Aerie Transport Station',
+                            'node': 'Elevator to Sanctuary Fortress - Aerie',
+                            'region': 'Sanctuary Fortress'}},
+            {'data': None,
              'teleporter': {'area': 'Transport to Temple Grounds',
                             'node': 'Elevator to Temple Grounds - Transport to Sanctuary Fortress',
                             'region': 'Sanctuary Fortress'}},
@@ -214,6 +228,16 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
              'teleporter': {'area': 'Transport to Torvus Bog',
                             'node': 'Elevator to Torvus Bog - Transport to Sanctuary Fortress',
                             'region': 'Sanctuary Fortress'}},
+            {'data': None,
+             'teleporter': {'area': 'Sky Temple Energy Controller',
+                            'node': 'Teleport to Temple Grounds - Sky '
+                                    'Temple Gateway',
+                            'region': 'Great Temple'}},
+            {'data': None,
+             'teleporter': {'area': 'Sky Temple Gateway',
+                            'node': 'Teleport to Great Temple - Sky Temple '
+                                    'Energy Controller',
+                            'region': 'Temple Grounds'}},
             {'data': None,
              'teleporter': {'area': 'Transport to Agon Wastes',
                             'node': 'Elevator to Agon Wastes - Transport to Temple Grounds',

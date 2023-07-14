@@ -82,7 +82,7 @@ def _create_session_with_discord_token(sio: ServerApp, sid: str | None) -> User:
     if sio.enforce_role is not None:
         if not sio.enforce_role.verify_user(discord_user.id):
             logger().info("User %s is not authorized for connecting to the server", discord_user.name)
-            raise error.UserNotAuthorizedToUseServerError()
+            raise error.UserNotAuthorizedToUseServerError
 
     user = _create_user_from_discord(discord_user)
 
@@ -102,17 +102,17 @@ def start_discord_login_flow(sio: ServerApp):
 
 def _get_now():
     # For mocking in tests
-    return datetime.datetime.now(datetime.timezone.utc)
+    return datetime.datetime.now(datetime.UTC)
 
 
 def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
     if sio.guest_encrypt is None:
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
     try:
         login_request_bytes = sio.guest_encrypt.decrypt(encrypted_login_request)
     except cryptography.fernet.InvalidToken:
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
     try:
         login_request = json.loads(login_request_bytes.decode("utf-8"))
@@ -122,7 +122,7 @@ def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
         raise error.InvalidActionError(str(e))
 
     if _get_now() - date > datetime.timedelta(days=1):
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
     user: User = User.create(name=f"Guest: {name}")
 
@@ -151,7 +151,7 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, _old_session_
                     user=user,
                     name=session["rdv-access-token"],
                 )
-                access_token.last_used = datetime.datetime.now(datetime.timezone.utc)
+                access_token.last_used = datetime.datetime.now(datetime.UTC)
                 access_token.save()
 
                 result = _create_client_side_session_raw(sio, user)
@@ -170,12 +170,12 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, _old_session_
         sio.save_session({})
         logger().info("Client at %s was unable to restore session: (%s) %s",
                       sio.current_client_ip(), str(type(e)), str(e))
-        raise error.InvalidSessionError()
+        raise error.InvalidSessionError
 
     except Exception:
         sio.save_session({})
         logger().exception("Error decoding user session")
-        raise error.InvalidSessionError()
+        raise error.InvalidSessionError
 
 
 def logout(sio: ServerApp):
@@ -204,7 +204,14 @@ def browser_login_with_discord(sio: ServerApp):
 
 def browser_discord_login_callback(sio: ServerApp):
     try:
-        sio.discord.callback()
+        try:
+            sio.discord.callback()
+
+        except ValueError as v:
+            if v.args == ('not enough values to unpack (expected 2, got 1)',):
+                raise oauthlib.oauth2.rfc6749.errors.MismatchingStateError
+            else:
+                raise
 
         sid = flask.session.get("sid")
         user = _create_session_with_discord_token(sio, sid)
@@ -238,6 +245,14 @@ def browser_discord_login_callback(sio: ServerApp):
             "unable_to_login.html",
             error_message="You're not authorized to use this build.\nPlease check #dev-builds for more details.",
         ), 403
+
+    except oauthlib.oauth2.rfc6749.errors.MismatchingStateError:
+        return flask.render_template(
+            "unable_to_login.html",
+            error_message=(
+                "You must finish the login with the same browser that you started it with."
+            ),
+        ), 401
 
     except oauthlib.oauth2.rfc6749.errors.OAuth2Error as err:
         if isinstance(err, oauthlib.oauth2.rfc6749.errors.InvalidGrantError):

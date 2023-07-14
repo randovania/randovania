@@ -1,30 +1,39 @@
+from __future__ import annotations
+
 import dataclasses
 import logging
 import struct
 import uuid
+from typing import TYPE_CHECKING
 
+from open_prime_rando.dol_patching import all_prime_dol_patches
 from retro_data_structures.game_check import Game as RDSGame
 
-from ppc_asm import assembler
-from randovania.game_connection.connector.remote_connector import RemoteConnector, PickupEntryWithOwner, \
-    PlayerLocationEvent
+from randovania.game_connection.connector.remote_connector import (
+    PickupEntryWithOwner,
+    PlayerLocationEvent,
+    RemoteConnector,
+)
 from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.executor.memory_operation import (
-    MemoryOperationException, MemoryOperation, MemoryOperationExecutor
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
 )
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, InventoryItem, Inventory
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.item_resource_info import Inventory, InventoryItem, ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import (
-    ResourceCollection
-)
-from randovania.game_description.db.region import Region
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib.infinite_timer import InfiniteTimer
-from open_prime_rando.dol_patching import all_prime_dol_patches
+
+if TYPE_CHECKING:
+    from ppc_asm import assembler
+
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
 @dataclasses.dataclass(frozen=True)
@@ -58,7 +67,7 @@ class PrimeRemoteConnector(RemoteConnector):
         self.executor = executor
         self.version = version
         self.game = default_database.game_description_for(_RDS_TO_RDV_GAME[version.game])
-        self.remote_pickups = tuple()
+        self.remote_pickups = ()
 
         self._timer = InfiniteTimer(self.update, self._dt)
 
@@ -88,7 +97,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
     def _asset_id_format(self):
         """struct.unpack format string for decoding an asset id"""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def world_by_asset_id(self, asset_id: int) -> Region | None:
         for region in self.game.region_list.regions:
@@ -118,15 +127,15 @@ class PrimeRemoteConnector(RemoteConnector):
         return self.world_by_asset_id(asset_id)
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     async def _memory_op_for_items(self, items: list[ItemResourceInfo],
                                    ) -> list[MemoryOperation]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def multiworld_magic_item(self) -> ItemResourceInfo:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     async def get_inventory(self) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
@@ -256,7 +265,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory
                                   ) -> tuple[list[list[assembler.BaseInstruction]], str]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
         overhead_size = 6  # 2 bytes for an extra char to differentiate sizes

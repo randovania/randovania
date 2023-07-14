@@ -1,31 +1,42 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 from abc import ABC
+from collections.abc import Callable, Iterator
 from random import Random
-from typing import Iterator, Optional, Callable
+from typing import TYPE_CHECKING
 
 from randovania.game_description import node_search
-from randovania.game_description.game_description import GameDescription
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
-    Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision,
-    HintRelativeAreaName, RelativeDataArea, RelativeDataItem
+    Hint,
+    HintItemPrecision,
+    HintLocationPrecision,
+    HintRelativeAreaName,
+    HintType,
+    PrecisionPair,
+    RelativeDataArea,
+    RelativeDataItem,
 )
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.hint_node import HintNodeKind, HintNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import RegionList
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import PlayerState
-from randovania.generator.filler.runner import PlayerPool
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib import random_lib
 from randovania.resolver import debug
 
-HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Optional[Hint]]
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.generator.filler.runner import PlayerPool
+    from randovania.layout.base.base_configuration import BaseConfiguration
+
+HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Hint | None]
 
 
 def _not_empty(it: Iterator) -> bool:
@@ -79,13 +90,13 @@ class HintDistributor(ABC):
 
         return patches
 
-    async def get_guranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
+    async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         return []
 
     async def assign_guaranteed_indices_hints(self, patches: GamePatches, identifiers: list[NodeIdentifier],
                                               prefill: PreFillParams) -> GamePatches:
         # Specific Pickup/any HintNode
-        indices_with_hint = await self.get_guranteed_hints(patches, prefill)
+        indices_with_hint = await self.get_guaranteed_hints(patches, prefill)
         prefill.rng.shuffle(indices_with_hint)
 
         all_hint_identifiers = [identifier for identifier in identifiers if identifier not in patches.hints]
@@ -152,7 +163,7 @@ class HintDistributor(ABC):
         :param player_state:
         :return:
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
         return pickup.pickup_category.hinted_as_major
@@ -231,8 +242,8 @@ class HintDistributor(ABC):
                 raise UnableToGenerate("Not enough PickupNodes in the game to fill all hint locations.")
 
         # Get an stable order
-        ordered_possible_indices = list(sorted(possible_indices))
-        ordered_potential_hint_locations = list(sorted(potential_hint_locations))
+        ordered_possible_indices = sorted(possible_indices)
+        ordered_potential_hint_locations = sorted(potential_hint_locations)
 
         num_logbooks: dict[PickupIndex, int] = {
             index: sum(1 for indices in hint_initial_pickups.values() if index in indices)
@@ -284,7 +295,7 @@ class HintDistributor(ABC):
         })
 
     def precision_pair_weighted_list(self) -> list[PrecisionPair]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def add_relative_hint(self, region_list: RegionList,
                           patches: GamePatches,
@@ -302,7 +313,9 @@ class HintDistributor(ABC):
         """
         target_node = node_search.pickup_index_to_node(region_list, target)
         target_area = region_list.nodes_to_area(target_node)
-        distances = node_search.distances_to_node(region_list, target_node, patches=patches, cutoff=max_distance)
+        dock_types_to_ignore = patches.game.dock_weakness_database.all_ignore_hints_dock_types
+        distances = node_search.distances_to_node(region_list, target_node, dock_types_to_ignore,
+                                                  patches=patches, cutoff=max_distance)
 
         def _major_pickups(area: Area) -> Iterator[PickupIndex]:
             for index in area.pickup_indices:
@@ -354,7 +367,7 @@ class HintDistributor(ABC):
         return _wrapper
 
     def _get_relative_hint_providers(self) -> list[HintProvider]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def add_hints_precision(self,
                             player_state: PlayerState,

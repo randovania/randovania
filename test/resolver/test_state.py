@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import pytest
 
-from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.resolver import state
 from randovania.resolver.state import StateGameData
 
@@ -21,7 +23,7 @@ def _state_game_data(empty_patches) -> StateGameData:
 def test_collected_pickup_indices(state_game_data, empty_patches):
     # Setup
     db = state_game_data.resource_database
-    starting = state_game_data.region_list.resolve_teleporter_connection(empty_patches.game.starting_location)
+    starting = state_game_data.region_list.node_by_identifier(empty_patches.game.starting_location)
     pickup_nodes = [node for node in empty_patches.game.region_list.all_nodes
                     if isinstance(node, PickupNode)]
 
@@ -48,7 +50,7 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
 def test_add_pickup_to_state(state_game_data, empty_patches, generic_pickup_category, default_generator_params):
     # Starting State
     db = state_game_data.resource_database
-    starting_node = state_game_data.region_list.resolve_teleporter_connection(empty_patches.game.starting_location)
+    starting_node = state_game_data.region_list.node_by_identifier(empty_patches.game.starting_location)
     s = state.State(ResourceCollection(), (), 99, starting_node, empty_patches, None, state_game_data)
 
     resource_a = db.item[0]
@@ -75,7 +77,7 @@ def test_assign_pickup_to_starting_items(empty_patches, state_game_data, generic
                                          default_generator_params):
     # Setup
     db = state_game_data.resource_database
-    starting_node = state_game_data.region_list.resolve_teleporter_connection(empty_patches.game.starting_location)
+    starting_node = state_game_data.region_list.node_by_identifier(empty_patches.game.starting_location)
     starting = state.State(ResourceCollection(), (), 99, starting_node, empty_patches, None, state_game_data)
 
     resource_a = db.get_item("Ammo")

@@ -1,15 +1,21 @@
+from __future__ import annotations
+
 import os.path
 from pathlib import Path
-from typing import TypeVar, Callable
+from typing import TYPE_CHECKING, TypeVar
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox
 
-from randovania.exporter.game_exporter import GameExportParams
-from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import common_qt_lib
-from randovania.interface_common.options import Options
 from randovania.layout.layout_description import LayoutDescription
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.options import Options, PerGameOptions
 
 T = TypeVar("T")
 
@@ -49,13 +55,29 @@ class GameExportDialog(QtWidgets.QDialog):
         if (btn := _try_get_field(self, "cancel_button", QtWidgets.QPushButton)) is not None:
             btn.clicked.connect(self.reject)
 
+    @classmethod
+    def game_enum(cls) -> RandovaniaGame:
+        """The game associated with this class."""
+        raise NotImplementedError
+
+    @property
+    def auto_save_spoiler(self) -> bool:
+        raise NotImplementedError
+
+    def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
+        raise NotImplementedError
+
     def save_options(self):
-        """Ensure that the current state of the dialog is saved to options."""
-        raise NotImplementedError()
+        with self._options as options:
+            if self._has_spoiler:
+                options.auto_save_spoiler = self.auto_save_spoiler
+
+            per_game = options.options_for_game(self.game_enum())
+            options.set_options_for_game(self.game_enum(), self.update_per_game_options(per_game))
 
     def get_game_export_params(self) -> GameExportParams:
         """Get the export params defined by the user. It'll be sent over to the `GameExporter`."""
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 def _prompt_for_output_common(parent: QtWidgets.QWidget, suggested_name: str,
@@ -188,7 +210,7 @@ def output_input_intersection_validator(output_edit: QtWidgets.QLineEdit, input_
     output_path = output_path.absolute()
     input_path = input_path.absolute()
     try:
-        shared_root = Path(os.path.commonpath(([output_path, input_path])))
+        shared_root = Path(os.path.commonpath([output_path, input_path]))
     except ValueError:
         # Not in same drive
         return False

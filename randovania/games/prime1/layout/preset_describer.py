@@ -1,10 +1,17 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.games.prime1.layout.hint_configuration import PhazonSuitHintMode
-from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, LayoutCutsceneMode, RoomRandoMode
-from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode, PrimeConfiguration, RoomRandoMode
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
-    fill_template_strings_from_tree, message_for_required_mains,
+    fill_template_strings_from_tree,
+    message_for_required_mains,
 )
+
+if TYPE_CHECKING:
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.MAJOR: "Major cutscene removal",
@@ -50,7 +57,7 @@ class PrimePresetDescriber(GamePresetDescriber):
             elif rand_range[0] > rand_range[1]:
                 rand_range = (rand_range[1], rand_range[0])
 
-            return "Random {0} within range {1} - {2}".format(attribute, rand_range[0], rand_range[1])
+            return f"Random {attribute} within range {rand_range[0]} - {rand_range[1]}"
 
         def different_xyz_randomization(diff_xyz):
             if enemy_rando_range_scale is None:

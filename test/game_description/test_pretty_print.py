@@ -1,9 +1,11 @@
-from unittest.mock import patch, MagicMock
+from __future__ import annotations
+
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 import randovania
-from randovania.game_description import pretty_print, default_database
+from randovania.game_description import default_database, pretty_print
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate

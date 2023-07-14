@@ -1,15 +1,20 @@
+from __future__ import annotations
+
 from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.pickup.pickup_database import PickupDatabase
-from randovania.games.game import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-from randovania.layout.layout_description import LayoutDescription
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+    from randovania.layout.layout_description import LayoutDescription
 
 
 class BasePatchDataFactory:
@@ -37,7 +42,7 @@ class BasePatchDataFactory:
         self.game = filtered_database.game_description_for_layout(self.configuration)
 
     def game_enum(self) -> RandovaniaGame:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def create_data(self) -> dict:
-        raise NotImplementedError()
+        raise NotImplementedError

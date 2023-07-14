@@ -1,8 +1,13 @@
-from unittest.mock import MagicMock
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 import pytest
 
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
+
+if TYPE_CHECKING:
+    from unittest.mock import MagicMock
 
 
 @pytest.mark.parametrize("valid", [False, True])

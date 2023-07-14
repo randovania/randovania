@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import json
 from typing import Any
 
 import construct
-from construct import CString, Rebuild, Flag, If, PrefixedArray, VarInt, Struct
+from construct import CString, Flag, If, PrefixedArray, Rebuild, Struct, VarInt
 
 String = CString("utf-8")
 

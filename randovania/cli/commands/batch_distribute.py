@@ -5,8 +5,7 @@ import functools
 import math
 import time
 import typing
-from argparse import ArgumentParser
-from concurrent.futures import ProcessPoolExecutor, Future, CancelledError
+from concurrent.futures import CancelledError, Future, ProcessPoolExecutor
 from pathlib import Path
 
 from randovania.cli import cli_lib
@@ -14,6 +13,8 @@ from randovania.interface_common import sleep_inhibitor
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
 if typing.TYPE_CHECKING:
+    from argparse import ArgumentParser
+
     from randovania.layout.generator_parameters import GeneratorParameters
 
 

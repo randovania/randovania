@@ -1,14 +1,20 @@
-from typing import Iterator
+from __future__ import annotations
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.resource_node import ResourceNode
+from typing import TYPE_CHECKING
+
 from randovania.generator.filler.filler_library import UncollectedState, find_node_with_resource
-from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver import debug
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.generator.generator_reach import GeneratorReach
 
 
 def debug_print_collect_event(event: ResourceNode, game: GameDescription):

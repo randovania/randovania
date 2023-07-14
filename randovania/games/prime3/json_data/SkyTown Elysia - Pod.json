@@ -48,7 +48,7 @@
                     }
                 },
                 "Skytram to Skytown - Skytram West": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -60,12 +60,17 @@
                         "teleporter_instance_id": 131197
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "SkyTown, Elysia - Main",
-                        "area": "Skytram West"
+                        "area": "Skytram West",
+                        "node": "Door to Security Tube"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Concourse Access A": {
                             "type": "and",

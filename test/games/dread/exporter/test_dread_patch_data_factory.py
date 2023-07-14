@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import dataclasses
-from unittest.mock import PropertyMock, MagicMock
-from pathlib import Path
+from typing import TYPE_CHECKING
+from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 
@@ -8,18 +10,23 @@ from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.dread.exporter.patch_data_factory import DreadPatchDataFactory, DreadAcquiredMemo, \
-    get_resources_for_details
+from randovania.games.dread.exporter.patch_data_factory import (
+    DreadAcquiredMemo,
+    DreadPatchDataFactory,
+    get_resources_for_details,
+)
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.ammo_pickup_state import AmmoPickupState
-from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset import Preset
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from randovania.layout.preset import Preset
 
 
 @pytest.mark.parametrize(
@@ -51,7 +58,7 @@ def test_create_patch_data(test_files_dir, rdvgame_filename,
     expected_data = json_lib.read_path(expected_results_path)
 
     # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_path, data)
+    # json_lib.write_path(expected_results_path, data); assert False
 
     assert data == expected_data
 
@@ -88,7 +95,7 @@ def test_pickup_data_for_pb_expansion(locked, dread_game_description, preset_man
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = get_resources_for_details(details)
+    result = get_resources_for_details(details.original_pickup, details.conditional_resources, details.other_player)
 
     # Assert
     assert result == [
@@ -119,7 +126,7 @@ def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager)
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = get_resources_for_details(details)
+    result = get_resources_for_details(details.original_pickup, details.conditional_resources, details.other_player)
 
     # Assert
     assert result == [
@@ -143,7 +150,7 @@ def test_pickup_data_for_recolored_missiles(dread_game_description, preset_manag
     # Setup
     pickup = pickup_creator.create_ammo_pickup(pickup_database.ammo_pickups["Missile Tank"],
                                                (2,),
-                                               False, 
+                                               False,
                                                resource_database=resource_db)
 
     factory = DreadPatchDataFactory(description, PlayersConfiguration(0, {0: "Dread"}), cosmetics)
@@ -299,5 +306,8 @@ def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardo
 
     # Expected Result
     expected_data = test_files_dir.read_json("patcher_data", "dread", "custom_start.json")
+
+    # Update the file
+    # json_lib.write_path(test_files_dir.joinpath("patcher_data", "dread", "custom_start.json"), data); assert False
 
     assert data == expected_data

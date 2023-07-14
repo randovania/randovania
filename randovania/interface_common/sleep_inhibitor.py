@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import logging
 import platform
 from abc import abstractmethod
-
 
 # Reference for this module:
 # https://github.com/h3llrais3r/Deluge-PreventSuspendPlus/blob/master/preventsuspendplus/core.py
@@ -22,7 +23,6 @@ class InhibitorSource:
         """
         Cancels a previous call to `inhibit`.
         """
-        pass
 
 
 class WindowsInhibitorSource(InhibitorSource):

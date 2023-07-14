@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -8,9 +10,9 @@ class BaseCosmeticPatches(JsonDataclass):
     pass
 
     @classmethod
-    def default(cls) -> "BaseCosmeticPatches":
+    def default(cls) -> BaseCosmeticPatches:
         return cls()
 
     @classmethod
     def game(cls):
-        raise NotImplementedError()
+        raise NotImplementedError

@@ -1,5 +1,5 @@
 {
-    "schema_version": 19,
+    "schema_version": 21,
     "game": "samus_returns",
     "resource_database": {
         "items": {
@@ -2008,12 +2008,7 @@
                         }
                     }
                 },
-                "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
-                }
+                "dock_rando": null
             },
             "tunnel": {
                 "name": "Tunnel",
@@ -2041,12 +2036,7 @@
                         "lock": null
                     }
                 },
-                "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
-                }
+                "dock_rando": null
             },
             "other": {
                 "name": "Dock",
@@ -2086,12 +2076,28 @@
                         "lock": null
                     }
                 },
-                "dock_rando": {
-                    "unlocked": null,
-                    "locked": null,
-                    "change_from": [],
-                    "change_to": []
-                }
+                "dock_rando": null
+            },
+            "teleporter": {
+                "name": "Teleporter",
+                "extra": {
+                    "is_teleporter": true,
+                    "ignore_for_hints": true
+                },
+                "items": {
+                    "Teleporter": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
             }
         },
         "default_weakness": {

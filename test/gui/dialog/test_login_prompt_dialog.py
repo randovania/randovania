@@ -1,10 +1,14 @@
-from unittest.mock import MagicMock, AsyncMock
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-import pytest_mock
-from PySide6 import QtWidgets
 
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 @pytest.fixture(name="prompt")

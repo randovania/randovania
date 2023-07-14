@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 class PickupIndex:
     __slots__ = ("_index",)
     _index: int
@@ -13,7 +16,7 @@ class PickupIndex:
     def __init__(self, index: int):
         self._index = index
 
-    def __lt__(self, other: "PickupIndex") -> bool:
+    def __lt__(self, other: PickupIndex) -> bool:
         return self._index < other._index
 
     def __repr__(self):

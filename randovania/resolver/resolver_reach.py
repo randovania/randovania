@@ -1,20 +1,25 @@
+from __future__ import annotations
+
 import itertools
 import math
 import typing
 from collections import defaultdict
-from typing import Iterator
 
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
 from randovania.game_description.resources import fast_as_set
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.resolver import debug
-from randovania.resolver.logic import Logic
-from randovania.resolver.state import State
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.resolver.logic import Logic
+    from randovania.resolver.state import State
 
 
 def _build_satisfiable_requirements(
@@ -78,7 +83,7 @@ class ResolverReach:
     @classmethod
     def calculate_reach(cls,
                         logic: Logic,
-                        initial_state: State) -> "ResolverReach":
+                        initial_state: State) -> ResolverReach:
 
         all_nodes = logic.game.region_list.all_nodes
         checked_nodes: dict[int, int] = {}

@@ -2,12 +2,16 @@ from __future__ import annotations
 
 import dataclasses
 import enum
-from typing import Iterator
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import default_database
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.bitpacking.bitpacking import BitPackDecoder
+    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 
 ENERGY_TANK_MAXIMUM_COUNT = 16
 DEFAULT_MAXIMUM_SHUFFLED = (2, 10, 99)
@@ -46,7 +50,7 @@ class StandardPickupState:
     num_shuffled_pickups: int = 0
     num_included_in_starting_pickups: int = 0
     priority: float = 1.0
-    included_ammo: tuple[int, ...] = tuple()
+    included_ammo: tuple[int, ...] = ()
 
     def check_consistency(self, pickup: StandardPickupDefinition):
         db = default_database.resource_database_for(pickup.game)

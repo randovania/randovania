@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 from random import Random
+from typing import TYPE_CHECKING
 
 from tsc_utils.flags import set_flag
 from tsc_utils.numbers import num_to_tsc_value
@@ -7,22 +10,25 @@ from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
-from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
-from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
 
+if TYPE_CHECKING:
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
+    from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+
+# ruff: noqa: C901
 
 class CSPatchDataFactory(BasePatchDataFactory):
     cosmetic_patches: CSCosmeticPatches
@@ -46,7 +52,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
             PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
             USELESS_PICKUP_CATEGORY,
             USELESS_PICKUP_CATEGORY,
-            tuple(),
+            (),
             generator_params=PickupGeneratorParams(
                 preferred_location_category=LocationCategory.MAJOR,  # TODO
             ),
@@ -72,7 +78,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
                 pickup_script = nothing_item_script
             else:
                 pickup_script = self.pickup_db.get_pickup_with_name(target.pickup.name).extra.get("script",
-                                                                                              nothing_item_script)
+                                                                                                  nothing_item_script)
             pickups[mapname][event] = pickup_script
 
         music = CaverMusic.get_shuffled_mapping(music_rng, self.cosmetic_patches)
@@ -325,7 +331,8 @@ class CSPatchDataFactory(BasePatchDataFactory):
                          ("Large Life Capsule", "0014")]
         for name, event in life_capsules:
             amount = \
-                self.configuration.standard_pickup_configuration.pickups_state[self.pickup_db.standard_pickups[name]].included_ammo[
+                self.configuration.standard_pickup_configuration.pickups_state[
+                    self.pickup_db.standard_pickups[name]].included_ammo[
                     0]
             head[event] = {
                 "needle": ".!<ML%+....",

@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import asyncio
 import datetime
 import functools
 import json
 import webbrowser
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QWidget
@@ -12,12 +14,20 @@ from qasync import asyncSlot
 import randovania
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, wait_dialog
-from randovania.network_client.network_client import NetworkClient, ConnectionState, UnableToConnect
+from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect
 from randovania.network_common import error
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, MultiplayerSessionListEntry, User, MultiplayerSessionActions,
-    MultiplayerWorldPickups, MultiplayerSessionAuditLog,
-    WorldUserInventory)
+    MultiplayerSessionActions,
+    MultiplayerSessionAuditLog,
+    MultiplayerSessionEntry,
+    MultiplayerSessionListEntry,
+    MultiplayerWorldPickups,
+    User,
+    WorldUserInventory,
+)
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 def handle_network_errors(fn):
@@ -149,7 +159,7 @@ class QtNetworkClient(QWidget, NetworkClient):
         fernet = Fernet(self.configuration["guest_secret"].encode("ascii"))
         login_request = fernet.encrypt(json.dumps({
             "name": name,
-            "date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "date": datetime.datetime.now(datetime.UTC).isoformat(),
         }).encode("utf-8"))
 
         new_session = await self.server_call("login_with_guest", login_request)

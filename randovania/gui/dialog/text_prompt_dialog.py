@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import typing
 
 from PySide6 import QtWidgets
 
 from randovania.gui.generated.text_prompt_dialog_ui import Ui_TextPromptDialog
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import async_dialog, common_qt_lib
 
 
 class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
@@ -20,6 +22,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
         self.check_re = check_re
 
         self.accept_button.setEnabled(False)
+        self.accept_button.setDefault(True)
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)
 

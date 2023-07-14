@@ -12,8 +12,14 @@ from randovania.network_common.admin_actions import SessionAdminGlobalAction, Se
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH, WORLD_NAME_RE
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
-from randovania.server.database import MultiplayerMembership, is_boolean, MultiplayerSession, World, \
-    WorldUserAssociation, MultiplayerAuditEntry
+from randovania.server.database import (
+    MultiplayerAuditEntry,
+    MultiplayerMembership,
+    MultiplayerSession,
+    World,
+    WorldUserAssociation,
+    is_boolean,
+)
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
@@ -26,7 +32,7 @@ def _check_user_associated_with(sio: ServerApp, world: World):
             WorldUserAssociation.user == sio.get_current_user(),
         )
     except peewee.DoesNotExist:
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
 
 def verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None,
@@ -48,7 +54,7 @@ def verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None,
                 is_boolean(MultiplayerMembership.admin, True)
         ).count() == 0:
             return
-        raise error.NotAuthorizedForActionError()
+        raise error.NotAuthorizedForActionError
 
 
 def verify_has_admin_or_claimed(sio: ServerApp, world: World) -> None:
@@ -252,8 +258,8 @@ def _change_layout_description(sio: ServerApp, session: MultiplayerSession, desc
         description = LayoutDescription.from_json_dict(description_json)
         worlds = session.get_ordered_worlds()
 
-        if description.player_count != len(worlds):
-            raise error.InvalidActionError(f"Description is for a {description.player_count} players,"
+        if description.world_count != len(worlds):
+            raise error.InvalidActionError(f"Description is for a {description.world_count} players,"
                                            f" while the session is for {len(worlds)}.")
 
         if any(world.order is None for world in worlds):

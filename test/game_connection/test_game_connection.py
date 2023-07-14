@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 import uuid
-from unittest.mock import AsyncMock, call, ANY
-from unittest.mock import MagicMock
+from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import pytest
 
@@ -10,10 +11,10 @@ from randovania.game_connection.builder.dolphin_connector_builder import Dolphin
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_connection.game_connection import GameConnection, ConnectedGameState
-from randovania.network_common.game_connection_status import GameConnectionStatus
+from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+from randovania.network_common.game_connection_status import GameConnectionStatus
 
 
 @pytest.fixture(name="connection")

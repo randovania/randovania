@@ -1,12 +1,18 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime3.patcher.gollop_corruption_patcher import layout_string_for_items
 from randovania.gui.generated.corruption_layout_editor_ui import Ui_CorruptionLayoutEditor
 from randovania.gui.lib import common_qt_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
 
 
 def _fill_combo(pickup_database: PickupDatabase, combo: QtWidgets.QComboBox):

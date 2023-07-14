@@ -1,9 +1,14 @@
+from __future__ import annotations
+
 import asyncio
 import platform
 import re
-from asyncio import StreamWriter, StreamReader, IncompleteReadError
+from asyncio import IncompleteReadError, StreamReader, StreamWriter
 from pathlib import Path
-from typing import Callable
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 IO_LOOP: asyncio.AbstractEventLoop | None = None
 

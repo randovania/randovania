@@ -1,9 +1,10 @@
+from __future__ import annotations
+
 import argparse
 import os
 import shutil
 import subprocess
 from pathlib import Path
-
 
 _here = Path(__file__).parent
 _production_id = "io.github.randovania.Randovania"

@@ -1,39 +1,44 @@
+from __future__ import annotations
+
 import copy
 import itertools
 from collections import defaultdict
-from heapq import heappush, heappop
-from typing import Iterator, Callable
+from heapq import heappop, heappush
+from typing import TYPE_CHECKING
 
-from randovania.game_description.requirements.requirement_set import RequirementSet
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+
+    from randovania.game_description.requirements.requirement_set import RequirementSet
 
 
 class BaseGraph:
     def copy(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def add_node(self, node: int):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def add_edge(self, previous_node: int, next_node: int, requirement: RequirementSet):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def remove_edge(self, previous: int, target: int):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def has_edge(self, previous_node: int, next_node: int) -> bool:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def __contains__(self, item: int):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def edges_data(self) -> Iterator[tuple[int, int, RequirementSet]]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def multi_source_dijkstra(self, sources: set[int], weight: Callable[[int, int, RequirementSet], float]):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def strongly_connected_components(self) -> Iterator[set[int]]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 class RandovaniaGraph(BaseGraph):

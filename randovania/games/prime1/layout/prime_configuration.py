@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
-from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
+from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
@@ -80,7 +82,7 @@ class PrimeConfiguration(BaseConfiguration):
 
     def dangerous_settings(self) -> list[str]:
         result = super().dangerous_settings()
-        
+
         if self.shuffle_item_pos:
             result.append("Shuffled Item Position")
 

@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import dataclasses
 import json
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -10,20 +13,19 @@ from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.default_database import default_prime2_memo_data
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
+from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -31,6 +33,10 @@ from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.game_description import GameDescription
 
 
 @pytest.fixture()
@@ -134,6 +140,7 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
     capacities = [
         {'amount': 1 if item.short_name == "MorphBall" else 0, 'index': item.extra["item_id"]}
         for item in resource_db.item
+        if item.extra["item_id"] < 1000
     ]
 
     # Run
@@ -154,7 +161,11 @@ def test_create_elevators_field_no_elevator(empty_patches, echoes_game_descripti
     # Setup
     # Run
     with pytest.raises(ValueError) as exp:
-        patch_data_factory._create_elevators_field(empty_patches, echoes_game_description)
+        patch_data_factory._create_elevators_field(
+            empty_patches,
+            echoes_game_description,
+            echoes_game_description.dock_weakness_database.find_type("elevator")
+        )
 
     # Assert
     assert str(exp.value) == "Invalid elevator count. Expected 22, got 0."
@@ -166,12 +177,12 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
                                                      echoes_game_patches):
     # Setup
     wl = echoes_game_description.region_list
-    elevator_connection: list[tuple[TeleporterNode, AreaIdentifier]] = []
+    elevator_connection: list[tuple[DockNode, Node]] = []
 
     def add(region: str, area: str, node: str, target_world: str, target_area: str):
         elevator_connection.append((
-            wl.get_teleporter_node(NodeIdentifier.create(region, area, node)),
-            AreaIdentifier(target_world, target_area),
+            wl.typed_node_by_identifier(NodeIdentifier.create(region, area, node), DockNode),
+            wl.default_node_for_area(AreaIdentifier(target_world, target_area)),
         ))
 
     add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
@@ -183,10 +194,13 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
         add("Temple Grounds", "Sky Temple Gateway", "Teleport to Great Temple - Sky Temple Energy Controller",
             "Great Temple", "Sanctum")
 
-    patches = echoes_game_patches.assign_elevators(elevator_connection)
+    patches = echoes_game_patches.assign_dock_connections(elevator_connection)
 
     # Run
-    result = patch_data_factory._create_elevators_field(patches, echoes_game_description)
+    result = patch_data_factory._create_elevators_field(
+        patches, echoes_game_description,
+        echoes_game_description.dock_weakness_database.find_type("elevator")
+    )
 
     # Assert
     expected = [
@@ -355,7 +369,7 @@ def test_get_single_hud_text_locked_pbs():
     # Run
     result = pickup_exporter._get_single_hud_text("Locked Power Bomb Expansion",
                                                   patch_data_factory._simplified_memo_data(),
-                                                  tuple())
+                                                  ())
 
     # Assert
     assert result == "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
@@ -482,8 +496,7 @@ def test_create_pickup_all_from_pool(echoes_game_description,
                                      default_echoes_configuration,
                                      disable_hud_popup: bool
                                      ):
-    item_pool = pool_creator.calculate_pool_results(default_echoes_configuration,
-                                                    echoes_game_description)
+    item_pool = pool_creator.calculate_pool_results(default_echoes_configuration, echoes_game_description)
     index = PickupIndex(0)
     if disable_hud_popup:
         memo_data = patch_data_factory._simplified_memo_data()
@@ -568,6 +581,7 @@ def test_create_string_patches(
         namer,
         player_config,
         rng,
+        []
     )
 
     # Assert

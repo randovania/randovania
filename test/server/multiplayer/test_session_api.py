@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 import contextlib
 import datetime
 import uuid
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
-from pytest_mock import MockerFixture
 
 from randovania.network_common import error
 from randovania.network_common.session_state import MultiplayerSessionState
@@ -12,11 +14,14 @@ from randovania.server import database
 from randovania.server.multiplayer import session_api
 from randovania.server.server_app import ServerApp
 
+if TYPE_CHECKING:
+    from pytest_mock import MockerFixture
+
 
 @pytest.mark.parametrize("limit", [None, 2, 3])
 def test_list_sessions(clean_database, flask_app, limit):
     # Setup
-    utc = datetime.timezone.utc
+    utc = datetime.UTC
     someone = database.User.create(name="Someone")
     other = database.User.create(name="Other")
     s1 = database.MultiplayerSession.create(
@@ -41,12 +46,12 @@ def test_list_sessions(clean_database, flask_app, limit):
 
     # Assert
     expected = [
-        {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_players': 2, 'creator': 'Someone',
-         'creation_date': '2021-01-20T05:02:00+00:00', 'is_user_in_session': True},
-        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 1, 'creator': 'Someone',
-         'creation_date': '2020-01-20T05:02:00+00:00', 'is_user_in_session': False},
-        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 1, 'creator': 'Someone',
-         'creation_date': '2020-10-02T10:20:00+00:00', 'is_user_in_session': True},
+        {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_users': 2, 'creator': 'Someone',
+         'num_worlds': 0, 'creation_date': '2021-01-20T05:02:00+00:00', 'is_user_in_session': True},
+        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_users': 1, 'creator': 'Someone',
+         'num_worlds': 0, 'creation_date': '2020-01-20T05:02:00+00:00', 'is_user_in_session': False},
+        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_users': 1, 'creator': 'Someone',
+         'num_worlds': 0, 'creation_date': '2020-10-02T10:20:00+00:00', 'is_user_in_session': True},
     ]
     if limit == 2:
         expected = expected[:2]

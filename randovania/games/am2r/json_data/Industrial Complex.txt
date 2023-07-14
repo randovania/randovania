@@ -277,7 +277,7 @@ Extra - map_name: rm_a3h06
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 3 - Exterior Gamma
+  * Event Metroids Area 3 - Exterior Gamma
   > Top
       Trivial
   > Pickup (Gamma)
@@ -324,7 +324,7 @@ Extra - map_name: rm_a3h08
 
 > Door to Storage Cavern; Heals? False
   * Layers: default
-  * Industrial Complex EMP Activated Door to Storage Cavern/Door to EMP Sentry Cavern
+  * Industrial Complex EMP Door to Storage Cavern/Door to EMP Sentry Cavern
   * Extra - instance_id: 115149
   > Bottom
       Trivial
@@ -350,12 +350,12 @@ Extra - map_name: rm_a3h08
       Can Use Any Bombs
   > Event - A3EMP
       All of the following:
-          After EMP Activated and Can Use Power Bombs
+          After Area 5 - Distribution Center Energy Activated and Can Use Power Bombs
           Missiles ≥ 5 or Super Missiles ≥ 2
 
 > Event - A3EMP; Heals? False
   * Layers: default
-  * Event EMP in Area 3 
+  * Event EMP - Industrial Complex
   > Bottom
       Trivial
 
@@ -411,7 +411,7 @@ Extra - map_name: rm_a3a01
 
 > Event - Torizo; Heals? False
   * Layers: default
-  * Event Boss Torizo Defeated
+  * Event Boss - Torizo Defeated
   > Door to Industrial Complex Exterior
       Trivial
 
@@ -534,7 +534,7 @@ Extra - map_name: rm_a3a04
   * Layers: default
   * Open Passage to Upper Factory Pipe/Dock to Spazer Beam Chamber Access
   > Bottom
-      Screw Attack
+      Screw Attack or Disabled Screw Attack Pipe Blocks
 
 > Bottom; Heals? False
   * Layers: default
@@ -543,7 +543,7 @@ Extra - map_name: rm_a3a04
   > Door to Spazer Beam
       Hijump Wall
   > Dock to Upper Factory Pipe
-      Screw Attack
+      Screw Attack or Disabled Screw Attack Pipe Blocks
 
 ----------------
 Spazer Beam
@@ -606,7 +606,7 @@ Extra - map_name: rm_a3a07
   > Dock to Upper Factory Intersection
       Any of the following:
           Space Jump Wall
-          After Area 3 - Interior Shaft Gamma and Walljump (Beginner) and Enabled Septogg Helpers
+          After Metroids Area 3 - Interior Shaft Gamma and Walljump (Beginner) and Enabled Septogg Helpers
   > Event - Gamma
       Defeat Gamma
   > Pickup (Missile Tank)
@@ -614,7 +614,7 @@ Extra - map_name: rm_a3a07
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 3 - Interior Shaft Gamma
+  * Event Metroids Area 3 - Interior Shaft Gamma
   > Dock to Upper Factory Autoad Fork
       Trivial
   > Pickup (Gamma)
@@ -766,7 +766,7 @@ Extra - map_name: rm_a3a13
           Any of the following:
               # Walljump
               Walljump (Advanced)
-              Damage Boost (Intermediate) and Lava ≥ 10
+              Damage Boost (Intermediate) and Lava Damage ≥ 10
 
 > Dock to Upper Factory Alpha Nest Access; Heals? False
   * Layers: default
@@ -827,7 +827,7 @@ Extra - map_name: rm_a3a15
 
 > Event - Alpha; Heals? False
   * Layers: default
-  * Event Area 3 - Interior Alpha
+  * Event Metroids Area 3 - Interior Alpha
   > Outside Of Tunnel
       Trivial
   > Pickup (Alpha)
@@ -1056,7 +1056,7 @@ Extra - map_name: rm_a3a22
           Hijump With Power Grip Wall
           Any of the following:
               # Get past super blocks
-              Super Missiles ≥ 3 or After Area 3 Skippy
+              Super Missiles ≥ 3 or After Area 3 - Industrial Complex Skippy Minigame Cleared
 
 > Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
@@ -1066,13 +1066,13 @@ Extra - map_name: rm_a3a22
 
 > Event - Skippy; Heals? False
   * Layers: default
-  * Event Area 3 Skippy
+  * Event Area 3 - Industrial Complex Skippy Minigame Cleared
   > Dock to Weapon Testing
       Trivial
 
 > Event - Past Super Blocks; Heals? False
   * Layers: default
-  * Event Area 3 Skippy
+  * Event Area 3 - Industrial Complex Skippy Minigame Cleared
   > Dock to Weapon Testing
       Space Jump Wall
   > Dock to Super Missile Chamber Access
@@ -1099,7 +1099,7 @@ Extra - map_name: rm_a3a23
 
 > Event - MakeSkippyBeCleared; Heals? False
   * Layers: default
-  * Event Area 3 Skippy
+  * Event Area 3 - Industrial Complex Skippy Minigame Cleared
   > Dock to Super Missile Chamber
       Trivial
 
@@ -1110,7 +1110,7 @@ Extra - map_name: rm_a3a23a
   * Layers: default
   * Open Passage to Super Missile Chamber Access/Dock to Super Missile Chamber
   > In Front Of Super
-      After Area 3 Super Missile Crystal or Power Grip Wall
+      After Area 3 - Super Missile Crystal Destroyed or Power Grip Wall
   > Event - SuperCrystal
       Super Missiles
 
@@ -1124,7 +1124,7 @@ Extra - map_name: rm_a3a23a
 > In Front Of Super; Heals? False
   * Layers: default
   > Dock to Super Missile Chamber Access
-      After Area 3 Super Missile Crystal
+      After Area 3 - Super Missile Crystal Destroyed
   > Pickup (Super Missile Tank)
       Trivial
   > Event - SuperCrystal
@@ -1132,7 +1132,7 @@ Extra - map_name: rm_a3a23a
 
 > Event - SuperCrystal; Heals? False
   * Layers: default
-  * Event Area 3 Super Missile Crystal
+  * Event Area 3 - Super Missile Crystal Destroyed
   > Dock to Super Missile Chamber Access
       Trivial
   > In Front Of Super
@@ -1165,7 +1165,7 @@ Extra - map_name: rm_a3a25
           Any of the following:
               # Lava run
               Gravity Suit
-              Damage Boost (Intermediate) and Lava ≥ 100 and Power Grip Wall
+              Damage Boost (Intermediate) and Lava Damage ≥ 100 and Power Grip Wall
 
 > Dock to Lower Factory Lava Lake Access; Heals? False
   * Layers: default
@@ -1178,7 +1178,7 @@ Extra - map_name: rm_a3a25
               Walljump (Intermediate)
               Any of the following:
                   Gravity Suit
-                  Damage Boost (Intermediate) and Lava ≥ 130
+                  Damage Boost (Intermediate) and Lava Damage ≥ 130
 
 ----------------
 Lower Factory Gamma Nest
@@ -1191,7 +1191,7 @@ Extra - map_name: rm_a3a26
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 3 - Deep Factory Gamma
+  * Event Metroids Area 3 - Deep Factory Gamma
   > Dock to Lower Factory Lava Lake
       Trivial
   > Pickup (Gamma)
@@ -1216,8 +1216,6 @@ Extra - map_name: rm_a3a27
 > Pipe to Distribution Center; Heals? False
   * Layers: default
   * Teleporter to Pipe Hub/Pipe to Industrial Complex
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Dock to Spazer Beam Chamber Access
       Morph Ball
 
@@ -1290,7 +1288,7 @@ Extra - map_name: rm_a3b03
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 3 - Breeding Grounds Left Gamma
+  * Event Metroids Area 3 - Breeding Grounds Left Gamma
   > Dock to Breeding Grounds Crossroads
       Trivial
   > Pickup (Gamma)
@@ -1322,7 +1320,7 @@ Extra - map_name: rm_a3b04
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 3 - Breeding Grounds Middle Middle Gamma
+  * Event Metroids Area 3 - Breeding Grounds Middle Middle Gamma
   > Dock to Breeding Grounds Crossroads
       Trivial
   > Pickup (Gamma)
@@ -1369,7 +1367,7 @@ Extra - map_name: rm_a3b06
 
 > Event - Alpha; Heals? False
   * Layers: default
-  * Event Area 3 - Breeding Grounds Alpha
+  * Event Metroids Area 3 - Breeding Grounds Alpha
   > Dock to Breeding Grounds Alpha Nest Access
       Trivial
   > Pickup (Alpha)
@@ -1393,7 +1391,7 @@ Extra - map_name: rm_a3b07
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 3 - Breeding Grounds Middle Top Gamma
+  * Event Metroids Area 3 - Breeding Grounds Middle Top Gamma
   > Tunnel to Breeding Grounds Alpha Nest
       Trivial
   > Pickup (Gamma)
@@ -1428,10 +1426,10 @@ Extra - map_name: rm_a3b08
           Space Jump or Can Use Spider Ball
           All of the following:
               # Septogg
-              Power Beam and After Area 3 - Breeding Grounds Middle Bottom Gamma and Enabled Septogg Helpers
+              Power Beam and After Metroids Area 3 - Breeding Grounds Middle Bottom Gamma and Enabled Septogg Helpers
           All of the following:
               # IBJ
-              After Area 3 - Breeding Grounds Middle Bottom Gamma and Infinite Bomb Jumping (Advanced) and Can Use Bombs
+              After Metroids Area 3 - Breeding Grounds Middle Bottom Gamma and Infinite Bomb Jumping (Advanced) and Can Use Bombs
   > Dock to Breeding Grounds Fly Stadium Access
       Any of the following:
           Space Jump or Can Use Spider Ball
@@ -1441,7 +1439,7 @@ Extra - map_name: rm_a3b08
               Power Grip or Walljump (Intermediate)
           All of the following:
               # IBJ
-              After Area 3 - Breeding Grounds Middle Bottom Gamma and Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+              After Metroids Area 3 - Breeding Grounds Middle Bottom Gamma and Infinite Bomb Jumping (Intermediate) and Can Use Bombs
           All of the following:
               # Option to have shoot blocks appear on right
               Enabled Softlock Prevention
@@ -1451,7 +1449,7 @@ Extra - map_name: rm_a3b08
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 3 - Breeding Grounds Middle Bottom Gamma
+  * Event Metroids Area 3 - Breeding Grounds Middle Bottom Gamma
   > Bottom
       Trivial
   > Pickup (Gamma)
@@ -1552,7 +1550,7 @@ Extra - map_name: rm_a3b12
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 3 - Breeding Grounds Right Gamma
+  * Event Metroids Area 3 - Breeding Grounds Right Gamma
   > Dock to Breeding Grounds Maze
       Hijump Wall
   > Pickup (Gamma)

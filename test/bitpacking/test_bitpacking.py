@@ -1,11 +1,17 @@
+from __future__ import annotations
+
 import dataclasses
-from typing import Iterator
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, call
 
 import pytest
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackDecoder
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.bitpacking.bitpacking import BitPackDecoder
 
 
 @pytest.mark.parametrize("value", [

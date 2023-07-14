@@ -3900,7 +3900,7 @@
             }
         },
         "Teleport to Dairon": {
-            "default_node": "Teleporter to Dairon - Teleport to Artaria",
+            "default_node": "Teleporter to Dairon",
             "extra": {
                 "total_boundings": {
                     "x1": 5800.0,
@@ -4386,7 +4386,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter to Dairon - Teleport to Artaria": {
+                        "Teleporter to Dairon": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4395,8 +4395,8 @@
                         }
                     }
                 },
-                "Teleporter to Dairon - Teleport to Artaria": {
-                    "node_type": "teleporter",
+                "Teleporter to Dairon": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 6350.0,
@@ -4416,12 +4416,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "Teleport to Artaria"
+                        "area": "Teleport to Artaria",
+                        "node": "Teleporter to Artaria"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to EMMI Zone Exit North (Upper)": {
                             "type": "and",
@@ -5273,6 +5278,32 @@
                                                         "name": "DoorLocks",
                                                         "amount": 1,
                                                         "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/bDwcjN4JTYQ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GrappleMovement",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -6389,7 +6420,7 @@
             }
         },
         "Teleport to Cataris": {
-            "default_node": "Teleporter to Cataris - Teleport to Artaria (Red)",
+            "default_node": "Teleporter to Cataris",
             "extra": {
                 "total_boundings": {
                     "x1": -12200.0,
@@ -6451,7 +6482,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                        "Teleporter to Cataris": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7182,7 +7213,7 @@
                                 ]
                             }
                         },
-                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                        "Teleporter to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7224,8 +7255,8 @@
                         }
                     }
                 },
-                "Teleporter to Cataris - Teleport to Artaria (Red)": {
-                    "node_type": "teleporter",
+                "Teleporter to Cataris": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -10200.0,
@@ -7245,12 +7276,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Teleport to Artaria (Red)"
+                        "area": "Teleport to Artaria (Red)",
+                        "node": "Teleporter to Artaria"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station West": {
                             "type": "and",
@@ -7769,7 +7805,7 @@
                                 ]
                             }
                         },
-                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                        "Teleporter to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7833,7 +7869,7 @@
                     "valid_starting_location": false,
                     "event_name": "s010_cave:default:db_reg_cv_022",
                     "connections": {
-                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                        "Teleporter to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15460,7 +15496,7 @@
                     }
                 },
                 "Elevator to Dairon": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1650.0,
@@ -15480,12 +15516,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Dairon",
-                        "area": "Transport to Artaria"
+                        "area": "Transport to Artaria",
+                        "node": "Elevator to Artaria"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Spider Beam Tower": {
                             "type": "and",
@@ -23784,7 +23825,7 @@
             }
         },
         "Transport to Cataris": {
-            "default_node": "Elevator to Cataris - Transport to Artaria",
+            "default_node": "Elevator to Cataris",
             "extra": {
                 "total_boundings": {
                     "x1": 31700.0,
@@ -23846,7 +23887,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Cataris - Transport to Artaria": {
+                        "Elevator to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -23888,7 +23929,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Cataris - Transport to Artaria": {
+                        "Elevator to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -23897,8 +23938,8 @@
                         }
                     }
                 },
-                "Elevator to Cataris - Transport to Artaria": {
-                    "node_type": "teleporter",
+                "Elevator to Cataris": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 32800.0,
@@ -23918,12 +23959,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Transport to Artaria"
+                        "area": "Transport to Artaria",
+                        "node": "Elevator to Artaria"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Hot Cataris Shortcut": {
                             "type": "and",
@@ -24901,7 +24947,7 @@
             }
         },
         "Transport to Burenia": {
-            "default_node": "Elevator to Burenia - Transport to Artaria",
+            "default_node": "Elevator to Burenia",
             "extra": {
                 "total_boundings": {
                     "x1": -27800.0,
@@ -24963,7 +25009,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Burenia - Transport to Artaria": {
+                        "Elevator to Burenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -24992,7 +25038,7 @@
                     "pickup_index": 32,
                     "location_category": "minor",
                     "connections": {
-                        "Elevator to Burenia - Transport to Artaria": {
+                        "Elevator to Burenia": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -25003,8 +25049,8 @@
                         }
                     }
                 },
-                "Elevator to Burenia - Transport to Artaria": {
-                    "node_type": "teleporter",
+                "Elevator to Burenia": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -25250.0,
@@ -25024,12 +25070,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Burenia",
-                        "area": "Transport to Artaria"
+                        "area": "Transport to Artaria",
+                        "node": "Elevator to Artaria"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Screw Attack Room": {
                             "type": "and",
@@ -26061,7 +26112,7 @@
                     }
                 },
                 "Teleporter to Cataris": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -20700.0,
@@ -26081,12 +26132,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Teleport to Artaria (Blue)"
+                        "area": "Teleport to Artaria (Blue)",
+                        "node": "Teleporter to Artaria"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Screw Attack Grapple Block": {
                             "type": "resource",

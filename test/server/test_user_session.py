@@ -1,18 +1,23 @@
+from __future__ import annotations
+
 import datetime
 import json
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import flask
 import flask_discord
 import oauthlib.oauth2.rfc6749.errors
 import pytest
-import pytest_mock
-from pytest_mock import MockerFixture
 
 from randovania.network_common import error
 from randovania.network_common.error import InvalidSessionError
 from randovania.server import user_session
 from randovania.server.database import User
+
+if TYPE_CHECKING:
+    import pytest_mock
+    from pytest_mock import MockerFixture
 
 
 def test_setup_app():
@@ -118,6 +123,30 @@ def test_browser_discord_login_callback_not_authorized(flask_app, mocker: pytest
     )
 
 
+@pytest.mark.parametrize("via_value_error", [False, True])
+def test_browser_discord_login_callback_mismatching_state(flask_app, mocker: pytest_mock.MockerFixture,
+                                                          via_value_error):
+    mock_render = mocker.patch("flask.render_template")
+
+    sio = MagicMock()
+    sio.discord.callback.side_effect = (
+        ValueError('not enough values to unpack (expected 2, got 1)')
+        if via_value_error else
+        oauthlib.oauth2.rfc6749.errors.MismatchingStateError()
+    )
+
+    # Run
+    result = user_session.browser_discord_login_callback(sio)
+
+    # Assert
+    sio.discord.callback.assert_called_once_with()
+    assert result == (mock_render.return_value, 401)
+    mock_render.assert_called_once_with(
+        "unable_to_login.html",
+        error_message="You must finish the login with the same browser that you started it with.",
+    )
+
+
 def test_browser_discord_login_callback_oauth_error(flask_app, mocker: pytest_mock.MockerFixture):
     mock_render = mocker.patch("flask.render_template")
 
@@ -164,7 +193,6 @@ def test_browser_discord_login_callback_invalid_sid(flask_app, mocker: pytest_mo
     # Run
     with flask_app.test_request_context():
         flask.session["sid"] = "TheSid"
-        # flask.session["DISCORD_OAUTH2_TOKEN"] = "The_Token"
         result = user_session.browser_discord_login_callback(sio)
 
     # Assert

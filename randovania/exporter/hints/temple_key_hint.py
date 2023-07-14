@@ -1,10 +1,16 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.exporter.hints import guaranteed_item_hint
-from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.game_description import default_database
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintDarkTemple
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher import echoes_items
+
+if TYPE_CHECKING:
+    from randovania.exporter.hints.hint_namer import HintNamer
+    from randovania.game_description.game_patches import GamePatches
 
 
 def create_temple_key_hint(all_patches: dict[int, GamePatches],

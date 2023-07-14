@@ -1,17 +1,28 @@
-from random import Random
+from __future__ import annotations
 
-from randovania.game_description.game_patches import GamePatches
+from typing import TYPE_CHECKING
+
 from randovania.game_description.hint import (
-    HintLocationPrecision, HintRelativeAreaName, HintItemPrecision,
-    PrecisionPair, HintDarkTemple, Hint, HintType
+    Hint,
+    HintDarkTemple,
+    HintItemPrecision,
+    HintLocationPrecision,
+    HintRelativeAreaName,
+    HintType,
+    PrecisionPair,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.generator.filler.player_state import PlayerState
-from randovania.generator.filler.runner import PlayerPool
-from randovania.generator.hint_distributor import HintDistributor, PreFillParams, HintTargetPrecision
+from randovania.generator.hint_distributor import HintDistributor, HintTargetPrecision, PreFillParams
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.generator.filler.player_state import PlayerState
+    from randovania.generator.filler.runner import PlayerPool
 
 
 class EchoesHintDistributor(HintDistributor):
@@ -20,7 +31,7 @@ class EchoesHintDistributor(HintDistributor):
     def num_joke_hints(self) -> int:
         return 2
 
-    async def get_guranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
+    async def get_guaranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         def g(index, loc):
             return (
                 PickupIndex(index),

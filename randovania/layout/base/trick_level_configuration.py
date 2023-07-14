@@ -3,18 +3,22 @@ from __future__ import annotations
 import collections
 import copy
 import dataclasses
-from typing import Iterator
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.games.game import RandovaniaGame
-from randovania.layout.lib import trick_lib
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.lib import trick_lib
 from randovania.lib.enum_lib import iterate_enum
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+    from randovania.games.game import RandovaniaGame
 
 
 def _all_tricks(resource_database: ResourceDatabase):
@@ -130,7 +134,7 @@ class TrickLevelConfiguration(BitPackValue):
     def level_for_trick(self, trick: TrickResourceInfo) -> LayoutTrickLevel:
         return self.specific_levels.get(trick.short_name, LayoutTrickLevel.DISABLED)
 
-    def set_level_for_trick(self, trick: TrickResourceInfo, value: LayoutTrickLevel) -> "TrickLevelConfiguration":
+    def set_level_for_trick(self, trick: TrickResourceInfo, value: LayoutTrickLevel) -> TrickLevelConfiguration:
         """
         Creates a new TrickLevelConfiguration with the given trick with a changed level
         :param trick:

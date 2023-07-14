@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 import platform
 
 import dolphin_memory_engine
 import pid
 
-from randovania.game_connection.executor.memory_operation import (MemoryOperationException, MemoryOperation,
-                                                                  MemoryOperationExecutor)
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
+)
 
 MEM1_START = 0x80000000
 MEM1_END = 0x81800000

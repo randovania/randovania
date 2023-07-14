@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 from PySide6.QtCore import Qt
 
@@ -8,7 +10,6 @@ from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import GenericNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 
 
@@ -16,7 +17,6 @@ from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
     GenericNode,
     DockNode,
     PickupNode,
-    TeleporterNode,
     EventNode,
     ConfigurableNode,
     HintNode,

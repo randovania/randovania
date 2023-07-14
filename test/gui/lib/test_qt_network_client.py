@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 import asyncio
 import datetime
 from pathlib import Path
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-import pytest_mock
 from PySide6 import QtWidgets
 
 from randovania.gui.lib import qt_network_client
@@ -12,6 +14,9 @@ from randovania.network_client.network_client import ConnectionState
 from randovania.network_common import error
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
 from randovania.network_common.session_state import MultiplayerSessionState
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 @pytest.fixture(name="client")
@@ -108,7 +113,7 @@ async def test_attempt_join(client, mocker, in_session):
                  return_value="A Session")
     session = MultiplayerSessionListEntry(
         id=1, name="A Game", has_password=True, state=MultiplayerSessionState.FINISHED,
-        num_players=1, creator="You", is_user_in_session=in_session,
+        num_users=1, num_worlds=0, creator="You", is_user_in_session=in_session,
         creation_date=datetime.datetime(year=2015, month=5, day=1, tzinfo=datetime.UTC),
     )
 

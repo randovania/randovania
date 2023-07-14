@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock
 
 from randovania.cli.commands import patcher_data
@@ -12,7 +14,7 @@ def test_patcher_data_logic(mocker):
     layout_description = mock_from_file.return_value
 
     preset = MagicMock()
-    layout_description.player_count = 4
+    layout_description.world_count = 4
     layout_description.get_preset = MagicMock(return_value=preset)
 
     players_config = PlayersConfiguration(

@@ -1,32 +1,39 @@
+from __future__ import annotations
+
 import collections
 import functools
-import uuid
+from typing import TYPE_CHECKING
 
 import wiiload
-from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt
 from qasync import asyncSlot
 
 import randovania
-from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
-from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_connection.game_connection import GameConnection
+from randovania.games.dread.gui.dialog.dread_connector_prompt_dialog import DreadConnectorPromptDialog
 from randovania.games.game import RandovaniaGame
 from randovania.gui.debug_backend_window import DebugConnectorWindow
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.game_connection_window_ui import Ui_GameConnectionWindow
-from randovania.gui.lib import common_qt_lib, async_dialog
-from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
-from randovania.gui.main_window import MainWindow
-from randovania.gui.multiworld_client import MultiworldClient
-from randovania.interface_common.options import Options
+from randovania.gui.lib import async_dialog, common_qt_lib
+from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.network_common import error
+
+if TYPE_CHECKING:
+    import uuid
+
+    from randovania.game_connection.builder.connector_builder import ConnectorBuilder
+    from randovania.game_connection.connector.remote_connector import RemoteConnector
+    from randovania.game_connection.game_connection import GameConnection
+    from randovania.gui.main_window import MainWindow
+    from randovania.gui.multiworld_client import MultiworldClient
+    from randovania.interface_common.options import Options
 
 
 class BuilderUi:
@@ -180,10 +187,12 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             args["ip"] = new_ip
 
         if choice == ConnectorBuilderChoice.DREAD:
-            new_ip = await self._prompt_for_text(
-                "Enter Ryujinx's/Switch's IP",
-                "Enter the IP address of your Switch or use \"localhost\" for Ryujinx."
-                "You can check the IP address in the system settings."
+            new_ip = await DreadConnectorPromptDialog.prompt(
+                parent=self,
+                is_modal=True,
+
+                title="Select Ryujinx or Switch to connect to",
+                description="Enter the IP address of your Switch. It can be found in the system settings."
             )
             if new_ip is None:
                 return

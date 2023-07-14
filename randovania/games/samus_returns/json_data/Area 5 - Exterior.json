@@ -306,7 +306,7 @@
                     }
                 },
                 "Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 3456.86,
@@ -323,12 +323,17 @@
                         "start_point_actor_name": "ST_FromArea06C_01"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 5 - Interior",
-                        "area": "Transport to Area 5 Exterior (East)"
+                        "area": "Transport to Area 5 Exterior (East)",
+                        "node": "Transport to Area 5 Exterior - Tower"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "or",
@@ -3072,7 +3077,7 @@
             },
             "nodes": {
                 "Elevator to Area 5 Interior - Transport to Area 5 Exterior (West)": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -3909.9,
@@ -3089,12 +3094,17 @@
                         "start_point_actor_name": "ST_FromArea06C_02"
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Area 5 - Interior",
-                        "area": "Transport to Area 5 Exterior (West)"
+                        "area": "Transport to Area 5 Exterior (West)",
+                        "node": "Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Tower": {
                             "type": "and",

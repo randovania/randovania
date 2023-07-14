@@ -1,4 +1,4 @@
-import json
+from __future__ import annotations
 
 from randovania.games.super_metroid.exporter.patch_data_factory import SuperMetroidPatchDataFactory
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches

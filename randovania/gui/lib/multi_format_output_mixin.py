@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import typing
 from pathlib import Path
 
@@ -13,7 +15,7 @@ class MultiFormatOutputMixin:
 
     @property
     def valid_output_file_types(self) -> list[str]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def available_output_file_types(self) -> list[str]:

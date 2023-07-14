@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import datetime
-import enum
 import json
 import uuid
 import zlib
-from typing import Any, Self, Iterable
+from typing import TYPE_CHECKING, Any, Self
 
 import cachetools
 import peewee
@@ -16,12 +15,24 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common import multiplayer_session, error
+from randovania.network_common import error, multiplayer_session
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.multiplayer_session import MultiplayerUser, GameDetails, \
-    MultiplayerWorld, MultiplayerSessionListEntry, MultiplayerSessionAuditLog, \
-    MultiplayerSessionAuditEntry, UserWorldDetail, MAX_SESSION_NAME_LENGTH, MAX_WORLD_NAME_LENGTH
+from randovania.network_common.multiplayer_session import (
+    MAX_SESSION_NAME_LENGTH,
+    MAX_WORLD_NAME_LENGTH,
+    GameDetails,
+    MultiplayerSessionAuditEntry,
+    MultiplayerSessionAuditLog,
+    MultiplayerSessionListEntry,
+    MultiplayerUser,
+    MultiplayerWorld,
+    UserWorldDetail,
+)
 from randovania.network_common.session_state import MultiplayerSessionState
+
+if TYPE_CHECKING:
+    import enum
+    from collections.abc import Iterable
 
 
 class MonitoredDb(peewee.SqliteDatabase):
@@ -94,7 +105,7 @@ class User(BaseModel):
 
 
 def _datetime_now():
-    return datetime.datetime.now(datetime.timezone.utc)
+    return datetime.datetime.now(datetime.UTC)
 
 
 class UserAccessToken(BaseModel):
@@ -179,16 +190,17 @@ class MultiplayerSession(BaseModel):
         return True
 
     def create_list_entry(self, user: User):
-        num_players = getattr(self, "num_players", None)
-        if num_players is None:
-            num_players = len(self.members)
+        num_users = getattr(self, "num_users", None)
+        if num_users is None:
+            num_users = len(self.members)
 
         return MultiplayerSessionListEntry(
             id=self.id,
             name=self.name,
             has_password=self.password is not None,
             state=self.state,
-            num_players=num_players,
+            num_users=num_users,
+            num_worlds=0,
             creator=self.creator.name,
             creation_date=self.creation_datetime,
             is_user_in_session=self.is_user_in_session(user),
@@ -318,7 +330,7 @@ class World(BaseModel):
         try:
             return cls.get(World.uuid == uid)
         except peewee.DoesNotExist:
-            raise error.WorldDoesNotExistError()
+            raise error.WorldDoesNotExistError
 
     @classmethod
     def get_by_order(cls, session_id: int, order: int) -> World:
@@ -329,7 +341,7 @@ class World(BaseModel):
 
     @classmethod
     def create_for(cls, session: MultiplayerSession, name: str, preset: VersionedPreset, *,
-                   uid: "uuid.UUID | None" = None, order: int | None = None) -> Self:
+                   uid: uuid.UUID | None = None, order: int | None = None) -> Self:
         if uid is None:
             uid = uuid.uuid4()
         return cls().create(

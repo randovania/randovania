@@ -1,8 +1,13 @@
-from dataclasses import dataclass
-from random import Random
-from typing import Iterable
+from __future__ import annotations
 
-from randovania.games.cave_story.layout.cs_cosmetic_patches import CSSong, CSCosmeticPatches, MusicRandoType, SONGS
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
+
+from randovania.games.cave_story.layout.cs_cosmetic_patches import SONGS, CSCosmeticPatches, CSSong, MusicRandoType
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+    from random import Random
 
 
 @dataclass(frozen=True)
@@ -133,7 +138,7 @@ class CaverMusic:
     )
 
     @classmethod
-    def get_randomizer(cls, rando_type: MusicRandoType) -> "CaverMusic":
+    def get_randomizer(cls, rando_type: MusicRandoType) -> CaverMusic:
         if rando_type == MusicRandoType.SHUFFLE:
             return CaverMusicShuffle()
         if rando_type == MusicRandoType.RANDOM:
@@ -143,7 +148,7 @@ class CaverMusic:
         return CaverMusicDefault()
 
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def get_shuffled_mapping(cls, rng: Random, cosmetic: CSCosmeticPatches) -> dict[str, dict[str, str]]:

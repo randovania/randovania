@@ -1,20 +1,25 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import functools
 import shutil
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import mp2hudcolor
+from open_prime_rando.dol_patching.echoes import dol_patcher
 from ppc_asm import dol_file
 from retro_data_structures.asset_manager import PathFileProvider
 
-from open_prime_rando.dol_patching.echoes import dol_patcher
 from randovania import get_data_path, monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
 from randovania.games.prime2.patcher import claris_randomizer
-from randovania.lib import status_update_lib, json_lib
+from randovania.lib import json_lib, status_update_lib
 from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 @dataclasses.dataclass(frozen=True)

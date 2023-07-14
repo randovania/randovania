@@ -1,12 +1,18 @@
+from __future__ import annotations
+
 import uuid
+from typing import TYPE_CHECKING
+
 from PySide6.QtCore import Signal
 
-from randovania.game_connection.connector.remote_connector import RemoteConnector, PickupEntryWithOwner
-from randovania.games.game import RandovaniaGame
+from randovania.game_connection.connector.remote_connector import PickupEntryWithOwner, RemoteConnector
+
+if TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
 
 
 class DebugRemoteConnector(RemoteConnector):
-    remote_pickups: tuple[PickupEntryWithOwner, ...] = tuple()
+    remote_pickups: tuple[PickupEntryWithOwner, ...] = ()
     _finished: bool = False
 
     RemotePickupsUpdated = Signal()

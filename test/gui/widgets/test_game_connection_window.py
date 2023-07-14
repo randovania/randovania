@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock, ANY
+from typing import TYPE_CHECKING
+from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
 from PySide6 import QtWidgets
-from pytest_mock import MockerFixture
 
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
@@ -12,12 +14,17 @@ from randovania.game_connection.builder.dread_connector_builder import DreadConn
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
-from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.game_connection_window import GameConnectionWindow
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.network_common import error
+
+if TYPE_CHECKING:
+    import pytest_mock
+    from pytest_mock import MockerFixture
+
+    from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 
 
 @pytest.fixture(name="window")
@@ -114,10 +121,14 @@ async def test_add_connector_builder_debug(window: GameConnectionWindow, abort):
 
 
 @pytest.mark.parametrize("abort", [False, True])
-async def test_add_connector_builder_dread(window: GameConnectionWindow, abort):
+async def test_add_connector_builder_dread(window: GameConnectionWindow, abort, mocker: pytest_mock.MockerFixture):
     # Setup
     window.game_connection.add_connection_builder = MagicMock()
-    window._prompt_for_text = AsyncMock(return_value=None if abort else "my_ip")
+    mocker.patch(
+        "randovania.games.dread.gui.dialog.dread_connector_prompt_dialog.DreadConnectorPromptDialog.prompt",
+        new_callable=AsyncMock,
+        return_value=None if abort else "my_ip"
+    )
 
     # Run
     await window._add_connector_builder(ConnectorBuilderChoice.DREAD)
@@ -306,7 +317,7 @@ def test_check_session_data_with_data(window: GameConnectionWindow):
     result = window._check_session_data(MagicMock())
 
     # assert
-    assert result is "Foo"
+    assert result == "Foo"
 
 
 async def test_attempt_join_no_login(window: GameConnectionWindow):

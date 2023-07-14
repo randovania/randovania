@@ -1,10 +1,16 @@
-from typing import Iterable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from randovania.layout.preset import Preset
 
 
 class PresetCSGeneration(PresetGeneration):

@@ -2193,7 +2193,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Arachnus",
+                                            "name": "BossArachnus",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2217,7 +2217,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Arachnus",
+                    "event_name": "BossArachnus",
                     "connections": {
                         "Door to Arachnus Save Station": {
                             "type": "and",
@@ -3097,7 +3097,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Event - A2BottomWaterTurbine": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3108,6 +3108,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -3129,7 +3138,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "A2WaterLowered",
+                    "event_name": "A2ExteriorWaterTurbine",
                     "connections": {
                         "Door to Hydro Station Exterior": {
                             "type": "and",
@@ -3303,7 +3312,7 @@
                             }
                         },
                         "Dock to Water Turbine Station Pipe": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3314,6 +3323,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -3492,7 +3510,7 @@
                             }
                         },
                         "Dock to Lower Hydro Station Pipe": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3503,6 +3521,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -3739,7 +3766,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Water Turbine Station": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3750,6 +3777,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -4439,7 +4475,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Middle": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -4450,6 +4486,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -4494,7 +4539,7 @@
                             }
                         },
                         "Dock to Lower Hydro Station Pipe": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -4505,6 +4550,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -5655,10 +5709,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": false,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -5756,10 +5807,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": true,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -6474,7 +6522,7 @@
                         "area": "Speedboosting Challenge",
                         "node": "Door to Breeding Grounds Access"
                     },
-                    "default_dock_weakness": "Hydro Station EMP Activated Door",
+                    "default_dock_weakness": "Hydro Station EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6503,7 +6551,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "A2EMP",
+                    "event_name": "EMPA2",
                     "connections": {
                         "Dock to Hydro Station Exterior (Bottom)": {
                             "type": "and",
@@ -6583,7 +6631,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "EMP",
+                                            "name": "A5EMPActivated",
                                             "amount": 1,
                                             "negate": false
                                         }

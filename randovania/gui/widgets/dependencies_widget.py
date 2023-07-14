@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import importlib.metadata
 from typing import Any
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 
 

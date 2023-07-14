@@ -1,15 +1,21 @@
-import datetime
+from __future__ import annotations
 
+import datetime
+from typing import TYPE_CHECKING
+
+from PySide6 import QtCore, QtGui
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem
+from PySide6.QtWidgets import QDialog, QDialogButtonBox, QPushButton, QTableWidgetItem
 from qasync import asyncSlot
 
 from randovania.gui.generated.multiplayer_session_browser_dialog_ui import Ui_MultiplayerSessionBrowserDialog
-from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
-from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry, MultiplayerSessionEntry
-from randovania.network_client.network_client import ConnectionState
+from randovania.gui.lib import common_qt_lib, model_lib
+from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.network_common.session_state import MultiplayerSessionState
+
+if TYPE_CHECKING:
+    from randovania.network_client.network_client import ConnectionState
+    from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerSessionListEntry
 
 
 class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
@@ -22,6 +28,15 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
         self.network_client = network_client
+
+        self.item_model = QtGui.QStandardItemModel(0, 6, self)
+        self.item_model.setHorizontalHeaderLabels(["Name", "State", "Players", "Password?", "Creator",
+                                                   "Creation Date"])
+
+        self.table_widget.setModel(self.item_model)
+        self.table_widget.resizeColumnToContents(2)
+        self.table_widget.resizeColumnToContents(3)
+        self.table_widget.sortByColumn(5, QtCore.Qt.SortOrder.DescendingOrder)
 
         self.refresh_button = QPushButton("Refresh")
         self.button_box.addButton(self.refresh_button, QDialogButtonBox.ButtonRole.ResetRole)
@@ -45,11 +60,15 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         self.filter_name_edit.textEdited.connect(self.update_list)
         self.filter_age_spin.valueChanged.connect(self.update_list)
 
-        self.table_widget.itemSelectionChanged.connect(self.on_selection_changed)
-        self.table_widget.itemDoubleClicked.connect(self.on_double_click)
+        table_selection = self._selection_model()
+        table_selection.selectionChanged.connect(self.on_selection_changed)
+        self.table_widget.doubleClicked.connect(self.on_double_click)
 
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
         self.on_server_connection_state_updated(self.network_client.connection_state)
+
+    def _selection_model(self) -> QtCore.QItemSelectionModel:
+        return self.table_widget.selectionModel()
 
     @handle_network_errors
     async def refresh(self, *, ignore_limit: bool = False):
@@ -67,15 +86,16 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
 
     def on_selection_changed(self):
         self.button_box.button(QDialogButtonBox.StandardButton.Ok).setEnabled(
-            len(self.table_widget.selectedItems()) > 0
+            not self._selection_model().selection().empty()
         )
 
     @property
     def selected_session(self) -> MultiplayerSessionListEntry:
-        return self.table_widget.selectedItems()[0].data(Qt.UserRole)
+        selection: QtCore.QItemSelectionRange = self._selection_model().selection().first()
+        return selection.topLeft().data(Qt.ItemDataRole.UserRole)
 
     @asyncSlot(QTableWidgetItem)
-    async def on_double_click(self, item: QTableWidgetItem):
+    async def on_double_click(self, item):
         await self._attempt_join()
 
     @asyncSlot()
@@ -90,9 +110,7 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
             return self.accept()
 
     def update_list(self):
-        self.table_widget.clear()
-        self.table_widget.setHorizontalHeaderLabels(["Name", "State", "Players", "Password?", "Creator",
-                                                     "Creation Date"])
+        self.item_model.removeRows(0, self.item_model.rowCount())
 
         name_filter = self.filter_name_edit.text().strip()
 
@@ -110,12 +128,12 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
                 displayed_states.add(state)
 
         dont_filter_age = not self.filter_age_check.isChecked()
-        now = datetime.datetime.now(tz=datetime.timezone.utc)
+        now = datetime.datetime.now(tz=datetime.UTC)
         max_session_age = datetime.timedelta(days=self.filter_age_spin.value())
 
         visible_sessions = [
             session
-            for session in reversed(self.sessions)
+            for session in self.sessions
             if (session.has_password in displayed_has_password
                 and session.state in displayed_states
                 and name_filter.lower() in session.name.lower()
@@ -123,25 +141,22 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         ]
         self.visible_sessions = visible_sessions
 
-        self.table_widget.setRowCount(len(visible_sessions))
+        self.item_model.setRowCount(len(visible_sessions))
         for i, session in enumerate(visible_sessions):
-            name = QTableWidgetItem(session.name)
-            state = QTableWidgetItem(session.state.user_friendly_name)
-            players_item = QTableWidgetItem(str(session.num_players))
-            has_password = QTableWidgetItem("Yes" if session.has_password else "No")
-            creator = QTableWidgetItem(session.creator)
-            creation_date = QTableWidgetItem(session.creation_date.astimezone().strftime("%Y-%m-%d %H:%M"))
+            name = QtGui.QStandardItem(session.name)
+            state = QtGui.QStandardItem(session.state.user_friendly_name)
+            num_users = model_lib.create_int_item(session.num_users)
+            has_password = QtGui.QStandardItem("Yes" if session.has_password else "No")
+            creator = QtGui.QStandardItem(session.creator)
+            creation_date = model_lib.create_date_item(session.creation_date)
 
-            name.setData(Qt.UserRole, session)
-            self.table_widget.setItem(i, 0, name)
-            self.table_widget.setItem(i, 1, state)
-            self.table_widget.setItem(i, 2, players_item)
-            self.table_widget.setItem(i, 3, has_password)
-            self.table_widget.setItem(i, 4, creator)
-            self.table_widget.setItem(i, 5, creation_date)
-
-        for i in range(6):
-            self.table_widget.resizeColumnToContents(i)
+            name.setData(session, Qt.ItemDataRole.UserRole)
+            self.item_model.setItem(i, 0, name)
+            self.item_model.setItem(i, 1, state)
+            self.item_model.setItem(i, 2, num_users)
+            self.item_model.setItem(i, 3, has_password)
+            self.item_model.setItem(i, 4, creator)
+            self.item_model.setItem(i, 5, creation_date)
 
         self.status_label.setText(f"{len(self.sessions)} sessions total, {len(visible_sessions)} displayed.")
 

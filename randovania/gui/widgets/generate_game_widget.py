@@ -1,36 +1,42 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import datetime
 import logging
 import random
 import uuid
-import markdown
-from pathlib import Path
-from typing import Callable
+from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets, QtGui, QtCore
+import markdown
+from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 import randovania
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.preset_history_dialog import PresetHistoryDialog
 from randovania.gui.generated.generate_game_widget_ui import Ui_GenerateGameWidget
-from randovania.gui.lib import common_qt_lib, async_dialog
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.interface_common import generator_frontend
-from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout import preset_describer
 from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
-from randovania.layout.versioned_preset import VersionedPreset, InvalidPreset
+from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.migration_lib import UnsupportedVersion
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import ImpossibleForSolver
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
+
+    from randovania.games.game import RandovaniaGame
+    from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.options import Options
+    from randovania.layout.layout_description import LayoutDescription
+    from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
 class RetryGeneration(Exception):
@@ -409,7 +415,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             if code == async_dialog.StandardButton.Save:
                 layout = e.layout
             elif code == async_dialog.StandardButton.Retry:
-                raise RetryGeneration()
+                raise RetryGeneration
             else:
                 self._background_task.progress_update_signal.emit("Solver Error", 0)
                 return

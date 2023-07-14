@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.lib import migration_lib
 
 
@@ -225,6 +227,87 @@ def _migrate_v18(data: dict) -> dict:
     return data
 
 
+def _migrate_v19(data: dict) -> dict:
+    game = data["game"]
+    if game in {"blank", "cave_story", "am2r"}:
+        return data
+
+    # changes TeleporterNode to DockNode
+    def change_node(node_to_change, regions_data: dict):
+        node_to_change["node_type"] = "dock"
+        node_to_change["default_connection"] = node_to_change.pop("destination")
+
+        # find the default node
+        target_region_data = next(region for region in regions_data if region["name"]
+                                  == node_to_change["default_connection"]["region"])
+        area_data = target_region_data["areas"][node_to_change["default_connection"]["area"]]
+        node_to_change["default_connection"]["node"] = area_data["default_node"]
+
+        node_to_change["default_dock_weakness"] = "Teleporter"
+        node_to_change["exclude_from_dock_rando"] = False
+        node_to_change["incompatible_dock_weaknesses"] = []
+        node_to_change["override_default_open_requirement"] = None
+        node_to_change["override_default_lock_requirement"] = None
+        node_to_change["extra"]["keep_name_when_vanilla"] = node_to_change.pop("keep_name_when_vanilla")
+        node_to_change["extra"]["editable"] = node_to_change.pop("editable")
+        node_to_change["dock_type"] = "teleporter"
+
+    # adds the required weaknesses
+    def add_dock_weakness(data: dict, game):
+        teleporter_weakness = {
+            "name": "Teleporter",
+            "extra": {"is_teleporter": True, "ignore_for_hints": True},
+            "items": {
+                "Teleporter": {
+                    "extra": {},
+                    "requirement": {
+                        "type": "and",
+                        "data": {
+                            "comment": None,
+                            "items": []
+                        }
+                    },
+                    "lock": None
+                }
+            },
+            "dock_rando": {
+                "unlocked": None,
+                "locked": None,
+                "change_from": [],
+                "change_to": []
+            }
+        }
+
+        data["dock_weakness_database"]["types"]["teleporter"] = teleporter_weakness
+        if game == "prime2":
+            data["dock_weakness_database"]["types"]["portal"]["extra"]["ignore_for_hints"] = True
+
+
+    regions_data = data["regions"]
+
+    # iterate overall nodes and checks if they are teleporter nodes
+    all_nodes = [
+        node
+        for region in regions_data
+        for area_name, area in region["areas"].items()
+        for node_name, node in area["nodes"].items() if node["node_type"] == "teleporter"
+    ]
+    for node in all_nodes:
+        change_node(node, regions_data)
+
+    add_dock_weakness(data, game)
+
+    return data
+
+
+def _migrate_v20(data: dict) -> dict:
+    for type_data in data["dock_weakness_database"]["types"].values():
+        if type_data["dock_rando"] is not None and type_data["dock_rando"]["locked"] is None:
+            type_data["dock_rando"] = None
+
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -244,6 +327,8 @@ _MIGRATIONS = [
     _migrate_v16,
     _migrate_v17,
     _migrate_v18,
+    _migrate_v19,
+    _migrate_v20,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

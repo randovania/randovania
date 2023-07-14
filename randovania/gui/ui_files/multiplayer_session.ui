@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>773</width>
-    <height>418</height>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,6 +65,13 @@
              </property>
              <property name="text">
               <string>Generate Game</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="export_game_button">
+             <property name="text">
+              <string>Export Game</string>
              </property>
             </widget>
            </item>
@@ -172,7 +179,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QTableWidget" name="tab_history">
+      <widget class="QTableView" name="tab_history">
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -182,33 +189,8 @@
        <attribute name="title">
         <string>History</string>
        </attribute>
-       <column>
-        <property name="text">
-         <string>Provider</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Receiver</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Pickup</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Location</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Time</string>
-        </property>
-       </column>
       </widget>
-      <widget class="QTableWidget" name="tab_audit">
+      <widget class="QTableView" name="tab_audit">
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -218,21 +200,6 @@
        <attribute name="title">
         <string>Audit Log</string>
        </attribute>
-       <column>
-        <property name="text">
-         <string>User</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Message</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Time</string>
-        </property>
-       </column>
       </widget>
      </widget>
     </item>

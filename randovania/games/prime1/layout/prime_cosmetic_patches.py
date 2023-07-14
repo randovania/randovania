@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 
 from randovania.games.game import RandovaniaGame
@@ -18,7 +20,7 @@ class PrimeCosmeticPatches(BaseCosmeticPatches):
     user_preferences: PrimeUserPreferences = dataclasses.field(default_factory=PrimeUserPreferences)
 
     @classmethod
-    def default(cls) -> "PrimeCosmeticPatches":
+    def default(cls) -> PrimeCosmeticPatches:
         return cls()
 
     @classmethod

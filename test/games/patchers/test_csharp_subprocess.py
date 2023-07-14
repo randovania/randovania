@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import asyncio
 import platform
 import sys
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import MagicMock, call, patch
 
 import pytest
 

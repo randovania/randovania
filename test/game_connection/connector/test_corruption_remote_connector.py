@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 from unittest.mock import AsyncMock
 
 import pytest
+from open_prime_rando.dol_patching.corruption import dol_versions
 
 from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation
-from open_prime_rando.dol_patching.corruption import dol_versions
 
 
 @pytest.fixture(name="connector")

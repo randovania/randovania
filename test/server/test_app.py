@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 from unittest.mock import MagicMock
 
@@ -5,7 +7,6 @@ import pytest
 
 import randovania
 import randovania.server.client_check
-from randovania.network_common import error
 from randovania.server import app
 
 
@@ -44,7 +45,9 @@ def test_create_app(mocker, tmpdir):
     assert result.config["DISCORD_REDIRECT_URI"] == "https://somewhere.nice/login_callback"
     assert result.config["FERNET_KEY"] == b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
 
-    encrpyted_value = b'gAAAAABfSh6fY4FOiqfGWMHXdE9A4uNVEu5wfn8BAsgP8EZ0-f-lqbYDqYzdiblhT5xhk-wMmG8sOLgKNN-dUaiV7n6JCydn7Q=='
+    encrpyted_value = (
+        b'gAAAAABfSh6fY4FOiqfGWMHXdE9A4uNVEu5wfn8BAsgP8EZ0-f-lqbYDqYzdiblhT5xhk-wMmG8sOLgKNN-dUaiV7n6JCydn7Q=='
+    )
     assert result.sio.fernet_encrypt.decrypt(encrpyted_value) == b'banana'
 
 

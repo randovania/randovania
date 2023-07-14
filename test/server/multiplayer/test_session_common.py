@@ -1,18 +1,21 @@
-import datetime
+from __future__ import annotations
+
 import datetime
 import uuid
-from unittest.mock import MagicMock, call
+from typing import TYPE_CHECKING
+from unittest.mock import MagicMock
 
 import pytest
-from pytest_mock import MockerFixture
 
 from randovania.bitpacking import construct_pack
 from randovania.network_common import multiplayer_session
-from randovania.network_common.multiplayer_session import MultiplayerSessionAuditLog, \
-    MultiplayerSessionAuditEntry
+from randovania.network_common.multiplayer_session import MultiplayerSessionAuditEntry, MultiplayerSessionAuditLog
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.multiplayer import session_common
+
+if TYPE_CHECKING:
+    from pytest_mock import MockerFixture
 
 
 def test_emit_session_meta_update(session_update, flask_app, mocker, default_game_list):
@@ -76,7 +79,7 @@ def test_emit_session_actions_update(session_update, flask_app, mocker):
             receiver=uuid.UUID('d0f7ed70-66b0-413c-bc13-f9f7fb018726'),
             pickup="The Pickup",
             location=0,
-            time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc),
+            time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
         )]
     )
 
@@ -97,17 +100,17 @@ def test_emit_session_audit_update(session_update, flask_app, mocker):
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
 
     database.MultiplayerAuditEntry.create(session=session_update, user=1234, message="Did something",
-                                          time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
+                                          time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC))
     database.MultiplayerAuditEntry.create(session=session_update, user=1235, message="Did something else",
-                                          time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.timezone.utc))
+                                          time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.UTC))
 
     audit_log = MultiplayerSessionAuditLog(
         session_id=session_update.id,
         entries=[
             MultiplayerSessionAuditEntry(user="The Name", message="Did something",
-                                         time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc)),
+                                         time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC)),
             MultiplayerSessionAuditEntry(user="Other", message="Did something else",
-                                         time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.timezone.utc)),
+                                         time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.UTC)),
         ]
     )
 

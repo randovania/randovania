@@ -10,7 +10,44 @@ build-backend = "setuptools.build_meta"
 
 [tool.ruff]
 line-length = 120
+select = [
+    "E", "F", "W", "C90", "I", "UP", "C4",
+    "RSE",
+    "TCH",
+    "PTH",
+    "COM818", "COM819",
+    "ISC",
+    "PIE",
 
-ignore = [
-    "F405",  # star import, using in pseudo-ppc assembly
+    "PLC",
+    "PLC0208",  # iterating over set is also not deterministic, so we shouldn't do that!
+
+    "PLE",
+    "PLR0402", "PLR1701", "PLR1711", "PLR1722", "PLR0206",
+    "PLR0133", "PLR0124",
+    "PLW",
+]
+extend-ignore = [
+    "PLW0603",  # we use some globals here and there
+    "PLW2901",  # TODO: should actually fix these
+]
+
+# Version to target for generated code.
+target-version = "py311"
+
+[tool.ruff.isort]
+# This is very desirable, but causes issues with py-cord and some usages of construct_pack.encode
+# required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.mccabe]
+# Flag errors (`C901`) whenever the complexity level exceeds 25.
+# Defaults to 10, but we're being very flexible right now
+max-complexity = 25
+
+[tool.ruff.flake8-type-checking]
+runtime-evaluated-base-classes = [
+    "randovania.bitpacking.bitpacking.BitPackDataclass",
+    "randovania.bitpacking.type_enforcement.DataclassPostInitTypeCheck",
+    "randovania.bitpacking.json_dataclass.JsonDataclass",
+    "randovania.layout.base.base_configuration.BaseConfiguration",
 ]

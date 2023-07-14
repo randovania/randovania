@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import base64
 import functools
@@ -7,7 +9,7 @@ import ssl
 import time
 import uuid
 from enum import Enum
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import aiofiles
 import aiohttp
@@ -21,14 +23,29 @@ import randovania
 from randovania.bitpacking import bitpacking, construct_pack
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
-from randovania.network_common import connection_headers, error, admin_actions, pickup_serializer, signals, \
-    multiplayer_session
+from randovania.lib import container_lib
+from randovania.network_common import (
+    admin_actions,
+    connection_headers,
+    error,
+    multiplayer_session,
+    pickup_serializer,
+    remote_inventory,
+    signals,
+)
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionListEntry, MultiplayerSessionEntry, User, MultiplayerSessionActions,
-    MultiplayerWorldPickups, MultiplayerSessionAuditLog,
-    WorldUserInventory, RemoteInventory
+    MultiplayerSessionActions,
+    MultiplayerSessionAuditLog,
+    MultiplayerSessionEntry,
+    MultiplayerSessionListEntry,
+    MultiplayerWorldPickups,
+    User,
+    WorldUserInventory,
 )
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 class ConnectionState(Enum):
@@ -108,6 +125,7 @@ class NetworkClient:
     _connect_error: str | None = None
     _num_emit_failures: int = 0
     _sessions_interested_in: set[int]
+    _tracking_worlds: set[tuple[uuid.UUID, int]]
     _allow_reporting_username: bool = False
 
     def __init__(self, user_data_dir: Path, configuration: dict):
@@ -128,6 +146,7 @@ class NetworkClient:
         self._call_lock = asyncio.Lock()
         self._current_timeout = _MINIMUM_TIMEOUT
         self._sessions_interested_in = set()
+        self._tracking_worlds = set()
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
@@ -241,6 +260,9 @@ class NetworkClient:
                 self.logger.info("calling listen to session for %s", self._sessions_interested_in)
                 for session_id in list(self._sessions_interested_in):
                     await self.server_call("multiplayer_listen_to_session", (session_id, True))
+                for world_uid, user_id in list(self._tracking_worlds):
+                    await self.server_call("multiplayer_watch_inventory",
+                                           (str(world_uid), user_id, True, True))
 
                 self.logger.info("session restored successful")
 
@@ -356,11 +378,12 @@ class NetworkClient:
         self.logger.info("world %s, num pickups: %d", pickups.world_id, len(pickups.pickups))
 
     async def _on_world_user_inventory_raw(self, entry_id: str, user_id: int, raw_inventory: bytes):
-        try:
-            inventory = construct_pack.decode(raw_inventory, RemoteInventory)
-        except construct.ConstructError as e:
-            self.logger.debug("Unable to parse inventory for entry %d: %s", entry_id, str(e))
+        inventory_or_error = remote_inventory.decode_remote_inventory(raw_inventory)
+        if isinstance(inventory_or_error, construct.ConstructError):
+            self.logger.debug("Unable to parse inventory for entry %d: %s", entry_id, str(inventory_or_error))
             return
+        else:
+            inventory = inventory_or_error
 
         session_inventory = WorldUserInventory(
             world_id=uuid.UUID(entry_id),
@@ -442,11 +465,7 @@ class NetworkClient:
 
     async def listen_to_session(self, session_id: int, listen: bool):
         result = await self.server_call("multiplayer_listen_to_session", (session_id, listen))
-        sessions = self._sessions_interested_in
-        if listen:
-            sessions.add(session_id)
-        elif session_id in sessions:
-            sessions.remove(session_id)
+        container_lib.ensure_in_set(session_id, self._sessions_interested_in, listen)
         return result
 
     async def session_admin_global(self, session: MultiplayerSessionEntry,
@@ -462,6 +481,7 @@ class NetworkClient:
     async def world_track_inventory(self, world_uid: uuid.UUID, user_id: int, enable: bool):
         await self.server_call("multiplayer_watch_inventory",
                                (str(world_uid), user_id, enable, True))
+        container_lib.ensure_in_set((world_uid, user_id), self._tracking_worlds, enable)
 
     async def perform_world_sync(self, request: ServerSyncRequest) -> ServerSyncResponse:
         return construct_pack.decode(
@@ -473,6 +493,12 @@ class NetworkClient:
     @property
     def current_user(self) -> User | None:
         return self._current_user
+
+    @property
+    def current_user_id(self) -> int | None:
+        if self._current_user is not None:
+            return self._current_user.id
+        return None
 
     async def logout(self):
         self.logger.info("Logging out")

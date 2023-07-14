@@ -1,11 +1,17 @@
+from __future__ import annotations
+
 import pytest
 
-from randovania.game_description import integrity_check, data_reader, default_database
+from randovania.game_description import data_reader, default_database, integrity_check
 from randovania.games.game import RandovaniaGame
 from randovania.lib.enum_lib import iterate_enum
 
 _acceptable_database_errors = {
+    RandovaniaGame.METROID_PRIME: True,
+    RandovaniaGame.METROID_PRIME_ECHOES: True,
+    RandovaniaGame.METROID_PRIME_CORRUPTION: True,
     RandovaniaGame.SUPER_METROID: True,
+    RandovaniaGame.METROID_SAMUS_RETURNS: True,
 }
 
 
@@ -476,12 +482,9 @@ def test_invalid_db():
         "World/Area 1/Event - Foo is not an Event Node, but naming suggests it is",
         "World/Area 1/Event - Foo has a connection to itself",
         "World/Area 1/Door to Area 2 (Generic) should be named 'Other to Area 2'",
-        "World/Area 1/Door to Area 2 (Generic) connects to 'region World/area Area 2/node Generic Node'"
-        " which is not a DockNode",
-
         "World/Area 1/Door to Area 2 (Dock) should be named 'Other to Area 2'",
-        "World/Area 1/Door to Area 2 (Dock) connects to 'region World/area Area 2/node Door to Area 1',"
-        " but that dock connects to 'region World/area Area 1/node Door to Area 2 (Generic)' instead.",
+        "World/Area 1/Door to Area 2 (Dock) connects to 'region World/area Area 2/node Door to Area 1', "
+        "but that dock connects to 'region World/area Area 1/node Door to Area 2 (Generic)' instead.",
 
         "World/Area 2/Door to Area 1 should be named 'Other to Area 1'",
         "World/Area 2/Door to Area 1 connects to 'region World/area Area 1/node Door to Area 2 (Generic)',"

@@ -1,6 +1,11 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtCore, QtWidgets
 
-from randovania.games.game import RandovaniaGame
+if TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
 
 
 def format_game_faq(game: RandovaniaGame, widget: QtWidgets.QLabel):

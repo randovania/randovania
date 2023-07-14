@@ -1,17 +1,17 @@
+from __future__ import annotations
+
 import asyncio
 import datetime
 import json
 import uuid
-from unittest.mock import MagicMock, AsyncMock, ANY, call
+from typing import TYPE_CHECKING
+from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import pytest
-import pytest_mock
 from PySide6 import QtWidgets
-from pytest_mock import MockerFixture
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.games.game import RandovaniaGame
-from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -20,11 +20,24 @@ from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, MultiplayerUser, User, MultiplayerSessionAction,
-    MultiplayerSessionActions, GameDetails, MultiplayerWorld, MultiplayerSessionAuditLog, MultiplayerSessionAuditEntry,
+    GameDetails,
+    MultiplayerSessionAction,
+    MultiplayerSessionActions,
+    MultiplayerSessionAuditEntry,
+    MultiplayerSessionAuditLog,
+    MultiplayerSessionEntry,
+    MultiplayerUser,
+    MultiplayerWorld,
+    User,
     UserWorldDetail,
 )
 from randovania.network_common.session_state import MultiplayerSessionState
+
+if TYPE_CHECKING:
+    import pytest_mock
+    from pytest_mock import MockerFixture
+
+    from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 
 
 @pytest.fixture()
@@ -58,7 +71,7 @@ def sample_session(preset_manager):
         users_list=[
             MultiplayerUser(12, "Player A", True, worlds={
                 u1: UserWorldDetail(GameConnectionStatus.InGame,
-                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc))
+                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC))
             }),
         ],
         game_details=None,
@@ -94,7 +107,7 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
         users_list=[
             MultiplayerUser(12, "Player A", True, worlds={
                 u1: UserWorldDetail(GameConnectionStatus.InGame,
-                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.timezone.utc))
+                                    datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC))
             }),
             MultiplayerUser(24, "Player B", False, {}),
         ],
@@ -140,7 +153,7 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
     )
 
     texts = [
-        window.tab_history.item(0, i).text()
+        window.history_item_model.item(0, i).text()
         for i in range(5)
     ]
     assert texts == [
@@ -148,7 +161,7 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
         'W2',
         'Bombs',
         'Temple Grounds/Hive Chamber A/Pickup (Missile)',
-        timestamp.strftime("%c")
+        '2020-01-05T00:00:00.000',
     ]
 
 
@@ -417,7 +430,7 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
     )
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
-    permalink.parameters.player_count = 2 + (end_state == "wrong_count")
+    permalink.parameters.world_count = 2 - (end_state == "wrong_count")
     permalink.parameters.presets = [MagicMock(), MagicMock()]
     permalink.parameters.presets[0].is_same_configuration.return_value = False
 
@@ -456,6 +469,7 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
     mock_load_layout = mocker.patch("randovania.gui.lib.layout_loader.prompt_and_load_layout_description",
                                     new_callable=AsyncMock)
     layout = mock_load_layout.return_value
+    layout.save_to_file = MagicMock()
     layout.as_json = MagicMock()
     if end_state == "reject":
         mock_load_layout.return_value = None
@@ -464,8 +478,9 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
 
     preset = MagicMock()
     preset.is_same_configuration.return_value = True
-    layout.generator_parameters.player_count = 2 + (end_state == "wrong_count")
-    layout.parameters.presets = [preset, preset]
+    layout.generator_parameters.world_count = 2 + (end_state == "wrong_count")
+    layout.generator_parameters.presets = [preset, preset]
+    layout.generator_parameters.get_preset = MagicMock(return_value=preset)
 
     session = MagicMock()
     session.worlds = [MagicMock(), MagicMock()]
@@ -474,6 +489,8 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
     window._session = session
     window.generate_game_with_permalink = AsyncMock()
 
+    window.game_session_api.create_unclaimed_world = AsyncMock()
+
     # Run
     await window.import_layout()
 
@@ -481,11 +498,21 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
     mock_load_layout.assert_awaited_once_with(window)
 
     if end_state == "wrong_count":
-        mock_warning.assert_awaited_once_with(window, "Incompatible permalink", ANY)
+        window.game_session_api.create_unclaimed_world.assert_awaited_once_with("World 3", ANY)
+        assert window.game_session_api.create_unclaimed_world.await_args[0][1]._preset is preset
+        mock_warning.assert_awaited_once_with(
+            window,
+            "Temporary error",
+            "New worlds created to fit the imported game file. Please import it again."
+        )
     else:
         mock_warning.assert_not_awaited()
+        window.game_session_api.create_unclaimed_world.assert_not_awaited()
 
     if end_state == "import":
+        layout.save_to_file.assert_called_once_with(
+            window._options.data_dir.joinpath(f"last_multiplayer_{session.id}.rdvgame")
+        )
         window._admin_global_action.assert_has_awaits([
             call(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, ["uid1", "uid2"]),
             call(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION, layout.as_json.return_value),
@@ -621,8 +648,8 @@ def test_update_session_audit_log(window: MultiplayerSessionWindow):
     window.update_session_audit_log(log)
     assert scrollbar.value() == scrollbar.maximum()
 
-    assert window.tab_audit.item(0, 0).text() == "You"
-    assert window.tab_audit.item(0, 1).text() == "Did something for the 0-th time."
+    assert window.audit_item_model.item(0, 0).text() == "You"
+    assert window.audit_item_model.item(0, 1).text() == "Did something for the 0-th time."
 
     window.tab_audit.scrollToTop()
     window.update_session_audit_log(log)

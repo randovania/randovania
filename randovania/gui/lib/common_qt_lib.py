@@ -1,15 +1,19 @@
+from __future__ import annotations
+
 import os
 import platform
 import re
 import subprocess
 import typing
 from pathlib import Path
-from typing import Iterator
 
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtGui, QtWidgets
 
 import randovania
 from randovania import get_data_path
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
 
 
 def map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool):

@@ -1,17 +1,23 @@
-import dataclasses
-import uuid
-from typing import Callable
+from __future__ import annotations
 
-from randovania.games.game import RandovaniaGame
-from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
-from randovania.layout.base.available_locations import AvailableLocationsConfiguration
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
-from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
-from randovania.layout.lib.teleporters import TeleporterConfiguration
+import dataclasses
+from typing import TYPE_CHECKING
+
 from randovania.layout.preset import Preset
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    import uuid
+    from collections.abc import Callable
+
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.options import Options
+    from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
+    from randovania.layout.base.available_locations import AvailableLocationsConfiguration
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+    from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
+    from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
+    from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 class PresetEditor:
@@ -78,11 +84,11 @@ class PresetEditor:
     @property
     def game(self):
         return self._game
-        
+
     @property
     def description(self):
         return self._description
-        
+
     @description.setter
     def description(self, value):
         self._set_field("description", value)

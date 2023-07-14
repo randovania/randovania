@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock
 
 from randovania.games.game import RandovaniaGame
@@ -44,7 +46,7 @@ def test_select_preset_two_games_with_name(skip_qtbot, preset_manager):
     assert dialog.accept_button.isEnabled()
 
 def test_select_preset_incompatible_preset(skip_qtbot, preset_manager, mocker):
-    mocker.patch("randovania.layout.preset.Preset.settings_incompatible_with_multiworld", 
+    mocker.patch("randovania.layout.preset.Preset.settings_incompatible_with_multiworld",
                  return_value=["Foo", "Bar"])
     game = RandovaniaGame.METROID_PRIME_ECHOES
 

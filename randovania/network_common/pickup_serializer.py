@@ -1,15 +1,26 @@
-from typing import Iterator
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackFloat, BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat
 from randovania.game_description.pickup.pickup_category import PickupCategory
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceConversion, ResourceLock, \
-    PickupModel, PickupGeneratorParams
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceQuantity
+from randovania.game_description.resources.pickup_entry import (
+    PickupEntry,
+    PickupGeneratorParams,
+    PickupModel,
+    ResourceConversion,
+    ResourceLock,
+)
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceQuantity
 
 _PROBABILITY_OFFSET_META = {
     "min": -3,

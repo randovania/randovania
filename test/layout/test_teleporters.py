@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import NamedTuple
 
 import pytest
@@ -7,8 +9,12 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
-from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode, TeleporterList, \
-    TeleporterTargetList
+from randovania.layout.lib.teleporters import (
+    TeleporterConfiguration,
+    TeleporterList,
+    TeleporterShuffleMode,
+    TeleporterTargetList,
+)
 
 
 class Data(NamedTuple):
@@ -65,8 +71,8 @@ def _test_data(request):
         mode=TeleporterShuffleMode.VANILLA,
         skip_final_bosses=False,
         allow_unvisited_room_names=False,
-        excluded_teleporters=TeleporterList(tuple(), game),
-        excluded_targets=TeleporterTargetList(tuple(), game),
+        excluded_teleporters=TeleporterList((), game),
+        excluded_targets=TeleporterTargetList((), game),
     )
     return Data(
         reference=reference,

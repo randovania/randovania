@@ -1,18 +1,24 @@
+from __future__ import annotations
+
 import asyncio
 import multiprocessing
 from concurrent.futures import ProcessPoolExecutor
-from multiprocessing.connection import Connection
-from typing import Callable
+from typing import TYPE_CHECKING
 
 import sentry_sdk
 
 from randovania.generator import generator
-from randovania.interface_common.options import Options
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
-from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
+from randovania.lib.status_update_lib import ConstantPercentageCallback, ProgressUpdateCallable
 from randovania.resolver import debug
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from multiprocessing.connection import Connection
+
+    from randovania.interface_common.options import Options
+    from randovania.layout.generator_parameters import GeneratorParameters
+    from randovania.layout.layout_description import LayoutDescription
 
 export_busy = False
 
@@ -31,8 +37,9 @@ def generate_layout(options: Options,
     :return:
     """
     with sentry_sdk.start_transaction(op="task", name="generate_layout") as span:
-        span.set_tag("num_worlds", parameters.player_count)
-        span.set_tag("game", parameters.get_preset(0).game.short_name if parameters.player_count == 0 else "multiworld")
+        games = {preset.game.short_name for preset in parameters.presets}
+        span.set_tag("num_worlds", parameters.world_count)
+        span.set_tag("game", next(iter(games)) if len(games) == 1 else "cross-game")
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)
         span.set_tag("dock_rando", any(
@@ -47,11 +54,18 @@ def generate_layout(options: Options,
                 timeout_during_generation=options.advanced_timeout_during_generation,
                 attempts=retries,
             )
-            span.set_status("success")
+            span.set_tag("exception", "none")
+            span.set_status("ok")
             return result
 
+        except (asyncio.CancelledError, ConnectionResetError) as err:
+            span.set_tag("exception", type(err).__name__)
+            span.set_status("cancelled")
+            raise
+
         except Exception as err:
-            span.set_status(type(err).__name__)
+            span.set_tag("exception", type(err).__name__)
+            span.set_status("unknown_error")
             raise
 
 

@@ -1,4 +1,6 @@
-from PySide6 import QtWidgets, QtCore
+from __future__ import annotations
+
+from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 

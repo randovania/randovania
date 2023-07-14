@@ -2,19 +2,20 @@ from __future__ import annotations
 
 import dataclasses
 import typing
-from typing import Callable
 
 from randovania.game_description.resources import search
-from randovania.game_description.resources.damage_resource_info import DamageReduction
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.games.game import RandovaniaGame
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Callable
+
     from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.damage_resource_info import DamageReduction
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+    from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+    from randovania.games.game import RandovaniaGame
 
 
 def default_base_damage_reduction(db: ResourceDatabase, current_resources: ResourceCollection):

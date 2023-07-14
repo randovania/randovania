@@ -1,12 +1,17 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
 
 from randovania.game_description import game_description
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
+
+if TYPE_CHECKING:
+    from randovania.game_description.requirements.base import Requirement
 
 
 @pytest.mark.parametrize(["danger_a", "danger_b", "expected_result"], [

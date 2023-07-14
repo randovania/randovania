@@ -1,9 +1,17 @@
-from argparse import ArgumentParser
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 
 def flask_command_logic(args):
+    import randovania
+    sampling_rate = randovania.get_configuration().get("sentry_sampling_rate", 1.0)
+
     import randovania.monitoring
-    randovania.monitoring.server_init()
+    randovania.monitoring.server_init(sampling_rate=sampling_rate)
 
     from randovania.server import app
     server_app = app.create_app()

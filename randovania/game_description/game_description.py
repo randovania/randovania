@@ -1,19 +1,24 @@
 """Classes that describes the raw data of a game db."""
+from __future__ import annotations
+
 import copy
 import dataclasses
-from typing import Iterator
+from typing import TYPE_CHECKING
 
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceCollection
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockWeaknessDatabase
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.region_list import RegionList
-from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.dock import DockWeaknessDatabase
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGainTuple, ResourceInfo
+    from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+    from randovania.games.game import RandovaniaGame
 
 
 def _calculate_dangerous_resources_in_db(
@@ -112,13 +117,16 @@ class GameDescription:
                                             self.dock_weakness_database)
         self._dangerous_resources = None
 
-    def get_default_elevator_connection(self) -> dict[NodeIdentifier, AreaIdentifier]:
-        return {
-            self.region_list.identifier_for_node(node): node.default_connection
-
-            for node in self.region_list.iterate_nodes()
-            if isinstance(node, TeleporterNode) and node.editable
-        }
+    def get_prefilled_docks(self) -> list[int | None]:
+        region_list = self.region_list
+        dock_connection = [None] * len(region_list.all_nodes)
+        connections = list(dock_connection)
+        teleporter_dock_types = self.dock_weakness_database.all_teleporter_dock_types
+        for source in region_list.iterate_nodes():
+            if isinstance(source, DockNode) and source.dock_type in teleporter_dock_types:
+                target = region_list.node_by_identifier(source.default_connection)
+                connections[source.node_index] = target.node_index
+        return connections
 
     @property
     def dangerous_resources(self) -> frozenset[ResourceInfo]:
@@ -131,7 +139,7 @@ class GameDescription:
 
         return self._dangerous_resources
 
-    def get_mutable(self) -> "GameDescription":
+    def get_mutable(self) -> GameDescription:
         if self.mutable:
             return self
         else:

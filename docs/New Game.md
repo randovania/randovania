@@ -1,45 +1,20 @@
 
 ## Required Changes
 
+Randovania provides a command line tool for making the necessary changes to start adding a new game:
 
-In order to add support for a new game to Randovania, you will need to create a new folder, `randovania/games/{game-id}`, and add a `game_data.py` file to it containing a single variable, `game_data`, assigned to a GameData. This GameData must populate all fields except for the optional `patcher` field.
+```commandline
+python -m randovania development add-new-game --enum-name FANCY_EXPLORATION --enum-value fancy_exploration --short-name Fancy --long-name "Fancy Exploration: The Adventure"
+```
+Replace the values of the command with appropriate values for your game. The meaning is:
+- enum-name: Used in Randovania's codebase to refer to your game, via `RandovaniaGame.FANCY_EXPLORATION`.
+- enum-value: Used for file and file paths to refer to your game. Very hard to be changed in the future.
+- short-name: Used to prefix all classes used by your game, and in user-facing elements that needs to be brief.
+- long-name: Used in user-facing elements to mention your game.
 
-For specific details on each field, refer to the class definition in `randovania/games/game.py` for type annotations and further documentation. You can also refer to existing games' implementations.
+The command check if the provided values fit the naming rules for each of these. 
 
-Once the GameData has been created, the following steps are required:
-
-
-1. In `randovania/games/game.py`, add your `{game-id}` as a new value to `RandovaniaGame`. Multiple words must be split with underscores. Also add an import to your module in `RandovaniaGame`'s `data` property.
-
-
-2. Add an empty file named `__init__.py` to your game folder.
-
-
-3. Add the new database file to `json_data/{game-id}.json` or `json_data/header.json` in your game folder.
-The latter must have the region list split into multiple files. 
-**TODO**: list minimum requirements for the database file (areas, docks?, etc.) 
-
-
-4. Open Randovania > Edit > Database > Internal > {new game} and then press "Save as database". This ensures the 
-database is saved as the split format, as well as the human-readable version.
-
-
-5. Create a new default Preset for your new game:
-   1. Create `presets/starter_preset.rdvpreset` in your game folder. You can copy over an existing preset.
-   2. Add a valid unique uuid. Run `python -c "import uuid; print(uuid.uuid4())"` to generate one.
-   3. Remove fields that are not present in `BaseConfiguration`.
-   4. Remove all references to items and tricks of other games.
-   5. Ensure your GameData includes an entry for this default preset.
-
-
-6. Create the folder `pickup_database` in your game folder with the following content:
-   1. `pickup-database.json`, with content `{"pickup_categories": {}, "standard_pickups": {}, "ammo_pickups": {}, "default_pickups": {}}`.
-   2. `default_state/ammo-pickups.json`, with content `{"maximum_ammo": {}, "pickups_state": {}}`.
-   3. `default_state/standard-pickups.json`, with content  `{"pickups_state": {}}`.
-
-
-7. Run the unit tests. If some tests don't pass, one of the steps above have incorrect data.
-
+Make sure you have followed the Developer setup and activated the virtual environment before running the command.
 
 ### Correctly generating games
 
@@ -50,13 +25,11 @@ During development, this can be anything you want, which can help when the datab
 While the database deals with items, the generator and layouts uses pickups. It's now necessary to configuring the new
 game to have proper pickups:
 
-1. Fill your game's `item_database`. Use another game's file for reference.
+1. Fill your game's `pickup_database/pickup-database.json`. Use another game's file for reference.
 
 
-2. Update `major_items_configuration` and `ammo_configuration` in your game's starter preset.
+2. Update `standard_pickup_configuration` and `ammo_pickup_configuration` in your game's starter preset.
 
-
-3. Fill the default state in your game's `item_database`. (Needed for tests, but point of cleanup).
 
 
 ### Exporting games

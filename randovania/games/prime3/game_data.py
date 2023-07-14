@@ -1,9 +1,9 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
-from randovania.games.prime3.layout.preset_describer import (
-    CorruptionPresetDescriber
-)
+from randovania.games.prime3.layout.preset_describer import CorruptionPresetDescriber
 
 
 def _options():
@@ -12,8 +12,8 @@ def _options():
 
 
 def _gui() -> game.GameGui:
-    from randovania.games.prime3.pickup_database import progressive_items
     from randovania.games.prime3 import gui
+    from randovania.games.prime3.pickup_database import progressive_items
 
     return game.GameGui(
         tab_provider=gui.prime3_preset_tabs,
@@ -25,15 +25,15 @@ def _gui() -> game.GameGui:
 
 
 def _generator() -> game.GameGenerator:
-    from randovania.games.prime3.generator.item_pool.pool_creator import corruption_specific_pool
-    from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
+    from randovania.games.prime3.generator.pickup_pool.pool_creator import corruption_specific_pool
+    from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import AllJokesHintDistributor
     from randovania.resolver.bootstrap import MetroidBootstrap
 
     return game.GameGenerator(
-        item_pool_creator=corruption_specific_pool,
+        pickup_pool_creator=corruption_specific_pool,
         bootstrap=MetroidBootstrap(),
-        base_patches_factory=PrimeTrilogyBasePatchesFactory(),
+        base_patches_factory=BasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
     )
 
@@ -61,13 +61,13 @@ game_data: game.GameData = game.GameData(
 
     faq=[
         (
-           "What causes the Hypermode vines in Corrupted Pool to disappear?",
-           "Collecting the ship item in Hangar Bay removes the vines."
+            "What causes the Hypermode vines in Corrupted Pool to disappear?",
+            "Collecting the ship item in Hangar Bay removes the vines."
         ),
         (
-           "While fighting Rundas, the game lags and there are pirates and turrets in the way. What causes this?",
-           "If you collect the ship item in Hangar Bay before fighting Rundas,"
-           " both Rundas and the pirate layers will be active at the same time."
+            "While fighting Rundas, the game lags and there are pirates and turrets in the way. What causes this?",
+            "If you collect the ship item in Hangar Bay before fighting Rundas,"
+            " both Rundas and the pirate layers will be active at the same time."
         ),
         (
             "I have Ship Missiles but I am unable to break the wall in Ancient Courtyard.",

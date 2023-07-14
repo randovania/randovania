@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 import randovania
 
-SERVER_API_VERSION = 8
+SERVER_API_VERSION = 10
 
 
 def connection_headers():
-    from randovania.layout import preset_migration, permalink, description_migration
+    from randovania.layout import description_migration, permalink, preset_migration
     return {
         "X-Randovania-Version": randovania.VERSION,
         "X-Randovania-API-Version": str(SERVER_API_VERSION),

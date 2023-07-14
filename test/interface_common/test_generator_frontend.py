@@ -1,8 +1,13 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 from randovania.interface_common import generator_frontend
-from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
+
+if TYPE_CHECKING:
+    from randovania.interface_common.options import Options
 
 
 def test_generate_layout(mocker):

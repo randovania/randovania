@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import copy
 import math
 import uuid
@@ -847,6 +849,41 @@ def _migrate_v54(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v55(preset: dict) -> dict:
+    game = preset["game"]
+    if game in {"blank", "cave_story", "am2r"}:
+        return preset
+    preset["configuration"]["dock_rando"]["types_state"]["teleporter"] = {"can_change_from": [],"can_change_to": []}
+    return preset
+
+
+def _migrate_v56(preset: dict) -> dict:
+    if preset["game"] in {"dread", "samus_returns", "prime3"}:
+        preset["configuration"].pop("elevators")
+
+    return preset
+
+
+def _migrate_v57(preset: dict) -> dict:
+
+    types_table = {
+        "am2r": ["tunnel", "teleporter", "other"],
+        "blank": ["other"],
+        "cave_story": ["door", "trigger", "entrance", "exit", "teleporter", "debug cat", "other"],
+        "dread": ["tunnel", "other", "teleporter"],
+        "prime1": ["morph_ball", "other", "teleporter"],
+        "prime2": ["morph_ball", "other", "teleporter"],
+        "prime3": ["door", "morph_ball", "other", "teleporter"],
+        "samus_returns": ["door", "tunnel", "other", "teleporter"],
+        "super_metroid": ["door", "morph_ball", "other", "teleporter"],
+    }
+
+    for type_name in types_table[preset["game"]]:
+        preset["configuration"]["dock_rando"]["types_state"].pop(type_name)
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -902,6 +939,9 @@ _MIGRATIONS = [
     _migrate_v52,
     _migrate_v53,
     _migrate_v54,
+    _migrate_v55,
+    _migrate_v56,
+    _migrate_v57,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

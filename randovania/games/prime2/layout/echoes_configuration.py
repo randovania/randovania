@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
-from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
+from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
@@ -24,10 +26,6 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
     SEVEN = 7
     EIGHT = 8
     NINE = 9
-
-    @classmethod
-    def default(cls) -> "LayoutSkyTempleKeyMode":
-        return cls.NINE
 
     @property
     def num_keys(self):

@@ -1,19 +1,28 @@
+from __future__ import annotations
+
 import uuid
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, PropertyMock, call
 
 import peewee
 import pytest
 from frozendict import frozendict
-from pytest_mock import MockerFixture
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
-from randovania.network_common import error
+from randovania.network_common import error, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.world_sync import ServerSyncRequest, ServerWorldSync, ServerSyncResponse, \
-    ServerWorldResponse
+from randovania.network_common.world_sync import (
+    ServerSyncRequest,
+    ServerSyncResponse,
+    ServerWorldResponse,
+    ServerWorldSync,
+)
 from randovania.server import database
 from randovania.server.multiplayer import world_api
+
+if TYPE_CHECKING:
+    from pytest_mock import MockerFixture
 
 
 def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker):
@@ -34,21 +43,21 @@ def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker
 
 
 @pytest.mark.parametrize(("progression", "result"), [
-        (   # normal
-            [("Power", 1),],
-            ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
-             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fdaq')
-        ),
-        (   # negative
-            [("Missile", -5),],
-            ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
-             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35(E0^{')
-        ),
-        (   # progressive
+    (  # normal
+            [("Power", 1) ],
+            ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fPr8')
+    ),
+    (  # negative
+            [("Missile", -5) ],
+            ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35sC@#!')
+    ),
+    (  # progressive
             [("DarkSuit", 1), ("LightSuit", 1)],
-            ('C?gdGwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
-             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu368yy0`')
-        )
+            ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
+             'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu364TnIm')
+    )
 ])
 def test_emit_world_pickups_update_one_action(
         flask_app, two_player_session, generic_pickup_category,
@@ -86,7 +95,7 @@ def test_emit_world_pickups_update_one_action(
     # Run
     world_api.emit_world_pickups_update(sio, w1)
 
-    # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
+    # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
     # from randovania.server.multiplayer.world_api import _base64_encode_pickup
     # new_data = _base64_encode_pickup(pickup, echoes_resource_database)
     # assert new_data == b""
@@ -181,7 +190,7 @@ def test_game_session_collect_pickup_etm(
     ((0, 1), (0, 1)),
 ])
 def test_collect_locations_other(flask_app, two_player_session, echoes_resource_database,
-                                           locations_to_collect, exists, mocker):
+                                 locations_to_collect, exists, mocker):
     mock_get_pickup_target: MagicMock = mocker.patch(
         "randovania.server.multiplayer.world_api._get_pickup_target", autospec=True)
     mock_session_description: PropertyMock = mocker.patch(
@@ -226,7 +235,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     mock_emit = mocker.patch("flask_socketio.emit")
     mock_emit_pickups = mocker.patch("randovania.server.multiplayer.world_api.emit_world_pickups_update")
     mock_emit_actions = mocker.patch("randovania.server.multiplayer.session_common.emit_session_actions_update")
-    mock_emit_inventory = mocker.patch("randovania.server.multiplayer.session_common.emit_inventory_update")
+    mock_emit_inventory = mocker.patch("randovania.server.multiplayer.world_api.emit_inventory_update")
 
     sio = MagicMock()
     user = database.User.get_by_id(1234)
@@ -268,7 +277,8 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
         worlds=frozendict({
             w1.uuid: ServerWorldResponse(
                 world_name=w1.name,
-                session=session.create_list_entry(user),
+                session_id=session.id,
+                session_name=session.name,
             ),
         }),
         errors=frozendict({
@@ -289,7 +299,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     mock_emit_pickups.assert_has_calls([call(sio, w1), call(sio, w2)], any_order=True)
     mock_emit_session_update.assert_called_once_with(session)
     mock_emit_actions.assert_called_once_with(session)
-    mock_emit_inventory.assert_called_once_with(a1)
+    mock_emit_inventory.assert_called_once_with(sio, w1, 1234, b"foo")
     mock_emit.assert_not_called()
 
 
@@ -310,3 +320,22 @@ def test_report_disconnect(mock_emit_session_update, solo_two_world_session):
     a1 = database.WorldUserAssociation.get_by_instances(world=1, user=1234)
     assert a1.connection_state == GameConnectionStatus.Disconnected
     mock_emit_session_update.assert_called_once_with(database.MultiplayerSession.get_by_id(1))
+
+
+def test_emit_inventory_room(solo_two_world_session):
+    sio = MagicMock()
+    sio.is_room_not_empty.return_value = True
+
+    world = database.World.get_by_id(1)
+
+    # Run
+    world_api.emit_inventory_update(sio, world, 1234, b"foo")
+
+    # Assert
+    sio.sio.emit.assert_called_once_with(
+        signals.WORLD_BINARY_INVENTORY,
+        (str(world.uuid), 1234, b"foo"),
+        to=f"multiplayer-{world.uuid}-1234-inventory",
+        namespace="/",
+        include_self=True,
+    )

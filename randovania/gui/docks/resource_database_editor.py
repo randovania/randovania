@@ -1,16 +1,16 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import functools
 import json
 import typing
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -19,6 +19,10 @@ from randovania.gui.generated.resource_database_editor_ui import Ui_ResourceData
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import create_tree_items_for_requirement
 from randovania.lib import frozen_lib
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True)

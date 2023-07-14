@@ -1,8 +1,13 @@
+from __future__ import annotations
+
 import asyncio
-from typing import Callable, Awaitable
+from typing import TYPE_CHECKING
 
 import shiboken6
 from PySide6 import QtCore
+
+if TYPE_CHECKING:
+    from collections.abc import Awaitable, Callable
 
 
 class InfiniteTimer(QtCore.QObject):

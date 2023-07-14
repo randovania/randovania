@@ -1,12 +1,11 @@
+from __future__ import annotations
+
 import asyncio
 import datetime
 import logging
-import os
 import time
 import typing
-import uuid
 from pathlib import Path
-from typing import Iterator
 
 import dulwich.porcelain
 import dulwich.repo
@@ -16,6 +15,10 @@ import randovania
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
+
+if typing.TYPE_CHECKING:
+    import uuid
+    from collections.abc import Iterator
 
 
 def read_preset_list() -> list[Path]:
@@ -35,7 +38,7 @@ def _commit(message: str, file_path: Path, repository: Path, remove: bool):
         try:
             r.open_index()
         except Exception:
-            os.remove(r.index_path())
+            Path(r.index_path()).unlink()
             r.reset_index()
 
     author = "randovania <nobody@example.com>"
@@ -59,8 +62,8 @@ def _get_preset_at_version(repository: Path, commit_sha: bytes, file_path: Path)
 
 
 def _history_for_file(repository: Path, file_path: Path) -> Iterator[tuple[datetime.datetime, bytes]]:
-    from dulwich.walk import WalkEntry
     from dulwich.objects import Commit
+    from dulwich.walk import WalkEntry
 
     with dulwich.porcelain.open_repo_closing(repository) as r:
         r = typing.cast(dulwich.repo.Repo, r)
@@ -156,7 +159,7 @@ class PresetManager:
     def delete_preset(self, preset: VersionedPreset):
         del self.custom_presets[preset.uuid]
         path = self._file_name_for_preset(preset)
-        os.remove(path)
+        path.unlink()
         self._commit(f"Remove preset '{preset.name}'", path, True)
 
     def included_preset_with(self, game: RandovaniaGame, name: str) -> VersionedPreset | None:

@@ -1,10 +1,19 @@
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig
-from randovania.layout.base.base_configuration import BaseConfiguration
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig, DreadConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
-    fill_template_strings_from_tree, message_for_required_mains, handle_progressive_expected_counts, has_shuffled_item,
+    fill_template_strings_from_tree,
+    handle_progressive_expected_counts,
+    has_shuffled_item,
+    message_for_required_mains,
 )
+
+if TYPE_CHECKING:
+    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 def describe_artifacts(artifacts: DreadArtifactConfig) -> list[dict[str, bool]]:
@@ -77,9 +86,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                     "Progressive Spin": has_shuffled_item(standard_pickups, "Progressive Spin")
                 }
             ],
-            "Gameplay": [
-                {f"Elevators/Shuttles: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
-            ],
+            "Gameplay": [],
             "Goal": describe_artifacts(configuration.artifacts),
             "Game Changes": [
                 message_for_required_mains(

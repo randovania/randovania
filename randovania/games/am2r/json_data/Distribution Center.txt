@@ -81,7 +81,7 @@ Extra - map_name: rm_a5h04
 
 > Door to Pipe Hub Access; Heals? False
   * Layers: default
-  * A5 Near Pipe Hub EMP Door to Pipe Hub Access/Door to Distribution Center Exterior West
+  * Distribution Center Pipe Hub Access EMP Door to Pipe Hub Access/Door to Distribution Center Exterior West
   * Extra - instance_id: 132467
   > Door to Blade Bot Patrol Room
       Trivial
@@ -220,7 +220,7 @@ Extra - map_name: rm_a5c04
 
 > Door to Energy Distribution Tower East; Heals? False
   * Layers: default
-  * A5 Near Save EMP Door to Energy Distribution Tower East/Door to Energy Distribution Tower West
+  * Distribution Center Energy Distribution Tower East EMP Door to Energy Distribution Tower East/Door to Energy Distribution Tower West
   * Extra - instance_id: 133513
   > Door to Energy Distribution Entrance Save Station
       Trivial
@@ -268,21 +268,21 @@ Energy Distribution Activation
 Extra - map_name: rm_a5c07
 > Door to Energy Distribution Activation Shaft; Heals? False
   * Layers: default
-  * A5 Activation Tower Door to Energy Distribution Activation Shaft/Door to Energy Distribution Activation
+  * Distribution Center Energy Restored Door to Energy Distribution Activation Shaft/Door to Energy Distribution Activation
   * Extra - instance_id: 133732
   > Event - EMP Activation Statue
       Morph Ball
 
 > Door to Energy Distribution Emergency Exit; Heals? False
   * Layers: default
-  * A5 Activation Tower Door to Energy Distribution Emergency Exit/Door to Energy Distribution Activation
+  * Distribution Center Energy Restored Door to Energy Distribution Emergency Exit/Door to Energy Distribution Activation
   * Extra - instance_id: 133731
   > Event - EMP Activation Statue
       Trivial
 
 > Event - EMP Activation Statue; Heals? False
   * Layers: default
-  * Event EMP Activated
+  * Event Area 5 - Distribution Center Energy Activated
   > Door to Energy Distribution Activation Shaft
       Trivial
   > Door to Energy Distribution Emergency Exit
@@ -325,7 +325,7 @@ EMP Ball Introduction
 Extra - map_name: rm_a5c09
 > Door to Energy Distribution Robot Home; Heals? False
   * Layers: default
-  * A5 Near Activation Tower EMP Door to Energy Distribution Robot Home/Door to EMP Ball Introduction
+  * Distribution Center EMP Ball Introduction EMP Door to Energy Distribution Robot Home/Door to EMP Ball Introduction
   * Extra - instance_id: 133836
   > Event - EMPPuzzle
       Trivial
@@ -339,7 +339,7 @@ Extra - map_name: rm_a5c09
 
 > Event - EMPPuzzle; Heals? False
   * Layers: default
-  * Event EMP NearA5EMPActivationStatue
+  * Event EMP - Area 5 EMP Ball Introduction
   > Door to Energy Distribution Robot Home
       Trivial
   > Door to Energy Distribution Emergency Exit
@@ -350,7 +350,7 @@ Energy Distribution Robot Home
 Extra - map_name: rm_a5c10
 > Door to Energy Distribution Tower East; Heals? False
   * Layers: default
-  * A5 Robots Showcase EMP Door to Energy Distribution Tower East/Door to Energy Distribution Robot Home
+  * Distribution Center Robot Home EMP Door to Energy Distribution Tower East/Door to Energy Distribution Robot Home
   * Extra - instance_id: 133903
   > Event - EMPPuzzle
       Trivial
@@ -364,7 +364,7 @@ Extra - map_name: rm_a5c10
 
 > Event - EMPPuzzle; Heals? False
   * Layers: default
-  * Event EMP A5RobotsEMP
+  * Event EMP - Area 5 Robot Home
   > Door to Energy Distribution Tower East
       Trivial
   > Door to EMP Ball Introduction
@@ -375,7 +375,7 @@ Energy Distribution Tower East
 Extra - map_name: rm_a5c11
 > Door to Energy Distribution Tower West; Heals? False
   * Layers: default
-  * A5 Near Save EMP Door to Energy Distribution Tower West/Door to Energy Distribution Tower East
+  * Distribution Center Energy Distribution Tower East EMP Door to Energy Distribution Tower West/Door to Energy Distribution Tower East
   * Extra - instance_id: 133914
   > Door to Energy Distribution Zeta Nest
       Trivial
@@ -391,14 +391,14 @@ Extra - map_name: rm_a5c11
 
 > Door to Energy Distribution Zeta Nest; Heals? False
   * Layers: default
-  * A5 Near Save EMP Door to Energy Distribution Zeta Nest/Door to Energy Distribution Tower East
+  * Distribution Center Energy Distribution Tower East EMP Door to Energy Distribution Zeta Nest/Door to Energy Distribution Tower East
   * Extra - instance_id: 133911
   > Door to Energy Distribution Tower West
       Trivial
 
 > Event - EMP Puzzle; Heals? False
   * Layers: default
-  * Event EMP NearA5Save
+  * Event EMP - Area 5 Energy Distribution Tower East
   > Door to Energy Distribution Tower West
       Trivial
   > Door to Energy Distribution Robot Home
@@ -425,14 +425,14 @@ Extra - map_name: rm_a5c12
 
 > Door to Energy Distribution Tower East; Heals? False
   * Layers: default
-  * A5 Near Save EMP Door to Energy Distribution Tower East/Door to Energy Distribution Zeta Nest
+  * Distribution Center Energy Distribution Tower East EMP Door to Energy Distribution Tower East/Door to Energy Distribution Zeta Nest
   * Extra - instance_id: 133981
   > Middle
       Can Use Any Bombs and Power Grip Wall
 
 > Event - Zeta; Heals? False
   * Layers: default
-  * Event Area 5 - Interior Zeta
+  * Event Metroids Area 5 - Interior Zeta
   > Middle
       Trivial
   > Pickup (Zeta)
@@ -486,6 +486,8 @@ Extra - map_name: rm_a5c13
   * Layers: default
   * Normal Door to Distribution Facility Connecting Path/Door to Distribution Facility Tower West
   * Extra - instance_id: 134068
+  > Door to Pipe Hub
+      Disabled Screw Attack Pipe Blocks and Space Jump Wall
   > Near Middle Pipe
       Screw Attack
   > Pillar
@@ -495,6 +497,8 @@ Extra - map_name: rm_a5c13
   * Layers: default
   * Normal Door to Pipe Hub/Door to Distribution Facility Tower West
   * Extra - instance_id: 134069
+  > Door to Distribution Facility Connecting Path
+      Disabled Screw Attack Pipe Blocks
   > Pillar
       Screw Attack
 
@@ -582,16 +586,12 @@ Extra - map_name: rm_a5c14
 > Pipe to The Tower; Heals? False
   * Layers: default
   * Teleporter to Inner Tower Pipe/Pipe to Distribution Center
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Pipe to Industrial Complex
       Trivial
 
 > Pipe to Industrial Complex; Heals? False
   * Layers: default
   * Teleporter to Upper Factory Pipe/Pipe to Distribution Center
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Door to Distribution Facility Tower West
       Morph Ball
   > Pipe to The Tower
@@ -602,8 +602,6 @@ Extra - map_name: rm_a5c14
 > Pipe to Golden Temple; Heals? False
   * Layers: default
   * Teleporter to Inner Temple Pipe/Pipe to Distribution Center
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Door to Distribution Facility Tower West
       Morph Ball
 
@@ -621,14 +619,14 @@ Extra - map_name: rm_a5c15
 
 > Door to Distribution Center Exterior West; Heals? False
   * Layers: default
-  * A5 Near Pipe Hub EMP Door to Distribution Center Exterior West/Door to Pipe Hub Access
+  * Distribution Center Pipe Hub Access EMP Door to Distribution Center Exterior West/Door to Pipe Hub Access
   * Extra - instance_id: 134426
   > Door to Pipe Hub
       Trivial
 
 > Event - NearLeftOutsideEMP; Heals? False
   * Layers: default
-  * Event A5NearPipeHubEMP
+  * Event EMP - Area 5 Pipe Hub Access
   > Door to Pipe Hub
       Trivial
 
@@ -742,7 +740,7 @@ Extra - map_name: rm_a5c18
 
 > Event - Right Bottom Alpha; Heals? False
   * Layers: default
-  * Event Area 5 - Squad Right Bottom Alpha
+  * Event Metroids Area 5 - Squad Right Bottom Alpha
   > Bottom
       Trivial
   > Pickup (Right Bottom Alpha)
@@ -750,7 +748,7 @@ Extra - map_name: rm_a5c18
 
 > Event - Right Top Alpha; Heals? False
   * Layers: default
-  * Event Area 5 - Squad Right Top Alpha
+  * Event Metroids Area 5 - Squad Right Top Alpha
   > Bottom
       Trivial
   > Pickup (Right Top Alpha)
@@ -758,7 +756,7 @@ Extra - map_name: rm_a5c18
 
 > Event - Left Bottom Alpha; Heals? False
   * Layers: default
-  * Event Area 5 - Squad Left Bottom Alpha
+  * Event Metroids Area 5 - Squad Left Bottom Alpha
   > Bottom
       Trivial
   > Pickup (Left Bottom Alpha)
@@ -766,7 +764,7 @@ Extra - map_name: rm_a5c18
 
 > Event - Left Middle Alpha; Heals? False
   * Layers: default
-  * Event Area 5 - Squad Left Middle Alpha
+  * Event Metroids Area 5 - Squad Left Middle Alpha
   > Bottom
       Trivial
   > Pickup (Left Middle Alpha)
@@ -774,7 +772,7 @@ Extra - map_name: rm_a5c18
 
 > Event - Left Top Alpha; Heals? False
   * Layers: default
-  * Event Area 5 - Squad Left Top Alpha
+  * Event Metroids Area 5 - Squad Left Top Alpha
   > Bottom
       Trivial
   > Pickup (Left Top Alpha)
@@ -880,7 +878,7 @@ Extra - map_name: rm_a5c20
 
 > Door to Distribution Center Exterior East Access; Heals? False
   * Layers: default
-  * A5 Near Right Side EMP Door to Distribution Center Exterior East Access/Door to Distribution Facility Intersection
+  * Distribution Center Exterior East Access EMP Door to Distribution Center Exterior East Access/Door to Distribution Facility Intersection
   * Extra - instance_id: 134670
   > Door to Distribution Facility Save Station
       Space Jump Wall
@@ -899,7 +897,7 @@ Extra - map_name: rm_a5c21
 
 > Door to Bullet Hell Room; Heals? False
   * Layers: default
-  * A5 Near Screw EMP Door to Bullet Hell Room/Door to Bullet Hell Room Access
+  * Distribution Center Bullet Hell Room Access EMP Door to Bullet Hell Room/Door to Bullet Hell Room Access
   * Extra - instance_id: 134711
   > Door to Distribution Facility Intersection
       Any of the following:
@@ -913,7 +911,7 @@ Extra - map_name: rm_a5c21
 
 > Event - EMP; Heals? False
   * Layers: default
-  * Event EMP NearScrewEMP
+  * Event EMP - Area 5 Bullet Hell Room Access
   > Door to Bullet Hell Room
       Any of the following:
           Space Jump or Walljump (Expert) or Can Use Spider Ball
@@ -1143,7 +1141,7 @@ Extra - map_name: rm_a5c30
 
 > Event - Left Gamma; Heals? False
   * Layers: default
-  * Event Area 5 - Dual Left Gamma
+  * Event Metroids Area 5 - Dual Left Gamma
   > Door to Facility Storage Intersection East
       Trivial
   > Pickup (Left Gamma)
@@ -1151,7 +1149,7 @@ Extra - map_name: rm_a5c30
 
 > Event - Right Gamma; Heals? False
   * Layers: default
-  * Event Area 5 - Dual Right Gamma
+  * Event Metroids Area 5 - Dual Right Gamma
   > Door to Facility Storage Intersection East
       Trivial
   > Pickup (Right Gamma)
@@ -1193,8 +1191,6 @@ Extra - map_name: rm_a5c31
 > Pipe to Serris Arena Pipe; Heals? False; Default Node
   * Layers: default
   * Teleporter to Serris Arena Pipe/Pipe to Ice Beam Chamber Access
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Door to Ice Beam Chamber
       Destroy Ice Barrier or Hijump Tunnel Climb
 
@@ -1217,7 +1213,7 @@ Extra - map_name: rm_a5c32
 
 > Event - Ice Beam Item collected; Heals? False
   * Layers: default
-  * Event Distribution Center Item at Ice location
+  * Event Area 5 - Distribution Center Item at Ice location Collected
   > Door to Ice Beam Chamber Access
       Trivial
 
@@ -1237,14 +1233,14 @@ Extra - map_name: rm_a5c33
 
 > Door to Distribution Facility Intersection; Heals? False
   * Layers: default
-  * A5 Near Right Side EMP Door to Distribution Facility Intersection/Door to Distribution Center Exterior East Access
+  * Distribution Center Exterior East Access EMP Door to Distribution Facility Intersection/Door to Distribution Center Exterior East Access
   * Extra - instance_id: 135330
   > Door to Distribution Center Exterior East
       Can Use Any Bombs
 
 > Event - NearRightOutsideEMP; Heals? False
   * Layers: default
-  * Event A5NearRightSideEMP
+  * Event EMP - Area 5 Exterior East Access
   > Door to Distribution Center Exterior East
       Trivial
 
@@ -1318,14 +1314,14 @@ Serris Arena
 Extra - map_name: rm_a5b03a
 > Door to Serris Arena Access; Heals? False
   * Layers: default
-  * Serris Door to Serris Arena Access/Door to Serris Arena; Excluded from Dock Lock Rando
+  * Serris Arena Entrance Door to Serris Arena Access/Door to Serris Arena; Excluded from Dock Lock Rando
   * Extra - instance_id: 135449
   > Door to Serris Arena Pipe
       Power Grip Wall
 
 > Door to Serris Arena Pipe; Heals? False
   * Layers: default
-  * Serris Door to Serris Arena Pipe/Door to Serris Arena; Excluded from Dock Lock Rando
+  * Serris Arena Entrance Door to Serris Arena Pipe/Door to Serris Arena; Excluded from Dock Lock Rando
   * Extra - instance_id: 135448
   > Door to Serris Arena Access
       Power Grip Wall
@@ -1333,7 +1329,7 @@ Extra - map_name: rm_a5b03a
       All of the following:
           All of the following:
               # Path requirements
-              After Distribution Center Item at Ice location and Before Boss Serris Defeated
+              After Area 5 - Distribution Center Item at Ice location Collected and Before Boss - Serris Defeated
           Any of the following:
               # Item requirements
               Combat (Advanced)
@@ -1359,7 +1355,7 @@ Extra - map_name: rm_a5b03a
 
 > Event - Serris; Heals? False
   * Layers: default
-  * Event Boss Serris Defeated
+  * Event Boss - Serris Defeated
   > Door to Serris Arena Access
       Trivial
 
@@ -1376,8 +1372,6 @@ Extra - map_name: rm_a5b03
 > Pipe to Ice Beam Chamber Access; Heals? False
   * Layers: default
   * Teleporter to Ice Beam Chamber Access/Pipe to Serris Arena Pipe
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Door to Serris Arena
       Trivial
 
@@ -1489,8 +1483,6 @@ Extra - map_name: rm_a5b08
 > Pipe to Gravity Area Blockade Pipe; Heals? False
   * Layers: default
   * Teleporter to Gravity Area Blockade Pipe/Pipe to Facility Storage Spiked Path Pipe
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Door to Facility Storage Spiked Path
       Morph Ball
 
@@ -1513,7 +1505,7 @@ Extra - map_name: rm_a5b09
   > Door to Distribution Center Exterior East
       Any of the following:
           Gravity Suit and Space Jump
-          Damage Boost (Advanced) and Walljump (Advanced) and Lava ≥ 400
+          Damage Boost (Advanced) and Walljump (Advanced) and Lava Damage ≥ 400
 
 ----------------
 Spiky Space Jump Trial Entrance
@@ -1744,19 +1736,18 @@ Extra - map_name: rm_a5a03
           Enabled Softlock Prevention
           Any of the following:
               # Items needed to get to top
-              Walljump (Intermediate)
+              Space Jump or Walljump (Intermediate) or Can Use Spider Ball
               All of the following:
                   # Items that only work with gravity
                   Gravity Suit
-                  Any of the following:
-                      Space Jump or Can Use Spider Ball
-                      All of the following:
-                          # IBJ
-                          Infinite Bomb Jumping (Advanced) and Can Use Any Bombs
-                      All of the following:
-                          Speed Booster and Shinesparking Tricks (Beginner)
-                          Short Charge (Hypermode) or Disabled Entrance Rando
+                  All of the following:
+                      # IBJ
+                      Infinite Bomb Jumping (Advanced) and Can Use Bombs
               Hi-Jump Boots and Walljump (Beginner)
+              All of the following:
+                  # Shinespark up
+                  Speed Booster and Shinesparking Tricks (Beginner)
+                  Short Charge (Hypermode) or Disabled Entrance Rando
 
 > Door to Gravity Area Moto Room; Heals? False
   * Layers: default
@@ -1913,8 +1904,6 @@ Extra - map_name: rm_a5a09
 > Pipe to Facility Storage Spiked Path Pipe; Heals? False
   * Layers: default
   * Teleporter to Facility Storage Spiked Path Pipe/Pipe to Gravity Area Blockade Pipe
-  * Extra - keep_name_when_vanilla: True
-  * Extra - editable: True
   > Door to Gravity Area Blockade
       Morph Ball
 

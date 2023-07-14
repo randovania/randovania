@@ -2,11 +2,16 @@ from __future__ import annotations
 
 import dataclasses
 import uuid as uuid_module
-from typing import Iterator
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.base_configuration import BaseConfiguration
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.interface_common.preset_manager import PresetManager
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
@@ -48,7 +53,6 @@ class Preset(BitPackValue):
         return self.configuration == other.configuration
 
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
-        from randovania.interface_common.preset_manager import PresetManager
         manager: PresetManager = metadata["manager"]
 
         reference = manager.reference_preset_for_game(self.game).get_preset()
@@ -56,7 +60,6 @@ class Preset(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> Preset:
-        from randovania.interface_common.preset_manager import PresetManager
         manager: PresetManager = metadata["manager"]
         game: RandovaniaGame = metadata["game"]
 
@@ -70,7 +73,7 @@ class Preset(BitPackValue):
             configuration=reference.configuration.bit_pack_unpack(decoder, {"reference": reference.configuration}),
         )
 
-    def fork(self) -> "Preset":
+    def fork(self) -> Preset:
         return dataclasses.replace(
             self, name=f"{self.name} Copy",
             description=f"A copy version of {self.name}.",

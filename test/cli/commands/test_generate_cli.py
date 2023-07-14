@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from pathlib import Path
-from unittest.mock import MagicMock, ANY, AsyncMock
-from unittest.mock import call
+from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import pytest
 

@@ -1,14 +1,16 @@
+from __future__ import annotations
+
 import dataclasses
 import datetime
 
 import aiohttp
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QCheckBox
+from PySide6.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, QPushButton, QTableWidgetItem
 from qasync import asyncSlot
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.racetime_browser_dialog_ui import Ui_RacetimeBrowserDialog
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
 
@@ -25,7 +27,7 @@ class RaceEntry:
     game: RandovaniaGame
 
     @classmethod
-    def from_json(cls, data, game) -> "RaceEntry":
+    def from_json(cls, data, game) -> RaceEntry:
         return RaceEntry(
             name=data["name"],
             status=data["status"]["value"],

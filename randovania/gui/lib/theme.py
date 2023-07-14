@@ -1,4 +1,6 @@
-from PySide6 import QtWidgets, QtGui
+from __future__ import annotations
+
+from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
 _current_dark_theme = None

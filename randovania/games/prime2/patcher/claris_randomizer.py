@@ -1,15 +1,21 @@
+from __future__ import annotations
+
 import json
 import logging
 import shutil
-from pathlib import Path
-from typing import Callable
+from typing import TYPE_CHECKING
 
 from randovania import get_data_path, monitoring
 from randovania.games.prime2.patcher import csharp_subprocess
 from randovania.interface_common.game_workdir import validate_game_files_path
-from randovania.lib import status_update_lib, json_lib
-from randovania.lib.status_update_lib import ProgressUpdateCallable
+from randovania.lib import json_lib, status_update_lib
 from randovania.patching.patchers.exceptions import ExportFailure
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
+
+    from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 CURRENT_PATCH_VERSION = 3
 logger = logging.getLogger(__name__)

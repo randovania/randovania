@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games.common.prime_family.exporter.hint_namer import PrimeFamilyHintNamer
 
 

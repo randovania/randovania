@@ -1,34 +1,39 @@
+from __future__ import annotations
+
 import copy
 import re
-from pathlib import Path
-from typing import TypeVar, Callable, Iterator
+from typing import TYPE_CHECKING, TypeVar
 
 from randovania.game_description import game_migration
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock import DockRandoParams, DockWeaknessDatabase, DockWeakness, DockLock
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import Node, GenericNode
+from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region import Region
-from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
-from randovania.game_description.game_description import GameDescription, MinimalLogicData
-from randovania.game_description.requirements.array_base import RequirementArrayBase
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.lib import frozen_lib, json_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+    from pathlib import Path
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.dock import DockLock, DockRandoParams, DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription, MinimalLogicData
+    from randovania.game_description.requirements.array_base import RequirementArrayBase
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
+    from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 REGION_NAME_TO_FILE_NAME_RE = re.compile(r'[^a-zA-Z0-9\- ]')
 
@@ -205,12 +210,9 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
 
 
 def write_dock_rando_params(dock_rando: DockRandoParams) -> dict:
-    def name_or_none(weak: DockWeakness):
-        return weak.name if weak is not None else weak
-
     return {
-        "unlocked": name_or_none(dock_rando.unlocked),
-        "locked": name_or_none(dock_rando.locked),
+        "unlocked": dock_rando.unlocked.name,
+        "locked": dock_rando.locked.name,
         "change_from": sorted(weakness.name for weakness in dock_rando.change_from),
         "change_to": sorted(weakness.name for weakness in dock_rando.change_to),
     }
@@ -226,7 +228,10 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
                     name: write_dock_weakness(weakness)
                     for name, weakness in database.weaknesses[dock_type].items()
                 },
-                "dock_rando": write_dock_rando_params(database.dock_rando_params[dock_type]),
+                "dock_rando": (
+                    write_dock_rando_params(database.dock_rando_params[dock_type])
+                    if dock_type in database.dock_rando_params else None
+                ),
             }
             for dock_type in database.dock_types
         },
@@ -281,13 +286,6 @@ def write_node(node: Node) -> dict:
         data.update(common_fields)
         data["pickup_index"] = node.pickup_index.index
         data["location_category"] = node.location_category.value
-
-    elif isinstance(node, TeleporterNode):
-        data["node_type"] = "teleporter"
-        data.update(common_fields)
-        data["destination"] = node.default_connection.as_json
-        data["keep_name_when_vanilla"] = node.keep_name_when_vanilla
-        data["editable"] = node.editable
 
     elif isinstance(node, EventNode):
         data["node_type"] = "event"

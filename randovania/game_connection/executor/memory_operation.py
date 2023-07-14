@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import logging
 
@@ -46,16 +48,16 @@ class MemoryOperationExecutor:
         self.logger = logging.getLogger(type(self).__name__)
 
     async def connect(self) -> str | None:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def disconnect(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def is_connected(self) -> bool:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     async def perform_single_memory_operation(self, op: MemoryOperation) -> bytes | None:
         result = await self.perform_memory_operations([op])

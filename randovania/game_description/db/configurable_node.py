@@ -1,7 +1,12 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.game_description.requirements.base import Requirement
+import dataclasses
+from typing import TYPE_CHECKING
+
 from randovania.game_description.db.node import Node, NodeContext
+
+if TYPE_CHECKING:
+    from randovania.game_description.requirements.base import Requirement
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

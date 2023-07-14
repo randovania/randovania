@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import contextlib
 from unittest.mock import MagicMock
 
@@ -44,7 +46,7 @@ def test_decode(mocker, invalid):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "DVwwMTIzAp44AFZd"
+    encoded = "DSkwMTIzAm3yAINX"
 
     expected = Permalink(
         parameters=parameters,
@@ -66,7 +68,7 @@ def test_decode(mocker, invalid):
         link = Permalink.from_str(encoded)
 
     # Assert
-    mock_from_bytes.assert_called_once_with(b'B\x80')
+    mock_from_bytes.assert_called_once_with(b'D\xa0')
     if invalid:
         assert exp.value.games == games
     else:

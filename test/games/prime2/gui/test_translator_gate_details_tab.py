@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.gui import TranslatorGateDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration

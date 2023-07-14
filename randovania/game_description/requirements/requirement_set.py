@@ -3,14 +3,15 @@ from __future__ import annotations
 import logging
 import typing
 from functools import lru_cache
-from typing import Iterable, Iterator
 
 from randovania.game_description.requirements.requirement_list import RequirementList
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from collections.abc import Iterable, Iterator
+
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 
 
 class RequirementSet:

@@ -1,12 +1,17 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum, unique
-from pathlib import Path
-from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+
+if TYPE_CHECKING:
+    from pathlib import Path
+    from random import Random
 
 
 @unique
@@ -44,7 +49,7 @@ class MyChar(BitPackEnum, Enum):
         if self == MyChar.CUSTOM:
             return "Provide your own MyChar! Place it in your data folder."
 
-    def next_mychar(self, reverse: bool) -> "MyChar":
+    def next_mychar(self, reverse: bool) -> MyChar:
         upcoming = list(MyChar)
         offset = -1 if reverse else 1
         return upcoming[(upcoming.index(self) + offset) % len(upcoming)]
@@ -101,11 +106,11 @@ class CSSong(BitPackDataclass, JsonDataclass):
         return self.song_type == SongType.SONG
 
     @classmethod
-    def valid_songs(cls, enabled: dict[str, bool]) -> list["CSSong"]:
+    def valid_songs(cls, enabled: dict[str, bool]) -> list[CSSong]:
         return [song for song in SONGS.values() if song.is_valid and enabled[song.song_name]]
 
     @classmethod
-    def songs_to_shuffle(cls) -> list["CSSong"]:
+    def songs_to_shuffle(cls) -> list[CSSong]:
         return [song for song in SONGS.values() if song.is_valid and song.source_game == SongGame.CS]
 
     @classmethod
@@ -117,7 +122,7 @@ class CSSong(BitPackDataclass, JsonDataclass):
         return {song.song_name: song.is_valid for song in SONGS.values()}
 
     @classmethod
-    def from_name(cls, name: str) -> "CSSong":
+    def from_name(cls, name: str) -> CSSong:
         return next(song for song in SONGS.values() if song.song_name == name)
 
 
@@ -206,10 +211,10 @@ class CSMusic(BitPackDataclass, JsonDataclass):
     song_status: dict[str, bool]
 
     @classmethod
-    def default(cls) -> "CSMusic":
+    def default(cls) -> CSMusic:
         return cls(MusicRandoType.DEFAULT, CSSong.defaults())
 
-    def update_song_status(self, new_status: dict[str, bool]) -> "CSMusic":
+    def update_song_status(self, new_status: dict[str, bool]) -> CSMusic:
         song_status = {
             key: new_status.get(key, value)
             for key, value in self.song_status.items()
@@ -223,7 +228,7 @@ class CSCosmeticPatches(BaseCosmeticPatches):
     music_rando: CSMusic = CSMusic.default()
 
     @classmethod
-    def default(cls) -> "CSCosmeticPatches":
+    def default(cls) -> CSCosmeticPatches:
         return cls()
 
     @classmethod

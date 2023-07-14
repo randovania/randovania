@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import struct
 from asyncio import StreamReader, StreamWriter
 
-from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
-    MemoryOperationExecutor
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
+)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -24,7 +29,7 @@ class RequestBatch:
         self.num_read_bytes = 0
         self.addresses = []
 
-    def copy(self) -> "RequestBatch":
+    def copy(self) -> RequestBatch:
         new = RequestBatch()
         new.data = self.data
         new.ops = list(self.ops)
@@ -111,11 +116,11 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         try:
             self._socket_error = None
-            # self.logger.info(f"Connecting to {self._ip}:{self._port}.")
+            self.logger.debug(f"Connecting to {self._ip}:{self._port}.")
             reader, writer = await asyncio.open_connection(self._ip, self._port)
 
             # Send API details request
-            self.logger.info("Connection open, requesting API details.")
+            self.logger.debug("Connection open, requesting API details.")
 
             writer.write(struct.pack(">BBBB", 1, 0, 0, 1))
             await asyncio.wait_for(writer.drain(), timeout=30)
@@ -124,7 +129,7 @@ class NintendontExecutor(MemoryOperationExecutor):
             response = await asyncio.wait_for(reader.read(1024), timeout=15)
             api_version, max_input, max_output, max_addresses = struct.unpack_from(">IIII", response, 0)
 
-            self.logger.info(f"Remote replied with API level {api_version}, connection successful.")
+            self.logger.debug(f"Remote replied with API level {api_version}, connection successful.")
             self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
             return None
 

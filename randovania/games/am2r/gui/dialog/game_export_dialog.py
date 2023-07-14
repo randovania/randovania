@@ -1,11 +1,20 @@
+from __future__ import annotations
 import json
 
 from PySide6.QtCore import QCoreApplication
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
+
+
+from typing import TYPE_CHECKING
+
 from randovania.gui.dialog.game_export_dialog import GameExportDialog
 from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RGameExportDialog
 from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import PerGameOptions
 
 
 class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
@@ -13,8 +22,8 @@ class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
         super().__init__(options, patch_data, word_hash, spoiler, games)
         self.json_label.setText(QCoreApplication.translate("json_label", f"{json.dumps(patch_data, indent=2)}", None))
 
-    def save_options(self):
-        pass
+    def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
+        raise NotImplementedError
 
     def get_game_export_params(self) -> GameExportParams:
-        pass
+        raise NotImplementedError

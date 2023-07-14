@@ -1,5 +1,7 @@
+
 def apply_migrations():
     import playhouse.migrate
+
     import randovania
     from randovania.server import database
 

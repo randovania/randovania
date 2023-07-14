@@ -1,31 +1,32 @@
+from __future__ import annotations
+
 import dataclasses
 import re
 from pathlib import Path
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QRadioButton, QDialog, QFileDialog, QInputDialog, QMessageBox
+from PySide6.QtWidgets import QDialog, QFileDialog, QInputDialog, QMainWindow, QMessageBox, QRadioButton
 from qasync import asyncSlot
 
 from randovania.game_description import (
-    data_reader, data_writer, pretty_print, integrity_check,
-    derived_nodes, default_database
+    data_reader,
+    data_writer,
+    default_database,
+    derived_nodes,
+    integrity_check,
+    pretty_print,
 )
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.node import Node, GenericNode, NodeLocation
+from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region import Region
-from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.editor import Editor
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
+from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
@@ -39,6 +40,12 @@ from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer, create_tree_items_for_requirement
 from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 from randovania.lib import json_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
 
 SHOW_REGION_MIN_MAX_SPINNER = False
 
@@ -460,15 +467,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 node.default_connection.node_name,
             )
 
-        elif isinstance(node, TeleporterNode):
-            try:
-                other = self.region_list.area_by_area_location(node.default_connection)
-                name = self.region_list.area_name(other, separator="/", distinguish_dark_aether=False)
-                pretty_name = msg.replace("Teleporter to ", "")
-                msg = f'Teleporter to <a href="area://{name}">{pretty_name}</a>'
-            except Exception as e:
-                msg = f'Teleporter to {node.default_connection} (Unknown area due to {e}).'
-
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
         self.node_description_label.setText(node.description)
@@ -722,7 +720,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             default_dock_weakness=dock_weakness,
             exclude_from_dock_rando=False,
             override_default_open_requirement=None, override_default_lock_requirement=None,
-            incompatible_dock_weaknesses=tuple(),
+            incompatible_dock_weaknesses=(),
         )
 
         new_node_other_area = DockNode(
@@ -734,7 +732,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             default_dock_weakness=dock_weakness,
             exclude_from_dock_rando=False,
             override_default_open_requirement=None, override_default_lock_requirement=None,
-            incompatible_dock_weaknesses=tuple(),
+            incompatible_dock_weaknesses=(),
         )
 
         self.editor.add_node(current_area, new_node_this_area)

@@ -1,44 +1,56 @@
+from __future__ import annotations
+
 import asyncio
+import itertools
 import json
 import logging
 import random
-import uuid
-from typing import Self
+from typing import TYPE_CHECKING, Self
 
-from PySide6 import QtWidgets, QtGui, QtCore
-from qasync import asyncSlot, asyncClose
+from PySide6 import QtCore, QtGui, QtWidgets
+from qasync import asyncClose, asyncSlot
 
 from randovania.game_description import default_database
-from randovania.games.game import RandovaniaGame
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.gui.auto_tracker_window import load_trackers_configuration
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
-from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, layout_loader
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin, BackgroundTaskInProgressError
+from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader, model_lib
+from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
-from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
-from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
+from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
-from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget
+from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget, connect_to
 from randovania.interface_common import generator_frontend
-from randovania.interface_common.options import Options
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
-from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, MultiplayerUser, MultiplayerSessionActions, MultiplayerSessionAuditLog,
-    MultiplayerSessionAction, WorldUserInventory, MAX_SESSION_NAME_LENGTH
+    MAX_SESSION_NAME_LENGTH,
+    MultiplayerSessionAction,
+    MultiplayerSessionActions,
+    MultiplayerSessionAuditLog,
+    MultiplayerSessionEntry,
+    MultiplayerUser,
+    WorldUserInventory,
 )
 from randovania.network_common.session_state import MultiplayerSessionState
+
+if TYPE_CHECKING:
+    import uuid
+
+    from randovania.games.game import RandovaniaGame
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
+    from randovania.interface_common.options import Options
+    from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 logger = logging.getLogger(__name__)
 
@@ -68,7 +80,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self._multiworld_client = window_manager.multiworld_client
 
         self._options = options
-        self._trackers = load_trackers_configuration()
+        self._trackers = load_trackers_configuration(for_solo=False)
         self._update_status_lock = asyncio.Lock()
 
         game_session_api.widget_root = self
@@ -77,6 +89,16 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.tabWidget.removeTab(0)
         self.tabWidget.insertTab(0, self.users_widget, "Players")
         self.tabWidget.setCurrentIndex(0)
+
+        self.audit_item_model = QtGui.QStandardItemModel(0, 3, self)
+        self.audit_item_model.setHorizontalHeaderLabels(["User", "Message", "Time"])
+        self.tab_audit.setModel(self.audit_item_model)
+        self.tab_audit.sortByColumn(2, QtCore.Qt.SortOrder.AscendingOrder)
+
+        self.history_item_model = QtGui.QStandardItemModel(0, 5, self)
+        self.history_item_model.setHorizontalHeaderLabels(["Provider", "Receiver", "Pickup", "Location", "Time"])
+        self.tab_history.setModel(self.history_item_model)
+        self.tab_history.sortByColumn(4, QtCore.Qt.SortOrder.AscendingOrder)
 
         # Advanced Options
         self.advanced_options_menu = QtWidgets.QMenu(self.advanced_options_tool)
@@ -106,6 +128,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.generate_game_menu.addAction(self.import_layout_action)
         self.generate_game_button.setMenu(self.generate_game_menu)
 
+        self.export_game_menu = QtWidgets.QMenu(self.export_game_button)
+
         self.tracker_windows = {}
 
     def connect_to_events(self):
@@ -117,6 +141,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.import_layout_action.triggered.connect(self.import_layout)
         self.generate_game_button.clicked.connect(self.generate_game_button_clicked)
         self.session_status_button.clicked.connect(self._session_status_button_clicked)
+        self.export_game_button.clicked.connect(self.export_game_button_clicked)
 
         # Session Admin
         self.rename_session_action.triggered.connect(self.rename_session)
@@ -235,8 +260,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if dock is not None:
             tracker = dock.item_tracker
             tracker.update_state({
-                tracker.resource_database.get_item(name): item
-                for name, item in inventory.inventory.items()
+                tracker.resource_database.get_item(name): InventoryItem(0, capacity)
+                for name, capacity in inventory.inventory.items()
             })
 
     async def _on_kicked(self):
@@ -266,7 +291,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     def update_game_tab(self):
         session = self._session
-        self_is_admin = session.users[self.network_client.current_user.id].admin
+        own_entry = session.users[self.network_client.current_user.id]
+        self_is_admin = own_entry.admin
 
         self.update_background_process_button()
         self.update_generate_game_button()
@@ -285,10 +311,26 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if session.game_details is None:
             self.generate_game_label.setText("<Game not generated>")
             self.view_game_details_button.setEnabled(False)
+            self.export_game_button.setEnabled(False)
         else:
             game_details = session.game_details
             self.generate_game_label.setText(f"Seed hash: {game_details.word_hash} ({game_details.seed_hash})")
             self.view_game_details_button.setEnabled(game_details.spoiler)
+            if len(own_entry.worlds) > 1:
+                self.export_game_button.setEnabled(True)
+                self.export_game_menu.clear()
+                self.export_game_button.setMenu(self.export_game_menu)
+
+                for world_uid in own_entry.worlds.keys():
+                    connect_to(self.export_game_menu.addAction(
+                        session.get_world(world_uid).name
+                    ), self.users_widget.world_export, world_uid)
+
+            elif len(own_entry.worlds) == 1:
+                self.export_game_button.setEnabled(True)
+                self.export_game_button.setMenu(None)
+            else:
+                self.export_game_button.setEnabled(False)
 
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
@@ -314,16 +356,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     def update_session_actions(self, actions: MultiplayerSessionActions):
         scrollbar = self.tab_history.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
-        self.tab_history.horizontalHeader().setVisible(True)
-        self.tab_history.setRowCount(len(actions.actions))
+        self.history_item_model.setRowCount(len(actions.actions))
 
         for i, action in enumerate(actions.actions):
             provider_name, receiver_name, location_name = self._describe_action(action)
-            self.tab_history.setItem(i, 0, QtWidgets.QTableWidgetItem(provider_name))
-            self.tab_history.setItem(i, 1, QtWidgets.QTableWidgetItem(receiver_name))
-            self.tab_history.setItem(i, 2, QtWidgets.QTableWidgetItem(action.pickup))
-            self.tab_history.setItem(i, 3, QtWidgets.QTableWidgetItem(location_name))
-            self.tab_history.setItem(i, 4, QtWidgets.QTableWidgetItem(action.time.astimezone().strftime("%c")))
+            self.history_item_model.setItem(i, 0, QtGui.QStandardItem(provider_name))
+            self.history_item_model.setItem(i, 1, QtGui.QStandardItem(receiver_name))
+            self.history_item_model.setItem(i, 2, QtGui.QStandardItem(action.pickup))
+            self.history_item_model.setItem(i, 3, QtGui.QStandardItem(location_name))
+            self.history_item_model.setItem(i, 4, model_lib.create_date_item(action.time))
 
         if autoscroll:
             self.tab_history.scrollToBottom()
@@ -331,16 +372,17 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     def update_session_audit_log(self, audit_log: MultiplayerSessionAuditLog):
         scrollbar = self.tab_audit.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
-        self.tab_audit.horizontalHeader().setVisible(True)
-        self.tab_audit.setRowCount(len(audit_log.entries))
+        # self.tab_audit.horizontalHeader().setVisible(True)
+        self.audit_item_model.setRowCount(len(audit_log.entries))
 
         for i, entry in enumerate(audit_log.entries):
-            self.tab_audit.setItem(i, 0, QtWidgets.QTableWidgetItem(entry.user))
-            self.tab_audit.setItem(i, 1, QtWidgets.QTableWidgetItem(entry.message))
-            self.tab_audit.setItem(i, 2, QtWidgets.QTableWidgetItem(entry.time.astimezone().strftime("%c")))
+            self.audit_item_model.setItem(i, 0, QtGui.QStandardItem(entry.user))
+            self.audit_item_model.setItem(i, 1, QtGui.QStandardItem(entry.message))
+            self.audit_item_model.setItem(i, 2, model_lib.create_date_item(entry.time))
 
         if autoscroll:
             self.tab_audit.scrollToBottom()
+            self.tab_audit.resizeColumnToContents(1)
 
     async def update_logic_settings_window(self):
         if self._logic_settings_window is not None:
@@ -522,11 +564,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         else:
             source_name = "game file"
 
-        if parameters.player_count != len(self._session.worlds):
+        if parameters.world_count < len(self._session.worlds):
             await async_dialog.warning(
-                self, "Incompatible permalink",
-                f"Given {source_name} is for {parameters.player_count} players, but "
-                f"this session only have {len(self._session.worlds)} rows.")
+                self, f"Incompatible {source_name}",
+                f"Given {source_name} is for {parameters.world_count} worlds, but "
+                f"this session has {len(self._session.worlds)} worlds.")
             return False
 
         if any(not preset_p.is_same_configuration(preset_s.preset)
@@ -540,6 +582,26 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             )
             if response != async_dialog.StandardButton.Yes:
                 return False
+
+        all_names = {world.name for world in self._session.worlds}
+        for i in range(len(self._session.worlds), parameters.world_count):
+            name = f"World {i + 1}"
+            for suffix in itertools.count():
+                if name not in all_names:
+                    break
+                name = f"World {i + 1} ({suffix + 1})"
+
+            await self.game_session_api.create_unclaimed_world(
+                name,
+                VersionedPreset.with_preset(parameters.get_preset(i))
+            )
+
+        if parameters.world_count != len(self._session.worlds):
+            await async_dialog.warning(
+                self, "Temporary error",
+                f"New worlds created to fit the imported {source_name}. Please import it again."
+            )
+            return False
 
         return True
 
@@ -570,8 +632,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, [])
 
     async def _upload_layout_description(self, layout: LayoutDescription):
+        last_multiplayer = self._options.data_dir.joinpath(f"last_multiplayer_{self._session.id}.rdvgame")
+        if layout.has_spoiler:
+            layout.save_to_file(last_multiplayer)
+
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
                                         layout.as_json(force_spoiler=True))
+
+        if layout.has_spoiler:
+            last_multiplayer.unlink()
 
     async def start_session(self):
         await self._admin_global_action(SessionAdminGlobalAction.START_SESSION, None)
@@ -597,6 +666,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             await self.finish_session()
         else:
             raise RuntimeError(f"Unknown session state: {state}")
+
+    @asyncSlot()
+    async def export_game_button_clicked(self):
+        own_entry = self._session.users[self.network_client.current_user.id]
+        if len(own_entry.worlds) != 1:
+            raise RuntimeError("Can only click this button when there's exactly one world")
+
+        world_uid = next(iter(own_entry.worlds.keys()))
+        await self.users_widget.world_export(world_uid)
 
     @asyncSlot()
     async def game_export_listener(self, world_id: uuid.UUID, patch_data: dict):
@@ -767,8 +845,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         preset = VersionedPreset.from_str(world.preset_raw)
 
         if preset.game not in self._trackers:
-            return async_dialog.message_box(self, QtWidgets.QMessageBox.Icon.Information,
-                                            "Unsupported Game", f"No tracker available for {preset.game.long_name}")
+            return await async_dialog.message_box(
+                self, QtWidgets.QMessageBox.Icon.Information,
+                "Unsupported Game",
+                f"No tracker available for {preset.game.long_name}"
+            )
 
         tracker_window = ItemTrackerPopupWindow(
             f"{self._session.name} Tracker: {world.name}", self._trackers[preset.game],

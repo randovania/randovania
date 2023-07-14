@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 
 import cryptography
@@ -20,7 +22,7 @@ class InvalidSecret(Exception):
 
 def _get_fernet() -> Fernet:
     if _secret is None:
-        raise MissingSecret()
+        raise MissingSecret
 
     global _encrypt
     if _encrypt is None:
@@ -41,7 +43,7 @@ def deobfuscate(data: str) -> bytes:
     try:
         return _get_fernet().decrypt(data)
     except cryptography.fernet.InvalidToken:
-        raise InvalidSecret() from None
+        raise InvalidSecret from None
 
 
 def deobfuscate_json(data: str) -> dict:

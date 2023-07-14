@@ -1,8 +1,14 @@
+from __future__ import annotations
+
 import dataclasses
 
 import pytest
 
-from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadArtifactConfig, DreadRavenBeakDamageMode
+from randovania.games.dread.layout.dread_configuration import (
+    DreadArtifactConfig,
+    DreadConfiguration,
+    DreadRavenBeakDamageMode,
+)
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 

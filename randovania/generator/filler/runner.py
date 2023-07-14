@@ -1,17 +1,23 @@
-import dataclasses
-from random import Random
-from typing import Callable
+from __future__ import annotations
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.games.game import GameGenerator
+import dataclasses
+from typing import TYPE_CHECKING
+
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.retcon import retcon_playthrough_filler
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import debug
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from random import Random
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.games.game import GameGenerator
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 @dataclasses.dataclass(frozen=True)

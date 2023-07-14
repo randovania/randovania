@@ -1,16 +1,22 @@
-import copy
-from typing import Iterator, NamedTuple
+from __future__ import annotations
 
-from randovania.game_description.game_description import GameDescription
+import copy
+from typing import TYPE_CHECKING, NamedTuple
+
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.db.node import Node, NodeContext
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.generator import graph as graph_module
 from randovania.generator.generator_reach import GeneratorReach
-from randovania.resolver.state import State
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.game_description import GameDescription
+    from randovania.resolver.state import State
 
 
 def _extra_requirement_for_node(game: GameDescription, context: NodeContext, node: Node) -> Requirement | None:
@@ -90,7 +96,7 @@ class OldGeneratorReach(GeneratorReach):
     def reach_from_state(cls,
                          game: GameDescription,
                          initial_state: State,
-                         ) -> "GeneratorReach":
+                         ) -> GeneratorReach:
 
         reach = cls(game, initial_state, graph_module.RandovaniaGraph.new())
         game.region_list.ensure_has_node_cache()

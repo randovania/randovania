@@ -1,12 +1,16 @@
+from __future__ import annotations
+
 import functools
 import typing
-from pathlib import Path
 
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtGui, QtWidgets
 
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.lib import json_lib
+
+if typing.TYPE_CHECKING:
+    from pathlib import Path
 
 
 class ItemTrackerPopupWindow(QtWidgets.QWidget):

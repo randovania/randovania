@@ -6,7 +6,6 @@ import logging.handlers
 import os
 import sys
 import typing
-from argparse import ArgumentParser
 from pathlib import Path
 
 from PySide6 import QtCore, QtWidgets
@@ -16,8 +15,12 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence
 
 if typing.TYPE_CHECKING:
-    from randovania.interface_common.preset_manager import PresetManager
+    from argparse import ArgumentParser
+
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.multiworld_client import MultiworldClient
     from randovania.interface_common.options import Options
+    from randovania.interface_common.preset_manager import PresetManager
 
 logger = logging.getLogger(__name__)
 
@@ -65,15 +68,13 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
     _migrate_old_base_preset_uuid(preset_manager, options)
     logger.info("Finished loading presets!")
 
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
     network_client: QtNetworkClient = app.network_client
 
-    from randovania.gui.multiworld_client import MultiworldClient
     multiworld_client: MultiworldClient = app.multiworld_client
 
     async def attempt_login():
-        from randovania.network_client.network_client import UnableToConnect
         from randovania.gui.lib import async_dialog
+        from randovania.network_client.network_client import UnableToConnect
 
         try:
             if not await network_client.ensure_logged_in(None):
@@ -177,8 +178,8 @@ def add_options_cli_args(parser: ArgumentParser):
 
 async def _load_options(args) -> Options | None:
     logger.info("Loading up user preferences code...")
-    from randovania.interface_common.options import Options
     from randovania.gui.lib import startup_tools, theme
+    from randovania.interface_common.options import Options
 
     logger.info("Restoring saved user preferences...")
     options = Options(args.local_data, args.user_data)
@@ -186,8 +187,8 @@ async def _load_options(args) -> Options | None:
         return None
 
     logger.info("Creating user preferences folder")
-    import dulwich.repo
     import dulwich.errors
+    import dulwich.repo
     try:
         dulwich.repo.Repo(os.fspath(options.user_dir))
 
@@ -203,7 +204,7 @@ async def _load_options(args) -> Options | None:
 
 def start_logger(data_dir: Path, is_preview: bool):
     # Ensure the log dir exists early on
-    log_dir = data_dir.joinpath("logs")
+    log_dir = data_dir.joinpath("logs", randovania.VERSION)
     log_dir.mkdir(parents=True, exist_ok=True)
 
     randovania.setup_logging('DEBUG' if is_preview else 'INFO', log_dir.joinpath("logger.log"))
@@ -255,7 +256,7 @@ async def qt_main(app: QtWidgets.QApplication, args):
     logging.info("Creating the global game connection")
     from randovania.game_connection.game_connection import GameConnection
     app.game_connection = GameConnection(options, app.world_database)
-    
+
     logging.info("Creating the global multiworld client")
     from randovania.gui.multiworld_client import MultiworldClient
     app.multiworld_client = MultiworldClient(app.network_client, app.game_connection,
@@ -282,7 +283,7 @@ async def qt_main(app: QtWidgets.QApplication, args):
 
 
 def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState):
-    logger.info("New application state: %s", new_state)
+    logger.debug("New application state: %s", new_state)
     import sentry_sdk
     if new_state == QtCore.Qt.ApplicationState.ApplicationActive:
         sentry_sdk.Hub.current.start_session(session_mode="application")

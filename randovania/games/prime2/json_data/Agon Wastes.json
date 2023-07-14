@@ -48,7 +48,7 @@
                     }
                 },
                 "Elevator to Temple Grounds - Transport to Agon Wastes": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -57,15 +57,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 2084247194,
-                        "teleporter_instance_id": 122
+                        "teleporter_instance_id": 122,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Temple Grounds",
-                        "area": "Transport to Agon Wastes"
+                        "area": "Transport to Agon Wastes",
+                        "node": "Elevator to Agon Wastes - Transport to Temple Grounds"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Plaza Access": {
                             "type": "and",
@@ -6914,7 +6920,7 @@
                     }
                 },
                 "Elevator to Torvus Bog - Transport to Agon Wastes": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -6923,15 +6929,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 3549584208,
-                        "teleporter_instance_id": 1245307
+                        "teleporter_instance_id": 1245307,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Torvus Bog",
-                        "area": "Transport to Agon Wastes"
+                        "area": "Transport to Agon Wastes",
+                        "node": "Elevator to Agon Wastes - Transport to Torvus Bog"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport Center": {
                             "type": "and",
@@ -17670,7 +17682,7 @@
                     }
                 },
                 "Teleport to Sanctuary Fortress - Sanctuary Energy Controller": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -17679,15 +17691,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 405209185
+                        "teleporter_instance_id": 405209185,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Sanctuary Fortress",
-                        "area": "Sanctuary Energy Controller"
+                        "area": "Sanctuary Energy Controller",
+                        "node": "Door to Controller Access"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -17699,7 +17717,7 @@
                     }
                 },
                 "Teleport to Torvus Bog - Torvus Energy Controller": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -17708,15 +17726,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 405209407
+                        "teleporter_instance_id": 405209407,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Torvus Bog",
-                        "area": "Torvus Energy Controller"
+                        "area": "Torvus Energy Controller",
+                        "node": "Door to Controller Access"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -17728,7 +17752,7 @@
                     }
                 },
                 "Teleport to Great Temple - Main Energy Controller": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -17737,15 +17761,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 405209411
+                        "teleporter_instance_id": 405209411,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Great Temple",
-                        "area": "Main Energy Controller"
+                        "area": "Main Energy Controller",
+                        "node": "Door to Controller Transport"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -19244,7 +19274,7 @@
                     }
                 },
                 "Elevator to Sanctuary Fortress - Transport to Agon Wastes": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -19253,15 +19283,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 3069534230,
-                        "teleporter_instance_id": 2949235
+                        "teleporter_instance_id": 2949235,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Sanctuary Fortress",
-                        "area": "Transport to Agon Wastes"
+                        "area": "Transport to Agon Wastes",
+                        "node": "Elevator to Agon Wastes - Transport to Sanctuary Fortress"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Ventilation Area A": {
                             "type": "and",
@@ -26309,32 +26345,6 @@
                                                                                                         "amount": 1,
                                                                                                         "negate": false
                                                                                                     }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "or",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "Dash",
-                                                                                                                    "amount": 3,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "EDash",
-                                                                                                                    "amount": 4,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
                                                                                                 }
                                                                                             ]
                                                                                         }
@@ -26557,7 +26567,7 @@
                                                                                                             {
                                                                                                                 "type": "and",
                                                                                                                 "data": {
-                                                                                                                    "comment": null,
+                                                                                                                    "comment": "https://youtu.be/cEiwn9ZE2W4",
                                                                                                                     "items": [
                                                                                                                         {
                                                                                                                             "type": "resource",
@@ -26573,7 +26583,7 @@
                                                                                                                             "data": {
                                                                                                                                 "type": "tricks",
                                                                                                                                 "name": "Movement",
-                                                                                                                                "amount": 3,
+                                                                                                                                "amount": 1,
                                                                                                                                 "negate": false
                                                                                                                             }
                                                                                                                         }
@@ -26590,7 +26600,7 @@
                                                                                                                             "data": {
                                                                                                                                 "type": "tricks",
                                                                                                                                 "name": "Dash",
-                                                                                                                                "amount": 4,
+                                                                                                                                "amount": 2,
                                                                                                                                 "negate": false
                                                                                                                             }
                                                                                                                         }
@@ -26761,6 +26771,32 @@
                                                                                                                     "name": "Dash",
                                                                                                                     "amount": 4,
                                                                                                                     "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "and",
+                                                                                                                "data": {
+                                                                                                                    "comment": "https://youtu.be/cEiwn9ZE2W4",
+                                                                                                                    "items": [
+                                                                                                                        {
+                                                                                                                            "type": "resource",
+                                                                                                                            "data": {
+                                                                                                                                "type": "items",
+                                                                                                                                "name": "ScrewAttack",
+                                                                                                                                "amount": 1,
+                                                                                                                                "negate": false
+                                                                                                                            }
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "type": "resource",
+                                                                                                                            "data": {
+                                                                                                                                "type": "tricks",
+                                                                                                                                "name": "Movement",
+                                                                                                                                "amount": 3,
+                                                                                                                                "negate": false
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ]
                                                                                                                 }
                                                                                                             },
                                                                                                             {

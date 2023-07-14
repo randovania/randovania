@@ -1,15 +1,20 @@
+from __future__ import annotations
+
 import collections
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.db.region_list import RegionList
-from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
-from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.lib.dict_lib import iterate_key_sorted
+from randovania.lib.container_lib import iterate_key_sorted
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class BaseConnectionDetailsTab(GameDetailsTab):
@@ -21,14 +26,14 @@ class BaseConnectionDetailsTab(GameDetailsTab):
         return self.tree_widget
 
     def tab_title(self) -> str:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _fill_per_region_connections(self,
                                      per_region: dict[str, dict[str, str | dict[str, str]]],
                                      region_list: RegionList,
                                      patches: GamePatches,
                                      ):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
                        players: PlayersConfiguration):

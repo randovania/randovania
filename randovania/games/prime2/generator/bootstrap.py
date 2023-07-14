@@ -1,13 +1,24 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
+from typing import TYPE_CHECKING
 
 from randovania.game_description.resources.damage_resource_info import DamageReduction
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.generator.pickup_pool import PoolResults
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class EchoesBootstrap(MetroidBootstrap):
@@ -60,3 +71,25 @@ class EchoesBootstrap(MetroidBootstrap):
             DamageReduction(db.get_item_by_name("Light Suit"), 0.0),
         ]
         return dataclasses.replace(db, damage_reductions=damage_reductions)
+
+    def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
+        assert isinstance(patches.configuration, EchoesConfiguration)
+        mode = patches.configuration.sky_temple_keys
+
+        if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
+            locations = sky_temple_keys.pickup_nodes_for_stk_mode(patches.game, mode)
+            rng.shuffle(locations)
+
+            keys = [pickup for pickup in list(pool_results.to_place)
+                    if pickup.pickup_category is sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY]
+
+            if len(keys) < len(locations):
+                raise InvalidConfiguration(
+                    f"Has {len(locations)} boss locations to fill, but only {len(keys)} Sky Temple Keys in the pool."
+                )
+
+            for key, location in zip(keys, locations, strict=False):
+                pool_results.to_place.remove(key)
+                pool_results.assignment[location.pickup_index] = key
+
+        return super().assign_pool_results(rng, patches, pool_results)

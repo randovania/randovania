@@ -1,11 +1,16 @@
+from __future__ import annotations
+
 import dataclasses
 import ftplib
 from contextlib import contextmanager
 from ftplib import FTP
-from pathlib import Path
-from typing import Callable
+from typing import TYPE_CHECKING
 
-from randovania.lib import status_update_lib
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
+
+    from randovania.lib import status_update_lib
 
 
 @contextmanager

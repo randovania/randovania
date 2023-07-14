@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import os
 from pathlib import Path
@@ -14,7 +16,7 @@ PACKAGE = 'randovania'
 
 
 async def main():
-    release_files = [f for f in _ROOT_FOLDER.joinpath("dist").glob("randovania-*.*")]
+    release_files = list(_ROOT_FOLDER.joinpath("dist").glob("randovania-*.*"))
     print(f"Found {len(release_files)} files at {_ROOT_FOLDER.joinpath('dist')}:")
     for f in release_files:
         print(f"* {f}")
@@ -30,7 +32,7 @@ async def main():
             print(f"* {f.name} is not a .zip or .tar.gz or .7z")
 
     if zip_file is None:
-        raise RuntimeError(f"No valid release file found.")
+        raise RuntimeError("No valid release file found.")
 
     bintray_user = os.environ["BINTRAY_USER"]
     bintray_password = os.environ["BINTRAY_API_KEY"]

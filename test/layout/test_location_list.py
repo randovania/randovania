@@ -1,10 +1,11 @@
+from __future__ import annotations
+
 import itertools
 
 import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib.location_list import LocationList
@@ -30,7 +31,7 @@ def _location_with_data(request, mocker, echoes_game_description):
          if area.has_start_node() and node.valid_starting_location), 15))
 
     mocker.patch("randovania.layout.lib.location_list.LocationList.nodes_list",
-                 return_value=list(sorted(nodes)))
+                 return_value=sorted(nodes))
     return request.param["encoded"], LocationList.from_json(request.param["json"], RandovaniaGame.METROID_PRIME_ECHOES)
 
 

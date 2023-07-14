@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.game_description import GameDescription
 
 
 def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> GameDescription:

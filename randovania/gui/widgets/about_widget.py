@@ -1,4 +1,7 @@
-from PySide6 import QtWidgets, QtGui
+from __future__ import annotations
+
+from PySide6 import QtGui, QtWidgets
+
 from randovania import get_readme_section
 
 

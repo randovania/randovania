@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6 import QtWidgets
 
 from randovania.gui.generated.scroll_label_dialog_ui import Ui_ScrollLabelDialog

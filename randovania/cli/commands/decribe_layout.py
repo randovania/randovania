@@ -1,15 +1,20 @@
-from argparse import ArgumentParser
+from __future__ import annotations
+
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
+
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
 
 
 def describe_command_logic(args):
     description = LayoutDescription.from_file(args.layout_file)
 
-    print(f"{description.player_count} players")
-    for player in range(description.player_count):
+    print(f"{description.world_count} players")
+    for player in range(description.world_count):
         preset = description.get_preset(player)
 
         print(f"## Player {player + 1} - {preset.game.long_name}")

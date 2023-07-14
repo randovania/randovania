@@ -1,5 +1,11 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.lib import status_update_lib
+
+if TYPE_CHECKING:
+    from randovania.lib import status_update_lib
 
 
 class AM2RGameExporter(GameExporter):

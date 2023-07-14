@@ -1,15 +1,20 @@
+from __future__ import annotations
+
 import dataclasses
 import functools
+from typing import TYPE_CHECKING
 
-from PySide6.QtWidgets import QCheckBox
-
-from randovania.game_description.game_description import GameDescription
-from randovania.games.super_metroid.layout.super_metroid_patch_configuration import SuperPatchConfiguration
 from randovania.gui.generated.preset_patcher_super_patches_ui import Ui_PresetPatcherSuperPatches
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from PySide6.QtWidgets import QCheckBox
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.games.super_metroid.layout.super_metroid_patch_configuration import SuperPatchConfiguration
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
