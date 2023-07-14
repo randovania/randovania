@@ -7,7 +7,7 @@ from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
-from randovania.games.am2r.layout.hint_configuration import ArtifactHintMode, IceBeamHintMode
+from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.lib import json_lib
@@ -83,7 +83,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "nest_pipes": self.patches.configuration.nest_pipes,
             "softlock_prevention_blocks": self.patches.configuration.softlock_prevention_blocks,
             "a3_entrance_blocks": self.patches.configuration.a3_entrance_blocks,
-            # TODO: uncomment after rebasing/merging main "screw_blocks": self.patches.configuration.screw_blocks,
+            "screw_blocks": self.patches.configuration.screw_blocks,
         }
         for item, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
             launcher_text = ""
@@ -113,12 +113,12 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
         ice = [(self.game.resource_database.get_item("Ice Beam"))]
         artifact_hints = {}
         hint_config = self.patches.configuration.hints
-        if hint_config.artifacts != ArtifactHintMode.DISABLED:
+        if hint_config.artifacts != ItemHintMode.DISABLED:
             artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 AM2RHintNamer(self.description.all_patches, self.players_config),
-                hint_config.artifacts == ArtifactHintMode.HIDE_AREA,
+                hint_config.artifacts == ItemHintMode.HIDE_AREA,
                 artifacts,
                 False  # TODO: set this to true, when patcher supports setting colors!
             )
@@ -126,12 +126,12 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             artifact_hints = {k: f"{k.long_name} is hidden somewhere on SR-388." for k in artifacts}
 
         ice_hint = {}
-        if hint_config.ice_beam != IceBeamHintMode.DISABLED:
+        if hint_config.ice_beam != ItemHintMode.DISABLED:
             ice_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 AM2RHintNamer(self.description.all_patches, self.players_config),
-                hint_config.ice_beam == IceBeamHintMode.HIDE_AREA,
+                hint_config.ice_beam == ItemHintMode.HIDE_AREA,
                 ice,
                 False  # TODO: set this to true, when patcher supports setting colors!
             )
