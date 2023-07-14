@@ -239,8 +239,8 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
     }
 
 
-@pytest.fixture
-def setup_and_teardown_for_wrong_custom_spawn():
+@pytest.fixture()
+def _setup_and_teardown_for_wrong_custom_spawn():
     # modify the default start to have no collision_camera (asset_id) and no vanilla
     # actor name for a start point
     game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
@@ -258,7 +258,8 @@ def setup_and_teardown_for_wrong_custom_spawn():
     area.extra["asset_id"] = asset_id
 
 
-def test_create_patch_with_wrong_custom_spawn(test_files_dir, mocker, setup_and_teardown_for_wrong_custom_spawn):
+@pytest.mark.usefixtures("_setup_and_teardown_for_wrong_custom_spawn")
+def test_create_patch_with_wrong_custom_spawn(test_files_dir, mocker):
     # test for a not createable spawn point
     file = test_files_dir.joinpath("log_files", "dread", "starter_preset.rdvgame")
     description = LayoutDescription.from_file(file)
@@ -276,8 +277,8 @@ def test_create_patch_with_wrong_custom_spawn(test_files_dir, mocker, setup_and_
         patcher.create_data()
 
 
-@pytest.fixture
-def setup_and_teardown_for_custom_spawn():
+@pytest.fixture()
+def _setup_and_teardown_for_custom_spawn():
     # modify a node to be a valid start point without a vanilla spawn
     game_desc = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
     region = game_desc.region_list.region_with_name("Artaria")
@@ -291,7 +292,8 @@ def setup_and_teardown_for_custom_spawn():
     area.nodes.append(node)
 
 
-def test_create_patch_with_custom_spawn(test_files_dir, mocker, setup_and_teardown_for_custom_spawn):
+@pytest.mark.usefixtures("_setup_and_teardown_for_custom_spawn")
+def test_create_patch_with_custom_spawn(test_files_dir, mocker):
     # test for custom spawn point referenced by starting location and teleporters
     file = test_files_dir.joinpath("log_files", "dread", "custom_start.rdvgame")
     description = LayoutDescription.from_file(file)

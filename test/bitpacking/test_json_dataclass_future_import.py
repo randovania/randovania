@@ -49,9 +49,9 @@ class D2OldSyntax(JsonDataclass):
          "json": {'a': None, 'b': {'a': 5, 'b': 'foo', 'c': 5}},
          }
     ],
-    name="sample_values")
-def _sample_values(request):
-    yield request.param["instance"], request.param["json"]
+)
+def sample_values(request):
+    return request.param["instance"], request.param["json"]
 
 
 def test_as_json(sample_values):

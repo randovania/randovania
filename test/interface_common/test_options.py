@@ -16,8 +16,8 @@ from randovania.interface_common.options import DecodeFailedException, InfoAlert
 from randovania.lib import migration_lib
 
 
-@pytest.fixture(name="option")
-def _option() -> Options:
+@pytest.fixture()
+def option() -> Options:
     return Options(MagicMock())
 
 
@@ -133,17 +133,16 @@ def test_getting_unknown_game_should_error(option: Options):
 
 
 def test_set_options_for_game_with_wrong_type(option: Options):
-    # Run
-    with pytest.raises(ValueError) as exception:
-        option.set_options_for_game(RandovaniaGame.METROID_PRIME, EchoesPerGameOptions(
-            cosmetic_patches=RandovaniaGame.METROID_PRIME_ECHOES.data.layout.cosmetic_patches.default(),
-        ))
-
-    # Assert
-    assert str(exception.value) == (
+    err = (
         "Expected <class 'randovania.games.prime1.exporter.options.PrimePerGameOptions'>, "
         "got <class 'randovania.games.prime2.exporter.options.EchoesPerGameOptions'>"
     )
+
+    # Run
+    with pytest.raises(ValueError, match=err):
+        option.set_options_for_game(RandovaniaGame.METROID_PRIME, EchoesPerGameOptions(
+            cosmetic_patches=RandovaniaGame.METROID_PRIME_ECHOES.data.layout.cosmetic_patches.default(),
+        ))
 
 
 def test_load_from_disk_no_data(tmp_path, mocker):

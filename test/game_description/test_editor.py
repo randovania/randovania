@@ -11,8 +11,8 @@ from randovania.game_description.editor import Editor
 from randovania.game_description.requirements.base import Requirement
 
 
-@pytest.fixture(name="game_editor")
-def _editor(echoes_game_data):
+@pytest.fixture()
+def game_editor(echoes_game_data):
     return Editor(data_reader.decode_data(echoes_game_data))
 
 

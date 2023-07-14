@@ -13,11 +13,11 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 
 
-@pytest.mark.parametrize(["has_artifacts", "rb_damage_mode"], [
-    [False, DreadRavenBeakDamageMode.CONSISTENT_LOW],
-    [True, DreadRavenBeakDamageMode.CONSISTENT_LOW],
-    [False, DreadRavenBeakDamageMode.CONSISTENT_HIGH],
-    [False, DreadRavenBeakDamageMode.UNMODIFIED],
+@pytest.mark.parametrize(("has_artifacts", "rb_damage_mode"), [
+    (False, DreadRavenBeakDamageMode.CONSISTENT_LOW),
+    (True, DreadRavenBeakDamageMode.CONSISTENT_LOW),
+    (False, DreadRavenBeakDamageMode.CONSISTENT_HIGH),
+    (False, DreadRavenBeakDamageMode.UNMODIFIED),
 ])
 def test_dread_format_params(has_artifacts: bool, rb_damage_mode: DreadRavenBeakDamageMode):
     # Setup

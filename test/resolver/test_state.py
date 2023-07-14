@@ -10,8 +10,8 @@ from randovania.resolver import state
 from randovania.resolver.state import StateGameData
 
 
-@pytest.fixture(name="state_game_data")
-def _state_game_data(empty_patches) -> StateGameData:
+@pytest.fixture()
+def state_game_data(empty_patches) -> StateGameData:
     return StateGameData(
         empty_patches.game.resource_database,
         empty_patches.game.region_list,

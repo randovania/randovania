@@ -64,8 +64,8 @@ def _a(region, area, instance_id=None):
             _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C")
         ]),
     ],
-    name="test_data")
-def _test_data(request):
+)
+def test_data(request):
     game = RandovaniaGame.METROID_PRIME_ECHOES
     reference = TeleporterConfiguration(
         mode=TeleporterShuffleMode.VANILLA,

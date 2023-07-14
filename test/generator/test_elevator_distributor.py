@@ -13,7 +13,7 @@ from randovania.generator import elevator_distributor
 from randovania.generator.elevator_distributor import ElevatorHelper
 
 
-@pytest.mark.parametrize(["seed_number", "expected_ids"], [
+@pytest.mark.parametrize(("seed_number", "expected_ids"), [
     (5000, [122, 129, 1638535, 393260, 4522032, 204865660, 4260106, 2097251, 38, 589851,
             2162826, 1245332, 1572998, 1245307, 3342446, 524321, 2949235, 1966093, 3538975, 152]),
     (9000, [2949235, 129, 152, 4522032, 4260106, 1245332, 1966093, 122, 1638535, 393260,
@@ -97,7 +97,7 @@ def test_two_way_elevator_connections_unchecked():
     }
 
 
-@pytest.mark.parametrize(["replacement", "expected"], [
+@pytest.mark.parametrize(("replacement", "expected"), [
     (False, {
         NodeIdentifier.create("w0", "a0", "n0"): AreaIdentifier("w1", "a1"),
         NodeIdentifier.create("w1", "a1", "n1"): AreaIdentifier("w2", "a2"),

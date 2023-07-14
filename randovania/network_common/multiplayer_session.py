@@ -40,7 +40,8 @@ class MultiplayerSessionListEntry(JsonDataclass):
 
     def __post_init__(self):
         tzinfo = self.creation_date.tzinfo
-        assert tzinfo is not None and tzinfo.utcoffset(self.creation_date) is not None
+        assert tzinfo is not None
+        assert tzinfo.utcoffset(self.creation_date) is not None
 
 
 @dataclasses.dataclass(frozen=True)

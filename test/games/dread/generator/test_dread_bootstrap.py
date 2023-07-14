@@ -16,7 +16,7 @@ _emmi_indices = [137, 139, 143, 144, 146, 147]
 _boss_indices = [138, 140, 141, 142, 145, 148]
 
 
-@pytest.mark.parametrize(["artifacts", "expected"], [
+@pytest.mark.parametrize(("artifacts", "expected"), [
     (DreadArtifactConfig(True, True, 12), _emmi_indices + _boss_indices),
     (DreadArtifactConfig(True, False, 6), _emmi_indices),
     (DreadArtifactConfig(False, True, 6), _boss_indices),

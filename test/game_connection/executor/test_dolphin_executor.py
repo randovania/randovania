@@ -71,7 +71,7 @@ async def test_connect_success(executor: DolphinExecutor):
     executor.dolphin.hook.assert_not_called()
 
 
-@pytest.mark.parametrize(["was_hooked", "now_hooked"], [
+@pytest.mark.parametrize(("was_hooked", "now_hooked"), [
     (False, False),
     (False, True),
     (True, True),

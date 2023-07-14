@@ -34,5 +34,4 @@ def test_create_subparsers():
     server.create_subparsers(subparsers)
 
     with pytest.raises(SystemExit):
-        args = parser.parse_args(["multiworld"])
-        args.func(args)
+        parser.parse_args(["multiworld"])

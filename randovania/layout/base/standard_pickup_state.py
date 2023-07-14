@@ -52,6 +52,11 @@ class StandardPickupState:
     priority: float = 1.0
     included_ammo: tuple[int, ...] = ()
 
+    def __post_init__(self):
+        for ammo in self.included_ammo:
+            if not isinstance(ammo, int):
+                raise ValueError(f"Expected int for ammo, got {ammo}")
+
     def check_consistency(self, pickup: StandardPickupDefinition):
         db = default_database.resource_database_for(pickup.game)
 
@@ -83,7 +88,7 @@ class StandardPickupState:
         if len(self.included_ammo) != len(pickup.ammo):
             raise ValueError(f"Mismatched included_ammo array size. ({pickup.name})")
 
-        for ammo_name, ammo in zip(pickup.ammo, self.included_ammo):
+        for ammo_name, ammo in zip(pickup.ammo, self.included_ammo, strict=True):
             if ammo > db.get_item(ammo_name).max_capacity:
                 raise ValueError(
                     f"Including more than maximum capacity for ammo {ammo_name}."

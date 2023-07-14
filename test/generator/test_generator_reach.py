@@ -125,7 +125,7 @@ _include_tricks_for_game = {
 }
 
 
-@pytest.mark.skip_resolver_tests
+@pytest.mark.skip_resolver_tests()
 @pytest.mark.parametrize(("game_enum", "ignore_events", "ignore_pickups", "include_tricks"), [
     pytest.param(
         game, _ignore_events_for_game.get(game, set()), _ignore_pickups_for_game.get(game, set()),

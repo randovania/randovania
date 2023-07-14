@@ -213,9 +213,9 @@ class DreadExecutor:
         return retBytes
 
     async def _read_response(self) -> bytes | None:
-        packet_type: bytes =  await asyncio.wait_for(self._socket.reader.read(1), None)
+        packet_type: bytes = await asyncio.wait_for(self._socket.reader.read(1), None)
         if len(packet_type) == 0:
-            raise OSError
+            raise OSError("missing packet type")
         return await self._parse_packet(packet_type[0])
 
     async def _parse_packet(self, packet_type: int) -> bytes | None:

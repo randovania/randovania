@@ -10,10 +10,8 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 
 
-@pytest.fixture(
-    params=[False, True],
-    name="logbook_node")
-def _logbook_node(request, blank_game_description):
+@pytest.fixture(params=[False, True])
+def logbook_node(request, blank_game_description):
     has_translator = request.param
     translator = blank_game_description.resource_database.get_item("BlueKey")
 

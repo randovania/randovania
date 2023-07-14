@@ -288,4 +288,3 @@ def test_restore_user_session_invalid_key(flask_app, fernet):
 
     with pytest.raises(InvalidSessionError):
         user_session.restore_user_session(sio, b"")
-        pass

@@ -83,10 +83,10 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
     )
 
 
-@pytest.mark.parametrize(["ammo_quantity"], [
-    (0,),
-    (10,),
-    (15,),
+@pytest.mark.parametrize("ammo_quantity", [
+    0,
+    10,
+    15,
 ])
 def test_create_missile_launcher(ammo_quantity: int, echoes_pickup_database, echoes_resource_database,
                                  default_generator_params):
@@ -103,9 +103,13 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_pickup_database, ech
     )
 
     # Run
-    result = pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups["Missile Launcher"], state,
-                                                   echoes_resource_database,
-                                                   echoes_pickup_database.ammo_pickups["Missile Expansion"], True)
+    result = pickup_creator.create_standard_pickup(
+        echoes_pickup_database.standard_pickups["Missile Launcher"],
+        state,
+        echoes_resource_database,
+        echoes_pickup_database.ammo_pickups["Missile Expansion"],
+        ammo_requires_main_item=True,
+    )
 
     # Assert
     assert result == PickupEntry(

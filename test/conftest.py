@@ -199,7 +199,7 @@ def game_enum(request) -> RandovaniaGame:
 @pytest.fixture(params=[False, True])
 def is_dev_version(request, mocker) -> bool:
     mocker.patch("randovania.is_dev_version", return_value=request.param)
-    yield request.param
+    return request.param
 
 
 @pytest.fixture()
@@ -324,6 +324,7 @@ else:
     @pytest.fixture()
     def skip_qtbot(request):
         pytest.skip()
+        return "no qtbot"
 
 
 def pytest_configure(config: pytest.Config):

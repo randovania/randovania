@@ -56,7 +56,7 @@ async def test_check_for_world_uid_unmodified(connector: EchoesRemoteConnector):
     assert connector.layout_uuid == uuid.UUID("00000000-0000-1111-0000-000000000000")
 
 
-@pytest.mark.parametrize(["message_original", "message_encoded", "previous_size"], [
+@pytest.mark.parametrize(("message_original", "message_encoded", "previous_size"), [
     ("Magoo", b'\x00M\x00a\x00g\x00o\x00o\x00\x00', 0),
     ("Magoo2", b'\x00M\x00a\x00g\x00o\x00o\x002\x00\x00\x00\x00', 0),
     ("Magoo", b'\x00M\x00a\x00g\x00o\x00o\x00 \x00\x00\x00\x00', 10),

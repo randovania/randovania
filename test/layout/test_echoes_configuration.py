@@ -74,8 +74,8 @@ def make_dummy(cls: type[T]) -> T:
          "damage_strictness": LayoutDamageStrictness.STRICT.value,
          },
     ],
-    name="layout_config_with_data")
-def _layout_config_with_data(request, default_echoes_configuration):
+)
+def layout_config_with_data(request, default_echoes_configuration):
     data = default_echoes_configuration.as_json
     for key, value in request.param.items():
         if key != "encoded":

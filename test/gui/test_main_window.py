@@ -32,8 +32,8 @@ def create_window(options: Options | MagicMock,
     return MainWindow(options, preset_manager, MagicMock(), MagicMock(), False)
 
 
-@pytest.fixture(name="default_main_window")
-def _default_main_window(skip_qtbot, preset_manager, mocker) -> MainWindow:
+@pytest.fixture()
+def default_main_window(skip_qtbot, preset_manager, mocker) -> MainWindow:
     mocker.patch("randovania.gui.lib.theme.set_dark_theme")
     window = create_window(Options(MagicMock()), preset_manager)
     skip_qtbot.addWidget(window)
@@ -46,7 +46,7 @@ def test_drop_random_event(default_main_window: MainWindow,
     pass
 
 
-@pytest.mark.parametrize(["url", "should_accept"], [
+@pytest.mark.parametrize(("url", "should_accept"), [
     ("something/game.iso", False),
     ("other/game.rdvgame", True),
     ("boss/custom.rdvpreset", True),

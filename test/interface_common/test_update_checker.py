@@ -21,7 +21,7 @@ _CUSTOM_EXPECTED_LOG = {
 }
 
 
-@pytest.mark.parametrize(["current_version", "last_changelog_version", "expected_display"], [
+@pytest.mark.parametrize(("current_version", "last_changelog_version", "expected_display"), [
     (5, 5, 10),
     (5, 4, 10),
     (5, 3, 10),

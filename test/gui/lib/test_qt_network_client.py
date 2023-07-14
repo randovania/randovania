@@ -43,7 +43,7 @@ async def test_handle_network_errors_success(skip_qtbot, qapp):
     assert result is callee.return_value
 
 
-@pytest.mark.parametrize(["exception", "title", "message"], [
+@pytest.mark.parametrize(("exception", "title", "message"), [
     (error.InvalidActionError("something"), "Invalid action", "Invalid Action: something"),
     (error.ServerError(), "Server error", "An error occurred on the server while processing your request."),
     (error.NotAuthorizedForActionError(), "Unauthorized", "You're not authorized to perform that action."),

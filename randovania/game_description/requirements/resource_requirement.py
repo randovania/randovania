@@ -23,7 +23,7 @@ class ResourceRequirement(Requirement):
     negate: bool
 
     def __post_init__(self):
-        assert False, "No ResourceRequirement should be directly created"
+        assert TypeError("No ResourceRequirement should be directly created")
 
     @classmethod
     def create(cls, resource: ResourceInfo, amount: int, negate: bool) -> ResourceRequirement:

@@ -41,8 +41,8 @@ core_blank_json = {
         {"game": RandovaniaGame.BLANK, "encoded": b'@'},
         {"game": RandovaniaGame.BLANK, "encoded": b'J\x05\x00', "can_change_to": ["Explosive Door"]},
     ],
-    name="config_with_data")
-def _config_with_data(request):
+)
+def config_with_data(request):
     game: RandovaniaGame = request.param["game"]
 
     default = DockRandoConfiguration.from_json(core_blank_json, game)

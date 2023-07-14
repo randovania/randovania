@@ -7,7 +7,7 @@ from randovania.layout import preset_migration
 from randovania.layout.versioned_preset import VersionedPreset
 
 
-@pytest.mark.parametrize(["preset_name", "schema_version"], [
+@pytest.mark.parametrize(("preset_name", "schema_version"), [
     ("fewest_changes_v1.rdvpreset", 1),
     ("echoes-v44-migration-preset.rdvpreset", 44),
 ])

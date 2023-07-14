@@ -27,7 +27,7 @@ def wrap(db: ResourceDatabase, data):
         ]
 
 
-@pytest.mark.parametrize(["a", "b", "result"], [
+@pytest.mark.parametrize(("a", "b", "result"), [
     ({"Ammo": 5}, {"Health": 6}, {"Ammo": 5, "Health": 6}),
     ({"Ammo": 5}, {"Ammo": 6}, {"Ammo": 11}),
 ])
@@ -75,7 +75,7 @@ def test_add_resource_gain_to_current_resources_convert(blank_resource_db, blank
     }
 
 
-@pytest.mark.parametrize(["resource_gain", "expected"], [
+@pytest.mark.parametrize(("resource_gain", "expected"), [
     ([], {}),
     ([("Ammo", 5), ("Health", 6)], {"Ammo": 5, "Health": 6}),
     ([("Ammo", 5), ("Ammo", 6)], {"Ammo": 11}),
