@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 
 from PySide6.QtCore import QCoreApplication
 
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import GameExportDialog
 from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RGameExportDialog
 
