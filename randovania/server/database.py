@@ -168,6 +168,8 @@ class MultiplayerSession(BaseModel):
     @layout_description.setter
     def layout_description(self, description: LayoutDescription | None):
         if description is not None:
+            # TODO: use description.as_binary
+            # This will need a data migration for the server, just to introduce our little header.
             encoded = description.as_json(force_spoiler=True)
             encoded["info"].pop("presets")
             self.layout_description_json = zlib.compress(
@@ -181,6 +183,18 @@ class MultiplayerSession(BaseModel):
         else:
             self.layout_description_json = None
             self.game_details_json = None
+
+    def get_layout_description_as_binary(self) -> bytes | None:
+        if self.layout_description_json is not None:
+            # TODO: just return layout_description_json directly!
+            return self.layout_description.as_binary(include_presets=False, force_spoiler=True)
+        else:
+            return None
+
+    def game_details(self) -> GameDetails | None:
+        if self.game_details_json is not None:
+            return GameDetails.from_json(json.loads(self.game_details_json))
+        return None
 
     @property
     def creation_datetime(self) -> datetime.datetime:

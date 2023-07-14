@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import randovania
 
-SERVER_API_VERSION = 10
+SERVER_API_VERSION = 11
 
 
 def connection_headers():

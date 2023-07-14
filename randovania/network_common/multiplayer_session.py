@@ -15,7 +15,6 @@ from randovania.network_common.session_state import MultiplayerSessionState
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.pickup_entry import PickupEntry
-    from randovania.layout.preset import Preset
     from randovania.network_common.remote_inventory import RemoteInventory
 
 MAX_SESSION_NAME_LENGTH = 50
@@ -65,8 +64,8 @@ class MultiplayerWorld(JsonDataclass):
     preset_raw: str
 
     @property
-    def preset(self) -> Preset:
-        return VersionedPreset.from_str(self.preset_raw).get_preset()
+    def preset(self) -> VersionedPreset:
+        return VersionedPreset.from_str(self.preset_raw)
 
 
 @dataclasses.dataclass(frozen=True)

@@ -28,6 +28,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
+from randovania.lib.container_lib import zip2
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
@@ -445,7 +446,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         def _combine(arr: list[list[str]]):
             return "\n".join(
                 f"{world.name}: {', '.join(dangerous)}"
-                for world, dangerous in zip(self._session.worlds, arr, strict=True)
+                for world, dangerous in zip2(self._session.worlds, arr)
                 if dangerous
             )
 
@@ -563,8 +564,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 f"this session has {len(self._session.worlds)} worlds.")
             return False
 
-        if any(not preset_p.is_same_configuration(preset_s.preset)
-               for preset_p, preset_s in zip(parameters.presets, self._session.worlds)):
+        if any(not preset_p.is_same_configuration(world.preset.get_preset())
+               for preset_p, world in zip2(parameters.presets, self._session.worlds, strict=False)):
             response = await async_dialog.warning(
                 self, "Different presets",
                 f"Given {source_name} has different presets compared to the session.\n"
@@ -594,6 +595,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 f"New worlds created to fit the imported {source_name}. Please import it again."
             )
             return False
+        else:
+            for preset, world in zip2(parameters.presets, self._session.worlds):
+                if preset != world.preset.get_preset():
+                    await self.game_session_api.replace_preset_for(world.id, VersionedPreset.with_preset(preset))
 
         return True
 
@@ -690,7 +695,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             return await async_dialog.warning(self, "No Spoiler Available",
                                               "Unable to view game spoilers, game was generated without spoiler.")
 
-        description = await self.game_session_api.request_layout_description()
+        description = await self.game_session_api.request_layout_description(self._session.worlds)
         if description is not None:
             self._window_manager.open_game_details(description, self._get_world_names())
 

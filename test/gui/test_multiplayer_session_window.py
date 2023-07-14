@@ -6,7 +6,7 @@ import datetime
 import json
 import uuid
 from typing import TYPE_CHECKING
-from unittest.mock import ANY, AsyncMock, MagicMock
+from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import pytest
 from PySide6 import QtWidgets
@@ -17,6 +17,8 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
+from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib.container_lib import zip2
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
     GameDetails,
@@ -454,6 +456,7 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
 
     window._session = session
     window.generate_game_with_permalink = AsyncMock()
+    window.game_session_api.replace_preset_for = AsyncMock()
 
     # Run
     await window.import_permalink()
@@ -473,9 +476,14 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
                                               QtWidgets.QMessageBox.StandardButton.No)
 
     if end_state == "import":
+        window.game_session_api.replace_preset_for.assert_has_awaits([
+            call(world.id, VersionedPreset.with_preset(preset))
+            for world, preset in zip2(session.worlds, permalink.parameters.presets)
+        ])
         window.generate_game_with_permalink.assert_awaited_once_with(permalink, retries=None)
     else:
         window.generate_game_with_permalink.assert_not_awaited()
+        window.game_session_api.replace_preset_for.assert_not_awaited()
 
 
 @pytest.mark.parametrize("end_state", ["reject", "wrong_count", "import"])
@@ -507,6 +515,7 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
     window.generate_game_with_permalink = AsyncMock()
 
     window.game_session_api.create_unclaimed_world = AsyncMock()
+    window.game_session_api.replace_preset_for = AsyncMock()
 
     # Run
     await window.import_layout()
@@ -528,6 +537,10 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
 
     if end_state == "import":
         window.game_session_api.prepare_to_upload_layout.assert_called_once_with(["uid1", "uid2"])
+        window.game_session_api.replace_preset_for.assert_has_awaits([
+            call(world.id, VersionedPreset.with_preset(preset))
+            for world in session.worlds
+        ])
         uploader.assert_awaited_once_with(layout)
     else:
         window.game_session_api.prepare_to_upload_layout.assert_not_called()
@@ -715,7 +728,7 @@ async def test_track_world_listener_create(window: MultiplayerSessionWindow, moc
 
     window._session = MagicMock()
     world = window._session.get_world.return_value
-    world.preset_raw = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_str
+    world.preset_raw = json.dumps(preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json)
 
     # Run
     await window.track_world_listener(world_uid, user_id)
