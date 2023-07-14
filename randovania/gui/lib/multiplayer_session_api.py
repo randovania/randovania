@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import contextlib
 import functools
+import json
 import logging
 import typing
 
 from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.lib import async_dialog
+from randovania.layout.layout_description import LayoutDescription
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import admin_actions, error
 
@@ -133,6 +136,70 @@ class MultiplayerSessionApi(QtCore.QObject):
             self.widget_root.setEnabled(True)
 
     @handle_network_errors
+    async def rename_session(self, new_name: str):
+        self.logger.info("Renaming session to %s", new_name)
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.CHANGE_TITLE, new_name)
+
+    @handle_network_errors
+    async def change_password(self, password: str):
+        self.logger.info("Changing password")
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.CHANGE_PASSWORD, password)
+
+    @handle_network_errors
+    async def duplicate_session(self, new_name: str):
+        self.logger.info("Duplicating session as %s", new_name)
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.DUPLICATE_SESSION, new_name)
+
+    @handle_network_errors
+    async def start_session(self):
+        self.logger.info("Starting session")
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.START_SESSION, None)
+
+    @handle_network_errors
+    async def finish_session(self):
+        self.logger.info("Finishing session")
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.FINISH_SESSION, None)
+
+    @handle_network_errors
+    async def abort_generation(self):
+        self.logger.info("Aborting generation")
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, [])
+
+    async def _upload_layout(self, layout: LayoutDescription):
+        self.logger.info("Uploading a layout description")
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
+                                         layout.as_json(force_spoiler=True))
+
+    @contextlib.asynccontextmanager
+    async def prepare_to_upload_layout(self, world_order: list[uuid.UUID]) -> typing.AsyncIterator[int]:
+        ordered_ids = [str(world_id) for world_id in world_order]
+        self.logger.info("Marking session with generation in progress")
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, ordered_ids)
+        yield self._upload_layout
+        self.logger.info("Clearing generation in progress")
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, [])
+
+    @handle_network_errors
+    async def clear_generated_game(self):
+        self.logger.info("Clearing current layout description")
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION, None)
+
+    @handle_network_errors
+    async def request_permalink(self) -> str | None:
+        self.logger.info("Requesting permalink")
+        return await self._session_admin_global(admin_actions.SessionAdminGlobalAction.REQUEST_PERMALINK, None)
+
+    @handle_network_errors
+    async def request_layout_description(self) -> LayoutDescription | None:
+        self.logger.info("Requesting layout description")
+        description_json = await self._session_admin_global(
+            admin_actions.SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION, None)
+
+        return LayoutDescription.from_json_dict(json.loads(description_json))
+
+    #
+
+    @handle_network_errors
     async def replace_preset_for(self, world_uid: uuid.UUID, preset: VersionedPreset):
         self.logger.info("Replacing preset for %s with %s", world_uid, preset.name)
         await self._session_admin_global(
@@ -218,3 +285,6 @@ class MultiplayerSessionApi(QtCore.QObject):
             "multiplayer_request_session_update",
             self.current_session_id
         )
+
+    def upload_layout_description(self, layout: LayoutDescription):
+        pass
