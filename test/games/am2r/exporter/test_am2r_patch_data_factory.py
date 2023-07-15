@@ -1,13 +1,14 @@
-from unittest.mock import PropertyMock, MagicMock
+from unittest.mock import MagicMock, PropertyMock
 
 import pytest
+
 from randovania.exporter import pickup_exporter
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.patch_data_factory import AM2RPatchDataFactory
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
+from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.generator.pickup_pool import pickup_creator
 from randovania.lib import json_lib
 
 
