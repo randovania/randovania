@@ -52,6 +52,43 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+class HistoryFilterModel(QtCore.QSortFilterProxyModel):
+    def __init__(self, parent: MultiplayerSessionWindow):
+        super().__init__(parent)
+        self.provider_filter = None
+        self.receiver_filter = None
+        self.generic_filter = ""
+
+    def filterAcceptsRow(self, source_row: int, source_parent: QtCore.QModelIndex) -> bool:
+        model = self.sourceModel()
+
+        def get_column(i):
+            return model.itemData(model.index(source_row, i)).get(0, "")
+
+        if self.provider_filter is not None:
+            return self.provider_filter == get_column(0)
+
+        if self.receiver_filter is not None:
+            return self.receiver_filter == get_column(1)
+
+        return any(
+            self.generic_filter.lower() in col.lower()
+            for col in (get_column(2), get_column(3))
+        )
+
+    def set_provider_filter(self, name: str | None):
+        self.provider_filter = name
+        self.invalidateRowsFilter()
+
+    def set_receiver_filter(self, name: str | None):
+        self.receiver_filter = name
+        self.invalidateRowsFilter()
+
+    def set_generic_filter(self, text: str):
+        self.generic_filter = text
+        self.invalidateRowsFilter()
+
+
 class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindow, BackgroundTaskMixin):
     tracker_windows: dict[tuple[uuid.UUID, int], ItemTrackerPopupWindow]
     _session: MultiplayerSessionEntry
@@ -61,6 +98,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     _already_kicked = False
     _can_stop_background_process = True
     _window_manager: WindowManager | None
+    _all_locations: set[str]
+    _all_pickups: set[str]
 
     def __init__(self, game_session_api: MultiplayerSessionApi, window_manager: WindowManager,
                  options: Options):
@@ -86,6 +125,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.tabWidget.removeTab(0)
         self.tabWidget.insertTab(0, self.users_widget, "Players")
         self.tabWidget.setCurrentIndex(0)
+        self._all_locations = set()
+        self._all_pickups = set()
 
         self.audit_item_model = QtGui.QStandardItemModel(0, 3, self)
         self.audit_item_model.setHorizontalHeaderLabels(["User", "Message", "Time"])
@@ -94,8 +135,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         self.history_item_model = QtGui.QStandardItemModel(0, 5, self)
         self.history_item_model.setHorizontalHeaderLabels(["Provider", "Receiver", "Pickup", "Location", "Time"])
-        self.tab_history.setModel(self.history_item_model)
-        self.tab_history.sortByColumn(4, QtCore.Qt.SortOrder.AscendingOrder)
+        self.history_item_proxy = HistoryFilterModel(self)
+        self.history_item_proxy.setSourceModel(self.history_item_model)
+        self.history_view.setModel(self.history_item_proxy)
+        self.history_view.sortByColumn(4, QtCore.Qt.SortOrder.AscendingOrder)
 
         # Advanced Options
         self.advanced_options_menu = QtWidgets.QMenu(self.advanced_options_tool)
@@ -139,6 +182,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.generate_game_button.clicked.connect(self.generate_game_button_clicked)
         self.session_status_button.clicked.connect(self._session_status_button_clicked)
         self.export_game_button.clicked.connect(self.export_game_button_clicked)
+
+        # History
+        self.history_filter_provider_combo.currentIndexChanged.connect(self.on_history_filter_provider_combo)
+        self.history_filter_receiver_combo.currentIndexChanged.connect(self.on_history_filter_receiver_combo)
+        self.history_filter_edit.textChanged.connect(self.on_history_filter_edit)
 
         # Session Admin
         self.rename_session_action.triggered.connect(self.rename_session)
@@ -234,6 +282,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.setWindowTitle(f"Multiworld Session: {self._session.name}")
         self.users_widget.update_state(self._session)
         self.sync_background_process_to_session()
+        self.update_history_filter_world_combo()
         self.update_game_tab()
         await self.update_logic_settings_window()
         self.update_multiworld_client_status()
@@ -348,7 +397,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             return "Unknown", "Unknown", f"Invalid location: {e}"
 
     def update_session_actions(self, actions: MultiplayerSessionActions):
-        scrollbar = self.tab_history.verticalScrollBar()
+        scrollbar = self.history_view.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
         self.history_item_model.setRowCount(len(actions.actions))
 
@@ -361,7 +410,29 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             self.history_item_model.setItem(i, 4, model_lib.create_date_item(action.time))
 
         if autoscroll:
-            self.tab_history.scrollToBottom()
+            self.history_view.scrollToBottom()
+
+    def update_history_filter_world_combo(self):
+        for prefix, combo in [("Provider: ", self.history_filter_provider_combo),
+                              ("Receiver: ", self.history_filter_receiver_combo)]:
+            combo.addItems(
+                [""] * (len(self._session.worlds) + 1 - combo.count())
+            )
+            for i, world in enumerate(self._session.worlds):
+                combo.setItemText(i + 1, prefix + world.name)
+                combo.setItemData(i + 1, world.name)
+
+        self.on_history_filter_provider_combo()
+        self.on_history_filter_receiver_combo()
+
+    def on_history_filter_provider_combo(self):
+        self.history_item_proxy.set_provider_filter(self.history_filter_provider_combo.currentData())
+
+    def on_history_filter_receiver_combo(self):
+        self.history_item_proxy.set_receiver_filter(self.history_filter_receiver_combo.currentData())
+
+    def on_history_filter_edit(self):
+        self.history_item_proxy.set_generic_filter(self.history_filter_edit.text())
 
     def update_session_audit_log(self, audit_log: MultiplayerSessionAuditLog):
         scrollbar = self.tab_audit.verticalScrollBar()
