@@ -285,6 +285,3 @@ class MultiplayerSessionApi(QtCore.QObject):
             "multiplayer_request_session_update",
             self.current_session_id
         )
-
-    def upload_layout_description(self, layout: LayoutDescription):
-        pass
