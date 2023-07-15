@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Make it possible to get to the Diffusion Beam location without Morph Ball.
 - Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 - Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
+- Fixed: A typo in the room name Ferenia - East Transport to Dairon has been changed from East Transport to Darion.
 - Removed: In Cataris - Green EMMI Introduction, the advanced Pseudo Wave Beam to break the blob from below is removed.
 
 ### Metroid Prime 2: Echoes
