@@ -12,13 +12,12 @@ from randovania.lib import json_lib
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "num_of_players"),
     [
-        ("starter_preset.rdvgame", "starter_preset.json", 1),                         # starter preset
-        ("door_lock.rdvgame", "door_lock.json", 1),                                   # starter preset+door lock rando
+        ("starter_preset.rdvgame", "starter_preset.json", 1),  # starter preset
+        ("door_lock.rdvgame", "door_lock.json", 1),  # starter preset+door lock rando
     ]
 )
-
 def test_create_patch_data(test_files_dir, rdvgame_filename,
-                            expected_results_filename, num_of_players, mocker):
+                           expected_results_filename, num_of_players, mocker):
     # Setup
     rdvgame = test_files_dir.joinpath("log_files", "am2r", rdvgame_filename)
     players_config = PlayersConfiguration(0, {i: f"Player {i + 1}" for i in range(num_of_players)})
