@@ -76,7 +76,7 @@ def sample_session(preset_manager):
             ),
         ],
         users_list=[
-            MultiplayerUser(12, "Player A", True, worlds={
+            MultiplayerUser(12, "Player A", True, True, worlds={
                 u1: UserWorldDetail(GameConnectionStatus.InGame,
                                     datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC))
             }),
@@ -112,11 +112,11 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
             ),
         ],
         users_list=[
-            MultiplayerUser(12, "Player A", True, worlds={
+            MultiplayerUser(12, "Player A", True, True, worlds={
                 u1: UserWorldDetail(GameConnectionStatus.InGame,
                                     datetime.datetime(2019, 1, 3, 2, 50, tzinfo=datetime.UTC))
             }),
-            MultiplayerUser(24, "Player B", False, {}),
+            MultiplayerUser(24, "Player B", False, False, {}),
         ],
         game_details=GameDetails(
             seed_hash="AB12",

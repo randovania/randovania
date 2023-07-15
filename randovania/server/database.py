@@ -290,6 +290,7 @@ class MultiplayerSession(BaseModel):
         # Fetch the members, with a Join to also fetch the member name
         members: Iterable[MultiplayerMembership] = MultiplayerMembership.select(
             MultiplayerMembership.admin,
+            MultiplayerMembership.ready,
             User.id,
             User.name,
         ).join(
@@ -323,6 +324,7 @@ class MultiplayerSession(BaseModel):
                     id=member.user_id,
                     name=member.user.name,
                     admin=member.admin,
+                    ready=member.ready,
                     worlds={
                         worlds[association.world_id].id: UserWorldDetail(
                             connection_state=association.connection_state,

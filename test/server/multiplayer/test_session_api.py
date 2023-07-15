@@ -80,7 +80,7 @@ def test_create_session(clean_database, preset_manager, default_game_list, mocke
         'id': 1,
         'name': 'My Room',
         'state': MultiplayerSessionState.SETUP.value,
-        'users_list': [{'admin': True, 'id': 1234, 'name': 'The Name', 'worlds': {}}],
+        'users_list': [{'admin': True, 'ready': False, 'id': 1234, 'name': 'The Name', 'worlds': {}}],
         'worlds': [],
         'game_details': None,
         'generation_in_progress': None,
@@ -115,8 +115,8 @@ def test_join_session(mock_emit_session_update: MagicMock,
         'state': MultiplayerSessionState.SETUP.value,
         'name': 'The Session',
         'users_list': [
-            {'admin': True, 'id': 1235, 'name': 'Other Name', 'worlds': {}},
-            {'admin': False, 'id': 1234, 'name': 'The Name', 'worlds': {}},
+            {'admin': True, 'ready': False, 'id': 1235, 'name': 'Other Name', 'worlds': {}},
+            {'admin': False, 'ready': False, 'id': 1234, 'name': 'The Name', 'worlds': {}},
         ],
         'worlds': [
             {"id": "bc82b6cf-df76-4c3d-9ea0-0695c2f7e719", "name": "World 1", "preset_raw": "{}"}

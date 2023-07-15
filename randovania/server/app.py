@@ -1,6 +1,7 @@
 import logging
 import time
 from logging.config import dictConfig
+from pathlib import Path
 
 import flask
 import werkzeug.middleware.proxy_fix
@@ -82,9 +83,13 @@ def create_app():
     app.config["ENFORCE_ROLE"] = configuration["server_config"].get("enforce_role")
     version_checking = client_check.ClientVersionCheck(configuration["server_config"]["client_version_checking"])
 
+    db_existed = Path(configuration["server_config"]['database_path']).exists()
     database.db.init(configuration["server_config"]['database_path'])
     database.db.connect(reuse_if_open=True)
     database.db.create_tables(database.all_classes)
+    if not db_existed:
+        for entry in database.DatabaseMigrations:
+            database.PerformedDatabaseMigrations.create(migration=entry)
 
     from randovania.server import database_migration
     database_migration.apply_migrations()
