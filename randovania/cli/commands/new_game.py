@@ -218,6 +218,7 @@ def create_pickup_database(game_enum: RandovaniaGame):
                 pickup_category=pickup_categories["weapon"],
                 broad_category=pickup_categories["ammo-based"],
                 model_name="Powerful",
+                offworld_models=frozendict(),
                 progression=("Weapon",),
                 default_shuffled_count=1,
                 default_starting_count=0,
@@ -226,6 +227,7 @@ def create_pickup_database(game_enum: RandovaniaGame):
         },
         ammo_pickups={},
         default_pickups={},
+        default_offworld_model="Powerful",
     )
     default_database.write_pickup_database_for_game(pickup_db, game_enum)
     return pickup_db

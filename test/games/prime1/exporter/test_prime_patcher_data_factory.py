@@ -38,6 +38,7 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
         )],
         conversion=[],
         model=PickupModel(RandovaniaGame.METROID_PRIME, "Missile"),
+        original_model=PickupModel(RandovaniaGame.METROID_PRIME, "Missile"),
         other_player=other_player,
         original_pickup=None,
     )
@@ -46,6 +47,7 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
         amount = 16
         shiny_stuff = {
             'model': {'game': 'prime1', 'name': 'Missile'},
+            'original_model': {'game': 'prime1', 'name': 'Missile'},
             'scanText': 'Your Missile Expansion. Provides 5 Missiles',
             'hudmemoText': 'Missile Expansion acquired!',
         }
@@ -54,6 +56,7 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
         amount = 6
         shiny_stuff = {
             'model': {'game': 'prime1', 'name': 'Shiny Missile'},
+            'original_model': {'game': 'prime1', 'name': 'Shiny Missile'},
             'scanText': 'Your Shiny Missile Expansion. Provides 5 Missiles',
             'hudmemoText': 'Shiny Missile Expansion acquired!',
         }

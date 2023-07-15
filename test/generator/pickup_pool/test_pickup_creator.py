@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import dataclasses
+
 import pytest
+from frozendict import frozendict
 
 from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY, AmmoPickupDefinition
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY, PickupCategory
@@ -39,6 +42,7 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
         pickup_category=less_generic_pickup_category,
         broad_category=generic_pickup_category,
         model_name="SuperModel",
+        offworld_models=frozendict(),
         progression=("DarkVisor", "MorphBall", "Bombs"),
         default_starting_count=0,
         default_shuffled_count=1,
@@ -110,6 +114,7 @@ def test_create_missile_launcher(ammo_quantity: int, echoes_pickup_database, ech
         echoes_pickup_database.ammo_pickups["Missile Expansion"],
         ammo_requires_main_item=True,
     )
+    result = dataclasses.replace(result, offworld_models=frozendict())
 
     # Assert
     assert result == PickupEntry(
@@ -160,6 +165,7 @@ def test_create_seeker_launcher(ammo_quantity: int,
                                                    echoes_resource_database,
                                                    echoes_pickup_database.ammo_pickups["Missile Expansion"],
                                                    ammo_requires_main_item)
+    result = dataclasses.replace(result, offworld_models=frozendict())
 
     # Assert
 
@@ -200,6 +206,7 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
         unlocked_by="MissileLauncher",
         temporary="Temporary1",
         model_name="AmmoModel",
+        offworld_models=frozendict(),
         preferred_location_category=LocationCategory.MINOR,
     )
     ammo_count = (11, 150)

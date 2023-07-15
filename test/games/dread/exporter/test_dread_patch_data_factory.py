@@ -91,7 +91,7 @@ def test_pickup_data_for_pb_expansion(locked, dread_game_description, preset_man
         resource_db,
     )
 
-    creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())
+    creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text(), RandovaniaGame.METROID_DREAD)
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -122,7 +122,7 @@ def test_pickup_data_for_main_pb(locked, dread_game_description, preset_manager)
                                                    ammo=pickup_database.ammo_pickups["Power Bomb Tank"],
                                                    ammo_requires_main_item=locked)
 
-    creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())
+    creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text(), RandovaniaGame.METROID_DREAD)
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -154,7 +154,7 @@ def test_pickup_data_for_recolored_missiles(dread_game_description, preset_manag
                                                resource_database=resource_db)
 
     factory = DreadPatchDataFactory(description, PlayersConfiguration(0, {0: "Dread"}), cosmetics)
-    creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())
+    creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text(), RandovaniaGame.METROID_DREAD)
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -204,7 +204,7 @@ def test_pickup_data_for_a_major(dread_game_description, preset_manager):
                                                    ammo_requires_main_item=False)
 
     factory = DreadPatchDataFactory(description, PlayersConfiguration(0, {0: "Dread"}), MagicMock())
-    creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text())
+    creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text(), RandovaniaGame.METROID_DREAD)
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
