@@ -12,7 +12,8 @@ from randovania.lib import json_lib
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "num_of_players"),
     [
-        ("starter_preset.rdvgame", "starter_preset.json", 1),                             # starter preset
+        ("starter_preset.rdvgame", "starter_preset.json", 1),                         # starter preset
+        ("door_lock.rdvgame", "door_lock.json", 1),                                   # starter preset+door lock rando
     ]
 )
 

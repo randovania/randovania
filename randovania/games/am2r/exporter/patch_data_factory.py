@@ -127,7 +127,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
     def _create_door_locks(self):
         locks = {}
         for node, weakness in self.patches.all_dock_weaknesses():
-            locks[node.extra["instance_id"]] = {
+            locks[str(node.extra["instance_id"])] = {
                 "lock": weakness.long_name
             }
         return locks
