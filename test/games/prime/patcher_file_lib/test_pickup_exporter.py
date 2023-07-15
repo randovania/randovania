@@ -143,7 +143,10 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         (PickupIndex(3), PickupTarget(pickup_a, 0)),
         (PickupIndex(4), PickupTarget(pickup_c, 0)),
     ])
-    creator = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
+    creator = pickup_exporter.PickupExporterSolo(
+        pickup_exporter.GenericAcquiredMemo(),
+        RandovaniaGame.METROID_PRIME_ECHOES
+    )
 
     region_list = MagicMock()
     region_list.iterate_nodes.return_value = [
@@ -174,6 +177,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         conditional_resources=[ConditionalResources("A", None, ((resource_a, 1),))],
         conversion=[],
         model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
         other_player=False,
         original_pickup=pickup_a,
     )
@@ -186,6 +190,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         conditional_resources=[ConditionalResources("Useless", None, ((useless_resource, 1),))],
         conversion=[],
         model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        original_model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
         other_player=False,
         original_pickup=useless_pickup,
     )
@@ -201,6 +206,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         ],
         conversion=[],
         model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
         other_player=False,
         original_pickup=pickup_b,
     )
@@ -212,6 +218,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         conditional_resources=[ConditionalResources("A", None, ((resource_a, 1),))],
         conversion=[],
         model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
         other_player=False,
         original_pickup=pickup_a,
     )
@@ -225,6 +232,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         ))],
         conversion=[ResourceConversion(source=useless_resource, target=resource_a)],
         model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
+        original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,
         other_player=False,
         original_pickup=pickup_c,
     )
@@ -275,7 +283,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
             for name in ("A", "B", "C", "Useless")
         }
 
-    creator = pickup_exporter.PickupExporterSolo(memo_data)
+    creator = pickup_exporter.PickupExporterSolo(memo_data, RandovaniaGame.METROID_PRIME_ECHOES)
 
     region_list = MagicMock()
     region_list.iterate_nodes.return_value = [
@@ -306,6 +314,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         conditional_resources=[ConditionalResources("A", None, ())],
         conversion=[],
         model=model_1,
+        original_model=model_1,
         other_player=False,
         original_pickup=pickup_a,
     )
@@ -317,6 +326,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         conditional_resources=[ConditionalResources("Useless", None, ())],
         conversion=[],
         model=model_1,
+        original_model=model_1,
         other_player=False,
         original_pickup=useless_pickup,
     )
@@ -331,6 +341,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         ],
         conversion=[],
         model=model_2,
+        original_model=model_2,
         other_player=False,
         original_pickup=pickup_b,
     )
@@ -342,6 +353,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         conditional_resources=[ConditionalResources("A", None, ())],
         conversion=[],
         model=model_2,
+        original_model=model_2,
         other_player=False,
         original_pickup=pickup_a,
     )
@@ -353,6 +365,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         conditional_resources=[ConditionalResources("C", None, ())],
         conversion=[],
         model=model_1,
+        original_model=model_1,
         other_player=False,
         original_pickup=pickup_c,
     )
@@ -402,7 +415,10 @@ def pickup_for_create_pickup_data(generic_pickup_category, default_generator_par
 
 def test_solo_create_pickup_data(pickup_for_create_pickup_data):
     # Setup
-    creator = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
+    creator = pickup_exporter.PickupExporterSolo(
+        pickup_exporter.GenericAcquiredMemo(),
+        RandovaniaGame.METROID_PRIME_ECHOES
+    )
     model = MagicMock()
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
@@ -424,6 +440,7 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
         ],
         conversion=[],
         model=model,
+        original_model=model,
         other_player=False,
         original_pickup=pickup_for_create_pickup_data,
     )
@@ -431,7 +448,10 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
 
 def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
     # Setup
-    solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
+    solo = pickup_exporter.PickupExporterSolo(
+        pickup_exporter.GenericAcquiredMemo(),
+        RandovaniaGame.METROID_PRIME_ECHOES
+    )
     creator = pickup_exporter.PickupExporterMulti(solo, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
     resource_a = ItemResourceInfo(0, "A", "A", 10)
@@ -454,14 +474,18 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
         ],
         conversion=[],
         model=model,
+        original_model=model,
         other_player=False,
         original_pickup=pickup_for_create_pickup_data,
     )
 
 
-def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
+def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data, mocker):
     # Setup
-    solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
+    solo = pickup_exporter.PickupExporterSolo(
+        pickup_exporter.GenericAcquiredMemo(),
+        RandovaniaGame.METROID_PRIME_ECHOES
+    )
     creator = pickup_exporter.PickupExporterMulti(solo, PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
 
@@ -469,6 +493,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
     data = creator.create_details(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 1),
                                   pickup_for_create_pickup_data, PickupModelStyle.ALL_VISIBLE,
                                   "The Name", "Scan Text", model)
+    data = dataclasses.replace(data, model=model)
 
     # Assert
     assert data == pickup_exporter.ExportedPickupDetails(
@@ -481,6 +506,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
         ],
         conversion=[],
         model=model,
+        original_model=model,
         other_player=True,
         original_pickup=pickup_for_create_pickup_data,
     )

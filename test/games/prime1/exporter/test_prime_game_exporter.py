@@ -100,12 +100,30 @@ def test_adjust_model_names():
                 "rooms": {
                     "A room": {
                         "pickups": [
-                            {"model": {"game": "prime1", "name": "Missile"}},
-                            {"model": {"game": "prime1", "name": "Space Jump Boots"}},
-                            {"model": {"game": "prime2", "name": "MissileLauncher"}},
-                            {"model": {"game": "prime2", "name": "BoostBall"}},
-                            {"model": {"game": "prime2", "name": "SpiderBall"}},
-                            {"model": {"game": "prime2", "name": "DarkAmmoExpansion"}},
+                            {
+                                "model": {"game": "prime1", "name": "Missile"},
+                                "original_model": {"game": "prime1", "name": "Missile"}
+                            },
+                            {
+                                "model": {"game": "prime1", "name": "Space Jump Boots"},
+                                "original_model": {"game": "prime1", "name": "Space Jump Boots"}
+                            },
+                            {
+                                "model": {"game": "prime2", "name": "Missile"},
+                                "original_model": {"game": "prime2", "name": "MissileLauncher"}
+                            },
+                            {
+                                "model": {"game": "prime2", "name": "Boost Ball"},
+                                "original_model": {"game": "prime2", "name": "BoostBall"}
+                            },
+                            {
+                                "model": {"game": "prime2", "name": "Spider Ball"},
+                                "original_model": {"game": "prime2", "name": "SpiderBall"}
+                            },
+                            {
+                                "model": {"game": "prime2", "name": "Nothing"},
+                                "original_model": {"game": "prime2", "name": "DarkAmmoExpansion"}
+                            },
                         ]
                     }
                 }

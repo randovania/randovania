@@ -427,67 +427,6 @@ def _simplified_memo_data() -> dict[str, str]:
     return result
 
 
-def _get_model_name_missing_backup():
-    """
-    A mapping of alternative model names if some models are missing.
-    :return:
-    """
-    other_game = {
-        PickupModel(RandovaniaGame.METROID_PRIME, "Charge Beam"): "ChargeBeam INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Super Missile"): "SuperMissile",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Scan Visor"): "ScanVisor INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Varia Suit"): "VariaSuit INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Gravity Suit"): "VariaSuit INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Phazon Suit"): "VariaSuit INCOMPLETE",
-        # PickupModel(RandovaniaGame.PRIME1, "Morph Ball"): "MorphBall INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Morph Ball Bomb"): "MorphBallBomb",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Boost Ball"): "BoostBall",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Spider Ball"): "SpiderBall",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Power Bomb"): "PowerBomb",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Power Bomb Expansion"): "PowerBombExpansion",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Missile"): "MissileExpansionPrime1",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Grapple Beam"): "GrappleBeam",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Space Jump Boots"): "SpaceJumpBoots",
-        PickupModel(RandovaniaGame.METROID_PRIME, "Energy Tank"): "EnergyTank",
-
-        # PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_BEAM"): "PowerBeam INCOMPLETE",
-        # PickupModel(RandovaniaGame.METROID_DREAD, "powerup_widebeam"): "PowerBeam INCOMPLETE",
-        # PickupModel(RandovaniaGame.METROID_DREAD, "powerup_plasmabeam"): "PowerBeam INCOMPLETE",
-        # PickupModel(RandovaniaGame.METROID_DREAD, "powerup_wavebeam"): "PowerBeam INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_CHARGE"): "ChargeBeam INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_chargebeam"): "ChargeBeam INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_diffusionbeam"): "ChargeBeam INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_MISSILE"): "SuperMissile",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_supermissile"): "SuperMissile",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_icemissile"): "SuperMissile",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_stormmissile"): "SeekerLauncher",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_grapplebeam"): "GrappleBeam",
-        # PickupModel(RandovaniaGame.METROID_DREAD, "powerup_morphball"): "MorphBall INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_BOMB"): "MorphBallBomb",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_bomb"): "MorphBallBomb",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_crossbomb"): "MorphBallBomb",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_powerbomb"): "PowerBomb",
-        PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_SUIT"): "VariaSuit INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_variasuit"): "VariaSuit INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_gravitysuit"): "VariaSuit INCOMPLETE",
-        PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_SPIN"): "SpaceJumpBoots",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_doublejump"): "SpaceJumpBoots",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_spacejump"): "SpaceJumpBoots",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_spidermagnet"): "SpiderBall",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_screwattack"): "ScrewAttack",
-        PickupModel(RandovaniaGame.METROID_DREAD, "powerup_speedbooster"): "BoostBall",
-        PickupModel(RandovaniaGame.METROID_DREAD, "item_missiletank"): "MissileExpansion",
-        PickupModel(RandovaniaGame.METROID_DREAD, "item_missiletankplus"): "MissileExpansionLarge",
-        PickupModel(RandovaniaGame.METROID_DREAD, "item_energytank"): "EnergyTank",
-        PickupModel(RandovaniaGame.METROID_DREAD, "item_energyfragment"): "EnergyTankSmall",
-        PickupModel(RandovaniaGame.METROID_DREAD, "item_powerbombtank"): "PowerBombExpansion",
-    }
-    return {
-        f"{model.game.value}_{model.name}": name
-        for model, name in other_game.items()
-    }
-
-
 def _get_model_mapping(randomizer_data: dict):
     jingles = {
         "SkyTempleKey": 2,
@@ -881,7 +820,7 @@ def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: 
         rng,
         configuration.pickup_model_style,
         configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config),
+        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, RandovaniaGame.METROID_PRIME_ECHOES),
         visual_etm=pickup_creator.create_visual_etm(),
     )
     multiworld_item = game.resource_database.get_item(echoes_items.MULTIWORLD_ITEM)
@@ -921,12 +860,14 @@ def _create_pickup_resources_for(resources: ResourceGain):
 def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDetails,
                                      multiworld_item: ItemResourceInfo, rng: Random) -> dict:
     model = details.model.as_json
+    original_model = details.original_model.as_json
 
     if (model["name"] == "MissileExpansion"
             and model["game"] == RandovaniaGame.METROID_PRIME_ECHOES
             and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
         # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
         model["name"] = "MissileExpansionPrime1"
+        original_model = model
 
     hud_text = details.collection_text
     if hud_text == ["Energy Transfer Module acquired!"] and (
@@ -959,22 +900,21 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
         "hud_text": hud_text,
         "scan": f"{details.name}. {details.description}".strip(),
         "model": model,
+        "original_model": original_model
     }
 
 
 def adjust_model_name(patcher_data: dict, randomizer_data: dict):
     mapping = _get_model_mapping(randomizer_data)
-    backup = _get_model_name_missing_backup()
 
     for pickup in patcher_data["pickups"]:
         model = pickup.pop("model")
-        if model["game"] == RandovaniaGame.METROID_PRIME_ECHOES.value:
-            model_name = model["name"]
-        else:
-            model_name = "{}_{}".format(model["game"], model["name"])
+        original_model = pickup.pop("original_model")
+
+        model_name = "{}_{}".format(original_model["game"], original_model["name"])
 
         if model_name not in mapping.index:
-            model_name = backup.get(model_name, "EnergyTransferModule")
+            model_name = model["name"]
 
         pickup["model_index"] = mapping.index[model_name]
         pickup["sound_index"] = mapping.sound_index.get(model_name, 0)
