@@ -245,6 +245,7 @@ class PickupExporterMulti(PickupExporter):
                 )
             )
 
+            is_different_game = self.game != model.game
             return ExportedPickupDetails(
                 index=original_index,
                 name=f"{other_name}'s {name}",
@@ -256,7 +257,7 @@ class PickupExporterMulti(PickupExporter):
                     resources=(),
                 )],
                 conversion=[],
-                model=offworld_model,
+                model=offworld_model if is_different_game else model,
                 original_model=model,
                 other_player=True,
                 original_pickup=pickup_target.pickup,
