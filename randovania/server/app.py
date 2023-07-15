@@ -86,6 +86,9 @@ def create_app():
     database.db.connect(reuse_if_open=True)
     database.db.create_tables(database.all_classes)
 
+    from randovania.server import database_migration
+    database_migration.apply_migrations()
+
     sio = ServerApp(app)
     app.sio = sio
     multiplayer.setup_app(sio)
