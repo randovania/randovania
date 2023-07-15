@@ -66,10 +66,12 @@ class HistoryFilterModel(QtCore.QSortFilterProxyModel):
             return model.itemData(model.index(source_row, i)).get(0, "")
 
         if self.provider_filter is not None:
-            return self.provider_filter == get_column(0)
+            if self.provider_filter != get_column(0):
+                return False
 
         if self.receiver_filter is not None:
-            return self.receiver_filter == get_column(1)
+            if self.receiver_filter != get_column(1):
+                return False
 
         return any(
             self.generic_filter.lower() in col.lower()

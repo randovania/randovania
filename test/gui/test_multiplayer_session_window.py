@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
-from PySide6 import QtWidgets
+from PySide6 import QtCore, QtWidgets
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.games.game import RandovaniaGame
@@ -51,6 +51,7 @@ async def window(skip_qtbot) -> MultiplayerSessionWindow:
 def sample_session(preset_manager):
     u1 = uuid.UUID('53308c10-c283-4be5-b5d2-1761c81a871b')
     u2 = uuid.UUID('4bdb294e-9059-4fdf-9822-3f649023249a')
+    u3 = uuid.UUID('47a8aec3-3149-4c76-b5c1-f86a9d3a5190')
 
     return MultiplayerSessionEntry(
         id=1234,
@@ -64,6 +65,11 @@ def sample_session(preset_manager):
             MultiplayerWorld(
                 name="W2", id=u2, preset_raw=json.dumps(
                     preset_manager.default_preset.as_json
+                ),
+            ),
+            MultiplayerWorld(
+                name="W3", id=u3, preset_raw=json.dumps(
+                    preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).as_json
                 ),
             ),
         ],
@@ -147,21 +153,80 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
                     location=0,
                     time=timestamp
                 ),
+                MultiplayerSessionAction(
+                    provider=sample_session.worlds[0].id,
+                    receiver=sample_session.worlds[2].id,
+                    pickup="Bombs",
+                    location=1,
+                    time=timestamp
+                ),
+                MultiplayerSessionAction(
+                    provider=sample_session.worlds[2].id,
+                    receiver=sample_session.worlds[1].id,
+                    pickup="Missile",
+                    location=2,
+                    time=timestamp
+                ),
+                MultiplayerSessionAction(
+                    provider=sample_session.worlds[1].id,
+                    receiver=sample_session.worlds[0].id,
+                    pickup="Missile",
+                    location=2,
+                    time=timestamp
+                ),
             ],
         )
     )
 
-    texts = [
-        window.history_item_model.item(0, i).text()
-        for i in range(5)
+    def get_texts(model):
+        return [
+            [
+                model.data(model.index(row, i))
+                for i in range(5)
+            ]
+            for row in range(model.rowCount())
+        ]
+
+    dt = QtCore.QDateTime(2020, 1, 5, 0, 0, 0, 0, 0)
+
+    assert get_texts(window.history_item_proxy) == [
+        ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
+        ['W1', 'W3', 'Bombs', 'Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)', dt],
+        ['W3', 'W2', 'Missile', 'Temple Grounds/Hive Chamber B/Pickup (Missile)', dt],
+        ['W2', 'W1', 'Missile', 'Intro/Explosive Depot/Pickup (Explosive)', dt],
     ]
-    assert texts == [
-        'W1',
-        'W2',
-        'Bombs',
-        'Temple Grounds/Hive Chamber A/Pickup (Missile)',
-        '2020-01-05T00:00:00.000',
+
+    window.history_filter_edit.setText("Missile")
+    assert get_texts(window.history_item_proxy) == [
+        ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
+        ['W3', 'W2', 'Missile', 'Temple Grounds/Hive Chamber B/Pickup (Missile)', dt],
+        ['W2', 'W1', 'Missile', 'Intro/Explosive Depot/Pickup (Explosive)', dt],
     ]
+
+    window.history_filter_edit.setText("Hive Chamber")
+    assert get_texts(window.history_item_proxy) == [
+        ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
+        ['W3', 'W2', 'Missile', 'Temple Grounds/Hive Chamber B/Pickup (Missile)', dt],
+    ]
+
+    window.history_item_proxy.set_provider_filter("W1")
+    assert get_texts(window.history_item_proxy) == [
+        ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
+    ]
+
+    window.history_filter_edit.setText("")
+    assert get_texts(window.history_item_proxy) == [
+        ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
+        ['W1', 'W3', 'Bombs', 'Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)', dt],
+    ]
+
+    window.history_item_proxy.set_receiver_filter("W3")
+    assert get_texts(window.history_item_proxy) == [
+        ['W1', 'W3', 'Bombs', 'Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)', dt],
+    ]
+
+    window.history_filter_edit.setText("Missile")
+    assert get_texts(window.history_item_proxy) == []
 
 
 @pytest.mark.parametrize(('generation_in_progress', 'game_details', 'expected_text'), [
