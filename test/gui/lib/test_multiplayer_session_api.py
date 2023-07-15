@@ -63,6 +63,164 @@ def session_api(skip_qtbot):
     return api
 
 
+async def test_rename_session(session_api, caplog, preset_manager):
+
+    # Run
+    await session_api.rename_session("New Name")
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        (1234,
+         admin_actions.SessionAdminGlobalAction.CHANGE_TITLE.value,
+         "New Name"),
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         '[Session 1234] Renaming session to New Name')
+    ]
+
+
+async def test_change_password(session_api, caplog, preset_manager):
+
+    # Run
+    await session_api.change_password("New Password")
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        (1234,
+         admin_actions.SessionAdminGlobalAction.CHANGE_PASSWORD.value,
+         "New Password"),
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         '[Session 1234] Changing password')
+    ]
+
+
+async def test_duplicate_session(session_api, caplog, preset_manager):
+
+    # Run
+    await session_api.duplicate_session("New Name")
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        (1234,
+         admin_actions.SessionAdminGlobalAction.DUPLICATE_SESSION.value,
+         "New Name"),
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         '[Session 1234] Duplicating session as New Name')
+    ]
+
+
+async def test_start_session(session_api, caplog, preset_manager):
+    # Run
+    await session_api.start_session()
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        (1234,
+         admin_actions.SessionAdminGlobalAction.START_SESSION.value,
+         None),
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         '[Session 1234] Starting session')
+    ]
+
+
+async def test_finish_session(session_api, caplog, preset_manager):
+    # Run
+    await session_api.finish_session()
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        (1234,
+         admin_actions.SessionAdminGlobalAction.FINISH_SESSION.value,
+         None),
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         '[Session 1234] Finishing session')
+    ]
+
+
+async def test_abort_generation(session_api, caplog, preset_manager):
+    # Run
+    await session_api.abort_generation()
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        (1234,
+         admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION.value,
+         []),
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         '[Session 1234] Aborting generation')
+    ]
+
+
+async def test_upload_layout(session_api, caplog, preset_manager):
+    layout = MagicMock()
+
+    # Run
+    await session_api._upload_layout(layout)
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        (1234,
+         admin_actions.SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
+         layout.as_json.return_value),
+    )
+    layout.as_json.assert_called_once_with(force_spoiler=True)
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         '[Session 1234] Uploading a layout description')
+    ]
+
+
+async def test_prepare_to_upload_layout(session_api, caplog, preset_manager):
+    mock_server_call = AsyncMock()
+    session_api.network_client.server_call = mock_server_call
+    world_order = [uuid.UUID('487fd145-d590-4984-b761-056974ce7d6d'),
+                   uuid.UUID('ec0cb868-341e-4688-89ce-9757e003b143')]
+
+    # Run
+    async with session_api.prepare_to_upload_layout(world_order) as context:
+        # Assert
+        mock_server_call.assert_called_once_with(
+            "multiplayer_admin_session",
+            (1234,
+             admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION.value,
+             ['487fd145-d590-4984-b761-056974ce7d6d', 'ec0cb868-341e-4688-89ce-9757e003b143']),
+        )
+        assert caplog.record_tuples == [
+            ('MultiplayerSessionApi', logging.INFO, '[Session 1234] Marking session with generation in progress')
+        ]
+
+        assert context == session_api._upload_layout
+
+        mock_server_call.reset_mock()
+        caplog.clear()
+
+    mock_server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        (1234, admin_actions.SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION.value, []),
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO, '[Session 1234] Clearing generation in progress')
+    ]
+
+
 async def test_replace_preset_for(session_api, caplog, preset_manager):
     uid = uuid.UUID('487fd145-d590-4984-b761-056974ce7d6d')
 

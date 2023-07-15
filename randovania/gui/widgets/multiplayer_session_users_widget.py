@@ -375,7 +375,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
             if in_setup and not has_layout and (player.id == self.your_id or self.is_admin()):
                 new_game_item = QtWidgets.QTreeWidgetItem(item)
-                tool = make_tool("New world")
+                tool = QtWidgets.QPushButton("Add new world")
                 tool.clicked.connect(functools.partial(self._new_world, player.id))
                 tool.setEnabled(not in_generation)
                 self.setItemWidget(new_game_item, 0, tool)

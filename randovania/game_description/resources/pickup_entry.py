@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import dataclasses
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
+
+from frozendict import frozendict
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -78,6 +81,7 @@ class PickupEntry:
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True
+    offworld_models: frozendict[RandovaniaGame, str] = dataclasses.field(default_factory=frozendict)
 
     def __post_init__(self):
         if not isinstance(self.progression, tuple):

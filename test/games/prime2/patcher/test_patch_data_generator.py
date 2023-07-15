@@ -84,11 +84,26 @@ def test_adjust_model_name(randomizer_data):
     # Setup
     patcher_data = {
         "pickups": [
-            {"model": {"game": "prime2", "name": "DarkVisor"}},
-            {"model": {"game": "prime2", "name": "SkyTempleKey"}},
-            {"model": {"game": "prime2", "name": "MissileExpansion"}},
-            {"model": {"game": "prime1", "name": "Boost Ball"}},
-            {"model": {"game": "prime1", "name": "Plasma Beam"}},
+            {
+                "model": {"game": "prime2", "name": "DarkVisor"},
+                "original_model": {"game": "prime2", "name": "DarkVisor"}
+            },
+            {
+                "model": {"game": "prime2", "name": "SkyTempleKey"},
+                "original_model": {"game": "prime2", "name": "SkyTempleKey"}
+            },
+            {
+                "model": {"game": "prime2", "name": "MissileExpansion"},
+                "original_model": {"game": "prime2", "name": "MissileExpansion"}
+            },
+            {
+                "model": {"game": "prime1", "name": "BoostBall"},
+                "original_model": {"game": "prime1", "name": "Boost Ball"}
+            },
+            {
+                "model": {"game": "prime1", "name": "EnergyTransferModule"},
+                "original_model": {"game": "prime1", "name": "Plasma Beam"}
+            },
         ]
     }
 
@@ -382,7 +397,10 @@ def test_pickup_data_for_seeker_launcher(echoes_pickup_database, multiworld_item
     pickup = pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups["Seeker Launcher"], state,
                                                    echoes_resource_database,
                                                    echoes_pickup_database.ammo_pickups["Missile Expansion"], True)
-    creator = pickup_exporter.PickupExporterSolo(patch_data_factory._simplified_memo_data())
+    creator = pickup_exporter.PickupExporterSolo(
+        patch_data_factory._simplified_memo_data(),
+        RandovaniaGame.METROID_PRIME_ECHOES
+    )
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -393,6 +411,7 @@ def test_pickup_data_for_seeker_launcher(echoes_pickup_database, multiworld_item
         "pickup_index": 0,
         "scan": "Seeker Launcher.",
         "model": {"game": "prime2", "name": "SeekerLauncher"},
+        "original_model": {"game": "prime2", "name": "SeekerLauncher"},
         "hud_text": ["Seeker Launcher acquired, but the Missile Launcher is required to use it.",
                      "Seeker Launcher acquired!"],
         'resources': [{'amount': 5, 'index': 71},
@@ -434,7 +453,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_pickup_database,
             "Power Bomb Expansion acquired! \nMaximum Power Bomb carrying capacity increased by 2.",
         ]
 
-    creator = pickup_exporter.PickupExporterSolo(memo)
+    creator = pickup_exporter.PickupExporterSolo(memo, RandovaniaGame.METROID_PRIME_ECHOES)
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -445,6 +464,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_pickup_database,
         "pickup_index": 0,
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage.",
         "model": {"game": "prime2", "name": "PowerBombExpansion"},
+        "original_model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": hud_text,
         'resources': [{'amount': 2, 'index': 72},
                       {'amount': 1, 'index': 47},
@@ -467,7 +487,10 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, multiworl
         False,
         echoes_resource_database,
     )
-    creator = pickup_exporter.PickupExporterSolo(patch_data_factory._simplified_memo_data())
+    creator = pickup_exporter.PickupExporterSolo(
+        patch_data_factory._simplified_memo_data(),
+        RandovaniaGame.METROID_PRIME_ECHOES
+    )
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -478,6 +501,7 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, multiworl
         "pickup_index": 0,
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage.",
         "model": {"game": "prime2", "name": "PowerBombExpansion"},
+        "original_model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": ["Power Bomb Expansion acquired!"],
         'resources': [{'amount': 2, 'index': 43},
                       {'amount': 1, 'index': 47},
@@ -498,7 +522,7 @@ def test_create_pickup_all_from_pool(echoes_game_description,
         memo_data = patch_data_factory._simplified_memo_data()
     else:
         memo_data = default_prime2_memo_data()
-    creator = pickup_exporter.PickupExporterSolo(memo_data)
+    creator = pickup_exporter.PickupExporterSolo(memo_data, RandovaniaGame.METROID_PRIME_ECHOES)
 
     for item in item_pool.to_place:
         data = creator.export(index, PickupTarget(item, 0), item, PickupModelStyle.ALL_VISIBLE)
@@ -520,6 +544,10 @@ def test_run_validated_hud_text(multiworld_item):
         ],
         conversion=[],
         model=PickupModel(
+            game=RandovaniaGame.METROID_PRIME_ECHOES,
+            name="EnergyTransferModule",
+        ),
+        original_model=PickupModel(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
