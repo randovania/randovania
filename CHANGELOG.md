@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.X.X] - 2023-08-??
 
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
+- Added: The Generation Order spoiler now has a field to filter it.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
 - Changed: Text prompts now default to accepting when pressing enter.
 - Fixed: The generation order for multiworld session now correctly handles any kind of names.

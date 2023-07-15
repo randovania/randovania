@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-import re
 import typing
 
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -13,6 +12,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.game_details.dock_lock_details_tab import DockLockDetailsTab
+from randovania.gui.game_details.generation_order_widget import GenerationOrderWidget
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
@@ -295,19 +295,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
                 self.layout_info_tab.addTab(self.validator_widget, "Spoiler: Playthrough")
 
             if not any(preset.configuration.should_hide_generation_log() for preset in description.all_presets):
-                action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
-                player_re = re.compile(r"[pP]layer (\d+)")
-
-                def get_name(m: re.Match):
-                    return players[int(m.group(1)) - 1]
-
-                for item_order in description.item_order:
-                    # update player names in the generation order
-                    if numbered_players != players:
-                        item_order = player_re.sub(get_name, item_order)
-                    action_list_widget.addItem(item_order)
-
-                self.layout_info_tab.addTab(action_list_widget, "Spoiler: Generation Order")
+                self.layout_info_tab.addTab(
+                    GenerationOrderWidget(None, description, players),
+                    "Spoiler: Generation Order"
+                )
 
         self._update_current_player()
 
