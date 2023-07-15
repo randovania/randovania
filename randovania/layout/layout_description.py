@@ -9,6 +9,8 @@ from dataclasses import dataclass
 from functools import lru_cache
 from random import Random
 
+import construct
+
 import randovania
 from randovania.games.game import RandovaniaGame
 from randovania.layout import description_migration, game_patches_serializer
@@ -16,6 +18,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib, obfuscator
+from randovania.lib.construct_lib import JsonEncodedValue
 
 if typing.TYPE_CHECKING:
     from pathlib import Path
@@ -62,6 +65,16 @@ def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
 def _info_hash(data: dict) -> str:
     bytes_representation = json.dumps(data).encode()
     return hashlib.blake2b(bytes_representation).hexdigest()
+
+
+BinaryLayoutDescription = construct.Struct(
+    magic=construct.Const(b"RDVG"),
+    version=construct.Const(1, construct.VarInt),
+    data=construct.Prefixed(
+        construct.VarInt,
+        construct.Compressed(JsonEncodedValue, "zlib")
+    ),
+)
 
 
 @dataclass(frozen=True)
@@ -117,6 +130,9 @@ class LayoutDescription:
                     f"Invalid preset for world {i + 1}: {e}"
                 ) from e.original_exception
 
+        if "presets" not in json_dict["info"]:
+            raise InvalidLayoutDescription("Missing presets.")
+
         generator_parameters = GeneratorParameters(
             seed_number=json_dict["info"]["seed"],
             spoiler=json_dict["info"]["has_spoiler"],
@@ -125,6 +141,8 @@ class LayoutDescription:
                 for i, preset in enumerate(json_dict["info"]["presets"])
             ],
         )
+        if len(json_dict["game_modifications"]) != generator_parameters.world_count:
+            raise InvalidLayoutDescription("Preset count does not match modifications count")
 
         return LayoutDescription(
             randovania_version_text=json_dict["info"]["randovania_version"],
@@ -141,6 +159,17 @@ class LayoutDescription:
     @classmethod
     def from_file(cls, path: Path) -> typing.Self:
         return cls.from_json_dict(json_lib.read_path(path))
+
+    @classmethod
+    def from_bytes(cls, data: bytes, *, presets: list[VersionedPreset] | None = None) -> typing.Self:
+        decoded = BinaryLayoutDescription.parse(data)
+        if presets is not None:
+            decoded["data"]["info"]["presets"] = [
+                preset.as_json
+                for preset in presets
+            ]
+
+        return cls.from_json_dict(decoded["data"])
 
     @property
     def permalink(self):
@@ -210,6 +239,15 @@ class LayoutDescription:
                 pass
 
         return result
+
+    def as_binary(self, *, include_presets: bool = True, force_spoiler: bool = False) -> bytes:
+        as_json = self.as_json(force_spoiler=force_spoiler)
+        if not include_presets:
+            as_json["info"].pop("presets")
+
+        return BinaryLayoutDescription.build({
+            "data": as_json,
+        })
 
     @property
     def all_games(self) -> frozenset[RandovaniaGame]:
