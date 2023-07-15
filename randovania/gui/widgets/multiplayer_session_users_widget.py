@@ -377,6 +377,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 new_game_item = QtWidgets.QTreeWidgetItem(item)
                 tool = QtWidgets.QPushButton("Add new world")
                 tool.clicked.connect(functools.partial(self._new_world, player.id))
+                tool.setMinimumWidth(100)
                 tool.setEnabled(not in_generation)
                 self.setItemWidget(new_game_item, 0, tool)
 
