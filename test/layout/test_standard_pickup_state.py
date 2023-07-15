@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+from frozendict import frozendict
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
@@ -46,6 +47,7 @@ def standard_pickup_state(request, echoes_pickup_database, generic_pickup_catego
         pickup_category=generic_pickup_category,
         broad_category=generic_pickup_category,
         model_name="Model Name",
+        offworld_models=frozendict(),
         progression=(request.param.get("progression", "Power"),),
         default_starting_count=0,
         default_shuffled_count=1,

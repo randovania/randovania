@@ -40,48 +40,6 @@ _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_SUIT"): ["powerup_variasuit", "powerup_gravitysuit"],
     PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_BOMB"): ["powerup_bomb", "powerup_crossbomb"],
     PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_SPIN"): ["powerup_doublejump", "powerup_spacejump"],
-
-    PickupModel(RandovaniaGame.METROID_PRIME, "Charge Beam"): ["powerup_chargebeam"],
-    # I don't love having standins for only SOME of the beams
-    # PickupModel(RandovaniaGame.METROID_PRIME, "Power Beam"): ["powerup_widebeam"],
-    # PickupModel(RandovaniaGame.METROID_PRIME, "Wave Beam"): ["powerup_wavebeam"],
-    # PickupModel(RandovaniaGame.METROID_PRIME, "Ice Beam"): ["powerup_widebeam"],
-    # PickupModel(RandovaniaGame.METROID_PRIME, "Plasma Beam"): ["powerup_plasmabeam"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Missile"): ["item_missiletank"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Grapple Beam"): ["powerup_grapple"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Space Jump Boots"): ["powerup_spacejump"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Energy Tank"): ["item_energytank"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Morph Ball"): ["powerup_morphball"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Morph Ball Bomb"): ["powerup_bomb"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Boost Ball"): ["powerup_speedbooster"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Spider Ball"): ["powerup_spidermagnet"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Power Bomb"): ["powerup_powerbomb"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Varia Suit"): ["powerup_variasuit"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Gravity Suit"): ["powerup_gravitysuit"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Phazon Suit"): ["powerup_variasuit"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Super Missile"): ["powerup_supermissile"],
-    PickupModel(RandovaniaGame.METROID_PRIME, "Power Bomb Expansion"): ["item_powerbombtank"],
-
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "DarkSuit"): ["powerup_variasuit"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "LightSuit"): ["powerup_variasuit"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "VariaSuit INCOMPLETE"): ["powerup_variasuit"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "ChargeBeam INCOMPLETE"): ["powerup_chargebeam"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTransferModule"): ["powerup_morphball"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "MorphBallBomb"): ["powerup_bomb"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "BoostBall"): ["powerup_speedbooster"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "SpiderBall"): ["powerup_spidermagnet"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "PowerBomb"): ["powerup_powerbomb"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "SpaceJumpBoots"): ["powerup_spacejump"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "GravityBoost"): ["powerup_gravitysuit"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "GrappleBeam"): ["powerup_grapplebeam"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "ScrewAttack"): ["powerup_screwattack"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "MissileLauncher"): ["powerup_icemissile"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "SeekerLauncher"): ["powerup_stormmissile"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "UnlimitedMissiles"): ["item_missiletankplus"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "SuperMissile"): ["powerup_supermissile"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTank"): ["item_energytank"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "MissileExpansion"): ["item_missiletank"],
-    PickupModel(RandovaniaGame.METROID_PRIME_ECHOES, "PowerBombExpansion"): ["item_powerbombtank"],
 }
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
@@ -234,12 +192,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             raise KeyError(f"{node} has no extra {e}")
 
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
-        # target.
-
-        offworld = detail.model.game != RandovaniaGame.METROID_DREAD
-        default = ["offworld"] if offworld else [detail.model.name]
-
-        alt_model = _ALTERNATIVE_MODELS.get(detail.model, default)
+        alt_model = _ALTERNATIVE_MODELS.get(detail.model, [detail.model.name])
         model_names = alt_model
 
         if detail.other_player:
@@ -247,10 +200,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 base_icon = "unknown"
                 model_names = ["itemsphere"]
             else:
-                base_icon = model_names[0] if offworld else detail.model.name
+                base_icon = detail.model.name
 
             map_icon = {
-                # TODO: more specific icons for pickups in other games
                 "custom_icon": {
                     "label": detail.name.upper(),
                     "base_icon": base_icon
@@ -506,7 +458,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config),
+            exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
