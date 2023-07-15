@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
 - Added: It's now possible to filter the history tab in a Multiworld Session.
+- Added: A new tool was added to the Pickup tab of Game Details that lets you quickly find in which worlds your pickups are.
 - Changed: Text prompts now default to accepting when pressing enter.
 - Fixed: The generation order for multiworld session now correctly handles any kind of names.
 - Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
