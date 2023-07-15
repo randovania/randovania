@@ -9,8 +9,8 @@ from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleK
 from randovania.interface_common.preset_editor import PresetEditor
 
 
-@pytest.fixture(name="editor")
-def _editor() -> PresetEditor:
+@pytest.fixture()
+def editor() -> PresetEditor:
     return PresetEditor(MagicMock(), MagicMock())
 
 
@@ -22,8 +22,8 @@ _sample_layout_configurations = [
 ]
 
 
-@pytest.fixture(params=_sample_layout_configurations, name="initial_layout_configuration_params")
-def _initial_layout_configuration_params(request) -> dict:
+@pytest.fixture(params=_sample_layout_configurations)
+def initial_layout_configuration_params(request) -> dict:
     return request.param
 
 

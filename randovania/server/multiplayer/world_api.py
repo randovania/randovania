@@ -195,6 +195,7 @@ def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: Se
             worlds_to_update.add(world)
             sio.store_world_in_session(world)
 
+    # Update association connection state
     if world_request.status != association.connection_state:
         association.connection_state = world_request.status
         should_update_activity = True
@@ -204,10 +205,15 @@ def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: Se
             world.session_id, world.name, world_request.status.pretty_text,
         )
 
-    if world_request.inventory is not None:
+    # Update association inventory
+    if world_request.inventory is not None and world_request.inventory != association.inventory:
         association.inventory = world_request.inventory
         should_update_activity = True
         emit_inventory_update(sio, world, user.id, world_request.inventory)
+        logger().info(
+            "Session %d, World %s has new inventory",
+            world.session_id, world.name,
+        )
 
     if world_request.request_details:
         response = ServerWorldResponse(
@@ -287,8 +293,13 @@ def emit_world_pickups_update(sio: ServerApp, world: World):
     resource_database = _get_resource_database(description, world.order)
 
     result = []
-    actions: list[WorldAction] = WorldAction.select(WorldAction, World).join(
-        World, on=WorldAction.provider).where(
+    actions: list[WorldAction] = WorldAction.select(
+        WorldAction.location,
+        World.order,
+        World.name,
+    ).join(
+        World, on=WorldAction.provider
+    ).where(
         WorldAction.receiver == world
     ).order_by(WorldAction.time.asc())
 
@@ -297,7 +308,6 @@ def emit_world_pickups_update(sio: ServerApp, world: World):
                                            action.location)
 
         if pickup_target is None:
-            logging.error(f"Action {action} has a location index with nothing.")
             result.append(None)
         else:
             result.append({
@@ -305,8 +315,12 @@ def emit_world_pickups_update(sio: ServerApp, world: World):
                 "pickup": _base64_encode_pickup(pickup_target.pickup, resource_database),
             })
 
-    logger().info(f"{session_common.describe_session(session, world)} "
-                  f"notifying {resource_database.game_enum.value} of {len(result)} pickups.")
+    logger().info(
+        "%s notifying %s of %s pickups.",
+        session_common.describe_session(session, world),
+        resource_database.game_enum.value,
+        len(result),
+    )
 
     data = {
         "world": str(world.uuid),

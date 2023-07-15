@@ -8,6 +8,7 @@ from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
@@ -25,18 +26,20 @@ if TYPE_CHECKING:
     from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 
 _ALTERNATIVE_MODELS = {
-    "Nothing": ["itemsphere"],
+    PickupModel(RandovaniaGame.METROID_DREAD, "Nothing"): ["itemsphere"],
 
-    "powerup_slide": ["itemsphere"],
-    "powerup_hyperbeam": ["powerup_plasmabeam"],
-    "powerup_metroidsuit": ["powerup_gravitysuit"],
+    PickupModel(RandovaniaGame.METROID_DREAD, "powerup_slide"): ["itemsphere"],
+    PickupModel(RandovaniaGame.METROID_DREAD, "powerup_hyperbeam"): ["powerup_plasmabeam"],
+    PickupModel(RandovaniaGame.METROID_DREAD, "powerup_metroidsuit"): ["powerup_gravitysuit"],
 
-    "PROGRESSIVE_BEAM": ["powerup_widebeam", "powerup_plasmabeam", "powerup_wavebeam"],
-    "PROGRESSIVE_CHARGE": ["powerup_chargebeam", "powerup_diffusionbeam"],
-    "PROGRESSIVE_MISSILE": ["powerup_supermissile", "powerup_icemissile"],
-    "PROGRESSIVE_SUIT": ["powerup_variasuit", "powerup_gravitysuit"],
-    "PROGRESSIVE_BOMB": ["powerup_bomb", "powerup_crossbomb"],
-    "PROGRESSIVE_SPIN": ["powerup_doublejump", "powerup_spacejump"],
+    PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_BEAM"): [
+        "powerup_widebeam", "powerup_plasmabeam", "powerup_wavebeam"
+    ],
+    PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_CHARGE"): ["powerup_chargebeam", "powerup_diffusionbeam"],
+    PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_MISSILE"): ["powerup_supermissile", "powerup_icemissile"],
+    PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_SUIT"): ["powerup_variasuit", "powerup_gravitysuit"],
+    PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_BOMB"): ["powerup_bomb", "powerup_crossbomb"],
+    PickupModel(RandovaniaGame.METROID_DREAD, "PROGRESSIVE_SPIN"): ["powerup_doublejump", "powerup_spacejump"],
 }
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
@@ -189,20 +192,17 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             raise KeyError(f"{node} has no extra {e}")
 
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
-        # target.
-
-        alt_model = _ALTERNATIVE_MODELS.get(detail.model.name, [detail.model.name])
+        alt_model = _ALTERNATIVE_MODELS.get(detail.model, [detail.model.name])
         model_names = alt_model
 
         if detail.other_player:
-            if detail.model.game != RandovaniaGame.METROID_DREAD:
+            if model_names == ["offworld"]:
                 base_icon = "unknown"
                 model_names = ["itemsphere"]
             else:
                 base_icon = detail.model.name
 
             map_icon = {
-                # TODO: more specific icons for pickups in other games
                 "custom_icon": {
                     "label": detail.name.upper(),
                     "base_icon": base_icon
@@ -458,7 +458,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config),
+            exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
             visual_etm=pickup_creator.create_visual_etm(),
         )
 

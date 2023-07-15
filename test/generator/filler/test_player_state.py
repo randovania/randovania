@@ -14,8 +14,8 @@ from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 
-@pytest.fixture(name="default_filler_config")
-def _default_filler_config() -> FillerConfiguration:
+@pytest.fixture()
+def default_filler_config() -> FillerConfiguration:
     return FillerConfiguration(
         randomization_mode=RandomizationMode.FULL,
         minimum_random_starting_pickups=0,
@@ -30,8 +30,8 @@ def _default_filler_config() -> FillerConfiguration:
     )
 
 
-@pytest.fixture(name="state_for_blank")
-def _state_for_blank(default_filler_config, blank_game_description, default_blank_configuration,
+@pytest.fixture()
+def state_for_blank(default_filler_config, blank_game_description, default_blank_configuration,
                      empty_patches) -> player_state.PlayerState:
     game = blank_game_description.get_mutable()
 

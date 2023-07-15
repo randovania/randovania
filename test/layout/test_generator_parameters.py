@@ -113,7 +113,7 @@ def test_decode(default_blank_preset, mocker, development, extra_data):
 
     # Run
     if extra_data:
-        expectation = pytest.raises(ValueError)
+        expectation = pytest.raises(ValueError, match="At least one entire byte of data is still unread.")
     else:
         expectation = contextlib.nullcontext()
 
@@ -125,7 +125,7 @@ def test_decode(default_blank_preset, mocker, development, extra_data):
         assert link == expected
 
 
-@pytest.mark.parametrize(["encoded", "num_players"], [
+@pytest.mark.parametrize(("encoded", "num_players"), [
     (b'$\x00\x00\x0f\xa2\x00\x15\xe0', 1),
     (b'D@\x00\x00\xfa \x01@\x05x', 2),
     (b'\x8cDDDDD\x00\x00\x0f\xa2\x00\x14\x00P\x01@\x05\x00\x14\x00P\x01@\x05\x00\x14\x00W\x80', 10),

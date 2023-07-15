@@ -50,8 +50,8 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
                           "include_owner": False},
             "target": 50}]},
     ],
-    name="patches_with_data")
-def _patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_pickup_database):
+)
+def patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_pickup_database):
     game = echoes_game_description
     db = game.resource_database
 

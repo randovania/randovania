@@ -74,9 +74,9 @@ class HasDict(JsonDataclass):
                   'd': [50]},
          }
     ],
-    name="sample_values")
-def _sample_values(request):
-    yield request.param["instance"], request.param["json"]
+)
+def sample_values(request):
+    return request.param["instance"], request.param["json"]
 
 
 def test_as_json(sample_values):

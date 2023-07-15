@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import itertools
-import json
 import logging
 import random
 from typing import TYPE_CHECKING, Self
@@ -26,12 +25,10 @@ from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWin
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget, connect_to
 from randovania.interface_common import generator_frontend
 from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
 from randovania.network_client.network_client import ConnectionState
-from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
     MultiplayerSessionAction,
@@ -169,11 +166,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
         self._multiworld_client.SyncFailure.connect(self.update_multiworld_client_status)
 
-    def _get_world_order(self) -> list[str]:
-        return [
-            str(world.id)
-            for world in self._session.worlds
-        ]
+    def _get_world_order(self) -> list[uuid.UUID]:
+        return [world.id for world in self._session.worlds]
 
     def _get_world_names(self) -> list[str]:
         return [
@@ -398,13 +392,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         user = self.network_client.current_user
         return self._session.users[user.id]
 
-    async def _admin_global_action(self, action: SessionAdminGlobalAction, arg):
-        self.setEnabled(False)
-        try:
-            return await self.network_client.session_admin_global(self._session, action, arg)
-        finally:
-            self.setEnabled(True)
-
     @asyncSlot()
     @handle_network_errors
     async def rename_session(self):
@@ -417,10 +404,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             max_length=MAX_SESSION_NAME_LENGTH,
         )
         if new_name is not None:
-            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_TITLE, new_name)
+            await self.game_session_api.rename_session(new_name)
 
     @asyncSlot()
-    @handle_network_errors
     async def change_password(self):
         password = await TextPromptDialog.prompt(
             parent=self,
@@ -430,10 +416,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             is_modal=True,
         )
         if password is not None:
-            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_PASSWORD, password)
+            await self.game_session_api.change_password(password)
 
     @asyncSlot()
-    @handle_network_errors
     async def duplicate_session(self):
         new_name = await TextPromptDialog.prompt(
             parent=self,
@@ -443,7 +428,18 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             max_length=MAX_SESSION_NAME_LENGTH,
         )
         if new_name is not None:
-            await self._admin_global_action(SessionAdminGlobalAction.DUPLICATE_SESSION, new_name)
+            await self.game_session_api.duplicate_session(new_name)
+
+    async def clear_generated_game(self):
+        result = await async_dialog.warning(
+            self, "Clear generated game?",
+            "Clearing the generated game will allow presets to be customized again, but all "
+            "players must export the ISOs again.",
+            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+            QtWidgets.QMessageBox.StandardButton.No
+        )
+        if result == QtWidgets.QMessageBox.StandardButton.Yes:
+            await self.game_session_api.clear_generated_game()
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
         def _combine(arr: list[list[str]]):
@@ -479,6 +475,21 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         return True
 
+    @asyncSlot()
+    @handle_network_errors
+    async def generate_game_with_spoiler(self):
+        await self.generate_game(True, retries=None)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def generate_game_with_spoiler_no_retry(self):
+        await self.generate_game(True, retries=0)
+
+    @asyncSlot()
+    @handle_network_errors
+    async def generate_game_without_spoiler(self):
+        await self.generate_game(False, retries=None)
+
     async def generate_game(self, spoiler: bool, retries: int | None):
         await async_dialog.warning(
             self, "Multiworld Limitation",
@@ -512,51 +523,32 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                                                       options=self._options,
                                                       retries=retries)
 
-        await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, self._get_world_order())
-        self._generating_game = True
-        try:
-            layout = await self.run_in_background_async(generate_layout, "Creating a game...")
-            self.update_progress("Finished generating, uploading...", 100)
-            await self._upload_layout_description(layout)
-            self.update_progress("Uploaded!", 100)
+        async with self.game_session_api.prepare_to_upload_layout(self._get_world_order()) as uploader:
+            self._generating_game = True
+            try:
+                layout = await self.run_in_background_async(generate_layout, "Creating a game...")
 
-        except (asyncio.exceptions.CancelledError, BackgroundTaskInProgressError):
-            pass
+                last_multiplayer = self._options.data_dir.joinpath(f"last_multiplayer_{self._session.id}.rdvgame")
+                if layout.has_spoiler:
+                    layout.save_to_file(last_multiplayer)
 
-        except Exception as e:
-            await self.failure_handler.handle_exception(
-                e, self.update_progress,
-            )
+                self.update_progress("Finished generating, uploading...", 100)
+                await uploader(layout)
+                self.update_progress("Uploaded!", 100)
 
-        finally:
-            await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, [])
-            self._generating_game = False
+                if layout.has_spoiler:
+                    last_multiplayer.unlink()
 
-    async def clear_generated_game(self):
-        result = await async_dialog.warning(
-            self, "Clear generated game?",
-            "Clearing the generated game will allow presets to be customized again, but all "
-            "players must export the ISOs again.",
-            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
-            QtWidgets.QMessageBox.StandardButton.No
-        )
-        if result == QtWidgets.QMessageBox.StandardButton.Yes:
-            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION, None)
+            except (asyncio.exceptions.CancelledError, BackgroundTaskInProgressError):
+                pass
 
-    @asyncSlot()
-    @handle_network_errors
-    async def generate_game_with_spoiler(self):
-        await self.generate_game(True, retries=None)
+            except Exception as e:
+                await self.failure_handler.handle_exception(
+                    e, self.update_progress,
+                )
 
-    @asyncSlot()
-    @handle_network_errors
-    async def generate_game_with_spoiler_no_retry(self):
-        await self.generate_game(True, retries=0)
-
-    @asyncSlot()
-    @handle_network_errors
-    async def generate_game_without_spoiler(self):
-        await self.generate_game(False, retries=None)
+            finally:
+                self._generating_game = False
 
     async def _should_overwrite_presets(self, parameters: GeneratorParameters, permalink_source: bool) -> bool:
         if permalink_source:
@@ -625,25 +617,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             return
 
         if await self._should_overwrite_presets(layout.generator_parameters, permalink_source=False):
-            await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, self._get_world_order())
-            try:
-                await self._upload_layout_description(layout)
-            finally:
-                await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, [])
-
-    async def _upload_layout_description(self, layout: LayoutDescription):
-        last_multiplayer = self._options.data_dir.joinpath(f"last_multiplayer_{self._session.id}.rdvgame")
-        if layout.has_spoiler:
-            layout.save_to_file(last_multiplayer)
-
-        await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
-                                        layout.as_json(force_spoiler=True))
-
-        if layout.has_spoiler:
-            last_multiplayer.unlink()
-
-    async def start_session(self):
-        await self._admin_global_action(SessionAdminGlobalAction.START_SESSION, None)
+            async with self.game_session_api.prepare_to_upload_layout(self._get_world_order()) as uploader:
+                await uploader(layout)
 
     async def finish_session(self):
         result = await async_dialog.warning(
@@ -654,14 +629,14 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             async_dialog.StandardButton.No,
         )
         if result == async_dialog.StandardButton.Yes:
-            await self._admin_global_action(SessionAdminGlobalAction.FINISH_SESSION, None)
+            await self.game_session_api.finish_session()
 
     @asyncSlot()
     @handle_network_errors
     async def _session_status_button_clicked(self):
         state = self._session.state
         if state == MultiplayerSessionState.SETUP:
-            await self.start_session()
+            await self.game_session_api.start_session()
         elif state == MultiplayerSessionState.IN_PROGRESS:
             await self.finish_session()
         else:
@@ -715,14 +690,16 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             return await async_dialog.warning(self, "No Spoiler Available",
                                               "Unable to view game spoilers, game was generated without spoiler.")
 
-        description_json = await self._admin_global_action(SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION, None)
-        description = LayoutDescription.from_json_dict(json.loads(description_json))
-        self._window_manager.open_game_details(description, self._get_world_names())
+        description = await self.game_session_api.request_layout_description()
+        if description is not None:
+            self._window_manager.open_game_details(description, self._get_world_names())
 
     @asyncSlot()
-    @handle_network_errors
     async def copy_permalink(self):
-        permalink_str = await self._admin_global_action(SessionAdminGlobalAction.REQUEST_PERMALINK, None)
+        permalink_str = await self.game_session_api.request_permalink()
+        if permalink_str is None:
+            return
+
         dialog = QtWidgets.QInputDialog(self)
         dialog.setModal(True)
         dialog.setWindowTitle("Session permalink")
@@ -738,7 +715,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if self._session.game_details is not None:
             await self.clear_generated_game()
         elif self._session.generation_in_progress is not None:
-            await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, [])
+            await self.game_session_api.abort_generation()
         else:
             await self.generate_game(True, retries=None)
 

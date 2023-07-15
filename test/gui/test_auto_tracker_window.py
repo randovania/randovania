@@ -44,7 +44,7 @@ def test_create_tracker_no_game(skip_qtbot):
 
 
 @pytest.mark.parametrize(
-    ["game", "tracker_name"], [
+    ("game", "tracker_name"), [
         (RandovaniaGame.METROID_PRIME, "Game Art (Standard)"),
         (RandovaniaGame.METROID_PRIME_ECHOES, "Game Art (Standard)"),
     ])

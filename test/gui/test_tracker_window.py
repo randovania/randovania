@@ -19,9 +19,8 @@ if TYPE_CHECKING:
 
 @pytest.fixture(params=[{},
                         {"elevators": TeleporterShuffleMode.ONE_WAY_ANYTHING,
-                         "translator_configuration": True}],
-                name="layout_config")
-def _layout_config(request, default_echoes_configuration):
+                         "translator_configuration": True}])
+def layout_config(request, default_echoes_configuration):
     if "translator_configuration" in request.param:
         translator_requirement = copy.copy(default_echoes_configuration.translator_configuration.translator_requirement)
         for gate in translator_requirement.keys():

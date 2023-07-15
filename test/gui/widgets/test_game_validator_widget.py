@@ -8,8 +8,8 @@ from randovania.gui.widgets import game_validator_widget
 from randovania.resolver import debug
 
 
-@pytest.fixture(name="widget")
-def _widget(skip_qtbot):
+@pytest.fixture()
+def widget(skip_qtbot):
     layout = MagicMock()
     widget = game_validator_widget.GameValidatorWidget(layout)
     skip_qtbot.addWidget(widget)

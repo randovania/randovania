@@ -97,7 +97,7 @@ async def test_error_on_read_response(executor):
     executor._socket = MagicMock()
     executor._socket.reader = reader
 
-    with pytest.raises(OSError):
+    with pytest.raises(OSError, match="missing packet type"):
         await executor._read_response()
 
 
@@ -184,13 +184,15 @@ async def test_packet_types_with_signals(executor):
     await executor._parse_packet(PacketType.PACKET_GAME_STATE)
     executor.signals.new_player_location.emit.assert_called_with("{GAME_STATE}")
 
+
 async def test_code_greater_than_buffer(executor):
     executor._socket = MagicMock()
     executor._socket.buffer_size = 5
     executor.get_bootstrapper_for = MagicMock(return_value="Lorem ipsum")
 
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Single code block has length 575 but maximum is 5"):
         await executor.bootstrap()
+
 
 async def test_code_in_multiple_buffer(executor):
     executor.run_lua_code = AsyncMock()

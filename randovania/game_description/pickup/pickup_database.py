@@ -18,6 +18,7 @@ class PickupDatabase:
     standard_pickups: dict[str, StandardPickupDefinition]
     ammo_pickups: dict[str, AmmoPickupDefinition]
     default_pickups: dict[PickupCategory, tuple[StandardPickupDefinition, ...]]
+    default_offworld_model: str
 
     def get_pickup_with_name(self, name: str) -> StandardPickupDefinition | AmmoPickupDefinition:
         return self.standard_pickups.get(name) or self.ammo_pickups.get(name)
@@ -51,7 +52,15 @@ def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
         for category_name, pickup_names in database_data["default_pickups"].items()
     }
 
-    return PickupDatabase(pickup_categories, standard_pickups, ammo_pickups, default_pickups)
+    default_offworld_model = database_data["default_offworld_model"]
+
+    return PickupDatabase(
+        pickup_categories,
+        standard_pickups,
+        ammo_pickups,
+        default_pickups,
+        default_offworld_model,
+    )
 
 
 def write_database(database: PickupDatabase) -> dict:
@@ -80,10 +89,13 @@ def write_database(database: PickupDatabase) -> dict:
         for category, pickups in database.default_pickups.items()
     }
 
+    default_offworld_model = database.default_offworld_model
+
     return {
         "schema_version": migrations.CURRENT_VERSION,
         "pickup_categories": pickup_categories,
         "standard_pickups": standard_pickups,
         "ammo_pickups": ammo_pickups,
         "default_pickups": default_pickups,
+        "default_offworld_model": default_offworld_model
     }

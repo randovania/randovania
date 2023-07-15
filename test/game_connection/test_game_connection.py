@@ -17,8 +17,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
 
-@pytest.fixture(name="connection")
-def _connection(skip_qtbot):
+@pytest.fixture()
+def connection(skip_qtbot):
     return GameConnection(MagicMock(), MagicMock())
 
 

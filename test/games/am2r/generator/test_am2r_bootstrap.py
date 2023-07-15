@@ -22,7 +22,7 @@ _boss_indices = [
 ]
 
 
-@pytest.mark.parametrize(["artifacts", "expected"], [
+@pytest.mark.parametrize(("artifacts", "expected"), [
     (AM2RArtifactConfig(True, True, 5), [3, 50, 374, 389, 391]),
     (AM2RArtifactConfig(True, False, 46), range(350, 396)),
     (AM2RArtifactConfig(False, True, 6), _boss_indices),

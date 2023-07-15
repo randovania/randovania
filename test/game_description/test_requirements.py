@@ -24,8 +24,8 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 from randovania.games.game import RandovaniaGame
 
 
-@pytest.fixture(name="database")
-def _database() -> ResourceDatabase:
+@pytest.fixture()
+def database() -> ResourceDatabase:
     return ResourceDatabase(
         game_enum=RandovaniaGame.METROID_PRIME_ECHOES,
         item=[
@@ -182,7 +182,7 @@ def test_expand_alternatives_4(blank_resource_db):
     assert a.expand_alternatives(b) == expected
 
 
-@pytest.mark.parametrize(["input_data", "output_data"], [
+@pytest.mark.parametrize(("input_data", "output_data"), [
     ([], []),
     ([(0, False)], []),
     ([(0, True)], [0]),
@@ -570,7 +570,7 @@ def _arr_req(req_type: str, items: list):
     return {"type": req_type, "data": {"comment": None, "items": items}}
 
 
-@pytest.mark.parametrize(["damage", "items", "requirement"], [
+@pytest.mark.parametrize(("damage", "items", "requirement"), [
     (50, [], _arr_req("and", [_json_req(50)])),
     (MAX_DAMAGE, [], _arr_req("and", [_json_req(1, "Dark", ResourceType.ITEM)])),
     (80, [], _arr_req("and", [_json_req(50), _json_req(30)])),

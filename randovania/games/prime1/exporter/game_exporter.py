@@ -18,7 +18,6 @@ from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 from randovania.patching.prime import asset_conversion
@@ -51,12 +50,11 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
         for room in level.get("rooms", {}).values():
             for pickup in room.get("pickups", []):
                 model = PickupModel.from_json(pickup.pop("model"))
-                if model.game == RandovaniaGame.METROID_PRIME:
+                original_model = PickupModel.from_json(pickup.pop("original_model"))
+
+                converted_model_name = f"{original_model.game.value}_{original_model.name}"
+                if converted_model_name not in model_list:
                     converted_model_name = model.name
-                else:
-                    converted_model_name = f"{model.game.value}_{model.name}"
-                    if converted_model_name not in model_list:
-                        converted_model_name = _MODEL_MAPPING.get((model.game, model.name), "Nothing")
 
                 pickup['model'] = converted_model_name
 

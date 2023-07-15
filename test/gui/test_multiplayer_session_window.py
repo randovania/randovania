@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import datetime
 import json
 import uuid
 from typing import TYPE_CHECKING
-from unittest.mock import ANY, AsyncMock, MagicMock, call
+from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
 from PySide6 import QtWidgets
@@ -16,8 +17,6 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
-from randovania.network_common import error
-from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
     GameDetails,
@@ -165,7 +164,7 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
     ]
 
 
-@pytest.mark.parametrize(["generation_in_progress", "game_details", "expected_text"], [
+@pytest.mark.parametrize(('generation_in_progress', 'game_details', 'expected_text'), [
     (True, None, "Abort generation"),
     (None, None, "Generate game"),
     (None, True, "Clear generated game"),
@@ -245,19 +244,21 @@ async def test_update_logic_settings_window(window: MultiplayerSessionWindow, mo
 
 
 @pytest.mark.parametrize("accept", [QtWidgets.QDialog.DialogCode.Accepted, QtWidgets.QDialog.DialogCode.Rejected])
-@pytest.mark.parametrize(["action", "method_name"], [
-    (SessionAdminGlobalAction.CHANGE_TITLE, "rename_session"),
-    (SessionAdminGlobalAction.CHANGE_PASSWORD, "change_password"),
-    (SessionAdminGlobalAction.DUPLICATE_SESSION, "duplicate_session"),
+@pytest.mark.parametrize("method_name", [
+    "rename_session",
+    "change_password",
+    "duplicate_session",
 ])
-async def test_change_password_title_or_duplicate(window, mocker, action, method_name, accept):
+async def test_change_password_title_or_duplicate(window: MultiplayerSessionWindow, mocker, method_name, accept):
     def set_text_value(dialog: TextPromptDialog):
         dialog.prompt_edit.setText("magoo")
         return accept
 
+    api_method = AsyncMock()
+    setattr(window.game_session_api, method_name, api_method)
+
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                   side_effect=set_text_value)
-    window._admin_global_action = AsyncMock()
     window._session = MagicMock()
     window._session.name = "OldName"
 
@@ -267,12 +268,20 @@ async def test_change_password_title_or_duplicate(window, mocker, action, method
     # Assert
     execute_dialog.assert_awaited_once()
     if accept == QtWidgets.QDialog.DialogCode.Accepted:
-        window._admin_global_action.assert_awaited_once_with(action, "magoo")
+        api_method.assert_awaited_once_with("magoo")
     else:
-        window._admin_global_action.assert_not_awaited()
+        api_method.assert_not_awaited()
 
 
-async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_manager):
+@pytest.fixture()
+def prepare_to_upload_layout():
+    result = MagicMock(spec=contextlib.AbstractAsyncContextManager)
+    result.__aenter__ = AsyncMock()
+    result.__aexit__ = AsyncMock()
+    return result
+
+
+async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_manager, prepare_to_upload_layout):
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout")
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
     mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
@@ -285,8 +294,10 @@ async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_ma
     ]
 
     window._session = session
-    window._upload_layout_description = AsyncMock()
-    window._admin_global_action = AsyncMock()
+    layout = mock_generate_layout.return_value
+
+    uploader = prepare_to_upload_layout.__aenter__.return_value
+    window.game_session_api.prepare_to_upload_layout = MagicMock(return_value=prepare_to_upload_layout)
 
     # Run
     await window.generate_game(spoiler, retries=3)
@@ -309,7 +320,13 @@ async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_ma
         options=window._options,
         retries=3,
     )
-    window._upload_layout_description.assert_awaited_once_with(mock_generate_layout.return_value)
+    window.game_session_api.prepare_to_upload_layout.assert_called_once_with(
+        [session.worlds[0].id, session.worlds[1].id]
+    )
+    uploader.assert_awaited_once_with(layout)
+    layout.save_to_file.assert_called_once_with(
+        window._options.data_dir.joinpath(f"last_multiplayer_{session.id}.rdvgame")
+    )
 
 
 async def test_check_dangerous_presets_incompatible(window: MultiplayerSessionWindow, mocker):
@@ -385,13 +402,13 @@ async def test_check_dangerous_presets_impossible(window: MultiplayerSessionWind
 async def test_copy_permalink_is_admin(window: MultiplayerSessionWindow, mocker):
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    window._admin_global_action = AsyncMock(return_value="<permalink>")
+    window.game_session_api.request_permalink = AsyncMock(return_value="<permalink>")
 
     # Run
     await window.copy_permalink()
 
     # Assert
-    window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.REQUEST_PERMALINK, None)
+    window.game_session_api.request_permalink.assert_awaited_once_with()
     execute_dialog.assert_awaited_once()
     assert execute_dialog.call_args.args[0].textValue() == "<permalink>"
     mock_set_clipboard.assert_called_once_with("<permalink>")
@@ -399,16 +416,14 @@ async def test_copy_permalink_is_admin(window: MultiplayerSessionWindow, mocker)
 
 async def test_copy_permalink_not_admin(window: MultiplayerSessionWindow, mocker):
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
-    execute_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     execute_dialog: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    window._admin_global_action = AsyncMock(side_effect=error.NotAuthorizedForActionError)
+    window.game_session_api.request_permalink = AsyncMock(return_value=None)
 
     # Run
     await window.copy_permalink()
 
     # Assert
-    window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.REQUEST_PERMALINK, None)
-    execute_warning.assert_awaited_once_with(window, "Unauthorized", "You're not authorized to perform that action.")
+    window.game_session_api.request_permalink.assert_awaited_once_with()
     execute_dialog.assert_not_awaited()
     mock_set_clipboard.assert_not_called()
 
@@ -464,7 +479,8 @@ async def test_import_permalink(window: MultiplayerSessionWindow, end_state, moc
 
 
 @pytest.mark.parametrize("end_state", ["reject", "wrong_count", "import"])
-async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker: MockerFixture):
+async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker: MockerFixture,
+                             prepare_to_upload_layout):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     mock_load_layout = mocker.patch("randovania.gui.lib.layout_loader.prompt_and_load_layout_description",
                                     new_callable=AsyncMock)
@@ -474,7 +490,8 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
     if end_state == "reject":
         mock_load_layout.return_value = None
 
-    window._admin_global_action = AsyncMock()
+    uploader: AsyncMock = prepare_to_upload_layout.__aenter__.return_value
+    window.game_session_api.prepare_to_upload_layout = MagicMock(return_value=prepare_to_upload_layout)
 
     preset = MagicMock()
     preset.is_same_configuration.return_value = True
@@ -510,16 +527,10 @@ async def test_import_layout(window: MultiplayerSessionWindow, end_state, mocker
         window.game_session_api.create_unclaimed_world.assert_not_awaited()
 
     if end_state == "import":
-        layout.save_to_file.assert_called_once_with(
-            window._options.data_dir.joinpath(f"last_multiplayer_{session.id}.rdvgame")
-        )
-        window._admin_global_action.assert_has_awaits([
-            call(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, ["uid1", "uid2"]),
-            call(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION, layout.as_json.return_value),
-            call(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, []),
-        ])
+        window.game_session_api.prepare_to_upload_layout.assert_called_once_with(["uid1", "uid2"])
+        uploader.assert_awaited_once_with(layout)
     else:
-        window._admin_global_action.assert_not_awaited()
+        window.game_session_api.prepare_to_upload_layout.assert_not_called()
 
 
 @pytest.mark.parametrize("already_kicked", [True, False])
@@ -555,7 +566,7 @@ async def test_finish_session(window: MultiplayerSessionWindow, accept, mocker):
     )
 
     window._session = MagicMock()
-    window.network_client.session_admin_global = AsyncMock()
+    window.game_session_api.finish_session = AsyncMock()
 
     # Run
     await window.finish_session()
@@ -563,10 +574,9 @@ async def test_finish_session(window: MultiplayerSessionWindow, accept, mocker):
     # Assert
     mock_warning.assert_awaited_once()
     if accept:
-        window.network_client.session_admin_global.assert_awaited_once_with(
-            window._session, SessionAdminGlobalAction.FINISH_SESSION, None)
+        window.game_session_api.finish_session.assert_awaited_once_with()
     else:
-        window.network_client.session_admin_global.assert_not_awaited()
+        window.game_session_api.finish_session.assert_not_awaited()
 
 
 async def test_game_export_listener(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture,

@@ -27,7 +27,7 @@ async def test_on_message_from_bot(mocker):
     mock_look_for.assert_not_awaited()
 
 
-@pytest.mark.parametrize(["is_dev", "git_result", "expected_result"], [
+@pytest.mark.parametrize(("is_dev", "git_result", "expected_result"), [
     (False, "v3.2.2-902-gc361caae\n", None),
     (True, "v3.2.2-902-gc361caae\n", "3.3.0.dev902"),
     (False, "v4.0.0\n", "4.0.0"),

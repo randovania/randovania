@@ -60,28 +60,6 @@ _STARTING_ITEM_NAME_TO_INDEX = {
     "wavebuster": "Wavebuster"
 }
 
-_MODEL_MAPPING = {
-    (RandovaniaGame.METROID_PRIME_ECHOES, "CombatVisor INCOMPLETE"): "Combat Visor",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "ChargeBeam INCOMPLETE"): "Charge Beam",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "SuperMissile"): "Super Missile",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "ScanVisor INCOMPLETE"): "Scan Visor",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "VariaSuit INCOMPLETE"): "Varia Suit",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "DarkSuit"): "Varia Suit",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "LightSuit"): "Varia Suit",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "MorphBall INCOMPLETE"): "Morph Ball",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "MorphBallBomb"): "Morph Ball Bomb",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "BoostBall"): "Boost Ball",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "SpiderBall"): "Spider Ball",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "PowerBomb"): "Power Bomb",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "PowerBombExpansion"): "Power Bomb Expansion",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "MissileExpansion"): "Missile",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "MissileExpansionPrime1"): "Missile",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "MissileLauncher"): "Missile",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "GrappleBeam"): "Grapple Beam",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "SpaceJumpBoots"): "Space Jump Boots",
-    (RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTank"): "Energy Tank",
-}
-
 # The following locations have cutscenes that weren't removed
 _LOCATIONS_WITH_MODAL_ALERT = {
     63,  # Artifact Temple
@@ -123,6 +101,7 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
                                      pickup_markers: bool,
                                      rng: Random) -> dict:
     model = detail.model.as_json
+    original_model = detail.original_model.as_json
 
     name = detail.name
     collection_text = detail.collection_text[0]
@@ -146,10 +125,12 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         model["name"] = "Shiny Missile"
         collection_text = collection_text.replace("Missile Expansion", "Shiny Missile Expansion")
         name = name.replace("Missile Expansion", "Shiny Missile Expansion")
+        original_model = model
 
     result = {
         "type": pickup_type,
         "model": model,
+        "original_model": original_model,
         "scanText": f"{name}. {detail.description}".strip(),
         "hudmemoText": collection_text,
         "currIncrease": count,
@@ -643,7 +624,11 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(pickup_exporter.GenericAcquiredMemo(), self.players_config),
+            exporter=pickup_exporter.create_pickup_exporter(
+                pickup_exporter.GenericAcquiredMemo(),
+                self.players_config,
+                self.game_enum()
+            ),
             visual_etm=pickup_creator.create_visual_etm(),
         )
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
