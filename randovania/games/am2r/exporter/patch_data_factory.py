@@ -21,11 +21,11 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
 
     def _does_pickup_have_shiny_values(self, pickup_list, item_effect: str, sprite_details: str, header: str,
                                        for_other_player: bool, rng: Random) -> bool:
-        return (pickup_list["item_effect"] == item_effect and pickup_list["sprite_details"] == sprite_details and
-                pickup_list["text"]["header"] == header and not for_other_player and
+        return (pickup_list["item_effect"] == item_effect and pickup_list["sprite_details"]["name"] == sprite_details
+                and pickup_list["text"]["header"] == header and not for_other_player and
                 rng.randint(0, self._EASTER_EGG_SHINY) == 0)
 
-    def _create_pickups_dict(self, pickup_list, item_info, memo_data, rng: Random):
+    def _create_pickups_dict(self, pickup_list, item_info, rng: Random):
         pickup_map_dict = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1]
@@ -39,7 +39,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 "quantity": quantity,
                 "text": {
                     "header": item_info[pickup.model.name]["text_header"],
-                    "description": memo_data[pickup.name]
+                    "description": pickup.collection_text[0]
                 }
             }
             # Shiny Missiles
@@ -213,7 +213,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "configuration_identifier": self._create_hash_dict(),
             "starting_items": self._create_starting_items_dict(),
             "starting_location": self._create_starting_location(),
-            "pickups": self._create_pickups_dict(pickup_list, item_data, memo_data, self.rng),
+            "pickups": self._create_pickups_dict(pickup_list, item_data, self.rng),
             "rooms": self._create_room_dict(),
             "game_patches": self._create_game_patches(),
             "door_locks": self._create_door_locks(),
