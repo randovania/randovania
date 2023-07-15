@@ -5,8 +5,8 @@ from randovania.gui.lib.foldable import Foldable
 
 def test_foldable_initial_state(skip_qtbot):
     # Setup & Run
-    foldable = Foldable("My foldable title", False)
-    foldable_2 = Foldable("")
+    foldable = Foldable(None, "My foldable title", False)
+    foldable_2 = Foldable(None, "")
 
     skip_qtbot.addWidget(foldable)
     skip_qtbot.addWidget(foldable_2)
@@ -19,7 +19,7 @@ def test_foldable_initial_state(skip_qtbot):
 
 def test_foldable_actions(skip_qtbot):
     # Setup
-    foldable = Foldable("My foldable title")
+    foldable = Foldable(None, "My foldable title")
 
     skip_qtbot.addWidget(foldable)
 

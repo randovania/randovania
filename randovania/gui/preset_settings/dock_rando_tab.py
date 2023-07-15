@@ -73,7 +73,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
     def _add_dock_type(self, dock_type: DockType, type_params: DockRandoParams):
         self.type_checks[dock_type] = defaultdict(dict)
 
-        type_box = Foldable(dock_type.long_name)
+        type_box = Foldable(self.dock_types_group, dock_type.long_name)
         type_box.setObjectName(f"type_box {dock_type.short_name}")
         type_layout = QtWidgets.QHBoxLayout()
         type_layout.setObjectName(f"type_layout {dock_type.short_name}")

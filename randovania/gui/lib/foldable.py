@@ -11,7 +11,7 @@ class Foldable(QtWidgets.QWidget):
     _content_area: QtWidgets.QFrame
     _folded: bool
 
-    def __init__(self, title: str, initially_folded: bool = True, parent: QtWidgets.QWidget = None):
+    def __init__(self, parent: QtWidgets.QWidget | None, title: str = "", initially_folded: bool = True):
         super().__init__(parent)
 
         self._folded = initially_folded
@@ -72,3 +72,6 @@ class Foldable(QtWidgets.QWidget):
             self._fold()
         else:
             self._unfold()
+
+    def setTitle(self, title: str):
+        self._toggle_button.setText(title)

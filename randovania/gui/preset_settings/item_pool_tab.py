@@ -232,7 +232,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         all_categories = list(pickup_database.pickup_categories.values())
         for standard_pickup_category in sorted(categories, key=lambda it: all_categories.index(it)):
-            category_box = Foldable(standard_pickup_category.long_name)
+            category_box = Foldable(None, standard_pickup_category.long_name)
             category_box.setObjectName(f"category_box {standard_pickup_category}")
             category_layout = QtWidgets.QGridLayout()
             category_layout.setObjectName(f"category_layout {standard_pickup_category}")
