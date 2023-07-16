@@ -7,7 +7,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode, Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.requirement_and import RequirementAnd
