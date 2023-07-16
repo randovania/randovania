@@ -152,7 +152,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         if self.skip_final_bosses:
             if self.game == RandovaniaGame.METROID_PRIME:
                 crater = NodeIdentifier.create("Tallon Overworld", "Artifact Temple",
-                                               "Teleport to Impact Crater - Crater Impact Point")
+                                               "Teleporter to Impact Crater")
                 static[crater] = NodeIdentifier.create("End of Game", "Credits", "Event - Credits")
             elif self.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 gateway = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
