@@ -58,7 +58,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         self.headerItem().setText(1, "")
         self.headerItem().setText(2, "")
         self.headerItem().setText(3, "")
+        self.headerItem().setText(4, "")
+        self.headerItem().setText(5, "")
         self.header().setVisible(False)
+        self.header().setSectionsMovable(False)
+        self.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
 
         self._options = options
         self._preset_manager = preset_manager
@@ -351,6 +355,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             world_tool.setMenu(world_menu)
 
             self.setItemWidget(world_item, 3, world_tool)
+            return world_item
 
         for player in session.users.values():
             item = QtWidgets.QTreeWidgetItem(self)
@@ -361,7 +366,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
             for world_uid, state in player.worlds.items():
                 used_worlds.add(world_uid)
-                _add_world(world_by_id[world_uid], item, player.id, state.connection_state.pretty_text)
+                the_item = _add_world(world_by_id[world_uid], item, player.id, state.connection_state.pretty_text)
+                the_item.setText(4, "Last Activity:")
+                the_item.setTextAlignment(4, QtCore.Qt.AlignmentFlag.AlignRight)
+                the_item.setData(5, QtCore.Qt.ItemDataRole.DisplayRole,
+                                 QtCore.QDateTime.fromSecsSinceEpoch(int(state.last_activity.timestamp())))
 
             if player.id != self.your_id and self.is_admin():
                 tool = make_tool("Administrate")
