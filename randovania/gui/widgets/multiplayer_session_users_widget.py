@@ -9,6 +9,8 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
+import randovania
+from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
@@ -258,6 +260,14 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 options.set_options_for_game(preset.game, dataclasses.replace(per_game_options,
                                                                               cosmetic_patches=dialog.cosmetic_patches))
 
+    def _register_debug_connector(self, world_details: MultiplayerWorld):
+        common_qt_lib.get_game_connection().add_connection_builder(
+            DebugConnectorBuilder(
+                world_details.preset.game.value,
+                str(world_details.id)
+            )
+        )
+
     #
 
     def _watch_inventory(self, world_uid: uuid.UUID, user_id: int):
@@ -323,6 +333,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
                 connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic,
                            world_details.id)
+                if randovania.is_dev_version():
+                    connect_to(world_menu.addAction("Connect via debug connector"),
+                               self._register_debug_connector,
+                               world_details)
 
             if owner is None:
                 world_menu.addSeparator()
