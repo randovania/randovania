@@ -39,7 +39,7 @@ class OnlineInteractions(QtWidgets.QWidget):
         main_window.host_new_game_button.clicked.connect(self._host_game_session)
 
         # Menu Bar
-        main_window.action_login_window.triggered.connect(self._action_login_window)
+        main_window.menu_action_login_window.triggered.connect(self._action_login_window)
 
     @asyncSlot()
     @handle_network_errors

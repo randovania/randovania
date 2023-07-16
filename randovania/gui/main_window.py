@@ -221,7 +221,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
-        self.menu_action_layout_editor.triggered.connect(self._on_menu_action_layout_editor)
         self.menu_action_help.triggered.connect(self._on_menu_action_help)
         self.menu_action_changelog.triggered.connect(self._on_menu_action_changelog)
         self.menu_action_changelog.setVisible(False)
@@ -660,11 +659,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                                         QtWidgets.QMessageBox.StandardButton.Ok, self)
             box.setTextInteractionFlags(Qt.TextSelectableByMouse)
             box.show()
-
-    def _on_menu_action_layout_editor(self):
-        from randovania.gui.corruption_layout_editor import CorruptionLayoutEditor
-        self.corruption_editor = CorruptionLayoutEditor()
-        self.corruption_editor.show()
 
     def setup_welcome_text(self):
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
