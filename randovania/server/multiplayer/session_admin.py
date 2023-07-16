@@ -509,6 +509,13 @@ def _switch_admin(sio: ServerApp, session: MultiplayerSession, membership: Multi
     membership.save()
 
 
+def _switch_ready(sio: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership):
+    with database.db.atomic():
+        membership.ready = not membership.ready
+        membership.save()
+        logger().info(f"{session_common.describe_session(session)}. Switching ready-ness.")
+
+
 def _create_patcher_file(sio: ServerApp, session: MultiplayerSession, world_uid: str, cosmetic_json: dict):
     player_names = {}
     uuids = {}
@@ -567,6 +574,9 @@ def admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, *ar
 
     elif action == SessionAdminUserAction.SWITCH_ADMIN:
         _switch_admin(sio, session, membership)
+
+    elif action == SessionAdminUserAction.SWITCH_READY:
+        _switch_ready(sio, session, membership)
 
     elif action == SessionAdminUserAction.ABANDON:
         # FIXME

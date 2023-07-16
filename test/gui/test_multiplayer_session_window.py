@@ -348,13 +348,20 @@ def prepare_to_upload_layout():
     return result
 
 
-async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_manager, prepare_to_upload_layout):
+@pytest.mark.parametrize("is_ready", [False, True])
+async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_manager, prepare_to_upload_layout,
+                             is_ready):
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout")
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
+    mock_yes_no_prompt: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.yes_no_prompt",
+                                                 new_callable=AsyncMock, return_value=True)
     mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
     spoiler = True
     session = MagicMock()
+    session.users = {
+        1: MultiplayerUser(1, "You", False, is_ready, {})
+    }
     session.worlds = [
         MultiplayerWorld(id=uuid.uuid4(), name="W1", preset_raw=json.dumps(preset_manager.default_preset.as_json)),
         MultiplayerWorld(id=uuid.uuid4(), name="W2", preset_raw=json.dumps(preset_manager.default_preset.as_json)),
@@ -370,6 +377,14 @@ async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_ma
     await window.generate_game(spoiler, retries=3)
 
     # Assert
+    if is_ready:
+        mock_yes_no_prompt.assert_not_awaited()
+    else:
+        mock_yes_no_prompt.assert_awaited_once_with(
+            window, "User not Ready",
+            "The following users are not ready. Do you want to continue generating a game?\n\nYou"
+        )
+
     mock_warning.assert_awaited_once_with(
         window, "Multiworld Limitation", ANY,
     )
@@ -394,6 +409,35 @@ async def test_generate_game(window: MultiplayerSessionWindow, mocker, preset_ma
     layout.save_to_file.assert_called_once_with(
         window._options.data_dir.joinpath(f"last_multiplayer_{session.id}.rdvgame")
     )
+
+
+async def test_generate_game_no_ready_abort(window: MultiplayerSessionWindow, mocker,
+                                            preset_manager):
+    mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout")
+    mock_yes_no_prompt: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.yes_no_prompt",
+                                                 new_callable=AsyncMock, return_value=False)
+    mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+
+    spoiler = True
+    session = MagicMock()
+    session.users = {
+        1: MultiplayerUser(1, "You", False, False, {})
+    }
+    window._session = session
+
+    window.game_session_api.prepare_to_upload_layout = MagicMock()
+
+    # Run
+    await window.generate_game(spoiler, retries=3)
+
+    # Assert
+    mock_yes_no_prompt.assert_awaited_once_with(
+        window, "User not Ready",
+        "The following users are not ready. Do you want to continue generating a game?\n\nYou"
+    )
+    mock_warning.assert_not_awaited()
+    mock_generate_layout.assert_not_called()
+    window.game_session_api.prepare_to_upload_layout.assert_not_called()
 
 
 async def test_check_dangerous_presets_incompatible(window: MultiplayerSessionWindow, mocker):

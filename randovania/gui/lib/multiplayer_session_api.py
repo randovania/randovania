@@ -288,6 +288,13 @@ class MultiplayerSessionApi(QtCore.QObject):
             new_admin_id, admin_actions.SessionAdminUserAction.SWITCH_ADMIN,
         )
 
+    @handle_network_errors
+    async def switch_readiness(self, user_id: int):
+        self.logger.info("Switching ready-ness of %d", user_id)
+        await self._session_admin_player(
+            user_id, admin_actions.SessionAdminUserAction.SWITCH_READY,
+        )
+
     async def request_session_update(self):
         self.logger.info("Requesting updated session data")
         await self.network_client.server_call(

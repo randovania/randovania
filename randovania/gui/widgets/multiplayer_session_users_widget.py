@@ -12,7 +12,7 @@ from qasync import asyncSlot
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
-from randovania.gui.lib import async_dialog, common_qt_lib
+from randovania.gui.lib import async_dialog, common_qt_lib, signal_handling
 from randovania.interface_common.options import InfoAlert, Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
@@ -109,6 +109,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     @asyncSlot()
     async def _switch_admin(self, new_admin_id: int):
         await self._session_api.switch_admin(new_admin_id)
+
+    @asyncSlot()
+    async def _switch_readiness(self, user_id: int):
+        await self._session_api.switch_readiness(user_id)
 
     @asyncSlot()
     async def _world_rename(self, world_uid: uuid.UUID):
@@ -358,6 +362,12 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             item.setText(0, player.name)
             if player.admin:
                 item.setText(1, "(Admin)")
+
+            ready_check = QtWidgets.QCheckBox("Ready?")
+            ready_check.setChecked(player.ready)
+            ready_check.setEnabled(player.id == self.your_id or self.is_admin())
+            signal_handling.on_checked(ready_check, functools.partial(self._switch_readiness, player.id))
+            self.setItemWidget(item, 2, ready_check)
 
             for world_uid, state in player.worlds.items():
                 used_worlds.add(world_uid)
