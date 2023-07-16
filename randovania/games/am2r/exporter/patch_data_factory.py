@@ -38,7 +38,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 "item_effect": pickup.original_pickup.name,
                 "quantity": quantity,
                 "text": {
-                    "header": item_info[pickup.model.name]["text_header"],
+                    "header": item_info[pickup.name]["text_header"],
                     "description": pickup.collection_text[0]
                 }
             }
