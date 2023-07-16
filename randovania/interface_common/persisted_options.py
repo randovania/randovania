@@ -191,6 +191,7 @@ _CONVERTER_FOR_VERSION = [
     _convert_v24,
     _convert_v25,
     _only_new_fields,  # added allow_crash_reporting
+    _only_new_fields,  # added DebugConnectorBuilder's layout_uuid
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
