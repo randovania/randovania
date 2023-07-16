@@ -66,6 +66,12 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyIceBeam"
                 pickup_map_dict[object_name]["text"]["header"] = "Shiny Ice Cream acquired"
 
+            # Shiny Nothing
+            elif (self._does_pickup_have_shiny_values(pickup_map_dict[object_name], "Nothing", "sItemNothing",
+                                                      "Nothing acquired", pickup.other_player, rng)):
+                pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyNothing"
+                pickup_map_dict[object_name]["text"]["header"] = "Shiny Nothing acquired"
+
         return pickup_map_dict
 
     def _create_room_dict(self):
