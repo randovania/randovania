@@ -45,9 +45,9 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
         {'id': 1, 'name': 'Debug', 'state': 'in-progress', 'users_list': [], 'worlds': [],
-         'game_details': {'seed_hash': 'CXQTEVPI',
+         'game_details': {'seed_hash': 'NMY7DGIN',
                           'spoiler': True,
-                          'word_hash': 'Aether Honor Spreader'},
+                          'word_hash': 'Spreader Liftvine Great'},
          'generation_in_progress': None,
          'allowed_games': ANY},
         room='multiplayer-session-1',

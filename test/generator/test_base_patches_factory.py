@@ -33,7 +33,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
 
     if skip_final_bosses:
         node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
-                                           "Teleport to Great Temple - Sky Temple Energy Controller")
+                                           "Elevator to Great Temple")
         expected = expected.assign_dock_connections([
             (echoes_game_description.region_list.typed_node_by_identifier(node_ident, DockNode),
             echoes_game_description.region_list.node_by_identifier(NodeIdentifier.create(
@@ -77,63 +77,64 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     elevator_connection: list[tuple[DockNode, Node]] = []
     teleporter_dock_types = echoes_game_description.dock_weakness_database.all_teleporter_dock_types
 
-    def ni(w: str, a: str, n: str, tw: str, ta: str):
+    def ni(w: str, a: str, n: str, tw: str, ta: str, tn: str):
         elevator_connection.append((
             wl.typed_node_by_identifier(NodeIdentifier.create(w, a, n), DockNode),
-            wl.default_node_for_area(AreaIdentifier(tw, ta)),
+            wl.node_by_identifier(NodeIdentifier.create(tw, ta, tn)),
         ))
 
-    ni("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
-       "Torvus Bog", "Transport to Temple Grounds")
-    ni("Temple Grounds", "Transport to Agon Wastes", "Elevator to Agon Wastes - Transport to Temple Grounds",
-       "Torvus Bog", "Transport to Agon Wastes")
-    ni("Temple Grounds", "Transport to Torvus Bog", "Elevator to Torvus Bog - Transport to Temple Grounds",
-       "Great Temple", "Temple Transport A")
-    ni("Temple Grounds", "Temple Transport B", "Elevator to Great Temple - Temple Transport B",
-       "Agon Wastes", "Transport to Sanctuary Fortress")
+    ni("Temple Grounds", "Temple Transport C", "Elevator to Great Temple",
+       "Torvus Bog", "Transport to Temple Grounds", "Elevator to Temple Grounds")
+    ni("Temple Grounds", "Transport to Agon Wastes", "Elevator to Agon Wastes",
+       "Torvus Bog", "Transport to Agon Wastes", "Elevator to Agon Wastes")
+    ni("Temple Grounds", "Transport to Torvus Bog", "Elevator to Torvus Bog",
+       "Great Temple", "Temple Transport A", "Elevator to Temple Grounds")
+    ni("Temple Grounds", "Temple Transport B", "Elevator to Great Temple",
+       "Agon Wastes", "Transport to Sanctuary Fortress", "Elevator to Sanctuary Fortress")
 
     if skip_final_bosses:
-        ni("Temple Grounds", "Sky Temple Gateway", "Teleport to Great Temple - Sky Temple Energy Controller",
-           "Temple Grounds", "Credits")
+        ni("Temple Grounds", "Sky Temple Gateway", "Elevator to Great Temple",
+           "Temple Grounds", "Credits", "Event - Dark Samus 3 and 4")
+    # TODO: The following to connections are kinda weird to me.
     else:
-        ni("Temple Grounds", "Sky Temple Gateway", "Teleport to Great Temple - Sky Temple Energy Controller",
-           "Great Temple", "Sky Temple Energy Controller")
-    ni("Great Temple", "Sky Temple Energy Controller", "Teleport to Temple Grounds - Sky Temple Gateway",
-       "Temple Grounds", "Sky Temple Gateway")
+        ni("Temple Grounds", "Sky Temple Gateway", "Elevator to Great Temple",
+           "Great Temple", "Sky Temple Energy Controller", "Save Station")
+    ni("Great Temple", "Sky Temple Energy Controller", "Elevator to Temple Grounds",
+       "Temple Grounds", "Sky Temple Gateway", "Spawn Point/Front of Teleporter")
     ni("Temple Grounds", "Transport to Sanctuary Fortress",
-       "Elevator to Sanctuary Fortress - Transport to Temple Grounds",
-       "Torvus Bog", "Transport to Sanctuary Fortress")
-    ni("Temple Grounds", "Temple Transport A", "Elevator to Great Temple - Temple Transport A",
-       "Agon Wastes", "Transport to Torvus Bog")
-    ni("Great Temple", "Temple Transport A", "Elevator to Temple Grounds - Temple Transport A",
-       "Temple Grounds", "Transport to Torvus Bog")
-    ni("Great Temple", "Temple Transport C", "Elevator to Temple Grounds - Temple Transport C",
-       "Sanctuary Fortress", "Transport to Torvus Bog")
-    ni("Great Temple", "Temple Transport B", "Elevator to Temple Grounds - Temple Transport B",
-       "Sanctuary Fortress", "Transport to Agon Wastes")
-    ni("Agon Wastes", "Transport to Temple Grounds", "Elevator to Temple Grounds - Transport to Agon Wastes",
-       "Sanctuary Fortress", "Transport to Temple Grounds")
-    ni("Agon Wastes", "Transport to Torvus Bog", "Elevator to Torvus Bog - Transport to Agon Wastes",
-       "Temple Grounds", "Temple Transport A")
-    ni("Agon Wastes", "Transport to Sanctuary Fortress", "Elevator to Sanctuary Fortress - Transport to Agon Wastes",
-       "Temple Grounds", "Temple Transport B")
-    ni("Torvus Bog", "Transport to Temple Grounds", "Elevator to Temple Grounds - Transport to Torvus Bog",
-       "Temple Grounds", "Temple Transport C")
-    ni("Torvus Bog", "Transport to Agon Wastes", "Elevator to Agon Wastes - Transport to Torvus Bog",
-       "Temple Grounds", "Transport to Agon Wastes")
-    ni("Torvus Bog", "Transport to Sanctuary Fortress", "Elevator to Sanctuary Fortress - Transport to Torvus Bog",
-       "Temple Grounds", "Transport to Sanctuary Fortress")
+       "Elevator to Sanctuary Fortress",
+       "Torvus Bog", "Transport to Sanctuary Fortress", "Elevator to Sanctuary Fortress")
+    ni("Temple Grounds", "Temple Transport A", "Elevator to Great Temple",
+       "Agon Wastes", "Transport to Torvus Bog", "Elevator to Torvus Bog")
+    ni("Great Temple", "Temple Transport A", "Elevator to Temple Grounds",
+       "Temple Grounds", "Transport to Torvus Bog", "Elevator to Torvus Bog")
+    ni("Great Temple", "Temple Transport C", "Elevator to Temple Grounds",
+       "Sanctuary Fortress", "Transport to Torvus Bog", "Elevator to Torvus Bog")
+    ni("Great Temple", "Temple Transport B", "Elevator to Temple Grounds",
+       "Sanctuary Fortress", "Transport to Agon Wastes", "Elevator to Agon Wastes")
+    ni("Agon Wastes", "Transport to Temple Grounds", "Elevator to Temple Grounds",
+       "Sanctuary Fortress", "Transport to Temple Grounds", "Elevator to Temple Grounds")
+    ni("Agon Wastes", "Transport to Torvus Bog", "Elevator to Torvus Bog",
+       "Temple Grounds", "Temple Transport A", "Elevator to Great Temple")
+    ni("Agon Wastes", "Transport to Sanctuary Fortress", "Elevator to Sanctuary Fortress",
+       "Temple Grounds", "Temple Transport B", "Elevator to Great Temple")
+    ni("Torvus Bog", "Transport to Temple Grounds", "Elevator to Temple Grounds",
+       "Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
+    ni("Torvus Bog", "Transport to Agon Wastes", "Elevator to Agon Wastes",
+       "Temple Grounds", "Transport to Agon Wastes", "Elevator to Agon Wastes")
+    ni("Torvus Bog", "Transport to Sanctuary Fortress", "Elevator to Sanctuary Fortress",
+       "Temple Grounds", "Transport to Sanctuary Fortress", "Elevator to Sanctuary Fortress")
     ni("Sanctuary Fortress", "Transport to Temple Grounds",
-       "Elevator to Temple Grounds - Transport to Sanctuary Fortress",
-       "Agon Wastes", "Transport to Temple Grounds")
-    ni("Sanctuary Fortress", "Transport to Agon Wastes", "Elevator to Agon Wastes - Transport to Sanctuary Fortress",
-       "Great Temple", "Temple Transport B")
-    ni("Sanctuary Fortress", "Transport to Torvus Bog", "Elevator to Torvus Bog - Transport to Sanctuary Fortress",
-       "Great Temple", "Temple Transport C")
-    ni("Sanctuary Fortress", "Aerie Transport Station", "Elevator to Sanctuary Fortress - Aerie",
-       "Sanctuary Fortress", "Aerie")
-    ni("Sanctuary Fortress", "Aerie", "Elevator to Sanctuary Fortress - Aerie Transport Station",
-       "Sanctuary Fortress", "Aerie Transport Station")
+       "Elevator to Temple Grounds",
+       "Agon Wastes", "Transport to Temple Grounds", "Elevator to Temple Grounds")
+    ni("Sanctuary Fortress", "Transport to Agon Wastes", "Elevator to Agon Wastes",
+       "Great Temple", "Temple Transport B", "Elevator to Temple Grounds")
+    ni("Sanctuary Fortress", "Transport to Torvus Bog", "Elevator to Torvus Bog",
+       "Great Temple", "Temple Transport C", "Elevator to Temple Grounds")
+    ni("Sanctuary Fortress", "Aerie Transport Station", "Elevator to Aerie",
+       "Sanctuary Fortress", "Aerie", "Elevator to Aerie Transport Station")
+    ni("Sanctuary Fortress", "Aerie", "Elevator to Aerie Transport Station",
+       "Sanctuary Fortress", "Aerie Transport Station", "Elevator to Aerie")
 
     expected = echoes_game_patches.assign_dock_connections(elevator_connection)
 
