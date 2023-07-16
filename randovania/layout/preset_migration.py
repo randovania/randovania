@@ -888,7 +888,7 @@ def _migrate_v58(preset: dict) -> dict:
     config = preset["configuration"]
     game = preset["game"]
 
-    if game in {"prime3", "prime1"}:
+    if game in {"prime1", "prime2", "prime3"}:
         mapping = migration_data.get_raw_data(RandovaniaGame(game))["rename_teleporter_nodes"]
 
         def replace_location(old_location):
@@ -901,7 +901,7 @@ def _migrate_v58(preset: dict) -> dict:
             replace_location(old_location)
 
 
-        if game in {"prime1"}:
+        if game in {"prime1", "prime2"}:
             elevators = config["elevators"]
             excluded_teleporters = elevators["excluded_teleporters"]
             for teleporter_obj in excluded_teleporters:

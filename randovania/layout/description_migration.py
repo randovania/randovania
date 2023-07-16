@@ -349,7 +349,7 @@ def _migrate_v19(data: dict) -> dict:
     game_mod = data["game_modifications"]
     for game in game_mod:
         game_name = game["game"]
-        if game_name in {"prime3", "prime1"}:
+        if game_name in {"prime1", "prime2", "prime3"}:
             mapping = migration_data.get_raw_data(RandovaniaGame(game_name))["rename_teleporter_nodes"]
 
             # starting location migration
@@ -360,10 +360,7 @@ def _migrate_v19(data: dict) -> dict:
                  game["starting_location"] = f'{world_name}/{area_name}/{new_node_name}'
 
             dock_connections = game["dock_connections"]
-            dock_copy = {
-                key: value
-                for key, value in dock_connections.items()
-            }
+            dock_copy = dict(dock_connections.items())
             for id_from, id_to in dock_copy.items():
                 world_name, area_name, node_name = id_from.split("/", 2)
                 new_node_name_from = mapping.get(id_from, node_name)
@@ -374,13 +371,12 @@ def _migrate_v19(data: dict) -> dict:
                 new_node_name_to = mapping.get(id_to, node_name)
                 new_identifier_to = f'{world_name}/{area_name}/{new_node_name_to}'
                 dock_connections[new_identifier_from] = new_identifier_to
-        
-            if game_name in {"prime1"}:
+
+            if game_name in {"prime1", "prime2"}:
                 mapping = migration_data.get_raw_data(RandovaniaGame(game_name))["dock_connection_fixes"]
                 dock_connections = game["dock_connections"]
             for id_from, id_to in dock_connections.items():
-                world_name, area_name, node_name = id_from.split("/", 2)
-                new_target = mapping.get(id_from, id_to)
+                new_target = mapping.get(id_to, id_to)
                 dock_connections[id_from] = new_target
 
     return data
