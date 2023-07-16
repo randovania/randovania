@@ -349,7 +349,7 @@ async def test_on_session_meta_update_not_own_world(client: MultiworldClient):
     entry = MagicMock()
     entry.users = {
         client.network_client.current_user.id: MultiplayerUser(
-            10, "You", False, {uid_2: MagicMock()}
+            10, "You", False, False, {uid_2: MagicMock()}
         )
     }
     client._world_sync_errors[uid_1] = error.WorldNotAssociatedError()

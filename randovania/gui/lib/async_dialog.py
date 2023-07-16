@@ -47,3 +47,16 @@ async def warning(parent: QtWidgets.QWidget | None,
                   default_button: StandardButton = StandardButton.NoButton,
                   ) -> QtWidgets.QMessageBox.StandardButton:
     return await message_box(parent, QtWidgets.QMessageBox.Icon.Warning, title, text, buttons, default_button)
+
+
+async def yes_no_prompt(
+        parent: QtWidgets.QWidget | None,
+        title: str, text: str, *,
+        defaults_to_no: bool = True,
+        icon: QtWidgets.QMessageBox.Icon = QtWidgets.QMessageBox.Icon.Question,
+) -> bool:
+    """Shows a message box with Yes and No buttons. Returns True if the user clicked Yes."""
+    return await message_box(
+        parent, icon, title, text, buttons=StandardButton.Yes | StandardButton.No,
+        default_button=StandardButton.No if defaults_to_no else StandardButton.Yes
+    ) == StandardButton.Yes

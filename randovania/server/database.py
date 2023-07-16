@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import collections
 import datetime
+import enum
 import json
 import uuid
 import zlib
@@ -32,7 +33,6 @@ from randovania.network_common.multiplayer_session import (
 from randovania.network_common.session_state import MultiplayerSessionState
 
 if TYPE_CHECKING:
-    import enum
     from collections.abc import Iterable
 
 
@@ -290,6 +290,7 @@ class MultiplayerSession(BaseModel):
         # Fetch the members, with a Join to also fetch the member name
         members: Iterable[MultiplayerMembership] = MultiplayerMembership.select(
             MultiplayerMembership.admin,
+            MultiplayerMembership.ready,
             User.id,
             User.name,
         ).join(
@@ -323,6 +324,7 @@ class MultiplayerSession(BaseModel):
                     id=member.user_id,
                     name=member.user.name,
                     admin=member.admin,
+                    ready=member.ready,
                     worlds={
                         worlds[association.world_id].id: UserWorldDetail(
                             connection_state=association.connection_state,
@@ -441,6 +443,7 @@ class MultiplayerMembership(BaseModel):
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="members")
     session_id: int
     admin: bool = peewee.BooleanField(default=False)
+    ready: bool = peewee.BooleanField(default=False)
     join_date = peewee.DateTimeField(default=_datetime_now)
 
     can_help_layout_generation: bool = peewee.BooleanField(default=False)
@@ -491,8 +494,16 @@ class MultiplayerAuditEntry(BaseModel):
         )
 
 
+class DatabaseMigrations(enum.Enum):
+    ADD_READY_TO_MEMBERSHIP = "ready_membership"
+
+
+class PerformedDatabaseMigrations(BaseModel):
+    migration = EnumField(DatabaseMigrations, unique=True)
+
+
 all_classes = [
     User, UserAccessToken, MultiplayerSession, World,
     WorldUserAssociation, MultiplayerMembership,
-    WorldAction, MultiplayerAuditEntry,
+    WorldAction, MultiplayerAuditEntry, PerformedDatabaseMigrations,
 ]

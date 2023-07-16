@@ -565,6 +565,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         await self.generate_game(False, retries=None)
 
     async def generate_game(self, spoiler: bool, retries: int | None):
+        not_ready_users = [user for user in self._session.users.values() if not user.ready]
+        if not_ready_users:
+            if not await async_dialog.yes_no_prompt(
+                self, "User not Ready",
+                "The following users are not ready. Do you want to continue generating a game?\n\n" +
+                ", ".join(user.name for user in not_ready_users),
+            ):
+                return
+
         await async_dialog.warning(
             self, "Multiworld Limitation",
             "Warning: Multiworld games doesn't have proper energy damage logic. "

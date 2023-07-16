@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
 - Added: The Generation Order spoiler now has a field to filter it.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
-- Added: It's now possible to filter the history tab in a Multiworld Session.
+- Added: It's now possible to filter the history tab in a Multiworld session.
+- Added: Add Ready checkbox for Multiworld sessions.
 - Added: A new tool was added to the Pickup tab of Game Details that lets you quickly find in which worlds your pickups are.
 - Added: The time a world last had any activity is now displayed in the Multiworld session.
 - Changed: Text prompts now default to accepting when pressing enter.

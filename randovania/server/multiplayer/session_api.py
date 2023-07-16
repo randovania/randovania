@@ -39,7 +39,7 @@ def create_session(sio: ServerApp, session_name: str):
     current_user = sio.get_current_user()
 
     if not (0 < len(session_name) <= MAX_SESSION_NAME_LENGTH):
-        raise error.InvalidAction("Invalid session name length")
+        raise error.InvalidActionError("Invalid session name length")
 
     with database.db.atomic():
         new_session: MultiplayerSession = MultiplayerSession.create(

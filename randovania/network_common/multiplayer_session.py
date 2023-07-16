@@ -54,6 +54,7 @@ class MultiplayerUser(JsonDataclass):
     id: int
     name: str
     admin: bool
+    ready: bool
     worlds: dict[uuid.UUID, UserWorldDetail]
 
 
