@@ -45,6 +45,13 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
         self.room_names_dropdown.currentIndexChanged.connect(self._on_room_name_mode_update)
         self.missile_cosmetic_dropdown.currentIndexChanged.connect(self._on_missile_cosmetic_update)
 
+        self.alt_ice_missile.stateChanged.connect(self._persist_option_then_notify("alt_ice_missile"))
+        self.alt_storm_missile.stateChanged.connect(self._persist_option_then_notify("alt_storm_missile"))
+        self.alt_diffusion_beam.stateChanged.connect(self._persist_option_then_notify("alt_diffusion_beam"))
+        self.alt_bomb_texture.stateChanged.connect(self._persist_option_then_notify("alt_bomb"))
+        self.alt_cross_bomb.stateChanged.connect(self._persist_option_then_notify("alt_cross_bomb"))
+        self.alt_power_bomb.stateChanged.connect(self._persist_option_then_notify("alt_power_bomb"))
+
     def on_new_cosmetic_patches(self, patches: DreadCosmeticPatches):
         self.show_boss_life.setChecked(patches.show_boss_lifebar)
         self.show_enemy_life.setChecked(patches.show_enemy_life)
@@ -54,6 +61,13 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
         self.enable_auto_tracker.setChecked(patches.enable_auto_tracker)
         set_combo_with_value(self.room_names_dropdown, patches.show_room_names)
         set_combo_with_value(self.missile_cosmetic_dropdown, patches.missile_cosmetic)
+
+        self.alt_ice_missile.setChecked(patches.alt_ice_missile)
+        self.alt_storm_missile.setChecked(patches.alt_storm_missile)
+        self.alt_diffusion_beam.setChecked(patches.alt_diffusion_beam)
+        self.alt_bomb_texture.setChecked(patches.alt_bomb)
+        self.alt_cross_bomb.setChecked(patches.alt_cross_bomb)
+        self.alt_power_bomb.setChecked(patches.alt_power_bomb)
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):

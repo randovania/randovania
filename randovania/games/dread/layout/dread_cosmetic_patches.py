@@ -85,6 +85,12 @@ class DreadCosmeticPatches(BaseCosmeticPatches):
     enable_auto_tracker: bool = True
     show_room_names: DreadRoomGuiType = DreadRoomGuiType.NONE
     missile_cosmetic: DreadMissileCosmeticType = DreadMissileCosmeticType.NONE
+    alt_ice_missile: bool = False
+    alt_storm_missile: bool = False
+    alt_diffusion_beam: bool = False
+    alt_bomb: bool = False
+    alt_cross_bomb: bool = False
+    alt_power_bomb: bool = True
 
     @classmethod
     def default(cls) -> DreadCosmeticPatches:

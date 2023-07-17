@@ -7,34 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>421</width>
-    <height>349</height>
+    <height>368</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Metroid Dread - Cosmetic Options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="2">
-    <widget class="QPushButton" name="reset_button">
-     <property name="text">
-      <string>Reset to Defaults</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="accept_button">
-     <property name="text">
-      <string>Accept</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="cancel_button">
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0" colspan="3">
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
@@ -44,9 +23,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>401</width>
-        <height>299</height>
+        <y>-144</y>
+        <width>384</width>
+        <height>462</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -158,8 +137,80 @@
          </layout>
         </widget>
        </item>
+       <item>
+        <widget class="QGroupBox" name="accessibility_options_box">
+         <property name="title">
+          <string>Accessibility Options</string>
+         </property>
+         <layout class="QVBoxLayout" name="game_changes_layout_3">
+          <item>
+           <widget class="QCheckBox" name="alt_ice_missile">
+            <property name="text">
+             <string>Alternate Ice Missile shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_storm_missile">
+            <property name="text">
+             <string>Alternate Storm Missile shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_diffusion_beam">
+            <property name="text">
+             <string>Alternate Diffusion Beam shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_bomb_texture">
+            <property name="text">
+             <string>Alternate Bomb shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_cross_bomb">
+            <property name="text">
+             <string>Alternate Cross Bomb shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_power_bomb">
+            <property name="text">
+             <string>Alternate Power Bomb shield texture</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="reset_button">
+     <property name="text">
+      <string>Reset to Defaults</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="accept_button">
+     <property name="text">
+      <string>Accept</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="cancel_button">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
     </widget>
    </item>
   </layout>
