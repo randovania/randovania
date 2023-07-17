@@ -29,14 +29,12 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         common_qt_lib.set_default_window_icon(self)
         self.network_client = network_client
 
-        self.item_model = QtGui.QStandardItemModel(0, 6, self)
-        self.item_model.setHorizontalHeaderLabels(["Name", "Is Member?", "State", "Players", "Worlds", "Password?",
-                                                   "Creator","Creation Date"])
+        self.item_model = QtGui.QStandardItemModel(0, 8, self)
+        self.item_model.setHorizontalHeaderLabels(["Name", "Is Member?", "Join Date", "State", "Players", "Worlds",
+                                                   "Password?", "Creator","Creation Date"])
 
         self.table_widget.setModel(self.item_model)
-        self.table_widget.resizeColumnToContents(3)
-        self.table_widget.resizeColumnToContents(4)
-        self.table_widget.sortByColumn(7, QtCore.Qt.SortOrder.DescendingOrder)
+        self.table_widget.sortByColumn(8, QtCore.Qt.SortOrder.DescendingOrder)
 
         self.refresh_button = QPushButton("Refresh")
         self.button_box.addButton(self.refresh_button, QDialogButtonBox.ButtonRole.ResetRole)
@@ -160,18 +158,21 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
             creation_date = model_lib.create_date_item(session.creation_date)
             is_user_in_session = QtGui.QStandardItem("Yes" if session.is_user_in_session else "No")
             num_worlds = model_lib.create_int_item(session.num_worlds)
+            join_date = model_lib.create_date_item(session.join_date)
 
             name.setData(session, Qt.ItemDataRole.UserRole)
             self.item_model.setItem(i, 0, name)
             self.item_model.setItem(i, 1, is_user_in_session)
-            self.item_model.setItem(i, 2, state)
-            self.item_model.setItem(i, 3, num_users)
-            self.item_model.setItem(i, 4, num_worlds)
-            self.item_model.setItem(i, 5, has_password)
-            self.item_model.setItem(i, 6, creator)
-            self.item_model.setItem(i, 7, creation_date)
-
+            self.item_model.setItem(i, 2, join_date)
+            self.item_model.setItem(i, 3, state)
+            self.item_model.setItem(i, 4, num_users)
+            self.item_model.setItem(i, 5, num_worlds)
+            self.item_model.setItem(i, 6, has_password)
+            self.item_model.setItem(i, 7, creator)
+            self.item_model.setItem(i, 8, creation_date)
         self.status_label.setText(f"{len(self.sessions)} sessions total, {len(visible_sessions)} displayed.")
+        for i in range(9):
+            self.table_widget.resizeColumnToContents(i)
 
     def on_server_connection_state_updated(self, state: ConnectionState):
         self.server_connection_label.setText(f"Server: {state.value}")

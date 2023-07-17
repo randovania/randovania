@@ -36,6 +36,7 @@ class MultiplayerSessionListEntry(JsonDataclass):
     creator: str
     creation_date: datetime.datetime
     is_user_in_session: bool
+    join_date: datetime.datetime
 
     def __post_init__(self):
         tzinfo = self.creation_date.tzinfo

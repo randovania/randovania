@@ -115,6 +115,7 @@ async def test_attempt_join(client, mocker, in_session):
         id=1, name="A Game", has_password=True, state=MultiplayerSessionState.FINISHED,
         num_users=1, num_worlds=0, creator="You", is_user_in_session=in_session,
         creation_date=datetime.datetime(year=2015, month=5, day=1, tzinfo=datetime.UTC),
+        join_date=datetime.datetime(year=2016, month=5, day=1, tzinfo=datetime.UTC),
     )
 
     # Run
