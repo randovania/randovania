@@ -533,6 +533,7 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
      </property>
      <addaction name="menu_action_validate_seed_after"/>
      <addaction name="menu_action_timeout_generation_after_a_time_limit"/>
+     <addaction name="menu_action_generate_in_another_process"/>
     </widget>
     <addaction name="menu_action_dark_mode"/>
     <addaction name="menu_action_experimental_settings"/>
@@ -649,7 +650,13 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
     <string>Automatic Data Collection and Reporting</string>
    </property>
   </action>
-  <action name="menu_action_generate_another_process">
+  <action name="menu_action_generate_in_another_process">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Generate games in another process</string>
    </property>
