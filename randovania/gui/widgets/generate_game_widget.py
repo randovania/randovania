@@ -428,7 +428,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                 e, self._background_task.progress_update_signal.emit
             )
 
-        self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 1)
+        self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 100)
         persist_layout(self._options.game_history_path, layout)
         self._window_manager.open_game_details(layout)
 
