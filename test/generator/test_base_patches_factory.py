@@ -95,7 +95,6 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     if skip_final_bosses:
         ni("Temple Grounds", "Sky Temple Gateway", "Elevator to Great Temple",
            "Temple Grounds", "Credits", "Event - Dark Samus 3 and 4")
-    # TODO: The following to connections are kinda weird to me.
     else:
         ni("Temple Grounds", "Sky Temple Gateway", "Elevator to Great Temple",
            "Great Temple", "Sky Temple Energy Controller", "Save Station")
