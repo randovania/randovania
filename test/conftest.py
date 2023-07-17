@@ -202,6 +202,16 @@ def is_dev_version(request, mocker) -> bool:
     return request.param
 
 
+@pytest.fixture(params=[False, True])
+def is_frozen(request, mocker) -> bool:
+    mocker.patch("randovania.is_frozen", return_value=request.param)
+    if request.param:
+        # Mock this call as it fails frequently when frozen
+        mocker.patch("randovania.gui.lib.common_qt_lib.set_default_window_icon")
+
+    return request.param
+
+
 @pytest.fixture()
 def generic_pickup_category() -> PickupCategory:
     return PickupCategory(
