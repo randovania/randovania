@@ -40,9 +40,11 @@ def test_list_sessions(clean_database, flask_app, limit):
     database.MultiplayerMembership.create(user=other, session=s3)
 
     state = MultiplayerSessionState.SETUP.value
+    sio_mock = MagicMock()
+    sio_mock.get_current_user = MagicMock(return_value = someone)
 
     # Run
-    result = session_api.list_sessions(MagicMock(), limit)
+    result = session_api.list_sessions(sio_mock, limit)
 
     # Assert
     expected = [
