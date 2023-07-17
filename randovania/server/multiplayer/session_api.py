@@ -4,7 +4,7 @@ from peewee import Case, fn
 from randovania.network_common import error
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH
 from randovania.server import database
-from randovania.server.database import MultiplayerMembership, MultiplayerSession, User
+from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
 
@@ -13,12 +13,14 @@ def list_sessions(sio: ServerApp, limit: int | None):
     # Note: this query fails to list any session that has no memberships
     # But that's fine, because these sessions should've been deleted!
     user = sio.get_current_user()
+    world_count_subquery = World.select(fn.COUNT(World.id)).where(World.session_id == MultiplayerSession.id)
     sessions: list[MultiplayerSession] = list(
         MultiplayerSession.select(
             MultiplayerSession,
             User.name,
             fn.COUNT(MultiplayerMembership.user_id).alias('num_users'),
-            fn.MAX(Case(MultiplayerMembership.user_id, ((user.id, True),), False)).alias('is_in_session')
+            fn.MAX(Case(MultiplayerMembership.user_id, ((user.id, True),), False)).alias('is_in_session'),
+            world_count_subquery.alias("num_worlds")
         ).join(
             User, on=MultiplayerSession.creator
         ).join(

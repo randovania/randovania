@@ -215,13 +215,18 @@ class MultiplayerSession(BaseModel):
         if num_users is None:
             num_users = len(self.members)
 
+        num_worlds = getattr(self, "num_worlds", None)
+        if num_worlds is None:
+            num_worlds = len(self.worlds)
+
+
         return MultiplayerSessionListEntry(
             id=self.id,
             name=self.name,
             has_password=self.password is not None,
             state=self.state,
             num_users=num_users,
-            num_worlds=0,
+            num_worlds=num_worlds,
             creator=self.creator.name,
             creation_date=self.creation_datetime,
             is_user_in_session=self.is_user_in_session(user),

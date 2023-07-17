@@ -3,7 +3,7 @@ from __future__ import annotations
 import datetime
 from unittest.mock import AsyncMock, MagicMock
 
-from randovania.gui.dialog.online_game_list_dialog import OnlineGameListDialog
+from randovania.gui.dialog.multiplayer_session_browser_dialog import MultiplayerSessionBrowserDialog
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
 from randovania.network_common.session_state import MultiplayerSessionState
 
@@ -26,7 +26,7 @@ async def test_attempt_join(skip_qtbot):
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=4),
     )
 
-    dialog = OnlineGameListDialog(network_client)
+    dialog = MultiplayerSessionBrowserDialog(network_client)
     dialog.sessions = [session_a, session_b]
     dialog.update_list()
     dialog.table_widget.selectRow(0)
