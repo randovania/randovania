@@ -9,8 +9,8 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
-import randovania
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
+from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
@@ -337,7 +337,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
                 connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic,
                            world_details.id)
-                if randovania.is_dev_version():
+                if ConnectorBuilderChoice.DEBUG.is_usable():
                     connect_to(world_menu.addAction("Connect via debug connector"),
                                self._register_debug_connector,
                                world_details)
