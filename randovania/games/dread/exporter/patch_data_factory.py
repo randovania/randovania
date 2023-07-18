@@ -377,12 +377,12 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "camera_names_dict": self._build_area_name_dict()
             },
             "shield_versions": {
-                "ice_missile": ("ALTERNATE" if c.alt_ice_missile else "DEFAULT"),
-                "storm_missile": ("ALTERNATE" if c.alt_storm_missile else "DEFAULT"),
-                "diffusion_beam": ("ALTERNATE" if c.alt_diffusion_beam else "DEFAULT"),
-                "bomb": ("ALTERNATE" if c.alt_bomb else "DEFAULT"),
-                "cross_bomb": ("ALTERNATE" if c.alt_cross_bomb else "DEFAULT"),
-                "power_bomb": ("ALTERNATE" if c.alt_power_bomb else "DEFAULT"),
+                "ice_missile": c.alt_ice_missile.value,
+                "storm_missile": c.alt_storm_missile.value,
+                "diffusion_beam": c.alt_diffusion_beam.value,
+                "bomb": c.alt_bomb.value,
+                "cross_bomb": c.alt_cross_bomb.value,
+                "power_bomb": c.alt_power_bomb.value,
             },
         }
 
