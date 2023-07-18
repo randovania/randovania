@@ -7,9 +7,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.lib.enum_lib import iterate_enum
 
 _acceptable_database_errors = {
-    RandovaniaGame.METROID_PRIME: True,
-    RandovaniaGame.METROID_PRIME_ECHOES: True,
-    RandovaniaGame.METROID_PRIME_CORRUPTION: True,
     RandovaniaGame.SUPER_METROID: True,
     RandovaniaGame.METROID_SAMUS_RETURNS: True,
 }

@@ -463,11 +463,11 @@ def should_keep_elevator_sounds(configuration: EchoesConfiguration):
 
     return not (set(elev.editable_teleporters) & {
         NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
-                              "Teleport to Great Temple - Sky Temple Energy Controller"),
+                              "Elevator to Great Temple"),
         NodeIdentifier.create("Great Temple", "Sky Temple Energy Controller",
-                              "Teleport to Temple Grounds - Sky Temple Gateway"),
+                              "Elevator to Temple Grounds"),
         NodeIdentifier.create("Sanctuary Fortress", "Aerie",
-                              "Elevator to Sanctuary Fortress - Aerie Transport Station"),
+                              "Elevator to Aerie Transport Station"),
     })
 
 
