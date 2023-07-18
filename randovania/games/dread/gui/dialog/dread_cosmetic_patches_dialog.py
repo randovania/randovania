@@ -87,16 +87,11 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
 
     def _on_shield_type_update(self, attribute_name: str, checkbox: QCheckBox):
         def persist(value: int):
-            if checkbox.isChecked():
-                self._cosmetic_patches = dataclasses.replace(
-                    self._cosmetic_patches,
-                    **{attribute_name: DreadShieldType.ALTERNATE}
-                )
-            else:
-                self._cosmetic_patches = dataclasses.replace(
-                    self._cosmetic_patches,
-                    **{attribute_name: DreadShieldType.DEFAULT}
-                )
+            shield_type = DreadShieldType.ALTERNATE if checkbox.isChecked() else DreadShieldType.DEFAULT
+            self._cosmetic_patches = dataclasses.replace(
+                self._cosmetic_patches,
+                **{attribute_name: shield_type}
+            )
 
         return persist
 
