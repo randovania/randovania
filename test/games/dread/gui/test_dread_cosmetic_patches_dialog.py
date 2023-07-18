@@ -8,7 +8,7 @@ from randovania.games.dread.layout.dread_cosmetic_patches import (
     DreadCosmeticPatches,
     DreadMissileCosmeticType,
     DreadRoomGuiType,
-    DreadShieldType
+    DreadShieldType,
 )
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
