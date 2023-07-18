@@ -86,7 +86,7 @@ class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
         with self._editor as editor:
             try:
                 editor.set_configuration_field("qol_cutscenes", value)
-            except Exception:
+            except ValueError:
                 editor.set_configuration_field("qol_cutscenes", LayoutCutsceneMode.COMPETITIVE)
                 signal_handling.set_combo_with_value(self.cutscene_combo, LayoutCutsceneMode.COMPETITIVE)
 
