@@ -47,6 +47,14 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 </p><p align="center">Are you sure you want to disable validation?</p></body></html>
 """
 
+_ANOTHER_PROCESS_GENERATION_WARNING = """
+<html><head/><body>
+<p>Generation by default runs in another process to keep Randovania responsive while it happens.<br/>
+Running in the same process as the user interface is a good troubleshooting step if you're having issues.
+
+</p><p align="center">Do you want to continue?</p></body></html>
+"""
+
 
 def _t(key: str, disambiguation: str | None = None):
     return QtCore.QCoreApplication.translate("MainWindow", key, disambiguation)
@@ -216,6 +224,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_edit_existing_database.triggered.connect(self._open_data_editor_prompt)
         self.menu_action_validate_seed_after.triggered.connect(self._on_validate_seed_change)
         self.menu_action_timeout_generation_after_a_time_limit.triggered.connect(self._on_generate_time_limit_change)
+        self.menu_action_generate_in_another_process.triggered.connect(self._on_generate_in_another_process_change)
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
         self.menu_action_experimental_settings.triggered.connect(self._on_menu_action_experimental_settings)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
@@ -475,6 +484,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_validate_seed_after.setChecked(self._options.advanced_validate_seed_after)
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
             self._options.advanced_timeout_during_generation)
+        self.menu_action_generate_in_another_process.setChecked(self._options.advanced_generate_in_another_process)
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
         self.menu_action_experimental_settings.setChecked(self._options.experimental_settings)
 
@@ -590,6 +600,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.progress_label.setText(message)
         if "Aborted" in message:
             percentage = 0
+
         if percentage >= 0:
             self.progress_bar.setRange(0, 100)
             self.progress_bar.setValue(percentage)
@@ -604,14 +615,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         new_value = self.menu_action_validate_seed_after.isChecked()
 
         if old_value and not new_value:
-            box = QtWidgets.QMessageBox(self)
-            box.setWindowTitle("Disable validation?")
-            box.setText(_DISABLE_VALIDATION_WARNING)
-            box.setIcon(QtWidgets.QMessageBox.Icon.Warning)
-            box.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
-            box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.No)
-            user_response = await async_dialog.execute_dialog(box)
-            if user_response != QtWidgets.QMessageBox.StandardButton.Yes:
+            if not await async_dialog.yes_no_prompt(
+                self, "Disable validation?",
+                text=_DISABLE_VALIDATION_WARNING,
+                icon=QtWidgets.QMessageBox.Icon.Warning,
+            ):
                 self.menu_action_validate_seed_after.setChecked(True)
                 return
 
@@ -622,6 +630,22 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         is_checked = self.menu_action_timeout_generation_after_a_time_limit.isChecked()
         with self._options as options:
             options.advanced_timeout_during_generation = is_checked
+
+    @asyncSlot()
+    async def _on_generate_in_another_process_change(self):
+        old_value = self._options.advanced_generate_in_another_process
+        new_value = self.menu_action_generate_in_another_process.isChecked()
+
+        if old_value and not new_value:
+            if not await async_dialog.yes_no_prompt(
+                self, "Run generation in the same process?",
+                text=_ANOTHER_PROCESS_GENERATION_WARNING,
+            ):
+                self.menu_action_generate_in_another_process.setChecked(True)
+                return
+
+        with self._options as options:
+            options.advanced_generate_in_another_process = new_value
 
     def _on_menu_action_dark_mode(self):
         with self._options as options:

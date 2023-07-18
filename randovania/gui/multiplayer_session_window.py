@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import collections
 import itertools
 import logging
 import random
@@ -30,6 +31,7 @@ from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
 from randovania.lib.container_lib import zip2
 from randovania.network_client.network_client import ConnectionState
+from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
     MultiplayerSessionAction,
@@ -216,6 +218,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.network_client.WorldUserInventoryUpdated.connect(self.on_user_inventory_update)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
         self._multiworld_client.SyncFailure.connect(self.update_multiworld_client_status)
+        self._multiworld_client.database.WorldDataUpdate.connect(self.update_multiworld_client_status)
+        self._multiworld_client.game_connection.GameStateUpdated.connect(self.update_multiworld_client_status)
 
     def _get_world_order(self) -> list[uuid.UUID]:
         return [world.id for world in self._session.worlds]
@@ -843,7 +847,39 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         else:
             self.progress_bar.setRange(0, 0)
 
+    @asyncSlot()
+    async def _display_disconnected_warning(self):
+        self.activateWindow()
+        error_msg = self.network_client.last_connection_error or "Unknown Error"
+        error_msg = error_msg.replace('\n', '<br />')
+        await async_dialog.warning(
+            self, "Disconnected from Server",
+            "You have been disconnected from the server and attempts to reconnect have failed with:<br /><br />"
+            f"{error_msg}"
+        )
+
+    _disconnected_warning_timer: QtCore.QTimer | None = None
+
+    def _ensure_disconnected_warning_timer(self):
+        if self._disconnected_warning_timer is None:
+            logger.debug("Starting timer to display a warning about being disconnected.")
+            self._disconnected_warning_timer = QtCore.QTimer(self)
+            self._disconnected_warning_timer.setSingleShot(True)
+            self._disconnected_warning_timer.timeout.connect(self._display_disconnected_warning)
+            self._disconnected_warning_timer.start(60_000)  # 60s
+
+    def _cancel_disconnected_warning_timer(self):
+        if self._disconnected_warning_timer is not None:
+            logger.debug("Cancelling timer for disconnection warning.")
+            self._disconnected_warning_timer.stop()
+            self._disconnected_warning_timer = None
+
     def on_server_connection_state_updated(self, state: ConnectionState):
+        if state != ConnectionState.Connected:
+            self._ensure_disconnected_warning_timer()
+        else:
+            self._cancel_disconnected_warning_timer()
+
         self.server_connection_button.setEnabled(state in {ConnectionState.Disconnected,
                                                            ConnectionState.ConnectedNotLogged})
         self.server_connection_button.setText("Login" if state == ConnectionState.ConnectedNotLogged else "Connect")
@@ -860,9 +896,23 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if err is not None:
             lines.append(f"Error when syncing worlds: {err}")
 
-        multi_user = self._session.users[self.network_client.current_user.id]
+        try:
+            user_worlds = self._session.users[self.network_client.current_user.id].worlds
+        except AttributeError:
+            # _session hasn't been set yet
+            user_worlds = {}
+
+        game_connection = self._multiworld_client.game_connection
+        connected_worlds: dict[uuid.UUID, list[str]] = collections.defaultdict(list)
+        for connector, connected_state in game_connection.connected_states.items():
+            if connected_state.status != GameConnectionStatus.Disconnected:
+                connected_worlds[connected_state.id].append("{} via {}".format(
+                    connected_state.status.pretty_text,
+                    game_connection.get_builder_for_connector(connector).pretty_text,
+                ))
+
         world_status = []
-        for uid in multi_user.worlds.keys():
+        for uid in user_worlds.keys():
             data = self._multiworld_client.database.get_data_for(uid)
 
             msg = "- {}: {} collected locations, {} pending uploads.".format(
@@ -870,6 +920,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 len(data.collected_locations),
                 len(set(data.collected_locations) - set(data.uploaded_locations)),
             )
+
+            if connected_worlds[uid]:
+                msg += f" {', '.join(connected_worlds[uid])}."
 
             err = self._multiworld_client.get_world_sync_error(uid)
             if err is not None:

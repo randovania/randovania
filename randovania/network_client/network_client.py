@@ -142,7 +142,8 @@ class NetworkClient:
         aiohttp.ClientSession.ws_connect = wrap_ws_connect
 
         self._connection_state = ConnectionState.Disconnected
-        self.sio = socketio.AsyncClient(ssl_verify=configuration.get("verify_ssl", True))
+        self.sio = socketio.AsyncClient(ssl_verify=configuration.get("verify_ssl", True),
+                                        reconnection=False)
         self._call_lock = asyncio.Lock()
         self._current_timeout = _MINIMUM_TIMEOUT
         self._sessions_interested_in = set()
@@ -188,6 +189,7 @@ class NetworkClient:
         import aiohttp.client_exceptions
 
         if self.sio.connected:
+            self.logger.debug("sio is already connected")
             return
 
         waiting_for_on_connect = asyncio.get_running_loop().create_future()
@@ -215,7 +217,7 @@ class NetworkClient:
             self.logger.info("connected")
 
         except (socketio.exceptions.ConnectionError, aiohttp.client_exceptions.ContentTypeError) as e:
-            self.logger.info(f"failed with {e} - {type(e)}")
+            self.logger.info("failed with %s - %s", e, type(e))
             if self._connect_error is None:
                 if isinstance(e, aiohttp.client_exceptions.ContentTypeError):
                     message = e.message
@@ -225,6 +227,16 @@ class NetworkClient:
             err = self._connect_error
             await self.sio.disconnect()
             raise UnableToConnect(err)
+
+        except error.BaseNetworkError as e:
+            self._connect_error = str(e)
+
+            # During the `on_connect` event we perform extra queries that can be rejected by the
+            # server (wrong version, etc.) which calls `sio.disconnect`. However, this is all during
+            # `sio.connect` which will finish by setting `sio.connected = True`.
+            await self.sio.disconnect()
+            self.sio.connected = False
+            raise
 
     def notify_on_connect(self, error_message: Exception | None):
         if self._waiting_for_on_connect is not None:
@@ -236,15 +248,18 @@ class NetworkClient:
 
     def connect_to_server(self) -> asyncio.Task:
         if self._connect_task is None:
+            self.logger.debug("creating new _connect_task")
             self._connect_task = asyncio.create_task(self._internal_connect_to_server())
             self._connect_task.add_done_callback(lambda _: setattr(self, "_connect_task", None))
+        else:
+            self.logger.debug("_connect_task already exists")
 
         return self._connect_task
 
     async def disconnect_from_server(self):
         self.logger.debug("will disconnect")
         await self.sio.disconnect()
-        self.logger.debug("disconnected")
+        self.logger.debug("disconnected. sio connected? %s", self.sio.connected)
 
     async def _restore_session(self):
         persisted_session = await self.read_persisted_session()
@@ -276,6 +291,7 @@ class NetworkClient:
                 )
                 self.connection_state = ConnectionState.ConnectedNotLogged
                 self.session_data_path.unlink()
+
         else:
             self.logger.info("no session to restore")
             self.connection_state = ConnectionState.ConnectedNotLogged
@@ -320,7 +336,7 @@ class NetworkClient:
         self._current_user = User.from_json(new_session["user"])
         self._update_reported_username()
 
-        if self.connection_state in (ConnectionState.ConnectedRestoringSession, ConnectionState.ConnectedNotLogged):
+        if self.connection_state == ConnectionState.ConnectedNotLogged:
             self.connection_state = ConnectionState.Connected
 
         self.logger.info(f"{self._current_user.name}, state: {self.connection_state}")
@@ -408,16 +424,17 @@ class NetworkClient:
         self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
 
     async def server_call(self, event: str, data=None, *, namespace=None, handle_invalid_session: bool = True):
-        if self.connection_state.is_disconnected:
-            self.logger.debug(f"{event}, urgent connect start")
-            await self.connect_to_server()
-            self.logger.debug(f"{event}, urgent connect finished")
+        self.logger.debug("performing call for %s", event)
 
-        self.logger.debug(f"{event}, getting lock")
+        if self.connection_state.is_disconnected:
+            self.logger.debug("%s, urgent connect start. Sio is connected? %s", event, self.sio.connected)
+            await self.connect_to_server()
+            self.logger.debug("%s, urgent connect finished", event)
+
         async with self._call_lock:
             request_start = time.time()
             timeout = self._current_timeout
-            self.logger.debug(f"{event}, will call with timeout {timeout}")
+            self.logger.debug("%s, will call with timeout %d", event, timeout)
             try:
                 result = await self.sio.call(event, data, namespace=namespace, timeout=timeout)
                 request_time = time.time() - request_start
@@ -520,6 +537,10 @@ class NetworkClient:
             })
         else:
             sentry_sdk.set_user(None)
+
+    @property
+    def last_connection_error(self) -> str | None:
+        return self._connect_error
 
     @property
     def allow_reporting_username(self):
