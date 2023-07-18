@@ -173,9 +173,7 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
 
     num_elevator_nodes = sum(1 for _ in _get_nodes_by_teleporter_id(region_list, elevator_type))
     if len(elevator_fields) != num_elevator_nodes:
-        raise ValueError("Invalid elevator count. Expected {}, got {}.".format(
-            num_elevator_nodes, len(elevator_fields)
-        ))
+        raise ValueError(f"Invalid elevator count. Expected {num_elevator_nodes}, got {len(elevator_fields)}.")
 
     return elevator_fields
 
@@ -509,10 +507,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             filtered_name = string_lib.sanitize_for_path(self.players_config.get_own_name())
             filtered_session = string_lib.sanitize_for_path(self.players_config.session_name)
 
-            result["banner_name"] = "Prime 2 Rando - {} - {}".format(
-                filtered_name,
-                filtered_session,
-            )[:40]
+            result["banner_name"] = f"Prime 2 Rando - {filtered_name} - {filtered_session}"[:40]
         else:
             result["banner_name"] = f"Metroid Prime 2: Randomizer - {self.description.shareable_hash}"
 

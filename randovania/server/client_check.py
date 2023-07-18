@@ -37,7 +37,5 @@ def check_client_headers(expected_headers: dict[str, str], environ: dict[str, st
             for name, value in wrong_headers.items()
         )
         return (
-            "Incompatible client:\n{}\n\nServer is version {}, please confirm you're updated.".format(
-                message, randovania.VERSION,
-            )
+            f"Incompatible client:\n{message}\n\nServer is version {randovania.VERSION}, please confirm you're updated."
         )
