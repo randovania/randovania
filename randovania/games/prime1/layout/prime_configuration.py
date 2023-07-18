@@ -23,6 +23,7 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
     COMPETITIVE = "competitive"
     MINOR = "minor"
     MAJOR = "major"
+    SKIPPABLE = "skippable"
 
 @dataclasses.dataclass(frozen=True)
 class EnemyAttributeRandomizer(BitPackDataclass, JsonDataclass):
