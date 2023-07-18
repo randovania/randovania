@@ -39,6 +39,30 @@ class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
         self.cutscene_combo.setItemData(1, LayoutCutsceneMode.COMPETITIVE)
         self.cutscene_combo.setItemData(2, LayoutCutsceneMode.MINOR)
         self.cutscene_combo.setItemData(3, LayoutCutsceneMode.MAJOR)
+        self.cutscene_combo.setItemData(4, LayoutCutsceneMode.SKIPPABLE)
+
+        if editor._options.experimental_settings:
+            # ruff made me do it this way
+            self.cutscene_label.setText("""
+                <html>
+                    <head/>
+                    <body>
+<p><span style=" font-weight:600;">Original</span>
+: No changes to the cutscenes are made.</p>
+<p><span style=" font-weight:600;">Competitive</span>
+: Similar to minor, but leaves a few rooms alone where skipping cutscenes would be inappropriate for races.</p>
+<p><span style=" font-weight:600;">Minor</span>
+: Removes cutscenes that don't affect the game too much when removed.</p>
+<p><span style=" font-weight:600;">Major</span>
+: Allows you to continue playing the game while cutscenes happen.</p>
+<p><span style=" font-weight:700;">Skippable</span>
+: Keeps all of the cutscenes in the game, but makes it so that they can be skipped with the START button.</p>
+                    </body>
+                </html>
+            """)
+        else:
+            self.cutscene_combo.removeItem(4)
+
         signal_handling.on_combo(self.cutscene_combo, self._on_cutscene_changed)
         for f in _FIELDS:
             self._add_persist_option(getattr(self, f"{f}_check"), f)
@@ -60,7 +84,11 @@ class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
 
     def _on_cutscene_changed(self, value: LayoutCutsceneMode):
         with self._editor as editor:
-            editor.set_configuration_field("qol_cutscenes", value)
+            try:
+                editor.set_configuration_field("qol_cutscenes", value)
+            except Exception:
+                editor.set_configuration_field("qol_cutscenes", LayoutCutsceneMode.COMPETITIVE)
+                signal_handling.set_combo_with_value(self.cutscene_combo, LayoutCutsceneMode.COMPETITIVE)
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
