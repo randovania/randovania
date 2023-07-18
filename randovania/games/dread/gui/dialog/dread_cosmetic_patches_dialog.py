@@ -7,14 +7,14 @@ from randovania.games.dread.layout.dread_cosmetic_patches import (
     DreadCosmeticPatches,
     DreadMissileCosmeticType,
     DreadRoomGuiType,
-    DreadShieldType
+    DreadShieldType,
 )
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.dread_cosmetic_patches_dialog_ui import Ui_DreadCosmeticPatchesDialog
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
-    from PySide6.QtWidgets import QWidget, QCheckBox
+    from PySide6.QtWidgets import QCheckBox, QWidget
 
 
 class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatchesDialog):
@@ -97,7 +97,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
                     self._cosmetic_patches,
                     **{attribute_name: DreadShieldType.DEFAULT}
                 )
-        
+
         return persist
 
     def _on_room_name_mode_update(self):
