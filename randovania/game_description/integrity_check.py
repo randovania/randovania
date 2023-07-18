@@ -126,7 +126,8 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
                     yield (f"{node.name} connects to '{node.default_connection}', but that dock connects "
                            f"to '{other_node.default_connection}' instead.")
 
-    elif any(node.name.startswith(dock_type.long_name) for dock_type in game.dock_weakness_database.dock_types):
+    elif any(re.match(fr"{dock_type.long_name}\s*(to|from)", node.name)
+             for dock_type in game.dock_weakness_database.dock_types):
         yield f"{node.name} is not a Dock Node, naming suggests it should be."
 
 def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
