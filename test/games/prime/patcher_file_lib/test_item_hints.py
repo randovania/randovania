@@ -125,7 +125,7 @@ def test_create_hints_item_joke(empty_patches, players_config):
                                         namer, rng)
 
     # Assert
-    joke = "ur Friend Roster is currently empty."
+    joke = "Your Friend Roster is currently empty."
     message = f"&push;&main-color=#45F731;{joke}&pop;"
     assert result[0]['strings'][0] == message
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
