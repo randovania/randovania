@@ -32,10 +32,11 @@ class MultiplayerSessionListEntry(JsonDataclass):
     has_password: bool
     state: MultiplayerSessionState
     num_users: int
-    num_worlds: int  # TODO: currently always 0
+    num_worlds: int
     creator: str
     creation_date: datetime.datetime
     is_user_in_session: bool
+    join_date: datetime.datetime
 
     def __post_init__(self):
         tzinfo = self.creation_date.tzinfo
