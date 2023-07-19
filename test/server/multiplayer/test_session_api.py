@@ -78,18 +78,18 @@ def test_list_sessions(clean_database, flask_app, limit):
 def test_create_session(clean_database, preset_manager, default_game_list, mocker):
     # Setup
     user = database.User.create(id=1234, discord_id=5678, name="The Name")
-    sio = MagicMock()
-    sio.get_current_user.return_value = user
+    sa = MagicMock()
+    sa.get_current_user.return_value = user
 
     mock_join: MagicMock = mocker.patch("randovania.server.multiplayer.session_common.join_room")
 
     # Run
-    result = session_api.create_session(sio, "My Room")
+    result = session_api.create_session(sa, "My Room")
 
     # Assert
     session = database.MultiplayerSession.get(1)
 
-    mock_join.assert_called_once_with(sio, session)
+    mock_join.assert_called_once_with(sa, session)
 
     assert session.name == "My Room"
     assert result == {
@@ -109,8 +109,8 @@ def test_join_session(mock_emit_session_update: MagicMock,
     # Setup
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other Name")
-    sio = MagicMock()
-    sio.get_current_user.return_value = user1
+    sa = MagicMock()
+    sa.get_current_user.return_value = user1
 
     mock_join_multiplayer_session: MagicMock = mocker.patch(
         "randovania.server.multiplayer.session_common.join_room")
@@ -122,7 +122,7 @@ def test_join_session(mock_emit_session_update: MagicMock,
                                           connection_state="Online, Badass")
 
     # Run
-    result = session_api.join_session(sio, 1, None)
+    result = session_api.join_session(sa, 1, None)
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -141,7 +141,7 @@ def test_join_session(mock_emit_session_update: MagicMock,
         'generation_in_progress': None,
         'allowed_games': default_game_list,
     }
-    mock_join_multiplayer_session.assert_called_once_with(sio, session)
+    mock_join_multiplayer_session.assert_called_once_with(sa, session)
 
 
 @pytest.mark.parametrize("is_member", [False, True])
@@ -159,21 +159,21 @@ def test_listen_to_session(session_update, mocker: MockerFixture, flask_app, lis
         membership = database.MultiplayerMembership.get_by_ids(user_id=1234, session_id=session_update)
         expectation = contextlib.nullcontext()
 
-    sio = MagicMock(spec=ServerApp)
-    sio.get_current_user.return_value = user
+    sa = MagicMock(spec=ServerApp)
+    sa.get_current_user.return_value = user
 
     # Run
     with flask_app.test_request_context(), expectation:
-        session_api.listen_to_session(sio, 1, listen)
+        session_api.listen_to_session(sa, 1, listen)
 
     # Assert
     if listen and is_member:
-        mock_join_room.assert_called_once_with(sio, membership.session)
+        mock_join_room.assert_called_once_with(sa, membership.session)
     else:
         mock_join_room.assert_not_called()
 
     if not listen:
-        mock_leave_room.assert_called_once_with(sio, membership.session.id)
+        mock_leave_room.assert_called_once_with(sa, membership.session.id)
     else:
         mock_leave_room.assert_not_called()
 
@@ -187,12 +187,12 @@ def test_session_request_update(session_update, mocker, flask_app):
         "randovania.server.multiplayer.session_common.emit_session_audit_update", autospec=True)
 
     user = database.User.get_by_id(1234)
-    sio = MagicMock()
-    sio.get_current_user.return_value = user
+    sa = MagicMock()
+    sa.get_current_user.return_value = user
 
     # Run
     with flask_app.test_request_context():
-        session_api.request_session_update(sio, 1)
+        session_api.request_session_update(sa, 1)
 
     # Assert
     mock_meta_update.assert_called_once_with(session_update)

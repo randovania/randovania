@@ -73,10 +73,10 @@ def emit_session_audit_update(session: MultiplayerSession):
                                   construct_pack.encode(log))
 
 
-def add_audit_entry(sio: ServerApp, session: MultiplayerSession, message: str):
+def add_audit_entry(sa: ServerApp, session: MultiplayerSession, message: str):
     MultiplayerAuditEntry.create(
         session=session,
-        user=sio.get_current_user(),
+        user=sa.get_current_user(),
         message=message
     )
     emit_session_audit_update(session)
@@ -86,11 +86,11 @@ def hash_password(password: str) -> str:
     return hashlib.blake2s(password.encode("utf-8")).hexdigest()
 
 
-def join_room(sio: ServerApp, session: MultiplayerSession):
+def join_room(sa: ServerApp, session: MultiplayerSession):
     room_name = room_name_for(session.id)
     flask_socketio.join_room(room_name)
 
-    with sio.session() as sio_session:
+    with sa.session() as sio_session:
         if "multiplayer_sessions" not in sio_session:
             sio_session["multiplayer_sessions"] = []
 
@@ -98,17 +98,17 @@ def join_room(sio: ServerApp, session: MultiplayerSession):
             sio_session["multiplayer_sessions"].append(session.id)
 
 
-def leave_room(sio: ServerApp, session_id: int):
+def leave_room(sa: ServerApp, session_id: int):
     flask_socketio.leave_room(room_name_for(session_id))
 
-    with sio.session() as sio_session:
+    with sa.session() as sio_session:
         if "multiplayer_sessions" in sio_session:
             if session_id in sio_session["multiplayer_sessions"]:
                 sio_session["multiplayer_sessions"].remove(session_id)
 
 
-def leave_all_rooms(sio: ServerApp):
-    with sio.session() as sio_session:
+def leave_all_rooms(sa: ServerApp):
+    with sa.session() as sio_session:
         multiplayer_sessions: list[int] = sio_session.pop("multiplayer_sessions", [])
 
     for session_id in multiplayer_sessions:

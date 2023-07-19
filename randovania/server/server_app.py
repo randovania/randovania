@@ -179,9 +179,9 @@ class ServerApp:
         arg_spec = inspect.getfullargspec(handler)
 
         @functools.wraps(handler)
-        def _handler(sio: ServerApp, arg: bytes) -> bytes:
+        def _handler(sa: ServerApp, arg: bytes) -> bytes:
             decoded_arg = construct_pack.decode(arg, types[arg_spec.args[1]])
-            return construct_pack.encode(handler(sio, decoded_arg), types["return"])
+            return construct_pack.encode(handler(sa, decoded_arg), types["return"])
 
         return self.on(message, _handler, with_header_check=True)
 

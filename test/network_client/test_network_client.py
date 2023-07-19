@@ -55,7 +55,7 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     else:
         call_result = InvalidSessionError().as_json
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.call = AsyncMock(return_value=call_result)
 
     # Run
@@ -94,7 +94,7 @@ async def test_connect_to_server(tmp_path):
     async def connect(*args, **kwargs):
         client._waiting_for_on_connect.set_result(True)
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False
 
@@ -121,7 +121,7 @@ async def test_internal_connect_to_server_failure(tmp_path):
             )
         )
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.disconnect = AsyncMock()
     client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False

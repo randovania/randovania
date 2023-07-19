@@ -32,11 +32,11 @@ def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker
     world = database.World.create(session=session, name="W1", preset="{}")
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
 
-    sio = MagicMock()
-    sio.get_current_user.return_value = user
+    sa = MagicMock()
+    sa.get_current_user.return_value = user
 
     # Run
-    world_api.emit_world_pickups_update(sio, world)
+    world_api.emit_world_pickups_update(sa, world)
 
     # Assert
     mock_emit.assert_not_called()
@@ -76,8 +76,8 @@ def test_emit_world_pickups_update_one_action(
         "randovania.server.multiplayer.world_api._get_pickup_target", autospec=True
     )
 
-    sio = MagicMock()
-    sio.get_current_user.return_value = database.User.get_by_id(1234)
+    sa = MagicMock()
+    sa.get_current_user.return_value = database.User.get_by_id(1234)
 
     w1 = database.World.get_by_id(1)
 
@@ -93,7 +93,7 @@ def test_emit_world_pickups_update_one_action(
     mock_get_resource_database.return_value = echoes_resource_database
 
     # Run
-    world_api.emit_world_pickups_update(sio, w1)
+    world_api.emit_world_pickups_update(sa, w1)
 
     # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
     # from randovania.server.multiplayer.world_api import _base64_encode_pickup
@@ -122,8 +122,8 @@ def test_game_session_collect_pickup_for_self(
         default_generator_params, echoes_resource_database, mocker
 ):
     # Setup
-    sio = MagicMock()
-    sio.get_current_user.return_value = database.User.get_by_id(1234)
+    sa = MagicMock()
+    sa.get_current_user.return_value = database.User.get_by_id(1234)
 
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
     mock_session_description: PropertyMock = mocker.patch(
@@ -144,7 +144,7 @@ def test_game_session_collect_pickup_for_self(
 
     # Run
     with flask_app.test_request_context():
-        result = world_api.collect_locations(sio, w1, (0,))
+        result = world_api.collect_locations(sa, w1, (0,))
 
     # Assert
     assert result == set()
@@ -157,8 +157,8 @@ def test_game_session_collect_pickup_for_self(
 def test_game_session_collect_pickup_etm(
         flask_app, two_player_session, echoes_resource_database, mocker
 ):
-    sio = MagicMock()
-    sio.get_current_user.return_value = database.User.get_by_id(1234)
+    sa = MagicMock()
+    sa.get_current_user.return_value = database.User.get_by_id(1234)
 
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
     mock_session_description: PropertyMock = mocker.patch(
@@ -172,7 +172,7 @@ def test_game_session_collect_pickup_etm(
 
     # Run
     with flask_app.test_request_context():
-        result = world_api.collect_locations(sio, w1, (0,))
+        result = world_api.collect_locations(sa, w1, (0,))
 
     # Assert
     assert result == set()
@@ -198,8 +198,8 @@ def test_collect_locations_other(flask_app, two_player_session, echoes_resource_
     mock_emit_session_update = mocker.patch(
         "randovania.server.multiplayer.session_common.emit_session_actions_update", autospec=True)
 
-    sio = MagicMock()
-    sio.get_current_user.return_value = database.User.get_by_id(1234)
+    sa = MagicMock()
+    sa.get_current_user.return_value = database.User.get_by_id(1234)
     mock_get_pickup_target.return_value = PickupTarget(MagicMock(), 1)
 
     w1 = database.World.get_by_id(1)
@@ -213,7 +213,7 @@ def test_collect_locations_other(flask_app, two_player_session, echoes_resource_
 
     # Run
     with flask_app.test_request_context():
-        result = world_api.collect_locations(sio, w1, locations_to_collect)
+        result = world_api.collect_locations(sa, w1, locations_to_collect)
 
     # Assert
     mock_get_pickup_target.assert_has_calls([
@@ -237,9 +237,9 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     mock_emit_actions = mocker.patch("randovania.server.multiplayer.session_common.emit_session_actions_update")
     mock_emit_inventory = mocker.patch("randovania.server.multiplayer.world_api.emit_inventory_update")
 
-    sio = MagicMock()
+    sa = MagicMock()
     user = database.User.get_by_id(1234)
-    sio.get_current_user.return_value = user
+    sa.get_current_user.return_value = user
 
     w1 = database.World.get_by_id(1)
     w2 = database.World.get_by_id(2)
@@ -270,7 +270,7 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
 
     # Run
     with flask_app.test_request_context():
-        result = world_api.world_sync(sio, request)
+        result = world_api.world_sync(sa, request)
 
     # Assert
     assert result == ServerSyncResponse(
@@ -293,13 +293,13 @@ def test_world_sync(flask_app, solo_two_world_session, mocker: MockerFixture, mo
     assert a2.connection_state == GameConnectionStatus.Disconnected
     assert a2.inventory is None
 
-    sio.store_world_in_session.assert_called_once_with(w1)
-    sio.ensure_in_room.assert_called_once_with("world-1179c986-758a-4170-9b07-fe4541d78db0")
+    sa.store_world_in_session.assert_called_once_with(w1)
+    sa.ensure_in_room.assert_called_once_with("world-1179c986-758a-4170-9b07-fe4541d78db0")
     mock_leave_room.assert_called_once_with("world-6b5ac1a1-d250-4f05-a5fb-ae37e8a92165")
-    mock_emit_pickups.assert_has_calls([call(sio, w1), call(sio, w2)], any_order=True)
+    mock_emit_pickups.assert_has_calls([call(sa, w1), call(sa, w2)], any_order=True)
     mock_emit_session_update.assert_called_once_with(session)
     mock_emit_actions.assert_called_once_with(session)
-    mock_emit_inventory.assert_called_once_with(sio, w1, 1234, b"foo")
+    mock_emit_inventory.assert_called_once_with(sa, w1, 1234, b"foo")
     mock_emit.assert_not_called()
 
 
@@ -323,16 +323,16 @@ def test_report_disconnect(mock_emit_session_update, solo_two_world_session):
 
 
 def test_emit_inventory_room(solo_two_world_session):
-    sio = MagicMock()
-    sio.is_room_not_empty.return_value = True
+    sa = MagicMock()
+    sa.is_room_not_empty.return_value = True
 
     world = database.World.get_by_id(1)
 
     # Run
-    world_api.emit_inventory_update(sio, world, 1234, b"foo")
+    world_api.emit_inventory_update(sa, world, 1234, b"foo")
 
     # Assert
-    sio.sio.emit.assert_called_once_with(
+    sa.sio.emit.assert_called_once_with(
         signals.WORLD_BINARY_INVENTORY,
         (str(world.uuid), 1234, b"foo"),
         to=f"multiplayer-{world.uuid}-1234-inventory",
