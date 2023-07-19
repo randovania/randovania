@@ -104,7 +104,6 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
     def _create_game_patches(self):
         game_patches = {
             "septogg_helpers": self.patches.configuration.septogg_helpers,
-            "change_level_design": self.patches.configuration.change_level_design,
             "respawn_bomb_blocks": self.patches.configuration.respawn_bomb_blocks,
             "skip_cutscenes": self.patches.configuration.skip_cutscenes,
             "energy_per_tank": self.patches.configuration.energy_per_tank,
