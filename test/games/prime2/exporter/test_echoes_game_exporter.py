@@ -43,6 +43,7 @@ def test_do_export_game(mocker: pytest_mock.MockerFixture,
     mock_mp2hudcolor_c = mocker.patch("mp2hudcolor.mp2hudcolor_c")
     mock_convert_prime1 = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime1_pickups")
     mock_menu_mod = mocker.patch("randovania.games.prime2.patcher.claris_randomizer.add_menu_mod_to_files")
+    mock_coin_chest = mocker.patch("randovania.games.prime2.exporter.game_exporter.copy_coin_chest")
 
     mock_dol_file = mocker.patch("ppc_asm.dol_file.DolFile")
     mock_apply_dol = mocker.patch("open_prime_rando.dol_patching.echoes.dol_patcher.apply_patches")
@@ -120,6 +121,8 @@ def test_do_export_game(mocker: pytest_mock.MockerFixture,
         )
     else:
         mock_convert_prime1.assert_not_called()
+
+    mock_coin_chest.assert_called_once_with(export_params.contents_files_path)
 
     mock_apply_patcher.assert_called_once_with(
         export_params.contents_files_path,

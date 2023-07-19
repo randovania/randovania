@@ -51,6 +51,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Added: Tracker layout "Debug Info", which also shows details useful for investigating errors.
+- Added: The Coin Chest model from multiplayer is now used for offworld items instead of the ETM model.
+- Changed: The Power Beam and the Morph Ball now use the Coin Chest model when shuffled, instead of the ETM model.
 - Added: 4 new joke hints in the pool.
 
 ## [6.0.1] - 2023-07-04
