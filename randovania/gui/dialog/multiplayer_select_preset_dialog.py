@@ -46,6 +46,7 @@ class MultiplayerSelectPresetDialog(QtWidgets.QDialog, Ui_MultiplayerSelectPrese
         self.world_name_edit.setMaxLength(MAX_WORLD_NAME_LENGTH)
 
         self.valid_preset = False
+        self.update_accept_button()
 
     @property
     def selected_preset(self) -> VersionedPreset | None:

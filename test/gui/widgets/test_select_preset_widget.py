@@ -123,3 +123,20 @@ async def test_on_view_preset_history(widget: SelectPresetWidget, has_result, mo
         assert widget._window_manager.preset_manager.custom_presets == {new_preset.uuid: new_preset}
     else:
         assert widget._window_manager.preset_manager.custom_presets == {}
+
+
+def test_select_preset_incompatible_preset(widget: SelectPresetWidget, preset_manager,
+                                           mocker: pytest_mock.MockerFixture):
+    mocker.patch("randovania.layout.preset.Preset.settings_incompatible_with_multiworld",
+                 return_value=["Foo", "Bar"])
+
+    can_generate = MagicMock()
+    widget.CanGenerate.connect(can_generate)
+
+    widget.for_multiworld = True
+    widget.on_preset_changed(
+        preset=preset_manager.default_preset_for_game(widget._game)
+    )
+
+    can_generate.assert_called_once_with(False)
+    assert "The following settings are incompatible with multiworld" in widget.create_preset_description.text()
