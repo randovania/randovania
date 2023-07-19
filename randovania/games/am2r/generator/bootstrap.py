@@ -75,16 +75,32 @@ class AM2RBootstrap(MetroidBootstrap):
         locations = all_dna_locations(patches.game, config)
         rng.shuffle(locations)
 
-        all_dna = [pickup for pickup in list(pool_results.to_place)
-                   if pickup.pickup_category is METROID_DNA_CATEGORY]
-        if len(all_dna) > len(locations):
+        total_dna = [pickup for pickup in pool_results.to_place + pool_results.starting
+                     if pickup.pickup_category is METROID_DNA_CATEGORY]
+
+        num_of_dna = sum(1 for pickup in pool_results.to_place if pickup.pickup_category is METROID_DNA_CATEGORY)
+        if num_of_dna > len(locations):
             raise InvalidConfiguration(
-                f"Has {len(all_dna)} DNA in the pool, but only {len(locations)} valid locations."
+                f"Has {num_of_dna} DNA in the pool, but only {len(locations)} valid locations."
             )
 
-        rng.shuffle(all_dna)
+        # Shuffle DNA, so that it isn't always just the first X DNA
+        # For this, get all DNA, remove them from starting/place, shuffle them, then add the new ones back
+        rng.shuffle(total_dna)
 
-        for dna, location in zip(all_dna, locations, strict=False):
+        temp_to_place = [p for p in pool_results.to_place if p.pickup_category is not METROID_DNA_CATEGORY]
+        pool_results.to_place.clear()
+        pool_results.to_place.extend(temp_to_place)
+
+        temp_start = [p for p in pool_results.starting if p.pickup_category is not METROID_DNA_CATEGORY]
+        pool_results.starting.clear()
+        pool_results.starting.extend(temp_start)
+
+        dna_to_place = total_dna[:num_of_dna]
+        pool_results.to_place.extend(dna_to_place)
+        pool_results.starting.extend(total_dna[len(dna_to_place):])
+
+        for dna, location in zip(dna_to_place, locations, strict=False):
             pool_results.to_place.remove(dna)
             pool_results.assignment[location.pickup_index] = dna
 
