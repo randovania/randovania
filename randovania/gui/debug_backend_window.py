@@ -58,7 +58,8 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         common_qt_lib.set_default_window_icon(self.window)
 
         self.connector = connector
-        connector.RemotePickupsUpdated.connect(self._on_remote_pickups)
+        connector.InventoryUpdated.connect(self.update_inventory_table)
+        connector.MessagesUpdated.connect(self.update_message_list)
 
         self.messages_item_model = QtGui.QStandardItemModel(0, 1, self.window)
         self.messages_list.setModel(self.messages_item_model)
@@ -97,7 +98,8 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         self._timer.setInterval(10000)
 
         self._setup_locations_combo()
-        self._on_remote_pickups()
+        self.update_inventory_table()
+        self.update_message_list()
 
     def _on_collect_randomly_toggle(self, value: int):
         if bool(value):
@@ -149,10 +151,6 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
     async def finish(self):
         await self.connector.force_finish()
         self.window.close()
-
-    def _on_remote_pickups(self):
-        self.update_message_list()
-        self.update_inventory_table()
 
     def update_message_list(self):
         self.messages_item_model.setRowCount(len(self.connector.messages))

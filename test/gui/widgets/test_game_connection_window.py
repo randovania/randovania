@@ -143,9 +143,8 @@ async def test_add_connector_builder_dread(window: GameConnectionWindow, abort, 
 
 
 @pytest.mark.parametrize("system", ["Darwin", "Windows"])
-def test_setup_builder_ui_all_builders(skip_qtbot, system, mocker: MockerFixture, is_dev_version):
+def test_setup_builder_ui_all_builders(skip_qtbot, system, mocker: MockerFixture, is_dev_version, is_frozen):
     # Setup
-    mocker.patch("randovania.is_frozen", return_value=False)
     mocker.patch("platform.system", return_value=system)
 
     game_connection = MagicMock()
@@ -163,11 +162,23 @@ def test_setup_builder_ui_all_builders(skip_qtbot, system, mocker: MockerFixture
     window.setup_builder_ui()
 
     # Assert
+    has_debug = ConnectorBuilderChoice.DEBUG.is_usable()
     if system == "Darwin":
-        assert len(window.ui_for_builder) == 1 + is_dev_version
+        print(list(window.ui_for_builder.keys()))
+        assert len(window.ui_for_builder) == 1 + has_debug
     else:
         assert not window._builder_actions[ConnectorBuilderChoice.DOLPHIN].isEnabled()
-        assert len(window.ui_for_builder) == 2 + is_dev_version
+        assert len(window.ui_for_builder) == 2 + has_debug
+
+    ui = window.ui_for_builder[game_connection.connection_builders[1]]
+    if is_frozen:
+        assert ui.important_message_menu is None
+        assert ui.send_arbitrary_message_action is None
+    else:
+        assert ui.important_message_menu is not None
+        assert ui.important_message_menu.isEnabled()
+        assert ui.send_arbitrary_message_action is not None
+        assert ui.send_arbitrary_message_action.isEnabled()
 
 
 def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
