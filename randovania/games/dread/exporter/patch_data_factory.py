@@ -376,6 +376,14 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 },
                 "camera_names_dict": self._build_area_name_dict()
             },
+            "shield_versions": {
+                "ice_missile": c.alt_ice_missile.value,
+                "storm_missile": c.alt_storm_missile.value,
+                "diffusion_beam": c.alt_diffusion_beam.value,
+                "bomb": c.alt_bomb.value,
+                "cross_bomb": c.alt_cross_bomb.value,
+                "power_bomb": c.alt_power_bomb.value,
+            },
         }
 
     def _door_patches(self):
