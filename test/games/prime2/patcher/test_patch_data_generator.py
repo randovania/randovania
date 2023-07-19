@@ -196,13 +196,13 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
             wl.default_node_for_area(AreaIdentifier(target_world, target_area)),
         ))
 
-    add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
+    add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple",
         "Sanctuary Fortress", "Transport to Agon Wastes")
-    add("Temple Grounds", "Transport to Agon Wastes", "Elevator to Agon Wastes - Transport to Temple Grounds",
+    add("Temple Grounds", "Transport to Agon Wastes", "Elevator to Agon Wastes",
         "Torvus Bog", "Transport to Agon Wastes")
 
     if not vanilla_gateway:
-        add("Temple Grounds", "Sky Temple Gateway", "Teleport to Great Temple - Sky Temple Energy Controller",
+        add("Temple Grounds", "Sky Temple Gateway", "Elevator to Great Temple",
             "Great Temple", "Sanctum")
 
     patches = echoes_game_patches.assign_dock_connections(elevator_connection)

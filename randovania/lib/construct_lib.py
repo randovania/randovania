@@ -72,5 +72,5 @@ JsonEncodedValue = construct.ExprAdapter(
     # Decode
     lambda obj, ctx: json.loads(obj),
     # Encode
-    lambda obj, ctx: json.dumps(obj),
+    lambda obj, ctx: json.dumps(obj, separators=(',', ':')),
 )

@@ -7877,7 +7877,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Breeding Grounds Access East": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -7896,32 +7896,138 @@
                                                     }
                                                 },
                                                 {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Walljump up with helpers with the edge",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "Septogg",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "IBJ",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Bombs"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Charged bomb jump",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Charged Bomb Jump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "ChargedBombJump",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Walljump",
-                                                        "amount": 3,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Spider Ball"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "WJ + hijump",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "IBJ expert",
                                             "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "misc",
-                                                        "name": "Septogg",
-                                                        "amount": 1,
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -7929,7 +8035,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Walljump",
+                                                        "name": "MidAirMorph",
                                                         "amount": 4,
                                                         "negate": false
                                                     }
@@ -8034,7 +8140,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Tunnel Climb"
+                                        "data": "Low Mid-Air Morph Tunnel Climb"
                                     },
                                     {
                                         "type": "template",

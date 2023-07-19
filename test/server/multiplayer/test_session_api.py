@@ -25,7 +25,7 @@ def test_list_sessions(clean_database, flask_app, limit):
     someone = database.User.create(name="Someone")
     other = database.User.create(name="Other")
     s1 = database.MultiplayerSession.create(
-        name="Debug", num_teams=1, creator=someone,
+        name="Debug", num_teams=1, creator=someone, password="Foo",
         creation_date=datetime.datetime(2020, 10, 2, 10, 20, tzinfo=utc))
     s2 = database.MultiplayerSession.create(
         name="Other", num_teams=2, creator=someone,
@@ -34,24 +34,40 @@ def test_list_sessions(clean_database, flask_app, limit):
         name="Third", num_teams=2, creator=someone,
         creation_date=datetime.datetime(2021, 1, 20, 5, 2, tzinfo=utc))
 
-    database.MultiplayerMembership.create(user=someone, session=s1)
-    database.MultiplayerMembership.create(user=someone, session=s3)
-    database.MultiplayerMembership.create(user=other, session=s2)
-    database.MultiplayerMembership.create(user=other, session=s3)
+    database.MultiplayerMembership.create(user=someone, session=s1,
+                                          join_date=datetime.datetime(2021, 1, 20, 5, 2, tzinfo=utc))
+    database.MultiplayerMembership.create(user=someone, session=s3,
+                                          join_date=datetime.datetime(2022, 1, 20, 5, 2, tzinfo=utc))
+    database.MultiplayerMembership.create(user=other, session=s2,
+                                          join_date=datetime.datetime(2021, 1, 20, 5, 2, tzinfo=utc))
+    database.MultiplayerMembership.create(user=other, session=s3,
+                                          join_date=datetime.datetime(2022, 1, 20, 5, 2, tzinfo=utc))
+
+    world1_s1 = database.World.create(session=s1, name="Foobar World 1", preset="I'm a dummy")
+    database.WorldUserAssociation.create(world=world1_s1, user=someone)
+    world2_s1 = database.World.create(session=s1, name="Foobar World 2", preset="I'm a dummy")
+    database.WorldUserAssociation.create(world=world2_s1, user=someone)
+    world1_s2 = database.World.create(session=s2, name="Foobar World 1", preset="I'm a dummy")
+    database.WorldUserAssociation.create(world=world1_s2, user=someone)
 
     state = MultiplayerSessionState.SETUP.value
+    sio_mock = MagicMock()
+    sio_mock.get_current_user = MagicMock(return_value = someone)
 
     # Run
-    result = session_api.list_sessions(MagicMock(), limit)
+    result = session_api.list_sessions(sio_mock, limit)
 
     # Assert
     expected = [
         {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_users': 2, 'creator': 'Someone',
-         'num_worlds': 0, 'creation_date': '2021-01-20T05:02:00+00:00', 'is_user_in_session': True},
+         'num_worlds': 0, 'creation_date': '2021-01-20T05:02:00+00:00',
+         'is_user_in_session': True, 'join_date': '2022-01-20T05:02:00+00:00'},
         {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_users': 1, 'creator': 'Someone',
-         'num_worlds': 0, 'creation_date': '2020-01-20T05:02:00+00:00', 'is_user_in_session': False},
-        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_users': 1, 'creator': 'Someone',
-         'num_worlds': 0, 'creation_date': '2020-10-02T10:20:00+00:00', 'is_user_in_session': True},
+         'num_worlds': 1, 'creation_date': '2020-01-20T05:02:00+00:00',
+         'is_user_in_session': False, 'join_date': '2021-01-20T05:02:00+00:00'},
+        {'has_password': True, 'id': 1, 'state': state, 'name': 'Debug', 'num_users': 1, 'creator': 'Someone',
+         'num_worlds': 2, 'creation_date': '2020-10-02T10:20:00+00:00',
+         'is_user_in_session': True, 'join_date': '2021-01-20T05:02:00+00:00'},
     ]
     if limit == 2:
         expected = expected[:2]
@@ -80,7 +96,7 @@ def test_create_session(clean_database, preset_manager, default_game_list, mocke
         'id': 1,
         'name': 'My Room',
         'state': MultiplayerSessionState.SETUP.value,
-        'users_list': [{'admin': True, 'id': 1234, 'name': 'The Name', 'worlds': {}}],
+        'users_list': [{'admin': True, 'ready': False, 'id': 1234, 'name': 'The Name', 'worlds': {}}],
         'worlds': [],
         'game_details': None,
         'generation_in_progress': None,
@@ -115,8 +131,8 @@ def test_join_session(mock_emit_session_update: MagicMock,
         'state': MultiplayerSessionState.SETUP.value,
         'name': 'The Session',
         'users_list': [
-            {'admin': True, 'id': 1235, 'name': 'Other Name', 'worlds': {}},
-            {'admin': False, 'id': 1234, 'name': 'The Name', 'worlds': {}},
+            {'admin': True, 'ready': False, 'id': 1235, 'name': 'Other Name', 'worlds': {}},
+            {'admin': False, 'ready': False, 'id': 1234, 'name': 'The Name', 'worlds': {}},
         ],
         'worlds': [
             {"id": "bc82b6cf-df76-4c3d-9ea0-0695c2f7e719", "name": "World 1", "preset_raw": "{}"}

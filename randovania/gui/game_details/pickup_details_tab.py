@@ -4,12 +4,13 @@ import collections
 import functools
 from typing import TYPE_CHECKING
 
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania.exporter import item_names
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.gui.generated.pickup_details_tab_ui import Ui_PickupDetailsTab
+from randovania.gui.lib import signal_handling
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
@@ -46,8 +47,18 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
         self.pickup_spoiler_buttons = []
         self._pickup_spoiler_region_to_group = {}
 
+        self.search_pickup_group.set_content_layout(self.search_pickup_layout)
+        self.search_pickup_model = QtGui.QStandardItemModel(0, 4, self.root)
+        self.search_pickup_model.setHorizontalHeaderLabels(["World", "Region", "Area", "Location"])
+        self.search_pickup_proxy = QtCore.QSortFilterProxyModel(self.root)
+        self.search_pickup_proxy.setSourceModel(self.search_pickup_model)
+        self.search_pickup_proxy.setFilterKeyColumn(0)
+        self.search_pickup_proxy.setFilterRole(QtCore.Qt.ItemDataRole.UserRole)
+        self.search_pickup_view.setModel(self.search_pickup_proxy)
+
         self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
         self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
+        signal_handling.on_combo(self.search_pickup_combo, self._show_location_for_pickup)
 
     def widget(self) -> QtWidgets.QWidget:
         return self.root
@@ -57,6 +68,8 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
 
     def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
                        players: PlayersConfiguration):
+        self._update_search_pickup_group(all_patches, players)
+
         patches = all_patches[players.player_index]
         pickup_names = {
             pickup.pickup.name
@@ -183,3 +196,48 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
             visible = text == "None" or text == button.item_name
             button.setVisible(visible)
             button.row.label.setVisible(visible)
+
+    def _update_search_pickup_group(self, all_patches: dict[int, GamePatches], players: PlayersConfiguration):
+        self.search_pickup_group.setVisible(players.is_multiworld)
+        if not players.is_multiworld:
+            return
+
+        pickup_names = set()
+        rows = []
+
+        for source_index, patches in all_patches.items():
+            rl = patches.game.region_list
+            for pickup_index, pickup_target in patches.pickup_assignment.items():
+                if pickup_target.player == players.player_index:
+                    node = rl.node_from_pickup_index(pickup_index)
+                    area = rl.nodes_to_area(node)
+
+                    rows.append((
+                        pickup_target.pickup.name,
+                        players.player_names[source_index],
+                        rl.region_name_from_area(area, True),
+                        area.name,
+                        node.name,
+                    ))
+                    pickup_names.add(pickup_target.pickup.name)
+
+        self.search_pickup_model.setRowCount(len(rows))
+
+        for i, (pickup_name, player_name, region_name, area_name, node_name) in enumerate(rows):
+            player_item = QtGui.QStandardItem(player_name)
+            player_item.setData(pickup_name, QtCore.Qt.ItemDataRole.UserRole)
+            self.search_pickup_model.setItem(i, 0, player_item)
+            self.search_pickup_model.setItem(i, 1, QtGui.QStandardItem(region_name))
+            self.search_pickup_model.setItem(i, 2, QtGui.QStandardItem(area_name))
+            self.search_pickup_model.setItem(i, 3, QtGui.QStandardItem(node_name))
+
+        self.search_pickup_combo.clear()
+        self.search_pickup_combo.addItem("Select pickup", None)
+        for pickup_name in sorted(pickup_names):
+            self.search_pickup_combo.addItem(pickup_name, pickup_name)
+
+    def _show_location_for_pickup(self, target: str | None):
+        if target is None:
+            self.search_pickup_proxy.setFilterFixedString("<@NOT PRESENT@>")
+        else:
+            self.search_pickup_proxy.setFilterFixedString(target)

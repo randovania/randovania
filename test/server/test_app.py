@@ -10,7 +10,7 @@ import randovania.server.client_check
 from randovania.server import app
 
 
-def test_create_app(mocker, tmpdir):
+def test_create_app(mocker, tmp_path):
     mocker.patch("randovania.get_configuration").return_value = {
         "discord_client_id": 1234,
         "server_address": "https://somewhere.nice",
@@ -19,7 +19,7 @@ def test_create_app(mocker, tmpdir):
             "secret_key": "key",
             "discord_client_secret": 5678,
             "fernet_key": 's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=',
-            "database_path": str(tmpdir.join("database.db")),
+            "database_path": str(tmp_path.joinpath("database.db")),
             "client_version_checking": "strict",
         }
     }
@@ -34,7 +34,7 @@ def test_create_app(mocker, tmpdir):
     mock_multiplayer.assert_called_once_with(result.sio)
     mock_user_session.assert_called_once_with(result.sio)
     mock_create_sio.assert_called_once_with(result)
-    assert tmpdir.join("database.db").exists()
+    assert tmp_path.joinpath("database.db").exists()
 
     with result.test_client() as test_client:
         assert test_client.get("/").data.decode("utf-8") == randovania.VERSION

@@ -5,7 +5,7 @@ import peewee
 
 import randovania
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
@@ -94,25 +94,23 @@ def _verify_not_in_generation(session: MultiplayerSession):
         raise error.InvalidActionError("Session game is being generated")
 
 
-def _get_preset(preset_json: dict) -> VersionedPreset:
+def _get_preset(preset_bytes: bytes) -> VersionedPreset:
     try:
-        preset = VersionedPreset(preset_json)
+        preset = VersionedPreset.from_bytes(preset_bytes)
         preset.get_preset()  # test if valid
         return preset
     except Exception as e:
         raise error.InvalidActionError(f"invalid preset: {e}")
 
 
-def _create_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[str, dict], for_user: int | None = None):
-    if len(arg) != 2:
-        raise error.InvalidActionError("Missing arguments.")
+def _create_world(sio: ServerApp, session: MultiplayerSession, name: str, preset_bytes: bytes,
+                  for_user: int | None = None):
     verify_has_admin(sio, session.id, for_user)
 
     _verify_in_setup(session)
     _verify_no_layout_description(session)
     _verify_not_in_generation(session)
-    name, preset_json = arg
-    preset = _get_preset(preset_json)
+    preset = _get_preset(preset_bytes)
 
     if WORLD_NAME_RE.match(name) is None:
         raise error.InvalidActionError("Invalid world name")
@@ -127,17 +125,13 @@ def _create_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[str, d
     return world
 
 
-def _change_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.UUID, dict]):
-    if len(arg) != 2:
-        raise error.InvalidActionError("Missing arguments.")
-
-    world_uid, preset_json = arg
+def _change_world(sio: ServerApp, session: MultiplayerSession, world_uid: uuid.UUID, preset_bytes: bytes):
     world = World.get_by_uuid(world_uid)
 
     _verify_in_setup(session)
     _verify_no_layout_description(session)
     _verify_not_in_generation(session)
-    preset = _get_preset(preset_json)
+    preset = _get_preset(preset_bytes)
 
     _verify_world_has_session(world, session)
     verify_has_admin_or_claimed(sio, world)
@@ -159,11 +153,7 @@ def _change_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.U
         raise error.InvalidActionError(f"invalid world: {world_uid}")
 
 
-def _rename_world(sio: ServerApp, session: MultiplayerSession, arg: tuple[uuid.UUID, str]):
-    if len(arg) != 2:
-        raise error.InvalidActionError("Missing arguments.")
-    world_uid, new_name = arg
-
+def _rename_world(sio: ServerApp, session: MultiplayerSession, world_uid: uuid.UUID, new_name: str):
     world = World.get_by_uuid(world_uid)
     _verify_world_has_session(world, session)
     verify_has_admin_or_claimed(sio, world)
@@ -233,12 +223,12 @@ def _update_layout_generation(sio: ServerApp, session: MultiplayerSession, world
         session.save()
 
 
-def _change_layout_description(sio: ServerApp, session: MultiplayerSession, description_json: dict | None):
+def _change_layout_description(sio: ServerApp, session: MultiplayerSession, description_bytes: bytes | None):
     verify_has_admin(sio, session.id, None)
     _verify_in_setup(session)
     worlds_to_update = []
 
-    if description_json is None:
+    if description_bytes is None:
         if not session.has_layout_description():
             return
 
@@ -255,25 +245,17 @@ def _change_layout_description(sio: ServerApp, session: MultiplayerSession, desc
                 raise error.InvalidActionError(f"Waiting for a layout from {session.generation_in_progress.name}.")
 
         _verify_no_layout_description(session)
-        description = LayoutDescription.from_json_dict(description_json)
         worlds = session.get_ordered_worlds()
-
-        if description.world_count != len(worlds):
-            raise error.InvalidActionError(f"Description is for a {description.world_count} players,"
-                                           f" while the session is for {len(worlds)}.")
-
         if any(world.order is None for world in worlds):
             raise error.InvalidActionError("One of the worlds has undefined order field.")
 
-        for permalink_preset, world in zip(description.all_presets, worlds):
-            if _get_preset(json.loads(world.preset)).get_preset() != permalink_preset:
-                preset = VersionedPreset.with_preset(permalink_preset)
-                if preset.game not in session.allowed_games:
-                    raise error.InvalidActionError(f"{preset.game} preset not allowed.")
-                if not randovania.is_dev_version() and permalink_preset.configuration.unsupported_features():
-                    raise error.InvalidActionError(f"Preset {permalink_preset.name} uses unsupported features.")
-                world.preset = json.dumps(preset.as_json)
-                worlds_to_update.append(world)
+        try:
+            description = LayoutDescription.from_bytes(description_bytes, presets=[
+                VersionedPreset.from_str(world.preset)
+                for world in worlds
+            ])
+        except InvalidLayoutDescription as e:
+            raise error.InvalidActionError(f"Invalid layout: {e}") from e
 
     with database.db.atomic():
         for world in worlds_to_update:
@@ -287,20 +269,18 @@ def _change_layout_description(sio: ServerApp, session: MultiplayerSession, desc
                                        else f"Set game to {description.shareable_word_hash}")
 
 
-def _download_layout_description(sio: ServerApp, session: MultiplayerSession):
+def _download_layout_description(sio: ServerApp, session: MultiplayerSession) -> bytes:
     # You must be a session member to do get the spoiler
     session_common.get_membership_for(sio, session)
 
     if not session.has_layout_description():
         raise error.InvalidActionError("Session does not contain a game")
 
-    description = session.layout_description
-
-    if not description.has_spoiler:
+    if not session.game_details().spoiler:
         raise error.InvalidActionError("Session does not contain a spoiler")
 
     session_common.add_audit_entry(sio, session, "Requested the spoiler log")
-    return json.dumps(description.as_json())
+    return session.get_layout_description_as_binary()
 
 
 def _start_session(sio: ServerApp, session: MultiplayerSession):
@@ -395,27 +375,27 @@ def _get_permalink(sio: ServerApp, session: MultiplayerSession) -> str:
     return session.layout_description.permalink.as_base64_str
 
 
-def admin_session(sio: ServerApp, session_id: int, action: str, arg):
+def admin_session(sio: ServerApp, session_id: int, action: str, *args):
     action: SessionAdminGlobalAction = SessionAdminGlobalAction(action)
     session: database.MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
 
     if action == SessionAdminGlobalAction.CREATE_WORLD:
-        _create_world(sio, session, arg)
+        _create_world(sio, session, *args, for_user=None)
 
     elif action == SessionAdminGlobalAction.CHANGE_WORLD:
-        _change_world(sio, session, arg)
+        _change_world(sio, session, *args)
 
     elif action == SessionAdminGlobalAction.RENAME_WORLD:
-        _rename_world(sio, session, arg)
+        _rename_world(sio, session, *args)
 
     elif action == SessionAdminGlobalAction.DELETE_WORLD:
-        _delete_world(sio, session, arg)
+        _delete_world(sio, session, *args)
 
     elif action == SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION:
-        _update_layout_generation(sio, session, arg)
+        _update_layout_generation(sio, session, *args)
 
     elif action == SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION:
-        _change_layout_description(sio, session, arg)
+        _change_layout_description(sio, session, *args)
 
     elif action == SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION:
         return _download_layout_description(sio, session)
@@ -427,13 +407,13 @@ def admin_session(sio: ServerApp, session_id: int, action: str, arg):
         _finish_session(sio, session)
 
     elif action == SessionAdminGlobalAction.CHANGE_PASSWORD:
-        _change_password(sio, session, arg)
+        _change_password(sio, session, *args)
 
     elif action == SessionAdminGlobalAction.CHANGE_TITLE:
-        _change_title(sio, session, arg)
+        _change_title(sio, session, *args)
 
     elif action == SessionAdminGlobalAction.DUPLICATE_SESSION:
-        return _duplicate_session(sio, session, arg)
+        return _duplicate_session(sio, session, *args)
 
     elif action == SessionAdminGlobalAction.DELETE_SESSION:
         logger().info(f"{session_common.describe_session(session)}: Deleting session.")
@@ -443,8 +423,7 @@ def admin_session(sio: ServerApp, session_id: int, action: str, arg):
         return _get_permalink(sio, session)
 
     elif action == SessionAdminGlobalAction.CREATE_PATCHER_FILE:
-        world_uid, cosmetic_json = arg
-        return _create_patcher_file(sio, session, world_uid, cosmetic_json)
+        return _create_patcher_file(sio, session, *args)
 
     session_common.emit_session_meta_update(session)
 
@@ -470,9 +449,9 @@ def _kick_user(sio: ServerApp, session: MultiplayerSession, membership: Multipla
 
 
 def _create_world_for(sio: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership,
-                      arg: tuple[str, dict]):
+                      name: str, preset_bytes: bytes):
     with database.db.atomic():
-        new_world = _create_world(sio, session, arg, membership.user.id)
+        new_world = _create_world(sio, session, name, preset_bytes, membership.user.id)
         WorldUserAssociation.create(
             world=new_world,
             user=membership.user,
@@ -530,6 +509,13 @@ def _switch_admin(sio: ServerApp, session: MultiplayerSession, membership: Multi
     membership.save()
 
 
+def _switch_ready(sio: ServerApp, session: MultiplayerSession, membership: MultiplayerMembership):
+    with database.db.atomic():
+        membership.ready = not membership.ready
+        membership.save()
+        logger().info(f"{session_common.describe_session(session)}. Switching ready-ness.")
+
+
 def _create_patcher_file(sio: ServerApp, session: MultiplayerSession, world_uid: str, cosmetic_json: dict):
     player_names = {}
     uuids = {}
@@ -567,7 +553,7 @@ def _create_patcher_file(sio: ServerApp, session: MultiplayerSession, world_uid:
         raise error.InvalidActionError(f"Unable to export game: {e}")
 
 
-def admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, arg):
+def admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, *args):
     verify_has_admin(sio, session_id, user_id)
     action: SessionAdminUserAction = SessionAdminUserAction(action)
 
@@ -578,16 +564,19 @@ def admin_player(sio: ServerApp, session_id: int, user_id: int, action: str, arg
         _kick_user(sio, session, membership, user_id)
 
     elif action == SessionAdminUserAction.CREATE_WORLD_FOR:
-        _create_world_for(sio, session, membership, arg)
+        _create_world_for(sio, session, membership, *args)
 
     elif action == SessionAdminUserAction.CLAIM:
-        _claim_world(sio, session, user_id, arg)
+        _claim_world(sio, session, user_id, *args)
 
     elif action == SessionAdminUserAction.UNCLAIM:
-        _unclaim_world(sio, session, user_id, arg)
+        _unclaim_world(sio, session, user_id, *args)
 
     elif action == SessionAdminUserAction.SWITCH_ADMIN:
         _switch_admin(sio, session, membership)
+
+    elif action == SessionAdminUserAction.SWITCH_READY:
+        _switch_ready(sio, session, membership)
 
     elif action == SessionAdminUserAction.ABANDON:
         # FIXME

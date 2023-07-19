@@ -25,7 +25,7 @@ def default_online_interactions(skip_qtbot, preset_manager) -> OnlineInteraction
 async def test_browse_for_game_session(skip_qtbot, default_online_interactions, mocker, refresh_success):
     # Setup
     mock_game_session_browser: MagicMock = mocker.patch(
-        "randovania.gui.main_online_interaction.OnlineGameListDialog", autospec=True)
+        "randovania.gui.main_online_interaction.MultiplayerSessionBrowserDialog", autospec=True)
     mock_ensure_session_window = AsyncMock(return_value=MagicMock())
     default_online_interactions.window_manager.ensure_multiplayer_session_window = mock_ensure_session_window
 

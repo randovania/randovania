@@ -81,10 +81,7 @@ def admin_session(user, session_id):
                 db = default_database.resource_database_for(game)
                 for item_name, item in parsed_inventory.items():
                     if item > 0:
-                        inventory.append("{} x{}".format(
-                            db.get_item(item_name).long_name,
-                            item
-                        ))
+                        inventory.append(f"{db.get_item(item_name).long_name} x{item}")
         else:
             inventory.append("Missing")
 

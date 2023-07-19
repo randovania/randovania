@@ -9,10 +9,12 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
+from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
+from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
-from randovania.gui.lib import async_dialog, common_qt_lib
+from randovania.gui.lib import async_dialog, common_qt_lib, signal_handling
 from randovania.interface_common.options import InfoAlert, Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
@@ -58,7 +60,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         self.headerItem().setText(1, "")
         self.headerItem().setText(2, "")
         self.headerItem().setText(3, "")
+        self.headerItem().setText(4, "")
+        self.headerItem().setText(5, "")
         self.header().setVisible(False)
+        self.header().setSectionsMovable(False)
+        self.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
 
         self._options = options
         self._preset_manager = preset_manager
@@ -109,6 +115,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     @asyncSlot()
     async def _switch_admin(self, new_admin_id: int):
         await self._session_api.switch_admin(new_admin_id)
+
+    @asyncSlot()
+    async def _switch_readiness(self, user_id: int):
+        await self._session_api.switch_readiness(user_id)
 
     @asyncSlot()
     async def _world_rename(self, world_uid: uuid.UUID):
@@ -254,6 +264,14 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 options.set_options_for_game(preset.game, dataclasses.replace(per_game_options,
                                                                               cosmetic_patches=dialog.cosmetic_patches))
 
+    def _register_debug_connector(self, world_details: MultiplayerWorld):
+        common_qt_lib.get_game_connection().add_connection_builder(
+            DebugConnectorBuilder(
+                world_details.preset.game.value,
+                str(world_details.id)
+            )
+        )
+
     #
 
     def _watch_inventory(self, world_uid: uuid.UUID, user_id: int):
@@ -319,6 +337,10 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
                 connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic,
                            world_details.id)
+                if ConnectorBuilderChoice.DEBUG.is_usable():
+                    connect_to(world_menu.addAction("Connect via debug connector"),
+                               self._register_debug_connector,
+                               world_details)
 
             if owner is None:
                 world_menu.addSeparator()
@@ -351,6 +373,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             world_tool.setMenu(world_menu)
 
             self.setItemWidget(world_item, 3, world_tool)
+            return world_item
 
         for player in session.users.values():
             item = QtWidgets.QTreeWidgetItem(self)
@@ -359,9 +382,19 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             if player.admin:
                 item.setText(1, "(Admin)")
 
+            ready_check = QtWidgets.QCheckBox("Ready?")
+            ready_check.setChecked(player.ready)
+            ready_check.setEnabled(player.id == self.your_id or self.is_admin())
+            signal_handling.on_checked(ready_check, functools.partial(self._switch_readiness, player.id))
+            self.setItemWidget(item, 2, ready_check)
+
             for world_uid, state in player.worlds.items():
                 used_worlds.add(world_uid)
-                _add_world(world_by_id[world_uid], item, player.id, state.connection_state.pretty_text)
+                the_item = _add_world(world_by_id[world_uid], item, player.id, state.connection_state.pretty_text)
+                the_item.setText(4, "Last Activity:")
+                the_item.setTextAlignment(4, QtCore.Qt.AlignmentFlag.AlignRight)
+                the_item.setData(5, QtCore.Qt.ItemDataRole.DisplayRole,
+                                 QtCore.QDateTime.fromSecsSinceEpoch(int(state.last_activity.timestamp())))
 
             if player.id != self.your_id and self.is_admin():
                 tool = make_tool("Administrate")
@@ -377,6 +410,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 new_game_item = QtWidgets.QTreeWidgetItem(item)
                 tool = QtWidgets.QPushButton("Add new world")
                 tool.clicked.connect(functools.partial(self._new_world, player.id))
+                tool.setMinimumWidth(100)
                 tool.setEnabled(not in_generation)
                 self.setItemWidget(new_game_item, 0, tool)
 

@@ -8,6 +8,11 @@ from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import enum_lib
 
 
+class DreadShieldType(Enum):
+    """default or alternate"""
+    DEFAULT = "DEFAULT"
+    ALTERNATE = "ALTERNATE"
+
 class DreadRoomGuiType(Enum):
     """Types of Room Name GUI to display. """
     long_name: str
@@ -85,6 +90,12 @@ class DreadCosmeticPatches(BaseCosmeticPatches):
     enable_auto_tracker: bool = True
     show_room_names: DreadRoomGuiType = DreadRoomGuiType.NONE
     missile_cosmetic: DreadMissileCosmeticType = DreadMissileCosmeticType.NONE
+    alt_ice_missile: DreadShieldType = DreadShieldType.DEFAULT
+    alt_storm_missile: DreadShieldType = DreadShieldType.DEFAULT
+    alt_diffusion_beam: DreadShieldType = DreadShieldType.DEFAULT
+    alt_bomb: DreadShieldType = DreadShieldType.DEFAULT
+    alt_cross_bomb: DreadShieldType = DreadShieldType.DEFAULT
+    alt_power_bomb: DreadShieldType = DreadShieldType.ALTERNATE
 
     @classmethod
     def default(cls) -> DreadCosmeticPatches:

@@ -109,7 +109,7 @@ def session_update(clean_database, mocker):
     )
     database.MultiplayerMembership.create(user=user1, session=session, row=0, admin=True,
                                           connection_state="Something")
-    database.MultiplayerMembership.create(user=user2, session=session, row=1, admin=False,
+    database.MultiplayerMembership.create(user=user2, session=session, row=1, admin=False, ready=True,
                                           connection_state="Game")
     w1 = database.World.create(session=session, name="World1",
                                uuid=uuid.UUID('67d75d0e-da8d-4a90-b29e-cae83bcf9519'), preset="{}")

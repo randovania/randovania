@@ -14,9 +14,9 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
+from randovania.network_common.multiplayer_session import GameDetails
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.multiplayer import session_admin
@@ -34,7 +34,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
 
     # Run
     with flask_app.test_request_context():
-        session_admin.admin_player(sio, 1, 1234, SessionAdminUserAction.KICK.value, None)
+        session_admin.admin_player(sio, 1, 1234, SessionAdminUserAction.KICK.value)
 
     # Assert
     for table in [database.MultiplayerSession, database.World,
@@ -45,11 +45,11 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
         {'id': 1, 'name': 'Debug', 'state': 'in-progress', 'users_list': [], 'worlds': [],
-         'game_details': {'seed_hash': 'CXQTEVPI',
+         'game_details': {'seed_hash': 'NMY7DGIN',
                           'spoiler': True,
-                          'word_hash': 'Aether Honor Spreader'},
+                          'word_hash': 'Spreader Liftvine Great'},
          'generation_in_progress': None,
-         'allowed_games': ANY },
+         'allowed_games': ANY},
         room='multiplayer-session-1',
         namespace='/',
     )
@@ -79,7 +79,7 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
         "multiplayer_session_meta_update",
         {'id': 1, 'name': 'Debug', 'state': 'in-progress',
          'users_list': [
-             {'admin': True, 'id': 1234, 'name': 'The Name',
+             {'admin': True, 'id': 1234, 'name': 'The Name', 'ready': False,
               'worlds': {'1179c986-758a-4170-9b07-fe4541d78db0': {
                   'connection_state': 'disconnected',
                   'last_activity': '2021-09-01 10:20:00+00:00'}}}
@@ -93,7 +93,7 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
               'preset_raw': '{}'}
          ],
          'game_details': None, 'generation_in_progress': None,
-         'allowed_games': ANY },
+         'allowed_games': ANY},
         room='multiplayer-session-1',
         namespace='/',
     )
@@ -111,7 +111,7 @@ def test_admin_player_create_world_for(mock_emit_session_update: MagicMock, mock
     # Run
     with flask_app.test_request_context():
         session_admin.admin_player(sio, 1, 1234, SessionAdminUserAction.CREATE_WORLD_FOR.value,
-                                   ("New World", preset_manager.default_preset.as_json))
+                                   "New World", preset_manager.default_preset.as_bytes())
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -168,7 +168,7 @@ def test_admin_player_switch_admin(flask_app, two_player_session, mock_audit,
 
     # Run
     with flask_app.test_request_context():
-        session_admin.admin_player(sio, 1, 1235, SessionAdminUserAction.SWITCH_ADMIN.value, None)
+        session_admin.admin_player(sio, 1, 1235, SessionAdminUserAction.SWITCH_ADMIN.value)
 
     assert database.MultiplayerMembership.get_by_ids(user_id=1235, session_id=1).admin
     mock_audit.assert_called_once_with(sio, two_player_session,
@@ -192,7 +192,7 @@ def test_admin_session_patcher_file(flask_app, mock_audit, mocker,
     # Run
     with flask_app.test_request_context():
         result = session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value,
-                                             (str(w2.uuid), cosmetic.as_json))
+                                             str(w2.uuid), cosmetic.as_json)
 
     # Assert
     mock_layout_description.return_value.get_preset.assert_called_once_with(1)
@@ -222,7 +222,7 @@ def test_admin_session_patcher_file_not_associated(flask_app, two_player_session
     # Run
     with flask_app.test_request_context(), pytest.raises(error.NotAuthorizedForActionError):
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value,
-                                    (str(w2.uuid), {}))
+                                    str(w2.uuid), {})
 
 
 def test_admin_session_delete_session(mock_emit_session_update: MagicMock, flask_app, clean_database):
@@ -234,7 +234,7 @@ def test_admin_session_delete_session(mock_emit_session_update: MagicMock, flask
 
     # Run
     with flask_app.test_request_context():
-        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.DELETE_SESSION.value, None)
+        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.DELETE_SESSION.value)
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -252,7 +252,7 @@ def test_admin_session_create_world(mock_emit_session_update: MagicMock, mock_au
     # Run
     with flask_app.test_request_context():
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CREATE_WORLD.value,
-                                    ("New World", preset_manager.default_preset.as_json))
+                                    "New World", preset_manager.default_preset.as_bytes())
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -283,7 +283,7 @@ def test_admin_session_create_world_bad(mock_emit_session_update: MagicMock, moc
     # Run
     with flask_app.test_request_context(), pytest.raises(error.InvalidActionError, match=match):
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CREATE_WORLD.value,
-                                    (new_name, preset_manager.default_preset.as_json))
+                                    new_name, preset_manager.default_preset.as_bytes())
 
     # Assert
     mock_emit_session_update.assert_not_called()
@@ -316,7 +316,7 @@ def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_au
     # Run
     with flask_app.test_request_context(), context:
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_WORLD.value,
-                                    (str(w1.uuid), preset_manager.default_preset.as_json))
+                                    str(w1.uuid), preset_manager.default_preset.as_bytes())
 
     new_preset_row = database.World.get_by_id(w1.id)
     # Assert
@@ -356,7 +356,7 @@ def test_admin_session_rename_world(mock_emit_session_update: MagicMock, mock_au
     # Run
     with flask_app.test_request_context(), context:
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.RENAME_WORLD.value,
-                                    (str(w1.uuid), new_name))
+                                    str(w1.uuid), new_name)
 
     world_after = database.World.get_by_id(w1.id)
     # Assert
@@ -484,7 +484,7 @@ def test_admin_session_change_layout_description(clean_database, preset_manager,
     mock_verify_no_layout_description = mocker.patch(
         "randovania.server.multiplayer.session_admin._verify_no_layout_description", autospec=True)
     mock_from_json_dict: MagicMock = mocker.patch(
-        "randovania.layout.layout_description.LayoutDescription.from_json_dict")
+        "randovania.layout.layout_description.LayoutDescription.from_bytes")
 
     preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
     user1 = database.User.create(id=1234, name="The Name")
@@ -513,7 +513,7 @@ def test_admin_session_change_layout_description(clean_database, preset_manager,
     # Run
     with flask_app.test_request_context():
         session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
-                                    "layout_description_json")
+                                    b"layout_description_json")
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -524,10 +524,6 @@ def test_admin_session_change_layout_description(clean_database, preset_manager,
     assert session_mod.layout_description_json == b'x\x9c\xabV\xca\xccK\xcbW\xb2\xaa\xae\xad\x05\x00\x17\xa7\x04\x1b'
     assert session_mod.generation_in_progress is None
     assert session_mod.game_details_json == '{"seed_hash": "ASDF", "word_hash": "Hash Words", "spoiler": true}'
-
-    new_session = database.MultiplayerSession.get_by_id(1)
-    new_json = json.dumps(VersionedPreset.with_preset(new_preset).as_json)
-    assert [preset.preset for preset in new_session.worlds] == [new_json] * 2
 
 
 def test_admin_session_remove_layout_description(mock_emit_session_update: MagicMock, clean_database,
@@ -544,8 +540,7 @@ def test_admin_session_remove_layout_description(mock_emit_session_update: Magic
 
     # Run
     with flask_app.test_request_context():
-        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value,
-                                    None)
+        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value, None)
 
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
@@ -590,13 +585,12 @@ def test_admin_session_download_layout_description(flask_app, solo_two_world_ses
     # Run
     with flask_app.test_request_context():
         result = session_admin.admin_session(sio, 1,
-                                             SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value,
-                                             None)
+                                             SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value)
 
     # Assert
     mock_emit_session_update.assert_not_called()
     mock_audit.assert_called_once_with(sio, session, "Requested the spoiler log")
-    assert result == json.dumps(session.layout_description.as_json())
+    assert result == session.get_layout_description_as_binary()
 
 
 def test_admin_session_download_layout_description_no_spoiler(clean_database, mock_emit_session_update,
@@ -604,21 +598,22 @@ def test_admin_session_download_layout_description_no_spoiler(clean_database, mo
     mock_layout_description: PropertyMock = mocker.patch(
         "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock)
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
-                                                 layout_description_json="layout_description_json")
+    session = database.MultiplayerSession.create(
+        id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
+        layout_description_json="layout_description_json",
+        game_details_json=json.dumps(GameDetails(spoiler=False, word_hash="fun", seed_hash="fun").as_json)
+    )
     database.MultiplayerMembership.create(user=user1, session=session, admin=False)
     sio = MagicMock(spec=ServerApp)
     sio.get_current_user.return_value = user1
-    mock_layout_description.return_value.has_spoiler = False
 
     # Run
     with pytest.raises(error.InvalidActionError), flask_app.test_request_context():
-        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value,
-                                    None)
+        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION.value)
 
     # Assert
     mock_emit_session_update.assert_not_called()
-    mock_layout_description.assert_called_once()
+    mock_layout_description.assert_not_called()
 
 
 @pytest.mark.parametrize("has_layout", [False, True])
@@ -670,7 +665,7 @@ def test_admin_session_finish_session(clean_database, mock_emit_session_update, 
 
     # Run
     with expectation, flask_app.test_request_context():
-        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.FINISH_SESSION.value, None)
+        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.FINISH_SESSION.value)
 
     # Assert
     if starting_state != MultiplayerSessionState.IN_PROGRESS:
@@ -772,7 +767,7 @@ def test_admin_session_download_permalink(solo_two_world_session, mock_emit_sess
 
     # Run
     with flask_app.test_request_context():
-        result = session_admin.admin_session(sio, 1, SessionAdminGlobalAction.REQUEST_PERMALINK.value, None)
+        result = session_admin.admin_session(sio, 1, SessionAdminGlobalAction.REQUEST_PERMALINK.value)
 
     # Assert
     mock_emit_session_update.assert_not_called()
@@ -789,16 +784,11 @@ def test_admin_session_download_permalink_no_layout(clean_database, mock_emit_se
 
     # Run
     with flask_app.test_request_context(), pytest.raises(error.InvalidActionError):
-        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.REQUEST_PERMALINK.value, None)
+        session_admin.admin_session(sio, 1, SessionAdminGlobalAction.REQUEST_PERMALINK.value)
 
     # Assert
     mock_emit_session_update.assert_not_called()
     mock_audit.assert_not_called()
-
-
-def test_change_row_missing_arguments(flask_app):
-    with pytest.raises(error.InvalidActionError), flask_app.test_request_context():
-        session_admin._change_world(MagicMock(), MagicMock(), (5,))
 
 
 def test_verify_in_setup(clean_database, flask_app):

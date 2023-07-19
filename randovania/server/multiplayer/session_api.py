@@ -1,10 +1,15 @@
 
-from peewee import fn
+import datetime
+
+from peewee import Case, fn
 
 from randovania.network_common import error
-from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH
+from randovania.network_common.multiplayer_session import (
+    MAX_SESSION_NAME_LENGTH,
+    MultiplayerSessionListEntry,
+)
 from randovania.server import database
-from randovania.server.database import MultiplayerMembership, MultiplayerSession, User
+from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
 
@@ -12,11 +17,26 @@ from randovania.server.server_app import ServerApp
 def list_sessions(sio: ServerApp, limit: int | None):
     # Note: this query fails to list any session that has no memberships
     # But that's fine, because these sessions should've been deleted!
-    sessions: list[MultiplayerSession] = list(
-        MultiplayerSession.select(
-            MultiplayerSession,
-            User.name,
-            fn.COUNT(MultiplayerMembership.user_id).alias('num_users')
+    def construct_helper(**args):
+        args["creation_date"] = datetime.datetime.fromisoformat(args["creation_date"])
+        args["join_date"] = datetime.datetime.fromisoformat(args["join_date"])
+        args["has_password"] = bool(args["has_password"])
+        args["is_user_in_session"] = bool(args["is_user_in_session"])
+        return MultiplayerSessionListEntry(**args)
+
+    user = sio.get_current_user()
+    world_count_subquery = World.select(fn.COUNT(World.id)).where(World.session_id == MultiplayerSession.id)
+    sessions: list[MultiplayerSessionListEntry] = MultiplayerSession.select(
+            MultiplayerSession.id,
+            MultiplayerSession.name,
+            Case(None, ((MultiplayerSession.password.is_null(), False),), True).alias('has_password'),
+            MultiplayerSession.state,
+            fn.COUNT(MultiplayerMembership.user_id).alias('num_users'),
+            world_count_subquery.alias("num_worlds"),
+            User.name.alias('creator'),
+            MultiplayerSession.creation_date.alias("creation_date"),
+            fn.MAX(Case(MultiplayerMembership.user_id, ((user.id, True),), False)).alias('is_user_in_session'),
+            MultiplayerMembership.join_date.alias('join_date'),
         ).join(
             User, on=MultiplayerSession.creator
         ).join(
@@ -25,12 +45,10 @@ def list_sessions(sio: ServerApp, limit: int | None):
             MultiplayerSession.id
         ).order_by(
             MultiplayerSession.id.desc()
-        ).limit(limit)
-    )
-    user = sio.get_current_user()
+        ).limit(limit).objects(construct_helper)
+
     return [
-        # FIXME: is_user_in_session still causes one extra query
-        session.create_list_entry(user).as_json
+        session.as_json
         for session in sessions
     ]
 
@@ -39,7 +57,7 @@ def create_session(sio: ServerApp, session_name: str):
     current_user = sio.get_current_user()
 
     if not (0 < len(session_name) <= MAX_SESSION_NAME_LENGTH):
-        raise error.InvalidAction("Invalid session name length")
+        raise error.InvalidActionError("Invalid session name length")
 
     with database.db.atomic():
         new_session: MultiplayerSession = MultiplayerSession.create(

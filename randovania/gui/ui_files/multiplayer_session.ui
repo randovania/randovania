@@ -31,7 +31,7 @@
       </property>
       <widget class="QWidget" name="tab_players">
        <attribute name="title">
-        <string>Players</string>
+        <string>Users and Worlds</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="tab_session">
@@ -179,16 +179,66 @@
         </item>
        </layout>
       </widget>
-      <widget class="QTableView" name="tab_history">
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="sortingEnabled">
-        <bool>true</bool>
-       </property>
+      <widget class="QWidget" name="tab_history">
        <attribute name="title">
         <string>History</string>
        </attribute>
+       <layout class="QVBoxLayout" name="history_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="history_filter_layout">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <item>
+           <widget class="QComboBox" name="history_filter_provider_combo">
+            <item>
+             <property name="text">
+              <string>All Worlds</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="history_filter_receiver_combo">
+            <item>
+             <property name="text">
+              <string>All Worlds</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="history_filter_edit">
+            <property name="placeholderText">
+             <string>Filter by pickup or location</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableView" name="history_view">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QTableView" name="tab_audit">
        <property name="editTriggers">

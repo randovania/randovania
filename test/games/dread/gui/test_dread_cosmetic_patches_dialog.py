@@ -8,6 +8,7 @@ from randovania.games.dread.layout.dread_cosmetic_patches import (
     DreadCosmeticPatches,
     DreadMissileCosmeticType,
     DreadRoomGuiType,
+    DreadShieldType,
 )
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
@@ -50,3 +51,25 @@ def test_missile_cosmetic_dropdown(skip_qtbot):
     set_combo_with_value(dialog.missile_cosmetic_dropdown, DreadMissileCosmeticType.TRANS)
 
     assert dialog.cosmetic_patches == DreadCosmeticPatches(missile_cosmetic=DreadMissileCosmeticType.TRANS)
+
+@pytest.mark.parametrize(("widget_field", "field_name"), [
+    ("alt_ice_missile", "alt_ice_missile"),
+    ("alt_storm_missile", "alt_storm_missile"),
+    ("alt_diffusion_beam", "alt_diffusion_beam"),
+    ("alt_bomb", "alt_bomb"),
+    ("alt_cross_bomb", "alt_cross_bomb"),
+    ("alt_power_bomb", "alt_power_bomb"),
+])
+def test_shield_type_field(skip_qtbot, widget_field, field_name):
+    cosmetic_patches = DreadCosmeticPatches(**{field_name: DreadShieldType.DEFAULT})
+
+    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
+    skip_qtbot.addWidget(dialog)
+
+    # test checking box
+    skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
+    assert dialog.cosmetic_patches == DreadCosmeticPatches(**{field_name: DreadShieldType.ALTERNATE})
+
+    # test unchecking box
+    skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
+    assert dialog.cosmetic_patches == DreadCosmeticPatches(**{field_name: DreadShieldType.DEFAULT})

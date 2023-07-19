@@ -6,16 +6,27 @@ from typing import TYPE_CHECKING
 from uuid import UUID
 
 import aiofiles
+import construct
 import slugify
 
 from randovania.games.game import RandovaniaGame
 from randovania.layout import preset_migration
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib
+from randovania.lib.construct_lib import JsonEncodedValue
 
 if TYPE_CHECKING:
     import io
     from pathlib import Path
+
+BinaryVersionedPreset = construct.Struct(
+    magic=construct.Const(b"RDVP"),
+    version=construct.Const(1, construct.VarInt),
+    data=construct.Prefixed(
+        construct.VarInt,
+        construct.Compressed(JsonEncodedValue, "zlib")
+    ),
+)
 
 
 class InvalidPreset(Exception):
@@ -108,6 +119,11 @@ class VersionedPreset:
         return cls(json.loads(contents))
 
     @classmethod
+    def from_bytes(cls, contents: bytes) -> VersionedPreset:
+        decoded = BinaryVersionedPreset.parse(contents)
+        return cls(decoded["data"])
+
+    @classmethod
     async def from_file(cls, path: Path) -> VersionedPreset:
         async with aiofiles.open(path) as f:
             return cls.from_str(await f.read())
@@ -145,9 +161,10 @@ class VersionedPreset:
             assert self.data is not None
             return self.data
 
-    @property
-    def as_str(self) -> str:
-        return json.dumps(self.as_json)
+    def as_bytes(self) -> bytes:
+        return BinaryVersionedPreset.build({
+            "data": self.as_json,
+        })
 
     def recover_old_base_uuid(self) -> UUID | None:
         """Returns the base preset uuid that existed in old versions.

@@ -175,9 +175,7 @@ class HintDistributor(ABC):
                               ) -> GamePatches:
         new_hints = copy.copy(patches.hints)
 
-        debug.debug_print("fill_unassigned_hints: hint_initial_pickups has {} elements".format(
-            len(hint_initial_pickups)
-        ))
+        debug.debug_print(f"fill_unassigned_hints: hint_initial_pickups has {len(hint_initial_pickups)} elements")
 
         # Get all LogbookAssets from the RegionList
         potential_hint_locations: set[NodeIdentifier] = {

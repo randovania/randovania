@@ -8,8 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.X.X] - 2023-08-??
 
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
+- Added: The Generation Order spoiler now has a field to filter it.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
+- Added: It's now possible to filter the history tab in a Multiworld session.
+- Added: Add Ready checkbox for Multiworld sessions.
+- Added: A new tool was added to the Pickup tab of Game Details that lets you quickly find in which worlds your pickups are.
+- Added: The time a world last had any activity is now displayed in the Multiworld session.
 - Changed: Text prompts now default to accepting when pressing enter.
+- Changed: Reorganized the top menu bar. The Advanced menu is now called Preferences, with an Advanced sub-menu. Opening the Login window is now in the Open menu.
+- Fixed: Multiworld now properly respects major/minor configuration of each world.
 - Fixed: The generation order for multiworld session now correctly handles any kind of names.
 - Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
 - Fixed: Import rdvgames for games that uses certain features, like Sky Temple Keys on Bosses or Metroid DNA in Dread, now works properly.
@@ -23,16 +30,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Ryujinx (Legacy) is disabled when auto-tracker support is on, or in a multiworld.
 - Fixed: Dairon - Navigation Station North can no longer be assigned a hint, which would then be replaced with DNA Hints.
 - Added: A new auto-tracker layout featuring progressive items.
+- Added: Custom shields now have alternate and more accessible models, which can be toggled per-shield in Cosmetic Options.
 
 #### Logic Database
 
 - Added: Slide from right to left in Cataris - Total Recharge Station South.
 - Added: Grapple Movement to get from Lower Door to Wide Beam Block Room to Upper Door in Artaria - EMMI Zone Hub.
+- Added: Crossing the water gap in Ferenia EMMI Zone Exit East with just Bombs (Hypermode IBJ and DBJ) or Cross Bombs and a Slide Bomb Boost (currently Movement Advanced).
 - Added: Use Speed Booster and Gravity Suit to escape Cataris - Kraid Arena after fighting Kraid.
 - Changed: Make it possible to get to the Diffusion Beam location without Morph Ball.
 - Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 - Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
 - Removed: In Cataris - Green EMMI Introduction, the advanced Pseudo Wave Beam to break the blob from below is removed.
+
+### Metroid Prime
+
+- Added: Experimental Option - `Skippable` Cutscene Mode. Keeps all cutscenes in the game but makes it so they can be skipped with the START button
+- Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
 
 ### Metroid Prime 2: Echoes
 

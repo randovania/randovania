@@ -68,9 +68,7 @@ class AM2RHintNamer(HintNamer):
         if resource.short_name.startswith("Metroid DNA "):
             return f'The Hunter already started with {resource.long_name}'
 
-        return "{} has no need to be located.".format(
-            colorize_text(self.color_item, resource.long_name, with_color)
-        )
+        return f"{colorize_text(self.color_item, resource.long_name, with_color)} has no need to be located."
 
     def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
                                    location: PickupLocation, hide_area: bool, with_color: bool) -> str:

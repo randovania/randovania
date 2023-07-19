@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import collections
 import itertools
 import logging
 import random
@@ -28,7 +29,9 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
+from randovania.lib.container_lib import zip2
 from randovania.network_client.network_client import ConnectionState
+from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
     MultiplayerSessionAction,
@@ -52,6 +55,45 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+class HistoryFilterModel(QtCore.QSortFilterProxyModel):
+    def __init__(self, parent: MultiplayerSessionWindow):
+        super().__init__(parent)
+        self.provider_filter = None
+        self.receiver_filter = None
+        self.generic_filter = ""
+
+    def filterAcceptsRow(self, source_row: int, source_parent: QtCore.QModelIndex) -> bool:
+        model = self.sourceModel()
+
+        def get_column(i):
+            return model.itemData(model.index(source_row, i)).get(0, "")
+
+        if self.provider_filter is not None:
+            if self.provider_filter != get_column(0):
+                return False
+
+        if self.receiver_filter is not None:
+            if self.receiver_filter != get_column(1):
+                return False
+
+        return any(
+            self.generic_filter.lower() in col.lower()
+            for col in (get_column(2), get_column(3))
+        )
+
+    def set_provider_filter(self, name: str | None):
+        self.provider_filter = name
+        self.invalidateRowsFilter()
+
+    def set_receiver_filter(self, name: str | None):
+        self.receiver_filter = name
+        self.invalidateRowsFilter()
+
+    def set_generic_filter(self, text: str):
+        self.generic_filter = text
+        self.invalidateRowsFilter()
+
+
 class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindow, BackgroundTaskMixin):
     tracker_windows: dict[tuple[uuid.UUID, int], ItemTrackerPopupWindow]
     _session: MultiplayerSessionEntry
@@ -61,6 +103,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     _already_kicked = False
     _can_stop_background_process = True
     _window_manager: WindowManager | None
+    _all_locations: set[str]
+    _all_pickups: set[str]
 
     def __init__(self, game_session_api: MultiplayerSessionApi, window_manager: WindowManager,
                  options: Options):
@@ -86,6 +130,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.tabWidget.removeTab(0)
         self.tabWidget.insertTab(0, self.users_widget, "Players")
         self.tabWidget.setCurrentIndex(0)
+        self._all_locations = set()
+        self._all_pickups = set()
 
         self.audit_item_model = QtGui.QStandardItemModel(0, 3, self)
         self.audit_item_model.setHorizontalHeaderLabels(["User", "Message", "Time"])
@@ -94,8 +140,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         self.history_item_model = QtGui.QStandardItemModel(0, 5, self)
         self.history_item_model.setHorizontalHeaderLabels(["Provider", "Receiver", "Pickup", "Location", "Time"])
-        self.tab_history.setModel(self.history_item_model)
-        self.tab_history.sortByColumn(4, QtCore.Qt.SortOrder.AscendingOrder)
+        self.history_item_proxy = HistoryFilterModel(self)
+        self.history_item_proxy.setSourceModel(self.history_item_model)
+        self.history_view.setModel(self.history_item_proxy)
+        self.history_view.sortByColumn(4, QtCore.Qt.SortOrder.AscendingOrder)
 
         # Advanced Options
         self.advanced_options_menu = QtWidgets.QMenu(self.advanced_options_tool)
@@ -140,6 +188,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.session_status_button.clicked.connect(self._session_status_button_clicked)
         self.export_game_button.clicked.connect(self.export_game_button_clicked)
 
+        # History
+        self.history_filter_provider_combo.currentIndexChanged.connect(self.on_history_filter_provider_combo)
+        self.history_filter_receiver_combo.currentIndexChanged.connect(self.on_history_filter_receiver_combo)
+        self.history_filter_edit.textChanged.connect(self.on_history_filter_edit)
+
         # Session Admin
         self.rename_session_action.triggered.connect(self.rename_session)
         self.change_password_action.triggered.connect(self.change_password)
@@ -165,6 +218,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.network_client.WorldUserInventoryUpdated.connect(self.on_user_inventory_update)
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
         self._multiworld_client.SyncFailure.connect(self.update_multiworld_client_status)
+        self._multiworld_client.database.WorldDataUpdate.connect(self.update_multiworld_client_status)
+        self._multiworld_client.game_connection.GameStateUpdated.connect(self.update_multiworld_client_status)
 
     def _get_world_order(self) -> list[uuid.UUID]:
         return [world.id for world in self._session.worlds]
@@ -234,6 +289,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.setWindowTitle(f"Multiworld Session: {self._session.name}")
         self.users_widget.update_state(self._session)
         self.sync_background_process_to_session()
+        self.update_history_filter_world_combo()
         self.update_game_tab()
         await self.update_logic_settings_window()
         self.update_multiworld_client_status()
@@ -348,7 +404,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             return "Unknown", "Unknown", f"Invalid location: {e}"
 
     def update_session_actions(self, actions: MultiplayerSessionActions):
-        scrollbar = self.tab_history.verticalScrollBar()
+        scrollbar = self.history_view.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
         self.history_item_model.setRowCount(len(actions.actions))
 
@@ -361,7 +417,29 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             self.history_item_model.setItem(i, 4, model_lib.create_date_item(action.time))
 
         if autoscroll:
-            self.tab_history.scrollToBottom()
+            self.history_view.scrollToBottom()
+
+    def update_history_filter_world_combo(self):
+        for prefix, combo in [("Provider: ", self.history_filter_provider_combo),
+                              ("Receiver: ", self.history_filter_receiver_combo)]:
+            combo.addItems(
+                [""] * (len(self._session.worlds) + 1 - combo.count())
+            )
+            for i, world in enumerate(self._session.worlds):
+                combo.setItemText(i + 1, prefix + world.name)
+                combo.setItemData(i + 1, world.name)
+
+        self.on_history_filter_provider_combo()
+        self.on_history_filter_receiver_combo()
+
+    def on_history_filter_provider_combo(self):
+        self.history_item_proxy.set_provider_filter(self.history_filter_provider_combo.currentData())
+
+    def on_history_filter_receiver_combo(self):
+        self.history_item_proxy.set_receiver_filter(self.history_filter_receiver_combo.currentData())
+
+    def on_history_filter_edit(self):
+        self.history_item_proxy.set_generic_filter(self.history_filter_edit.text())
 
     def update_session_audit_log(self, audit_log: MultiplayerSessionAuditLog):
         scrollbar = self.tab_audit.verticalScrollBar()
@@ -445,7 +523,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         def _combine(arr: list[list[str]]):
             return "\n".join(
                 f"{world.name}: {', '.join(dangerous)}"
-                for world, dangerous in zip(self._session.worlds, arr, strict=True)
+                for world, dangerous in zip2(self._session.worlds, arr)
                 if dangerous
             )
 
@@ -491,6 +569,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         await self.generate_game(False, retries=None)
 
     async def generate_game(self, spoiler: bool, retries: int | None):
+        not_ready_users = [user for user in self._session.users.values() if not user.ready]
+        if not_ready_users:
+            if not await async_dialog.yes_no_prompt(
+                self, "User not Ready",
+                "The following users are not ready. Do you want to continue generating a game?\n\n" +
+                ", ".join(user.name for user in not_ready_users),
+            ):
+                return
+
         await async_dialog.warning(
             self, "Multiworld Limitation",
             "Warning: Multiworld games doesn't have proper energy damage logic. "
@@ -563,8 +650,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 f"this session has {len(self._session.worlds)} worlds.")
             return False
 
-        if any(not preset_p.is_same_configuration(preset_s.preset)
-               for preset_p, preset_s in zip(parameters.presets, self._session.worlds)):
+        if any(not preset_p.is_same_configuration(world.preset.get_preset())
+               for preset_p, world in zip2(parameters.presets, self._session.worlds, strict=False)):
             response = await async_dialog.warning(
                 self, "Different presets",
                 f"Given {source_name} has different presets compared to the session.\n"
@@ -594,6 +681,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 f"New worlds created to fit the imported {source_name}. Please import it again."
             )
             return False
+        else:
+            for preset, world in zip2(parameters.presets, self._session.worlds):
+                if preset != world.preset.get_preset():
+                    await self.game_session_api.replace_preset_for(world.id, VersionedPreset.with_preset(preset))
 
         return True
 
@@ -690,7 +781,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             return await async_dialog.warning(self, "No Spoiler Available",
                                               "Unable to view game spoilers, game was generated without spoiler.")
 
-        description = await self.game_session_api.request_layout_description()
+        description = await self.game_session_api.request_layout_description(self._session.worlds)
         if description is not None:
             self._window_manager.open_game_details(description, self._get_world_names())
 
@@ -756,7 +847,39 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         else:
             self.progress_bar.setRange(0, 0)
 
+    @asyncSlot()
+    async def _display_disconnected_warning(self):
+        self.activateWindow()
+        error_msg = self.network_client.last_connection_error or "Unknown Error"
+        error_msg = error_msg.replace('\n', '<br />')
+        await async_dialog.warning(
+            self, "Disconnected from Server",
+            "You have been disconnected from the server and attempts to reconnect have failed with:<br /><br />"
+            f"{error_msg}"
+        )
+
+    _disconnected_warning_timer: QtCore.QTimer | None = None
+
+    def _ensure_disconnected_warning_timer(self):
+        if self._disconnected_warning_timer is None:
+            logger.debug("Starting timer to display a warning about being disconnected.")
+            self._disconnected_warning_timer = QtCore.QTimer(self)
+            self._disconnected_warning_timer.setSingleShot(True)
+            self._disconnected_warning_timer.timeout.connect(self._display_disconnected_warning)
+            self._disconnected_warning_timer.start(60_000)  # 60s
+
+    def _cancel_disconnected_warning_timer(self):
+        if self._disconnected_warning_timer is not None:
+            logger.debug("Cancelling timer for disconnection warning.")
+            self._disconnected_warning_timer.stop()
+            self._disconnected_warning_timer = None
+
     def on_server_connection_state_updated(self, state: ConnectionState):
+        if state != ConnectionState.Connected:
+            self._ensure_disconnected_warning_timer()
+        else:
+            self._cancel_disconnected_warning_timer()
+
         self.server_connection_button.setEnabled(state in {ConnectionState.Disconnected,
                                                            ConnectionState.ConnectedNotLogged})
         self.server_connection_button.setText("Login" if state == ConnectionState.ConnectedNotLogged else "Connect")
@@ -773,9 +896,23 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if err is not None:
             lines.append(f"Error when syncing worlds: {err}")
 
-        multi_user = self._session.users[self.network_client.current_user.id]
+        try:
+            user_worlds = self._session.users[self.network_client.current_user.id].worlds
+        except AttributeError:
+            # _session hasn't been set yet
+            user_worlds = {}
+
+        game_connection = self._multiworld_client.game_connection
+        connected_worlds: dict[uuid.UUID, list[str]] = collections.defaultdict(list)
+        for connector, connected_state in game_connection.connected_states.items():
+            if connected_state.status != GameConnectionStatus.Disconnected:
+                connected_worlds[connected_state.id].append("{} via {}".format(
+                    connected_state.status.pretty_text,
+                    game_connection.get_builder_for_connector(connector).pretty_text,
+                ))
+
         world_status = []
-        for uid in multi_user.worlds.keys():
+        for uid in user_worlds.keys():
             data = self._multiworld_client.database.get_data_for(uid)
 
             msg = "- {}: {} collected locations, {} pending uploads.".format(
@@ -783,6 +920,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 len(data.collected_locations),
                 len(set(data.collected_locations) - set(data.uploaded_locations)),
             )
+
+            if connected_worlds[uid]:
+                msg += f" {', '.join(connected_worlds[uid])}."
 
             err = self._multiworld_client.get_world_sync_error(uid)
             if err is not None:

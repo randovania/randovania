@@ -162,8 +162,7 @@ async def create_split_regions(db: GameDescription) -> list[SplitRegion]:
                     del areas[:per_part]
 
                     region_options.append(SplitRegion(
-                        region, "{} ({}-{})".format(name, areas_part[0].name[:2],
-                                                    areas_part[-1].name[:2]),
+                        region, f"{name} ({areas_part[0].name[:2]}-{areas_part[-1].name[:2]})",
                         create_areas(areas_part),
                         create_id(),
                     ))

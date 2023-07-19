@@ -5,11 +5,12 @@ import pytest
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.games.game import RandovaniaGame
 from randovania.gui.debug_backend_window import DebugConnectorWindow
+from randovania.interface_common.players_configuration import INVALID_UUID
 
 
 @pytest.fixture(name="window")
 def debug_connector_window(skip_qtbot) -> DebugConnectorWindow:
-    window = DebugConnectorWindow(DebugRemoteConnector(RandovaniaGame.METROID_PRIME_ECHOES))
+    window = DebugConnectorWindow(DebugRemoteConnector(RandovaniaGame.METROID_PRIME_ECHOES, INVALID_UUID))
     skip_qtbot.addWidget(window.window)
     return window
 

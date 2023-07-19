@@ -17,3 +17,17 @@ jobs:
           ./tools/bulk_generate_for_discord.sh
         env:
           WEBHOOK_URL: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}
+
+  notify_failure:
+    runs-on: ubuntu-latest
+    needs: report
+    if: ${{ failure() }}
+    steps:
+      - name: Alert Failure
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}
+          nodetail: true
+          title: Bulk Generation failed!
+          description: |
+            [Daily Bulk Generation failed for `${{ github.ref_name }}`](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})

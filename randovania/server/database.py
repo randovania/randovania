@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import collections
 import datetime
+import enum
 import json
 import uuid
 import zlib
@@ -24,7 +25,6 @@ from randovania.network_common.multiplayer_session import (
     GameDetails,
     MultiplayerSessionAuditEntry,
     MultiplayerSessionAuditLog,
-    MultiplayerSessionListEntry,
     MultiplayerUser,
     MultiplayerWorld,
     UserWorldDetail,
@@ -32,7 +32,6 @@ from randovania.network_common.multiplayer_session import (
 from randovania.network_common.session_state import MultiplayerSessionState
 
 if TYPE_CHECKING:
-    import enum
     from collections.abc import Iterable
 
 
@@ -168,6 +167,8 @@ class MultiplayerSession(BaseModel):
     @layout_description.setter
     def layout_description(self, description: LayoutDescription | None):
         if description is not None:
+            # TODO: use description.as_binary
+            # This will need a data migration for the server, just to introduce our little header.
             encoded = description.as_json(force_spoiler=True)
             encoded["info"].pop("presets")
             self.layout_description_json = zlib.compress(
@@ -182,6 +183,18 @@ class MultiplayerSession(BaseModel):
             self.layout_description_json = None
             self.game_details_json = None
 
+    def get_layout_description_as_binary(self) -> bytes | None:
+        if self.layout_description_json is not None:
+            # TODO: just return layout_description_json directly!
+            return self.layout_description.as_binary(include_presets=False, force_spoiler=True)
+        else:
+            return None
+
+    def game_details(self) -> GameDetails | None:
+        if self.game_details_json is not None:
+            return GameDetails.from_json(json.loads(self.game_details_json))
+        return None
+
     @property
     def creation_datetime(self) -> datetime.datetime:
         return datetime.datetime.fromisoformat(self.creation_date)
@@ -192,23 +205,6 @@ class MultiplayerSession(BaseModel):
         except peewee.DoesNotExist:
             return False
         return True
-
-    def create_list_entry(self, user: User):
-        num_users = getattr(self, "num_users", None)
-        if num_users is None:
-            num_users = len(self.members)
-
-        return MultiplayerSessionListEntry(
-            id=self.id,
-            name=self.name,
-            has_password=self.password is not None,
-            state=self.state,
-            num_users=num_users,
-            num_worlds=0,
-            creator=self.creator.name,
-            creation_date=self.creation_datetime,
-            is_user_in_session=self.is_user_in_session(user),
-        )
 
     @property
     def allowed_games(self) -> list[RandovaniaGame]:
@@ -276,6 +272,7 @@ class MultiplayerSession(BaseModel):
         # Fetch the members, with a Join to also fetch the member name
         members: Iterable[MultiplayerMembership] = MultiplayerMembership.select(
             MultiplayerMembership.admin,
+            MultiplayerMembership.ready,
             User.id,
             User.name,
         ).join(
@@ -309,6 +306,7 @@ class MultiplayerSession(BaseModel):
                     id=member.user_id,
                     name=member.user.name,
                     admin=member.admin,
+                    ready=member.ready,
                     worlds={
                         worlds[association.world_id].id: UserWorldDetail(
                             connection_state=association.connection_state,
@@ -427,6 +425,7 @@ class MultiplayerMembership(BaseModel):
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="members")
     session_id: int
     admin: bool = peewee.BooleanField(default=False)
+    ready: bool = peewee.BooleanField(default=False)
     join_date = peewee.DateTimeField(default=_datetime_now)
 
     can_help_layout_generation: bool = peewee.BooleanField(default=False)
@@ -477,8 +476,16 @@ class MultiplayerAuditEntry(BaseModel):
         )
 
 
+class DatabaseMigrations(enum.Enum):
+    ADD_READY_TO_MEMBERSHIP = "ready_membership"
+
+
+class PerformedDatabaseMigrations(BaseModel):
+    migration = EnumField(DatabaseMigrations, unique=True)
+
+
 all_classes = [
     User, UserAccessToken, MultiplayerSession, World,
     WorldUserAssociation, MultiplayerMembership,
-    WorldAction, MultiplayerAuditEntry,
+    WorldAction, MultiplayerAuditEntry, PerformedDatabaseMigrations,
 ]
