@@ -20,10 +20,7 @@ def create_subparsers(root_parser):
 
 
 def _print_version(args):
-    print("Randovania {} from {}".format(
-        randovania.VERSION,
-        Path(randovania.__file__).parent
-    ))
+    print(f"Randovania {randovania.VERSION} from {Path(randovania.__file__).parent}")
 
 
 def _create_parser():

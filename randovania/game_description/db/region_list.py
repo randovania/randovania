@@ -131,10 +131,7 @@ class RegionList(NodeProvider):
         return self.region_name_from_area(self.nodes_to_area(node), distinguish_dark_aether)
 
     def area_name(self, area: Area, separator: str = " - ", distinguish_dark_aether: bool = True) -> str:
-        return "{}{}{}".format(
-            self.region_name_from_area(area, distinguish_dark_aether),
-            separator,
-            area.name)
+        return f"{self.region_name_from_area(area, distinguish_dark_aether)}{separator}{area.name}"
 
     def node_name(self, node: Node, with_region=False, distinguish_dark_aether: bool = False) -> str:
         prefix = f"{self.region_name_from_node(node, distinguish_dark_aether)}/" if with_region else ""
@@ -289,8 +286,7 @@ def _calculate_nodes_to_area_region(region: Iterable[Region]):
             for node in area.nodes:
                 if node.node_index in nodes_to_area:
                     raise ValueError(
-                        "Trying to map {} to {}, but already mapped to {}".format(
-                            node, area, nodes_to_area[node.node_index]))
+                        f"Trying to map {node} to {area}, but already mapped to {nodes_to_area[node.node_index]}")
                 nodes_to_area[node.node_index] = area
                 nodes_to_region[node.node_index] = region
 

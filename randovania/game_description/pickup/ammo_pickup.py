@@ -39,9 +39,7 @@ class AmmoPickupDefinition(JsonDataclass):
             if self.unlocked_by is None:
                 raise ValueError("If temporaries is set, unlocked_by must be set.")
             if len(self.items) != 1:
-                raise ValueError("If temporaries is set, only one item is supported. Got {} instead".format(
-                    len(self.items)
-                ))
+                raise ValueError(f"If temporaries is set, only one item is supported. Got {len(self.items)} instead")
         elif self.unlocked_by is not None:
             raise ValueError("If temporaries is not set, unlocked_by must not be set.")
 
