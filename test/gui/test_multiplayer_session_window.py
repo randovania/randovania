@@ -13,6 +13,7 @@ from PySide6 import QtCore, QtWidgets
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.games.game import RandovaniaGame
+from randovania.gui.lib import model_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -180,18 +181,9 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
         )
     )
 
-    def get_texts(model):
-        return [
-            [
-                model.data(model.index(row, i))
-                for i in range(5)
-            ]
-            for row in range(model.rowCount())
-        ]
-
     dt = QtCore.QDateTime(2020, 1, 5, 0, 0, 0, 0, 0)
 
-    assert get_texts(window.history_item_proxy) == [
+    assert model_lib.get_texts(window.history_item_proxy) == [
         ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
         ['W1', 'W3', 'Bombs', 'Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)', dt],
         ['W3', 'W2', 'Missile', 'Temple Grounds/Hive Chamber B/Pickup (Missile)', dt],
@@ -199,36 +191,36 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
     ]
 
     window.history_filter_edit.setText("Missile")
-    assert get_texts(window.history_item_proxy) == [
+    assert model_lib.get_texts(window.history_item_proxy) == [
         ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
         ['W3', 'W2', 'Missile', 'Temple Grounds/Hive Chamber B/Pickup (Missile)', dt],
         ['W2', 'W1', 'Missile', 'Intro/Explosive Depot/Pickup (Explosive)', dt],
     ]
 
     window.history_filter_edit.setText("Hive Chamber")
-    assert get_texts(window.history_item_proxy) == [
+    assert model_lib.get_texts(window.history_item_proxy) == [
         ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
         ['W3', 'W2', 'Missile', 'Temple Grounds/Hive Chamber B/Pickup (Missile)', dt],
     ]
 
     window.history_item_proxy.set_provider_filter("W1")
-    assert get_texts(window.history_item_proxy) == [
+    assert model_lib.get_texts(window.history_item_proxy) == [
         ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
     ]
 
     window.history_filter_edit.setText("")
-    assert get_texts(window.history_item_proxy) == [
+    assert model_lib.get_texts(window.history_item_proxy) == [
         ['W1', 'W2', 'Bombs', 'Temple Grounds/Hive Chamber A/Pickup (Missile)', dt],
         ['W1', 'W3', 'Bombs', 'Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)', dt],
     ]
 
     window.history_item_proxy.set_receiver_filter("W3")
-    assert get_texts(window.history_item_proxy) == [
+    assert model_lib.get_texts(window.history_item_proxy) == [
         ['W1', 'W3', 'Bombs', 'Temple Grounds/Hall of Honored Dead/Pickup (Seeker Launcher)', dt],
     ]
 
     window.history_filter_edit.setText("Missile")
-    assert get_texts(window.history_item_proxy) == []
+    assert model_lib.get_texts(window.history_item_proxy) == []
 
 
 @pytest.mark.parametrize(('generation_in_progress', 'game_details', 'expected_text'), [

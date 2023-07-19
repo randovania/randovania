@@ -72,9 +72,7 @@ def create_beam_configuration_description(beams: BeamConfiguration) -> list[dict
         return " and ".join(names)
 
     def format_missile_cost(b: BeamAmmoConfiguration) -> str:
-        return "{missiles} missiles for combo".format(
-            missiles=b.combo_missile_cost,
-        )
+        return f"{b.combo_missile_cost} missiles for combo"
 
     for name, default_beam, actual_beam in zip(beam_names, default_config.all_beams, beams.all_beams):
         different = []

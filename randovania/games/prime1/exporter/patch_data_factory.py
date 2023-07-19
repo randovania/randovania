@@ -189,8 +189,7 @@ def _name_for_start_location(region_list: RegionList, location: NodeIdentifier) 
 
 
 def _create_results_screen_text(description: LayoutDescription) -> str:
-    return "{} | Seed Hash - {} ({})".format(
-        randovania.VERSION, description.shareable_word_hash, description.shareable_hash)
+    return f"{randovania.VERSION} | Seed Hash - {description.shareable_word_hash} ({description.shareable_hash})"
 
 
 def _random_factor(rng: Random, min: float, max: float, target: float):
@@ -971,10 +970,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     "gameNameFull": f"Metroid Prime: Randomizer - {self.description.shareable_hash}",
                     "description": f"Seed Hash: {self.description.shareable_word_hash}",
                 },
-                "mainMenuMessage": "Randovania v{}\n{}".format(
-                    randovania.VERSION,
-                    self.description.shareable_word_hash
-                ),
+                "mainMenuMessage": f"Randovania v{randovania.VERSION}\n{self.description.shareable_word_hash}",
 
                 "creditsString": credits_string,
                 "artifactHints": {

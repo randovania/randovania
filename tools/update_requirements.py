@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 
 import piptools
@@ -20,6 +21,17 @@ custom_env = {
 is_quiet = "--quiet" in sys.argv
 upgrade_arg = ["--upgrade"] if ("--upgrade" in sys.argv) else []
 stdout = subprocess.PIPE if is_quiet else None
+
+# Create requirements-setuptools.in
+pyproject = tomllib.loads(parent.joinpath("pyproject.toml").read_text())
+parent.joinpath("tools/requirements/requirements-setuptools.in").write_text(
+    "\n".join(pyproject["build-system"]["requires"] + [
+        "build",
+        "pyinstaller",
+        "pyinstaller-hooks-contrib",
+        "-c ../../requirements.txt",
+    ])
+)
 
 
 def print_arguments(args):
@@ -43,8 +55,21 @@ subprocess.run(
         "--output-file",
         "requirements.txt",
         *upgrade_arg,
-        "tools/requirements/requirements.in",
         "setup.py",
+    ]),
+    env=custom_env,
+    check=True,
+    cwd=parent,
+    stdout=stdout,
+    stderr=stdout,
+)
+
+subprocess.run(
+    print_arguments([
+        "--output-file",
+        "requirements-setuptools.txt",
+        *upgrade_arg,
+        "tools/requirements/requirements-setuptools.in",
     ]),
     env=custom_env,
     check=True,
