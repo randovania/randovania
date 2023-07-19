@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Ryujinx (Legacy) is disabled when auto-tracker support is on, or in a multiworld.
 - Fixed: Dairon - Navigation Station North can no longer be assigned a hint, which would then be replaced with DNA Hints.
 - Added: A new auto-tracker layout featuring progressive items.
+- Added: Custom shields now have alternate and more accessible models, which can be toggled per-shield in Cosmetic Options.
 
 #### Logic Database
 
