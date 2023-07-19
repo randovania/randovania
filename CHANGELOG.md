@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The time a world last had any activity is now displayed in the Multiworld session.
 - Changed: Text prompts now default to accepting when pressing enter.
 - Changed: Reorganized the top menu bar. The Advanced menu is now called Preferences, with an Advanced sub-menu. Opening the Login window is now in the Open menu.
+- Fixed: Multiworld now properly respects major/minor configuration of each world.
 - Fixed: The generation order for multiworld session now correctly handles any kind of names.
 - Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
 - Fixed: Import rdvgames for games that uses certain features, like Sky Temple Keys on Bosses or Metroid DNA in Dread, now works properly.
