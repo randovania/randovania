@@ -4,6 +4,7 @@ import dataclasses
 import datetime
 import re
 import uuid
+from functools import cached_property
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -65,7 +66,7 @@ class MultiplayerWorld(JsonDataclass):
     name: str
     preset_raw: str
 
-    @property
+    @cached_property
     def preset(self) -> VersionedPreset:
         return VersionedPreset.from_str(self.preset_raw)
 
