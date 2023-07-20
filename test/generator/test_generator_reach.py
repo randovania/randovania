@@ -195,7 +195,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 
     region_list = RegionList([
         Region("Test World", [
-            Area("Test Area A", None, [node_a, node_b, node_c, translator_node],
+            Area("Test Area A", [node_a, node_b, node_c, translator_node],
                  {
                      node_a: {
                          node_b: Requirement.trivial(),

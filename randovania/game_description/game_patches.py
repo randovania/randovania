@@ -5,13 +5,12 @@ import dataclasses
 import typing
 from dataclasses import dataclass
 
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 
-ElevatorConnection = dict[NodeIdentifier, AreaIdentifier]
+ElevatorConnection = dict[NodeIdentifier, NodeIdentifier]
 StartingEquipment = list[PickupEntry] | ResourceCollection
 
 

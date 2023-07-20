@@ -69,8 +69,8 @@ def test_two_way_elevator_connections_between_areas(mock_try_randomize_elevators
     # Assert
     mock_try_randomize_elevators.assert_called_once_with(rng, (elevator_a, elevator_b))
     assert result == {
-        elevator_a.teleporter: elevator_a.connected_elevator.area_location,
-        elevator_b.teleporter: elevator_b.connected_elevator.area_location,
+        elevator_a.teleporter: elevator_a.connected_elevator.teleporter,
+        elevator_b.teleporter: elevator_b.connected_elevator.teleporter,
     }
 
 
@@ -78,7 +78,8 @@ def test_two_way_elevator_connections_unchecked():
     # Setup
     rng = random.Random(5000)
     elevators = [
-        ElevatorHelper(NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"), AreaIdentifier(f"w{i}", f"a{i}"))
+        ElevatorHelper(NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"),
+                       NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"))
         for i in range(6)
     ]
     database = tuple(elevators)
@@ -88,12 +89,12 @@ def test_two_way_elevator_connections_unchecked():
 
     # Assert
     assert result == {
-        NodeIdentifier.create("w0", "a0", "n0"): AreaIdentifier("w4", "a4"),
-        NodeIdentifier.create("w1", "a1", "n1"): AreaIdentifier("w2", "a2"),
-        NodeIdentifier.create("w2", "a2", "n2"): AreaIdentifier("w1", "a1"),
-        NodeIdentifier.create("w3", "a3", "n3"): AreaIdentifier("w5", "a5"),
-        NodeIdentifier.create("w4", "a4", "n4"): AreaIdentifier("w0", "a0"),
-        NodeIdentifier.create("w5", "a5", "n5"): AreaIdentifier("w3", "a3"),
+        NodeIdentifier.create("w0", "a0", "n0"):  NodeIdentifier.create("w4", "a4", "n4"),
+        NodeIdentifier.create("w1", "a1", "n1"):  NodeIdentifier.create("w2", "a2", "n2"),
+        NodeIdentifier.create("w2", "a2", "n2"):  NodeIdentifier.create("w1", "a1", "n1"),
+        NodeIdentifier.create("w3", "a3", "n3"):  NodeIdentifier.create("w5", "a5", "n5"),
+        NodeIdentifier.create("w4", "a4", "n4"):  NodeIdentifier.create("w0", "a0", "n0"),
+        NodeIdentifier.create("w5", "a5", "n5"):  NodeIdentifier.create("w3", "a3", "n3"),
     }
 
 
