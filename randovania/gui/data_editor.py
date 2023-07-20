@@ -353,8 +353,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if region_name is not None and area_name is not None:
             self.focus_on_region_by_name(region_name)
             self.focus_on_area_by_name(area_name)
-            if node_name is None:
-                node_name = self.current_area.nodes[0]
 
             for radio_button in self.radio_button_to_node.keys():
                 if radio_button.text() == node_name:

@@ -78,7 +78,8 @@ def test_two_way_elevator_connections_unchecked():
     # Setup
     rng = random.Random(5000)
     elevators = [
-        ElevatorHelper(NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"), NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"))
+        ElevatorHelper(NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"),
+                       NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"))
         for i in range(6)
     ]
     database = tuple(elevators)

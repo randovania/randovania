@@ -100,7 +100,7 @@ class TeleporterList(location_list.LocationList):
 
 def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
     if (game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and
-            area.name == "Credits" and node.name == "Event - Credits"):
+            area.name == "Credits" and node.name in ("Event - Credits", "Event - Dark Samus 3 and 4")):
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
