@@ -918,6 +918,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "qolGameBreaking": not self.configuration.legacy_mode,
                 "qolCosmetic": not self.configuration.legacy_mode,
                 "qolPickupScans": not self.configuration.legacy_mode,
+                "qolGeneral": not self.configuration.legacy_mode,
                 "qolCutscenes": qol_cutscenes,
                 "mapDefaultState": map_default_state,
                 "artifactHintBehavior": None,
