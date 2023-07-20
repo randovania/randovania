@@ -18,10 +18,10 @@ if TYPE_CHECKING:
 
 class ElevatorHelper:
     teleporter: NodeIdentifier
-    destination: AreaIdentifier
+    destination: NodeIdentifier
     connected_elevator: ElevatorHelper | None
 
-    def __init__(self, teleporter: NodeIdentifier, destination: AreaIdentifier):
+    def __init__(self, teleporter: NodeIdentifier, destination: NodeIdentifier):
         self.teleporter = teleporter
         self.destination = destination
         self.connected_elevator = None
@@ -35,8 +35,8 @@ class ElevatorHelper:
         return self.teleporter.area_location.area_name
 
     def connect_to(self, other: ElevatorHelper):
-        self.destination = other.teleporter.area_location
-        other.destination = self.teleporter.area_location
+        self.destination = other.teleporter
+        other.destination = self.teleporter
         self.connected_elevator = other
         other.connected_elevator = self
 
@@ -112,14 +112,14 @@ def two_way_elevator_connections(rng: Random,
             elevators.pop().connect_to(elevators.pop())
 
     return {
-        elevator.teleporter: elevator.connected_elevator.area_location
+        elevator.teleporter: elevator.connected_elevator.teleporter
         for elevator in elevator_database
     }
 
 
 def one_way_elevator_connections(rng: Random,
                                  elevator_database: tuple[ElevatorHelper, ...],
-                                 target_locations: list[AreaIdentifier],
+                                 target_locations: list[NodeIdentifier],
                                  replacement: bool,
                                  ) -> ElevatorConnection:
     target_locations.sort()

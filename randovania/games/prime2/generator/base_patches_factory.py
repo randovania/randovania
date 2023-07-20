@@ -124,8 +124,8 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             raise KeyError(f"{identifier} has no valid starting location")
 
         def link_to(source: AreaIdentifier, target: AreaIdentifier):
-            result[area_to_node(source)] = target
-            result[area_to_node(target)] = source
+            result[area_to_node(source)] = area_to_node(target)
+            result[area_to_node(target)] = area_to_node(source)
 
         def tg_link_to(source: str, target: AreaIdentifier):
             link_to(AreaIdentifier("Temple Grounds", source), target)

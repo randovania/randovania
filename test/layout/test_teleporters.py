@@ -60,7 +60,7 @@ def _a(region, area, instance_id=None):
            mode="one-way-elevator", excluded_teleporters=[
                 _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
             ]),
-        _m(b'\xe4\x03,\xd0', 28, 'One-way, anywhere; excluded 1 targets', mode="one-way-anything", excluded_targets=[
+        _m(b'\xe4\x03,\x90', 28, 'One-way, anywhere; excluded 1 targets', mode="one-way-anything", excluded_targets=[
             _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
         ]),
     ],

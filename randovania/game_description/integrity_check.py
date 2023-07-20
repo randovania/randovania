@@ -11,6 +11,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -146,12 +147,6 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
     if len(start_nodes) > 1 and not game.game.data.multiple_start_nodes_per_area:
         names = [node.name for node in start_nodes]
         yield f"{area.name} has multiple valid start nodes {names}, but is not allowed for {game.game.long_name}"
-
-    if area.default_node is not None and area.node_with_name(area.default_node) is None:
-        yield f"{area.name} has default node {area.default_node}, but no node with that name exists"
-
-    # elif area.default_node is not None:
-    #     nodes_with_paths_in.add(area.node_with_name(area.default_node))
 
     for node in area.nodes:
         if isinstance(node, DockNode) or area.connections[node]:

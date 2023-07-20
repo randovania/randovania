@@ -295,7 +295,9 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
 
     if shuffle_advanced:
         for elevator in state["elevators"]:
-            if elevator["teleporter"]["node"] == "Elevator to Sanctuary Fortress":
+            if (elevator["teleporter"]["region"] == "Agon Wastes" 
+                and elevator["teleporter"]["node"] == "Elevator to Sanctuary Fortress"
+                and elevator["teleporter"]["area"] == "Transport to Sanctuary Fortress"):
                 elevator["data"] = {'area': "Agon Energy Controller", 'region': "Agon Wastes"}
         state["configurable_nodes"]['Temple Grounds/Hive Access Tunnel/Translator Gate'] = "violet"
     VersionedPreset.with_preset(preset).save_to_file(tmp_path.joinpath("preset.rdvpreset"))

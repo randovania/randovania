@@ -129,7 +129,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_details_label.linkActivated.connect(self._on_click_link_to_other_node)
         self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
         self.area_spawn_check.stateChanged.connect(self.on_area_spawn_check)
-        self.default_node_check.stateChanged.connect(self.on_default_node_check)
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_swap_button.clicked.connect(self._swap_selected_connection)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
@@ -355,7 +354,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.focus_on_region_by_name(region_name)
             self.focus_on_area_by_name(area_name)
             if node_name is None:
-                node_name = self.current_area.default_node
+                node_name = self.current_area.nodes[0]
 
             for radio_button in self.radio_button_to_node.keys():
                 if radio_button.text() == node_name:
@@ -373,14 +372,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         assert old_node is not None
         new_node = dataclasses.replace(old_node, valid_starting_location=bool(state))
         self.replace_node_with(self.current_area, old_node, new_node)
-
-    def on_default_node_check(self, state: int):
-        state = bool(state)
-        if not state:
-            return
-
-        object.__setattr__(self.current_area, "default_node", self.current_node.name)
-        self.default_node_check.setEnabled(False)
 
     def replace_node_with(self, area: Area, old_node: Node, new_node: Node):
         if old_node == new_node:
@@ -448,10 +439,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         is_area_spawn = self.current_node.valid_starting_location
         self.area_spawn_check.setChecked(is_area_spawn)
-
-        is_default_node = self.current_area.default_node == node.name
-        self.default_node_check.setChecked(is_default_node)
-        self.default_node_check.setEnabled(self.edit_mode and not is_default_node)
 
         self.area_view_canvas.highlight_node(node)
 
@@ -829,7 +816,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.other_node_connection_edit_button.setVisible(self.edit_mode)
         self.node_heals_check.setEnabled(self.edit_mode)
         self.area_spawn_check.setEnabled(self.edit_mode)
-        self.default_node_check.setEnabled(self.edit_mode and self.default_node_check.isEnabled())
         self.node_edit_button.setVisible(self.edit_mode)
         self.resource_editor.set_allow_edits(self.edit_mode)
         self.area_view_canvas.set_edit_mode(self.edit_mode)

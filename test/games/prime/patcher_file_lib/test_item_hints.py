@@ -53,8 +53,8 @@ def _create_region_list(asset_id: int, pickup_index: PickupIndex):
 
     region_list = RegionList([
         Region("World", [
-            Area("Area", None, [logbook_node, pickup_node], {}, {}),
-            Area("Other Area", None,
+            Area("Area", [logbook_node, pickup_node], {}, {}),
+            Area("Other Area",
                  [PickupNode(nc("World", "Other Area", f"Pickup {i}"),
                              2 + i, True, None, "", ("default",), {}, False, PickupIndex(i), True)
                   for i in range(pickup_index.index)],

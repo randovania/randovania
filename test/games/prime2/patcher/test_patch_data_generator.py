@@ -190,20 +190,20 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
     wl = echoes_game_description.region_list
     elevator_connection: list[tuple[DockNode, Node]] = []
 
-    def add(region: str, area: str, node: str, target_world: str, target_area: str):
+    def add(region: str, area: str, node: str, target_world: str, target_area: str, target_node: str):
         elevator_connection.append((
             wl.typed_node_by_identifier(NodeIdentifier.create(region, area, node), DockNode),
-            wl.default_node_for_area(AreaIdentifier(target_world, target_area)),
+            wl.node_by_identifier(NodeIdentifier.create(target_world, target_area, target_node)),
         ))
 
     add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple",
-        "Sanctuary Fortress", "Transport to Agon Wastes")
+        "Sanctuary Fortress", "Transport to Agon Wastes", "Elevator to Agon Wastes")
     add("Temple Grounds", "Transport to Agon Wastes", "Elevator to Agon Wastes",
-        "Torvus Bog", "Transport to Agon Wastes")
+        "Torvus Bog", "Transport to Agon Wastes", "Elevator to Agon Wastes")
 
     if not vanilla_gateway:
         add("Temple Grounds", "Sky Temple Gateway", "Elevator to Great Temple",
-            "Great Temple", "Sanctum")
+            "Great Temple", "Sanctum", "Door to Sanctum Access")
 
     patches = echoes_game_patches.assign_dock_connections(elevator_connection)
 

@@ -75,14 +75,8 @@ class MSRPatchDataFactory(BasePatchDataFactory):
 
         return details
 
-    def _node_for(self, identifier: AreaIdentifier | NodeIdentifier) -> Node:
-        if isinstance(identifier, NodeIdentifier):
-            return self.game.region_list.node_by_identifier(identifier)
-        else:
-            area = self.game.region_list.area_by_area_location(identifier)
-            node = area.node_with_name(area.default_node)
-            assert node is not None
-            return node
+    def _node_for(self, identifier:  NodeIdentifier) -> Node:
+        return self.game.region_list.node_by_identifier(identifier)
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))

@@ -604,7 +604,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                                                                location_names, 0, False)
                 area_location = area_locations[location_names.index(selected_name[0])]
 
-            self._initial_state.node = region_list.area_by_area_location(area_location).default_node
+            # TODO If there is no `default_node` anymore, what would be the replacement?
+            self._initial_state.node = region_list.area_by_area_location(area_location).get_start_nodes()[0]
 
         def is_resource_node_present(node: Node, state: State):
             if node.is_resource_node:
@@ -757,7 +758,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         state.patches = state.patches.assign_dock_connections(
             (region_list.typed_node_by_identifier(teleporter, DockNode),
-              region_list.default_node_for_area(combo.currentData()))
+            # TODO If there is no `default_node` anymore, what would be the replacement?
+              region_list.area_by_area_location(combo.currentData()).get_start_nodes()[0])
             for teleporter, combo in self._elevator_id_to_combo.items() if combo.currentData() is not None
         )
 
