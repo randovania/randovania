@@ -120,7 +120,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.failure_handler = GenerationFailureHandler(self)
 
         self._window_manager = window_manager
-        self._preset_manager = window_manager.preset_manager
         self._multiworld_client = window_manager.multiworld_client
 
         self._options = options
@@ -129,7 +128,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         game_session_api.widget_root = self
         game_session_api.setParent(self)
-        self.users_widget = MultiplayerSessionUsersWidget(options, self._preset_manager, game_session_api)
+        self.users_widget = MultiplayerSessionUsersWidget(options, self._window_manager, game_session_api)
         self.tabWidget.removeTab(0)
         self.tabWidget.insertTab(0, self.users_widget, "Players")
         self.tabWidget.setCurrentIndex(0)
