@@ -56,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The Coin Chest model from multiplayer is now used for offworld items instead of the ETM model.
 - Changed: The Power Beam and the Morph Ball now use the Coin Chest model when shuffled, instead of the ETM model.
 - Added: 4 new joke hints in the pool.
+- Fixed: The gate in Command Center now opens correctly when using the new patcher.
 
 ## [6.0.1] - 2023-07-04
 
