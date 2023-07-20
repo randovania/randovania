@@ -100,6 +100,6 @@ def admin_session(user, session_id):
     )
 
 
-def setup_app(sio: ServerApp):
-    sio.route_with_user("/sessions", need_admin=True)(admin_sessions)
-    sio.route_with_user("/session/<session_id>", need_admin=True)(admin_session)
+def setup_app(sa: ServerApp):
+    sa.route_with_user("/sessions", need_admin=True)(admin_sessions)
+    sa.route_with_user("/session/<session_id>", need_admin=True)(admin_session)
