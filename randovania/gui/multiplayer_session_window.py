@@ -76,8 +76,11 @@ class HistoryFilterModel(QtCore.QSortFilterProxyModel):
             if self.receiver_filter != get_column(1):
                 return False
 
+        if not self.generic_filter:
+            return True
+
         return any(
-            self.generic_filter.lower() in col.lower()
+            self.generic_filter in col.lower()
             for col in (get_column(2), get_column(3))
         )
 
@@ -90,7 +93,7 @@ class HistoryFilterModel(QtCore.QSortFilterProxyModel):
         self.invalidateRowsFilter()
 
     def set_generic_filter(self, text: str):
-        self.generic_filter = text
+        self.generic_filter = text.lower()
         self.invalidateRowsFilter()
 
 
@@ -391,8 +394,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         except KeyError as e:
             return "Unknown", "Unknown", f"Unknown worlds {e}"
 
-        preset = VersionedPreset.from_str(provider_world.preset_raw)
-        game = default_database.game_description_for(preset.game)
+        game = default_database.game_description_for(provider_world.preset.game)
         try:
             location_node = game.region_list.node_from_pickup_index(action.location_index)
             location_name = game.region_list.node_name(location_node, with_region=True,
