@@ -9,7 +9,6 @@ from randovania.game_description.db.dock_node import DockNode
 if TYPE_CHECKING:
     from random import Random
 
-    from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList

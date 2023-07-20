@@ -5,14 +5,13 @@ from typing import TYPE_CHECKING
 from randovania.exporter import pickup_exporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
-    from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.node import Node
+    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_info import ResourceCollection
 

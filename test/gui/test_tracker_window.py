@@ -295,7 +295,7 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
 
     if shuffle_advanced:
         for elevator in state["elevators"]:
-            if (elevator["teleporter"]["region"] == "Agon Wastes" 
+            if (elevator["teleporter"]["region"] == "Agon Wastes"
                 and elevator["teleporter"]["node"] == "Elevator to Sanctuary Fortress"
                 and elevator["teleporter"]["area"] == "Transport to Sanctuary Fortress"):
                 elevator["data"] = {'area': "Agon Energy Controller", 'region': "Agon Wastes"}
