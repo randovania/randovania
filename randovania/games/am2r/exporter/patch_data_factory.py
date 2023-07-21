@@ -6,6 +6,9 @@ from randovania.exporter import pickup_exporter
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.pickup import pickup_category
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
@@ -28,8 +31,8 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             object_name = self.game.region_list.node_from_pickup_index(pickup.index).extra["object_name"]
             pickup_map_dict[object_name] = {
                 "sprite_details": {
-                    "name": item_info[pickup.model.name]["sprite_name"],
-                    "speed": item_info[pickup.model.name]["sprite_speed"]
+                    "name": pickup.model.name,
+                    "speed": item_info[pickup.original_pickup.name]["sprite_speed"]
                 },
                 "item_effect": pickup.original_pickup.name,
                 "quantity": quantity,
@@ -96,6 +99,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "nest_pipes": self.patches.configuration.nest_pipes,
             "softlock_prevention_blocks": self.patches.configuration.softlock_prevention_blocks,
             "a3_entrance_blocks": self.patches.configuration.a3_entrance_blocks,
+            # TODO: remove the show_unexplored_map when cosmetic is done
             "show_unexplored_map": self.patches.configuration.show_unexplored_map,
             "screw_blocks": self.patches.configuration.screw_blocks,
         }
@@ -183,8 +187,24 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
     def create_data(self) -> dict:
         db = self.game
 
-        useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
-                                      self.players_config.player_index)
+        # TODO: instead of manually creating the pickup here, modify pickup_creator.create_nothing_pickup to take an
+        # arg for model name
+        useless_pickup = PickupEntry(
+            name="Nothing",
+            progression=(
+                (db.resource_database.get_item_by_name("Nothing"), 1),
+            ),
+            model=PickupModel(
+                game=db.resource_database.game_enum,
+                name="sItemNothing",
+            ),
+            pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
+            broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
+            generator_params=PickupGeneratorParams(
+                preferred_location_category=LocationCategory.MAJOR,  # TODO
+            ),
+        )
+        useless_target = PickupTarget(useless_pickup, self.players_config.player_index)
 
         item_data = self._get_item_data()
         memo_data = {
