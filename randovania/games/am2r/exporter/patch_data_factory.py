@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.exporter import pickup_exporter
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
@@ -19,7 +20,7 @@ if TYPE_CHECKING:
 class AM2RPatchDataFactory(BasePatchDataFactory):
     _EASTER_EGG_SHINY = 1024
 
-    def _create_pickups_dict(self, pickup_list, item_info, rng: Random):
+    def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random):
         pickup_map_dict = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1]
@@ -50,7 +51,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             }
 
             pickup_obj = pickup_map_dict[object_name]
-            shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup["text"]["header"])
+            shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup_obj["text"]["header"])
 
             if (shiny_id in shinies) and not pickup.other_player and rng.randint(0, self._EASTER_EGG_SHINY == 0):
                 sprite, text = shinies[shiny_id]
