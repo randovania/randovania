@@ -57,7 +57,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             pickup_obj = pickup_map_dict[object_name]
             shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup_obj["text"]["header"])
 
-            if (shiny_id in shinies) and not pickup.other_player and rng.randint(0, self._EASTER_EGG_SHINY == 0):
+            if (shiny_id in shinies) and not pickup.other_player and rng.randint(0, self._EASTER_EGG_SHINY) == 0:
                 sprite, text = shinies[shiny_id]
                 pickup_obj["sprite_details"]["name"] = sprite
                 pickup_obj["text"]["header"] = text
@@ -99,7 +99,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "nest_pipes": self.patches.configuration.nest_pipes,
             "softlock_prevention_blocks": self.patches.configuration.softlock_prevention_blocks,
             "a3_entrance_blocks": self.patches.configuration.a3_entrance_blocks,
-            # TODO: remove the show_unexplored_map when cosmetic is done
+            # TODO: remove the show_unexplored_map from here when cosmetic is done
             "show_unexplored_map": self.patches.configuration.show_unexplored_map,
             "screw_blocks": self.patches.configuration.screw_blocks,
         }
