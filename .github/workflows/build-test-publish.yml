@@ -91,7 +91,6 @@ jobs:
 
       - name: build ui files
         run: python setup.py build_ui
-        if: ${{ !matrix.executable }}
 
       - name: build sdist and wheel
         run: python -m build --no-isolation
