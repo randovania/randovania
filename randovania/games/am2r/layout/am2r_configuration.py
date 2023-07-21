@@ -29,6 +29,7 @@ class AM2RConfiguration(BaseConfiguration):
     fusion_mode: bool
     grave_grotto_blocks: bool
     nest_pipes: bool
+    show_unexplored_map: bool
     a3_entrance_blocks: bool
 
     @classmethod
