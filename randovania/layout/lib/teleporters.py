@@ -100,12 +100,11 @@ class TeleporterList(location_list.LocationList):
 
 def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
     if (game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and
-            area.name == "Credits" and node.name == area.default_node):
+            area.name == "Credits" and node.name in ("Event - Credits", "Event - Dark Samus 3 and 4")):
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
-    return (area.has_start_node() and area.default_node is not None and
-            area.default_node == node.name and not has_save_station)
+    return (area.has_start_node() and node in area.get_start_nodes() and not has_save_station)
 
 
 class TeleporterTargetList(location_list.LocationList):
@@ -164,9 +163,9 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         return static
 
     @property
-    def valid_targets(self) -> list[AreaIdentifier]:
+    def valid_targets(self) -> list[NodeIdentifier]:
         if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            return [location.area_identifier for location in self.excluded_targets.nodes_list(self.game)
+            return [location for location in self.excluded_targets.nodes_list(self.game)
                     if location not in self.excluded_targets.locations]
 
         elif self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
@@ -181,7 +180,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                     # Valid destinations must be valid starting areas
                     area = region_list.nodes_to_area(node)
                     if area.has_start_node():
-                        result.append(identifier.area_identifier)
+                        result.append(identifier)
                     # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
                     # on the previous room
                     elif area.name == "Metroid Prime Lair":
