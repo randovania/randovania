@@ -24,6 +24,7 @@ _FIELDS = [
     "nest_pipes",
     "softlock_prevention_blocks",
     "a3_entrance_blocks",
+    "show_unexplored_map",
     "screw_blocks"
 ]
 
