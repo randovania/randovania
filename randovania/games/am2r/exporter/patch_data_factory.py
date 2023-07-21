@@ -19,12 +19,6 @@ if TYPE_CHECKING:
 class AM2RPatchDataFactory(BasePatchDataFactory):
     _EASTER_EGG_SHINY = 1024
 
-    def _does_pickup_have_shiny_values(self, pickup_list, item_effect: str, sprite_details: str, header: str,
-                                       for_other_player: bool, rng: Random) -> bool:
-        return (pickup_list["item_effect"] == item_effect and pickup_list["sprite_details"]["name"] == sprite_details
-                and pickup_list["text"]["header"] == header and not for_other_player and
-                rng.randint(0, self._EASTER_EGG_SHINY) == 0)
-
     def _create_pickups_dict(self, pickup_list, item_info, rng: Random):
         pickup_map_dict = {}
         for pickup in pickup_list:
@@ -42,53 +36,41 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                     "description": pickup.collection_text[0]
                 }
             }
-            # Shiny Missiles
-            if (self._does_pickup_have_shiny_values(pickup_map_dict[object_name], "Missile Expansion", "sItemMissile",
-                                                    "Got Missile Tank", pickup.other_player, rng)):
-                pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyMissile"
-                pickup_map_dict[object_name]["text"]["header"] = "Got Shiny Missile Tank"
 
-            # Shiny Hijump
-            elif (self._does_pickup_have_shiny_values(pickup_map_dict[object_name], "Hi-Jump Boots", "sItemHijump",
-                                                      "Hi-Jump Boots acquired", pickup.other_player, rng)):
-                pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyHijump"
-                pickup_map_dict[object_name]["text"]["header"] = "Shiny Air Jordan Boots acquired"
+            # Effect, sprite, header => new_sprite, new_header
+            shinies = {
+                ("Missile Expansion", "sItemMissile", "Got Missile Tank"): (
+                    "sItemShinyMissile", "Got Shiny Missile Tank"),
+                ("Hi-Jump Boots", "sItemHijump", "Hi-Jump Boots acquired"): (
+                    "sItemShinyHijump", "Shiny Air Jordan Boots acquired"),
+                ("Screw Attack", "sItemScrewAttack", "Screw Attack acquired"): (
+                    "sItemShinyScrewAttack", "Shiny Screw Attacker acquired"),
+                ("Ice Beam", "sItemIceBeam", "Ice Beam acquired"): ("sItemShinyIceBeam", "Shiny Ice Cream acquired"),
+                ("Nothing", "sItemNothing", "Nothing acquired"): ("sItemShinyNothing", "Shiny Nothing acquired"),
+            }
 
-            # Shiny Screw
-            elif (self._does_pickup_have_shiny_values(pickup_map_dict[object_name], "Screw Attack", "sItemScrewAttack",
-                                                      "Screw Attack acquired", pickup.other_player, rng)):
-                pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyScrewAttack"
-                pickup_map_dict[object_name]["text"]["header"] = "Shiny Screw Attacker acquired"
+            pickup_obj = pickup_map_dict[object_name]
+            shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup["text"]["header"])
 
-            # Shiny Ice
-            elif (self._does_pickup_have_shiny_values(pickup_map_dict[object_name], "Ice Beam", "sItemIceBeam",
-                                                      "Ice Beam acquired", pickup.other_player, rng)):
-                pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyIceBeam"
-                pickup_map_dict[object_name]["text"]["header"] = "Shiny Ice Cream acquired"
-
-            # Shiny Nothing
-            elif (self._does_pickup_have_shiny_values(pickup_map_dict[object_name], "Nothing", "sItemNothing",
-                                                      "Nothing acquired", pickup.other_player, rng)):
-                pickup_map_dict[object_name]["sprite_details"]["name"] = "sItemShinyNothing"
-                pickup_map_dict[object_name]["text"]["header"] = "Shiny Nothing acquired"
+            if (shiny_id in shinies) and not pickup.other_player and rng.randint(0, self._EASTER_EGG_SHINY == 0):
+                sprite, text = shinies[shiny_id]
+                pickup_obj["sprite_details"]["name"] = sprite
+                pickup_obj["text"]["header"] = text
 
         return pickup_map_dict
 
     def _create_room_dict(self):
-        room_name_dict = {}
-        for region in self.game.region_list.regions:
-            for area in region.areas:
-                room_name_dict[area.extra["map_name"]] = {
-                    "display_name": area.name
-                }
-        return room_name_dict
+        return {
+            area.extra["map_name"]: {"display_name": area.name}
+            for area in self.game.region_list.all_areas
+        }
 
     def _create_starting_items_dict(self):
-        start = {}
         starting_resources = self.patches.starting_resources()
-        for resource, quantity in starting_resources.as_resource_gain():
-            start[resource.short_name] = quantity
-        return start
+        return {
+            resource.short_name: quantity
+            for resource, quantity in starting_resources.as_resource_gain()
+        }
 
     def _create_starting_location(self):
         return {
@@ -112,30 +94,30 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "nest_pipes": self.patches.configuration.nest_pipes,
             "softlock_prevention_blocks": self.patches.configuration.softlock_prevention_blocks,
             "a3_entrance_blocks": self.patches.configuration.a3_entrance_blocks,
+            "show_unexplored_map": self.patches.configuration.show_unexplored_map,
             "screw_blocks": self.patches.configuration.screw_blocks,
         }
         for item, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
-            launcher_text = ""
-            if item.name == "Missile Expansion":
-                launcher_text = "require_missile_launcher"
-            elif item.name == "Super Missile Expansion":
-                launcher_text = "require_super_launcher"
-            elif item.name == "Power Bomb Expansion":
-                launcher_text = "require_pb_launcher"
+            launcher_dict = {
+                "Missile Expansion": "require_missile_launcher",
+                "Super Missile Expansion": "require_super_launcher",
+                "Power Bomb Expansion": "require_pb_launcher",
+            }
+            key = launcher_dict.get(item.name)
 
-            if not launcher_text:
+            if key is None:
                 continue
 
-            game_patches[launcher_text] = state.requires_main_item
+            game_patches[key] = state.requires_main_item
         return game_patches
 
     def _create_door_locks(self):
-        locks = {}
-        for node, weakness in self.patches.all_dock_weaknesses():
-            locks[str(node.extra["instance_id"])] = {
+        return {
+            str(node.extra["instance_id"]): {
                 "lock": weakness.long_name
             }
-        return locks
+            for node, weakness in self.patches.all_dock_weaknesses()
+        }
 
     def _create_hints(self):
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
@@ -165,7 +147,9 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 False  # TODO: set this to true, when patcher supports setting colors!
             )
         else:
-            ice_hint = {k: "Ice Beam is located somewhere on SR-388." for k in ice}
+            ice_hint = {
+                k: "To combat our creations, we have created the Ice Beam. Unfortunately, we seem to have misplaced it."
+                for k in ice}
 
         hints = artifact_hints | ice_hint
 
@@ -173,6 +157,9 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             key.long_name: value
             for key, value in hints.items()
         }
+
+    def _create_cosmetics(self):
+        return {}
 
     def _get_item_data(self):
         item_data = json_lib.read_path(
@@ -198,9 +185,10 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                                       self.players_config.player_index)
 
         item_data = self._get_item_data()
-        memo_data = {}
-        for (key, value) in item_data.items():
-            memo_data[key] = value["text_desc"]
+        memo_data = {
+            key: value["text_desc"]
+            for key, value in item_data.items()
+        }
         memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=self.patches.configuration.energy_per_tank)
 
         pickup_list = pickup_exporter.export_all_indices(
@@ -222,6 +210,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "rooms": self._create_room_dict(),
             "game_patches": self._create_game_patches(),
             "door_locks": self._create_door_locks(),
-            "hints": self._create_hints()
-            # TODO: add cosmetic field and decide what to even put in there.
+            "hints": self._create_hints(),
+            # TODO: implement cosmetic window and decide what to even put in there.
+            "cosmetics": self._create_cosmetics()
         }
