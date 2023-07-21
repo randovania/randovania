@@ -22,6 +22,7 @@ class DebugRemoteConnector(RemoteConnector):
     _last_inventory_event: Inventory
 
     RemotePickupsUpdated = Signal()
+    MessagesUpdated = Signal()
 
     def __init__(self, game: RandovaniaGame, layout_uuid: uuid.UUID):
         super().__init__()
@@ -42,6 +43,10 @@ class DebugRemoteConnector(RemoteConnector):
     def description(self) -> str:
         return f"{self.game_enum.long_name}: {self._layout_uuid}"
 
+    async def display_arbitrary_message(self, message: str):
+        self.messages.append(message)
+        self.MessagesUpdated.emit()
+
     async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):
         self.remote_pickups = remote_pickups
 
@@ -51,6 +56,7 @@ class DebugRemoteConnector(RemoteConnector):
             self._last_remote_pickup += 1
 
         self.RemotePickupsUpdated.emit()
+        self.MessagesUpdated.emit()
         self.emit_inventory()
 
     async def force_finish(self):

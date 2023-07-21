@@ -1,46 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SelectPresetDialog</class>
- <widget class="QDialog" name="SelectPresetDialog">
+ <class>SelectPresetWidget</class>
+ <widget class="QWidget" name="SelectPresetWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
-    <height>438</height>
+    <width>409</width>
+    <height>312</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Select Preset</string>
-  </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="0">
-    <widget class="QPushButton" name="accept_button">
-     <property name="text">
-      <string>Accept</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="PresetTreeWidget" name="create_preset_tree">
-     <property name="headerHidden">
-      <bool>true</bool>
-     </property>
-     <column>
-      <property name="text">
-       <string notr="true">1</string>
-      </property>
-     </column>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QPushButton" name="cancel_button">
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
+  <layout class="QGridLayout" name="create_layout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="2" column="2" colspan="2">
     <widget class="QScrollArea" name="create_scroll_area">
      <property name="widgetResizable">
       <bool>true</bool>
@@ -50,8 +33,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>264</width>
-        <height>350</height>
+        <width>200</width>
+        <height>310</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="create_scroll_area_layout">
@@ -96,22 +79,55 @@
      </widget>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="world_name_label">
-     <property name="text">
-      <string>World name</string>
+   <item row="2" column="0" colspan="2">
+    <widget class="PresetTreeWidget" name="create_preset_tree">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="world_name_edit">
-     <property name="placeholderText">
-      <string>World name</string>
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::InternalMove</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>false</bool>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <column>
+      <property name="text">
+       <string>Presets (Right click for actions)</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>Metroid Prime</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>Default Preset</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Your Custom Preset</string>
+        </property>
+       </item>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>Metroid Prime 2</string>
+      </property>
+     </item>
     </widget>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QComboBox" name="game_selection_combo"/>
    </item>
   </layout>
  </widget>

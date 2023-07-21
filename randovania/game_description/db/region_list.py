@@ -119,8 +119,10 @@ class RegionList(NodeProvider):
                 for node in area.nodes:
                     yield region, area, node
 
-    def region_name_from_area(self, area: Area, distinguish_dark_aether: bool = False) -> str:
-        region = self.region_with_area(area)
+    def region_name_from_area(self, area: Area, distinguish_dark_aether: bool = False,
+                              region: Region | None = None) -> str:
+        if region is None:
+            region = self.region_with_area(area)
 
         if distinguish_dark_aether:
             return region.correct_name(area.in_dark_aether)
@@ -128,7 +130,8 @@ class RegionList(NodeProvider):
             return region.name
 
     def region_name_from_node(self, node: Node, distinguish_dark_aether: bool = False) -> str:
-        return self.region_name_from_area(self.nodes_to_area(node), distinguish_dark_aether)
+        region = self.nodes_to_region(node)
+        return self.region_name_from_area(self.nodes_to_area(node), distinguish_dark_aether, region)
 
     def area_name(self, area: Area, separator: str = " - ", distinguish_dark_aether: bool = True) -> str:
         return f"{self.region_name_from_area(area, distinguish_dark_aether)}{separator}{area.name}"

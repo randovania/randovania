@@ -8,12 +8,25 @@ on:
 jobs:
   report:
     runs-on: self-hosted
-    container:
-      image: randovania/server:edge
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Create venv
+        run: python3.11 -m venv venv
+
+      - name: Install core Python packages
+        run: venv/bin/python -m pip install --upgrade -r requirements-setuptools.txt
+
+      - name: Install Python packages
+        run: venv/bin/python -m pip install -c requirements.txt -e .
+
       - name: Bulk Generate
-        run:
+        run: |
+          source venv/bin/activate
           ./tools/bulk_generate_for_discord.sh
         env:
           WEBHOOK_URL: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}

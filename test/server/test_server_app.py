@@ -201,7 +201,7 @@ def test_ensure_in_room(server_app, expected):
 
 
 def test_on_with_wrapper(server_app):
-    def my_function(sio, arg: bytes) -> list[int]:
+    def my_function(sa, arg: bytes) -> list[int]:
         return list(arg)
 
     def on(message, handler, with_header_check):

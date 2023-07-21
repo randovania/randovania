@@ -47,8 +47,8 @@ def test_connections_from_dock_blast_shield(empty_patches):
                       node_1_identifier, weak_2, None, None, False, ())
     node_2_lock = DockLockNode.create_from_dock(node_2, 3)
 
-    area_1 = Area("Area 1", None, [node_1, node_1_lock], {}, {})
-    area_2 = Area("Area 2", None, [node_2, node_2_lock], {}, {})
+    area_1 = Area("Area 1", [node_1, node_1_lock], {}, {})
+    area_2 = Area("Area 2", [node_2, node_2_lock], {}, {})
 
     region = Region("W", [area_1, area_2], {})
     region_list = RegionList([region])

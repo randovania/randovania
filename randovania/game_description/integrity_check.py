@@ -147,12 +147,6 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         names = [node.name for node in start_nodes]
         yield f"{area.name} has multiple valid start nodes {names}, but is not allowed for {game.game.long_name}"
 
-    if area.default_node is not None and area.node_with_name(area.default_node) is None:
-        yield f"{area.name} has default node {area.default_node}, but no node with that name exists"
-
-    # elif area.default_node is not None:
-    #     nodes_with_paths_in.add(area.node_with_name(area.default_node))
-
     for node in area.nodes:
         if isinstance(node, DockNode) or area.connections[node]:
             continue

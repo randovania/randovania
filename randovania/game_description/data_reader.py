@@ -416,8 +416,8 @@ class RegionReader:
             self.next_node_index += 1
 
         try:
-            return Area(area_name, data["default_node"],
-                        nodes, connections, data["extra"])
+            return Area(area_name, nodes, connections, data["extra"],
+                        data["default_node"])
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
 

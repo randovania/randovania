@@ -17,10 +17,10 @@ if typing.TYPE_CHECKING:
 @dataclasses.dataclass(frozen=True, slots=True)
 class Area:
     name: str
-    default_node: str | None
     nodes: list[Node]
     connections: dict[Node, dict[Node, Requirement]]
     extra: dict[str, typing.Any]
+    default_node: str | None = None
 
     def __repr__(self):
         return f"Area[{self.name}]"

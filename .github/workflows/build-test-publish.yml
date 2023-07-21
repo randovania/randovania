@@ -72,21 +72,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python }}
-
-      - name: Get pip cache dir
-        id: pip-cache
-        shell: bash
-        run: |
-          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
-
-      - name: Set up cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          python-version: "${{ matrix.python }}"
+          cache: "pip"
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install libdbus-1-3 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-shape0 libgl1-mesa-dev
@@ -102,11 +89,11 @@ jobs:
         run: python -m pip install -r requirements-xvfb.txt
         if: matrix.os == 'ubuntu-latest'
 
-      - name: build whell
-        run: python setup.py bdist_wheel
+      - name: build ui files
+        run: python setup.py build_ui
 
-      - name: build sdist
-        run: python setup.py sdist
+      - name: build sdist and wheel
+        run: python -m build --no-isolation
         if: ${{ !matrix.executable && matrix.os == 'ubuntu-latest' }}
 
       - name: create test game
@@ -145,7 +132,7 @@ jobs:
           files: ./coverage.xml
 
       - name: Upload artifacts
-        if: ${{ matrix.executable }}
+        if: ${{ matrix.executable && (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
         uses: actions/upload-artifact@v3
         with:
           name: Randovania ${{ matrix.name }}
@@ -169,7 +156,7 @@ jobs:
     runs-on: windows-latest
     needs: pytest
     name: Build Windows Installer
-    if: ${{ startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v') }}
+    if: ${{ (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -209,7 +196,7 @@ jobs:
       - name: Deploy Advanced Installer
         uses: caphyon/advinst-github-action@v1.0
         with:
-          advinst-version: '19.8.1'
+          advinst-version: '20.8'
           advinst-license: ${{ secrets.ADVANCED_INSTALLER_LICENSE }}
           advinst-enable-automation: 'true'
 
@@ -228,7 +215,7 @@ jobs:
           $productDetails.UpgradeCode.UpgradeCode = "{7583BC7E-D9ED-4428-A9AD-AE60AE48D4A2}";
           # Use dev name
           $productDetails.Name = "Randovania Dev";
-          
+
           # Save the changes
           $project.Save();
 
@@ -241,11 +228,11 @@ jobs:
           $advinst = new-object -com advancedinstaller;
           $project = $advinst.LoadProject($aipPath);
           $productDetails = $project.ProductDetails;
-          
+
           # Bump the ProductVersion
           $productDetails.Version = "${{ steps.version.outputs.version }}";
           Write-Host "Version: $productDetails.Version";
-          
+
           # Build the project
           $project.Build();
 
@@ -261,7 +248,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: pytest
     name: Build Flatpak
-    if: ${{ startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v') }}
+    if: ${{ (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
 
     steps:
       - name: Check out repository code
@@ -271,6 +258,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
+          cache: 'pip'
 
       - name: Download the executable
         uses: actions/download-artifact@v3
@@ -302,21 +290,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
-
-      - name: Get pip cache dir
-        id: pip-cache
-        shell: bash
-        run: |
-          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
-
-      - name: Set up cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-lint.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          python-version: "3.11"
 
       - name: Install Python packages
         run: |
@@ -414,7 +388,7 @@ jobs:
       -
         name: Test image
         run: |
-          docker run --rm --entrypoint /bin/bash randovania/server:${{ steps.prep.outputs.version }} tools/server_image_test.sh 
+          docker run --rm --entrypoint /bin/bash randovania/server:${{ steps.prep.outputs.version }} tools/server_image_test.sh
 
   release:
     runs-on: 'ubuntu-latest'
@@ -434,7 +408,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Download the executables
         uses: actions/download-artifact@v3
@@ -492,7 +466,7 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
 
       - name: Discord Notifications
-        run: python tools/post_discord_webhook.py --artifact-dir "packages/Randovania Linux Executable/" 
+        run: python tools/post_discord_webhook.py --artifact-dir "packages/Randovania Linux Executable/"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}

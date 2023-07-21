@@ -53,8 +53,8 @@ def _create_region_list(asset_id: int, pickup_index: PickupIndex):
 
     region_list = RegionList([
         Region("World", [
-            Area("Area", None, [logbook_node, pickup_node], {}, {}),
-            Area("Other Area", None,
+            Area("Area", [logbook_node, pickup_node], {}, {}),
+            Area("Other Area",
                  [PickupNode(nc("World", "Other Area", f"Pickup {i}"),
                              2 + i, True, None, "", ("default",), {}, False, PickupIndex(i), True)
                   for i in range(pickup_index.index)],
@@ -125,7 +125,7 @@ def test_create_hints_item_joke(empty_patches, players_config):
                                         namer, rng)
 
     # Assert
-    joke = "While walking, holding L makes you move faster."
+    joke = "Your Friend Roster is currently empty."
     message = f"&push;&main-color=#45F731;{joke}&pop;"
     assert result[0]['strings'][0] == message
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]
