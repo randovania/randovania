@@ -24,6 +24,18 @@ if TYPE_CHECKING:
 class AM2RPatchDataFactory(BasePatchDataFactory):
     _EASTER_EGG_SHINY = 1024
 
+    # Effect, sprite, header => new_sprite, new_header
+    SHINIES = {
+        ("Missile Expansion", "sItemMissile", "Got Missile Tank"): (
+            "sItemShinyMissile", "Got Shiny Missile Tank"),
+        ("Hi-Jump Boots", "sItemHijump", "Hi-Jump Boots acquired"): (
+            "sItemShinyHijump", "Shiny Air Jordan Boots acquired"),
+        ("Screw Attack", "sItemScrewAttack", "Screw Attack acquired"): (
+            "sItemShinyScrewAttack", "Shiny Screw Attacker acquired"),
+        ("Ice Beam", "sItemIceBeam", "Ice Beam acquired"): ("sItemShinyIceBeam", "Shiny Ice Cream acquired"),
+        ("Nothing", "sItemNothing", "Nothing acquired"): ("sItemShinyNothing", "Shiny Nothing acquired"),
+    }
+
     def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random):
         pickup_map_dict = {}
         for pickup in pickup_list:
@@ -42,23 +54,11 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 }
             }
 
-            # Effect, sprite, header => new_sprite, new_header
-            shinies = {
-                ("Missile Expansion", "sItemMissile", "Got Missile Tank"): (
-                    "sItemShinyMissile", "Got Shiny Missile Tank"),
-                ("Hi-Jump Boots", "sItemHijump", "Hi-Jump Boots acquired"): (
-                    "sItemShinyHijump", "Shiny Air Jordan Boots acquired"),
-                ("Screw Attack", "sItemScrewAttack", "Screw Attack acquired"): (
-                    "sItemShinyScrewAttack", "Shiny Screw Attacker acquired"),
-                ("Ice Beam", "sItemIceBeam", "Ice Beam acquired"): ("sItemShinyIceBeam", "Shiny Ice Cream acquired"),
-                ("Nothing", "sItemNothing", "Nothing acquired"): ("sItemShinyNothing", "Shiny Nothing acquired"),
-            }
-
             pickup_obj = pickup_map_dict[object_name]
             shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup_obj["text"]["header"])
 
-            if (shiny_id in shinies) and not pickup.other_player and rng.randint(0, self._EASTER_EGG_SHINY) == 0:
-                sprite, text = shinies[shiny_id]
+            if (shiny_id in self.SHINIES) and not pickup.other_player and rng.randint(0, self._EASTER_EGG_SHINY) == 0:
+                sprite, text = self.SHINIES[shiny_id]
                 pickup_obj["sprite_details"]["name"] = sprite
                 pickup_obj["text"]["header"] = text
 
