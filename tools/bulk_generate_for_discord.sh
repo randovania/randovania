@@ -25,7 +25,7 @@ mkdir -p "$OUTPUT_PATH"
 python -m randovania layout batch-distribute --process-count "${PROCESS_COUNT}" "$permalink" "${TARGET_SEED_COUNT}" "$RDVGAME_PATH" | tee "$GENERATION_LOG_PATH"
 generated_count=$(find "$RDVGAME_PATH/" -type f | wc -l)
 failed_count=$((TARGET_SEED_COUNT - generated_count))
-timed_out_count=$(grep -c "Timeout reached when validating possibility" "$GENERATION_LOG_PATH")
+timed_out_count=$(grep -c "Timeout reached when validating possibility" "$GENERATION_LOG_PATH" || true)  # fails if no matches otherwise
 
 # Analyze
 python tools/log_analyzer.py "$RDVGAME_PATH" "$REPORT_PATH"
