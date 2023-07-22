@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Main Plaza - Tree item OoB logic
 - Added: Crossway - Easier boost only method for item
+- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner 
 
 ##### Phendrana Drifts
 
