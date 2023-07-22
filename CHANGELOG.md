@@ -41,6 +41,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
 - Removed: In Cataris - Green EMMI Introduction, the advanced Pseudo Wave Beam to break the blob from below is removed.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Main Plaza - Tree item OoB logic
+- Added: Crossway - Easier boost only method for item
+
+##### Phendrana Drifts
+
+- Fixed: Quarantine Cave - Various cleanup with Thardus fight logic. Removed Ice Beam only possibility, reworked visor requirements.
+
 ### Metroid Prime 2: Echoes
 
 - Added: Tracker layout "Debug Info", which also shows details useful for investigating errors.
