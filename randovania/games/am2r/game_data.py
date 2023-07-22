@@ -6,18 +6,18 @@ from randovania.layout.preset_describer import GamePresetDescriber
 
 
 def _options():
-    from randovania.interface_common.options import PerGameOptions
-    return PerGameOptions
+    from randovania.games.am2r.exporter.options import AM2RPerGameOptions
+    return AM2RPerGameOptions
 
 
 def _gui() -> game.GameGui:
     from randovania.games.am2r import gui
 
     return game.GameGui(
-        game_tab=gui.AM2RGameTabWidget,
+        game_tab=gui.AM2RTabWidget,
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.AM2RCosmeticPatchesDialog,
-        export_dialog=gui.AM2RGameExportDialog,
+        export_dialog=gui.AM2RExportDialog,
         progressive_item_gui_tuples=(),
         spoiler_visualizer=(),
     )
@@ -41,8 +41,8 @@ def _patch_data_factory():
 
 
 def _exporter():
-    from randovania.games.am2r.exporter.game_exporter import AM2RGameExporter
-    return AM2RGameExporter()
+    from randovania.games.am2r.exporter.game_exporter import AM2RExporter
+    return AM2RExporter()
 
 game_data: game.GameData = game.GameData(
     short_name="AM2R",

@@ -1,12 +1,25 @@
 from __future__ import annotations
 
+import dataclasses
 import json
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 from PySide6.QtCore import QCoreApplication
 
 from randovania.gui.dialog.game_export_dialog import GameExportDialog
-from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RGameExportDialog
+from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RExportDialog
+from randovania.games.am2r.exporter.game_exporter import AM2RExportParams
+from randovania.games.game import RandovaniaGame
+from randovania.games.am2r.exporter.options import AM2RPerGameOptions
+from randovania.gui.dialog.game_export_dialog import (
+    GameExportDialog,
+    add_field_validation,
+    output_file_validator,
+    prompt_for_input_directory,
+    prompt_for_output_directory,
+    spoiler_path_for_directory,
+)
 
 if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExportParams
@@ -14,13 +27,73 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options, PerGameOptions
 
 
-class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
+class AM2RExportDialog(GameExportDialog, Ui_AM2RExportDialog):
+    @classmethod
+    def game_enum(cls):
+        return RandovaniaGame.AM2R
+
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
-        self.json_label.setText(QCoreApplication.translate("json_label", f"{json.dumps(patch_data, indent=2)}", None))
+        per_game = options.options_for_game(self.game_enum())
+        assert isinstance(per_game, AM2RPerGameOptions)
 
-    def update_per_game_options(self, per_game: PerGameOptions) -> PerGameOptions:
-        raise NotImplementedError
+        # Input
+        self.input_file_button.clicked.connect(self._on_input_file_button)
 
-    def get_game_export_params(self) -> GameExportParams:
-        raise NotImplementedError
+        # Output
+        self.output_file_button.clicked.connect(self._on_output_file_button)
+
+        if per_game.input_path is not None:
+            self.input_file_edit.setText(str(per_game.input_path))
+
+        if per_game.output_path is not None:
+            self.output_file_edit.setText(str(per_game.output_path))
+
+        add_field_validation(
+            accept_button=self.accept_button,
+            fields={
+                self.input_file_edit: lambda: not self.input_file.is_dir(),
+                self.output_file_edit: lambda: not (self.output_file.is_dir() and self.output_file != self.input_file),
+            }
+        )
+
+    # Getters
+    @property
+    def input_file(self) -> Path:
+        return Path(self.input_file_edit.text())
+
+    @property
+    def output_file(self) -> Path:
+        return Path(self.output_file_edit.text())
+
+    @property
+    def auto_save_spoiler(self) -> bool:
+        return self.auto_save_spoiler_check.isChecked()
+
+    # Input file
+    def _on_input_file_button(self):
+        input_dir = prompt_for_input_directory(self, self.input_file_edit)
+        if input_dir is not None:
+            self.input_file_edit.setText(str(input_dir.absolute()))
+
+    # Output File
+    def _on_output_file_button(self):
+        output_dir = prompt_for_output_directory(self, self.output_file, self.output_file_edit)
+        if output_dir is not None:
+            self.output_file_edit.setText(str(output_dir))
+
+    def update_per_game_options(self, per_game: AM2RPerGameOptions) -> AM2RPerGameOptions:
+        return dataclasses.replace(
+            per_game,
+            input_path=self.input_file,
+            output_path=self.output_file,
+        )
+
+    def get_game_export_params(self) -> AM2RExportParams:
+        spoiler_output = spoiler_path_for_directory(self.auto_save_spoiler, self.output_file)
+
+        return AM2RExportParams(
+            spoiler_output=spoiler_output,
+            input_path=self.input_file,
+            output_path=self.output_file,
+        )
