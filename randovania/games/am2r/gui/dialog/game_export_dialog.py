@@ -1,30 +1,23 @@
 from __future__ import annotations
 
 import dataclasses
-import json
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from PySide6.QtCore import QCoreApplication
-
-from randovania.gui.dialog.game_export_dialog import GameExportDialog
-from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RExportDialog
 from randovania.games.am2r.exporter.game_exporter import AM2RExportParams
-from randovania.games.game import RandovaniaGame
 from randovania.games.am2r.exporter.options import AM2RPerGameOptions
+from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
-    output_file_validator,
     prompt_for_input_directory,
     prompt_for_output_directory,
     spoiler_path_for_directory,
 )
+from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RExportDialog
 
 if TYPE_CHECKING:
-    from randovania.exporter.game_exporter import GameExportParams
-    from randovania.games.game import RandovaniaGame
-    from randovania.interface_common.options import Options, PerGameOptions
+    from randovania.interface_common.options import Options
 
 
 class AM2RExportDialog(GameExportDialog, Ui_AM2RExportDialog):
