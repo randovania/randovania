@@ -2,14 +2,12 @@ from __future__ import annotations
 
 import dataclasses
 from typing import TYPE_CHECKING
+from pathlib import Path
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
 if TYPE_CHECKING:
     from randovania.lib import status_update_lib
-
-
-
 
 
 @dataclasses.dataclass(frozen=True)
