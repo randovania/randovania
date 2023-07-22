@@ -38,7 +38,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
         {},
         {"starting_pickup": "Morph Ball"},
         {"elevator": NodeIdentifier.create("Temple Grounds", "Transport to Agon Wastes",
-                                           "Elevator to Agon Wastes - Transport to Temple Grounds")},
+                                           "Elevator to Agon Wastes")},
         {"configurable_nodes": [("Agon Wastes/Mining Plaza/Translator Gate", "Cobalt"),
                                 ("Torvus Bog/Great Bridge/Translator Gate", "Emerald")]},
         {"pickup": "Morph Ball Bomb"},
@@ -60,54 +60,54 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
         "starting_location": "Temple Grounds/Landing Site/Save Station",
         "starting_equipment": {"pickups": []},
         "dock_connections": {
-            "Temple Grounds/Temple Transport C/Elevator to Great Temple - Temple Transport C":
-            "Great Temple/Temple Transport C/Elevator to Temple Grounds - Temple Transport C",
-            "Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes - Transport to Temple Grounds":
-            "Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Agon Wastes",
-            "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Temple Grounds":
-            "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Torvus Bog",
-            "Temple Grounds/Temple Transport B/Elevator to Great Temple - Temple Transport B":
-            "Great Temple/Temple Transport B/Elevator to Temple Grounds - Temple Transport B",
+            "Temple Grounds/Temple Transport C/Elevator to Great Temple":
+            "Great Temple/Temple Transport C/Elevator to Temple Grounds",
+            "Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes":
+            "Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds",
+            "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog":
+            "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds",
+            "Temple Grounds/Temple Transport B/Elevator to Great Temple":
+            "Great Temple/Temple Transport B/Elevator to Temple Grounds",
             "Temple Grounds/Transport to Sanctuary Fortress/"
-                "Elevator to Sanctuary Fortress - Transport to Temple Grounds":
+                "Elevator to Sanctuary Fortress":
             "Sanctuary Fortress/Transport to Temple Grounds/"
-                "Elevator to Temple Grounds - Transport to Sanctuary Fortress",
-            "Temple Grounds/Temple Transport A/Elevator to Great Temple - Temple Transport A":
-            "Great Temple/Temple Transport A/Elevator to Temple Grounds - Temple Transport A",
-            "Great Temple/Temple Transport A/Elevator to Temple Grounds - Temple Transport A":
-            "Temple Grounds/Temple Transport A/Elevator to Great Temple - Temple Transport A",
-            "Great Temple/Temple Transport C/Elevator to Temple Grounds - Temple Transport C":
-            "Temple Grounds/Temple Transport C/Elevator to Great Temple - Temple Transport C",
-            "Great Temple/Temple Transport B/Elevator to Temple Grounds - Temple Transport B":
-            "Temple Grounds/Temple Transport B/Elevator to Great Temple - Temple Transport B",
-            "Temple Grounds/Sky Temple Gateway/Teleport to Great Temple - Sky Temple Energy Controller":
+                "Elevator to Temple Grounds",
+            "Temple Grounds/Temple Transport A/Elevator to Great Temple":
+            "Great Temple/Temple Transport A/Elevator to Temple Grounds",
+            "Great Temple/Temple Transport A/Elevator to Temple Grounds":
+            "Temple Grounds/Temple Transport A/Elevator to Great Temple",
+            "Great Temple/Temple Transport C/Elevator to Temple Grounds":
+            "Temple Grounds/Temple Transport C/Elevator to Great Temple",
+            "Great Temple/Temple Transport B/Elevator to Temple Grounds":
+            "Temple Grounds/Temple Transport B/Elevator to Great Temple",
+            "Temple Grounds/Sky Temple Gateway/Elevator to Great Temple":
             "Great Temple/Sky Temple Energy Controller/Save Station",
-            "Great Temple/Sky Temple Energy Controller/Teleport to Temple Grounds - Sky Temple Gateway":
+            "Great Temple/Sky Temple Energy Controller/Elevator to Temple Grounds":
             "Temple Grounds/Sky Temple Gateway/Spawn Point/Front of Teleporter",
-            "Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Agon Wastes":
-            "Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes - Transport to Temple Grounds",
-            "Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Agon Wastes":
-            "Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes - Transport to Torvus Bog",
-            "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress - Transport to Agon Wastes":
-            "Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes - Transport to Sanctuary Fortress",
-            "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Torvus Bog":
-            "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Temple Grounds",
-            "Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes - Transport to Torvus Bog":
-            "Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Agon Wastes",
-            "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress - Transport to Torvus Bog":
-            "Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Sanctuary Fortress",
+            "Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds":
+            "Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes",
+            "Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog":
+            "Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes",
+            "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress":
+            "Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes",
+            "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds":
+            "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog",
+            "Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes":
+            "Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog",
+            "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress":
+            "Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog",
             "Sanctuary Fortress/Transport to Temple Grounds/"
-                "Elevator to Temple Grounds - Transport to Sanctuary Fortress":
+                "Elevator to Temple Grounds":
             "Temple Grounds/Transport to Sanctuary Fortress/"
-                "Elevator to Sanctuary Fortress - Transport to Temple Grounds",
-            "Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes - Transport to Sanctuary Fortress":
-            "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress - Transport to Agon Wastes",
-            "Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Sanctuary Fortress":
-            "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress - Transport to Torvus Bog",
-            "Sanctuary Fortress/Aerie Transport Station/Elevator to Sanctuary Fortress - Aerie":
-            "Sanctuary Fortress/Aerie/Dock to Aerie Access",
-            "Sanctuary Fortress/Aerie/Elevator to Sanctuary Fortress - Aerie Transport Station":
-            "Sanctuary Fortress/Aerie Transport Station/Door to Checkpoint Station"
+                "Elevator to Sanctuary Fortress",
+            "Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes":
+            "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress",
+            "Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog":
+            "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress",
+            "Sanctuary Fortress/Aerie Transport Station/Elevator to Aerie":
+            "Sanctuary Fortress/Aerie/Elevator to Aerie Transport Station",
+            "Sanctuary Fortress/Aerie/Elevator to Aerie Transport Station":
+            "Sanctuary Fortress/Aerie Transport Station/Elevator to Aerie"
         },
         "dock_weakness": {},
         "configurable_nodes": {},

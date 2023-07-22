@@ -17,7 +17,6 @@ if typing.TYPE_CHECKING:
 
 _FIELDS = [
     "septogg_helpers",
-    "change_level_design",
     "respawn_bomb_blocks",
     "skip_cutscenes",
     "grave_grotto_blocks",
@@ -25,6 +24,7 @@ _FIELDS = [
     "nest_pipes",
     "softlock_prevention_blocks",
     "a3_entrance_blocks",
+    "show_unexplored_map",
     "screw_blocks"
 ]
 

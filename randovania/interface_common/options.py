@@ -129,6 +129,7 @@ _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(identity, str),
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
+    "advanced_generate_in_another_process": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
     "experimental_settings": Serializer(identity, bool),
@@ -194,6 +195,7 @@ class Options:
     _last_changelog_displayed: str
     _advanced_validate_seed_after: bool | None = None
     _advanced_timeout_during_generation: bool | None = None
+    _advanced_generate_in_another_process: bool | None = None
     _auto_save_spoiler: bool | None = None
     _dark_mode: bool | None = None
     _experimental_settings: bool | None = None
@@ -563,6 +565,14 @@ class Options:
     @advanced_timeout_during_generation.setter
     def advanced_timeout_during_generation(self, value: bool):
         self._edit_field("advanced_timeout_during_generation", value)
+
+    @property
+    def advanced_generate_in_another_process(self) -> bool:
+        return _return_with_default(self._advanced_generate_in_another_process, lambda: True)
+
+    @advanced_generate_in_another_process.setter
+    def advanced_generate_in_another_process(self, value: bool):
+        self._edit_field("advanced_generate_in_another_process", value)
 
     ######
 

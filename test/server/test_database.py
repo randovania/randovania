@@ -47,9 +47,9 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         s.layout_description = description
         s.save()
         game_details = GameDetails(
-            seed_hash='CXQTEVPI',
+            seed_hash='NMY7DGIN',
             spoiler=True,
-            word_hash='Aether Honor Spreader',
+            word_hash='Spreader Liftvine Great',
         )
         worlds.append(MultiplayerWorld(id=w1.uuid, name="Prime 1", preset_raw=w1.preset))
         worlds.append(MultiplayerWorld(id=w2.uuid, name="Prime 2", preset_raw=w2.preset))

@@ -27,6 +27,7 @@ def test_round_trip_small(test_files_dir, small_name):
     encoded_data = data_writer.write_game_description(game)
 
     # # Uncomment the following to update the file
+    # from randovania.lib import json_lib
     # json_lib.write_path(test_files_dir.joinpath(small_name), encoded_data); assert False
 
     assert encoded_data == original_data

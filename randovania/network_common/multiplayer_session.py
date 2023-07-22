@@ -4,6 +4,7 @@ import dataclasses
 import datetime
 import re
 import uuid
+from functools import cached_property
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -32,10 +33,11 @@ class MultiplayerSessionListEntry(JsonDataclass):
     has_password: bool
     state: MultiplayerSessionState
     num_users: int
-    num_worlds: int  # TODO: currently always 0
+    num_worlds: int
     creator: str
     creation_date: datetime.datetime
     is_user_in_session: bool
+    join_date: datetime.datetime
 
     def __post_init__(self):
         tzinfo = self.creation_date.tzinfo
@@ -64,7 +66,7 @@ class MultiplayerWorld(JsonDataclass):
     name: str
     preset_raw: str
 
-    @property
+    @cached_property
     def preset(self) -> VersionedPreset:
         return VersionedPreset.from_str(self.preset_raw)
 

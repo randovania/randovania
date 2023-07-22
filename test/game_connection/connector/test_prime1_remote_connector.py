@@ -153,7 +153,7 @@ async def test_multiworld_interaction(connector: Prime1RemoteConnector, depth: i
 
 
 @pytest.mark.parametrize("failure_at", [None, 1, 2])
-@pytest.mark.parametrize("depth", [0, 1, 2])
+@pytest.mark.parametrize("depth", [0, 1, 2, 3])
 async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, failure_at: int | None):
     # Setup
     connector.message_cooldown = 0.0
@@ -171,7 +171,10 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
         connector.get_inventory.side_effect = MemoryOperationException("error at _get_inventory")
         should_disconnect = depth > 0
 
-    connector._multiworld_interaction = AsyncMock()
+    connector._send_next_pending_message = AsyncMock()
+    connector._multiworld_interaction = AsyncMock(
+        return_value=depth <= 2
+    )
     if failure_at == 2:
         connector._multiworld_interaction.side_effect = MemoryOperationException("error at _check_for_collected_index")
         should_disconnect = depth > 1
@@ -195,6 +198,11 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
         connector._multiworld_interaction.assert_awaited_once_with()
     else:
         connector._multiworld_interaction.assert_not_awaited()
+
+    if expected_depth > 2:
+        connector._send_next_pending_message.assert_awaited_once_with()
+    else:
+        connector._send_next_pending_message.assert_not_awaited()
 
     if 0 < depth:
         assert connector._last_emitted_region is not None

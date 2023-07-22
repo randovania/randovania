@@ -158,6 +158,12 @@ class GameConnection(QObject):
         connected_state.current_inventory = inventory
         self.GameStateUpdated.emit(connected_state)
 
+    def get_builder_for_connector(self, connector: RemoteConnector) -> ConnectorBuilder:
+        for builder, this_connector in self.remote_connectors.items():
+            if this_connector == connector:
+                return builder
+        raise KeyError("Unknown connector")
+
     def get_backend_choice_for_state(self, state: ConnectedGameState) -> ConnectorBuilderChoice:
         for builder, connector in self.remote_connectors.items():
             if connector == state.source:

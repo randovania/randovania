@@ -46,13 +46,29 @@ def generate_layout(options: Options,
             preset.configuration.dock_rando.mode == DockRandoMode.DOCKS for preset in parameters.presets
         ))
 
+        extra_args = {
+            "generator_params": parameters,
+            "validate_after_generation": options.advanced_validate_seed_after,
+        }
+        if not options.advanced_timeout_during_generation:
+            extra_args["timeout"] = None
+        if retries is not None:
+            extra_args["attempts"] = retries
+
+        debug_level = debug.debug_level()
+        if not parameters.spoiler:
+            debug_level = 0
+
+        if options.advanced_generate_in_another_process:
+            generator_function = generate_in_another_process
+        else:
+            generator_function = generate_in_host_process
+
         try:
-            result = generate_in_another_process(
-                parameters=parameters,
+            result = generator_function(
                 status_update=ConstantPercentageCallback(progress_update, -1),
-                validate_after_generation=options.advanced_validate_seed_after,
-                timeout_during_generation=options.advanced_timeout_during_generation,
-                attempts=retries,
+                debug_level=debug_level,
+                extra_args=extra_args,
             )
             span.set_tag("exception", "none")
             span.set_status("ok")
@@ -81,31 +97,16 @@ def _generate_layout_worker(output_pipe: Connection,
     return asyncio.run(generator.generate_and_validate_description(status_update=status_update, **extra_args))
 
 
-def generate_in_another_process(parameters: GeneratorParameters,
-                                status_update: Callable[[str], None],
-                                validate_after_generation: bool,
-                                timeout_during_generation: bool,
-                                attempts: int | None,
+def generate_in_another_process(status_update: Callable[[str], None],
+                                debug_level: int,
+                                extra_args: dict,
                                 ) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
-
-    debug_level = debug.debug_level()
-    if not parameters.spoiler:
-        debug_level = 0
 
     def on_done(_):
         output_pipe.send(None)
 
     with ProcessPoolExecutor(max_workers=1) as executor:
-        extra_args = {
-            "generator_params": parameters,
-            "validate_after_generation": validate_after_generation,
-        }
-        if not timeout_during_generation:
-            extra_args["timeout"] = None
-        if attempts is not None:
-            extra_args["attempts"] = attempts
-
         future = executor.submit(_generate_layout_worker, output_pipe, debug_level, extra_args)
         future.add_done_callback(on_done)
 
@@ -119,3 +120,14 @@ def generate_in_another_process(parameters: GeneratorParameters,
                     raise
 
         return future.result()
+
+
+def generate_in_host_process(status_update: Callable[[str], None],
+                             debug_level: int,
+                             extra_args: dict,
+                             ) -> LayoutDescription:
+    with debug.with_level(debug_level):
+        return asyncio.run(generator.generate_and_validate_description(
+            **extra_args,
+            status_update=status_update,
+        ))

@@ -1,4 +1,5 @@
 from randovania.gui.game_details.generation_order_widget import GenerationOrderWidget
+from randovania.gui.lib import model_lib
 from randovania.layout.layout_description import LayoutDescription
 
 
@@ -8,13 +9,7 @@ def test_generation_order_widget(skip_qtbot, test_files_dir):
     widget = GenerationOrderWidget(None, layout, ["Me"])
     skip_qtbot.addWidget(widget)
 
-    def get_texts(model):
-        return [
-            model.data(model.index(row, 0))
-            for row in range(min(5, model.rowCount()))
-        ]
-
-    assert get_texts(widget.proxy_model) == [
+    assert model_lib.get_texts(widget.proxy_model, max_rows=5) == [
         'Power Bomb at Temple Grounds/GFMC Compound/Pickup (Missile Launcher)',
         'Space Jump Boots at Temple Grounds/Hive Chamber B/Pickup (Missile)',
         'Violet Translator at Temple Grounds/Temple Assembly Site/Pickup (Missile)',
@@ -23,11 +18,11 @@ def test_generation_order_widget(skip_qtbot, test_files_dir):
     ]
 
     widget.filter_edit.setText("Space Jump")
-    assert get_texts(widget.proxy_model) == [
+    assert model_lib.get_texts(widget.proxy_model) == [
         'Space Jump Boots at Temple Grounds/Hive Chamber B/Pickup (Missile)',
         'Screw Attack at Dark Agon Wastes/Judgment Pit/Pickup (Space Jump Boots) with '
         'hint at Agon Wastes/Mining Plaza/Lore Scan'
     ]
 
     widget.filter_edit.setText("Something That Does Not Exist")
-    assert get_texts(widget.proxy_model) == []
+    assert model_lib.get_texts(widget.proxy_model) == []

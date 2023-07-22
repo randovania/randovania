@@ -21,7 +21,6 @@ class AM2RConfiguration(BaseConfiguration):
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     softlock_prevention_blocks: bool
     septogg_helpers: bool
-    change_level_design: bool
     skip_cutscenes: bool
     respawn_bomb_blocks: bool
     screw_blocks: bool
@@ -30,7 +29,7 @@ class AM2RConfiguration(BaseConfiguration):
     fusion_mode: bool
     grave_grotto_blocks: bool
     nest_pipes: bool
-    # TODO: warp to start
+    show_unexplored_map: bool
     a3_entrance_blocks: bool
 
     @classmethod

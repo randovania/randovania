@@ -43,7 +43,11 @@ class PrimeGameExportParams(GameExportParams):
 def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
     model_list = []
     if use_external_assets:
-        bad_models = {"prime2_MissileLauncher", "prime2_MissileExpansionPrime1"}
+        bad_models = {
+            "prime2_MissileLauncher",
+            "prime2_MissileExpansionPrime1",
+            "prime2_CoinChest",
+        }
         model_list = list(set(assets_meta["items"]) - bad_models)
 
     for level in patch_data["levelData"].values():

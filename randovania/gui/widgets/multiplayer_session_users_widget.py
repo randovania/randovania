@@ -9,10 +9,10 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
-import randovania
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
+from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
+from randovania.gui.dialog.multiplayer_select_preset_dialog import MultiplayerSelectPresetDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, common_qt_lib, signal_handling
 from randovania.interface_common.options import InfoAlert, Options
@@ -28,7 +28,7 @@ from randovania.network_common.session_state import MultiplayerSessionState
 
 if TYPE_CHECKING:
     from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
-    from randovania.interface_common.preset_manager import PresetManager
+    from randovania.gui.lib.window_manager import WindowManager
 
 
 def make_tool(text: str):
@@ -53,7 +53,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     _session: MultiplayerSessionEntry
 
-    def __init__(self, options: Options, preset_manager: PresetManager, session_api: MultiplayerSessionApi):
+    def __init__(self, options: Options, window_manager: WindowManager, session_api: MultiplayerSessionApi):
         super().__init__()
         self.header().setStretchLastSection(False)
         self.headerItem().setText(0, "Name")
@@ -67,7 +67,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         self.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
 
         self._options = options
-        self._preset_manager = preset_manager
+        self._window_manager = window_manager
         self._session_api = session_api
 
     @property
@@ -80,9 +80,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     #
 
     def _create_select_preset_dialog(self, include_world_name_prompt: bool):
-        return SelectPresetDialog(self._preset_manager, self._options,
-                                  allowed_games=self._session.allowed_games,
-                                  include_world_name_prompt=include_world_name_prompt)
+        return MultiplayerSelectPresetDialog(self._window_manager, self._options,
+                                             allowed_games=self._session.allowed_games,
+                                             include_world_name_prompt=include_world_name_prompt)
 
     async def _prompt_for_preset(self):
         dialog = self._create_select_preset_dialog(False)
@@ -157,43 +157,6 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         message_box.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
         await async_dialog.execute_dialog(message_box)
 
-    @asyncSlot()
-    async def _preset_customize(self, world_uid: uuid.UUID):
-        print("customize preset", world_uid)
-        # if self._logic_settings_window is not None:
-        #     if self._logic_settings_window._game_session_row == row:
-        #         self._logic_settings_window.raise_()
-        #         self._logic_settings_window.activateWindow()
-        #     else:
-        #         # show warning that a dialog is already in progress?
-        #         await async_dialog.warning(self, "Customize in progress",
-        #                                    "A window for customizing a preset is already open. "
-        #                                    "Please close it before continuing.",
-        #                                    async_dialog.StandardButton.Ok, async_dialog.StandardButton.Ok)
-        #     return
-        #
-        # row_index = self.rows.index(row)
-        # old_preset = self._game_session.presets[row_index].get_preset()
-        # if self._preset_manager.is_included_preset_uuid(old_preset.uuid):
-        #     old_preset = old_preset.fork()
-        #
-        # editor = PresetEditor(old_preset, self._options)
-        # self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
-        # self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
-        # editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
-        # self._logic_settings_window._game_session_row = row
-        #
-        # result = await async_dialog.execute_dialog(self._logic_settings_window)
-        # self._logic_settings_window = None
-        #
-        # if result == QtWidgets.QDialog.DialogCode.Accepted:
-        #     new_preset = VersionedPreset.with_preset(editor.create_custom_preset_with())
-        #
-        #     if self._preset_manager.add_new_preset(new_preset):
-        #         self.refresh_row_import_preset_actions()
-        #
-        #     await self._do_import_preset(row_index, new_preset)
-
     def _get_preset(self, world_uid: uuid.UUID) -> VersionedPreset:
         return VersionedPreset.from_str(self._session.get_world(world_uid).preset_raw)
 
@@ -205,7 +168,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             # Nothing to do, this is an included preset
             return
 
-        self._preset_manager.add_new_preset(preset)
+        self._window_manager.preset_manager.add_new_preset(preset)
 
     @asyncSlot()
     async def _world_save_preset_to_file(self, world_uid: uuid.UUID):
@@ -315,12 +278,6 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                        self._preset_view_summary, world_details.id)
 
             if owner == self.your_id or self.is_admin():
-                # TODO: Customize preset button
-                # customize_action = preset_menu.addAction("Customize")
-                # customize_action.setEnabled(can_change_preset)
-                # connect_to(customize_action,
-                #            self._preset_customize, world_details.id)
-
                 connect_to(
                     preset_menu.addAction("Replace with"),
                     self._world_replace_preset, world_details.id,
@@ -337,7 +294,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
                 connect_to(world_menu.addAction("Customize cosmetic options"), self._customize_cosmetic,
                            world_details.id)
-                if randovania.is_dev_version():
+                if ConnectorBuilderChoice.DEBUG.is_usable():
                     connect_to(world_menu.addAction("Connect via debug connector"),
                                self._register_debug_connector,
                                world_details)

@@ -25,7 +25,6 @@ from randovania.network_common.multiplayer_session import (
     GameDetails,
     MultiplayerSessionAuditEntry,
     MultiplayerSessionAuditLog,
-    MultiplayerSessionListEntry,
     MultiplayerUser,
     MultiplayerWorld,
     UserWorldDetail,
@@ -206,23 +205,6 @@ class MultiplayerSession(BaseModel):
         except peewee.DoesNotExist:
             return False
         return True
-
-    def create_list_entry(self, user: User):
-        num_users = getattr(self, "num_users", None)
-        if num_users is None:
-            num_users = len(self.members)
-
-        return MultiplayerSessionListEntry(
-            id=self.id,
-            name=self.name,
-            has_password=self.password is not None,
-            state=self.state,
-            num_users=num_users,
-            num_worlds=0,
-            creator=self.creator.name,
-            creation_date=self.creation_datetime,
-            is_user_in_session=self.is_user_in_session(user),
-        )
 
     @property
     def allowed_games(self) -> list[RandovaniaGame]:

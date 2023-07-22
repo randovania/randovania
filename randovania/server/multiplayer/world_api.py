@@ -39,10 +39,10 @@ def get_inventory_room_name_raw(world_uuid: uuid.UUID, user_id: int):
     return f"multiplayer-{world_uuid}-{user_id}-inventory"
 
 
-def emit_inventory_update(sio: ServerApp, world: World, user_id: int, inventory: bytes):
+def emit_inventory_update(sa: ServerApp, world: World, user_id: int, inventory: bytes):
     room_name = get_inventory_room_name_raw(world.uuid, user_id)
 
-    sio.sio.emit(
+    sa.sio.emit(
         signals.WORLD_BINARY_INVENTORY,
         (str(world.uuid), user_id, inventory),
         namespace="/",
@@ -125,7 +125,7 @@ def _collect_location(session: MultiplayerSession, world: World,
 
 
 @sentry_sdk.trace
-def collect_locations(sio: ServerApp, source_world: World, pickup_locations: tuple[int, ...],
+def collect_locations(sa: ServerApp, source_world: World, pickup_locations: tuple[int, ...],
                       ) -> set[World]:
     session = source_world.session
 
@@ -144,13 +144,13 @@ def collect_locations(sio: ServerApp, source_world: World, pickup_locations: tup
     return receiver_worlds
 
 
-def watch_inventory(sio: ServerApp, world_uid: uuid.UUID, user_id: int, watch: bool, binary: bool):
+def watch_inventory(sa: ServerApp, world_uid: uuid.UUID, user_id: int, watch: bool, binary: bool):
     logger().debug("Watching inventory of %s/%d: %s", world_uid, user_id, watch)
     room_name = get_inventory_room_name_raw(world_uid, user_id)
 
     if watch:
         world = World.get_by_uuid(world_uid)
-        session_common.get_membership_for(sio, world.session)
+        session_common.get_membership_for(sa, world.session)
         try:
             association = WorldUserAssociation.get_by_instances(world=world, user=user_id)
         except peewee.DoesNotExist:
@@ -158,7 +158,7 @@ def watch_inventory(sio: ServerApp, world_uid: uuid.UUID, user_id: int, watch: b
 
         flask_socketio.join_room(room_name)
         if association.inventory is not None:
-            emit_inventory_update(sio, world, user_id, association.inventory)
+            emit_inventory_update(sa, world, user_id, association.inventory)
     else:
         # Allow one to stop listening even if you're not allowed to start listening
         flask_socketio.leave_room(room_name)
@@ -175,7 +175,7 @@ def _check_user_is_associated(user: User, world: World) -> WorldUserAssociation:
 
 
 @sentry_sdk.trace
-def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: ServerWorldSync,
+def sync_one_world(sa: ServerApp, user: User, uid: uuid.UUID, world_request: ServerWorldSync,
                    ) -> tuple[ServerWorldResponse | None, int | None, set[World]]:
     sentry_sdk.set_tag("world_uuid", str(uid))
     world = World.get_by_uuid(uid)
@@ -191,9 +191,9 @@ def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: Se
     if world_request.status == GameConnectionStatus.Disconnected:
         flask_socketio.leave_room(_get_world_room(world))
     else:
-        if sio.ensure_in_room(_get_world_room(world)):
+        if sa.ensure_in_room(_get_world_room(world)):
             worlds_to_update.add(world)
-            sio.store_world_in_session(world)
+            sa.store_world_in_session(world)
 
     # Update association connection state
     if world_request.status != association.connection_state:
@@ -209,7 +209,7 @@ def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: Se
     if world_request.inventory is not None and world_request.inventory != association.inventory:
         association.inventory = world_request.inventory
         should_update_activity = True
-        emit_inventory_update(sio, world, user.id, world_request.inventory)
+        emit_inventory_update(sa, world, user.id, world_request.inventory)
         logger().info(
             "Session %d, World %s has new inventory",
             world.session_id, world.name,
@@ -224,7 +224,7 @@ def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: Se
 
     # Do this last, as it fails if session is in setup
     if world_request.collected_locations:
-        worlds_to_update.update(collect_locations(sio, world, world_request.collected_locations))
+        worlds_to_update.update(collect_locations(sa, world, world_request.collected_locations))
         should_update_activity = True
 
     # User did something, so update activity
@@ -235,8 +235,8 @@ def sync_one_world(sio: ServerApp, user: User, uid: uuid.UUID, world_request: Se
     return response, session_id_to_return, worlds_to_update
 
 
-def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
-    user = sio.get_current_user()
+def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
+    user = sa.get_current_user()
 
     world_details = {}
     failed_syncs = {}
@@ -247,7 +247,7 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
 
     for uid, world_request in request.worlds.items():
         try:
-            response, session_id, new_worlds_to_update = sync_one_world(sio, user, uid, world_request)
+            response, session_id, new_worlds_to_update = sync_one_world(sa, user, uid, world_request)
 
             if response is not None:
                 world_details[uid] = response
@@ -266,7 +266,7 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
             failed_syncs[uid] = error.ServerError()
 
     for world in worlds_to_update:
-        emit_world_pickups_update(sio, world)
+        emit_world_pickups_update(sa, world)
         sessions_to_update_actions.add(world.session.id)
 
     for session_id in sessions_to_update_meta:
@@ -282,7 +282,7 @@ def world_sync(sio: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse
 
 
 @sentry_sdk.trace
-def emit_world_pickups_update(sio: ServerApp, world: World):
+def emit_world_pickups_update(sa: ServerApp, world: World):
     session = world.session
 
     if session.state == MultiplayerSessionState.SETUP:
@@ -330,7 +330,7 @@ def emit_world_pickups_update(sio: ServerApp, world: World):
     flask_socketio.emit(signals.WORLD_PICKUPS_UPDATE, data, room=_get_world_room(world))
 
 
-def report_disconnect(sio: ServerApp, session_dict: dict, log: logging.Logger):
+def report_disconnect(sa: ServerApp, session_dict: dict, log: logging.Logger):
     user_id: int | None = session_dict.get("user-id")
     if user_id is None:
         return
@@ -357,6 +357,6 @@ def report_disconnect(sio: ServerApp, session_dict: dict, log: logging.Logger):
         session_common.emit_session_meta_update(session)
 
 
-def setup_app(sio: ServerApp):
-    sio.on("multiplayer_watch_inventory", watch_inventory)
-    sio.on_with_wrapper("multiplayer_world_sync", world_sync)
+def setup_app(sa: ServerApp):
+    sa.on("multiplayer_watch_inventory", watch_inventory)
+    sa.on_with_wrapper("multiplayer_world_sync", world_sync)

@@ -144,10 +144,10 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
             elevator_connection.update(connections)
 
         for teleporter, destination in elevators.static_teleporters.items():
-            elevator_connection[teleporter] = destination.area_identifier
+            elevator_connection[teleporter] = destination
 
         assignment = [
-            (region_list.typed_node_by_identifier(identifier, DockNode), region_list.default_node_for_area(target))
+            (region_list.typed_node_by_identifier(identifier, DockNode), region_list.node_by_identifier(target))
             for identifier, target in elevator_connection.items()
         ]
 
