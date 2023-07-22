@@ -53,7 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Phendrana Drifts
 
-- Fixed: Quarantine Cave - Various cleanup with Thardus fight logic. Removed Ice Beam only possibility, reworked visor requirements.
+- Changed: Quarantine Cave - Various cleanup with Thardus fight logic. Reworked visor requirements. Added Missile strategy (allows Ice Beam only fight logically).
 
 ### Metroid Prime 2: Echoes
 
