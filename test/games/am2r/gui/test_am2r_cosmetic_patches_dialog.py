@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from PySide6 import QtCore
+
 from randovania.games.am2r.gui.dialog.cosmetic_patches_dialog import (
     AM2RCosmeticPatchesDialog,
     hue_rotate_color,
@@ -42,7 +43,8 @@ def test_custom_hud_colors(skip_qtbot):
     assert dialog.custom_dna_rotation_square.styleSheet() == "background-color: rgb(49,208,5)"
 
     # Run
-    for field in [dialog.custom_health_rotation_field, dialog.custom_etank_rotation_field, dialog.custom_dna_rotation_field]:
+    for field in [dialog.custom_health_rotation_field, dialog.custom_etank_rotation_field,
+                  dialog.custom_dna_rotation_field]:
         field.setValue(50)
 
     # Assert
