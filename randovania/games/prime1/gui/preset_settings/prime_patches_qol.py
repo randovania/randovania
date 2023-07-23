@@ -40,6 +40,7 @@ class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
         self.cutscene_combo.setItemData(2, LayoutCutsceneMode.MINOR)
         self.cutscene_combo.setItemData(3, LayoutCutsceneMode.MAJOR)
         self.cutscene_combo.setItemData(4, LayoutCutsceneMode.SKIPPABLE)
+        self.cutscene_combo.setItemData(5, LayoutCutsceneMode.SKIPPABLE_COMPETITIVE)
 
         if editor._options.experimental_settings:
             # ruff made me do it this way
@@ -55,12 +56,15 @@ class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
 : Removes cutscenes that don't affect the game too much when removed.</p>
 <p><span style=" font-weight:600;">Major</span>
 : Allows you to continue playing the game while cutscenes happen.</p>
-<p><span style=" font-weight:700;">Skippable</span>
+<p><span style=" font-weight:700;">Skippable (Experimental)</span>
 : Keeps all of the cutscenes in the game, but makes it so that they can be skipped with the START button.</p>
+<p><span style=" font-weight:700;">Competitive (Experimental)</span>
+: Removes some cutsenes from the game which hinder the flow of competitive play. All others are skippable.</p>
                     </body>
                 </html>
             """)
         else:
+            self.cutscene_combo.removeItem(4)
             self.cutscene_combo.removeItem(4)
 
         signal_handling.on_combo(self.cutscene_combo, self._on_cutscene_changed)
