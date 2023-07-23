@@ -129,9 +129,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         game_session_api.widget_root = self
         game_session_api.setParent(self)
         self.users_widget = MultiplayerSessionUsersWidget(options, self._window_manager, game_session_api)
-        self.tabWidget.removeTab(0)
-        self.tabWidget.insertTab(0, self.users_widget, "Players")
-        self.tabWidget.setCurrentIndex(0)
+        self.users_widget.setSizePolicy(QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Preferred,
+            QtWidgets.QSizePolicy.Policy.Expanding
+        ))
+        self.worlds_layout.insertWidget(0, self.users_widget)
+        self.tab_widget.setCurrentIndex(0)
         self._all_locations = set()
         self._all_pickups = set()
 
@@ -761,7 +764,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         dialog.save_options()
         self._can_stop_background_process = game.exporter.export_can_be_aborted
-        self.tabWidget.setCurrentWidget(self.tab_session)
+        self.tab_widget.setCurrentWidget(self.tab_session)
         await game_exporter.export_game(
             exporter=game.exporter,
             export_dialog=dialog,

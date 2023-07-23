@@ -65,6 +65,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         self.header().setVisible(False)
         self.header().setSectionsMovable(False)
         self.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollMode.ScrollPerPixel)
 
         self._options = options
         self._window_manager = window_manager
