@@ -56,7 +56,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Chozo Ruins
 
+- Added: Main Plaza - Tree item OoB logic
+- Added: Crossway - Easier boost only method for item
+- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner 
 - Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
+
+##### Phendrana Drifts
+
+- Changed: Quarantine Cave - Various cleanup with Thardus fight logic. Reworked visor requirements. Added Missile strategy (allows Ice Beam only fight logically).
 
 ### Metroid Prime 2: Echoes
 
