@@ -59,7 +59,7 @@ class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
 <p><span style=" font-weight:700;">Skippable (Experimental)</span>
 : Keeps all of the cutscenes in the game, but makes it so that they can be skipped with the START button.</p>
 <p><span style=" font-weight:700;">Competitive (Experimental)</span>
-: Removes some cutsenes from the game which hinder the flow of competitive play. All others are skippable.</p>
+: Removes some cutscenes from the game which hinder the flow of competitive play. All others are skippable.</p>
                     </body>
                 </html>
             """)
