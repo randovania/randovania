@@ -27,6 +27,7 @@ from randovania.network_common.multiplayer_session import (
 from randovania.network_common.session_state import MultiplayerSessionState
 
 if TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
     from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
     from randovania.gui.lib.window_manager import WindowManager
 
@@ -80,13 +81,14 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     #
 
-    def _create_select_preset_dialog(self, include_world_name_prompt: bool):
+    def _create_select_preset_dialog(self, include_world_name_prompt: bool, default_game: RandovaniaGame | None):
         return MultiplayerSelectPresetDialog(self._window_manager, self._options,
                                              allowed_games=self._session.allowed_games,
+                                             default_game=default_game,
                                              include_world_name_prompt=include_world_name_prompt)
 
-    async def _prompt_for_preset(self):
-        dialog = self._create_select_preset_dialog(False)
+    async def _prompt_for_preset(self, default_game: RandovaniaGame | None):
+        dialog = self._create_select_preset_dialog(False, default_game)
         result = await async_dialog.execute_dialog(dialog)
         if result == QtWidgets.QDialog.DialogCode.Accepted:
             return dialog.selected_preset
@@ -97,7 +99,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     @asyncSlot()
     async def _world_replace_preset(self, world_uid: uuid.UUID):
-        preset = await self._prompt_for_preset()
+        game = self._session.get_world(world_uid).preset.game
+        preset = await self._prompt_for_preset(game)
         if preset is not None:
             await self._session_api.replace_preset_for(world_uid, preset)
 
@@ -200,7 +203,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     @asyncSlot()
     async def _new_world(self, user_id: int):
-        dialog = self._create_select_preset_dialog(True)
+        dialog = self._create_select_preset_dialog(True, None)
 
         result = await async_dialog.execute_dialog(dialog)
         if result != QtWidgets.QDialog.DialogCode.Accepted:
