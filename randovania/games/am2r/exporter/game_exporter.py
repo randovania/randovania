@@ -8,14 +8,13 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from typing import TYPE_CHECKING
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania import get_data_path
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
 if TYPE_CHECKING:
-    from pathlib import Path
 
     from randovania.lib import status_update_lib
 
