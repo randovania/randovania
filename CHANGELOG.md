@@ -52,6 +52,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Introduction of non-critical fixes and improvements to the base game such as fixed sound effects and removed tutorial popups. Those wanting an untainted experience of the vanilla game may still do so at their own risk by activating "Legacy Mode". For technical description of what's changed, see [qol.jsonc](https://github.com/toasterparty/randomprime/blob/randovania/generated/json_data/qol.jsonc)
 - Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
 
+#### Logic Database
+
+##### Chozo Ruins
+
+- Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
+
 ### Metroid Prime 2: Echoes
 
 - Added: Tracker layout "Debug Info", which also shows details useful for investigating errors.
