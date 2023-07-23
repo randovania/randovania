@@ -204,6 +204,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.duplicate_session_action.triggered.connect(self.duplicate_session)
         self.copy_permalink_button.clicked.connect(self.copy_permalink)
         self.view_game_details_button.clicked.connect(self.view_game_details)
+        self.everyone_can_claim_check.clicked.connect(self._on_everyone_can_claim_check)
 
         # Background Tasks
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -298,6 +299,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.update_game_tab()
         await self.update_logic_settings_window()
         self.update_multiworld_client_status()
+        self.everyone_can_claim_check.setChecked(session.allow_everyone_claim_world)
+        self.everyone_can_claim_check.setEnabled(self.users_widget.is_admin())
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -745,6 +748,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         world_uid = next(iter(own_entry.worlds.keys()))
         await self.users_widget.world_export(world_uid)
+
+    @asyncSlot()
+    async def _on_everyone_can_claim_check(self):
+        await self.game_session_api.set_everyone_can_claim(self.everyone_can_claim_check.isChecked())
 
     @asyncSlot()
     async def game_export_listener(self, world_id: uuid.UUID, patch_data: dict):

@@ -417,6 +417,42 @@ async def test_switch_admin(session_api, caplog):
     ]
 
 
+@pytest.mark.parametrize("new_state", [False, True])
+async def test_set_everyone_can_claim(session_api, caplog, new_state):
+    # Run
+    await session_api.set_everyone_can_claim(new_state)
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session", [
+            1234,
+            admin_actions.SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM.value, new_state,
+        ],
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         f'[Session 1234] Setting whether everyone can claim to {new_state}')
+    ]
+
+
+async def test_switch_readiness(session_api, caplog):
+    # Run
+    await session_api.switch_readiness(50)
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_player", [
+            1234, 50,
+            admin_actions.SessionAdminUserAction.SWITCH_READY.value,
+        ],
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         "[Session 1234] Switching ready-ness of 50")
+    ]
+
+
+
 async def test_request_session_update(session_api, caplog):
     # Run
     await session_api.request_session_update()
