@@ -8,6 +8,9 @@ from pathlib import Path
 from typing import Any
 
 from randovania.game_description import default_database
+from randovania.game_description.requirements.array_base import RequirementArrayBase
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.games import binary_data, default_data
 from randovania.games.game import RandovaniaGame
@@ -16,6 +19,7 @@ from randovania.lib.enum_lib import iterate_enum
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 
@@ -573,6 +577,72 @@ def pickups_per_area_command(sub_parsers):
     parser.set_defaults(func=pickups_per_area_command_logic)
 
 
+def _find_uncommented_tricks(requirement: Requirement):
+    from randovania.layout.base.trick_level import LayoutTrickLevel
+    if not isinstance(requirement, RequirementArrayBase):
+        return
+
+    trick_resources = []
+    for it in requirement.items:
+        if isinstance(it, RequirementArrayBase):
+            yield from _find_uncommented_tricks(it)
+        elif isinstance(it, ResourceRequirement) and it.resource.resource_type == ResourceType.TRICK:
+            trick_resources.append(it)
+
+    if requirement.comment is None and trick_resources:
+        yield ", ".join(sorted(
+            f"{req.resource.long_name} ({LayoutTrickLevel.from_number(req.amount).long_name})"
+            for req in trick_resources
+        ))
+
+
+def uncommented_trick_usages_logic(args):
+    gd = load_game_description(args)
+    output_path: Path = args.output_path
+
+    lines = []
+    for region in gd.region_list.regions:
+        lines.append(f"# {region.name}")
+        for area in region.areas:
+
+            paths = {}
+            for source, connections in area.connections.items():
+                paths[source.name] = {}
+                for target, requirement in connections.items():
+                    undocumented = sorted(set(_find_uncommented_tricks(requirement)))
+                    if undocumented:
+                        paths[source.name][target.name] = undocumented
+
+            if paths and any(paths.values()):
+                lines.append(f"## {area.name}")
+                for source_name, connections in paths.items():
+                    if connections:
+                        lines.append(f"### {source_name}")
+                        for target_name, undocumented in connections.items():
+                            if len(undocumented) == 1:
+                                lines.append(f"- [ ] {target_name}: {undocumented[0]}\n")
+                            else:
+                                lines.append(f"#### {target_name}")
+                                for it in undocumented:
+                                    lines.append(f"- [ ] {it}\n")
+
+    output_path.write_text("\n".join(lines))
+
+
+def uncommented_trick_usages_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "uncommented-trick-usages",
+        help="Creates a list of all trick usages that are in uncommented groups.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )
+    parser.add_argument(
+        "output_path",
+        type=Path,
+        help="Where to write the output.",
+    )
+    parser.set_defaults(func=uncommented_trick_usages_logic)
+
+
 def create_subparsers(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "database",
@@ -603,6 +673,7 @@ def create_subparsers(sub_parsers):
     render_regions_graph(sub_parsers)
     pickups_per_area_command(sub_parsers)
     create_export_videos_command(sub_parsers)
+    uncommented_trick_usages_command(sub_parsers)
 
     def check_command(args):
         if args.database_command is None:
