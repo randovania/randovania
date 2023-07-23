@@ -12,12 +12,12 @@ if TYPE_CHECKING:
 
 
 @dataclasses.dataclass(frozen=True)
-class AM2RExportParams(GameExportParams):
+class AM2RGameExportParams(GameExportParams):
     input_path: Path
     output_path: Path
 
 
-class AM2RExporter(GameExporter):
+class AM2RGameExporter(GameExporter):
     _busy: bool = False
 
     @property
@@ -34,7 +34,7 @@ class AM2RExporter(GameExporter):
         """
         return False
 
-    def _do_export_game(self, patch_data: dict, export_params: AM2RExportParams,
+    def _do_export_game(self, patch_data: dict, export_params: AM2RGameExportParams,
                         progress_update: status_update_lib.ProgressUpdateCallable):
         pass
         # TODO: WIP, needs to implement a bunch of prep work. current implementation is for testing purposes only.

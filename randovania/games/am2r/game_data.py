@@ -14,10 +14,10 @@ def _gui() -> game.GameGui:
     from randovania.games.am2r import gui
 
     return game.GameGui(
-        game_tab=gui.AM2RTabWidget,
+        game_tab=gui.AM2RGameTabWidget,
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.AM2RCosmeticPatchesDialog,
-        export_dialog=gui.AM2RExportDialog,
+        export_dialog=gui.AM2RGameExportDialog,
         progressive_item_gui_tuples=(),
         spoiler_visualizer=(),
     )
@@ -41,8 +41,8 @@ def _patch_data_factory():
 
 
 def _exporter():
-    from randovania.games.am2r.exporter.game_exporter import AM2RExporter
-    return AM2RExporter()
+    from randovania.games.am2r.exporter.game_exporter import AM2RGameExporter
+    return AM2RGameExporter()
 
 game_data: game.GameData = game.GameData(
     short_name="AM2R",

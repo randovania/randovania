@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from randovania.games.am2r.gui.am2r_game_tab import AM2RTabWidget
+from randovania.games.am2r.gui.am2r_game_tab import AM2RGameTabWidget
 from randovania.games.am2r.gui.dialog.cosmetic_patches_dialog import AM2RCosmeticPatchesDialog
-from randovania.games.am2r.gui.dialog.game_export_dialog import AM2RExportDialog
+from randovania.games.am2r.gui.dialog.game_export_dialog import AM2RGameExportDialog
 from randovania.games.am2r.gui.preset_settings import preset_tabs
 
 __all__ = [
-    "AM2RTabWidget",
+    "AM2RGameTabWidget",
     "AM2RCosmeticPatchesDialog",
-    "AM2RExportDialog",
+    "AM2RGameExportDialog",
     "preset_tabs",
 ]

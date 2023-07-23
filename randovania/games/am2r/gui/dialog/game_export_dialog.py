@@ -4,7 +4,7 @@ import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from randovania.games.am2r.exporter.game_exporter import AM2RExportParams
+from randovania.games.am2r.exporter.game_exporter import AM2RGameExportParams
 from randovania.games.am2r.exporter.options import AM2RPerGameOptions
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
@@ -14,13 +14,13 @@ from randovania.gui.dialog.game_export_dialog import (
     prompt_for_output_directory,
     spoiler_path_for_directory,
 )
-from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RExportDialog
+from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RGameExportDialog
 
 if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class AM2RExportDialog(GameExportDialog, Ui_AM2RExportDialog):
+class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
     @classmethod
     def game_enum(cls):
         return RandovaniaGame.AM2R
@@ -82,10 +82,10 @@ class AM2RExportDialog(GameExportDialog, Ui_AM2RExportDialog):
             output_path=self.output_file,
         )
 
-    def get_game_export_params(self) -> AM2RExportParams:
+    def get_game_export_params(self) -> AM2RGameExportParams:
         spoiler_output = spoiler_path_for_directory(self.auto_save_spoiler, self.output_file)
 
-        return AM2RExportParams(
+        return AM2RGameExportParams(
             spoiler_output=spoiler_output,
             input_path=self.input_file,
             output_path=self.output_file,
