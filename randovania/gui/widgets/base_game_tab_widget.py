@@ -1,14 +1,19 @@
-import re
+from __future__ import annotations
 
-from PySide6 import QtWidgets, QtCore, QtGui
+import re
+from typing import TYPE_CHECKING
+
+from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
-from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import faq_lib, hints_text
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
+    from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
+    from randovania.interface_common.options import Options
 
 
 class BaseGameTabWidget(QtWidgets.QTabWidget):
@@ -56,11 +61,11 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
         self._update_quick_generate_text()
 
     def setup_ui(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def game(cls) -> RandovaniaGame:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _on_intro_label_link_clicked(self, link: str):
         if (info := re.match(r"^tab://(.+)$", link)) is not None:

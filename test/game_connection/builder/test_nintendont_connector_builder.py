@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_connection.executor.nintendont_executor import NintendontExecutor

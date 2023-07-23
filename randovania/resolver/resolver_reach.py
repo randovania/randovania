@@ -1,18 +1,48 @@
+from __future__ import annotations
+
+import itertools
 import math
 import typing
 from collections import defaultdict
-from typing import Iterator
 
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
-from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.resources import fast_as_set
 from randovania.resolver import debug
-from randovania.resolver.logic import Logic
-from randovania.resolver.state import State
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.resolver.logic import Logic
+    from randovania.resolver.state import State
+
+
+def _build_satisfiable_requirements(
+        logic: Logic, all_nodes: tuple[Node | None, ...], resource_db: ResourceDatabase,
+        requirements_by_node: dict[int, list[Requirement]],
+) -> SatisfiableRequirements:
+    def _for_node(node_index: int, reqs: list[Requirement]) -> frozenset[RequirementList]:
+        additional = logic.get_additional_requirements(all_nodes[node_index]).alternatives
+
+        set_param = set()
+        for req in set(reqs):
+            set_param.update(fast_as_set.fast_as_alternatives(req, resource_db))
+
+        yield from (
+            a.union(b)
+            for a in set_param
+            for b in additional
+        )
+
+    return frozenset(itertools.chain.from_iterable(
+        _for_node(*it)
+        for it in requirements_by_node.items()
+    ))
 
 
 class ResolverReach:
@@ -39,10 +69,6 @@ class ResolverReach:
             for part in self._path_to_node[node.node_index]
         )
 
-    @property
-    def satisfiable_as_requirement_set(self) -> RequirementSet:
-        return RequirementSet(self._satisfiable_requirements)
-
     def __init__(self,
                  nodes: dict[int, int],
                  path_to_node: dict[int, list[int]],
@@ -57,7 +83,7 @@ class ResolverReach:
     @classmethod
     def calculate_reach(cls,
                         logic: Logic,
-                        initial_state: State) -> "ResolverReach":
+                        initial_state: State) -> ResolverReach:
 
         all_nodes = logic.game.region_list.all_nodes
         checked_nodes: dict[int, int] = {}
@@ -71,7 +97,7 @@ class ResolverReach:
         }
 
         reach_nodes: dict[int, int] = {}
-        requirements_by_node: dict[int, set[RequirementList]] = defaultdict(set)
+        requirements_by_node: dict[int, list[Requirement]] = defaultdict(list)
 
         path_to_node: dict[int, list[int]] = {
             initial_state.node.node_index: [],
@@ -105,9 +131,11 @@ class ResolverReach:
                 satisfied = requirement.satisfied(initial_state.resources, energy, database)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
-                    satisfied = logic.get_additional_requirements(node).satisfied(initial_state.resources,
-                                                                                  energy,
-                                                                                  initial_state.resource_database)
+                    satisfied = logic.get_additional_requirements(node).satisfied(
+                        initial_state.resources,
+                        energy,
+                        initial_state.resource_database
+                    )
 
                 if satisfied:
                     nodes_to_check[target_node_index] = energy - requirement.damage(initial_state.resources, database)
@@ -117,18 +145,16 @@ class ResolverReach:
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
-                    requirements_by_node[target_node_index].update(
-                        requirement.as_set(initial_state.resource_database).alternatives)
+                    requirements_by_node[target_node_index].append(requirement)
 
         # Discard satisfiable requirements of nodes reachable by other means
         for node_index in set(reach_nodes.keys()).intersection(requirements_by_node.keys()):
             requirements_by_node.pop(node_index)
 
         if requirements_by_node:
-            satisfiable_requirements = frozenset.union(
-                *[RequirementSet(requirements).union(
-                    logic.get_additional_requirements(all_nodes[node_index])).alternatives
-                  for node_index, requirements in requirements_by_node.items()])
+            satisfiable_requirements = _build_satisfiable_requirements(
+                logic, all_nodes, initial_state.resource_database, requirements_by_node
+            )
         else:
             satisfiable_requirements = frozenset()
 
@@ -151,7 +177,7 @@ class ResolverReach:
     def satisfiable_actions(self,
                             state: State,
                             victory_condition: Requirement,
-                            actions: list[tuple[ResourceNode, int]],
+                            actions: typing.Iterable[tuple[ResourceNode, int]],
                             ) -> Iterator[tuple[ResourceNode, int]]:
 
         interesting_resources = calculate_interesting_resources(

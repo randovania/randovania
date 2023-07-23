@@ -1,3 +1,4 @@
+
 import discord
 
 from randovania.games.game import RandovaniaGame

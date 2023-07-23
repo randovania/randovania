@@ -1,13 +1,15 @@
+from __future__ import annotations
+
 from asyncio import CancelledError
 from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin, AbortBackgroundTask
+from randovania.gui.lib.background_task_mixin import AbortBackgroundTask, BackgroundTaskMixin
 
 
-@pytest.fixture(name="force_sync_mixin")
-def _force_sync_mixin():
+@pytest.fixture()
+def force_sync_mixin():
     mixin = BackgroundTaskMixin()
 
     def run_in_background_thread(work, starting_message):
@@ -32,7 +34,7 @@ async def test_run_in_background_success(force_sync_mixin):
 async def test_run_in_background_async_cancelled(force_sync_mixin):
     # Setup
     def target(progress_update):
-        raise AbortBackgroundTask()
+        raise AbortBackgroundTask
 
     # Run
     with pytest.raises(CancelledError):

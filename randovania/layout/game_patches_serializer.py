@@ -1,26 +1,29 @@
+from __future__ import annotations
+
 import collections
 import dataclasses
 import re
 import typing
-from typing import DefaultDict
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import RegionList
-from randovania.generator.pickup_pool import pool_creator, PoolResults
+from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import Hint
+from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.search import find_resource_info_with_long_name
+from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 _ETM_NAME = "Energy Transfer Module"
 
@@ -29,7 +32,7 @@ def _pickup_assignment_to_item_locations(region_list: RegionList,
                                          pickup_assignment: PickupAssignment,
                                          num_players: int,
                                          ) -> dict[str, dict[str, str]]:
-    items_locations: DefaultDict[str, dict[str, str]] = collections.defaultdict(dict)
+    items_locations: collections.defaultdict[str, dict[str, str]] = collections.defaultdict(dict)
 
     for region, area, node in region_list.all_regions_areas_nodes:
         if not node.is_resource_node or not isinstance(node, PickupNode):
@@ -47,10 +50,7 @@ def _pickup_assignment_to_item_locations(region_list: RegionList,
         items_locations[region.correct_name(area.in_dark_aether)][region_list.node_name(node)] = item_name
 
     return {
-        region: {
-            area: item
-            for area, item in sorted(items_locations[region].items())
-        }
+        region: dict(sorted(items_locations[region].items()))
         for region in sorted(items_locations.keys())
     }
 
@@ -95,10 +95,6 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             equipment_name: equipment_value,
         },
         "starting_location": patches.starting_location.as_string,
-        "teleporters": {
-            source.identifier.as_string: connection.as_string
-            for source, connection in patches.all_elevator_connections()
-        },
         "dock_connections": {
             dock.identifier.as_string: target.identifier.as_string
             for dock, target in patches.all_dock_connections()
@@ -114,12 +110,9 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             identifier.as_string: data_writer.write_requirement(requirement)
             for identifier, requirement in patches.configurable_nodes.items()
         },
-        "locations": {
-            key: value
-            for key, value in _pickup_assignment_to_item_locations(region_list,
+        "locations": dict(_pickup_assignment_to_item_locations(region_list,
                                                                    patches.pickup_assignment,
-                                                                   num_players).items()
-        },
+                                                                   num_players).items()),
         "hints": {
             identifier.as_string: hint.as_json
             for identifier, hint in patches.hints.items()
@@ -190,29 +183,26 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
                 pickup = _get_pickup_from_pool(player_pool.to_place, starting)
             starting_equipment.append(pickup)
 
-    # Elevators
-    elevator_connection = [
-        (region_list.get_teleporter_node(NodeIdentifier.from_string(source_name)),
-         AreaIdentifier.from_string(target_name))
-        for source_name, target_name in game_modifications["teleporters"].items()
-    ]
-
     # Dock Connection
-    def get_dock(ni: NodeIdentifier):
+    def get_dock_source(ni: NodeIdentifier):
         result = game.region_list.node_by_identifier(ni)
         assert isinstance(result, DockNode)
         return result
 
+    def get_dock_target(ni: NodeIdentifier):
+        result = game.region_list.node_by_identifier(ni)
+        return result
+
     dock_connections = [
-        (get_dock(NodeIdentifier.from_string(source_name)),
-         get_dock(NodeIdentifier.from_string(target_name)))
+        (get_dock_source(NodeIdentifier.from_string(source_name)),
+         get_dock_target(NodeIdentifier.from_string(target_name)))
         for source_name, target_name in game_modifications["dock_connections"].items()
     ]
 
     # Dock Weakness
 
     dock_weakness = [
-        (get_dock(NodeIdentifier.from_string(source_name)),
+        (get_dock_source(NodeIdentifier.from_string(source_name)),
          weakness_db.get_by_weakness(
              weakness_data["type"],
              weakness_data["name"],
@@ -267,7 +257,6 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     patches = GamePatches.create_from_game(game, player_index, configuration)
     patches = patches.assign_dock_connections(dock_connections)
     patches = patches.assign_dock_weakness(dock_weakness)
-    patches = patches.assign_elevators(elevator_connection)
     return dataclasses.replace(
         patches,
         pickup_assignment=pickup_assignment,  # PickupAssignment

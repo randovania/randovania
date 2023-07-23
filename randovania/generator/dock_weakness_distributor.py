@@ -1,35 +1,37 @@
+from __future__ import annotations
+
 import asyncio
 import dataclasses
 import itertools
 import time
 from functools import lru_cache
-from random import Random
-from typing import Callable, Self
+from typing import TYPE_CHECKING, Self
 
 from frozendict import frozendict
 
 from randovania.game_description import default_database
-from randovania.game_description.db.dock import (DockLock, DockLockType,
-                                                 DockRandoParams, DockWeakness)
+from randovania.game_description.db.dock import DockLock, DockLockType, DockRandoParams, DockWeakness
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import NodeContext
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.resource_requirement import \
-    ResourceRequirement
-from randovania.game_description.resources.node_resource_info import \
-    NodeResourceInfo
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.generator.filler.filler_library import UnableToGenerate
-from randovania.generator.filler.runner import FillerResults
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import (DockRandoMode,
-                                                             DockTypeState)
+from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import random_lib
 from randovania.resolver import debug, resolver
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
-from randovania.resolver.state import State
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from random import Random
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.generator.filler.runner import FillerResults
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.state import State
 
 
 def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
@@ -51,7 +53,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
         for node in all_docks.keys()
         if (
                 patches.has_default_weakness(node)  # don't randomize anything that was already modified
-                and dock_rando.types_state[node.dock_type].can_shuffle
+                and dock_rando.can_shuffle(node.dock_type)
                 and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
                 and not node.exclude_from_dock_rando
         )
@@ -67,7 +69,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
             docks_to_unlock.extend([
                 (node, weakness_database.dock_rando_params[node.dock_type].unlocked)
                 for node, target in all_docks.items()
-                if node not in unlocked and target in unlocked
+                if node not in unlocked and target in unlocked and node.dock_type is target.dock_type
             ])
         patches = patches.assign_weaknesses_to_shuffle([(node, True) for node, _ in docks_to_unlock])
         return patches.assign_dock_weakness(docks_to_unlock)
@@ -92,7 +94,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random):
 
         all_mapping: dict[DockWeakness, DockWeakness] = {}
         for dock_type, type_state in dock_rando.types_state.items():
-            if not type_state.can_shuffle:
+            if not dock_rando.can_shuffle(dock_type):
                 continue
 
             source_weaknesses = sorted(type_state.can_change_from)

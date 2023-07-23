@@ -1,21 +1,26 @@
+from __future__ import annotations
+
 import copy
 from collections import defaultdict
-from random import Random
-from typing import Optional
+from typing import TYPE_CHECKING
 
-from randovania.game_description.game_patches import ElevatorConnection
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
-from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.db.dock_node import DockNode
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.db.dock import DockType
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_patches import ElevatorConnection
 
 
 class ElevatorHelper:
     teleporter: NodeIdentifier
-    destination: AreaIdentifier
-    connected_elevator: Optional["ElevatorHelper"]
+    destination: NodeIdentifier
+    connected_elevator: ElevatorHelper | None
 
-    def __init__(self, teleporter: NodeIdentifier, destination: AreaIdentifier):
+    def __init__(self, teleporter: NodeIdentifier, destination: NodeIdentifier):
         self.teleporter = teleporter
         self.destination = destination
         self.connected_elevator = None
@@ -28,9 +33,9 @@ class ElevatorHelper:
     def area_name(self):
         return self.teleporter.area_location.area_name
 
-    def connect_to(self, other: "ElevatorHelper"):
-        self.destination = other.teleporter.area_location
-        other.destination = self.teleporter.area_location
+    def connect_to(self, other: ElevatorHelper):
+        self.destination = other.teleporter
+        other.destination = self.teleporter
         self.connected_elevator = other
         other.connected_elevator = self
 
@@ -106,14 +111,14 @@ def two_way_elevator_connections(rng: Random,
             elevators.pop().connect_to(elevators.pop())
 
     return {
-        elevator.teleporter: elevator.connected_elevator.area_location
+        elevator.teleporter: elevator.connected_elevator.teleporter
         for elevator in elevator_database
     }
 
 
 def one_way_elevator_connections(rng: Random,
                                  elevator_database: tuple[ElevatorHelper, ...],
-                                 target_locations: list[AreaIdentifier],
+                                 target_locations: list[NodeIdentifier],
                                  replacement: bool,
                                  ) -> ElevatorConnection:
     target_locations.sort()
@@ -133,6 +138,7 @@ def one_way_elevator_connections(rng: Random,
 
 def create_elevator_database(region_list: RegionList,
                              all_teleporters: list[NodeIdentifier],
+                             allowed_dock_types: list[DockType]
                              ) -> tuple[ElevatorHelper, ...]:
     """
     Creates a tuple of Elevator objects, exclude those that belongs to one of the areas provided.
@@ -141,10 +147,10 @@ def create_elevator_database(region_list: RegionList,
     :return:
     """
     all_helpers = [
-        ElevatorHelper(region_list.identifier_for_node(node), node.default_connection)
+        ElevatorHelper(region_list.identifier_for_node(node), node.default_connection.area_identifier)
 
         for region, area, node in region_list.all_regions_areas_nodes
-        if isinstance(node, TeleporterNode)
+        if isinstance(node, DockNode) and node.dock_type in allowed_dock_types
     ]
     return tuple(
         helper

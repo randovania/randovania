@@ -1,23 +1,29 @@
+from __future__ import annotations
+
 import asyncio
 import itertools
-from typing import Callable
+from typing import TYPE_CHECKING
 
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.requirement_list import RequirementList
-from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.db.dock_lock_node import DockLockNode
+from randovania.game_description.requirements.requirement_list import RequirementList
+from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout import filtered_database
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
-from randovania.resolver.state import State
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+
+    from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.state import State
 
 
 def _simplify_requirement_list(self: RequirementList, state: State,
@@ -37,12 +43,12 @@ def _simplify_requirement_list(self: RequirementList, state: State,
     return RequirementList(items)
 
 
-def _simplify_additional_requirement_set(requirements: RequirementSet,
+def _simplify_additional_requirement_set(alternatives: Iterable[RequirementList],
                                          state: State,
                                          ) -> RequirementSet:
     new_alternatives = [
         _simplify_requirement_list(alternative, state)
-        for alternative in requirements.alternatives
+        for alternative in alternatives
     ]
     return RequirementSet(alternative
                           for alternative in new_alternatives
@@ -81,7 +87,7 @@ def _should_check_if_action_is_safe(state: State,
     :return:
     """
     return not _is_action_dangerous(state, action, dangerous_resources) \
-        and (isinstance(action, (EventNode, EventPickupNode))
+        and (isinstance(action, EventNode | EventPickupNode)
              or _is_major_or_key_pickup_node(action, state))
 
 
@@ -98,7 +104,6 @@ def set_attempts(value: int):
 
 
 def get_attempts() -> int:
-    global attempts
     return attempts
 
 
@@ -163,7 +168,7 @@ async def _inner_advance_depth(state: State,
 
                     logic.set_additional_requirements(
                         state.node,
-                        _simplify_additional_requirement_set(RequirementSet(additional), state)
+                        _simplify_additional_requirement_set(additional, state)
                     )
                     debug.log_rollback(state, True, True, logic.get_additional_requirements(state.node))
 
@@ -172,20 +177,24 @@ async def _inner_advance_depth(state: State,
             else:
                 dangerous_actions.append((action, energy))
                 continue
+
         action_tuple = (action, energy)
         if _is_action_dangerous(state, action, logic.game.dangerous_resources) and isinstance(action, EventNode):
             dangerous_actions.append(action_tuple)
         elif _is_major_or_key_pickup_node(action, state):
             major_pickup_actions.append(action_tuple)
-        elif isinstance(action, (DockLockNode, EventNode, EventPickupNode)):
+        elif isinstance(action, DockLockNode | EventNode | EventPickupNode):
             lock_actions.append(action_tuple)
         else:
             rest_of_actions.append(action_tuple)
 
-    actions = list(reach.satisfiable_actions(state, logic.victory_condition, itertools.chain(major_pickup_actions,
-                                                                                             lock_actions,
-                                                                                             rest_of_actions,
-                                                                                             dangerous_actions)))
+    actions = list(reach.satisfiable_actions(
+        state, logic.victory_condition,
+        itertools.chain(major_pickup_actions,
+                        lock_actions,
+                        rest_of_actions,
+                        dangerous_actions)
+    ))
     debug.log_checking_satisfiable_actions(state, actions)
     has_action = False
     for action, energy in actions:
@@ -202,18 +211,21 @@ async def _inner_advance_depth(state: State,
         else:
             has_action = True
 
-    additional_requirements = reach.satisfiable_as_requirement_set
+    additional_requirements = reach.satisfiable_requirements
 
     if has_action:
         additional = set()
         for resource_node in reach.collectable_resource_nodes(state):
             additional |= logic.get_additional_requirements(resource_node).alternatives
 
-        additional_requirements = additional_requirements.union(RequirementSet(additional))
+        additional_requirements = additional_requirements.union(additional)
 
     logic.set_additional_requirements(
         state.node,
-        _simplify_additional_requirement_set(additional_requirements, state)
+        _simplify_additional_requirement_set(
+            additional_requirements,
+            state
+        )
     )
     debug.log_rollback(state, has_action, False, logic.get_additional_requirements(state.node))
 

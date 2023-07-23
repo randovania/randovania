@@ -1,14 +1,20 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
-from typing import Iterator
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.games.game import RandovaniaGame
+from randovania.game_description.resources.pickup_index import PickupIndex
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.games.game import RandovaniaGame
 
 
 def _all_indices(db: GameDescription) -> list[int]:
@@ -24,7 +30,7 @@ class RandomizationMode(BitPackEnum, Enum):
     MAJOR_MINOR_SPLIT = "major/minor split"
 
     @classmethod
-    def default(cls) -> "RandomizationMode":
+    def default(cls) -> RandomizationMode:
         return cls.FULL
 
     @property
@@ -45,7 +51,7 @@ class AvailableLocationsConfiguration(BitPackValue):
 
     @property
     def _sorted_indices(self) -> list[int]:
-        return list(sorted(item.index for item in self.excluded_indices))
+        return sorted(item.index for item in self.excluded_indices)
 
     @property
     def as_json(self) -> dict:
@@ -55,7 +61,7 @@ class AvailableLocationsConfiguration(BitPackValue):
         }
 
     @classmethod
-    def from_json(cls, value: dict, game: RandovaniaGame) -> "AvailableLocationsConfiguration":
+    def from_json(cls, value: dict, game: RandovaniaGame) -> AvailableLocationsConfiguration:
         return cls(
             randomization_mode=RandomizationMode(value["randomization_mode"]),
             excluded_indices=frozenset(PickupIndex(item) for item in value["excluded_indices"]),

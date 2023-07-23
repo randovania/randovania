@@ -1,9 +1,15 @@
-from typing import Iterator
+from __future__ import annotations
 
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_database import ResourceDatabase
+from typing import TYPE_CHECKING
+
 from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup
-from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 
 
 def add_ammo_pickups(resource_database: ResourceDatabase,

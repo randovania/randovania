@@ -1,17 +1,19 @@
+from __future__ import annotations
+
 import logging
+from typing import TYPE_CHECKING
 
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
-from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
-from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
-from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
-from randovania.game_connection.connector.remote_connector import RemoteConnector
-from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException, \
-    MemoryOperationExecutor
-from open_prime_rando.dol_patching.prime1 import dol_versions as prime1_dol_versions
-from open_prime_rando.dol_patching.corruption import dol_versions as corruption_dol_versions
-from open_prime_rando.dol_patching.echoes import dol_versions as echoes_dol_versions
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
+)
+
+if TYPE_CHECKING:
+    from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
+    from randovania.game_connection.connector.remote_connector import RemoteConnector
+    from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 
 
 class PrimeConnectorBuilder(ConnectorBuilder):
@@ -22,12 +24,21 @@ class PrimeConnectorBuilder(ConnectorBuilder):
         self.logger = logging.getLogger(type(self).__name__)
 
     def create_executor(self) -> MemoryOperationExecutor:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def get_status_message(self) -> str | None:
         return self._last_status_message
 
     async def build_connector(self) -> RemoteConnector | None:
+        # Delay importing these to avoid too many early imports in startup
+        from open_prime_rando.dol_patching.corruption import dol_versions as corruption_dol_versions
+        from open_prime_rando.dol_patching.echoes import dol_versions as echoes_dol_versions
+        from open_prime_rando.dol_patching.prime1 import dol_versions as prime1_dol_versions
+
+        from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
+        from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
+        from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
+
         executor = self.create_executor()
 
         self._status_message("Connecting...", log=False)
@@ -92,7 +103,7 @@ class PrimeConnectorBuilder(ConnectorBuilder):
 
     @property
     def connector_builder_choice(self) -> ConnectorBuilderChoice:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def configuration_params(self) -> dict:
-        raise NotImplementedError()
+        raise NotImplementedError

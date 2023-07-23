@@ -5,7 +5,7 @@
     },
     "areas": {
         "Transit Station 4-B\nLeads to Command Center": {
-            "default_node": "Train to Command Center - Transit Station 4-A",
+            "default_node": "Teleporter to Pirate Homeworld - Command",
             "extra": {
                 "asset_id": 4566937761378320542
             },
@@ -82,7 +82,7 @@
                                 "items": []
                             }
                         },
-                        "Train to Command Center - Transit Station 4-A": {
+                        "Teleporter to Pirate Homeworld - Command": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -93,8 +93,8 @@
                         }
                     }
                 },
-                "Train to Command Center - Transit Station 4-A": {
-                    "node_type": "teleporter",
+                "Teleporter to Pirate Homeworld - Command": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -106,12 +106,17 @@
                         "teleporter_instance_id": 131408
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Pirate Homeworld - Command",
-                        "area": "Transit Station 4-A\nLeads to Mining Site"
+                        "area": "Transit Station 4-A\nLeads to Mining Site",
+                        "node": "Teleporter to Pirate Homeworld - Mines"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Phazon Quarry": {
                             "type": "and",

@@ -1,29 +1,39 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExportParams
 from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
-    GameExportDialog, prompt_for_output_file, prompt_for_input_file, output_file_validator, add_field_validation,
-    spoiler_path_for
+    GameExportDialog,
+    add_field_validation,
+    output_file_validator,
+    prompt_for_input_file,
+    prompt_for_output_file,
+    spoiler_path_for,
 )
 from randovania.gui.generated.super_metroid_game_export_dialog_ui import Ui_SuperMetroidGameExportDialog
 from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 
 class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_SuperMetroidGameExportDialog):
-    @property
-    def _game(self):
+
+    @classmethod
+    def game_enum(cls):
         return RandovaniaGame.SUPER_METROID
 
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
         self._base_output_name = f"SM Randomizer - {word_hash}"
-        per_game = options.options_for_game(self._game)
+        per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, SuperMetroidPerGameOptions)
 
         # Input
@@ -58,19 +68,13 @@ class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_
     def valid_output_file_types(self) -> list[str]:
         return ["smc", "sfc"]
 
-    def save_options(self):
-        with self._options as options:
-            if self._has_spoiler:
-                options.auto_save_spoiler = self.auto_save_spoiler
-
-            per_game = options.options_for_game(self._game)
-            assert isinstance(per_game, SuperMetroidPerGameOptions)
-            options.set_options_for_game(self._game, dataclasses.replace(
-                per_game,
-                input_path=self.input_file,
-                output_directory=self.output_file.parent,
-                output_format=self._selected_output_format,
-            ))
+    def update_per_game_options(self, per_game: SuperMetroidPerGameOptions) -> SuperMetroidPerGameOptions:
+        return dataclasses.replace(
+            per_game,
+            input_path=self.input_file,
+            output_directory=self.output_file.parent,
+            output_format=self._selected_output_format,
+        )
 
     # Getters
     @property

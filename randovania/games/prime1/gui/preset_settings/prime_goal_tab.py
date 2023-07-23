@@ -1,12 +1,18 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtCore
 
-from randovania.game_description.game_description import GameDescription
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.gui.generated.preset_prime_goal_ui import Ui_PresetPrimeGoal
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):

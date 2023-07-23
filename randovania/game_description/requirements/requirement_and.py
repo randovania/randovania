@@ -1,17 +1,22 @@
-from randovania.game_description.requirements.array_base import RequirementArrayBase, mergeable_array, expand_items
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from randovania.game_description.requirements.array_base import RequirementArrayBase, expand_items, mergeable_array
 from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
 
 
 class RequirementAnd(RequirementArrayBase):
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         result = 0
         for item in self.items:
-            if item.satisfied(current_resources, MAX_DAMAGE, database):
-                result += item.damage(current_resources, database)
-            else:
+            result += item.damage(current_resources, database)
+            if result >= MAX_DAMAGE:
                 return MAX_DAMAGE
         return result
 

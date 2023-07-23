@@ -1,24 +1,89 @@
+from __future__ import annotations
+
+import asyncio
 import datetime
 import functools
 import json
-from pathlib import Path
+import webbrowser
+from typing import TYPE_CHECKING
 
-import pypresence
+import PySide6
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Signal
-from PySide6.QtWidgets import QWidget
+from qasync import asyncSlot
 
 import randovania
-from randovania.gui.lib import async_dialog
-from randovania.network_client.network_client import NetworkClient, ConnectionState, UnableToConnect
-from randovania.network_common.error import (InvalidAction, NotAuthorizedForAction, ServerError, RequestTimeout,
-                                             NotLoggedIn, UserNotAuthorized, UnsupportedClient)
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
+from randovania.gui.lib import async_dialog, wait_dialog
+from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect
+from randovania.network_common import error
 from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionEntry, User, MultiplayerSessionActions,
-    MultiplayerWorldPickups, MultiplayerSessionAuditLog,
-    WorldUserInventory)
+    MultiplayerSessionActions,
+    MultiplayerSessionAuditLog,
+    MultiplayerSessionEntry,
+    MultiplayerSessionListEntry,
+    MultiplayerWorldPickups,
+    User,
+    WorldUserInventory,
+)
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
-class QtNetworkClient(QWidget, NetworkClient):
+def handle_network_errors(fn):
+    @functools.wraps(fn)
+    async def wrapper(self, *args, **kwargs):
+        try:
+            return await fn(self, *args, **kwargs)
+
+        except error.InvalidActionError as e:
+            await async_dialog.warning(self, "Invalid action", f"{e}")
+
+        except error.SessionInWrongStateError as e:
+            await async_dialog.warning(self, "Wrong session state", f"{e}")
+
+        except error.ServerError:
+            await async_dialog.warning(self, "Server error",
+                                       "An error occurred on the server while processing your request.")
+
+        except error.NotLoggedInError:
+            await async_dialog.warning(self, "Unauthenticated",
+                                       "You must be logged in.")
+
+        except error.NotAuthorizedForActionError:
+            await async_dialog.warning(self, "Unauthorized",
+                                       "You're not authorized to perform that action.")
+
+        except error.UserNotAuthorizedToUseServerError:
+            await async_dialog.warning(
+                self, "Unauthorized",
+                "You're not authorized to use this build.\nPlease check #dev-builds for more details.",
+            )
+
+        except error.UnsupportedClientError as e:
+            s = e.detail.replace('\n', '<br />')
+            await async_dialog.warning(
+                self, "Unsupported client",
+                s,
+            )
+
+        except UnableToConnect as e:
+            s = e.reason.replace('\n', '<br />')
+            await async_dialog.warning(self, "Connection Error",
+                                       f"<b>Unable to connect to the server:</b><br /><br />{s}")
+
+        except error.RequestTimeoutError as e:
+            await async_dialog.warning(self, "Connection Error",
+                                       f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
+                                       f"<br />Further attempts will wait for longer.")
+
+        return None
+
+    return wrapper
+
+
+class QtNetworkClient(QtCore.QObject, NetworkClient):
     Connect = Signal()
     ConnectError = Signal()
     Disconnect = Signal()
@@ -32,13 +97,17 @@ class QtNetworkClient(QWidget, NetworkClient):
     WorldPickupsUpdated = Signal(MultiplayerWorldPickups)
     WorldUserInventoryUpdated = Signal(WorldUserInventory)
 
-    discord: pypresence.AioClient | None = None
-
     def __init__(self, user_data_dir: Path):
-        super().__init__()
-        NetworkClient.__init__(self, user_data_dir.joinpath("network_client"), randovania.get_configuration())
-        from randovania.gui.lib import common_qt_lib
-        common_qt_lib.set_default_window_icon(self)
+        configuration = randovania.get_configuration()
+        user_data_dir = user_data_dir.joinpath("network_client")
+
+        if PySide6.__version_info__ >= (6, 5):
+            super().__init__(None,
+                             user_data_dir=user_data_dir,
+                             configuration=configuration)
+        else:
+            super().__init__(None)
+            NetworkClient.__init__(self, user_data_dir=user_data_dir, configuration=configuration)
 
     @NetworkClient.connection_state.setter
     def connection_state(self, value: ConnectionState):
@@ -85,14 +154,9 @@ class QtNetworkClient(QWidget, NetworkClient):
         if "discord_client_id" not in self.configuration:
             raise RuntimeError("Missing Discord configuration for Randovania")
 
-        self.discord = pypresence.AioClient(self.configuration["discord_client_id"])
-        self.discord._events_on = False  # workaround for broken AioClient
-        await self.discord.start()
-
-        authorize = await self.discord.authorize(self.configuration["discord_client_id"], ['identify'])
-
-        new_session = await self.server_call("login_with_discord", authorize["data"]["code"])
-        await self.on_user_session_updated(new_session)
+        sid = await self.server_call("start_discord_login_flow")
+        url = self.configuration["server_address"] + f"/login?sid={sid}"
+        webbrowser.open(url)
 
     async def login_as_guest(self, name: str = "Unknown"):
         if "guest_secret" not in self.configuration:
@@ -102,7 +166,7 @@ class QtNetworkClient(QWidget, NetworkClient):
         fernet = Fernet(self.configuration["guest_secret"].encode("ascii"))
         login_request = fernet.encrypt(json.dumps({
             "name": name,
-            "date": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "date": datetime.datetime.now(datetime.UTC).isoformat(),
         }).encode("utf-8"))
 
         new_session = await self.server_call("login_with_guest", login_request)
@@ -117,51 +181,54 @@ class QtNetworkClient(QWidget, NetworkClient):
             methods.append("discord")
         return set(methods)
 
+    @asyncSlot()
+    async def attempt_join_with_password_check(self, session: MultiplayerSessionListEntry):
+        if session.has_password and not session.is_user_in_session:
+            password = await TextPromptDialog.prompt(
+                title="Enter password",
+                description="This session requires a password:",
+                is_password=True,
+            )
+            if password is None:
+                return
+        else:
+            password = None
+        return await self.attempt_join(session.id, password)
 
-def handle_network_errors(fn):
-    @functools.wraps(fn)
-    async def wrapper(self, *args, **kwargs):
+    @asyncSlot()
+    @handle_network_errors
+    async def attempt_join(self, session_id: int, password: str | None):
         try:
-            return await fn(self, *args, **kwargs)
+            joined_session = await self.join_multiplayer_session(session_id, password)
+            return joined_session
 
-        except InvalidAction as e:
-            await async_dialog.warning(self, "Invalid action", f"{e}")
+        except error.WrongPasswordError:
+            await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
 
-        except ServerError:
-            await async_dialog.warning(self, "Server error",
-                                       "An error occurred on the server while processing your request.")
+    async def ensure_logged_in(self, parent: QtWidgets.QWidget | None):
+        if self.connection_state == ConnectionState.Connected:
+            return True
 
-        except NotLoggedIn:
-            await async_dialog.warning(self, "Unauthenticated",
-                                       "You must be logged in.")
+        if self.connection_state.is_disconnected:
+            try:
+                await wait_dialog.cancellable_wait(
+                    parent,
+                    self.connect_to_server(),
+                    "Connecting",
+                    "Connecting to server...",
+                )
+            except UnableToConnect as e:
+                await async_dialog.warning(
+                    parent, "Unable to connect",
+                    e.reason,
+                )
+                return False
 
-        except NotAuthorizedForAction:
-            await async_dialog.warning(self, "Unauthorized",
-                                       "You're not authorized to perform that action.")
+            except asyncio.CancelledError:
+                return False
 
-        except UserNotAuthorized:
-            await async_dialog.warning(
-                self, "Unauthorized",
-                "You're not authorized to use this build.\nPlease check #dev-builds for more details.",
-            )
+        if self.current_user is None:
+            from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
+            await async_dialog.execute_dialog(LoginPromptDialog(self))
 
-        except UnsupportedClient as e:
-            s = e.detail.replace('\n', '<br />')
-            await async_dialog.warning(
-                self, "Unsupported client",
-                s,
-            )
-
-        except UnableToConnect as e:
-            s = e.reason.replace('\n', '<br />')
-            await async_dialog.warning(self, "Connection Error",
-                                       f"<b>Unable to connect to the server:</b><br /><br />{s}")
-
-        except RequestTimeout as e:
-            await async_dialog.warning(self, "Connection Error",
-                                       f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
-                                       f"<br />Further attempts will wait for longer.")
-
-        return None
-
-    return wrapper
+        return self.current_user is not None

@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import uuid
 
-from randovania.interface_common.world_database import WorldDatabase, WorldData
+from randovania.interface_common.world_database import WorldData, WorldDatabase
 from randovania.lib import json_lib
 
 

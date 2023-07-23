@@ -1,17 +1,22 @@
+from __future__ import annotations
+
 import dataclasses
 import json
 import uuid
 from distutils.version import StrictVersion
 from enum import Enum
-from pathlib import Path
-from typing import TypeVar, Callable, Any
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
-from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common import update_checker, persisted_options
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+from randovania.interface_common import persisted_options, update_checker
 from randovania.lib import migration_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
+
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 T = TypeVar("T")
 
@@ -71,7 +76,7 @@ def decode_uuid_set(data: list[str]) -> set[uuid.UUID]:
 
 
 def decode_uuid_list(data: list[str]) -> list[uuid.UUID]:
-    result = list()
+    result = []
     decode_uuid_container(data, result.append)
     return result
 
@@ -112,24 +117,28 @@ class PerGameOptions:
         }
 
     @classmethod
-    def default_for_game(cls, game: RandovaniaGame) -> "PerGameOptions":
+    def default_for_game(cls, game: RandovaniaGame) -> PerGameOptions:
         return cls(cosmetic_patches=game.data.layout.cosmetic_patches())
 
     @classmethod
-    def from_json(cls, value: dict) -> "PerGameOptions":
-        raise NotImplementedError()
+    def from_json(cls, value: dict) -> PerGameOptions:
+        raise NotImplementedError
 
 
 _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(identity, str),
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
+    "advanced_generate_in_another_process": Serializer(identity, bool),
     "auto_save_spoiler": Serializer(identity, bool),
     "dark_mode": Serializer(identity, bool),
     "experimental_settings": Serializer(identity, bool),
+    "allow_crash_reporting": Serializer(identity, bool),
+    "use_user_for_crash_reporting": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "hidden_preset_uuids": Serializer(serialize_uuid_set, decode_uuid_set),
-    "game_backend": Serializer(lambda it: it.value, ConnectorBuilderChoice),
+    "tracker_default_game": Serializer(lambda it: it.value if it is not None else None,
+                                       lambda it: RandovaniaGame(it) if it is not None else None),
     "parent_for_presets": Serializer(serialize_uuid_dict, decode_uuid_dict),
     "connector_builders": Serializer(lambda obj: [it.as_json for it in obj],
                                      lambda obj: [ConnectorBuilderOption.from_json(it) for it in obj]),
@@ -186,13 +195,16 @@ class Options:
     _last_changelog_displayed: str
     _advanced_validate_seed_after: bool | None = None
     _advanced_timeout_during_generation: bool | None = None
+    _advanced_generate_in_another_process: bool | None = None
     _auto_save_spoiler: bool | None = None
     _dark_mode: bool | None = None
     _experimental_settings: bool | None = None
+    _allow_crash_reporting: bool | None = None
+    _use_user_for_crash_reporting: bool | None = None
     _displayed_alerts: set[InfoAlert] | None = None
     _hidden_preset_uuids: set[uuid.UUID] | None = None
     _parent_for_presets: dict[uuid.UUID, uuid.UUID] | None = None
-    _game_backend: ConnectorBuilderChoice | None = None
+    _tracker_default_game: RandovaniaGame | None = None
     _connector_builders: list[ConnectorBuilderOption] | None = None
 
     def __init__(self, data_dir: Path, user_dir: Path | None = None):
@@ -403,12 +415,28 @@ class Options:
         self._edit_field("experimental_settings", value)
 
     @property
-    def game_backend(self) -> ConnectorBuilderChoice:
-        return _return_with_default(self._game_backend, lambda: ConnectorBuilderChoice.DOLPHIN)
+    def allow_crash_reporting(self) -> bool:
+        return _return_with_default(self._allow_crash_reporting, lambda: True)
 
-    @game_backend.setter
-    def game_backend(self, value: ConnectorBuilderChoice):
-        self._edit_field("game_backend", value)
+    @allow_crash_reporting.setter
+    def allow_crash_reporting(self, value: bool):
+        self._edit_field("allow_crash_reporting", value)
+
+    @property
+    def use_user_for_crash_reporting(self) -> bool:
+        return _return_with_default(self._use_user_for_crash_reporting, lambda: True)
+
+    @use_user_for_crash_reporting.setter
+    def use_user_for_crash_reporting(self, value):
+        self._edit_field("use_user_for_crash_reporting", value)
+
+    @property
+    def tracker_default_game(self) -> RandovaniaGame | None:
+        return self._tracker_default_game
+
+    @tracker_default_game.setter
+    def tracker_default_game(self, value: RandovaniaGame | None):
+        self._edit_field("tracker_default_game", value)
 
     def selected_tracker_for(self, game: RandovaniaGame) -> str:
         return getattr(self, f"selected_tracker_{game.value}")
@@ -537,6 +565,14 @@ class Options:
     @advanced_timeout_during_generation.setter
     def advanced_timeout_during_generation(self, value: bool):
         self._edit_field("advanced_timeout_during_generation", value)
+
+    @property
+    def advanced_generate_in_another_process(self) -> bool:
+        return _return_with_default(self._advanced_generate_in_another_process, lambda: True)
+
+    @advanced_generate_in_another_process.setter
+    def advanced_generate_in_another_process(self, value: bool):
+        self._edit_field("advanced_generate_in_another_process", value)
 
     ######
 

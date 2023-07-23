@@ -1,22 +1,22 @@
+from __future__ import annotations
+
 import asyncio
 import platform
 import sys
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import MagicMock, call, patch
 
 import pytest
 
 from randovania.games.prime2.patcher import csharp_subprocess
 
 
-@pytest.fixture(
-    params=[False, True],
-    name="mock_is_windows")
-def _mock_is_windows(request):
+@pytest.fixture(params=[False, True])
+def mock_is_windows(request):
     with patch("randovania.games.prime2.patcher.csharp_subprocess.is_windows", return_value=request.param):
         yield request.param
 
 
-@pytest.mark.parametrize(["system_name", "expected"], [
+@pytest.mark.parametrize(("system_name", "expected"), [
     ("Windows", True),
     ("Linux", False),
 ])

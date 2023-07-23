@@ -1,12 +1,18 @@
+from __future__ import annotations
+
 import dataclasses
 import hashlib
 import math
+import typing
 from enum import Enum
-from typing import Iterator, TypeVar, Callable
+from typing import TYPE_CHECKING, TypeVar
 
 import bitstruct
 
 from randovania.lib import type_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
 
 T = TypeVar("T")
 
@@ -63,11 +69,11 @@ class BitPackDecoder:
 
 class BitPackValue:
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     def bit_pack_skip_if_equals(cls):
@@ -191,6 +197,7 @@ def _get_bit_pack_value_for(value, dataclass_type: type):
 
 class BitPackDataclass(BitPackValue):
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+        resolved_types = typing.get_type_hints(type(self))
         reference = metadata.get("reference")
 
         for field in dataclasses.fields(self):
@@ -198,8 +205,9 @@ class BitPackDataclass(BitPackValue):
                 continue
 
             item = getattr(self, field.name)
+            field_type = resolved_types[field.name]
 
-            resolved_type, optional = type_lib.resolve_optional(field.type)
+            resolved_type, optional = type_lib.resolve_optional(field_type)
             if optional:
                 yield from encode_bool(item is not None)
                 if item is None:
@@ -235,6 +243,7 @@ class BitPackDataclass(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata):
+        resolved_types = typing.get_type_hints(cls)
         reference = metadata.get("reference")
         args = {}
 
@@ -242,7 +251,7 @@ class BitPackDataclass(BitPackValue):
             if not field.init:
                 continue
 
-            resolved_type, optional = type_lib.resolve_optional(field.type)
+            resolved_type, optional = type_lib.resolve_optional(resolved_types[field.name])
 
             if optional:
                 should_decode = decode_bool(decoder)
@@ -279,14 +288,14 @@ def pack_array_element(element: T, array: list[T]) -> Iterator[tuple[int, int]]:
 
 
 def _is_sorted(array: list[T]) -> bool:
-    return array == list(sorted(array))
+    return array == sorted(array)
 
 
 def _limits_for_size(remaining_size: int) -> tuple[int, ...]:
     if remaining_size > 4:
         return 4, remaining_size
     elif remaining_size > 0:
-        return remaining_size,
+        return (remaining_size,)
     else:
         return ()
 

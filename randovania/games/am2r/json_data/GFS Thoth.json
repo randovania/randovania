@@ -1244,7 +1244,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "GenesisKilled",
+                                            "name": "BossGenesis",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1260,14 +1260,14 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Energy requirements",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Damage",
-                                                        "amount": 699,
+                                                        "amount": 399,
                                                         "negate": false
                                                     }
                                                 },
@@ -1286,7 +1286,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Item requirements",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -1307,7 +1307,7 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "Power Bombs",
-                                                                    "amount": 5,
+                                                                    "amount": 10,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -1326,8 +1326,34 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Fusion Mode requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "FusionMode",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
                                                         "type": "items",
-                                                        "name": "Spazer Beam",
+                                                        "name": "Missiles",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -1336,7 +1362,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Plasma Beam",
+                                                        "name": "Super Missiles",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -1363,7 +1389,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "GenesisKilled",
+                    "event_name": "BossGenesis",
                     "connections": {
                         "Door to Thoth West Lift": {
                             "type": "and",

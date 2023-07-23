@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import typing
 from pathlib import Path
 
@@ -13,7 +15,7 @@ class MultiFormatOutputMixin:
 
     @property
     def valid_output_file_types(self) -> list[str]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def available_output_file_types(self) -> list[str]:
@@ -21,10 +23,7 @@ class MultiFormatOutputMixin:
 
     @property
     def default_output_name(self):
-        return "{}.{}".format(
-            self._base_output_name,
-            self._selected_output_format,
-        )
+        return f"{self._base_output_name}.{self._selected_output_format}"
 
     def setup_multi_format(self, output_format: str | None):
         available_types = self.available_output_file_types

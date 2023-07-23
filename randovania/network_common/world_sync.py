@@ -6,7 +6,6 @@ from frozendict import frozendict
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
 
 
 @dataclasses.dataclass(frozen=True)
@@ -25,7 +24,8 @@ class ServerSyncRequest:
 @dataclasses.dataclass(frozen=True)
 class ServerWorldResponse(JsonDataclass):
     world_name: str
-    session: MultiplayerSessionListEntry
+    session_id: int
+    session_name: str | None
 
 
 @dataclasses.dataclass(frozen=True)

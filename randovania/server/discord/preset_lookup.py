@@ -9,14 +9,14 @@ import re
 import subprocess
 import time
 import typing
-from typing import Callable
+from collections.abc import Callable
 
 import discord
 from discord.ui import Button
 
 import randovania
 from randovania.generator import generator
-from randovania.layout import preset_describer, layout_description
+from randovania.layout import layout_description, preset_describer
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
@@ -139,22 +139,38 @@ async def look_for_permalinks(message: discord.Message):
         content = None
         if multiple_permalinks:
             content = "Multiple permalinks found, using only the first."
-        await message.reply(content=content, embed=embed, view=view, mention_author=False)
+
+        try:
+            await message.reply(content=content, embed=embed, view=view, mention_author=False)
+        except discord.errors.HTTPException:
+            logging.exception("Unable to describe a preset. Embed: %s", str(embed.to_dict()))
+
+            embed.clear_fields()
+            content += "\nUnable to include a description."
+            await message.reply(content=content, embed=embed, mention_author=False)
 
 
 async def reply_for_preset(message: discord.Message, versioned_preset: VersionedPreset):
     try:
         preset = versioned_preset.get_preset()
     except ValueError as e:
-        logging.info("Invalid preset '{}' from {}: {}".format(versioned_preset.name,
-                                                              message.author.display_name,
-                                                              e))
+        logging.info(f"Invalid preset '{versioned_preset.name}' from {message.author.display_name}: {e}")
         return
 
     embed = discord.Embed(title=preset.name,
                           description=preset.description)
     _add_preset_description_to_embed(embed, preset)
-    await message.reply(embed=embed, mention_author=False)
+
+    try:
+        await message.reply(embed=embed, mention_author=False)
+    except discord.errors.HTTPException:
+        embed.description = "[Preset description too long to include]"
+        try:
+            await message.reply(embed=embed, mention_author=False)
+        except discord.errors.HTTPException:
+            logging.exception("Unable to describe a preset. Embed: %s", str(embed.to_dict()))
+            embed.clear_fields()
+            await message.reply(content="Unable to include a description", embed=embed, mention_author=False)
 
 
 async def reply_for_layout_description(message: discord.Message, description: LayoutDescription):
@@ -162,7 +178,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
         title=f"Spoiler file for Randovania {description.randovania_version_text}",
     )
 
-    if description.player_count == 1:
+    if description.world_count == 1:
         preset = description.get_preset(0)
         embed.description = "{}, with preset {}.\nSeed Hash: {}\nPermalink: {}".format(
             preset.game.long_name, preset.name,
@@ -181,7 +197,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
         games_text += last_game
 
         embed.description = "{} player multiworld for {}.\nSeed Hash: {}\nPermalink: {}".format(
-            description.player_count,
+            description.world_count,
             games_text,
             description.shareable_word_hash,
             description.permalink.as_base64_str,

@@ -3,21 +3,24 @@ from __future__ import annotations
 import copy
 import dataclasses
 import typing
-from typing import Iterator
 
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
 class Area:
     name: str
-    default_node: str | None
     nodes: list[Node]
     connections: dict[Node, dict[Node, Requirement]]
     extra: dict[str, typing.Any]
+    default_node: str | None = None
 
     def __repr__(self):
         return f"Area[{self.name}]"
@@ -69,7 +72,7 @@ class Area:
 
     def get_start_nodes(self) -> list[Node]:
         return list(filter(lambda node: node.valid_starting_location, self.actual_nodes))
-    
+
     def has_start_node(self) -> bool:
         return any(node.valid_starting_location for node in self.actual_nodes)
 

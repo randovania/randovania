@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import randovania
 from randovania.games import game
 from randovania.games.blank import layout
@@ -17,8 +19,8 @@ def _gui() -> game.GameGui:
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.BlankCosmeticPatchesDialog,
         export_dialog=gui.BlankGameExportDialog,
-        progressive_item_gui_tuples=tuple(),
-        spoiler_visualizer=tuple(),
+        progressive_item_gui_tuples=(),
+        spoiler_visualizer=(),
     )
 
 
@@ -27,7 +29,7 @@ def _generator() -> game.GameGenerator:
     from randovania.generator.hint_distributor import AllJokesHintDistributor
 
     return game.GameGenerator(
-        item_pool_creator=generator.pool_creator,
+        pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.BlankBootstrap(),
         base_patches_factory=generator.BlankBasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),

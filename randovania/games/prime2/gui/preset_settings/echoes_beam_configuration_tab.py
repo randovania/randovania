@@ -1,17 +1,23 @@
+from __future__ import annotations
+
 import dataclasses
 import functools
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QComboBox
 
-from randovania.game_description.game_description import GameDescription
-from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
 from randovania.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration
 from randovania.gui.lib.signal_handling import set_combo_with_value
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 _BEAMS = {
     "power": "Power Beam",

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import platform
 from enum import Enum
 from typing import Self
@@ -26,7 +28,7 @@ class ConnectorBuilderChoice(Enum):
         return True
 
     def supports_multiple_instances(self) -> bool:
-        return self == ConnectorBuilderChoice.NINTENDONT
+        return self != ConnectorBuilderChoice.DOLPHIN
 
     @classmethod
     def all_usable_choices(cls) -> list[Self]:

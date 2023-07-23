@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Self
 
 import attrs
@@ -33,9 +35,7 @@ class NodeIdentifier:
         return cls.create(*value.split("/", 2))
 
     def __repr__(self):
-        return "{}/node {}".format(
-            self.area_identifier, self.node_name,
-        )
+        return f"{self.area_identifier}/node {self.node_name}"
 
     @property
     def region_name(self) -> str:

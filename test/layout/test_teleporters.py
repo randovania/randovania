@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import NamedTuple
 
 import pytest
@@ -7,8 +9,12 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
-from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode, TeleporterList, \
-    TeleporterTargetList
+from randovania.layout.lib.teleporters import (
+    TeleporterConfiguration,
+    TeleporterList,
+    TeleporterShuffleMode,
+    TeleporterTargetList,
+)
 
 
 class Data(NamedTuple):
@@ -52,21 +58,21 @@ def _a(region, area, instance_id=None):
         _m(b'\xc1', 8, 'One-way, elevator room with cycles', mode="one-way-elevator"),
         _m(b'\xc81d', 22, 'One-way, elevator room with cycles; excluded 1 teleporters',
            mode="one-way-elevator", excluded_teleporters=[
-                _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C")
+                _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
             ]),
         _m(b'\xe4\x03,\xd0', 28, 'One-way, anywhere; excluded 1 targets', mode="one-way-anything", excluded_targets=[
-            _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C")
+            _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
         ]),
     ],
-    name="test_data")
-def _test_data(request):
+)
+def test_data(request):
     game = RandovaniaGame.METROID_PRIME_ECHOES
     reference = TeleporterConfiguration(
         mode=TeleporterShuffleMode.VANILLA,
         skip_final_bosses=False,
         allow_unvisited_room_names=False,
-        excluded_teleporters=TeleporterList(tuple(), game),
-        excluded_targets=TeleporterTargetList(tuple(), game),
+        excluded_teleporters=TeleporterList((), game),
+        excluded_targets=TeleporterTargetList((), game),
     )
     return Data(
         reference=reference,

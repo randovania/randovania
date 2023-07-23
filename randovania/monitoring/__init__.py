@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import contextlib
 import json
 import platform
@@ -6,6 +8,8 @@ import typing
 from pathlib import Path
 
 import sentry_sdk
+import sentry_sdk.integrations.logging
+import sentry_sdk.scrubber
 
 import randovania
 from randovania.version_hash import full_git_hash
@@ -13,9 +17,6 @@ from randovania.version_hash import full_git_hash
 _CLIENT_DEFAULT_URL = "https://44282e1a237c48cfaf8120c40debc2fa@o4504594031509504.ingest.sentry.io/4504594037211137"
 _SERVER_DEFAULT_URL = "https://c2147c86fecc490f8e7dcfc201d35895@o4504594031509504.ingest.sentry.io/4504594037276672"
 _BOT_DEFAULT_URL = "https://7e7607e10378497689b443d8922870f7@o4504594031509504.ingest.sentry.io/4504606761287680"
-_sampling_per_path = {
-    'restore_user_session': 1.0,
-}
 
 
 def _filter_data(data, str_filter: typing.Callable[[str], str]) -> typing.Any | None:
@@ -53,29 +54,23 @@ def _filter_data(data, str_filter: typing.Callable[[str], str]) -> typing.Any | 
     return result
 
 
-_HOME_RE = re.compile(r"(:[/\\]Users[/\\])([^/\\]+)([/\\])")
+_HOME_RE = re.compile(r"(:?[/\\](?:home|Users)[/\\])([^/\\]+)([/\\])")
 
 
-def _filter_windows_home(data):
+def _filter_user_home(data):
     def filter_home(s: str) -> str:
         return _HOME_RE.sub(r"\1<redacted>\3", s)
 
     return _filter_data(data, filter_home)
 
 
-def _before_send(event, hint):
-    _filter_windows_home(event["extra"])
-    if "logentry" in event:
-        _filter_windows_home(event["logentry"])
-    return event
+class HomeEventScrubber(sentry_sdk.scrubber.EventScrubber):
+    def scrub_dict(self, d):
+        super().scrub_dict(d)
+        _filter_user_home(d)
 
 
-def _before_breadcrumb(event, hint):
-    _filter_windows_home(event)
-    return event
-
-
-def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, exclude_server_name: bool = False):
+def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exclude_server_name: bool = False):
     if randovania.is_dirty():
         return
 
@@ -88,9 +83,12 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, ex
         AioHttpIntegration(),
     ]
 
+    profiles_sample_rate = sampling_rate
     if include_flask:
         from sentry_sdk.integrations.flask import FlaskIntegration
         integrations.append(FlaskIntegration())
+    else:
+        profiles_sample_rate = 0.0
 
     server_name = None
     if exclude_server_name:
@@ -102,12 +100,11 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, ex
         return
 
     def traces_sampler(sampling_context):
-        if randovania.is_dev_version():
-            return 1.0
-        else:
-            if sampling_context['transaction_context']['op'] == 'message':
-                return _sampling_per_path.get(sampling_context['transaction_context']['name'], 0.5)
-            return sampling_rate
+        # Ignore the websocket request
+        if sampling_context['transaction_context']['name'] == 'generic WSGI request':
+            return 0
+
+        return sampling_rate
 
     sentry_sdk.init(
         dsn=sentry_url,
@@ -115,10 +112,10 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, ex
         release=full_git_hash,
         environment="staging" if randovania.is_dev_version() else "production",
         traces_sampler=traces_sampler,
+        profiles_sample_rate=profiles_sample_rate,
         server_name=server_name,
-        before_send=_before_send,
-        before_breadcrumb=_before_breadcrumb,
         auto_session_tracking=include_flask,
+        event_scrubber=HomeEventScrubber(),
     )
     sentry_sdk.set_context("os", {
         "name": platform.system(),
@@ -127,25 +124,48 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 0.25, ex
 
 
 def client_init():
+    if not randovania.is_frozen():
+        # TODO: It'd be nice to catch these running from source, but only for unmodified main.
+        return
+
     _init(False, _CLIENT_DEFAULT_URL,
           exclude_server_name=True)
     sentry_sdk.set_tag("frozen", randovania.is_frozen())
 
+    # Ignore the "packet queue is empty, aborting" message
+    # It causes a disconnect, but we smoothly reconnect in that case.
+    sentry_sdk.integrations.logging.ignore_logger("engineio.client")
 
-def server_init():
-    return _init(True, _SERVER_DEFAULT_URL)
+
+def server_init(sampling_rate: float):
+    return _init(True, _SERVER_DEFAULT_URL, sampling_rate=sampling_rate)
 
 
 def bot_init():
-    return _init(False, _BOT_DEFAULT_URL, sampling_rate=1.0)
+    return _init(False, _BOT_DEFAULT_URL)
 
 
 @contextlib.contextmanager
 def attach_patcher_data(patcher_data: dict):
-    with sentry_sdk.configure_scope() as scope:
+    with sentry_sdk.push_scope() as scope:
         scope.add_attachment(
             json.dumps(patcher_data).encode("utf-8"),
             filename="patcher.json",
             content_type="application/json",
         )
         yield
+
+
+trace_function = sentry_sdk.trace
+set_tag = sentry_sdk.set_tag
+
+
+def trace_block(description: str):
+    current_span = sentry_sdk.get_current_span()
+    if current_span is not None:
+        return current_span.start_child(
+            op=sentry_sdk.consts.OP.FUNCTION,
+            description=description,
+        )
+    else:
+        return contextlib.nullcontext()

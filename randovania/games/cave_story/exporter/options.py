@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
 
@@ -17,7 +19,7 @@ class CSPerGameOptions(PerGameOptions):
         }
 
     @classmethod
-    def from_json(cls, value: dict) -> "CSPerGameOptions":
+    def from_json(cls, value: dict) -> CSPerGameOptions:
         game = RandovaniaGame.CAVE_STORY
         cosmetic_patches = game.data.layout.cosmetic_patches.from_json(value["cosmetic_patches"])
         return cls(

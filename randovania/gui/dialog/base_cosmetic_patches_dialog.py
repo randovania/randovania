@@ -1,6 +1,11 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6.QtWidgets import QDialog
 
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+if TYPE_CHECKING:
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 
 class BaseCosmeticPatchesDialog(QDialog):
@@ -10,8 +15,8 @@ class BaseCosmeticPatchesDialog(QDialog):
         self.reset_button.clicked.connect(self.reset)
 
     def reset(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def cosmetic_patches(self) -> BaseCosmeticPatches:
-        raise NotImplementedError()
+        raise NotImplementedError

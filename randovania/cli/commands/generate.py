@@ -3,7 +3,6 @@ from __future__ import annotations
 import asyncio
 import time
 import typing
-from argparse import ArgumentParser
 from pathlib import Path
 
 from randovania.cli import cli_lib
@@ -11,6 +10,8 @@ from randovania.cli.commands import permalink as permalink_command
 from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
+    from argparse import ArgumentParser
+
     from randovania.layout.permalink import Permalink
 
 

@@ -1,7 +1,13 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from randovania.game_connection.builder.prime_connector_builder import PrimeConnectorBuilder
-from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
-from randovania.game_connection.executor.memory_operation import MemoryOperationExecutor
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
+
+if TYPE_CHECKING:
+    from randovania.game_connection.executor.memory_operation import MemoryOperationExecutor
 
 
 class DolphinConnectorBuilder(PrimeConnectorBuilder):

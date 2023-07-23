@@ -15,7 +15,7 @@ Extra - map_name: rm_a0h01
               Infinite Bomb Jumping (Expert) and Can Use Bombs
           Charged Bomb Jump (Advanced) and Walljump (Expert) and Can Use Charged Bomb Jump
   > Event - Victory
-      After Collected the Baby
+      After Collected the Baby Metroid
 
 > Dock to Hornoad Hallway; Heals? False
   * Layers: default
@@ -27,12 +27,12 @@ Extra - map_name: rm_a0h01
   * Layers: default
   * Open Passage to Crystal Climb West/Dock to Landing Site
   > Next to Crystal Blocks
-      After Collected the Baby
+      After Collected the Baby Metroid
 
 > Next to Crystal Blocks; Heals? False
   * Layers: default
   > Dock to Crystal Climb West
-      After Collected the Baby
+      After Collected the Baby Metroid
   > Top
       Any of the following:
           Space Jump or Can Use Spider Ball
@@ -245,8 +245,17 @@ Extra - map_name: rm_a0h05
 
 > Event - Alpha; Heals? False
   * Layers: default
-  * Event Surface - Alpha Metroid
+  * Event Metroids Surface - Alpha Metroid
   > Dock to Surface Lava Pond
+      Trivial
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 350; Category? Minor
+  * Extra - object_name: oItemDNA_350
+  > Event - Alpha
       Trivial
 
 ----------------
@@ -273,7 +282,7 @@ Extra - map_name: rm_a0h07
   > Dock to Mumbo Manor
       Trivial
   > Middle
-      Trivial
+      Disabled Grave Grotto Blocks or Can Use Any Bombs
 
 > Dock to Mumbo Manor; Heals? False
   * Layers: default
@@ -312,7 +321,7 @@ Extra - map_name: rm_a0h07
 > Middle; Heals? False
   * Layers: default
   > Dock to Twisty Tunnel
-      Trivial
+      Disabled Grave Grotto Blocks or Can Use Any Bombs
   > Tunnel to Surface Spider Ball Challenge
       Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
   > Dock to Surface Gunzoo Room
@@ -482,9 +491,16 @@ Extra - map_name: rm_a0h09A
   * Extra - object_name: oItemM_57
   > Near Spikes
       Any of the following:
-          Damage Boost (Beginner) or Can Use Spider Ball
-          Movement (Intermediate) and Hijump Wall
-          Morph Ball and Morph Glide (Beginner)
+          Can Use Spider Ball or Space Jump Wall
+          All of the following:
+              # damage boost
+              Damage Boost (Beginner) and Lava Damage ≥ 7
+          All of the following:
+              # Jump with hi
+              Hi-Jump Boots and Movement (Intermediate)
+          All of the following:
+              # glide
+              Morph Ball and Morph Glide (Beginner)
 
 ----------------
 Spike Maze
@@ -493,7 +509,7 @@ Extra - map_name: rm_a0h10
   * Layers: default
   * Open Passage to Mines Access/Dock to Spike Maze
   > Middle Pit
-      Morph Ball and Tunnel Climb
+      Low Mid-Air Morph Tunnel Climb
 
 > Dock to Surface Gunzoo Room; Heals? False
   * Layers: default
@@ -524,7 +540,9 @@ Extra - map_name: rm_a0h10
   > Top Pit
       All of the following:
           Morph Ball
-          Damage Boost (Beginner) or High Mid-Air Morph Tunnel Climb
+          Any of the following:
+              High Mid-Air Morph Tunnel Climb
+              Damage Boost (Beginner) and Normal Damage ≥ 14
 
 ----------------
 Mines Access
@@ -539,7 +557,7 @@ Extra - map_name: rm_a0h10a
   * Layers: default
   * Open Passage to Mines 3-Shape Shaft/Dock to Mines Access
   > Bottom
-      After Mines Entrance Crystal
+      After Surface - Mines Entrance Crystal Destroyed
   > Event - Crystal
       Super Missiles
 
@@ -565,7 +583,7 @@ Extra - map_name: rm_a0h10a
 > Bottom; Heals? False
   * Layers: default
   > Dock to Mines 3-Shape Shaft
-      After Mines Entrance Crystal
+      After Surface - Mines Entrance Crystal Destroyed
   > Dock to Hidden Mines Route
       Speed Booster and Knowledge (Intermediate)
   > Middle
@@ -575,7 +593,7 @@ Extra - map_name: rm_a0h10a
 
 > Event - Crystal; Heals? False
   * Layers: default
-  * Event Mines Entrance Crystal
+  * Event Surface - Mines Entrance Crystal Destroyed
   > Bottom
       Trivial
 
@@ -653,7 +671,13 @@ Extra - map_name: rm_a0h24
   * Layers: default
   * Open Passage to Western Cave Shaft/Dock to Western Cave Entrance
   > Pickup (Missile Tank)
-      Speed Booster and Shinesparking Tricks (Beginner)
+      All of the following:
+          Speed Booster and Shinesparking Tricks (Beginner)
+          Any of the following:
+              Power Grip
+              All of the following:
+                  Morph Ball and Mid-Air Morph (Beginner)
+                  Space Jump or Walljump (Beginner)
   > Middle 
       Space Jump Wall
 
@@ -864,7 +888,7 @@ Extra - map_name: rm_a0h30a
   * Layers: default
   * Open Passage to Tower Exterior South East/Dock to Tower East Exterior Access
   > Dock to Skreek Street
-      After Tower Rock Entrance and Power Grip Wall
+      After Surface - Rock Entrance To The Tower and Power Grip Wall
   > Event - A4RockEntrance
       Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
 
@@ -872,13 +896,13 @@ Extra - map_name: rm_a0h30a
   * Layers: default
   * Open Passage to Skreek Street/Dock to Tower East Exterior Access
   > Dock to Tower Exterior South East
-      After Tower Rock Entrance
+      After Surface - Rock Entrance To The Tower
   > Event - A4RockEntrance
       Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
 
 > Event - A4RockEntrance; Heals? False
   * Layers: default
-  * Event Tower Rock Entrance
+  * Event Surface - Rock Entrance To The Tower
   > Dock to Tower Exterior South East
       Trivial
   > Dock to Skreek Street
@@ -893,9 +917,7 @@ Extra - map_name: rm_a0h31
   > Dock to Distribution Entranceway
       Power Grip Wall
   > Dock to Depths Shaft
-      All of the following:
-          # All Metroid Events
-          After Surface - Alpha Metroid and After Area 2 - Breeding Grounds Upper Right Alpha and After Area 2 - Breeding Grounds Left Alpha and After Area 2 - Breeding Grounds Lower Right Alpha and After Area 3 - Interior Alpha and After Area 3 - Breeding Grounds Alpha and After Area 5 - Squad Right Bottom Alpha and After Area 5 - Squad Right Top Alpha and After Area 1 - Exterior Alpha and After Area 5 - Squad Left Bottom Alpha and After Area 5 - Squad Left Middle Alpha and After Area 5 - Squad Left Top Alpha and After Area 1 - Breeding Grounds Upper Right Alpha and After Area 1 - Breeding Grounds Lower Right Alpha and After Area 1 - Breeding Grounds Lower Left Alpha and After Area 2 - Entrance Alpha and After Area 2 - Exterior Alpha and After Area 2 - Interior Upper Alpha and After Area 2 - Interior Lower Alpha and After Area 2 - Breeding Grounds Gamma and After Area 4 - Left Gamma and After Area 4 - Right Bottom Gamma and After Area 4 - Right Top Gamma and After Area 5 - Dual Left Gamma and After Area 5 - Dual Right Gamma and After Area 3 - Exterior Gamma and After Area 3 - Interior Shaft Gamma and After Area 3 - Deep Factory Gamma and After Area 3 - Breeding Grounds Left Gamma and After Area 3 - Breeding Grounds Middle Bottom Gamma and After Area 3 - Breeding Grounds Middle Middle Gamma and After Area 3 - Breeding Grounds Middle Top Gamma and After Area 3 - Breeding Grounds Right Gamma and After Area 4 - Left Zeta and After Area 4 - Right Zeta and After Area 4 - Interior Zeta and After Area 5 - Interior Zeta
+      Trivial
 
 > Dock to Distribution Entranceway; Heals? False
   * Layers: default
@@ -964,7 +986,7 @@ Extra - map_name: rm_a0h32
 ----------------
 Depths Save Station
 Extra - map_name: rm_a0h33
-> Save Station; Heals? True
+> Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 20
   > Dock to Depths Shaft
@@ -1041,7 +1063,9 @@ Extra - map_name: rm_a0h12
           Space Jump or Can Use Spider Ball
           All of the following:
               # Lava
-              Gravity Suit or Damage Boost (Intermediate)
+              Any of the following:
+                  Gravity Suit
+                  Damage Boost (Beginner) and Lava Damage ≥ 14
               Movement (Beginner) or Power Grip Wall
 
 > Dock to Research Site Access; Heals? False
@@ -1055,7 +1079,9 @@ Extra - map_name: rm_a0h12
               Space Jump
               All of the following:
                   Power Grip Wall
-                  Gravity Suit or Damage Boost (Intermediate) or Movement (Intermediate)
+                  Any of the following:
+                      Gravity Suit or Movement (Intermediate)
+                      Damage Boost (Beginner) and Lava Damage ≥ 5
 
 ----------------
 Research Site Access
@@ -1072,7 +1098,7 @@ Extra - map_name: rm_a0h13
   > Dock to Octroll Lava Pool
       Trivial
   > Dock to Elevator Shaft
-      After Thoth Power Bomb Entrance
+      After Surface - Thoth Power Bomb Blocks Entrance Destroyed
   > Event - ThothPBEntrance
       Can Use Power Bombs
 
@@ -1084,7 +1110,7 @@ Extra - map_name: rm_a0h13
 
 > Event - ThothPBEntrance; Heals? False
   * Layers: default
-  * Event Thoth Power Bomb Entrance
+  * Event Surface - Thoth Power Bomb Blocks Entrance Destroyed
   > Dock to Research Site
       Trivial
 
@@ -1097,9 +1123,9 @@ Extra - map_name: rm_a0h14
   > Dock to Research Site Access
       Trivial
   > Event - LeftDualAlpha
-      After Research Dual Alphas Trigger Activated and Defeat Alpha
+      After Surface - Research Site Dual Alphas Trigger Activated and Defeat Alpha
   > Event - RightDualAlpha
-      After Research Dual Alphas Trigger Activated and Defeat Alpha
+      After Surface - Research Site Dual Alphas Trigger Activated and Defeat Alpha
 
 > Dock to Research Site Access; Heals? False
   * Layers: default
@@ -1109,14 +1135,32 @@ Extra - map_name: rm_a0h14
 
 > Event - LeftDualAlpha; Heals? False
   * Layers: default
-  * Event Surface - Dual Alphas Left
+  * Event Metroids Surface - Dual Alphas Left
   > Dock to Research Site Storage
+      Trivial
+  > Pickup (Left Alpha)
       Trivial
 
 > Event - RightDualAlpha; Heals? False
   * Layers: default
-  * Event Surface - Dual Alphas Right
+  * Event Metroids Surface - Dual Alphas Right
   > Dock to Research Site Storage
+      Trivial
+  > Pickup (Right Alpha)
+      Trivial
+
+> Pickup (Left Alpha); Heals? False
+  * Layers: default
+  * Pickup 364; Category? Minor
+  * Extra - object_name: oItemDNA_364
+  > Event - LeftDualAlpha
+      Trivial
+
+> Pickup (Right Alpha); Heals? False
+  * Layers: default
+  * Pickup 365; Category? Minor
+  * Extra - object_name: oItemDNA_365
+  > Event - RightDualAlpha
       Trivial
 
 ----------------
@@ -1137,7 +1181,7 @@ Extra - map_name: rm_a0h15
 
 > Event - DualAlphasTrigger; Heals? False
   * Layers: default
-  * Event Research Dual Alphas Trigger Activated
+  * Event Surface - Research Site Dual Alphas Trigger Activated
   > Dock to Research Site
       Trivial
   > Pickup (Super Missile Tank)
@@ -1253,9 +1297,13 @@ Extra - map_name: rm_a0h17e
   * Layers: default
   * Open Passage to Drill Excavation Access/Dock to Drill Excavation
   > After Drill Sequence
-      After Mines Drill Crystal
+      After Surface - Mines Drill Crystal Destroyed
   > Event - DrillCrystal
-      Super Missiles and Can Use Any Bombs and Tunnel Climb
+      All of the following:
+          Super Missiles
+          Any of the following:
+              Enabled Skip cutscenes
+              Can Use Any Bombs and Tunnel Climb
 
 > After Drill Sequence; Heals? False
   * Layers: default
@@ -1266,11 +1314,11 @@ Extra - map_name: rm_a0h17e
               # Shinespark
               Speed Booster and Shinesparking Tricks (Beginner)
   > Dock to Drill Excavation Access
-      After Mines Drill Crystal
+      After Surface - Mines Drill Crystal Destroyed
 
 > Event - DrillCrystal; Heals? False
   * Layers: default
-  * Event Mines Drill Crystal
+  * Event Surface - Mines Drill Crystal Destroyed
   > Dock to Drill Excavation Access
       Can Use Any Bombs and Tunnel Climb
 
@@ -1332,7 +1380,9 @@ Extra - map_name: rm_a0h20
           All of the following:
               # Lava
               Power Grip Wall
-              Gravity Suit or Damage Boost (Intermediate)
+              Any of the following:
+                  Gravity Suit
+                  Damage Boost (Beginner) and Lava Damage ≥ 35
 
 > Dock to Mines Alpha Nest; Heals? False
   * Layers: default
@@ -1342,7 +1392,8 @@ Extra - map_name: rm_a0h20
           Space Jump
           Any of the following:
               # Lava
-              Gravity Suit or Damage Boost (Intermediate)
+              Gravity Suit
+              Damage Boost (Beginner) and Lava Damage ≥ 35
 
 ----------------
 Mines Alpha Nest
@@ -1355,7 +1406,7 @@ Extra - map_name: rm_a0h21
 
 > Event - Alpha; Heals? False
   * Layers: default
-  * Event Surface - Mines Alpha
+  * Event Metroids Surface - Mines Alpha
   > Dock to Mines Alpha Nest Access
       Any of the following:
           Space Jump or Can Use Spider Ball
@@ -1367,7 +1418,16 @@ Extra - map_name: rm_a0h21
               No Hi-Jump Boots and No Speed Booster and Enabled Septogg Helpers
           All of the following:
               # IBJ
-              After Surface - Mines Alpha and Infinite Bomb Jumping (Advanced) and Can Use Bombs
+              After Metroids Surface - Mines Alpha and Infinite Bomb Jumping (Advanced) and Can Use Bombs
+  > Pickup (Alpha)
+      Trivial
+
+> Pickup (Alpha); Heals? False
+  * Layers: default
+  * Pickup 366; Category? Minor
+  * Extra - object_name: oItemDNA_366
+  > Event - Alpha
+      Trivial
 
 ----------------
 Mines Gamma Nest Access
@@ -1376,13 +1436,17 @@ Extra - map_name: rm_a0h22
   * Layers: default
   * Open Passage to Mines Intersection/Dock to Mines Gamma Nest Access
   > Dock to Mines Gamma Nest
-      Gravity Suit or Space Jump or Damage Boost (Intermediate)
+      Any of the following:
+          Gravity Suit or Space Jump
+          Damage Boost (Intermediate) and Lava Damage ≥ 70
 
 > Dock to Mines Gamma Nest; Heals? False
   * Layers: default
   * Open Passage to Mines Gamma Nest/Dock to Mines Gamma Nest Access
   > Dock to Mines Intersection
-      Gravity Suit or Space Jump or Damage Boost (Intermediate)
+      Any of the following:
+          Gravity Suit or Space Jump
+          Damage Boost (Intermediate) and Lava Damage ≥ 50
 
 ----------------
 Mines Gamma Nest
@@ -1395,7 +1459,7 @@ Extra - map_name: rm_a0h23
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Surface - Mines Gamma
+  * Event Metroids Surface - Mines Gamma
   > Dock to Mines Gamma Nest Access
       Any of the following:
           Space Jump or Can Use Spider Ball
@@ -1403,4 +1467,13 @@ Extra - map_name: rm_a0h23
           All of the following:
               # IBJ
               Infinite Bomb Jumping (Advanced) and Can Use Bombs
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 382; Category? Minor
+  * Extra - object_name: oItemDNA_382
+  > Event - Gamma
+      Trivial
 

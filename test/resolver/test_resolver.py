@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.layout.layout_description import LayoutDescription
-from randovania.resolver import resolver, debug
+from randovania.resolver import debug, resolver
 
 
-@pytest.mark.skip_resolver_tests
+@pytest.mark.skip_resolver_tests()
 @pytest.mark.parametrize("seed_name", [
     "seed_a.rdvgame",
     "corruption_seed_a.rdvgame",

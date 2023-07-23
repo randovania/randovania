@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import dataclasses
 import json
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -9,21 +12,19 @@ import randovania
 from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.game_description.default_database import default_prime2_memo_data
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
+from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -31,6 +32,10 @@ from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.game_description import GameDescription
 
 
 @pytest.fixture()
@@ -49,9 +54,10 @@ def test_create_starting_popup_empty(echoes_game_patches):
 def test_create_starting_popup_items(echoes_game_patches, echoes_pickup_database):
     db = echoes_game_patches.game.resource_database
 
-    def create_major(n):
+    def create_major(n, included_ammo=()):
         return pickup_creator.create_standard_pickup(echoes_pickup_database.get_pickup_with_name(n),
-                                                     StandardPickupState(), db, None, False)
+                                                     StandardPickupState(included_ammo=included_ammo),
+                                                     db, None, False)
 
     missile = pickup_creator.create_ammo_pickup(echoes_pickup_database.get_pickup_with_name("Missile Expansion"),
                                                 [5], False, db)
@@ -59,7 +65,7 @@ def test_create_starting_popup_items(echoes_game_patches, echoes_pickup_database
 
     starting_pickups = [
         missile, missile, missile, tank, tank, tank,
-        create_major("Dark Beam"), create_major("Screw Attack"),
+        create_major("Dark Beam", (50,)), create_major("Screw Attack"),
     ]
     patches = echoes_game_patches.assign_extra_starting_pickups(starting_pickups)
 
@@ -77,11 +83,26 @@ def test_adjust_model_name(randomizer_data):
     # Setup
     patcher_data = {
         "pickups": [
-            {"model": {"game": "prime2", "name": "DarkVisor"}},
-            {"model": {"game": "prime2", "name": "SkyTempleKey"}},
-            {"model": {"game": "prime2", "name": "MissileExpansion"}},
-            {"model": {"game": "prime1", "name": "Boost Ball"}},
-            {"model": {"game": "prime1", "name": "Plasma Beam"}},
+            {
+                "model": {"game": "prime2", "name": "DarkVisor"},
+                "original_model": {"game": "prime2", "name": "DarkVisor"}
+            },
+            {
+                "model": {"game": "prime2", "name": "SkyTempleKey"},
+                "original_model": {"game": "prime2", "name": "SkyTempleKey"}
+            },
+            {
+                "model": {"game": "prime2", "name": "MissileExpansion"},
+                "original_model": {"game": "prime2", "name": "MissileExpansion"}
+            },
+            {
+                "model": {"game": "prime1", "name": "BoostBall"},
+                "original_model": {"game": "prime1", "name": "Boost Ball"}
+            },
+            {
+                "model": {"game": "prime1", "name": "EnergyTransferModule"},
+                "original_model": {"game": "prime1", "name": "Plasma Beam"}
+            },
         ]
     }
 
@@ -134,6 +155,7 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
     capacities = [
         {'amount': 1 if item.short_name == "MorphBall" else 0, 'index': item.extra["item_id"]}
         for item in resource_db.item
+        if item.extra["item_id"] < 1000
     ]
 
     # Run
@@ -151,13 +173,12 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
 
 def test_create_elevators_field_no_elevator(empty_patches, echoes_game_description):
-    # Setup
-    # Run
-    with pytest.raises(ValueError) as exp:
-        patch_data_factory._create_elevators_field(empty_patches, echoes_game_description)
-
-    # Assert
-    assert str(exp.value) == "Invalid elevator count. Expected 22, got 0."
+    with pytest.raises(ValueError, match="Invalid elevator count. Expected 22, got 0."):
+        patch_data_factory._create_elevators_field(
+            empty_patches,
+            echoes_game_description,
+            echoes_game_description.dock_weakness_database.find_type("elevator")
+        )
 
 
 @pytest.mark.parametrize("vanilla_gateway", [False, True])
@@ -166,27 +187,30 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
                                                      echoes_game_patches):
     # Setup
     wl = echoes_game_description.region_list
-    elevator_connection: list[tuple[TeleporterNode, AreaIdentifier]] = []
+    elevator_connection: list[tuple[DockNode, Node]] = []
 
-    def add(region: str, area: str, node: str, target_world: str, target_area: str):
+    def add(region: str, area: str, node: str, target_world: str, target_area: str, target_node: str):
         elevator_connection.append((
-            wl.get_teleporter_node(NodeIdentifier.create(region, area, node)),
-            AreaIdentifier(target_world, target_area),
+            wl.typed_node_by_identifier(NodeIdentifier.create(region, area, node), DockNode),
+            wl.node_by_identifier(NodeIdentifier.create(target_world, target_area, target_node)),
         ))
 
-    add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
-        "Sanctuary Fortress", "Transport to Agon Wastes")
-    add("Temple Grounds", "Transport to Agon Wastes", "Elevator to Agon Wastes - Transport to Temple Grounds",
-        "Torvus Bog", "Transport to Agon Wastes")
+    add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple",
+        "Sanctuary Fortress", "Transport to Agon Wastes", "Elevator to Agon Wastes")
+    add("Temple Grounds", "Transport to Agon Wastes", "Elevator to Agon Wastes",
+        "Torvus Bog", "Transport to Agon Wastes", "Elevator to Agon Wastes")
 
     if not vanilla_gateway:
-        add("Temple Grounds", "Sky Temple Gateway", "Teleport to Great Temple - Sky Temple Energy Controller",
-            "Great Temple", "Sanctum")
+        add("Temple Grounds", "Sky Temple Gateway", "Elevator to Great Temple",
+            "Great Temple", "Sanctum", "Door to Sanctum Access")
 
-    patches = echoes_game_patches.assign_elevators(elevator_connection)
+    patches = echoes_game_patches.assign_dock_connections(elevator_connection)
 
     # Run
-    result = patch_data_factory._create_elevators_field(patches, echoes_game_description)
+    result = patch_data_factory._create_elevators_field(
+        patches, echoes_game_description,
+        echoes_game_description.dock_weakness_database.find_type("elevator")
+    )
 
     # Assert
     expected = [
@@ -355,7 +379,7 @@ def test_get_single_hud_text_locked_pbs():
     # Run
     result = pickup_exporter._get_single_hud_text("Locked Power Bomb Expansion",
                                                   patch_data_factory._simplified_memo_data(),
-                                                  tuple())
+                                                  ())
 
     # Assert
     assert result == "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
@@ -372,7 +396,10 @@ def test_pickup_data_for_seeker_launcher(echoes_pickup_database, multiworld_item
     pickup = pickup_creator.create_standard_pickup(echoes_pickup_database.standard_pickups["Seeker Launcher"], state,
                                                    echoes_resource_database,
                                                    echoes_pickup_database.ammo_pickups["Missile Expansion"], True)
-    creator = pickup_exporter.PickupExporterSolo(patch_data_factory._simplified_memo_data())
+    creator = pickup_exporter.PickupExporterSolo(
+        patch_data_factory._simplified_memo_data(),
+        RandovaniaGame.METROID_PRIME_ECHOES
+    )
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -383,6 +410,7 @@ def test_pickup_data_for_seeker_launcher(echoes_pickup_database, multiworld_item
         "pickup_index": 0,
         "scan": "Seeker Launcher.",
         "model": {"game": "prime2", "name": "SeekerLauncher"},
+        "original_model": {"game": "prime2", "name": "SeekerLauncher"},
         "hud_text": ["Seeker Launcher acquired, but the Missile Launcher is required to use it.",
                      "Seeker Launcher acquired!"],
         'resources': [{'amount': 5, 'index': 71},
@@ -424,7 +452,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_pickup_database,
             "Power Bomb Expansion acquired! \nMaximum Power Bomb carrying capacity increased by 2.",
         ]
 
-    creator = pickup_exporter.PickupExporterSolo(memo)
+    creator = pickup_exporter.PickupExporterSolo(memo, RandovaniaGame.METROID_PRIME_ECHOES)
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -435,6 +463,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_pickup_database,
         "pickup_index": 0,
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage.",
         "model": {"game": "prime2", "name": "PowerBombExpansion"},
+        "original_model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": hud_text,
         'resources': [{'amount': 2, 'index': 72},
                       {'amount': 1, 'index': 47},
@@ -457,7 +486,10 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, multiworl
         False,
         echoes_resource_database,
     )
-    creator = pickup_exporter.PickupExporterSolo(patch_data_factory._simplified_memo_data())
+    creator = pickup_exporter.PickupExporterSolo(
+        patch_data_factory._simplified_memo_data(),
+        RandovaniaGame.METROID_PRIME_ECHOES
+    )
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
@@ -468,6 +500,7 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, multiworl
         "pickup_index": 0,
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage.",
         "model": {"game": "prime2", "name": "PowerBombExpansion"},
+        "original_model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": ["Power Bomb Expansion acquired!"],
         'resources': [{'amount': 2, 'index': 43},
                       {'amount': 1, 'index': 47},
@@ -482,14 +515,13 @@ def test_create_pickup_all_from_pool(echoes_game_description,
                                      default_echoes_configuration,
                                      disable_hud_popup: bool
                                      ):
-    item_pool = pool_creator.calculate_pool_results(default_echoes_configuration,
-                                                    echoes_game_description)
+    item_pool = pool_creator.calculate_pool_results(default_echoes_configuration, echoes_game_description)
     index = PickupIndex(0)
     if disable_hud_popup:
         memo_data = patch_data_factory._simplified_memo_data()
     else:
         memo_data = default_prime2_memo_data()
-    creator = pickup_exporter.PickupExporterSolo(memo_data)
+    creator = pickup_exporter.PickupExporterSolo(memo_data, RandovaniaGame.METROID_PRIME_ECHOES)
 
     for item in item_pool.to_place:
         data = creator.export(index, PickupTarget(item, 0), item, PickupModelStyle.ALL_VISIBLE)
@@ -511,6 +543,10 @@ def test_run_validated_hud_text(multiworld_item):
         ],
         conversion=[],
         model=PickupModel(
+            game=RandovaniaGame.METROID_PRIME_ECHOES,
+            name="EnergyTransferModule",
+        ),
+        original_model=PickupModel(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
@@ -568,6 +604,7 @@ def test_create_string_patches(
         namer,
         player_config,
         rng,
+        []
     )
 
     # Assert

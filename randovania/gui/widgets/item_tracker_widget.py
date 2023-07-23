@@ -1,12 +1,14 @@
+from __future__ import annotations
+
 import dataclasses
 import logging
 from enum import Enum
 
-from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania import get_data_path
 from randovania.game_description import default_database
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, InventoryItem
+from randovania.game_description.resources.item_resource_info import InventoryItem, ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame
@@ -22,11 +24,12 @@ class FieldToCheck(Enum):
 
 @dataclasses.dataclass(frozen=True)
 class Element:
-    labels: list[QtWidgets.QLabel | TrackerItemImage | TrackerItemImage]
+    labels: list[QtWidgets.QLabel | TrackerItemImage]
     resources: list[ItemResourceInfo]
     text_template: str
     minimum_to_check: int
     field_to_check: FieldToCheck
+    disabled_image: TrackerItemImage | None
 
     def __post_init__(self):
         if len(self.labels) > 1 and len(self.labels) != len(self.resources):
@@ -45,6 +48,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
         super().__init__()
         self._layout = QtWidgets.QGridLayout(self)
         self.tracker_config = tracker_config
+        self.current_state = {}
 
         self.tracker_elements: list[Element] = []
         game_enum = RandovaniaGame(tracker_config["game"])
@@ -53,17 +57,22 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
 
         for element in tracker_config["elements"]:
             text_template = ""
+            col_span = element.get("col_span", 1)
+            row_span = element.get("row_span", 1)
             minimum_to_check = element.get("minimum_to_check", 1)
             field_to_check = FieldToCheck(element.get("field_to_check", FieldToCheck.CAPACITY.value))
 
             labels = []
+            disabled_image = None
             if "image_path" in element:
                 paths = element["image_path"]
                 if not isinstance(paths, list):
                     paths = [paths]
 
                 visible = True
-                for path in paths:
+
+                def get_label(path):
+                    nonlocal visible
                     image_path = get_data_path().joinpath(path)
                     if not image_path.exists():
                         logging.error("Tracker asset not found: %s", image_path)
@@ -75,12 +84,24 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                     label.set_ignore_mouse_events(True)
                     label.setVisible(visible)
                     visible = False
-                    labels.append(label)
+                    return label
+
+                for path in paths:
+                    labels.append(get_label(path))
+
+                if "disabled_image_path" in element:
+                    disabled_image = get_label(element["disabled_image_path"])
+                else:
+                    disabled_image = get_label(paths[0])
 
             elif "label" in element:
                 label = QtWidgets.QLabel(self)
                 label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 text_template = element["label"]
+                labels.append(label)
+
+            elif "progress_bar" in element:
+                label = QtWidgets.QProgressBar(self)
                 labels.append(label)
 
             else:
@@ -93,9 +114,25 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
             for resource, label in zip(resources, labels):
                 label.setToolTip(resource.long_name)
 
-            self.tracker_elements.append(Element(labels, resources, text_template, minimum_to_check, field_to_check))
+            self.tracker_elements.append(Element(
+                labels,
+                resources,
+                text_template,
+                minimum_to_check,
+                field_to_check,
+                disabled_image
+            ))
+            if disabled_image is not None:
+                labels.append(disabled_image)
             for label in labels:
-                self._layout.addWidget(label, element["row"], element["column"])
+                self._layout.addWidget(
+                    label,
+                    element["row"],
+                    element["column"],
+                    row_span,
+                    col_span,
+                    QtCore.Qt.AlignmentFlag.AlignCenter
+                )
 
         self.inventory_spacer = QtWidgets.QSpacerItem(5, 5, QtWidgets.QSizePolicy.Policy.Expanding,
                                                       QtWidgets.QSizePolicy.Policy.Expanding)
@@ -103,6 +140,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
 
     def update_state(self, inventory: dict[ItemResourceInfo, InventoryItem]):
         self.current_state = inventory
+
         for element in self.tracker_elements:
             if len(element.labels) > 1:
                 satisfied = False
@@ -122,9 +160,8 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                     else:
                         element.labels[i].setVisible(False)
 
-                if not satisfied:
-                    element.labels[0].setVisible(True)
-                    element.labels[0].set_checked(False)
+                element.disabled_image.setVisible(not satisfied)
+                element.disabled_image.set_checked(satisfied)
 
             else:
                 label = element.labels[0]
@@ -142,7 +179,16 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                     fields = {"amount": amount, "capacity": capacity, "max_capacity": max_capacity}
                     value_target = element.minimum_to_check
                     value = fields[element.field_to_check.value]
-                    label.set_checked(max_capacity == 0 or value >= value_target)
+                    satisfied = max_capacity == 0 or value >= value_target
+                    label.set_checked(satisfied)
+                    label.setVisible(satisfied)
+                    element.disabled_image.set_checked(not satisfied)
+                    element.disabled_image.setVisible(not satisfied)
+
+                elif isinstance(label, QtWidgets.QProgressBar):
+                    label.setMaximum(max(capacity, 1))
+                    label.setValue(amount)
+
                 else:
                     label.setText(element.text_template.format(
                         amount=amount,

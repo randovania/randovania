@@ -1,12 +1,18 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 import randovania
-from randovania.game_description.game_description import GameDescription
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.generated.preset_echoes_patches_ui import Ui_PresetEchoesPatches
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):

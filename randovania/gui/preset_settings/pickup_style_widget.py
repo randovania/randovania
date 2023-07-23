@@ -1,12 +1,19 @@
-from PySide6 import QtWidgets
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QDialog, QWidget
 
 from randovania.gui.generated.widget_pickup_style_ui import Ui_PickupStyleWidget
 from randovania.gui.lib import signal_handling
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
+
+if TYPE_CHECKING:
+    from PySide6 import QtWidgets
+
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):

@@ -6,16 +6,16 @@ import shutil
 import tempfile
 from pathlib import Path
 
-import PIL.Image
 import discord
 import graphviz
-from PIL import ImageDraw
+import PIL.Image
 from discord import Embed
-from discord.ext.commands import Converter, Context
+from discord.ext.commands import Context, Converter
+from PIL import ImageDraw
 
 from randovania.game_description import default_database, pretty_print
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.node import NodeLocation, Node
+from randovania.game_description.db.node import Node, NodeLocation
 from randovania.game_description.db.region import Region
 from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
@@ -162,8 +162,7 @@ async def create_split_regions(db: GameDescription) -> list[SplitRegion]:
                     del areas[:per_part]
 
                     region_options.append(SplitRegion(
-                        region, "{} ({}-{})".format(name, areas_part[0].name[:2],
-                                                    areas_part[-1].name[:2]),
+                        region, f"{name} ({areas_part[0].name[:2]}-{areas_part[-1].name[:2]})",
                         create_areas(areas_part),
                         create_id(),
                     ))

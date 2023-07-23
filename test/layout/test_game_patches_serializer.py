@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import collections
 import dataclasses
 import typing
@@ -9,16 +11,18 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import data_writer
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.hint import Hint
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_entry import (
-    PickupEntry, ResourceLock, PickupModel,
+    PickupEntry,
+    PickupModel,
+    ResourceLock,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
@@ -34,7 +38,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
         {},
         {"starting_pickup": "Morph Ball"},
         {"elevator": NodeIdentifier.create("Temple Grounds", "Transport to Agon Wastes",
-                                           "Elevator to Agon Wastes - Transport to Temple Grounds")},
+                                           "Elevator to Agon Wastes")},
         {"configurable_nodes": [("Agon Wastes/Mining Plaza/Translator Gate", "Cobalt"),
                                 ("Torvus Bog/Great Bridge/Translator Gate", "Emerald")]},
         {"pickup": "Morph Ball Bomb"},
@@ -46,8 +50,8 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
                           "include_owner": False},
             "target": 50}]},
     ],
-    name="patches_with_data")
-def _patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_pickup_database):
+)
+def patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_pickup_database):
     game = echoes_game_description
     db = game.resource_database
 
@@ -55,31 +59,56 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
         "game": echoes_game_description.game.value,
         "starting_location": "Temple Grounds/Landing Site/Save Station",
         "starting_equipment": {"pickups": []},
-        "teleporters": {
-            "Temple Grounds/Temple Transport C/Elevator to Great Temple - Temple Transport C": "Great Temple/Temple Transport C",
-            "Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes - Transport to Temple Grounds": "Agon Wastes/Transport to Temple Grounds",
-            "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Temple Grounds": "Torvus Bog/Transport to Temple Grounds",
-            "Temple Grounds/Temple Transport B/Elevator to Great Temple - Temple Transport B": "Great Temple/Temple Transport B",
-            "Temple Grounds/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress - Transport to Temple Grounds": "Sanctuary Fortress/Transport to Temple Grounds",
-            "Temple Grounds/Temple Transport A/Elevator to Great Temple - Temple Transport A": "Great Temple/Temple Transport A",
-            "Great Temple/Temple Transport A/Elevator to Temple Grounds - Temple Transport A": "Temple Grounds/Temple Transport A",
-            "Great Temple/Temple Transport C/Elevator to Temple Grounds - Temple Transport C": "Temple Grounds/Temple Transport C",
-            "Great Temple/Temple Transport B/Elevator to Temple Grounds - Temple Transport B": "Temple Grounds/Temple Transport B",
-            "Temple Grounds/Sky Temple Gateway/Teleport to Great Temple - Sky Temple Energy Controller": "Great Temple/Sky Temple Energy Controller",
-            "Great Temple/Sky Temple Energy Controller/Teleport to Temple Grounds - Sky Temple Gateway": "Temple Grounds/Sky Temple Gateway",
-            "Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Agon Wastes": "Temple Grounds/Transport to Agon Wastes",
-            "Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Agon Wastes": "Torvus Bog/Transport to Agon Wastes",
-            "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress - Transport to Agon Wastes": "Sanctuary Fortress/Transport to Agon Wastes",
-            "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Torvus Bog": "Temple Grounds/Transport to Torvus Bog",
-            "Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes - Transport to Torvus Bog": "Agon Wastes/Transport to Torvus Bog",
-            "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress - Transport to Torvus Bog": "Sanctuary Fortress/Transport to Torvus Bog",
-            "Sanctuary Fortress/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Sanctuary Fortress": "Temple Grounds/Transport to Sanctuary Fortress",
-            "Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes - Transport to Sanctuary Fortress": "Agon Wastes/Transport to Sanctuary Fortress",
-            "Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Sanctuary Fortress": "Torvus Bog/Transport to Sanctuary Fortress",
-            "Sanctuary Fortress/Aerie/Elevator to Sanctuary Fortress - Aerie Transport Station": "Sanctuary Fortress/Aerie Transport Station",
-            "Sanctuary Fortress/Aerie Transport Station/Elevator to Sanctuary Fortress - Aerie": "Sanctuary Fortress/Aerie",
+        "dock_connections": {
+            "Temple Grounds/Temple Transport C/Elevator to Great Temple":
+            "Great Temple/Temple Transport C/Elevator to Temple Grounds",
+            "Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes":
+            "Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds",
+            "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog":
+            "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds",
+            "Temple Grounds/Temple Transport B/Elevator to Great Temple":
+            "Great Temple/Temple Transport B/Elevator to Temple Grounds",
+            "Temple Grounds/Transport to Sanctuary Fortress/"
+                "Elevator to Sanctuary Fortress":
+            "Sanctuary Fortress/Transport to Temple Grounds/"
+                "Elevator to Temple Grounds",
+            "Temple Grounds/Temple Transport A/Elevator to Great Temple":
+            "Great Temple/Temple Transport A/Elevator to Temple Grounds",
+            "Great Temple/Temple Transport A/Elevator to Temple Grounds":
+            "Temple Grounds/Temple Transport A/Elevator to Great Temple",
+            "Great Temple/Temple Transport C/Elevator to Temple Grounds":
+            "Temple Grounds/Temple Transport C/Elevator to Great Temple",
+            "Great Temple/Temple Transport B/Elevator to Temple Grounds":
+            "Temple Grounds/Temple Transport B/Elevator to Great Temple",
+            "Temple Grounds/Sky Temple Gateway/Elevator to Great Temple":
+            "Great Temple/Sky Temple Energy Controller/Save Station",
+            "Great Temple/Sky Temple Energy Controller/Elevator to Temple Grounds":
+            "Temple Grounds/Sky Temple Gateway/Spawn Point/Front of Teleporter",
+            "Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds":
+            "Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes",
+            "Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog":
+            "Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes",
+            "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress":
+            "Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes",
+            "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds":
+            "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog",
+            "Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes":
+            "Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog",
+            "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress":
+            "Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog",
+            "Sanctuary Fortress/Transport to Temple Grounds/"
+                "Elevator to Temple Grounds":
+            "Temple Grounds/Transport to Sanctuary Fortress/"
+                "Elevator to Sanctuary Fortress",
+            "Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes":
+            "Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress",
+            "Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog":
+            "Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress",
+            "Sanctuary Fortress/Aerie Transport Station/Elevator to Aerie":
+            "Sanctuary Fortress/Aerie/Elevator to Aerie Transport Station",
+            "Sanctuary Fortress/Aerie/Elevator to Aerie Transport Station":
+            "Sanctuary Fortress/Aerie Transport Station/Elevator to Aerie"
         },
-        "dock_connections": {},
         "dock_weakness": {},
         "configurable_nodes": {},
         "locations": {},
@@ -94,10 +123,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
             locations[world_name][game.region_list.node_name(node)] = game_patches_serializer._ETM_NAME
 
     data["locations"] = {
-        region: {
-            area: item
-            for area, item in sorted(locations[region].items())
-        }
+        region: dict(sorted(locations[region].items()))
         for region in sorted(locations.keys())
     }
 
@@ -114,12 +140,11 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
 
     if request.param.get("elevator"):
         teleporter: NodeIdentifier = request.param.get("elevator")
-        patches = patches.assign_elevators([
-            (game.region_list.get_teleporter_node(teleporter),
-             # TODO: Starting Locations are now NodeIdentifier not AreaIdentifier => was modified but can be refactored back if teleporter also uses Node instead of Area a.k.a default_node is removed
-             game.starting_location.area_identifier),
+        patches = patches.assign_dock_connections([
+            (game.region_list.typed_node_by_identifier(teleporter, DockNode),
+             game.region_list.node_by_identifier(game.starting_location)),
         ])
-        data["teleporters"][teleporter.as_string] = "Temple Grounds/Landing Site"
+        data["dock_connections"][teleporter.as_string] = "Temple Grounds/Landing Site/Save Station"
 
     if request.param.get("configurable_nodes"):
         gates = []
@@ -167,7 +192,7 @@ def test_decode(patches_with_data, default_echoes_configuration):
     decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_echoes_configuration)
 
     # Assert
-    assert set(decoded.all_elevator_connections()) == set(expected.all_elevator_connections())
+    assert set(decoded.all_dock_connections()) == set(expected.all_dock_connections())
     assert decoded == expected
 
 

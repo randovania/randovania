@@ -1,21 +1,26 @@
+from __future__ import annotations
+
 import functools
+from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
-from randovania.gui.dialog.trick_details_popup import TrickDetailsPopup, ResourceDetailsPopup, BaseResourceDetailsPopup
+from randovania.gui.dialog.trick_details_popup import BaseResourceDetailsPopup, ResourceDetailsPopup, TrickDetailsPopup
 from randovania.gui.generated.preset_trick_level_ui import Ui_PresetTrickLevel
 from randovania.gui.lib import signal_handling
-from randovania.layout.lib import trick_lib
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.layout.preset import Preset
+from randovania.layout.lib import trick_lib
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):

@@ -8409,7 +8409,7 @@
                     }
                 },
                 "Elevator - Forgotten Highway Elevator": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 251.0097465886939,
@@ -8425,12 +8425,17 @@
                         "teleporter_instance_id": null
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Crateria",
-                        "area": "Forgotten Highway Elevator"
+                        "area": "Forgotten Highway Elevator",
+                        "node": "Elevator - Maridia Elevator Room"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Maridia Elevator Save Station": {
                             "type": "and",

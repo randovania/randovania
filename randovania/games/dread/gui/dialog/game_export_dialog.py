@@ -1,26 +1,37 @@
+from __future__ import annotations
+
 import json
 import logging
 import os
 import platform
 import string
 from pathlib import Path
-from typing import Iterator, Callable
+from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
 
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
-    GameExportDialog, prompt_for_output_directory, prompt_for_input_directory,
-    is_directory_validator, path_in_edit, spoiler_path_for_directory, update_validation,
-    output_input_intersection_validator
+    GameExportDialog,
+    is_directory_validator,
+    output_input_intersection_validator,
+    path_in_edit,
+    prompt_for_input_directory,
+    prompt_for_output_directory,
+    spoiler_path_for_directory,
+    update_validation,
 )
 from randovania.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.gui.lib import common_qt_lib
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 
 def get_path_to_ryujinx() -> Path:
@@ -84,15 +95,31 @@ def add_validation(edit: QtWidgets.QLineEdit, validation: Callable[[], bool], po
     edit.textChanged.connect(field_validation)
 
 
+def romfs_validation(line: QtWidgets.QLineEdit):
+    if is_directory_validator(line):
+        return True
+
+    path = Path(line.text())
+    return not all(
+        p.is_file() for p in [
+            path.joinpath("system", "files.toc"),
+            path.joinpath("packs", "system", "system.pkg"),
+            path.joinpath("packs", "maps", "s010_cave", "s010_cave.pkg"),
+            path.joinpath("packs", "maps", "s020_magma", "s020_magma.pkg"),
+        ]
+    )
+
+
 class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
-    @property
-    def _game(self):
+
+    @classmethod
+    def game_enum(cls):
         return RandovaniaGame.METROID_DREAD
 
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
-        per_game = options.options_for_game(self._game)
+        per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, DreadPerGameOptions)
 
         self._validate_input_file()
@@ -111,6 +138,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.atmosphere_radio.toggled.connect(self._on_update_target_platform)
         self.ryujinx_radio.toggled.connect(self._on_update_target_platform)
         self.ryujinx_legacy_radio.toggled.connect(self._on_update_target_platform)
+        self.ryujinx_legacy_radio.setEnabled(not patch_data.get("enable_remote_lua"))
         self._on_update_target_platform()
 
         # Output to SD
@@ -197,29 +225,23 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         self.update_accept_validation()
 
-    def save_options(self):
-        with self._options as options:
-            if self._has_spoiler:
-                options.auto_save_spoiler = self.auto_save_spoiler
+    def update_per_game_options(self, per_game: DreadPerGameOptions) -> DreadPerGameOptions:
+        selected_tab = self.output_tab_widget.currentWidget()
+        output_preference = json.dumps({
+            "selected_tab": next(tab_name for tab_name, the_tab in self._output_tab_by_name.items()
+                                 if selected_tab == the_tab),
+            "tab_options": {
+                tab_name: the_tab.serialize_options()
+                for tab_name, the_tab in self._output_tab_by_name.items()
+            }
+        })
 
-            per_game = options.options_for_game(self._game)
-
-            selected_tab = self.output_tab_widget.currentWidget()
-            output_preference = json.dumps({
-                "selected_tab": next(tab_name for tab_name, the_tab in self._output_tab_by_name.items()
-                                     if selected_tab == the_tab),
-                "tab_options": {
-                    tab_name: the_tab.serialize_options()
-                    for tab_name, the_tab in self._output_tab_by_name.items()
-                }
-            })
-
-            options.set_options_for_game(self._game, DreadPerGameOptions(
-                cosmetic_patches=per_game.cosmetic_patches,
-                input_directory=self.input_file,
-                target_platform=self.target_platform,
-                output_preference=output_preference,
-            ))
+        return DreadPerGameOptions(
+            cosmetic_patches=per_game.cosmetic_patches,
+            input_directory=self.input_file,
+            target_platform=self.target_platform,
+            output_preference=output_preference,
+        )
 
     # Update
 
@@ -268,7 +290,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
     # Input file
 
     def _validate_input_file(self):
-        common_qt_lib.set_error_border_stylesheet(self.input_file_edit, is_directory_validator(self.input_file_edit))
+        common_qt_lib.set_error_border_stylesheet(self.input_file_edit, romfs_validation(self.input_file_edit))
 
     def _on_input_file_change(self):
         self._validate_input_file()

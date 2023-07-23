@@ -280,7 +280,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -537,7 +540,7 @@
                         "area": "Pipe Hub Access",
                         "node": "Door to Distribution Center Exterior West"
                     },
-                    "default_dock_weakness": "A5 Near Pipe Hub EMP Door",
+                    "default_dock_weakness": "Distribution Center Pipe Hub Access EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -665,7 +668,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1323,7 +1329,7 @@
                         "area": "Energy Distribution Tower East",
                         "node": "Door to Energy Distribution Tower West"
                     },
-                    "default_dock_weakness": "A5 Near Save EMP Door",
+                    "default_dock_weakness": "Distribution Center Energy Distribution Tower East EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1599,7 +1605,7 @@
                         "area": "Energy Distribution Activation Shaft",
                         "node": "Door to Energy Distribution Activation"
                     },
-                    "default_dock_weakness": "A5 Activation Tower Door",
+                    "default_dock_weakness": "Distribution Center Energy Restored Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1646,7 +1652,7 @@
                         "area": "Energy Distribution Emergency Exit",
                         "node": "Door to Energy Distribution Activation"
                     },
-                    "default_dock_weakness": "A5 Activation Tower Door",
+                    "default_dock_weakness": "Distribution Center Energy Restored Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1675,7 +1681,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "EMP",
+                    "event_name": "A5EMPActivated",
                     "connections": {
                         "Door to Energy Distribution Activation Shaft": {
                             "type": "and",
@@ -1773,6 +1779,32 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "SoftlockPrevention",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1807,6 +1839,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Energy Distribution Activation": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "SoftlockPrevention",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Hijump Tunnel Climb"
+                                    }
+                                ]
+                            }
+                        },
                         "Pickup (Super Missile Tank)": {
                             "type": "or",
                             "data": {
@@ -1928,7 +1981,7 @@
                         "area": "Energy Distribution Robot Home",
                         "node": "Door to EMP Ball Introduction"
                     },
-                    "default_dock_weakness": "A5 Near Activation Tower EMP Door",
+                    "default_dock_weakness": "Distribution Center EMP Ball Introduction EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1999,7 +2052,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "NearA5EMPActivationStatueEMP",
+                    "event_name": "EMPA5EMPBallIntroduction",
                     "connections": {
                         "Door to Energy Distribution Robot Home": {
                             "type": "and",
@@ -2056,7 +2109,7 @@
                         "area": "Energy Distribution Tower East",
                         "node": "Door to Energy Distribution Robot Home"
                     },
-                    "default_dock_weakness": "A5 Robots Showcase EMP Door",
+                    "default_dock_weakness": "Distribution Center Robot Home EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2145,7 +2198,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "A5RobotsEMP",
+                    "event_name": "EMPA5RobotHome",
                     "connections": {
                         "Door to Energy Distribution Tower East": {
                             "type": "and",
@@ -2193,7 +2246,7 @@
                         "area": "Energy Distribution Tower West",
                         "node": "Door to Energy Distribution Tower East"
                     },
-                    "default_dock_weakness": "A5 Near Save EMP Door",
+                    "default_dock_weakness": "Distribution Center Energy Distribution Tower East EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2293,7 +2346,7 @@
                         "area": "Energy Distribution Zeta Nest",
                         "node": "Door to Energy Distribution Tower East"
                     },
-                    "default_dock_weakness": "A5 Near Save EMP Door",
+                    "default_dock_weakness": "Distribution Center Energy Distribution Tower East EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2322,7 +2375,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "NearA5SaveEMP",
+                    "event_name": "EMPA5EnergyDistributionTowerEast",
                     "connections": {
                         "Door to Energy Distribution Tower West": {
                             "type": "and",
@@ -2496,7 +2549,7 @@
                         "area": "Energy Distribution Tower East",
                         "node": "Door to Energy Distribution Zeta Nest"
                     },
-                    "default_dock_weakness": "A5 Near Save EMP Door",
+                    "default_dock_weakness": "Distribution Center Energy Distribution Tower East EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2537,6 +2590,13 @@
                     "event_name": "Zeta4",
                     "connections": {
                         "Middle": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Zeta)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2733,6 +2793,34 @@
                             }
                         }
                     }
+                },
+                "Pickup (Zeta)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 587.07,
+                        "y": 174.61,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_391"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 391,
+                    "location_category": "major",
+                    "connections": {
+                        "Event - Zeta": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2867,6 +2955,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Pipe Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Space Jump Wall"
+                                    }
+                                ]
+                            }
+                        },
                         "Near Middle Pipe": {
                             "type": "and",
                             "data": {
@@ -2926,6 +3035,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Distribution Facility Connecting Path": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Pillar": {
                             "type": "and",
                             "data": {
@@ -3188,8 +3314,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 152.77434893873246,
-                        "y": 1208.9357218124342,
+                        "x": 154.524064171123,
+                        "y": 1210.7807486631016,
                         "z": 0.0
                     },
                     "description": "",
@@ -3584,10 +3710,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": true,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -3622,10 +3745,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": true,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -3717,10 +3837,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": true,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -3850,7 +3967,7 @@
                         "area": "Distribution Center Exterior West",
                         "node": "Door to Pipe Hub Access"
                     },
-                    "default_dock_weakness": "A5 Near Pipe Hub EMP Door",
+                    "default_dock_weakness": "Distribution Center Pipe Hub Access EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3879,7 +3996,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "A5NearPipeHubEMP",
+                    "event_name": "EMPA5PipeHubAccess",
                     "connections": {
                         "Door to Pipe Hub": {
                             "type": "and",
@@ -4762,6 +4879,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Right Bottom Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4782,6 +4906,13 @@
                     "event_name": "Alpha19",
                     "connections": {
                         "Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Right Top Alpha)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4812,6 +4943,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Left Bottom Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4837,6 +4975,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Left Middle Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4857,6 +5002,13 @@
                     "event_name": "Alpha22",
                     "connections": {
                         "Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Left Top Alpha)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5041,6 +5193,146 @@
                                         "data": "Defeat Alpha"
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Left Top Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 144.72,
+                        "y": 449.67,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_367"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 367,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Left Top Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Left Middle Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 266.07,
+                        "y": 364.72,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_368"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 368,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Left Middle Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Left Bottom Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 53.03,
+                        "y": 185.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_369"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 369,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Left Bottom Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Right Top Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 576.18,
+                        "y": 225.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_371"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 371,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Right Top Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Right Bottom Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 477.76,
+                        "y": 33.03,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_370"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 370,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Right Bottom Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5264,7 +5556,7 @@
                         "area": "Distribution Center Exterior East Access",
                         "node": "Door to Distribution Facility Intersection"
                     },
-                    "default_dock_weakness": "A5 Near Right Side EMP Door",
+                    "default_dock_weakness": "Distribution Center Exterior East Access EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5358,7 +5650,7 @@
                         "area": "Bullet Hell Room",
                         "node": "Door to Bullet Hell Room Access"
                     },
-                    "default_dock_weakness": "A5 Near Screw EMP Door",
+                    "default_dock_weakness": "Distribution Center Bullet Hell Room Access EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5441,7 +5733,7 @@
                                 ]
                             }
                         },
-                        "Event - BeforeScrewEMP": {
+                        "Event - EMP": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5450,7 +5742,7 @@
                         }
                     }
                 },
-                "Event - BeforeScrewEMP": {
+                "Event - EMP": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -5464,7 +5756,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "NearScrewEMP",
+                    "event_name": "EMPA5BulletHellRoomAccess",
                     "connections": {
                         "Door to Bullet Hell Room": {
                             "type": "or",
@@ -5650,12 +5942,29 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Power Bombs",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Get through screw blocks",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Screw Attack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "SoftlockPrevention",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -6202,7 +6511,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6412,7 +6724,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6431,12 +6746,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "DamageBoost",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -6494,7 +6826,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6539,12 +6874,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "DamageBoost",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6584,7 +6936,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6654,7 +7009,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6699,7 +7057,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6771,7 +7132,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6884,7 +7248,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6936,6 +7303,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Left Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -6956,6 +7330,69 @@
                     "event_name": "Gamma15",
                     "connections": {
                         "Door to Facility Storage Intersection East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Right Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Left Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 261.47,
+                        "y": 389.19,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_386"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 386,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Left Gamma": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Right Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 549.85,
+                        "y": 432.02,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_387"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 387,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Right Gamma": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7006,13 +7443,42 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Destroy Ice Barrier"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get to the pipe",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Destroy Ice Barrier"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Get through the top tunnel",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "SoftlockPrevention",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Hijump Tunnel Climb"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get into the pipe",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -7028,15 +7494,6 @@
                                                     }
                                                 }
                                             ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph Ball",
-                                            "amount": 1,
-                                            "negate": false
                                         }
                                     }
                                 ]
@@ -7056,10 +7513,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": true,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -7178,7 +7632,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "IceItem",
+                    "event_name": "A5IceItem",
                     "connections": {
                         "Door to Ice Beam Chamber Access": {
                             "type": "and",
@@ -7303,7 +7757,7 @@
                         "area": "Distribution Facility Intersection",
                         "node": "Door to Distribution Center Exterior East Access"
                     },
-                    "default_dock_weakness": "A5 Near Right Side EMP Door",
+                    "default_dock_weakness": "Distribution Center Exterior East Access EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7337,7 +7791,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "A5NearRightSideEMP",
+                    "event_name": "EMPA5ExteriorEastAccess",
                     "connections": {
                         "Door to Distribution Center Exterior East": {
                             "type": "and",
@@ -7697,7 +8151,10 @@
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7878,8 +8335,8 @@
                         "area": "Serris Arena Access",
                         "node": "Door to Serris Arena"
                     },
-                    "default_dock_weakness": "Serris Door",
-                    "exclude_from_dock_rando": false,
+                    "default_dock_weakness": "Serris Arena Entrance Door",
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -7920,8 +8377,8 @@
                         "area": "Serris Arena Pipe",
                         "node": "Door to Serris Arena"
                     },
-                    "default_dock_weakness": "Serris Door",
-                    "exclude_from_dock_rando": false,
+                    "default_dock_weakness": "Serris Arena Entrance Door",
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -7952,7 +8409,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "IceItem",
+                                                        "name": "A5IceItem",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -7961,7 +8418,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "Serris",
+                                                        "name": "BossSerris",
                                                         "amount": 1,
                                                         "negate": true
                                                     }
@@ -8013,20 +8470,157 @@
                                             "comment": "Energy requirements",
                                             "items": [
                                                 {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "With gravity",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity Suit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 260,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Without Gravity",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity Suit",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 430,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": "Dependant on whether you can zip or not",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 5,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Zip",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Combat",
+                                                                                                        "amount": 4,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Fusion Mode requirements",
+                                            "items": [
+                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 599,
+                                                        "type": "misc",
+                                                        "name": "FusionMode",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 3,
+                                                        "type": "items",
+                                                        "name": "Super Missiles",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -8052,7 +8646,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Serris",
+                    "event_name": "BossSerris",
                     "connections": {
                         "Door to Serris Arena Access": {
                             "type": "and",
@@ -8095,7 +8689,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8130,10 +8727,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": true,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -8606,7 +9200,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8824,7 +9421,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8859,10 +9459,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": true,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -8927,7 +9524,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -8977,12 +9577,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageBoost",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 400,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -9017,7 +9634,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9067,12 +9687,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageBoost",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 400,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -9442,7 +10079,7 @@
                         "Dock to Spiky Space Jump Trial Entrance": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "# TODO: hypermode walljump + expert damage boost + 700 damage suitless",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9473,12 +10110,29 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoost",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageBoost",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 150,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
@@ -9530,7 +10184,7 @@
                         "Dock to Spiky Space Jump Trial Reward Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "# TODO: refactor this to have suitless. takes 700 damage, expert damage boosting",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9561,12 +10215,29 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoost",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageBoost",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 120,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
@@ -9892,7 +10563,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10036,7 +10710,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10090,7 +10767,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Spider Ball Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10256,7 +10936,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10318,7 +11001,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10360,7 +11046,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -10613,10 +11302,185 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Gravity Area Moto Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "SoftlockPrevention",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Items needed to get to top",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Items that only work with gravity",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity Suit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "IBJ",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Bombs"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Shinespark up",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed Booster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Shinesparking",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShortCharge",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "EntranceRando",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Gravity Area Moto Room": {
                     "node_type": "dock",
@@ -10861,8 +11725,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 0.0,
-                        "y": 288.0,
+                        "x": 27.379679144385026,
+                        "y": 289.4117647058823,
                         "z": 0.0
                     },
                     "description": "",
@@ -10917,7 +11781,7 @@
                         "node": "Door to Gravity Area Shaft"
                     },
                     "default_dock_weakness": "Missile Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -10945,7 +11809,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Varia Suit",
+                                                        "name": "Gravity Suit",
                                                         "amount": 1,
                                                         "negate": true
                                                     }
@@ -10965,7 +11829,7 @@
                                 ]
                             }
                         },
-                        "Door to Gravity Area Blockade": {
+                        "Top": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11014,7 +11878,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Varia Suit",
+                                                        "name": "Gravity Suit",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -11062,17 +11926,58 @@
                         "area": "Gravity Area Blockade",
                         "node": "Door to Gravity Area Shaft"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Top": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Top": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 142.03208556149733,
+                        "y": 578.6096256684492,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Gravity Area Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Door to Gravity Area Blockade": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity Suit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -11125,20 +12030,75 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Destroy Bomb blocks",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity Suit",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity Suit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ChargedBombJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Charged Bomb Jump"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
                                                     "type": "template",
                                                     "data": "Can Use Bombs"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Option with bottom block gone",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "SoftlockPrevention",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -11197,6 +12157,32 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Hijump Tunnel Climb"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "SoftlockPrevention",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -11456,10 +12442,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": true,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {

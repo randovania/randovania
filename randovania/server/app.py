@@ -1,6 +1,7 @@
 import logging
 import time
 from logging.config import dictConfig
+from pathlib import Path
 
 import flask
 import werkzeug.middleware.proxy_fix
@@ -8,25 +9,63 @@ from flask_socketio import ConnectionRefusedError
 
 import randovania
 import randovania.server.multiplayer.world_api
-from randovania.server import user_session, database, client_check, multiplayer
+from randovania.server import client_check, database, multiplayer, user_session
 from randovania.server.multiplayer import world_api
 from randovania.server.server_app import ServerApp
+
+
+class ServerLoggingFormatter(logging.Formatter):
+    converter = time.gmtime
+
+    def format(self, record):
+        if flask.has_request_context():
+            who = flask.request.remote_addr
+            is_socketio = hasattr(flask.request, "sid")
+
+            where = flask.request.url
+
+            if is_socketio:
+                record.context = "SocketIO"
+                user = getattr(flask.request, "current_user", None)
+                if user is not None:
+                    who = user.name
+                where = getattr(flask.request, "message", where)
+            else:
+                record.context = "Flask"
+
+            record.who = who
+            record.where = where
+
+        else:
+            record.who = None
+            record.where = None
+            record.context = "Free"
+
+        return super().format(record)
 
 
 def create_app():
     configuration = randovania.get_configuration()
 
-    logging.Formatter.converter = time.gmtime
     dictConfig({
         'version': 1,
-        'formatters': {'default': {
-            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-        }},
+        'formatters': {
+            'default': {
+                'format': '[%(asctime)s] %(context)s [%(who)s] %(levelname)s in %(where)s: %(message)s',
+                'class': 'randovania.server.app.ServerLoggingFormatter',
+            }
+        },
         'handlers': {'wsgi': {
             'class': 'logging.StreamHandler',
             'stream': 'ext://flask.logging.wsgi_errors_stream',
             'formatter': 'default'
         }},
+        'loggers': {
+            # Enable peewee logging to see the queries being made
+            # 'peewee': {
+            #     'level': 'DEBUG',
+            # },
+        },
         'root': {
             'level': 'INFO',
             'handlers': ['wsgi']
@@ -44,16 +83,23 @@ def create_app():
     app.config["ENFORCE_ROLE"] = configuration["server_config"].get("enforce_role")
     version_checking = client_check.ClientVersionCheck(configuration["server_config"]["client_version_checking"])
 
+    db_existed = Path(configuration["server_config"]['database_path']).exists()
     database.db.init(configuration["server_config"]['database_path'])
     database.db.connect(reuse_if_open=True)
     database.db.create_tables(database.all_classes)
+    if not db_existed:
+        for entry in database.DatabaseMigrations:
+            database.PerformedDatabaseMigrations.create(migration=entry)
 
-    sio = ServerApp(app)
-    app.sio = sio
-    multiplayer.setup_app(sio)
-    user_session.setup_app(sio)
+    from randovania.server import database_migration
+    database_migration.apply_migrations()
 
-    connected_clients = sio.metrics.info("connected_clients", "How many clients are connected right now.")
+    sa = ServerApp(app)
+    app.sa = sa
+    multiplayer.setup_app(sa)
+    user_session.setup_app(sa)
+
+    connected_clients = sa.metrics.info("connected_clients", "How many clients are connected right now.")
     connected_clients.set(0)
 
     @app.route("/")
@@ -65,7 +111,7 @@ def create_app():
 
     server_version = randovania.VERSION
 
-    @sio.sio.server.on("connect")
+    @sa.get_server().on("connect")
     def connect(sid, environ):
         try:
             if "HTTP_X_RANDOVANIA_VERSION" not in environ:
@@ -74,7 +120,7 @@ def create_app():
             client_app_version = environ["HTTP_X_RANDOVANIA_VERSION"]
             error_message = client_check.check_client_version(version_checking, client_app_version, server_version)
             if error_message is None and not randovania.is_dev_version():
-                error_message = client_check.check_client_headers(sio.expected_headers, environ)
+                error_message = client_check.check_client_headers(sa.expected_headers, environ)
 
             forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
 
@@ -97,13 +143,13 @@ def create_app():
             raise ConnectionRefusedError(f"Unable to check if request is valid: {e}.\n"
                                          f"Please file a bug report.")
 
-    @sio.sio.server.on("disconnect")
+    @sa.get_server().on("disconnect")
     def disconnect(sid):
         connected_clients.dec()
 
-        app.logger.info(f"Client at {sio.current_client_ip(sid)} disconnected.")
+        app.logger.info(f"Client at {sa.current_client_ip(sid)} disconnected.")
 
-        session = sio.get_server().get_session(sid)
-        world_api.report_disconnect(sio, session, app.logger)
+        session = sa.get_server().get_session(sid)
+        world_api.report_disconnect(sa, session, app.logger)
 
     return app

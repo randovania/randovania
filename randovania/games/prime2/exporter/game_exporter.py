@@ -1,20 +1,26 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import functools
 import shutil
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import mp2hudcolor
-from ppc_asm import dol_file
-from retro_data_structures.asset_manager import PathFileProvider
-
 from open_prime_rando.dol_patching.echoes import dol_patcher
-from randovania import get_data_path
+from ppc_asm import dol_file
+from retro_data_structures.asset_manager import AssetManager, PathFileProvider
+from retro_data_structures.game_check import Game as RDSGame
+
+from randovania import get_data_path, monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
 from randovania.games.prime2.patcher import claris_randomizer
-from randovania.lib import status_update_lib, json_lib
+from randovania.lib import json_lib, status_update_lib
 from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 @dataclasses.dataclass(frozen=True)
@@ -56,6 +62,7 @@ class EchoesGameExporter(GameExporter):
                         progress_update: status_update_lib.ProgressUpdateCallable):
         assert isinstance(export_params, EchoesGameExportParams)
         new_patcher = patch_data.pop("new_patcher", None)
+        monitoring.set_tag("echoes_new_patcher", new_patcher is not None)
 
         # restore backups
         # convert prime models
@@ -125,6 +132,8 @@ class EchoesGameExporter(GameExporter):
                 patch_data, randomizer_data, convert_update,
             )
 
+        copy_coin_chest(contents_files_path)
+
         # Claris Rando
         claris_update = updaters.pop(0)
         adjust_model_name(patch_data, randomizer_data)
@@ -143,13 +152,15 @@ class EchoesGameExporter(GameExporter):
         # New Patcher
         if new_patcher is not None:
             opr_update = updaters.pop(0)
-            import open_prime_rando.echoes_patcher
-            open_prime_rando.echoes_patcher.patch_paks(
-                PathFileProvider(contents_files_path),
-                contents_files_path,
-                new_patcher,
-                opr_update
-            )
+
+            with monitoring.trace_block("open_prime_rando.echoes_patcher.patch_paks"):
+                import open_prime_rando.echoes_patcher
+                open_prime_rando.echoes_patcher.patch_paks(
+                    PathFileProvider(contents_files_path),
+                    contents_files_path,
+                    new_patcher,
+                    opr_update
+                )
 
         # Menu Mod
         if patch_data["menu_mod"]:
@@ -183,3 +194,31 @@ class EchoesGameExporter(GameExporter):
 def decode_randomizer_data() -> dict:
     randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
     return json_lib.read_path(randomizer_data_path)
+
+
+def copy_coin_chest(contents_path: Path):
+    """
+    Claris patcher doesn't read from Metroid6.pak, where these assets are found.
+    Copy them into the main paks so that we can actually use the Coin Chest model
+    """
+    manager = AssetManager(
+        PathFileProvider(contents_path),
+        RDSGame.ECHOES
+    )
+
+    coinchest_ancs = 0xE3067A51
+    paks = [
+        pak for pak in manager.all_paks
+        if "Metroid" in pak
+    ]
+    for dep in manager.get_dependencies_for_asset(coinchest_ancs):
+        # stupid hack. it won't actually ensure they're present
+        # unless it thinks the assets were modified
+        manager.replace_asset(
+            dep.id,
+            manager.get_raw_asset(dep.id)
+        )
+        for pak in paks:
+            manager.ensure_present(pak, dep.id)
+
+    manager.save_modifications(contents_path)

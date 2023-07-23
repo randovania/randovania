@@ -6,7 +6,7 @@
     },
     "areas": {
         "Transport to Temple Grounds": {
-            "default_node": "Elevator to Temple Grounds - Transport to Torvus Bog",
+            "default_node": "Elevator to Temple Grounds",
             "extra": {
                 "asset_id": 1868895730,
                 "in_dark_aether": false
@@ -36,7 +36,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Temple Grounds - Transport to Torvus Bog": {
+                        "Elevator to Temple Grounds": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -47,8 +47,8 @@
                         }
                     }
                 },
-                "Elevator to Temple Grounds - Transport to Torvus Bog": {
-                    "node_type": "teleporter",
+                "Elevator to Temple Grounds": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -57,15 +57,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 3964483773,
-                        "teleporter_instance_id": 129
+                        "teleporter_instance_id": 129,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Temple Grounds",
-                        "area": "Transport to Torvus Bog"
+                        "area": "Transport to Torvus Bog",
+                        "node": "Elevator to Torvus Bog"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Temple Transport Access": {
                             "type": "and",
@@ -467,7 +473,9 @@
                     },
                     "default_dock_weakness": "Dark Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -969,7 +977,9 @@
                     },
                     "default_dock_weakness": "Dark Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -17430,7 +17440,7 @@
             }
         },
         "Transport to Agon Wastes": {
-            "default_node": "Elevator to Agon Wastes - Transport to Torvus Bog",
+            "default_node": "Elevator to Agon Wastes",
             "extra": {
                 "asset_id": 3479543630,
                 "in_dark_aether": false
@@ -17501,7 +17511,7 @@
                         }
                     },
                     "connections": {
-                        "Elevator to Agon Wastes - Transport to Torvus Bog": {
+                        "Elevator to Agon Wastes": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -17512,8 +17522,8 @@
                         }
                     }
                 },
-                "Elevator to Agon Wastes - Transport to Torvus Bog": {
-                    "node_type": "teleporter",
+                "Elevator to Agon Wastes": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -17522,15 +17532,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 218734126,
-                        "teleporter_instance_id": 2162826
+                        "teleporter_instance_id": 2162826,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Agon Wastes",
-                        "area": "Transport to Torvus Bog"
+                        "area": "Transport to Torvus Bog",
+                        "node": "Elevator to Torvus Bog"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Torvus Temple": {
                             "type": "and",
@@ -18646,7 +18662,9 @@
                     },
                     "default_dock_weakness": "Light Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -18757,7 +18775,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -18884,7 +18904,9 @@
                     },
                     "default_dock_weakness": "Dark Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -18979,7 +19001,7 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
-                    "description": "https://youtu.be/Myr8MRM5ZDc?list=PLPFZVy8SRe3tAkQMzVw8vWt_w_AF2_l91&t=134",
+                    "description": "<https://youtu.be/Myr8MRM5ZDc?list=PLPFZVy8SRe3tAkQMzVw8vWt_w_AF2_l91&t=134>",
                     "layers": [
                         "default"
                     ],
@@ -18995,7 +19017,9 @@
                     },
                     "default_dock_weakness": "Seeker Launcher Blast Shield",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": {
                         "type": "or",
@@ -19922,7 +19946,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleport to Great Temple - Main Energy Controller": {
+                        "Teleporter to Great Temple": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -19931,7 +19955,7 @@
                                 "negate": false
                             }
                         },
-                        "Teleport to Sanctuary Fortress - Sanctuary Energy Controller": {
+                        "Teleporter to Sanctuary Fortress": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -19940,7 +19964,7 @@
                                 "negate": false
                             }
                         },
-                        "Teleport to Agon Wastes - Agon Energy Controller": {
+                        "Teleporter to Agon Wastes": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -19996,8 +20020,8 @@
                         }
                     }
                 },
-                "Teleport to Great Temple - Main Energy Controller": {
-                    "node_type": "teleporter",
+                "Teleporter to Great Temple": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -20006,15 +20030,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 338231469
+                        "teleporter_instance_id": 338231469,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Great Temple",
-                        "area": "Main Energy Controller"
+                        "area": "Main Energy Controller",
+                        "node": "Teleporter to Torvus Bog"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -20025,8 +20055,8 @@
                         }
                     }
                 },
-                "Teleport to Sanctuary Fortress - Sanctuary Energy Controller": {
-                    "node_type": "teleporter",
+                "Teleporter to Sanctuary Fortress": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -20035,15 +20065,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 338231474
+                        "teleporter_instance_id": 338231474,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Sanctuary Fortress",
-                        "area": "Sanctuary Energy Controller"
+                        "area": "Sanctuary Energy Controller",
+                        "node": "Teleporter to Torvus Bog"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -20054,8 +20090,8 @@
                         }
                     }
                 },
-                "Teleport to Agon Wastes - Agon Energy Controller": {
-                    "node_type": "teleporter",
+                "Teleporter to Agon Wastes": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -20064,15 +20100,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 338231479
+                        "teleporter_instance_id": 338231479,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Agon Wastes",
-                        "area": "Agon Energy Controller"
+                        "area": "Agon Energy Controller",
+                        "node": "Teleporter to Torvus Bog"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Access": {
                             "type": "and",
@@ -21634,7 +21676,9 @@
                     },
                     "default_dock_weakness": "Light Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -21742,7 +21786,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -21784,7 +21830,9 @@
                     },
                     "default_dock_weakness": "Dark Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -22026,7 +22074,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -22133,7 +22183,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -25382,7 +25434,9 @@
                     },
                     "default_dock_weakness": "Dark Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -25922,7 +25976,9 @@
                     },
                     "default_dock_weakness": "Light Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -27916,7 +27972,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -28837,7 +28895,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -30066,7 +30126,7 @@
                         "node": "Door to Sacrificial Chamber"
                     },
                     "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
+                    "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -31886,7 +31946,9 @@
                     },
                     "default_dock_weakness": "Light Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -31999,7 +32061,9 @@
                     },
                     "default_dock_weakness": "Dark Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -32899,7 +32963,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Screw Attack Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -33524,7 +33590,7 @@
             }
         },
         "Transport to Sanctuary Fortress": {
-            "default_node": "Elevator to Sanctuary Fortress - Transport to Torvus Bog",
+            "default_node": "Elevator to Sanctuary Fortress",
             "extra": {
                 "asset_id": 3205424168,
                 "in_dark_aether": false
@@ -33554,7 +33620,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Sanctuary Fortress - Transport to Torvus Bog": {
+                        "Elevator to Sanctuary Fortress": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -33565,8 +33631,8 @@
                         }
                     }
                 },
-                "Elevator to Sanctuary Fortress - Transport to Torvus Bog": {
-                    "node_type": "teleporter",
+                "Elevator to Sanctuary Fortress": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -33575,15 +33641,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 2728448996,
-                        "teleporter_instance_id": 4522032
+                        "teleporter_instance_id": 4522032,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Sanctuary Fortress",
-                        "area": "Transport to Torvus Bog"
+                        "area": "Transport to Torvus Bog",
+                        "node": "Elevator to Torvus Bog"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Fortress Transport Access": {
                             "type": "and",

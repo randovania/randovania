@@ -1,49 +1,55 @@
+from __future__ import annotations
+
 import copy
-from pathlib import Path
-from typing import Callable, TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 from randovania.game_description import game_migration
 from randovania.game_description.db import event_pickup
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import (
-    DockRandoConfig, DockRandoParams, DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
+    DockLock,
+    DockLockType,
+    DockRandoConfig,
+    DockRandoParams,
+    DockType,
+    DockWeakness,
+    DockWeaknessDatabase,
 )
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNodeKind, HintNode
-from randovania.game_description.db.node import (
-    GenericNode, Node,
-    NodeLocation
-)
+from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
-from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
-from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.game_description import GameDescription, IndexWithReason, MinimalLogicData
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.search import (
-    MissingResource, find_resource_info_with_id
-)
+from randovania.game_description.resources.search import MissingResource, find_resource_info_with_id
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.lib import frozen_lib, json_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from pathlib import Path
+
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -171,7 +177,7 @@ def read_optional_requirement(data: dict | None, resource_database: ResourceData
 
 # Resource Gain
 
-def read_single_resource_gain(item: dict, database: "ResourceDatabase") -> tuple[ResourceInfo, int]:
+def read_single_resource_gain(item: dict, database: ResourceDatabase) -> tuple[ResourceInfo, int]:
     resource = database.get_by_type_and_index(ResourceType.from_str(item["resource_type"]),
                                               item["resource_name"])
     amount = item["amount"]
@@ -179,7 +185,7 @@ def read_single_resource_gain(item: dict, database: "ResourceDatabase") -> tuple
     return resource, amount
 
 
-def read_resource_gain_tuple(data: list[dict], database: "ResourceDatabase") -> ResourceGainTuple:
+def read_resource_gain_tuple(data: list[dict], database: ResourceDatabase) -> ResourceGainTuple:
     return tuple(
         read_single_resource_gain(item, database)
         for item in data
@@ -235,16 +241,14 @@ def read_dock_weakness_database(data: dict,
             for weak_name, weak_data in type_data["items"].items()
         }
 
-        def weakness_or_none(weak):
-            return weak if weak is None else weaknesses[dock_type][weak]
-
         dr = type_data["dock_rando"]
-        dock_rando[dock_type] = DockRandoParams(
-            unlocked=weakness_or_none(dr["unlocked"]),
-            locked=weakness_or_none(dr["locked"]),
-            change_from={weaknesses[dock_type][weak] for weak in dr["change_from"]},
-            change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
-        )
+        if dr is not None:
+            dock_rando[dock_type] = DockRandoParams(
+                unlocked=weaknesses[dock_type][dr["unlocked"]],
+                locked=weaknesses[dock_type][dr["locked"]],
+                change_from={weaknesses[dock_type][weak] for weak in dr["change_from"]},
+                change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
+            )
 
     default_dock_type = [dock_type for dock_type in dock_types
                          if dock_type.short_name == data["default_weakness"]["type"]][0]
@@ -340,14 +344,6 @@ class RegionReader:
                     location_category=LocationCategory(data["location_category"]),
                 )
 
-            elif node_type == "teleporter":
-                return TeleporterNode(
-                    **generic_args,
-                    default_connection=AreaIdentifier.from_json(data["destination"]),
-                    keep_name_when_vanilla=data["keep_name_when_vanilla"],
-                    editable=data["editable"],
-                )
-
             elif node_type == "event":
                 return EventNode(
                     **generic_args,
@@ -420,8 +416,8 @@ class RegionReader:
             self.next_node_index += 1
 
         try:
-            return Area(area_name, data["default_node"],
-                        nodes, connections, data["extra"])
+            return Area(area_name, nodes, connections, data["extra"],
+                        data["default_node"])
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
 
@@ -451,6 +447,7 @@ def read_resource_database(game: RandovaniaGame, data: dict) -> ResourceDatabase
     reader = ResourceReader()
 
     item = read_dict(data["items"], reader.read_item_resource_info)
+
     db = ResourceDatabase(
         game_enum=game,
         item=item,
@@ -461,7 +458,9 @@ def read_resource_database(game: RandovaniaGame, data: dict) -> ResourceDatabase
         misc=reader.read_resource_info_array(data["misc"], ResourceType.MISC),
         requirement_template={},
         damage_reductions={},
-        energy_tank_item_index=data["energy_tank_item_index"],
+        energy_tank_item=search.find_resource_info_with_id(
+            item, data["energy_tank_item_index"], ResourceType.ITEM
+        ),
     )
     db.requirement_template.update(read_requirement_templates(data["requirement_template"], db))
     db.damage_reductions.update(read_resource_reductions_dict(data["damage_reductions"], db))

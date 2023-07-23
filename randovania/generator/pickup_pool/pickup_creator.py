@@ -1,17 +1,22 @@
-from typing import Sequence
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.game_description.pickup import pickup_category
-from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel, PickupGeneratorParams
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceQuantity
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.patcher import prime_items
 from randovania.games.prime2.patcher import echoes_items
-from randovania.games.prime3.patcher import corruption_items
-from randovania.layout.base.standard_pickup_state import StandardPickupState
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
+    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceQuantity
+    from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 def create_standard_pickup(
@@ -31,9 +36,9 @@ def create_standard_pickup(
     :return:
     """
 
-    extra_resources = [
+    extra_resources: list[tuple[ItemResourceInfo, int]] = [
         (resource_database.get_item(ammo_name), ammo_count)
-        for ammo_name, ammo_count in zip(pickup.ammo, state.included_ammo)
+        for ammo_name, ammo_count in zip(pickup.ammo, state.included_ammo, strict=True)
     ]
     extra_resources.extend(
         (resource_database.get_item(item), count)
@@ -41,9 +46,7 @@ def create_standard_pickup(
     )
 
     def _create_resources(base_resource: str | None) -> ResourceQuantity:
-        # FIXME: hacky quantity for Hazard Shield
-        quantity = 5 if pickup.name == "Hazard Shield" else 1
-        return resource_database.get_item(base_resource), quantity
+        return resource_database.get_item(base_resource), 1
 
     return PickupEntry(
         name=pickup.name,
@@ -56,6 +59,7 @@ def create_standard_pickup(
             game=resource_database.game_enum,
             name=pickup.model_name,
         ),
+        offworld_models=pickup.offworld_models,
         pickup_category=pickup.pickup_category,
         broad_category=pickup.broad_category,
         unlocks_resource=pickup.unlocks_ammo,
@@ -97,6 +101,7 @@ def create_ammo_pickup(ammo: AmmoPickupDefinition,
             game=resource_database.game_enum,
             name=ammo.model_name,
         ),
+        offworld_models=ammo.offworld_models,
         pickup_category=ammo.pickup_category,
         broad_category=ammo.broad_category,
         respects_lock=requires_main_item,
@@ -104,188 +109,6 @@ def create_ammo_pickup(ammo: AmmoPickupDefinition,
         generator_params=PickupGeneratorParams(
             preferred_location_category=ammo.preferred_location_category,
             probability_multiplier=2,
-        ),
-    )
-
-
-def create_dark_temple_key(key_number: int,
-                           temple_index: int,
-                           resource_database: ResourceDatabase,
-                           ) -> PickupEntry:
-    """
-    Creates a Dark Temple Key
-    :param key_number:
-    :param temple_index: The index of the temple: Dark Agon, Dark Torvus, Hive Temple
-    :param resource_database:
-    :return:
-    """
-    TEMPLE_KEY_CATEGORY = pickup_category.PickupCategory(
-        name="temple_key",
-        long_name="Dark Temple Key",
-        hint_details=("a ", "red Temple Key"),
-        hinted_as_major=False,
-        is_key=True
-    )
-
-    return PickupEntry(
-        name=echoes_items.DARK_TEMPLE_KEY_NAMES[temple_index].format(key_number + 1),
-        progression=((resource_database.get_item(echoes_items.DARK_TEMPLE_KEY_ITEMS[temple_index][key_number]), 1),),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=echoes_items.DARK_TEMPLE_KEY_MODEL,
-        ),
-        pickup_category=TEMPLE_KEY_CATEGORY,
-        broad_category=pickup_category.GENERIC_KEY_CATEGORY,
-        generator_params=PickupGeneratorParams(
-            preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=3,
-        ),
-    )
-
-
-def create_sky_temple_key(key_number: int,
-                          resource_database: ResourceDatabase,
-                          ) -> PickupEntry:
-    """
-
-    :param key_number:
-    :param resource_database:
-    :return:
-    """
-    SKY_TEMPLE_KEY_CATEGORY = pickup_category.PickupCategory(
-        name="sky_temple_key",
-        long_name="Sky Temple Key",
-        hint_details=("a ", "Sky Temple Key"),
-        hinted_as_major=False,
-        is_key=True
-    )
-
-    return PickupEntry(
-        name=f"Sky Temple Key {key_number + 1}",
-        progression=((resource_database.get_item(echoes_items.SKY_TEMPLE_KEY_ITEMS[key_number]), 1),),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=echoes_items.SKY_TEMPLE_KEY_MODEL,
-        ),
-        pickup_category=SKY_TEMPLE_KEY_CATEGORY,
-        broad_category=pickup_category.GENERIC_KEY_CATEGORY,
-        generator_params=PickupGeneratorParams(
-            preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=3,
-        ),
-    )
-
-
-def create_dread_artifact(artifact_number: int,
-                          resource_database: ResourceDatabase,
-                          ) -> PickupEntry:
-    DREAD_ARTIFACT_CATEGORY = pickup_category.PickupCategory(
-        name="dna",
-        long_name="Metroid DNA",
-        hint_details=("some ", "Metroid DNA"),
-        hinted_as_major=False,
-        is_key=True
-    )
-
-    return PickupEntry(
-        name=f"Metroid DNA {artifact_number + 1}",
-        progression=((resource_database.get_item(f"Artifact{artifact_number + 1}"), 1),),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=f"DNA_{artifact_number + 1}"
-        ),
-        pickup_category=DREAD_ARTIFACT_CATEGORY,
-        broad_category=pickup_category.GENERIC_KEY_CATEGORY,
-        generator_params=PickupGeneratorParams(
-            preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=0.25,
-        ),
-    )
-
-
-def create_energy_cell(cell_index: int,
-                       resource_database: ResourceDatabase,
-                       ) -> PickupEntry:
-    ENERGY_CELL_CATEGORY = pickup_category.PickupCategory(
-        name="energy_cell",
-        long_name="Energy Cell",
-        hint_details=("an ", "energy cell"),
-        hinted_as_major=True,
-        is_key=True
-    )
-
-    return PickupEntry(
-        name=f"Energy Cell {cell_index + 1}",
-        progression=(
-            (resource_database.get_item(corruption_items.ENERGY_CELL_ITEMS[cell_index]), 1),
-        ),
-        extra_resources=(
-            (resource_database.get_item(corruption_items.ENERGY_CELL_TOTAL_ITEM), 1),
-            (resource_database.get_item(corruption_items.PERCENTAGE), 1),
-        ),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=corruption_items.ENERGY_CELL_MODEL,
-        ),
-        pickup_category=ENERGY_CELL_CATEGORY,
-        broad_category=pickup_category.GENERIC_KEY_CATEGORY,
-        generator_params=PickupGeneratorParams(
-            preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=0.25,
-        ),
-    )
-
-
-def create_artifact(artifact_index: int,
-                    minimum_progression: int,
-                    resource_database: ResourceDatabase,
-                    ) -> PickupEntry:
-    ARTIFACT_CATEGORY = pickup_category.PickupCategory(
-        name="artifact",
-        long_name="Artifact",
-        hint_details=("an ", "artifact"),
-        hinted_as_major=False,
-        is_key=True
-    )
-
-    return PickupEntry(
-        name=prime_items.ARTIFACT_NAMES[artifact_index],
-        progression=(
-            (resource_database.get_item(prime_items.ARTIFACT_ITEMS[artifact_index]), 1),
-        ),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=prime_items.ARTIFACT_MODEL[artifact_index],
-        ),
-        pickup_category=ARTIFACT_CATEGORY,
-        broad_category=pickup_category.GENERIC_KEY_CATEGORY,
-        generator_params=PickupGeneratorParams(
-            preferred_location_category=LocationCategory.MAJOR,
-            probability_offset=0.25,
-            required_progression=minimum_progression,
-        ),
-    )
-
-
-def create_echoes_useless_pickup(resource_database: ResourceDatabase) -> PickupEntry:
-    """
-    Creates an Energy Transfer Module pickup.
-    :param resource_database:
-    :return:
-    """
-    return PickupEntry(
-        name="Energy Transfer Module",
-        progression=(
-            (resource_database.get_item(echoes_items.USELESS_PICKUP_ITEM), 1),
-        ),
-        model=PickupModel(
-            game=resource_database.game_enum,
-            name=echoes_items.USELESS_PICKUP_MODEL,
-        ),
-        pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
-        broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
-        generator_params=PickupGeneratorParams(
-            preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),
     )
 
@@ -320,7 +143,7 @@ def create_visual_etm() -> PickupEntry:
     """
     return PickupEntry(
         name="Unknown item",
-        progression=tuple(),
+        progression=(),
         model=PickupModel(
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name=echoes_items.USELESS_PICKUP_MODEL,

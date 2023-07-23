@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 
 from randovania.lib import enum_lib

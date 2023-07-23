@@ -5,7 +5,7 @@
     },
     "areas": {
         "Skytram East": {
-            "default_node": "Skytram to Skytown - Skytram West",
+            "default_node": "Teleporter to SkyTown, Elysia - Main",
             "extra": {
                 "asset_id": 10057915363412886881
             },
@@ -38,7 +38,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Skytram to Skytown - Skytram West": {
+                        "Teleporter to SkyTown, Elysia - Main": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -47,8 +47,8 @@
                         }
                     }
                 },
-                "Skytram to Skytown - Skytram West": {
-                    "node_type": "teleporter",
+                "Teleporter to SkyTown, Elysia - Main": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -60,12 +60,17 @@
                         "teleporter_instance_id": 131197
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "SkyTown, Elysia - Main",
-                        "area": "Skytram West"
+                        "area": "Skytram West",
+                        "node": "Teleporter to SkyTown, Elysia - Pod"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Concourse Access A": {
                             "type": "and",

@@ -1,22 +1,26 @@
+from __future__ import annotations
+
 import re
 import struct
-from unittest.mock import AsyncMock, MagicMock
 import uuid
+from typing import TYPE_CHECKING
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-
 from ppc_asm.assembler import BaseInstruction
 from retro_data_structures.game_check import Game as RDSGame
 
-from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
-from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation
+from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.standard_pickup_state import StandardPickupState
+
+if TYPE_CHECKING:
+    from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 
 
 @pytest.fixture(name="version")
@@ -52,7 +56,7 @@ async def test_check_for_world_uid_unmodified(connector: EchoesRemoteConnector):
     assert connector.layout_uuid == uuid.UUID("00000000-0000-1111-0000-000000000000")
 
 
-@pytest.mark.parametrize(["message_original", "message_encoded", "previous_size"], [
+@pytest.mark.parametrize(("message_original", "message_encoded", "previous_size"), [
     ("Magoo", b'\x00M\x00a\x00g\x00o\x00o\x00\x00', 0),
     ("Magoo2", b'\x00M\x00a\x00g\x00o\x00o\x002\x00\x00\x00\x00', 0),
     ("Magoo", b'\x00M\x00a\x00g\x00o\x00o\x00 \x00\x00\x00\x00', 10),
@@ -76,13 +80,17 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
         op: struct.pack(">II", item.max_capacity, item.max_capacity)
         for op, item in zip(ops, connector.game.resource_database.item)
     }
+    connector.executor.perform_single_memory_operation.return_value = b"\x00\x00\x00\x00" * 16
+    _override = {
+        "ObjectCount": 0,
+    }
 
     # Run
     inventory = await connector.get_inventory()
 
     # Assert
     assert inventory == {
-        item: InventoryItem(item.max_capacity, item.max_capacity)
+        item: InventoryItem(_override.get(item.short_name, item.max_capacity), item.max_capacity)
         for item in connector.game.resource_database.item
     }
 
@@ -162,7 +170,7 @@ async def test_receive_remote_pickups_nothing(connector: EchoesRemoteConnector):
     connector.execute_remote_patches = AsyncMock()
 
     # Run
-    await connector.receive_remote_pickups(inventory, [])
+    assert not await connector.receive_remote_pickups(inventory, ())
     connector.execute_remote_patches.assert_not_awaited()
 
 
@@ -172,13 +180,13 @@ async def test_receive_remote_pickups_pending_location(connector: EchoesRemoteCo
     connector.execute_remote_patches = AsyncMock()
 
     # Run
-    await connector.receive_remote_pickups(inventory, [])
+    assert not await connector.receive_remote_pickups(inventory, ())
     connector.execute_remote_patches.assert_not_awaited()
 
 
 @pytest.mark.parametrize("in_cooldown", [False, True])
 async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion,
-                                                       mocker, in_cooldown):
+                                                  mocker, in_cooldown):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "open_prime_rando.dol_patching.all_prime_dol_patches.increment_item_capacity_patch")
@@ -193,15 +201,17 @@ async def test_receive_remote_pickups_give_pickup(connector: EchoesRemoteConnect
     connector._patches_for_pickup = AsyncMock(return_value=([pickup_patches, pickup_patches], "The Message"))
 
     inventory = {connector.multiworld_magic_item: InventoryItem(0, 0)}
-    permanent_pickups = [
+    permanent_pickups = (
         ("A", MagicMock()),
         ("B", MagicMock()),
-    ]
+    )
 
     # Run
-    await connector.receive_remote_pickups(inventory, permanent_pickups)
+    result = await connector.receive_remote_pickups(inventory, permanent_pickups)
 
     # Assert
+    assert result != in_cooldown
+
     if in_cooldown:
         connector.execute_remote_patches.assert_not_awaited()
         mock_item_patch.assert_not_called()
@@ -242,7 +252,7 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
             (db.get_item("Percent"), 1),
         ]
 
-    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=tuple(),
+    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=(),
                          generator_params=default_generator_params,
                          extra_resources=(
                              (db.energy_tank, db.energy_tank.max_capacity),
@@ -339,3 +349,38 @@ async def test_receive_required_missile_launcher(connector: EchoesRemoteConnecto
     connector.execute_remote_patches.assert_awaited_once()
     assert len(connector.execute_remote_patches.call_args[0][0]) == 5
 
+
+@pytest.mark.parametrize("in_cooldown", [False, True])
+@pytest.mark.parametrize("messages", [
+    [], ["Hello"], ["Hello", "Good Bye"],
+])
+async def test_send_next_pending_message(connector: EchoesRemoteConnector, in_cooldown, messages):
+    # Setup
+    connector.message_cooldown = 2.0 if in_cooldown else 0.0
+    connector.pending_messages = list(messages)
+    connector.execute_remote_patches = AsyncMock()
+    connector._dol_patch_for_hud_message = MagicMock()
+
+    # Run
+    result = await connector._send_next_pending_message()
+
+    # Assert
+    if in_cooldown or not messages:
+        assert not result
+        assert connector.pending_messages == messages
+        connector.execute_remote_patches.assert_not_awaited()
+
+    else:
+        assert result
+        assert connector.pending_messages == messages[1:]
+        connector._dol_patch_for_hud_message.assert_called_once_with(messages[0])
+        connector.execute_remote_patches.assert_awaited_once_with([
+            connector._dol_patch_for_hud_message.return_value
+        ])
+        assert connector.message_cooldown == 4.0
+
+
+async def test_display_arbitrary_message(connector: EchoesRemoteConnector):
+    connector.pending_messages = ["Existing"]
+    await connector.display_arbitrary_message("New Message")
+    assert connector.pending_messages == ["Existing", "New Message"]

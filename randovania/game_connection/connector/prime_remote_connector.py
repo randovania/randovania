@@ -1,29 +1,39 @@
+from __future__ import annotations
+
 import dataclasses
 import logging
 import struct
 import uuid
+from typing import TYPE_CHECKING
 
+from open_prime_rando.dol_patching import all_prime_dol_patches
 from retro_data_structures.game_check import Game as RDSGame
 
-from ppc_asm import assembler
-from randovania.game_connection.connector.remote_connector import RemoteConnector, PickupEntryWithOwner, \
-    PlayerLocationEvent
+from randovania.game_connection.connector.remote_connector import (
+    PickupEntryWithOwner,
+    PlayerLocationEvent,
+    RemoteConnector,
+)
+from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.executor.memory_operation import (
-    MemoryOperationException, MemoryOperation, MemoryOperationExecutor
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
 )
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo, InventoryItem, Inventory
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.item_resource_info import Inventory, InventoryItem, ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import (
-    ResourceCollection
-)
-from randovania.game_description.db.region import Region
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib.infinite_timer import InfiniteTimer
-from open_prime_rando.dol_patching import all_prime_dol_patches
+
+if TYPE_CHECKING:
+    from ppc_asm import assembler
+
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
 @dataclasses.dataclass(frozen=True)
@@ -57,7 +67,8 @@ class PrimeRemoteConnector(RemoteConnector):
         self.executor = executor
         self.version = version
         self.game = default_database.game_description_for(_RDS_TO_RDV_GAME[version.game])
-        self.remote_pickups = tuple()
+        self.remote_pickups = ()
+        self.pending_messages = []
 
         self._timer = InfiniteTimer(self.update, self._dt)
 
@@ -87,7 +98,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
     def _asset_id_format(self):
         """struct.unpack format string for decoding an asset id"""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def world_by_asset_id(self, asset_id: int) -> Region | None:
         for region in self.game.region_list.regions:
@@ -117,15 +128,15 @@ class PrimeRemoteConnector(RemoteConnector):
         return self.world_by_asset_id(asset_id)
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     async def _memory_op_for_items(self, items: list[ItemResourceInfo],
                                    ) -> list[MemoryOperation]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @property
     def multiworld_magic_item(self) -> ItemResourceInfo:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     async def get_inventory(self) -> Inventory:
         """Fetches the inventory represented by the given game memory."""
@@ -176,12 +187,14 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def receive_remote_pickups(
             self, inventory: Inventory, remote_pickups: tuple[PickupEntryWithOwner, ...],
-    ) -> None:
+    ) -> bool:
+        """Returns true if an operation was sent."""
+
         in_cooldown = self.message_cooldown > 0.0
         multiworld_magic_item = self.multiworld_magic_item
         magic_inv = inventory.get(multiworld_magic_item)
         if magic_inv is None or magic_inv.amount > 0 or magic_inv.capacity >= len(remote_pickups) or in_cooldown:
-            return
+            return False
 
         provider_name, pickup = remote_pickups[magic_inv.capacity]
         item_patches, message = await self._patches_for_pickup(provider_name, pickup, inventory)
@@ -196,9 +209,9 @@ class PrimeRemoteConnector(RemoteConnector):
         )))
         patches.append(self._dol_patch_for_hud_message(message))
 
-        if patches:
-            await self.execute_remote_patches(patches)
-            self.message_cooldown = 4.0
+        await self.execute_remote_patches(patches)
+        self.message_cooldown = 4.0
+        return True
 
     async def execute_remote_patches(self, patches: list[DolRemotePatch]) -> None:
         """
@@ -255,7 +268,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory
                                   ) -> tuple[list[list[assembler.BaseInstruction]], str]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:
         overhead_size = 6  # 2 bytes for an extra char to differentiate sizes
@@ -285,6 +298,13 @@ class PrimeRemoteConnector(RemoteConnector):
 
     async def update(self):
         try:
+            if isinstance(self.executor, DolphinExecutor):
+                current_uid = self._layout_uuid
+                if not await self.check_for_world_uid() or current_uid != self._layout_uuid:
+                    self.logger.warning("Dolphin changed games too quickly")
+                    self.executor.disconnect()
+                    return
+
             has_pending_op, region = await self.current_game_status()
             if region != self._last_emitted_region:
                 self.logger.debug("Region changed from last emitted %s", region)
@@ -295,7 +315,9 @@ class PrimeRemoteConnector(RemoteConnector):
                 await self.update_current_inventory()
                 if not has_pending_op:
                     self.message_cooldown = max(self.message_cooldown - self._dt, 0.0)
-                    await self._multiworld_interaction()
+                    has_pending_op = await self._multiworld_interaction()
+                    if not has_pending_op:
+                        await self._send_next_pending_message()
 
         except MemoryOperationException as e:
             # A memory operation failing is expected only when the socket is lost or dolphin is closed
@@ -316,15 +338,31 @@ class PrimeRemoteConnector(RemoteConnector):
             self.InventoryUpdated.emit(new_inventory)
             self.last_inventory = new_inventory
 
-    async def _multiworld_interaction(self):
+    async def _multiworld_interaction(self) -> bool:
+        """Returns true if an operation was sent."""
         locations = await self.known_collected_locations()
         if len(locations) != 0:
             for location in locations:
                 self.PickupIndexCollected.emit(location)
+            return True
         else:
-            await self.receive_remote_pickups(
+            return await self.receive_remote_pickups(
                 self.last_inventory, self.remote_pickups
             )
+
+    async def _send_next_pending_message(self):
+        if not self.pending_messages or self.message_cooldown > 0.0:
+            return False
+
+        message = self.pending_messages.pop(0)
+        await self.execute_remote_patches([
+            self._dol_patch_for_hud_message(message)
+        ])
+        self.message_cooldown = 4.0
+        return True
+
+    async def display_arbitrary_message(self, message: str):
+        self.pending_messages.append(message)
 
     async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):
         """

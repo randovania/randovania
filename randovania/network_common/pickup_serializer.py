@@ -1,15 +1,26 @@
-from typing import Iterator
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackFloat, BitPackDecoder
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat
 from randovania.game_description.pickup.pickup_category import PickupCategory
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceConversion, ResourceLock, \
-    PickupModel, PickupGeneratorParams
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceQuantity
+from randovania.game_description.resources.pickup_entry import (
+    PickupEntry,
+    PickupGeneratorParams,
+    PickupModel,
+    ResourceConversion,
+    ResourceLock,
+)
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceQuantity
 
 _PROBABILITY_OFFSET_META = {
     "min": -3,
@@ -35,13 +46,15 @@ class DatabaseBitPackHelper:
     # Resource Quantity
     def encode_resource_quantity(self, item: ResourceQuantity):
         yield from bitpacking.pack_array_element(item[0], self.database.item)
-        assert item[1] <= item[0].max_capacity
-        yield item[1], item[0].max_capacity + 1
+        amount = item[1]
+        capacity = item[0].max_capacity
+        assert abs(amount) <= capacity
+        yield amount + capacity, capacity * 2 + 1
 
     def decode_resource_quantity(self, decoder: BitPackDecoder) -> ResourceQuantity:
         resource = self._decode_item(decoder)
-        quantity = decoder.decode_single(resource.max_capacity + 1)
-        return resource, quantity
+        quantity = decoder.decode_single(resource.max_capacity * 2 + 1)
+        return resource, quantity - resource.max_capacity
 
     # Resource Conversion
     def encode_resource_conversion(self, item: ResourceConversion):

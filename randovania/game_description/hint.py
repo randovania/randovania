@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from enum import Enum
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 class HintType(Enum):
@@ -79,7 +81,7 @@ class RelativeData:
     distance_offset: int | None
 
     @classmethod
-    def from_json(cls, param: dict) -> "RelativeData":
+    def from_json(cls, param: dict) -> RelativeData:
         if "area_location" in param:
             return RelativeDataArea.from_json(param)
         else:

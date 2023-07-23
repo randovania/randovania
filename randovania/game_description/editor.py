@@ -1,14 +1,18 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
+import dataclasses
+from typing import TYPE_CHECKING
+
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import Node, NodeIndex
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.node import Node, NodeIndex
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.base import Requirement
 
 
 class Editor:
@@ -124,17 +128,7 @@ class Editor:
                     node = area.nodes[i]
                     new_node = None
 
-                    if isinstance(node, TeleporterNode):
-                        if node.default_connection == old_identifier:
-                            new_node = dataclasses.replace(
-                                node,
-                                identifier=node.identifier.renamed(
-                                    node.name.replace(old_identifier.area_name, new_identifier.area_name)
-                                ),
-                                default_connection=new_identifier,
-                            )
-
-                    elif isinstance(node, DockNode):
+                    if isinstance(node, DockNode):
                         if node.default_connection.area_identifier == old_identifier:
                             new_node = dataclasses.replace(
                                 node,

@@ -1,25 +1,29 @@
+from __future__ import annotations
+
 import uuid
 from pathlib import Path
-from unittest.mock import MagicMock, AsyncMock, call
+from typing import TYPE_CHECKING
+from unittest.mock import AsyncMock, MagicMock, call
 
 import aiohttp.client_exceptions
 import pytest
-import pytest_mock
 import socketio.exceptions
 
-from randovania.bitpacking import construct_pack
-from randovania.game_description.resources.item_resource_info import InventoryItem
+from randovania.game_description.resources.item_resource_info import InventoryItem, ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.network_client.network_client import NetworkClient, ConnectionState, _decode_pickup, UnableToConnect
-from randovania.network_common import connection_headers
+from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
+from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
-from randovania.network_common.error import InvalidSession, RequestTimeout, ServerError
-from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, RemoteInventory, WorldUserInventory
+from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
+from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
-@pytest.fixture(name="client")
-def _client(tmpdir):
+@pytest.fixture()
+def client(tmpdir):
     return NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
 
 
@@ -49,9 +53,9 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
             "encoded_session_b85": b'Ze@30VtI6Ba{'
         }}
     else:
-        call_result = InvalidSession().as_json
+        call_result = InvalidSessionError().as_json
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.call = AsyncMock(return_value=call_result)
 
     # Run
@@ -90,7 +94,7 @@ async def test_connect_to_server(tmp_path):
     async def connect(*args, **kwargs):
         client._waiting_for_on_connect.set_result(True)
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False
 
@@ -117,7 +121,7 @@ async def test_internal_connect_to_server_failure(tmp_path):
             )
         )
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.disconnect = AsyncMock()
     client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False
@@ -136,7 +140,7 @@ async def test_disconnect_from_server(client: NetworkClient):
     client.sio.disconnect.assert_awaited_once_with()
 
 
-async def test_session_admin_global(client):
+async def test_session_admin_global(client: NetworkClient):
     client.server_call = AsyncMock()
 
     game_session_meta = MagicMock()
@@ -160,7 +164,7 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
         client._sessions_interested_in.add(1234)
 
     # Run
-    await client.listen_to_session(session_meta, listen)
+    await client.listen_to_session(session_meta.id, listen)
 
     # Assert
     client.server_call.assert_awaited_once_with(
@@ -172,6 +176,29 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
         assert client._sessions_interested_in == set()
 
 
+@pytest.mark.parametrize("was_listening", [False, True])
+@pytest.mark.parametrize("listen", [False, True])
+async def test_world_track_inventory(client: NetworkClient, listen, was_listening):
+    uid = uuid.UUID('8b8b9269-1e54-42fe-9e5f-82875ef986e2')
+
+    client.server_call = AsyncMock()
+    client._tracking_worlds.add((uid, 9999))
+    if was_listening:
+        client._tracking_worlds.add((uid, 4567))
+
+    # Run
+    await client.world_track_inventory(uid, 4567, listen)
+
+    # Assert
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_watch_inventory", (str(uid), 4567, listen, True)
+    )
+    if listen:
+        assert client._tracking_worlds == {(uid, 9999), (uid, 4567)}
+    else:
+        assert client._tracking_worlds == {(uid, 9999)}
+
+
 async def test_emit_with_result_timeout(client: NetworkClient):
     # Setup
     client._connection_state = ConnectionState.Connected
@@ -179,7 +206,7 @@ async def test_emit_with_result_timeout(client: NetworkClient):
     client.sio.call.side_effect = socketio.exceptions.TimeoutError()
 
     # Run
-    with pytest.raises(RequestTimeout, match="Timeout after "):
+    with pytest.raises(RequestTimeoutError, match="Timeout after "):
         await client.server_call("test_event")
 
 
@@ -250,7 +277,7 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
 def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_pickup_category,
                        default_generator_params):
     data = (
-        "h^WxYK%Bzb$}<8Yw=%giys9}cw>h&ixhA)=I<_*yXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+"
+        "h^WxYK%Bzb%2NU&w=%giys9}cw>h&ixhA)=I<_*yXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+"
         "~(lQ#?s8v%E&;{=*rqdXJu|>a%p3j6&;nimC2=yfhEzEw1EwU(UqOO$>p%O5KI8-+~(lQ#?s8v%E&;{=*rpvSO"
     )
     expected_pickup = PickupEntry(
@@ -261,12 +288,12 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
         ),
         pickup_category=generic_pickup_category,
         broad_category=generic_pickup_category,
-        progression=tuple(),
+        progression=(),
         generator_params=default_generator_params,
     )
 
     # # Uncomment this to encode the data once again and get the new bytefield if it changed for some reason
-    # from randovania.server.game_session import _base64_encode_pickup
+    # from randovania.server.multiplayer.world_api import _base64_encode_pickup
     # new_data = _base64_encode_pickup(expected_pickup, echoes_resource_database)
     # assert new_data == data; assert False
 
@@ -308,7 +335,7 @@ async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mo
     client.server_call = AsyncMock()
 
     # Run
-    result = await client.join_multiplayer_session(session, "mahSecret")
+    result = await client.join_multiplayer_session(session.id, "mahSecret")
 
     # Assert
     assert result is mock_session_from.return_value
@@ -320,14 +347,16 @@ async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mo
 async def test_on_world_user_inventory_raw(client: NetworkClient):
     client.on_world_user_inventory = AsyncMock()
     uid = "00000000-0000-1111-0000-000000000000"
+    item = ItemResourceInfo(0, "Super Key", "MyKey", 1)
+
     inventory = {
-        "MyKey": InventoryItem(1, 4)
+        item: InventoryItem(1, 4)
     }
-    encoded = construct_pack.encode(inventory, RemoteInventory)
+    encoded = remote_inventory.inventory_to_encoded_remote(inventory)
 
     await client._on_world_user_inventory_raw(uid, 1234, encoded)
     client.on_world_user_inventory.assert_called_once_with(WorldUserInventory(
         world_id=uuid.UUID(uid),
         user_id=1234,
-        inventory=inventory,
+        inventory={"MyKey": 4},
     ))

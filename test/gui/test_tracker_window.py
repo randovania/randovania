@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import json
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 
@@ -11,12 +13,14 @@ from randovania.gui import tracker_window
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.layout.versioned_preset import VersionedPreset
 
+if TYPE_CHECKING:
+    from pathlib import Path
+
 
 @pytest.fixture(params=[{},
                         {"elevators": TeleporterShuffleMode.ONE_WAY_ANYTHING,
-                         "translator_configuration": True}],
-                name="layout_config")
-def _layout_config(request, default_echoes_configuration):
+                         "translator_configuration": True}])
+def layout_config(request, default_echoes_configuration):
     if "translator_configuration" in request.param:
         translator_requirement = copy.copy(default_echoes_configuration.translator_configuration.translator_requirement)
         for gate in translator_requirement.keys():
@@ -180,75 +184,91 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
         "elevators": [
             {'data': None,
              'teleporter': {'area': 'Transport to Temple Grounds',
-                            'node': 'Elevator to Temple Grounds - Transport to Agon Wastes',
+                            'node': 'Elevator to Temple Grounds',
                             'region': 'Agon Wastes'}},
             {'data': None,
              'teleporter': {'area': 'Transport to Torvus Bog',
-                            'node': 'Elevator to Torvus Bog - Transport to Agon Wastes',
+                            'node': 'Elevator to Torvus Bog',
                             'region': 'Agon Wastes'}},
             {'data': None,
              'teleporter': {'area': 'Transport to Sanctuary Fortress',
-                            'node': 'Elevator to Sanctuary Fortress - Transport to Agon Wastes',
+                            'node': 'Elevator to Sanctuary Fortress',
                             'region': 'Agon Wastes'}},
             {'data': None,
              'teleporter': {'area': 'Temple Transport C',
-                            'node': 'Elevator to Temple Grounds - Temple Transport C',
+                            'node': 'Elevator to Temple Grounds',
                             'region': 'Great Temple'}},
             {'data': None,
              'teleporter': {'area': 'Temple Transport A',
-                            'node': 'Elevator to Temple Grounds - Temple Transport A',
+                            'node': 'Elevator to Temple Grounds',
                             'region': 'Great Temple'}},
             {'data': None,
              'teleporter': {'area': 'Temple Transport B',
-                            'node': 'Elevator to Temple Grounds - Temple Transport B',
+                            'node': 'Elevator to Temple Grounds',
                             'region': 'Great Temple'}},
             {'data': None,
+             'teleporter': {'area': 'Aerie',
+                            'node': 'Elevator to Aerie Transport Station',
+                            'region': 'Sanctuary Fortress'}},
+            {'data': None,
+             'teleporter': {'area': 'Aerie Transport Station',
+                            'node': 'Elevator to Aerie',
+                            'region': 'Sanctuary Fortress'}},
+            {'data': None,
              'teleporter': {'area': 'Transport to Temple Grounds',
-                            'node': 'Elevator to Temple Grounds - Transport to Sanctuary Fortress',
+                            'node': 'Elevator to Temple Grounds',
                             'region': 'Sanctuary Fortress'}},
             {'data': None,
              'teleporter': {'area': 'Transport to Agon Wastes',
-                            'node': 'Elevator to Agon Wastes - Transport to Sanctuary Fortress',
+                            'node': 'Elevator to Agon Wastes',
                             'region': 'Sanctuary Fortress'}},
             {'data': None,
              'teleporter': {'area': 'Transport to Torvus Bog',
-                            'node': 'Elevator to Torvus Bog - Transport to Sanctuary Fortress',
+                            'node': 'Elevator to Torvus Bog',
                             'region': 'Sanctuary Fortress'}},
             {'data': None,
+             'teleporter': {'area': 'Sky Temple Energy Controller',
+                            'node': 'Elevator to Temple Grounds',
+                            'region': 'Great Temple'}},
+            {'data': None,
+             'teleporter': {'area': 'Sky Temple Gateway',
+                            'node': 'Elevator to Great Temple',
+                            'region': 'Temple Grounds'}},
+            {'data': None,
              'teleporter': {'area': 'Transport to Agon Wastes',
-                            'node': 'Elevator to Agon Wastes - Transport to Temple Grounds',
+                            'node': 'Elevator to Agon Wastes',
                             'region': 'Temple Grounds'}},
             {'data': None,
              'teleporter': {'area': 'Temple Transport B',
-                            'node': 'Elevator to Great Temple - Temple Transport B',
+                            'node': 'Elevator to Great Temple',
                             'region': 'Temple Grounds'}},
             {'data': None,
              'teleporter': {'area': 'Transport to Sanctuary Fortress',
-                            'node': 'Elevator to Sanctuary Fortress - Transport to Temple Grounds',
+                            'node': 'Elevator to Sanctuary Fortress',
                             'region': 'Temple Grounds'}},
             {'data': None,
              'teleporter': {'area': 'Temple Transport A',
-                            'node': 'Elevator to Great Temple - Temple Transport A',
+                            'node': 'Elevator to Great Temple',
                             'region': 'Temple Grounds'}},
             {'data': None,
              'teleporter': {'area': 'Transport to Torvus Bog',
-                            'node': 'Elevator to Torvus Bog - Transport to Temple Grounds',
+                            'node': 'Elevator to Torvus Bog',
                             'region': 'Temple Grounds'}},
             {'data': None,
              'teleporter': {'area': 'Temple Transport C',
-                            'node': 'Elevator to Great Temple - Temple Transport C',
+                            'node': 'Elevator to Great Temple',
                             'region': 'Temple Grounds'}},
             {'data': None,
              'teleporter': {'area': 'Transport to Sanctuary Fortress',
-                            'node': 'Elevator to Sanctuary Fortress - Transport to Torvus Bog',
+                            'node': 'Elevator to Sanctuary Fortress',
                             'region': 'Torvus Bog'}},
             {'data': None,
              'teleporter': {'area': 'Transport to Temple Grounds',
-                            'node': 'Elevator to Temple Grounds - Transport to Torvus Bog',
+                            'node': 'Elevator to Temple Grounds',
                             'region': 'Torvus Bog'}},
             {'data': None,
              'teleporter': {'area': 'Transport to Agon Wastes',
-                            'node': 'Elevator to Agon Wastes - Transport to Torvus Bog',
+                            'node': 'Elevator to Agon Wastes',
                             'region': 'Torvus Bog'}}
         ],
         "configurable_nodes": {
@@ -275,7 +295,9 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
 
     if shuffle_advanced:
         for elevator in state["elevators"]:
-            if elevator["teleporter"]["node"] == "Elevator to Sanctuary Fortress - Transport to Agon Wastes":
+            if (elevator["teleporter"]["region"] == "Agon Wastes"
+                and elevator["teleporter"]["node"] == "Elevator to Sanctuary Fortress"
+                and elevator["teleporter"]["area"] == "Transport to Sanctuary Fortress"):
                 elevator["data"] = {'area': "Agon Energy Controller", 'region': "Agon Wastes"}
         state["configurable_nodes"]['Temple Grounds/Hive Access Tunnel/Translator Gate'] = "violet"
     VersionedPreset.with_preset(preset).save_to_file(tmp_path.joinpath("preset.rdvpreset"))

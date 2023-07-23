@@ -1,10 +1,21 @@
+from __future__ import annotations
+
 import dataclasses
 from functools import partial
 
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import QColorDialog, QFrame, QLayout, QMessageBox, QSizePolicy, QWidget, QLabel, QSlider, \
-    QCheckBox
+from PySide6.QtWidgets import (
+    QCheckBox,
+    QColorDialog,
+    QFrame,
+    QLabel,
+    QLayout,
+    QMessageBox,
+    QSizePolicy,
+    QSlider,
+    QWidget,
+)
 
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.layout.prime_user_preferences import PrimeUserPreferences, SoundMode

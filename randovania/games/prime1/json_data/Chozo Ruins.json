@@ -5,7 +5,7 @@
     },
     "areas": {
         "Transport to Tallon Overworld North": {
-            "default_node": "Elevator to Tallon Overworld - Transport to Chozo Ruins West",
+            "default_node": "Teleporter to Tallon Overworld",
             "extra": {
                 "asset_id": 1047210935,
                 "size_index": 0.3,
@@ -48,7 +48,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Tallon Overworld - Transport to Chozo Ruins West": {
+                        "Teleporter to Tallon Overworld": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -57,8 +57,8 @@
                         }
                     }
                 },
-                "Elevator to Tallon Overworld - Transport to Chozo Ruins West": {
-                    "node_type": "teleporter",
+                "Teleporter to Tallon Overworld": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -70,12 +70,17 @@
                         "teleporter_instance_id": 125
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Tallon Overworld",
-                        "area": "Transport to Chozo Ruins West"
+                        "area": "Transport to Chozo Ruins West",
+                        "node": "Teleporter to Chozo Ruins"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Ruins Entrance": {
                             "type": "and",
@@ -4063,7 +4068,7 @@
                         "area": "Ruined Shrine",
                         "node": "Door to Tower of Light Access"
                     },
-                    "default_dock_weakness": "Wave Door",
+                    "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6347,7 +6352,7 @@
             }
         },
         "Transport to Magmoor Caverns North": {
-            "default_node": "Elevator to Magmoor Caverns - Transport to Chozo Ruins North",
+            "default_node": "Teleporter to Magmoor Caverns",
             "extra": {
                 "asset_id": 2199318005,
                 "size_index": 0.3,
@@ -6480,7 +6485,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator to Magmoor Caverns - Transport to Chozo Ruins North": {
+                        "Teleporter to Magmoor Caverns": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6489,8 +6494,8 @@
                         }
                     }
                 },
-                "Elevator to Magmoor Caverns - Transport to Chozo Ruins North": {
-                    "node_type": "teleporter",
+                "Teleporter to Magmoor Caverns": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -6502,12 +6507,17 @@
                         "teleporter_instance_id": 1572903
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Magmoor Caverns",
-                        "area": "Transport to Chozo Ruins North"
+                        "area": "Transport to Chozo Ruins North",
+                        "node": "Teleporter to Chozo Ruins"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport Access North": {
                             "type": "and",
@@ -16402,7 +16412,7 @@
             }
         },
         "Transport to Tallon Overworld East": {
-            "default_node": "Elevator to Tallon Overworld - Transport to Chozo Ruins East",
+            "default_node": "Teleporter to Tallon Overworld",
             "extra": {
                 "asset_id": 2784651681,
                 "size_index": 0.3,
@@ -16445,7 +16455,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Tallon Overworld - Transport to Chozo Ruins East": {
+                        "Teleporter to Tallon Overworld": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16454,8 +16464,8 @@
                         }
                     }
                 },
-                "Elevator to Tallon Overworld - Transport to Chozo Ruins East": {
-                    "node_type": "teleporter",
+                "Teleporter to Tallon Overworld": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -16467,12 +16477,17 @@
                         "teleporter_instance_id": 4063276
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Tallon Overworld",
-                        "area": "Transport to Chozo Ruins East"
+                        "area": "Transport to Chozo Ruins East",
+                        "node": "Teleporter to Chozo Ruins"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Save Station 3": {
                             "type": "and",
@@ -16502,7 +16517,7 @@
             }
         },
         "Transport to Tallon Overworld South": {
-            "default_node": "Elevator to Tallon Overworld - Transport to Chozo Ruins South",
+            "default_node": "Teleporter to Tallon Overworld",
             "extra": {
                 "asset_id": 594418447,
                 "size_index": 0.3,
@@ -16545,7 +16560,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Tallon Overworld - Transport to Chozo Ruins South": {
+                        "Teleporter to Tallon Overworld": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16554,8 +16569,8 @@
                         }
                     }
                 },
-                "Elevator to Tallon Overworld - Transport to Chozo Ruins South": {
-                    "node_type": "teleporter",
+                "Teleporter to Tallon Overworld": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -16567,12 +16582,17 @@
                         "teleporter_instance_id": 4128808
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Tallon Overworld",
-                        "area": "Transport to Chozo Ruins South"
+                        "area": "Transport to Chozo Ruins South",
+                        "node": "Teleporter to Chozo Ruins"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport Access South": {
                             "type": "and",

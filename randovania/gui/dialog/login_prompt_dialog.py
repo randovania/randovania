@@ -1,13 +1,19 @@
-import pypresence
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 from qasync import asyncSlot
 
+from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.login_prompt_dialog_ui import Ui_LoginPromptDialog
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
-from randovania.network_common.multiplayer_session import User
 from randovania.network_client.network_client import ConnectionState
+
+if TYPE_CHECKING:
+    from randovania.network_common.multiplayer_session import User
 
 
 class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
@@ -28,7 +34,7 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
         )
         self.privacy_policy_label.setText(self.privacy_policy_label.text().replace("color:#0000ff;", ""))
 
-        self.button_box.button(QtWidgets.QDialogButtonBox.Reset).setText("Logout")
+        self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).setText("Logout")
 
         # Signals
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
@@ -36,15 +42,16 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
 
         self.guest_button.clicked.connect(self.on_login_as_guest_button)
         self.discord_button.clicked.connect(self.on_login_with_discord_button)
-        self.button_box.button(QtWidgets.QDialogButtonBox.Ok).clicked.connect(self.on_ok_button)
-        self.button_box.button(QtWidgets.QDialogButtonBox.Reset).clicked.connect(self.on_logout_button)
+        self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).clicked.connect(self.on_ok_button)
+        self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).clicked.connect(self.on_logout_button)
 
         # Initial update
         self.on_user_changed(network_client.current_user)
 
     def on_user_changed(self, user: User):
+        self.activateWindow()
         self.on_server_connection_state_updated(self.network_client.connection_state)
-        self.button_box.button(QtWidgets.QDialogButtonBox.Reset).setEnabled(user is not None)
+        self.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Reset).setEnabled(user is not None)
 
     def on_server_connection_state_updated(self, state: ConnectionState):
         message = f"{state.value}"
@@ -58,32 +65,19 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
     @asyncSlot()
     @handle_network_errors
     async def on_login_as_guest_button(self):
-        dialog = QtWidgets.QInputDialog(self)
-        dialog.setModal(True)
-        dialog.setWindowTitle("Enter guest name")
-        dialog.setLabelText("Select a name for the guest account:")
-        if await async_dialog.execute_dialog(dialog) != QtWidgets.QDialog.DialogCode.Accepted:
-            return
-
-        await self.network_client.login_as_guest(dialog.textValue())
+        name = await TextPromptDialog.prompt(
+            parent=self,
+            title="Enter guest name",
+            description="Select a name for the guest account:",
+            is_modal=True,
+        )
+        if name is not None:
+            await self.network_client.login_as_guest(name)
 
     @asyncSlot()
     @handle_network_errors
     async def on_login_with_discord_button(self):
-        try:
-            await self.network_client.login_with_discord()
-
-        except pypresence.exceptions.DiscordNotFound as e:
-            await async_dialog.warning(self, "Discord not found",
-                                       str(e))
-
-        except pypresence.exceptions.InvalidPipe:
-            await async_dialog.warning(self, "Discord login",
-                                       "Login failed. Is Discord running?")
-
-        except pypresence.exceptions.ServerError:
-            await async_dialog.warning(self, "Discord login",
-                                       "Login failed. Did you reject the authorization prompt in Discord?")
+        await self.network_client.login_with_discord()
 
     def on_ok_button(self):
         self.accept()

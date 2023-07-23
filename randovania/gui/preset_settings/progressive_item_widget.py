@@ -1,12 +1,18 @@
-from typing import Iterable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 def _state_has_item(state: StandardPickupState) -> bool:

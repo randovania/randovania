@@ -549,13 +549,39 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Industrial Complex Exterior": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "A3Entrance",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -599,8 +625,42 @@
                                             "comment": "Bottom way",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Any Bombs"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Any Bombs"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph Ball",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "A3Entrance",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "template",
@@ -1199,12 +1259,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageBoost",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1791,6 +1868,41 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 531.69,
+                        "y": 126.07,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_374"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 374,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Gamma": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -2004,7 +2116,7 @@
                         "area": "Storage Cavern",
                         "node": "Door to EMP Sentry Cavern"
                     },
-                    "default_dock_weakness": "Industrial Complex EMP Activated Door",
+                    "default_dock_weakness": "Industrial Complex EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2159,7 +2271,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "EMP",
+                                            "name": "A5EMPActivated",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2183,7 +2295,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "A3EMP",
+                    "event_name": "EMPA3",
                     "connections": {
                         "Bottom": {
                             "type": "and",
@@ -2339,7 +2451,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Item requirements",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2355,7 +2467,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 3,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 }
@@ -2365,23 +2477,126 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Energy requirements",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "With space jump",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 260,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Without space jump",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space Jump",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 399,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Fusion Mode requirements",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 399,
+                                                        "type": "misc",
+                                                        "name": "FusionMode",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
+                                                        "type": "items",
+                                                        "name": "Super Missiles",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -2407,7 +2622,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Torizo",
+                    "event_name": "BossTorizo",
                     "connections": {
                         "Door to Industrial Complex Exterior": {
                             "type": "and",
@@ -3174,7 +3389,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Bottom": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3185,6 +3400,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -3232,7 +3456,7 @@
                             }
                         },
                         "Dock to Upper Factory Pipe": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3243,6 +3467,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -3702,6 +3935,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3725,6 +3965,34 @@
                     "location_category": "minor",
                     "connections": {
                         "Dock to Upper Factory Autoad Fork": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 258.87,
+                        "y": 289.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_375"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 375,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Gamma": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4610,12 +4878,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageBoost",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4975,6 +5260,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5064,6 +5356,34 @@
                                         "data": "Power Grip Wall"
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 477.98,
+                        "y": 151.35,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_362"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 362,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -6335,61 +6655,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Super Missile Chamber Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Hijump With Power Grip Wall"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Break the super blocks",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph Ball",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Super Missiles",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "A3Skippy",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Event - Skippy": {
                             "type": "or",
                             "data": {
@@ -6402,6 +6667,44 @@
                                             "name": "Morph Ball",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Past Super Blocks": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Hijump With Power Grip Wall"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get past super blocks",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "A3Skippy",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Super Missiles",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6435,16 +6738,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Weapon Testing": {
+                        "Event - Past Super Blocks": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Space Jump Wall"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -6466,6 +6764,43 @@
                     "event_name": "A3Skippy",
                     "connections": {
                         "Dock to Weapon Testing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Past Super Blocks": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 428.72,
+                        "y": 69.63,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "A3Skippy",
+                    "connections": {
+                        "Dock to Weapon Testing": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Space Jump Wall"
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Super Missile Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6667,7 +7002,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Before Super": {
+                        "In Front Of Super": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6676,7 +7011,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "SuperCrystal",
+                                            "name": "A3SuperCrystal",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6726,7 +7061,7 @@
                     "pickup_index": 206,
                     "location_category": "minor",
                     "connections": {
-                        "Before Super": {
+                        "In Front Of Super": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6735,12 +7070,12 @@
                         }
                     }
                 },
-                "Before Super": {
+                "In Front Of Super": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 307.358024691358,
-                        "y": 51.65432098765433,
+                        "x": 307.36,
+                        "y": 51.65,
                         "z": 0.0
                     },
                     "description": "",
@@ -6759,7 +7094,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "SuperCrystal",
+                                            "name": "A3SuperCrystal",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -6807,7 +7142,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "SuperCrystal",
+                    "event_name": "A3SuperCrystal",
                     "connections": {
                         "Dock to Super Missile Chamber Access": {
                             "type": "and",
@@ -6816,7 +7151,7 @@
                                 "items": []
                             }
                         },
-                        "Before Super": {
+                        "In Front Of Super": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6980,12 +7315,29 @@
                                                                 "data": "Power Grip Wall"
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoost",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageBoost",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Lava",
+                                                                                "amount": 100,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -7059,12 +7411,29 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoost",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageBoost",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Lava",
+                                                                                "amount": 130,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -7157,6 +7526,41 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 483.15,
+                        "y": 175.96,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_376"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 376,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Gamma": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -7229,10 +7633,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": true,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -7476,7 +7877,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Breeding Grounds Access East": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -7495,32 +7896,138 @@
                                                     }
                                                 },
                                                 {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Walljump up with helpers with the edge",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "Septogg",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "IBJ",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Bombs"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Charged bomb jump",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Charged Bomb Jump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "ChargedBombJump",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Walljump",
-                                                        "amount": 3,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Spider Ball"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "WJ + hijump",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "IBJ expert",
                                             "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "misc",
-                                                        "name": "Septogg",
-                                                        "amount": 1,
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -7528,7 +8035,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Walljump",
+                                                        "name": "MidAirMorph",
                                                         "amount": 4,
                                                         "negate": false
                                                     }
@@ -7633,7 +8140,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Tunnel Climb"
+                                        "data": "Low Mid-Air Morph Tunnel Climb"
                                     },
                                     {
                                         "type": "template",
@@ -7748,6 +8255,41 @@
                     "event_name": "Gamma5",
                     "connections": {
                         "Dock to Breeding Grounds Crossroads": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 423.37,
+                        "y": 149.33,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_377"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 377,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Gamma": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7877,6 +8419,41 @@
                     "event_name": "Gamma7",
                     "connections": {
                         "Dock to Breeding Grounds Crossroads": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 340.23,
+                        "y": 153.03,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_378"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 378,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Gamma": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8113,6 +8690,41 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 144.72,
+                        "y": 103.15,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_363"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 363,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -8185,6 +8797,41 @@
                     "event_name": "Gamma8",
                     "connections": {
                         "Tunnel to Breeding Grounds Alpha Nest": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 222.7,
+                        "y": 94.72,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_379"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 379,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Gamma": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8429,7 +9076,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Walljump",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8453,7 +9100,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "IBJ",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -8472,6 +9119,49 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Option to have shoot blocks appear on right",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "SoftlockPrevention",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -8507,6 +9197,41 @@
                     "event_name": "Gamma6",
                     "connections": {
                         "Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 801.58,
+                        "y": 147.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_380"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 380,
+                    "location_category": "major",
+                    "connections": {
+                        "Event - Gamma": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9075,6 +9800,41 @@
                                         "data": "Hijump Wall"
                                     }
                                 ]
+                            }
+                        },
+                        "Pickup (Gamma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Gamma)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 122.92,
+                        "y": 126.61,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_381"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 381,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Gamma": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

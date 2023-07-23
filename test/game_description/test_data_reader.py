@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.game_description.data_reader import RegionReader
@@ -12,7 +14,8 @@ def test_invalid_node_type():
     reader.current_region_name = "World"
     reader.current_area_name = "Area"
 
-    with pytest.raises(Exception) as e:
+    with pytest.raises(Exception,
+                       match="In node Broken Node, got error: Unknown type: something that doesn't exist"):
         reader.read_node("Broken Node", {
             "heal": True,
             "coordinates": None,
@@ -23,13 +26,11 @@ def test_invalid_node_type():
             "valid_starting_location": False
         })
 
-    assert str(e.value) == "In node Broken Node, got error: Unknown type: something that doesn't exist"
-
 
 def test_area_with_invalid_connections():
     # Setup
     db = ResourceDatabase(RandovaniaGame.METROID_PRIME_ECHOES, [], [], [], [], [], [], {},
-                          damage_reductions={}, energy_tank_item_index="Energy")
+                          damage_reductions={}, energy_tank_item=None)
     reader = RegionReader(db, None)
     reader.current_region_name = "World"
 

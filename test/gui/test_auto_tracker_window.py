@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import uuid
 from unittest.mock import MagicMock
 
@@ -6,14 +8,17 @@ import pytest
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.game_connection import ConnectedGameState
-from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.games.game import RandovaniaGame
 from randovania.gui.auto_tracker_window import AutoTrackerWindow
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
+from randovania.network_common.game_connection_status import GameConnectionStatus
 
 
 def test_create_tracker_no_game(skip_qtbot):
     # Setup
+    options = MagicMock()
+    options.tracker_default_game = None
+
     connection = MagicMock()
     connection.connected_states = {}
     connection.get_connector_for_builder.return_value = None
@@ -22,7 +27,7 @@ def test_create_tracker_no_game(skip_qtbot):
     connector.game_enum = RandovaniaGame.METROID_PRIME
 
     # Run
-    window = AutoTrackerWindow(connection, None, MagicMock())
+    window = AutoTrackerWindow(connection, None, options)
     skip_qtbot.addWidget(window)
     # window.create_tracker() is implied
 
@@ -39,7 +44,7 @@ def test_create_tracker_no_game(skip_qtbot):
 
 
 @pytest.mark.parametrize(
-    ["game", "tracker_name"], [
+    ("game", "tracker_name"), [
         (RandovaniaGame.METROID_PRIME, "Game Art (Standard)"),
         (RandovaniaGame.METROID_PRIME_ECHOES, "Game Art (Standard)"),
     ])
@@ -75,13 +80,16 @@ def test_create_tracker_valid(skip_qtbot, game, tracker_name):
 
 def test_update_sources_combo(skip_qtbot):
     # Setup
+    options = MagicMock()
+    options.tracker_default_game = None
+
     connection = MagicMock()
     connection.connected_states = {}
     connection.get_connector_for_builder.return_value = None
     connection.connection_builders = []
 
     # Run
-    window = AutoTrackerWindow(connection, None, MagicMock())
+    window = AutoTrackerWindow(connection, None, options)
     skip_qtbot.addWidget(window)
 
     # Empty

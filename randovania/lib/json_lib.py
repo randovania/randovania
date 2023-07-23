@@ -1,8 +1,13 @@
+from __future__ import annotations
+
 import json
-from pathlib import Path
-from typing import Any, Hashable
+from typing import TYPE_CHECKING, Any
 
 import aiofiles
+
+if TYPE_CHECKING:
+    from collections.abc import Hashable
+    from pathlib import Path
 
 
 def _hook_for_raise_on_duplicate_keys(ordered_pairs: list[tuple[Hashable, Any]]) -> dict:
@@ -35,3 +40,7 @@ async def read_path_async(path: Path, *, raise_on_duplicate_keys: bool = False) 
         return json.loads(await f.read(),
                           object_pairs_hook=_hook_for_raise_on_duplicate_keys
                           if raise_on_duplicate_keys else None)
+
+
+def dumps_small(obj: dict | list) -> str:
+    return json.dumps(obj, separators=(',', ':'))

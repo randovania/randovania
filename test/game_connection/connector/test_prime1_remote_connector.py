@@ -1,16 +1,19 @@
-from unittest.mock import MagicMock, call
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
-from mock import AsyncMock
 from retro_data_structures.game_check import Game as RDSGame
 
-from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperationException
+from randovania.game_description.resources.item_resource_info import InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
-from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
+
+if TYPE_CHECKING:
+    from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
 
 
 @pytest.fixture(name="version")
@@ -44,7 +47,7 @@ async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, arti
     else:
         extra = (db.energy_tank, db.energy_tank.max_capacity)
 
-    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=tuple(),
+    pickup = PickupEntry("Pickup", 0, generic_pickup_category, generic_pickup_category, progression=(),
                          generator_params=default_generator_params,
                          extra_resources=(
                              extra,
@@ -150,7 +153,7 @@ async def test_multiworld_interaction(connector: Prime1RemoteConnector, depth: i
 
 
 @pytest.mark.parametrize("failure_at", [None, 1, 2])
-@pytest.mark.parametrize("depth", [0, 1, 2])
+@pytest.mark.parametrize("depth", [0, 1, 2, 3])
 async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, failure_at: int | None):
     # Setup
     connector.message_cooldown = 0.0
@@ -168,7 +171,10 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
         connector.get_inventory.side_effect = MemoryOperationException("error at _get_inventory")
         should_disconnect = depth > 0
 
-    connector._multiworld_interaction = AsyncMock()
+    connector._send_next_pending_message = AsyncMock()
+    connector._multiworld_interaction = AsyncMock(
+        return_value=depth <= 2
+    )
     if failure_at == 2:
         connector._multiworld_interaction.side_effect = MemoryOperationException("error at _check_for_collected_index")
         should_disconnect = depth > 1
@@ -192,6 +198,11 @@ async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, 
         connector._multiworld_interaction.assert_awaited_once_with()
     else:
         connector._multiworld_interaction.assert_not_awaited()
+
+    if expected_depth > 2:
+        connector._send_next_pending_message.assert_awaited_once_with()
+    else:
+        connector._send_next_pending_message.assert_not_awaited()
 
     if 0 < depth:
         assert connector._last_emitted_region is not None

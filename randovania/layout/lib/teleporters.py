@@ -1,19 +1,24 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
+from typing import TYPE_CHECKING
 
 import randovania
-from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
+from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node import Node
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node import Node
 
 
 class TeleporterShuffleMode(BitPackEnum, Enum):
@@ -68,22 +73,16 @@ enum_lib.add_per_enum_field(TeleporterShuffleMode, "description", {
 })
 
 
-def _has_editable_teleporter(area: Area) -> bool:
-    return any(
-        node.editable
-        for node in area.nodes
-        if isinstance(node, TeleporterNode)
-    )
-
-
 class TeleporterList(location_list.LocationList):
     @classmethod
     def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
-        region_list = default_database.game_description_for(game).region_list
+        game_description = default_database.game_description_for(game)
+        teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
+        region_list = game_description.region_list
         nodes = [
             region_list.identifier_for_node(node)
             for node in region_list.all_nodes
-            if isinstance(node, TeleporterNode) and node.editable
+            if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types
         ]
         nodes.sort()
         return nodes
@@ -92,21 +91,20 @@ class TeleporterList(location_list.LocationList):
     def element_type(cls):
         return NodeIdentifier
 
-    def ensure_has_location(self, area_location: NodeIdentifier, enabled: bool) -> "TeleporterList":
+    def ensure_has_location(self, area_location: NodeIdentifier, enabled: bool) -> TeleporterList:
         return super().ensure_has_location(area_location, enabled)
 
-    def ensure_has_locations(self, area_locations: list[NodeIdentifier], enabled: bool) -> "TeleporterList":
+    def ensure_has_locations(self, area_locations: list[NodeIdentifier], enabled: bool) -> TeleporterList:
         return super().ensure_has_locations(area_locations, enabled)
 
 
 def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
     if (game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and
-            area.name == "Credits" and node.name == area.default_node):
+            area.name == "Credits" and node.name in ("Event - Credits", "Event - Dark Samus 3 and 4")):
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
-    return (area.has_start_node() and area.default_node is not None and
-            area.default_node == node.name and not has_save_station)
+    return (area.has_start_node() and node in area.get_start_nodes() and not has_save_station)
 
 
 class TeleporterTargetList(location_list.LocationList):
@@ -148,38 +146,41 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                 if teleporter not in self.excluded_teleporters.locations]
 
     @property
-    def static_teleporters(self) -> dict[NodeIdentifier, AreaIdentifier]:
+    def static_teleporters(self) -> dict[NodeIdentifier, NodeIdentifier]:
         static = {}
         if self.skip_final_bosses:
             if self.game == RandovaniaGame.METROID_PRIME:
                 crater = NodeIdentifier.create("Tallon Overworld", "Artifact Temple",
-                                               "Teleport to Impact Crater - Crater Impact Point")
-                static[crater] = AreaIdentifier("End of Game", "Credits")
+                                               "Teleporter to Impact Crater")
+                static[crater] = NodeIdentifier.create("End of Game", "Credits", "Event - Credits")
             elif self.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 gateway = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
-                                                "Teleport to Great Temple - Sky Temple Energy Controller")
-                static[gateway] = AreaIdentifier("Temple Grounds", "Credits")
+                                                "Elevator to Great Temple")
+                static[gateway] = NodeIdentifier.create("Temple Grounds", "Credits", "Event - Dark Samus 3 and 4")
             else:
                 raise ValueError(f"Unsupported skip_final_bosses and {self.game}")
 
         return static
 
     @property
-    def valid_targets(self) -> list[AreaIdentifier]:
+    def valid_targets(self) -> list[NodeIdentifier]:
         if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            return [location.area_identifier for location in self.excluded_targets.nodes_list(self.game)
+            return [location for location in self.excluded_targets.nodes_list(self.game)
                     if location not in self.excluded_targets.locations]
 
         elif self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
-            region_list = default_database.game_description_for(self.game).region_list
+            game_description = default_database.game_description_for(self.game)
+            teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
+            region_list = game_description.region_list
+
             result = []
             for identifier in self.editable_teleporters:
                 node = region_list.node_by_identifier(identifier)
-                if isinstance(node, TeleporterNode) and node.editable:
+                if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
                     # Valid destinations must be valid starting areas
                     area = region_list.nodes_to_area(node)
                     if area.has_start_node():
-                        result.append(identifier.area_identifier)
+                        result.append(identifier)
                     # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
                     # on the previous room
                     elif area.name == "Metroid Prime Lair":

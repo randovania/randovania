@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import dataclasses
 from enum import Enum
-from typing import Optional
 
 import pytest
 
@@ -34,7 +33,7 @@ class D2(JsonDataclass):
 
 @dataclasses.dataclass()
 class D2OldSyntax(JsonDataclass):
-    a: Optional[A]
+    a: A | None
     b: D1
 
 
@@ -50,9 +49,9 @@ class D2OldSyntax(JsonDataclass):
          "json": {'a': None, 'b': {'a': 5, 'b': 'foo', 'c': 5}},
          }
     ],
-    name="sample_values")
-def _sample_values(request):
-    yield request.param["instance"], request.param["json"]
+)
+def sample_values(request):
+    return request.param["instance"], request.param["json"]
 
 
 def test_as_json(sample_values):

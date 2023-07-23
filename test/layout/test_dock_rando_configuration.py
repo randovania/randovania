@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import copy
 
 import pytest
@@ -39,8 +41,8 @@ core_blank_json = {
         {"game": RandovaniaGame.BLANK, "encoded": b'@'},
         {"game": RandovaniaGame.BLANK, "encoded": b'J\x05\x00', "can_change_to": ["Explosive Door"]},
     ],
-    name="config_with_data")
-def _config_with_data(request):
+)
+def config_with_data(request):
     game: RandovaniaGame = request.param["game"]
 
     default = DockRandoConfiguration.from_json(core_blank_json, game)
@@ -101,14 +103,6 @@ def test_prime_thing(default_prime_configuration):
                     "Super Missile Blast Shield",
                     "Wave Door"
                 ]
-            },
-            "morph_ball": {
-                "can_change_from": [],
-                "can_change_to": []
-            },
-            "other": {
-                "can_change_from": [],
-                "can_change_to": []
             }
         }
     }

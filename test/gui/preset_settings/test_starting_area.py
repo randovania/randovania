@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import uuid
 from unittest.mock import MagicMock
@@ -132,7 +134,7 @@ def test_check_credits(skip_qtbot, preset_manager):
     not_expected = NodeIdentifier.create("End of Game", "Credits", "Event - Credits")
 
     checkbox_list = window._starting_location_for_node
-    assert checkbox_list.get(not_expected, None) == None
+    assert checkbox_list.get(not_expected, None) is None
 
 
 def test_area_with_multiple_nodes(skip_qtbot, preset_manager):
@@ -162,12 +164,12 @@ def test_area_with_multiple_nodes(skip_qtbot, preset_manager):
     intro_world_box = checkbox_region_list.get(region.name)
 
     # check default start location is set
-    assert checkbox_node_list.get(default_start_point, None) != None
-    assert checkbox_node_list.get(second_start_point, None) != None
-    assert checkbox_node_list.get(blue_key_start_point, None) != None
-    assert intro_world_box != None
-    assert starting_area_box != None
-    assert blue_key_room_box != None
+    assert checkbox_node_list.get(default_start_point, None) is not None
+    assert checkbox_node_list.get(second_start_point, None) is not None
+    assert checkbox_node_list.get(blue_key_start_point, None) is not None
+    assert intro_world_box is not None
+    assert starting_area_box is not None
+    assert blue_key_room_box is not None
     assert len(editor.configuration.starting_location.locations) == 1
 
     # test checkboxes

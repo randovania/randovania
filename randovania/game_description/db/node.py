@@ -5,15 +5,15 @@ import typing
 
 from frozendict import frozendict
 
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
+    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.node_provider import NodeProvider
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 
 NodeIndex = int
 

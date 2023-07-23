@@ -2,16 +2,28 @@ from __future__ import annotations
 
 import dataclasses
 import datetime
+import re
 import uuid
+from functools import cached_property
+from typing import TYPE_CHECKING
 
-from randovania.bitpacking import construct_pack
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.game_description.resources.item_resource_info import InventoryItem
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.session_state import MultiplayerSessionState
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.network_common.remote_inventory import RemoteInventory
+
+MAX_SESSION_NAME_LENGTH = 50
+MAX_WORLD_NAME_LENGTH = 30
+
+WORLD_NAME_RE = re.compile(
+    r"^[a-zA-Z0-9 _\-!?()]{1," + str(MAX_WORLD_NAME_LENGTH) + "}$"
+)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -20,13 +32,17 @@ class MultiplayerSessionListEntry(JsonDataclass):
     name: str
     has_password: bool
     state: MultiplayerSessionState
-    num_players: int
+    num_users: int
+    num_worlds: int
     creator: str
     creation_date: datetime.datetime
+    is_user_in_session: bool
+    join_date: datetime.datetime
 
     def __post_init__(self):
         tzinfo = self.creation_date.tzinfo
-        assert tzinfo is not None and tzinfo.utcoffset(self.creation_date) is not None
+        assert tzinfo is not None
+        assert tzinfo.utcoffset(self.creation_date) is not None
 
 
 @dataclasses.dataclass(frozen=True)
@@ -40,6 +56,7 @@ class MultiplayerUser(JsonDataclass):
     id: int
     name: str
     admin: bool
+    ready: bool
     worlds: dict[uuid.UUID, UserWorldDetail]
 
 
@@ -48,6 +65,10 @@ class MultiplayerWorld(JsonDataclass):
     id: uuid.UUID
     name: str
     preset_raw: str
+
+    @cached_property
+    def preset(self) -> VersionedPreset:
+        return VersionedPreset.from_str(self.preset_raw)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -125,9 +146,6 @@ class MultiplayerSessionAuditLog(JsonDataclass):
     entries: list[MultiplayerSessionAuditEntry]  # TODO: restore tuple
 
 
-RemoteInventory = dict[str, InventoryItem]
-
-
 @dataclasses.dataclass(frozen=True)
 class WorldUserInventory:
     world_id: uuid.UUID
@@ -142,7 +160,7 @@ class User:
     discord_id: int | None = None
 
     @classmethod
-    def from_json(cls, data) -> "User":
+    def from_json(cls, data) -> User:
         return cls(
             id=data["id"],
             name=data["name"],
@@ -156,6 +174,3 @@ class User:
             "name": self.name,
             "discord_id": self.discord_id,
         }
-
-
-BinaryInventory = construct_pack.construct_for_type(WorldUserInventory)

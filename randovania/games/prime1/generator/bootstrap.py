@@ -1,13 +1,18 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
+from typing import TYPE_CHECKING
 
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_resource_info import DamageReduction
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class PrimeBootstrap(MetroidBootstrap):
@@ -35,7 +40,7 @@ class PrimeBootstrap(MetroidBootstrap):
         for name, index in logical_patches.items():
             if getattr(configuration, name):
                 enabled_resources.add(index)
-        
+
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("dock_rando")
 

@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import pytest
+from frozendict import frozendict
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
@@ -18,8 +21,10 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
         {"encoded": b'\x842', "bit_count": 15, "json": {"num_shuffled_pickups": 3, "priority": 2.5}},
 
         # Energy Tank
-        {"encoded": b'\x92\x88', "bit_count": 13, "progression": "EnergyTank", "json": {"num_shuffled_pickups": 6,
-                                                                                        "num_included_in_starting_pickups": 10}},
+        {"encoded": b'\x92\x88', "bit_count": 13, "progression": "EnergyTank", "json": {
+            "num_shuffled_pickups": 6,
+            "num_included_in_starting_pickups": 10
+        }},
 
         # Ammo
         {"encoded": b'\x1b\x80', "bit_count": 9, "ammo_index": ("PowerBomb",), "json": {"included_ammo": [7]}},
@@ -32,8 +37,8 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
         {"encoded": b'\x1b\x9b ', "bit_count": 22, "ammo_index": ("DarkAmmo", "LightAmmo"),
          "json": {"included_ammo": [230, 200]}},
     ],
-    name="standard_pickup_state")
-def _standard_pickup_state(request, echoes_pickup_database, generic_pickup_category):
+)
+def standard_pickup_state(request, echoes_pickup_database, generic_pickup_category):
     encoded: bytes = request.param["encoded"]
 
     pickup = StandardPickupDefinition(
@@ -42,6 +47,7 @@ def _standard_pickup_state(request, echoes_pickup_database, generic_pickup_categ
         pickup_category=generic_pickup_category,
         broad_category=generic_pickup_category,
         model_name="Model Name",
+        offworld_models=frozendict(),
         progression=(request.param.get("progression", "Power"),),
         default_starting_count=0,
         default_shuffled_count=1,

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.game import RandovaniaGame
 

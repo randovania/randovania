@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import datetime
 import json
 import uuid
-from unittest.mock import MagicMock, PropertyMock
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -33,7 +35,7 @@ def solo_two_world_session(clean_database, test_files_dir):
 
     session = database.MultiplayerSession.create(
         id=1, name="Debug", state=MultiplayerSessionState.IN_PROGRESS,
-        creator=user1, creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
+        creator=user1, creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC))
     session.layout_description = description
     session.save()
     w1 = database.World.create_for(session=session, name="World 1", preset=preset_0, order=0,
@@ -43,9 +45,9 @@ def solo_two_world_session(clean_database, test_files_dir):
 
     database.MultiplayerMembership.create(user=user1, session=session, admin=False)
     database.WorldUserAssociation.create(
-        world=w1, user=user1, last_activity=datetime.datetime(2021, 9, 1, 10, 20, tzinfo=datetime.timezone.utc))
+        world=w1, user=user1, last_activity=datetime.datetime(2021, 9, 1, 10, 20, tzinfo=datetime.UTC))
     database.WorldUserAssociation.create(
-        world=w2, user=user1, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.timezone.utc))
+        world=w2, user=user1, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.UTC))
     database.WorldAction.create(provider=w2, location=0,
                                 receiver=w1, session=session)
 
@@ -67,9 +69,9 @@ def two_player_session(clean_database):
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     database.MultiplayerMembership.create(user=user2, session=session, admin=False)
     database.WorldUserAssociation.create(
-        world=w1, user=user1, last_activity=datetime.datetime(2021, 9, 1, 10, 20, tzinfo=datetime.timezone.utc))
+        world=w1, user=user1, last_activity=datetime.datetime(2021, 9, 1, 10, 20, tzinfo=datetime.UTC))
     database.WorldUserAssociation.create(
-        world=w2, user=user2, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.timezone.utc))
+        world=w2, user=user2, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.UTC))
     database.WorldAction.create(provider=w2, location=0,
                                 receiver=w1, session=session)
 
@@ -84,7 +86,7 @@ def session_update(clean_database, mocker):
     mock_layout.has_spoiler = True
     mock_layout.permalink.as_base64_str = "<permalink>"
     mock_layout.get_preset.return_value.game = RandovaniaGame.METROID_PRIME_ECHOES
-    time = datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc)
+    time = datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC)
 
     game_details = GameDetails(
         seed_hash="ABCDEFG",
@@ -96,8 +98,8 @@ def session_update(clean_database, mocker):
     target = mock_layout.all_patches.__getitem__.return_value.pickup_assignment.__getitem__.return_value
     target.pickup.name = "The Pickup"
 
-    mocker.patch("randovania.server.database.MultiplayerSession.layout_description",
-                 new_callable=PropertyMock, return_value=mock_layout)
+    mocker.patch("randovania.server.database.MultiplayerSession._get_layout_description",
+                 return_value=mock_layout)
 
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")
@@ -107,7 +109,7 @@ def session_update(clean_database, mocker):
     )
     database.MultiplayerMembership.create(user=user1, session=session, row=0, admin=True,
                                           connection_state="Something")
-    database.MultiplayerMembership.create(user=user2, session=session, row=1, admin=False,
+    database.MultiplayerMembership.create(user=user2, session=session, row=1, admin=False, ready=True,
                                           connection_state="Game")
     w1 = database.World.create(session=session, name="World1",
                                uuid=uuid.UUID('67d75d0e-da8d-4a90-b29e-cae83bcf9519'), preset="{}")

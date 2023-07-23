@@ -1,11 +1,12 @@
+from __future__ import annotations
+
 import dataclasses
 
 import pytest
 
-from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer, PrimeConfiguration
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
 
 @pytest.mark.parametrize("use_enemy_attribute_randomizer", [False, True])
@@ -72,7 +73,12 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
     }
 
     if use_enemy_attribute_randomizer:
-        expected["Game Changes"].insert(5, "Random Size within range 0.25 - 5.25, Random Health within range 2.25 - 8.23, Random Speed within range 0.15 - 7.25, Random Damage within range 1.25 - 100.25, Enemies will be stretched randomly")
+        expected["Game Changes"].insert(
+            5,
+            "Random Size within range 0.25 - 5.25, Random Health within range 2.25 - 8.23, "
+            "Random Speed within range 0.15 - 7.25, Random Damage within range 1.25 - 100.25, "
+            "Enemies will be stretched randomly"
+        )
     else:
         expected["Game Changes"].insert(2, "Random Boss Sizes")
 

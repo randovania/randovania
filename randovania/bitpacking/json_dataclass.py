@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import datetime
 import inspect
@@ -91,13 +93,13 @@ def _encode_value(value: typing.Any) -> typing.Any:
     elif type_lib.is_named_tuple(type(value)):
         return _encode_value(value._asdict())
 
-    elif isinstance(value, (tuple, list)):
+    elif isinstance(value, tuple | list):
         return [
             _encode_value(v)
             for v in value
         ]
 
-    elif isinstance(value, (dict, frozendict)):
+    elif isinstance(value, dict | frozendict):
         result = {
             _encode_value(k): _encode_value(v)
             for k, v in value.items()
@@ -107,7 +109,7 @@ def _encode_value(value: typing.Any) -> typing.Any:
         return result
 
     elif isinstance(value, datetime.datetime):
-        return value.astimezone(datetime.timezone.utc).isoformat()
+        return value.astimezone(datetime.UTC).isoformat()
 
     elif value is not None and hasattr(value, "as_json"):
         return value.as_json

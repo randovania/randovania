@@ -1,8 +1,11 @@
+from __future__ import annotations
+
 from unittest.mock import MagicMock
 
 import pytest
 
 from randovania.game_description import data_reader
+from randovania.game_description.db.node import NodeContext
 from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_list import RequirementList
@@ -10,25 +13,24 @@ from randovania.game_description.requirements.requirement_or import RequirementO
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources import search
+from randovania.game_description.resources import fast_as_set, search
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
+from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.db.node import NodeContext
 from randovania.games.game import RandovaniaGame
 
 
-@pytest.fixture(name="database")
-def _database() -> ResourceDatabase:
+@pytest.fixture()
+def database() -> ResourceDatabase:
     return ResourceDatabase(
         game_enum=RandovaniaGame.METROID_PRIME_ECHOES,
         item=[
-            ItemResourceInfo(i, l, l, 1)
-            for i, l in enumerate("ABCDEF")
+            ItemResourceInfo(i, letter, letter, 1)
+            for i, letter in enumerate("ABCDEF")
         ],
         event=[],
         trick=[],
@@ -40,7 +42,7 @@ def _database() -> ResourceDatabase:
         ],
         requirement_template={},
         damage_reductions={},
-        energy_tank_item_index="",
+        energy_tank_item=None,
     )
 
 
@@ -180,7 +182,7 @@ def test_expand_alternatives_4(blank_resource_db):
     assert a.expand_alternatives(b) == expected
 
 
-@pytest.mark.parametrize(["input_data", "output_data"], [
+@pytest.mark.parametrize(("input_data", "output_data"), [
     ([], []),
     ([(0, False)], []),
     ([(0, True)], [0]),
@@ -224,22 +226,41 @@ def test_set_dangerous_resources():
     assert result == {1, 2, 3, "a", "b", "c"}
 
 
+def test_requirement_as_set_0(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
+    expected = RequirementSet([
+        RequirementList([_req("A"), _req("B")]),
+        RequirementList([_req("A"), _req("C")]),
+    ])
+    req = RequirementAnd([
+        _req("A"),
+        RequirementOr([_req("B"), _req("C")]),
+    ])
+    assert req.as_set(database) == expected
+    assert frozenset(fast_as_set.fast_as_alternatives(req, database)) == expected.alternatives
+
+
 def test_requirement_as_set_1(database):
     def _req(name: str):
         id_req = ResourceRequirement.simple(database.get_item(name))
         return id_req
 
-    req = RequirementAnd([
-        _req("A"),
-        RequirementOr([_req("B"), _req("C")]),
-        RequirementOr([_req("D"), _req("E")]),
-    ])
-    assert req.as_set(database) == RequirementSet([
+    expected = RequirementSet([
         RequirementList([_req("A"), _req("B"), _req("D")]),
         RequirementList([_req("A"), _req("B"), _req("E")]),
         RequirementList([_req("A"), _req("C"), _req("D")]),
         RequirementList([_req("A"), _req("C"), _req("E")]),
     ])
+    req = RequirementAnd([
+        _req("A"),
+        RequirementOr([_req("B"), _req("C")]),
+        RequirementOr([_req("D"), _req("E")]),
+    ])
+    assert req.as_set(database) == expected
+    assert frozenset(fast_as_set.fast_as_alternatives(req, database)) == expected.alternatives
 
 
 def test_requirement_as_set_2(database):
@@ -247,13 +268,15 @@ def test_requirement_as_set_2(database):
         id_req = ResourceRequirement.simple(database.get_item(name))
         return id_req
 
+    expected = RequirementSet([
+        RequirementList([_req("A")]),
+    ])
     req = RequirementAnd([
         Requirement.trivial(),
         _req("A"),
     ])
-    assert req.as_set(database) == RequirementSet([
-        RequirementList([_req("A")]),
-    ])
+    assert req.as_set(database) == expected
+    assert frozenset(fast_as_set.fast_as_alternatives(req, database)) == expected.alternatives
 
 
 def test_requirement_as_set_3(database):
@@ -261,13 +284,15 @@ def test_requirement_as_set_3(database):
         id_req = ResourceRequirement.simple(database.get_item(name))
         return id_req
 
+    expected = RequirementSet([
+        RequirementList([_req("A")]),
+    ])
     req = RequirementOr([
         Requirement.impossible(),
         _req("A"),
     ])
-    assert req.as_set(database) == RequirementSet([
-        RequirementList([_req("A")]),
-    ])
+    assert req.as_set(database) == expected
+    assert frozenset(fast_as_set.fast_as_alternatives(req, database)) == expected.alternatives
 
 
 def test_requirement_as_set_4(database):
@@ -275,14 +300,19 @@ def test_requirement_as_set_4(database):
         id_req = ResourceRequirement.simple(database.get_item(name))
         return id_req
 
+    expected = RequirementSet([
+        RequirementList([]),
+    ])
     req = RequirementOr([
         Requirement.impossible(),
         _req("A"),
         Requirement.trivial(),
     ])
-    assert req.as_set(database) == RequirementSet([
+    assert req.as_set(database) == expected
+    assert set(fast_as_set.fast_as_alternatives(req, database)) == {
         RequirementList([]),
-    ])
+        RequirementList([_req("A")]),
+    }
 
 
 def test_requirement_as_set_5(database):
@@ -290,14 +320,16 @@ def test_requirement_as_set_5(database):
         id_req = ResourceRequirement.simple(database.get_item(name))
         return id_req
 
+    expected = RequirementSet([
+        RequirementList([_req("A"), _req("B"), _req("C")]),
+    ])
     req = RequirementAnd([
         _req("A"),
         _req("B"),
         _req("C"),
     ])
-    assert req.as_set(database) == RequirementSet([
-        RequirementList([_req("A"), _req("B"), _req("C")]),
-    ])
+    assert req.as_set(database) == expected
+    assert frozenset(fast_as_set.fast_as_alternatives(req, database)) == expected.alternatives
 
 
 def test_requirement_and_str(database):
@@ -538,7 +570,7 @@ def _arr_req(req_type: str, items: list):
     return {"type": req_type, "data": {"comment": None, "items": items}}
 
 
-@pytest.mark.parametrize(["damage", "items", "requirement"], [
+@pytest.mark.parametrize(("damage", "items", "requirement"), [
     (50, [], _arr_req("and", [_json_req(50)])),
     (MAX_DAMAGE, [], _arr_req("and", [_json_req(1, "Dark", ResourceType.ITEM)])),
     (80, [], _arr_req("and", [_json_req(50), _json_req(30)])),

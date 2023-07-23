@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 from unittest.mock import MagicMock, call
 
@@ -98,6 +100,16 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     # Setup
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
     tmp_path.joinpath("existing-folder").mkdir()
+
+    for p in [
+        ("system", "files.toc"),
+        ("packs", "system", "system.pkg"),
+        ("packs", "maps", "s010_cave", "s010_cave.pkg"),
+        ("packs", "maps", "s020_magma", "s020_magma.pkg"),
+    ]:
+        tmp_path.joinpath("existing-folder", *p).parent.mkdir(parents=True, exist_ok=True)
+        tmp_path.joinpath("existing-folder", *p).touch()
+
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_vanilla_input_file", autospec=True,
                                side_effect=[
                                    None,
@@ -119,27 +131,27 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     assert window.input_file_edit.has_error
 
     # Cancelling doesn't change the value
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == ""
     assert window.input_file_edit.has_error
 
     # A path that doesn't exist is an error
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == str(tmp_path.joinpath("missing-folder"))
     assert window.input_file_edit.has_error
 
     # The path must be a directory, not a file
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == str(tmp_path.joinpath("existing.iso"))
     assert window.input_file_edit.has_error
 
     # A valid path!
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == str(tmp_path.joinpath("existing-folder"))
     assert not window.input_file_edit.has_error
 
     # Another invalid path
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == str(tmp_path.joinpath("missing2-folder"))
     assert window.input_file_edit.has_error
 

@@ -1,12 +1,17 @@
+from __future__ import annotations
+
 import dataclasses
+from typing import TYPE_CHECKING
 
 import pytest
 
 from randovania.game_description.resources.pickup_entry import ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def wrap(db: ResourceDatabase, data):
@@ -22,7 +27,7 @@ def wrap(db: ResourceDatabase, data):
         ]
 
 
-@pytest.mark.parametrize(["a", "b", "result"], [
+@pytest.mark.parametrize(("a", "b", "result"), [
     ({"Ammo": 5}, {"Health": 6}, {"Ammo": 5, "Health": 6}),
     ({"Ammo": 5}, {"Ammo": 6}, {"Ammo": 11}),
 ])
@@ -70,7 +75,7 @@ def test_add_resource_gain_to_current_resources_convert(blank_resource_db, blank
     }
 
 
-@pytest.mark.parametrize(["resource_gain", "expected"], [
+@pytest.mark.parametrize(("resource_gain", "expected"), [
     ([], {}),
     ([("Ammo", 5), ("Health", 6)], {"Ammo": 5, "Health": 6}),
     ([("Ammo", 5), ("Ammo", 6)], {"Ammo": 11}),

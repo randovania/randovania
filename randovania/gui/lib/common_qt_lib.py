@@ -1,15 +1,19 @@
+from __future__ import annotations
+
 import os
 import platform
 import re
 import subprocess
 import typing
 from pathlib import Path
-from typing import Iterator
 
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtGui, QtWidgets
 
 import randovania
 from randovania import get_data_path
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
 
 
 def map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool):
@@ -193,9 +197,11 @@ def set_edit_if_different(edit: QtWidgets.QLineEdit, new_text: str):
     if edit.text() != new_text:
         edit.setText(new_text)
 
+
 def set_edit_if_different_text(edit: QtWidgets.QTextEdit, new_text: str):
     if edit.toPlainText() != new_text:
         edit.setPlainText(new_text)
+
 
 def get_network_client():
     from randovania.gui.lib.qt_network_client import QtNetworkClient

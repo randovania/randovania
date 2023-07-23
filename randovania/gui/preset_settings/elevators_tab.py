@@ -1,28 +1,37 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import functools
+from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtCore, QtWidgets
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
+from randovania.game_description.db.dock_node import DockNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.patch_data_factory import should_keep_elevator_sounds
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList, \
-    TeleporterConfiguration
-from randovania.layout.preset import Preset
+from randovania.layout.lib.teleporters import (
+    TeleporterConfiguration,
+    TeleporterList,
+    TeleporterShuffleMode,
+    TeleporterTargetList,
+)
 from randovania.lib import enum_lib
 from randovania.patching.prime import elevators
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_description import GameDescription
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
@@ -37,6 +46,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         self.setupUi(self)
 
         self.elevator_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
+        self.teleporter_types = game_description.dock_weakness_database.all_teleporter_dock_types
 
         descriptions = ["<p>Controls where each elevator connects to.</p>"]
         for value in enum_lib.iterate_enum(TeleporterShuffleMode):
@@ -142,13 +152,14 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
             other_locations = [
                 node.default_connection
                 for node in node_identifiers[location].nodes
-                if isinstance(node, TeleporterNode) and region_list.identifier_for_node(node) == location
+                if isinstance(node, DockNode) and node.dock_type in self.teleporter_types
+                and region_list.identifier_for_node(node) == location
             ]
             assert len(other_locations) == 1
             teleporters_in_target = [
                 region_list.identifier_for_node(node)
                 for node in region_list.area_by_area_location(other_locations[0]).nodes
-                if isinstance(node, TeleporterNode)
+                if isinstance(node, DockNode) and node.dock_type in self.teleporter_types
             ]
 
             self._elevator_source_destination[location] = None
@@ -222,10 +233,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
                                                            TeleporterShuffleMode.ECHOES_SHUFFLED,
                                                            TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
                                                            TeleporterShuffleMode.TWO_WAY_UNCHECKED)
-        static_areas = {
-            teleporter
-            for teleporter in config_elevators.static_teleporters.keys()
-        }
+        static_nodes = set(config_elevators.static_teleporters.keys())
 
         for origin, destination in self._elevator_source_destination.items():
             origin_check = self._elevator_source_for_location[origin]
@@ -233,9 +241,9 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
 
             assert origin_check or dest_check
 
-            is_locked = origin in static_areas
+            is_locked = origin in static_nodes
             if not is_locked and not can_shuffle_target:
-                is_locked = (destination in static_areas) or (origin_check and not dest_check)
+                is_locked = (destination in static_nodes) or (origin_check and not dest_check)
 
             origin_check.setEnabled(can_shuffle_source and not is_locked)
             origin_check.setChecked(origin not in config_elevators.excluded_teleporters.locations and not is_locked)
@@ -248,10 +256,10 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
                     origin_check.setEnabled(False)
                 continue
 
-            dest_check.setEnabled(can_shuffle_target and destination not in static_areas)
+            dest_check.setEnabled(can_shuffle_target and destination not in static_nodes)
             if can_shuffle_target:
                 dest_check.setChecked(destination not in config_elevators.excluded_teleporters.locations
-                                      and destination not in static_areas)
+                                      and destination not in static_nodes)
             else:
                 dest_check.setChecked(origin_check.isChecked())
 

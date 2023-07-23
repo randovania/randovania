@@ -1,9 +1,9 @@
+from __future__ import annotations
+
 from randovania.games import game
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.layout.preset_describer import (
-    EchoesPresetDescriber
-)
+from randovania.games.prime2.layout.preset_describer import EchoesPresetDescriber
 
 
 def _options():
@@ -34,11 +34,11 @@ def _gui() -> game.GameGui:
 def _generator() -> game.GameGenerator:
     from randovania.games.prime2.generator.base_patches_factory import EchoesBasePatchesFactory
     from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
-    from randovania.games.prime2.generator.item_pool.pool_creator import echoes_specific_pool
     from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
+    from randovania.games.prime2.generator.pickup_pool.pool_creator import echoes_specific_pool
 
     return game.GameGenerator(
-        item_pool_creator=echoes_specific_pool,
+        pickup_pool_creator=echoes_specific_pool,
         bootstrap=EchoesBootstrap(),
         base_patches_factory=EchoesBasePatchesFactory(),
         hint_distributor=EchoesHintDistributor(),

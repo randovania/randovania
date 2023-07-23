@@ -162,7 +162,7 @@
             }
         },
         "Teleport to Artaria": {
-            "default_node": "Teleporter to Artaria - Teleport to Dairon",
+            "default_node": "Teleporter to Artaria",
             "extra": {
                 "total_boundings": {
                     "x1": 16000.0,
@@ -618,8 +618,8 @@
                         }
                     }
                 },
-                "Teleporter to Artaria - Teleport to Dairon": {
-                    "node_type": "teleporter",
+                "Teleporter to Artaria": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 16650.0,
@@ -639,12 +639,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Artaria",
-                        "area": "Teleport to Dairon"
+                        "area": "Teleport to Dairon",
+                        "node": "Teleporter to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Top Floor": {
                             "type": "or",
@@ -1013,7 +1018,7 @@
                                 "items": []
                             }
                         },
-                        "Teleporter to Artaria - Teleport to Dairon": {
+                        "Teleporter to Artaria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1400,7 +1405,7 @@
             }
         },
         "East Transport to Ferenia": {
-            "default_node": "Elevator to Ferenia - East Transport to Darion",
+            "default_node": "Elevator to Ferenia",
             "extra": {
                 "total_boundings": {
                     "x1": 12000.0,
@@ -1458,7 +1463,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Ferenia - East Transport to Darion": {
+                        "Elevator to Ferenia": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1478,8 +1483,8 @@
                         }
                     }
                 },
-                "Elevator to Ferenia - East Transport to Darion": {
-                    "node_type": "teleporter",
+                "Elevator to Ferenia": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 13250.0,
@@ -1499,12 +1504,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Ferenia",
-                        "area": "East Transport to Darion"
+                        "area": "East Transport to Darion",
+                        "node": "Elevator to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to EMMI Zone Exit East": {
                             "type": "resource",
@@ -2760,7 +2770,7 @@
             }
         },
         "Teleport to Cataris": {
-            "default_node": "Teleporter to Cataris - Teleport to Dairon",
+            "default_node": "Teleporter to Cataris",
             "extra": {
                 "total_boundings": {
                     "x1": 1000.0,
@@ -3021,8 +3031,8 @@
                         }
                     }
                 },
-                "Teleporter to Cataris - Teleport to Dairon": {
-                    "node_type": "teleporter",
+                "Teleporter to Cataris": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1800.0,
@@ -3042,12 +3052,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Teleport to Dairon"
+                        "area": "Teleport to Dairon",
+                        "node": "Teleporter to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Blob, from teleporter": {
                             "type": "template",
@@ -3151,7 +3166,7 @@
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
-                        "Teleporter to Cataris - Teleport to Dairon": {
+                        "Teleporter to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4571,7 +4586,7 @@
             }
         },
         "Transport to Artaria": {
-            "default_node": "Elevator to Artaria - Transport to Dairon",
+            "default_node": "Elevator to Artaria",
             "extra": {
                 "total_boundings": {
                     "x1": 12000.0,
@@ -4698,7 +4713,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Artaria - Transport to Dairon": {
+                        "Elevator to Artaria": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4970,7 +4985,7 @@
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2_006",
                     "connections": {
-                        "Elevator to Artaria - Transport to Dairon": {
+                        "Elevator to Artaria": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5015,8 +5030,8 @@
                         }
                     }
                 },
-                "Elevator to Artaria - Transport to Dairon": {
-                    "node_type": "teleporter",
+                "Elevator to Artaria": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 13650.0,
@@ -5036,12 +5051,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Artaria",
-                        "area": "Transport to Dairon"
+                        "area": "Transport to Dairon",
+                        "node": "Elevator to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Early Grapple Room": {
                             "type": "or",
@@ -5363,7 +5383,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Artaria - Transport to Dairon": {
+                        "Elevator to Artaria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8574,7 +8594,7 @@
             }
         },
         "West Transport to Ferenia": {
-            "default_node": "Elevator to Ferenia - Transport to Dairon",
+            "default_node": "Elevator to Ferenia",
             "extra": {
                 "total_boundings": {
                     "x1": 1000.0,
@@ -8792,7 +8812,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Ferenia - Transport to Dairon": {
+                        "Elevator to Ferenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8801,8 +8821,8 @@
                         }
                     }
                 },
-                "Elevator to Ferenia - Transport to Dairon": {
-                    "node_type": "teleporter",
+                "Elevator to Ferenia": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 1850.0,
@@ -8822,12 +8842,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Ferenia",
-                        "area": "Transport to Dairon"
+                        "area": "Transport to Dairon",
+                        "node": "Elevator to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Navigation Station North (Upper)": {
                             "type": "and",
@@ -11424,15 +11449,6 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "Space",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
                                                                     "name": "Magnet",
                                                                     "amount": 1,
                                                                     "negate": false
@@ -11498,9 +11514,68 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "Gravity",
+                                                                    "name": "Speed",
                                                                     "amount": 1,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Cross Bomb"
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WBJ",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Normal Bomb"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WBJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -16870,7 +16945,7 @@
             }
         },
         "Transport to Cataris": {
-            "default_node": "Elevator to Cataris - Transport to Dairon",
+            "default_node": "Shuttle to Cataris",
             "extra": {
                 "total_boundings": {
                     "x1": 20400.0,
@@ -16932,7 +17007,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Cataris - Transport to Dairon": {
+                        "Shuttle to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16941,8 +17016,8 @@
                         }
                     }
                 },
-                "Elevator to Cataris - Transport to Dairon": {
-                    "node_type": "teleporter",
+                "Shuttle to Cataris": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 24600.0,
@@ -16962,12 +17037,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "shuttle",
+                    "default_connection": {
                         "region": "Cataris",
-                        "area": "Transport to Dairon"
+                        "area": "Transport to Dairon",
+                        "node": "Shuttle to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Shuttle",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Teleport to Artaria": {
                             "type": "and",
@@ -17143,7 +17223,7 @@
             }
         },
         "Lower Transport to Burenia": {
-            "default_node": "Tram to Burenia - Lower Transport to Dairon",
+            "default_node": "Shuttle to Burenia",
             "extra": {
                 "total_boundings": {
                     "x1": -25100.0,
@@ -17205,7 +17285,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tram to Burenia - Lower Transport to Dairon": {
+                        "Shuttle to Burenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17214,8 +17294,8 @@
                         }
                     }
                 },
-                "Tram to Burenia - Lower Transport to Dairon": {
-                    "node_type": "teleporter",
+                "Shuttle to Burenia": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -21400.0,
@@ -17235,12 +17315,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "shuttle",
+                    "default_connection": {
                         "region": "Burenia",
-                        "area": "Lower Transport to Dairon"
+                        "area": "Lower Transport to Dairon",
+                        "node": "Shuttle to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Shuttle",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Burenia Lower Transport Access": {
                             "type": "and",
@@ -17254,7 +17339,7 @@
             }
         },
         "Upper Transport to Burenia": {
-            "default_node": "Tram to Burenia - Upper Transport to Dairon",
+            "default_node": "Shuttle to Burenia",
             "extra": {
                 "total_boundings": {
                     "x1": -27900.0,
@@ -17316,7 +17401,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tram to Burenia - Upper Transport to Dairon": {
+                        "Shuttle to Burenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17325,8 +17410,8 @@
                         }
                     }
                 },
-                "Tram to Burenia - Upper Transport to Dairon": {
-                    "node_type": "teleporter",
+                "Shuttle to Burenia": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -23900.0,
@@ -17346,12 +17431,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "shuttle",
+                    "default_connection": {
                         "region": "Burenia",
-                        "area": "Upper Transport to Dairon"
+                        "area": "Upper Transport to Dairon",
+                        "node": "Shuttle to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Shuttle",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Burenia Upper Transport Access": {
                             "type": "and",
@@ -17365,7 +17455,7 @@
             }
         },
         "Transport to Ghavoran": {
-            "default_node": "Elevator to Ghavoran - Transport to Dairon",
+            "default_node": "Elevator to Ghavoran",
             "extra": {
                 "total_boundings": {
                     "x1": -18100.0,
@@ -17394,8 +17484,8 @@
                 "asset_id": "collision_camera_047"
             },
             "nodes": {
-                "Elevator to Ghavoran - Transport to Dairon": {
-                    "node_type": "teleporter",
+                "Elevator to Ghavoran": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": -16900.0,
@@ -17415,12 +17505,17 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Ghavoran",
-                        "area": "Transport to Dairon"
+                        "area": "Transport to Dairon",
+                        "node": "Elevator to Dairon"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Energy Recharge Station West": {
                             "type": "and",
@@ -17457,7 +17552,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Ghavoran - Transport to Dairon": {
+                        "Elevator to Ghavoran": {
                             "type": "and",
                             "data": {
                                 "comment": null,

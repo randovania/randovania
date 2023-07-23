@@ -1,4 +1,6 @@
-from unittest.mock import MagicMock, patch, ANY
+from __future__ import annotations
+
+from unittest.mock import ANY, MagicMock, patch
 
 import pytest
 
@@ -29,8 +31,8 @@ def test_parse_args_valid(args):
     try:
         cli._create_parser().parse_args(args)
 
-    except SystemExit as value:
-        assert value is None
+    except SystemExit:
+        pytest.fail("should not have raised SystemExit")
 
 
 @pytest.mark.parametrize("args", [

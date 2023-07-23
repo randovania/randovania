@@ -14,7 +14,7 @@ Extra - map_name: rm_a4h01
               # Shinespark
               Speed Booster and Shinesparking Tricks (Beginner)
   > Dock to Southern Cave Pipe Access
-      Screw Attack
+      Screw Attack or Disabled Screw Attack Pipe Blocks
   > Pickup (Missile Tank)
       Morph Ball
   > Top Right Cliff
@@ -66,7 +66,7 @@ Extra - map_name: rm_a4h01
   * Layers: default
   * Open Passage to Southern Cave Pipe Access/Dock to Tower Exterior South East
   > Door to Inner Save Station East Access
-      Screw Attack
+      Screw Attack or Disabled Screw Attack Pipe Blocks
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -139,7 +139,7 @@ Extra - map_name: rm_a4h02
 
 > Door to Plasma Beam Chamber Access; Heals? False
   * Layers: default
-  * Tower Activated Door to Plasma Beam Chamber Access/Door to Tower Exterior North East
+  * Tower Energy Restored Door to Plasma Beam Chamber Access/Door to Tower Exterior North East
   * Extra - instance_id: 125529
   > Dock to Tower Exterior South East
       Trivial
@@ -266,7 +266,9 @@ Extra - map_name: rm_a4h04
   > Dock to Gamma Nest West Access
       Mid-Air Morph (Intermediate) and Movement (Intermediate)
   > Dock to Tower Exterior North
-      Space Jump or Walljump (Expert) or Can Use Spider Ball
+      Any of the following:
+          Space Jump or Can Use Spider Ball
+          Hi-Jump Boots and Walljump (Advanced)
   > Door to Tower Activation Station
       Trivial
 
@@ -320,8 +322,9 @@ Extra - map_name: rm_a4h05
   * Open Passage to Exterior Zeta Nest East/Dock to Exterior Zeta Nest East Access
   > Dock to Tower Exterior South East
       Any of the following:
-          Space Jump or Damage Boost (Intermediate)
+          Space Jump
           Hi-Jump Boots and Mid-Air Morph (Intermediate)
+          Damage Boost (Beginner) and Normal Damage ≥ 25
           Diagonal Infinite Bomb Jumping (Intermediate) and Can Use Bombs
           Speed Booster and Shinesparking Tricks (Intermediate)
 
@@ -330,7 +333,8 @@ Extra - map_name: rm_a4h05
   * Open Passage to Tower Exterior South East/Dock to Exterior Zeta Nest East Access
   > Dock to Exterior Zeta Nest East
       Any of the following:
-          Space Jump or Damage Boost (Intermediate) or Can Use Spider Ball
+          Space Jump or Can Use Spider Ball
+          Damage Boost (Beginner) and Normal Damage ≥ 50
           Hi-Jump Boots and Mid-Air Morph (Advanced)
           Diagonal Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
@@ -349,11 +353,20 @@ Extra - map_name: rm_a4h06
 
 > Event - Zeta; Heals? False
   * Layers: default
-  * Event Area 4 - Right Zeta
+  * Event Metroids Area 4 - Right Zeta
   > Dock to Exterior Zeta Nest East Access
       Any of the following:
           High Mid-Air Morph Tunnel Climb
           Speed Booster and Knowledge (Intermediate)
+  > Pickup (Zeta)
+      Trivial
+
+> Pickup (Zeta); Heals? False
+  * Layers: default
+  * Pickup 389; Category? Major
+  * Extra - object_name: oItemDNA_389
+  > Event - Zeta
+      Trivial
 
 ----------------
 Gamma Nest South East
@@ -366,8 +379,17 @@ Extra - map_name: rm_a4h07
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 4 - Right Bottom Gamma
+  * Event Metroids Area 4 - Right Bottom Gamma
   > Dock to Tower Exterior South East
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 383; Category? Minor
+  * Extra - object_name: oItemDNA_383
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -379,22 +401,29 @@ Extra - map_name: rm_a4h08
   > Middle
       Any of the following:
           Space Jump
-          Damage Boost (Intermediate) and Power Grip Wall
+          All of the following:
+              Damage Boost (Intermediate) and Normal Damage ≥ 100
+              Power Grip or Walljump (Intermediate)
 
 > Dock to Tower Exterior North; Heals? False
   * Layers: default
   * Open Passage to Tower Exterior North/Dock to Gamma Nest North East Access
   > Middle
       Any of the following:
-          Space Jump or Damage Boost (Intermediate)
+          Space Jump
           Hi-Jump Boots and Morph Glide (Advanced)
+          Damage Boost (Beginner) and Normal Damage ≥ 50
 
 > Middle; Heals? False
   * Layers: default
   > Dock to Gamma Nest North East
-      Space Jump or Damage Boost (Intermediate)
+      Any of the following:
+          Space Jump
+          Damage Boost (Beginner) and Normal Damage ≥ 100
   > Dock to Tower Exterior North
-      Space Jump or Damage Boost (Intermediate)
+      Any of the following:
+          Space Jump
+          Damage Boost (Beginner) and Normal Damage ≥ 50
 
 ----------------
 Gamma Nest North East
@@ -407,8 +436,17 @@ Extra - map_name: rm_a4h09
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 4 - Right Top Gamma
+  * Event Metroids Area 4 - Right Top Gamma
   > Dock to Gamma Nest North East Access
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 384; Category? Minor
+  * Extra - object_name: oItemDNA_384
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -420,7 +458,10 @@ Extra - map_name: rm_a4h10
   > Right Spike Tunnel
       Any of the following:
           Space Jump
-          Damage Boost (Advanced) and Power Grip Wall
+          All of the following:
+              # Damage boost through it
+              Damage Boost (Beginner) and Normal Damage ≥ 50
+              Power Grip or Walljump (Intermediate)
           Hi-Jump Boots and Mid-Air Morph (Intermediate)
 
 > Dock to Gamma Nest West; Heals? False
@@ -431,7 +472,8 @@ Extra - map_name: rm_a4h10
           Space Jump
           All of the following:
               # Damage boost
-              Damage Boost (Advanced) and Power Grip Wall
+              Damage Boost (Intermediate) and Normal Damage ≥ 100
+              Power Grip or Walljump (Intermediate)
 
 > Left Spike Tunnel; Heals? False
   * Layers: default
@@ -440,19 +482,27 @@ Extra - map_name: rm_a4h10
           Space Jump
           All of the following:
               # Damage boost
-              Damage Boost (Advanced) and Power Grip Wall
+              Damage Boost (Intermediate) and Normal Damage ≥ 75
+              Power Grip or Walljump (Intermediate)
   > Right Spike Tunnel
-      Morph Ball or Damage Boost (Beginner)
+      Any of the following:
+          Morph Ball
+          Damage Boost (Beginner) and Normal Damage ≥ 25
 
 > Right Spike Tunnel; Heals? False
   * Layers: default
   > Dock to Tower Exterior West
       Any of the following:
           Space Jump
-          Damage Boost (Advanced) and Power Grip Wall
+          All of the following:
+              # Damge boost through it
+              Damage Boost (Beginner) and Normal Damage ≥ 50
+              Power Grip or Walljump (Intermediate)
           Hi-Jump Boots and Mid-Air Morph (Intermediate)
   > Left Spike Tunnel
-      Morph Ball or Damage Boost (Beginner)
+      Any of the following:
+          Morph Ball
+          Damage Boost (Beginner) and Normal Damage ≥ 25
 
 ----------------
 Gamma Nest West
@@ -465,8 +515,17 @@ Extra - map_name: rm_a4h11
 
 > Event - Gamma; Heals? False
   * Layers: default
-  * Event Area 4 - Left Gamma
+  * Event Metroids Area 4 - Left Gamma
   > Dock to Gamma Nest West Access
+      Trivial
+  > Pickup (Gamma)
+      Trivial
+
+> Pickup (Gamma); Heals? False
+  * Layers: default
+  * Pickup 385; Category? Minor
+  * Extra - object_name: oItemDNA_385
+  > Event - Gamma
       Trivial
 
 ----------------
@@ -477,10 +536,13 @@ Extra - map_name: rm_a4h12
   * Open Passage to Tower Exterior West/Dock to Exterior Zeta Nest West Access
   > Middle Platform
       Any of the following:
-          Space Jump or Damage Boost (Beginner)
-          Morph Ball and Mid-Air Morph (Advanced)
+          Space Jump or Movement (Intermediate)
+          Morph Ball and Mid-Air Morph (Intermediate)
+          Damage Boost (Beginner) and Normal Damage ≥ 25
   > Right Platform
-      Space Jump or Damage Boost (Beginner) or Movement (Intermediate)
+      Any of the following:
+          Space Jump or Movement (Intermediate)
+          Damage Boost (Beginner) and Normal Damage ≥ 25
 
 > Dock to Exterior Zeta Nest West; Heals? False
   * Layers: default
@@ -488,42 +550,67 @@ Extra - map_name: rm_a4h12
   > Middle Left Platform
       Any of the following:
           Space Jump
-          Diagonal Infinite Bomb Jumping (Advanced) and Infinite Bomb Jumping (Expert) and Can Use Bombs
-          Hi-Jump Boots and Damage Boost (Advanced) and Walljump (Expert)
+          All of the following:
+              # IBJ + DIBJ at top
+              Diagonal Infinite Bomb Jumping (Advanced) and Infinite Bomb Jumping (Expert) and Can Use Bombs
+          All of the following:
+              # WJ with hijump
+              Hi-Jump Boots and Damage Boost (Advanced) and Walljump (Advanced) and Normal Damage ≥ 50
+          All of the following:
+              # WJ with nothing
+              Damage Boost (Expert) and Walljump (Expert) and Normal Damage ≥ 150
 
 > Middle Left Platform; Heals? False
   * Layers: default
   > Dock to Exterior Zeta Nest West
       Any of the following:
           Space Jump
-          Diagonal Infinite Bomb Jumping (Advanced) and Infinite Bomb Jumping (Expert) and Can Use Bombs
-          Hi-Jump Boots and Damage Boost (Advanced) and Walljump (Advanced)
+          All of the following:
+              # IBJ + DIBJ at top
+              Diagonal Infinite Bomb Jumping (Advanced) and Infinite Bomb Jumping (Expert) and Can Use Bombs
+          All of the following:
+              # WJ with hijump
+              Hi-Jump Boots and Damage Boost (Intermediate) and Walljump (Advanced) and Normal Damage ≥ 50
+          All of the following:
+              # WJ without items
+              Damage Boost (Advanced) and Walljump (Expert) and Normal Damage ≥ 100
   > Middle Platform
       Any of the following:
-          Hi-Jump Boots or Space Jump or Damage Boost (Beginner)
+          Hi-Jump Boots or Space Jump
           Morph Ball and Mid-Air Morph (Intermediate)
+          Damage Boost (Beginner) and Normal Damage ≥ 25
 
 > Middle Platform; Heals? False
   * Layers: default
   > Middle Left Platform
       Any of the following:
-          Space Jump or Damage Boost (Beginner)
+          Space Jump
+          Damage Boost (Beginner) and Normal Damage ≥ 25
           Hi-Jump Boots and Morph Ball and Mid-Air Morph (Intermediate)
   > Right Platform
       Any of the following:
-          Space Jump or Damage Boost (Beginner)
+          Space Jump
           Diagonal Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Damage Boost (Beginner) and Normal Damage ≥ 50
 
 > Right Platform; Heals? False
   * Layers: default
   > Dock to Tower Exterior West
       Any of the following:
           Space Jump
-          Infinite Bomb Jumping (Expert) and Can Use Bombs
-          Hi-Jump Boots and Damage Boost (Intermediate) and Walljump (Advanced)
+          All of the following:
+              # IBJ
+              Infinite Bomb Jumping (Expert) and Can Use Bombs
+          All of the following:
+              # WJ with hijump
+              Hi-Jump Boots and Damage Boost (Intermediate) and Walljump (Advanced) and Normal Damage ≥ 50
+          All of the following:
+              # WJ with only morph
+              Morph Ball and Damage Boost (Hypermode) and Morph Glide (Hypermode) and Walljump (Hypermode) and Normal Damage ≥ 300
   > Middle Platform
       Any of the following:
-          Space Jump or Damage Boost (Beginner)
+          Space Jump
+          Damage Boost (Beginner) and Normal Damage ≥ 50
           Hi-Jump Boots and Morph Ball and Mid-Air Morph (Advanced)
 
 ----------------
@@ -537,8 +624,17 @@ Extra - map_name: rm_a4h13
 
 > Event - Zeta; Heals? False
   * Layers: default
-  * Event Area 4 - Left Zeta
+  * Event Metroids Area 4 - Left Zeta
   > Dock to Exterior Zeta Nest West Access
+      Trivial
+  > Pickup (Zeta)
+      Trivial
+
+> Pickup (Zeta); Heals? False
+  * Layers: default
+  * Pickup 388; Category? Major
+  * Extra - object_name: oItemDNA_388
+  > Event - Zeta
       Trivial
 
 ----------------
@@ -592,8 +688,6 @@ Extra - map_name: rm_a4h16
 > Pipe to Hydro Station; Heals? False
   * Layers: default
   * Teleporter to Lower Hydro Station Pipe/Pipe to The Tower
-  * Extra - keep_name_when_vanilla: False
-  * Extra - editable: True
   > Dock to Southern Cave Pipe Access
       Morph Ball
 
@@ -607,7 +701,9 @@ Extra - map_name: rm_a4a01
   > Door to Inner Save Station
       Space Jump Wall
   > Dock to Inner Tower Pipe
-      Screw Attack and Space Jump Wall
+      All of the following:
+          Space Jump Wall
+          Screw Attack or Disabled Screw Attack Pipe Blocks
 
 > Door to Inner Save Station; Heals? False
   * Layers: default
@@ -620,7 +716,7 @@ Extra - map_name: rm_a4a01
   * Layers: default
   * Open Passage to Inner Tower Pipe/Dock to Inner Save Station East Access
   > Door to Tower Exterior South East
-      Screw Attack
+      Screw Attack or Disabled Screw Attack Pipe Blocks
 
 ----------------
 Inner Save Station
@@ -669,14 +765,14 @@ Tower Activation Station
 Extra - map_name: rm_a4a04
 > Door to Gunzoo Shaft; Heals? False
   * Layers: default
-  * Tower Activated Door to Gunzoo Shaft/Door to Tower Activation Station
+  * Tower Energy Restored Door to Gunzoo Shaft/Door to Tower Activation Station
   * Extra - instance_id: 127890
   > Ground
       Trivial
 
 > Door to Tower Exterior West; Heals? False
   * Layers: default
-  * After Tester Door to Tower Exterior West/Door to Tower Activation Station
+  * Tester-Locked Door to Tower Exterior West/Door to Tower Activation Station
   * Extra - instance_id: 127838
   > Ground
       Trivial
@@ -689,7 +785,7 @@ Extra - map_name: rm_a4a04
 
 > Event - ActivateTower; Heals? False
   * Layers: default
-  * Event Tower Interior Activated
+  * Event Area 4 - Tower Energy Activated
   > Ground
       Trivial
 
@@ -707,49 +803,64 @@ Tester Arena
 Extra - map_name: rm_a4a05
 > Door to Tester Arena Access North; Heals? False
   * Layers: default
-  * After Tester Door to Tester Arena Access North/Door to Tester Arena
+  * Normal Door to Tester Arena Access North/Door to Tester Arena
   * Extra - instance_id: 127943
-  > Door to Tester Arena Access South
+  > Before Tester
       Trivial
 
 > Door to Tester Arena Access South; Heals? False
   * Layers: default
-  * After Tester Door to Tester Arena Access South/Door to Tester Arena
+  * Normal Door to Tester Arena Access South/Door to Tester Arena
   * Extra - instance_id: 128037
-  > Event - Tester
-      All of the following:
-          Any of the following:
-              # Movements requirements
-              Space Jump or Combat (Advanced)
-          Any of the following:
-              # Energy requirements
-              Combat (Advanced) or Normal Damage ≥ 599
-          Any of the following:
-              # Attack requirements
-              Plasma Beam or Spazer Beam or Combat (Intermediate)
-              All of the following:
-                  # 4 PBs to destroy the outer shell
-                  Morph Ball and Power Bombs ≥ 4
+  > Before Tester
+      Trivial
 
 > Event - Tester; Heals? False
   * Layers: default
-  * Event Boss Tester Defeated
+  * Event Boss - Tester Defeated
   > Door to Tester Arena Access North
       Space Jump Wall
+  > Door to Tester Arena Access South
+      Trivial
+
+> Before Tester; Heals? False
+  * Layers: default
+  > Event - Tester
+      All of the following:
+          Any of the following:
+              # Movement requirements
+              Space Jump or Combat (Advanced)
+          Any of the following:
+              # Energy requirements
+              All of the following:
+                  # With Space jump
+                  Space Jump
+                  Combat (Advanced) or Normal Damage ≥ 330
+              All of the following:
+                  # Without Space jump
+                  No Space Jump
+                  Combat (Hypermode) or Normal Damage ≥ 460
+          Any of the following:
+              # Attack requirements (destroy shield)
+              Missiles or Plasma Beam or Super Missiles or Can Use Charged Bomb Jump or Can Use Power Bombs
+              Combat (Hypermode) and Can Use Bombs
+              All of the following:
+                  # Damage boost into him
+                  Damage Boost (Advanced) and Knowledge (Advanced) and Normal Damage ≥ 299
 
 ----------------
 Tester Arena Access South
 Extra - map_name: rm_a4a06
 > Door to Gunzoo Shaft; Heals? False
   * Layers: default
-  * Tower Activated Door to Gunzoo Shaft/Door to Tester Arena Access South
+  * Tower Energy Restored Door to Gunzoo Shaft/Door to Tester Arena Access South
   * Extra - instance_id: 128065
   > Top Platform
       Trivial
 
 > Door to Tester Arena; Heals? False
   * Layers: default
-  * Tower Activated Door to Tester Arena/Door to Tester Arena Access South
+  * Tower Energy Restored Door to Tester Arena/Door to Tester Arena Access South
   * Extra - instance_id: 128064
   > Bottom
       Trivial
@@ -817,7 +928,7 @@ Extra - map_name: rm_a4a08
 
 > Door to Tester Arena; Heals? False
   * Layers: default
-  * Tower Activated Door to Tester Arena/Door to Tester Arena Access North
+  * Tower Energy Restored Door to Tester Arena/Door to Tester Arena Access North
   * Extra - instance_id: 128525
   > Middle
       Trivial
@@ -878,7 +989,7 @@ Extra - map_name: rm_a4a09
 
 > Door to Tower Exterior North East; Heals? False
   * Layers: default
-  * Tower Activated Door to Tower Exterior North East/Door to Plasma Beam Chamber Access
+  * Tower Energy Restored Door to Tower Exterior North East/Door to Plasma Beam Chamber Access
   * Extra - instance_id: 128625
   > Door to Plasma Beam Chamber
       Trivial
@@ -894,7 +1005,7 @@ Extra - map_name: rm_a4a09
 
 > Door to Plasma Beam Chamber; Heals? False
   * Layers: default
-  * Tower Activated Door to Plasma Beam Chamber/Door to Plasma Beam Chamber Access
+  * Tower Energy Restored Door to Plasma Beam Chamber/Door to Plasma Beam Chamber Access
   * Extra - instance_id: 128607
   > Door to Tower Exterior North East
       Trivial
@@ -918,7 +1029,7 @@ Extra - map_name: rm_a4a10
 
 > Door to Plasma Beam Chamber Access; Heals? False
   * Layers: default
-  * Normal Door to Plasma Beam Chamber Access/Door to Plasma Beam Chamber
+  * Tower Energy Restored Door to Plasma Beam Chamber Access/Door to Plasma Beam Chamber
   * Extra - instance_id: 128664
   > Pickup (Plasma Beam)
       Trivial
@@ -973,9 +1084,18 @@ Extra - map_name: rm_a4a12
 
 > Event - Zeta; Heals? False
   * Layers: default
-  * Event Area 4 - Interior Zeta
+  * Event Metroids Area 4 - Interior Zeta
   > Dock to Inner Zeta Nest Access
       Can Use Any Bombs and High Mid-Air Morph Tunnel Climb
+  > Pickup (Zeta)
+      Trivial
+
+> Pickup (Zeta); Heals? False
+  * Layers: default
+  * Pickup 390; Category? Major
+  * Extra - object_name: oItemDNA_390
+  > Event - Zeta
+      Trivial
 
 ----------------
 Dark Maze
@@ -1040,8 +1160,6 @@ Extra - map_name: rm_a4a14
 > Pipe to Distribution Center; Heals? False
   * Layers: default
   * Teleporter to Pipe Hub/Pipe to The Tower
-  * Extra - keep_name_when_vanilla: False
-  * Extra - editable: True
   > Dock to Inner Save Station East Access
       Morph Ball and Space Jump Wall
 
@@ -1085,7 +1203,8 @@ Extra - map_name: rm_a4b02a
           Can Use Any Bombs
           Any of the following:
               # Get up
-              Screw Attack or Can Use Spider Ball
+              Can Use Spider Ball
+              Space Jump and Mid-Air Morph (Beginner)
               Walljump (Advanced) and Enabled Septogg Helpers
               Hi-Jump Boots and Walljump (Intermediate)
               All of the following:

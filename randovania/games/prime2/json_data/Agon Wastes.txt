@@ -6,14 +6,15 @@ Extra - in_dark_aether: False
   * Layers: default
   * Normal Door to Plaza Access/Door to Transport to Temple Grounds
   * Extra - dock_name: East
-  > Elevator to Temple Grounds - Transport to Agon Wastes
+  > Elevator to Temple Grounds
       Scan Visor
 
-> Elevator to Temple Grounds - Transport to Agon Wastes; Heals? False; Spawn Point; Default Node
+> Elevator to Temple Grounds; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Temple Grounds - Transport to Agon Wastes
+  * Elevator to Transport to Agon Wastes/Elevator to Agon Wastes
   * Extra - scan_asset_id: 2084247194
   * Extra - teleporter_instance_id: 122
+  * Extra - keep_name_when_vanilla: False
   > Door to Plaza Access
       Trivial
 
@@ -946,14 +947,15 @@ Extra - in_dark_aether: False
   * Seeker Launcher Blast Shield to Transport Center/Door to Transport to Torvus Bog
   * https://www.youtube.com/watch?v=xjfVuXDROz0
   * Extra - dock_name: Dock - North
-  > Elevator to Torvus Bog - Transport to Agon Wastes
+  > Elevator to Torvus Bog
       Scan Visor
 
-> Elevator to Torvus Bog - Transport to Agon Wastes; Heals? False; Spawn Point; Default Node
+> Elevator to Torvus Bog; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Torvus Bog - Transport to Agon Wastes
+  * Elevator to Transport to Agon Wastes/Elevator to Agon Wastes
   * Extra - scan_asset_id: 3549584208
   * Extra - teleporter_instance_id: 1245307
+  * Extra - keep_name_when_vanilla: False
   > Door to Transport Center
       Trivial
 
@@ -2148,11 +2150,11 @@ Extra - in_dark_aether: False
   * Layers: default
   * Normal Door to Controller Access/Door to Agon Energy Controller
   * Extra - dock_name: South
-  > Teleport to Sanctuary Fortress - Sanctuary Energy Controller
+  > Teleporter to Sanctuary Fortress
       After Main Energy Controller Pickup
-  > Teleport to Torvus Bog - Torvus Energy Controller
+  > Teleporter to Torvus Bog
       After Main Energy Controller Pickup
-  > Teleport to Great Temple - Main Energy Controller
+  > Teleporter to Great Temple
       After Main Energy Controller Pickup
   > Event - Agon Energy Returned
       After Dark Agon Energy Taken
@@ -2167,27 +2169,30 @@ Extra - in_dark_aether: False
   > Door to Controller Access
       Trivial
 
-> Teleport to Sanctuary Fortress - Sanctuary Energy Controller; Heals? False
+> Teleporter to Sanctuary Fortress; Heals? False
   * Layers: default
-  * Teleporter to Sanctuary Fortress - Sanctuary Energy Controller
+  * Teleporter to Sanctuary Energy Controller/Teleporter to Agon Wastes
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 405209185
+  * Extra - keep_name_when_vanilla: False
   > Door to Controller Access
       Trivial
 
-> Teleport to Torvus Bog - Torvus Energy Controller; Heals? False
+> Teleporter to Torvus Bog; Heals? False
   * Layers: default
-  * Teleporter to Torvus Bog - Torvus Energy Controller
+  * Teleporter to Torvus Energy Controller/Teleporter to Agon Wastes
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 405209407
+  * Extra - keep_name_when_vanilla: False
   > Door to Controller Access
       Trivial
 
-> Teleport to Great Temple - Main Energy Controller; Heals? False
+> Teleporter to Great Temple; Heals? False
   * Layers: default
-  * Teleporter to Great Temple - Main Energy Controller
+  * Teleporter to Main Energy Controller/Teleporter to Agon Wastes
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 405209411
+  * Extra - keep_name_when_vanilla: False
   > Door to Controller Access
       Trivial
 
@@ -2419,14 +2424,15 @@ Extra - in_dark_aether: False
   * Layers: default
   * Power Bomb Blast Shield to Ventilation Area A/Door to Transport to Sanctuary Fortress
   * Extra - dock_name: Dock - South
-  > Elevator to Sanctuary Fortress - Transport to Agon Wastes
+  > Elevator to Sanctuary Fortress
       Scan Visor
 
-> Elevator to Sanctuary Fortress - Transport to Agon Wastes; Heals? False; Spawn Point; Default Node
+> Elevator to Sanctuary Fortress; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Sanctuary Fortress - Transport to Agon Wastes
+  * Elevator to Transport to Agon Wastes/Elevator to Agon Wastes
   * Extra - scan_asset_id: 3069534230
   * Extra - teleporter_instance_id: 2949235
+  * Extra - keep_name_when_vanilla: False
   > Door to Ventilation Area A
       Trivial
 
@@ -3368,9 +3374,7 @@ Extra - in_dark_aether: False
                   All of the following:
                       Morph Ball
                       Any of the following:
-                          All of the following:
-                              Boost Ball and Spider Ball
-                              Combat/Scan Dash (Advanced) or Extended Dash (Expert)
+                          Boost Ball and Spider Ball
                           Morph Ball Bomb and Screw Attack and Bomb Space Jump (Hypermode) and Movement (Hypermode)
                           Space Jump Boots and Roll Jump (Advanced)
                   Space Jump Boots and Combat/Scan Dash (Advanced)
@@ -3387,8 +3391,10 @@ Extra - in_dark_aether: False
                           All of the following:
                               Boost Ball and Spider Ball
                               Any of the following:
-                                  Combat/Scan Dash (Expert)
-                                  Screw Attack and Movement (Advanced)
+                                  Combat/Scan Dash (Intermediate)
+                                  All of the following:
+                                      # https://youtu.be/cEiwn9ZE2W4
+                                      Screw Attack and Movement (Beginner)
                           Morph Ball Bomb and Bomb Space Jump (Hypermode) and Movement (Hypermode)
   > Pickup (Energy Tank)
       Any of the following:
@@ -3402,7 +3408,11 @@ Extra - in_dark_aether: False
                       Any of the following:
                           All of the following:
                               Boost Ball and Spider Ball
-                              Combat/Scan Dash (Expert) or Extended Dash (Expert)
+                              Any of the following:
+                                  Combat/Scan Dash (Expert) or Extended Dash (Expert)
+                                  All of the following:
+                                      # https://youtu.be/cEiwn9ZE2W4
+                                      Screw Attack and Movement (Advanced)
                           Morph Ball Bomb and Bomb Space Jump (Hypermode) and Movement (Hypermode) and Use Screw Attack (No Space Jump)
 
 > Door to Ventilation Area B; Heals? False

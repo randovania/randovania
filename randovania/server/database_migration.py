@@ -1,20 +1,32 @@
-def apply_migrations():
-    import playhouse.migrate
-    import randovania
-    from randovania.server import database
+import playhouse.migrate
 
-    randovania.setup_logging('DEBUG', None)
+from randovania.server import database
 
-    configuration = randovania.get_configuration()
-    database.db.init(configuration["server_config"]['database_path'])
-    database.db.connect(reuse_if_open=True)
-    migrator = playhouse.migrate.SqliteMigrator(database.db)
 
+def add_ready_field(migrator: playhouse.migrate.SqliteMigrator):
     with database.db.atomic():
         playhouse.migrate.migrate(
-            migrator.rename_table("gamesession", "game_session"),
-            migrator.rename_table("gamesessionmembership", "game_session_membership"),
-            migrator.rename_table("gamesessionpreset", "game_session_preset"),
-            migrator.rename_table("gamesessionteamaction", "game_session_team_action"),
-            migrator.add_column("game_session", "dev_features", database.MultiplayerSession.dev_features),
+            migrator.add_column("multiplayer_membership", "ready",
+                                database.MultiplayerMembership.ready),
         )
+
+
+_migrations = {
+    database.DatabaseMigrations.ADD_READY_TO_MEMBERSHIP: add_ready_field,
+}
+
+
+def apply_migrations():
+    migrator = playhouse.migrate.SqliteMigrator(database.db)
+
+    all_performed = {
+        performed.migration
+        for performed in database.PerformedDatabaseMigrations.select()
+    }
+
+    for enum_value, call in _migrations.items():
+        if enum_value not in all_performed:
+            call(migrator)
+            database.PerformedDatabaseMigrations.create(
+                migration=enum_value,
+            )

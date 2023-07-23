@@ -1,4 +1,6 @@
-from PySide6 import QtWidgets, QtGui
+from __future__ import annotations
+
+from PySide6 import QtGui, QtWidgets
 
 from randovania.gui.generated.randovania_help_widget_ui import Ui_RandovaniaHelpWidget
 from randovania.gui.lib import common_qt_lib

@@ -1,18 +1,33 @@
-from randovania.game_description.requirements.array_base import RequirementArrayBase, mergeable_array, expand_items
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from randovania.game_description.requirements.array_base import RequirementArrayBase, expand_items, mergeable_array
 from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
+
+
+def _halt_damage_on_zero(items: Iterable[Requirement], current_resources: ResourceCollection,
+                         database: ResourceDatabase):
+    for item in items:
+        dmg = item.damage(current_resources, database)
+        yield dmg
+        if dmg == 0:
+            break
 
 
 class RequirementOr(RequirementArrayBase):
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         try:
             return min(
-                item.damage(current_resources, database)
-                for item in self.items
-                if item.satisfied(current_resources, MAX_DAMAGE, database)
+                _halt_damage_on_zero(self.items, current_resources, database)
             )
         except ValueError:
             return MAX_DAMAGE
@@ -69,7 +84,7 @@ class RequirementOr(RequirementArrayBase):
 
         return RequirementOr(final_items, comment=self.comment)
 
-    def as_set(self, database: ResourceDatabase) -> "RequirementSet":
+    def as_set(self, database: ResourceDatabase) -> RequirementSet:
         alternatives = set()
         for item in self.items:
             alternatives |= item.as_set(database).alternatives

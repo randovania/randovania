@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import contextlib
+import re
 from unittest.mock import MagicMock
 
 import pytest
@@ -10,8 +13,8 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
 
 
-@pytest.fixture(name="fake_generator_parameters")
-def _fake_generator_parameters() -> GeneratorParameters:
+@pytest.fixture()
+def fake_generator_parameters() -> GeneratorParameters:
     parameters = MagicMock(spec=GeneratorParameters)
     parameters.as_bytes = b"\xA0\xB0\xC0"
     return parameters
@@ -44,7 +47,7 @@ def test_decode(mocker, invalid):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "DVwwMTIzAp44AFZd"
+    encoded = "DSkwMTIzAm3yAINX"
 
     expected = Permalink(
         parameters=parameters,
@@ -66,23 +69,25 @@ def test_decode(mocker, invalid):
         link = Permalink.from_str(encoded)
 
     # Assert
-    mock_from_bytes.assert_called_once_with(b'B\x80')
+    mock_from_bytes.assert_called_once_with(b'D\xa0')
     if invalid:
         assert exp.value.games == games
     else:
         assert link == expected
 
 
-@pytest.mark.parametrize("invalid", [
-    "",
-    "a",
-    "x",
-    "zz",
-    "AAAAfRxALWmCI50gIQD",
-    "AAAAfRxALxmCI50gIQDy"
+@pytest.mark.parametrize(("invalid", "err"), [
+    ("", "String too short"),
+    ("a", r"Invalid base64-encoded string: number of data characters \(1\) cannot be 1 more than a multiple of 4"),
+    ("x", r"Invalid base64-encoded string: number of data characters \(1\) cannot be 1 more than a multiple of 4"),
+    ("zz", "String too short"),
+    ("AAAAfRxALWmCI50gIQD",
+     r"Given permalink has version 0, but this Randovania support only permalink of version \d+."),
+    ("AAAAfRxALxmCI50gIQDy",
+     r"Given permalink has version 0, but this Randovania support only permalink of version \d+."),
 ])
-def test_decode_invalid(invalid: str):
-    with pytest.raises(ValueError):
+def test_decode_invalid(invalid: str, err: str):
+    with pytest.raises(ValueError, match=err):
         Permalink.from_str(invalid)
 
 
@@ -109,14 +114,12 @@ def test_round_trip(seed_hash, fake_generator_parameters, mocker):
     mock_from_bytes.assert_called_once_with(b"\xA0\xB0\xC0")
 
 
-@pytest.mark.parametrize(["permalink", "version"], [
+@pytest.mark.parametrize(("permalink", "version"), [
     ("CrhkAGTOLJD7Kf6Y", 10),
     ("DLhkAGTOLJD7Kf6Y", 12),
 ])
 def test_decode_old_version(permalink: str, version: int):
-    with pytest.raises(ValueError) as exp:
+    expect = (f"Given permalink has version {version}, "
+              f"but this Randovania support only permalink of version {Permalink.current_schema_version()}.")
+    with pytest.raises(ValueError, match=re.escape(expect)):
         Permalink.from_str(permalink)
-
-    assert str(exp.value) == (
-        "Given permalink has version {}, but this Randovania support only permalink of version {}.".format(
-            version, Permalink.current_schema_version()))

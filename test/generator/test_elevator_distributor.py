@@ -1,17 +1,19 @@
+from __future__ import annotations
+
 import random
 from random import Random
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.teleporter_node import TeleporterNode
 from randovania.generator import elevator_distributor
 from randovania.generator.elevator_distributor import ElevatorHelper
 
 
-@pytest.mark.parametrize(["seed_number", "expected_ids"], [
+@pytest.mark.parametrize(("seed_number", "expected_ids"), [
     (5000, [122, 129, 1638535, 393260, 4522032, 204865660, 4260106, 2097251, 38, 589851,
             2162826, 1245332, 1572998, 1245307, 3342446, 524321, 2949235, 1966093, 3538975, 152]),
     (9000, [2949235, 129, 152, 4522032, 4260106, 1245332, 1966093, 122, 1638535, 393260,
@@ -24,19 +26,21 @@ def test_try_randomize_elevators(seed_number: int,
                                  echoes_game_description):
     # Setup
     rng = Random(seed_number)
+    elevator_type = echoes_game_description.dock_weakness_database.find_type("elevator")
     teleporters = [
-        echoes_game_description.region_list.identifier_for_node(node)
-        for region in echoes_game_description.region_list.regions
-        for area in region.areas
-        for node in area.nodes
-        if isinstance(node, TeleporterNode) and node.editable and node.extra["teleporter_instance_id"] in expected_ids
+        node.identifier
+        for node in echoes_game_description.region_list.all_nodes
+        if isinstance(node, DockNode) and (
+                node.dock_type is elevator_type and node.extra["teleporter_instance_id"] in expected_ids
+        )
     ]
     teleporters.sort()
 
     # Run
     result = elevator_distributor.try_randomize_elevators(
         rng,
-        elevator_distributor.create_elevator_database(echoes_game_description.region_list, teleporters))
+        elevator_distributor.create_elevator_database(echoes_game_description.region_list,
+                                                      teleporters, [elevator_type]))
 
     connected_ids = [
         echoes_game_description.region_list.node_by_identifier(elevator.connected_elevator.teleporter
@@ -65,8 +69,8 @@ def test_two_way_elevator_connections_between_areas(mock_try_randomize_elevators
     # Assert
     mock_try_randomize_elevators.assert_called_once_with(rng, (elevator_a, elevator_b))
     assert result == {
-        elevator_a.teleporter: elevator_a.connected_elevator.area_location,
-        elevator_b.teleporter: elevator_b.connected_elevator.area_location,
+        elevator_a.teleporter: elevator_a.connected_elevator.teleporter,
+        elevator_b.teleporter: elevator_b.connected_elevator.teleporter,
     }
 
 
@@ -74,7 +78,8 @@ def test_two_way_elevator_connections_unchecked():
     # Setup
     rng = random.Random(5000)
     elevators = [
-        ElevatorHelper(NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"), AreaIdentifier(f"w{i}", f"a{i}"))
+        ElevatorHelper(NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"),
+                       NodeIdentifier.create(f"w{i}", f"a{i}", f"n{i}"))
         for i in range(6)
     ]
     database = tuple(elevators)
@@ -84,16 +89,16 @@ def test_two_way_elevator_connections_unchecked():
 
     # Assert
     assert result == {
-        NodeIdentifier.create("w0", "a0", "n0"): AreaIdentifier("w4", "a4"),
-        NodeIdentifier.create("w1", "a1", "n1"): AreaIdentifier("w2", "a2"),
-        NodeIdentifier.create("w2", "a2", "n2"): AreaIdentifier("w1", "a1"),
-        NodeIdentifier.create("w3", "a3", "n3"): AreaIdentifier("w5", "a5"),
-        NodeIdentifier.create("w4", "a4", "n4"): AreaIdentifier("w0", "a0"),
-        NodeIdentifier.create("w5", "a5", "n5"): AreaIdentifier("w3", "a3"),
+        NodeIdentifier.create("w0", "a0", "n0"):  NodeIdentifier.create("w4", "a4", "n4"),
+        NodeIdentifier.create("w1", "a1", "n1"):  NodeIdentifier.create("w2", "a2", "n2"),
+        NodeIdentifier.create("w2", "a2", "n2"):  NodeIdentifier.create("w1", "a1", "n1"),
+        NodeIdentifier.create("w3", "a3", "n3"):  NodeIdentifier.create("w5", "a5", "n5"),
+        NodeIdentifier.create("w4", "a4", "n4"):  NodeIdentifier.create("w0", "a0", "n0"),
+        NodeIdentifier.create("w5", "a5", "n5"):  NodeIdentifier.create("w3", "a3", "n3"),
     }
 
 
-@pytest.mark.parametrize(["replacement", "expected"], [
+@pytest.mark.parametrize(("replacement", "expected"), [
     (False, {
         NodeIdentifier.create("w0", "a0", "n0"): AreaIdentifier("w1", "a1"),
         NodeIdentifier.create("w1", "a1", "n1"): AreaIdentifier("w2", "a2"),

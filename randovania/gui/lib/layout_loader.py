@@ -1,12 +1,17 @@
+from __future__ import annotations
+
 import json
 import logging
-from pathlib import Path
-
-from PySide6 import QtWidgets
+from typing import TYPE_CHECKING
 
 from randovania.gui.lib import async_dialog, file_prompts
-from randovania.layout.layout_description import LayoutDescription, InvalidLayoutDescription
+from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 from randovania.lib.migration_lib import UnsupportedVersion
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from PySide6 import QtWidgets
 
 
 async def load_layout_description(parent: QtWidgets.QWidget | None, path: Path) -> LayoutDescription | None:

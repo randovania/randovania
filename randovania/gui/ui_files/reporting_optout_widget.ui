@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ReportingOptOutWidget</class>
+ <widget class="QWidget" name="ReportingOptOutWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>375</width>
+    <height>277</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Automatic Data Collection and Reporting</string>
+  </property>
+  <layout class="QVBoxLayout" name="root_layout">
+   <item>
+    <widget class="QLabel" name="intro_label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The following settings controls how the Randovania client application reports data. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::MarkdownText</enum>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="allow_reports_check">
+     <property name="text">
+      <string>Automatically report errors and performance of key components</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="allow_reports_label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These repots include:&lt;/p&gt;&lt;p&gt;- All errors that happen, with contextual data of the situation they happened.&lt;br/&gt;- Performance metrics of key locations of the application &lt;/p&gt;&lt;p&gt;These reports are filtered of any known identifiable data, such as Windows usernames, but some may still be accidentally included.&lt;/p&gt;&lt;p&gt;Restarting Randovania is required for changes to this to take effect.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::MarkdownText</enum>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="include_user_check">
+     <property name="text">
+      <string>Allow reports to be associated with your user, if logged in</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="privacy_policy_label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Any data collected is only visible by trusted members of the Randovania team, and is utilized in accordance to our &lt;a href=&quot;https://github.com/randovania/randovania/blob/main/PRIVACY_POLICY.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Privacy Policy&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;All reporting, aggregating and hosting of the data is done by &lt;a href=&quot;https://sentry.io/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;sentry.io&lt;/span&gt;&lt;/a&gt;, which has graciously sponsored a free account for Randovania.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,12 +1,18 @@
-import pytest
+from __future__ import annotations
+
 from unittest.mock import AsyncMock, MagicMock
+
+import pytest
+from open_prime_rando.dol_patching.echoes import dol_versions
 
 from randovania.game_connection.builder.prime_connector_builder import PrimeConnectorBuilder
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException, \
-    MemoryOperationExecutor
-from open_prime_rando.dol_patching.echoes import dol_versions
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
+)
 
 
 class MockedPrimeConnectorBuilder(PrimeConnectorBuilder):

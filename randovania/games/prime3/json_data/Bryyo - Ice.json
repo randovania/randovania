@@ -5,7 +5,7 @@
     },
     "areas": {
         "Warp Site Bravo": {
-            "default_node": "Teleport to Bryyo Fire - Warp Site Alpha",
+            "default_node": "Teleporter to Bryyo - Fire",
             "extra": {
                 "asset_id": 9245834436705857859
             },
@@ -38,7 +38,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Teleport to Bryyo Fire - Warp Site Alpha": {
+                        "Teleporter to Bryyo - Fire": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -47,8 +47,8 @@
                         }
                     }
                 },
-                "Teleport to Bryyo Fire - Warp Site Alpha": {
-                    "node_type": "teleporter",
+                "Teleporter to Bryyo - Fire": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -60,12 +60,17 @@
                         "teleporter_instance_id": 131452
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Bryyo - Fire",
-                        "area": "Warp Site Alpha"
+                        "area": "Warp Site Alpha",
+                        "node": "Teleporter to Bryyo - Ice"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Imperial Caverns": {
                             "type": "and",

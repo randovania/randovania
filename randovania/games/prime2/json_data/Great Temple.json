@@ -6,7 +6,7 @@
     },
     "areas": {
         "Temple Transport A": {
-            "default_node": "Elevator to Temple Grounds - Temple Transport A",
+            "default_node": "Elevator to Temple Grounds",
             "extra": {
                 "asset_id": 408633584,
                 "in_dark_aether": false
@@ -36,7 +36,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Temple Grounds - Temple Transport A": {
+                        "Elevator to Temple Grounds": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -47,8 +47,8 @@
                         }
                     }
                 },
-                "Elevator to Temple Grounds - Temple Transport A": {
-                    "node_type": "teleporter",
+                "Elevator to Temple Grounds": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -57,15 +57,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 827726881,
-                        "teleporter_instance_id": 152
+                        "teleporter_instance_id": 152,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Temple Grounds",
-                        "area": "Temple Transport A"
+                        "area": "Temple Transport A",
+                        "node": "Elevator to Great Temple"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport A Access": {
                             "type": "and",
@@ -1568,7 +1574,7 @@
             }
         },
         "Temple Transport C": {
-            "default_node": "Elevator to Temple Grounds - Temple Transport C",
+            "default_node": "Elevator to Temple Grounds",
             "extra": {
                 "asset_id": 2556480432,
                 "in_dark_aether": false
@@ -1598,7 +1604,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Temple Grounds - Temple Transport C": {
+                        "Elevator to Temple Grounds": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1609,8 +1615,8 @@
                         }
                     }
                 },
-                "Elevator to Temple Grounds - Temple Transport C": {
-                    "node_type": "teleporter",
+                "Elevator to Temple Grounds": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -1619,15 +1625,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 1430348762,
-                        "teleporter_instance_id": 393260
+                        "teleporter_instance_id": 393260,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Temple Grounds",
-                        "area": "Temple Transport C"
+                        "area": "Temple Transport C",
+                        "node": "Elevator to Great Temple"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport C Access": {
                             "type": "and",
@@ -1678,7 +1690,7 @@
                                 "items": []
                             }
                         },
-                        "Teleport to Agon Wastes - Agon Energy Controller": {
+                        "Teleporter to Agon Wastes": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1687,7 +1699,7 @@
                                 "negate": false
                             }
                         },
-                        "Teleport to Torvus Bog - Torvus Energy Controller": {
+                        "Teleporter to Torvus Bog": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1696,7 +1708,7 @@
                                 "negate": false
                             }
                         },
-                        "Teleport to Sanctuary Fortress - Sanctuary Energy Controller": {
+                        "Teleporter to Sanctuary Fortress": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1767,8 +1779,8 @@
                         }
                     }
                 },
-                "Teleport to Agon Wastes - Agon Energy Controller": {
-                    "node_type": "teleporter",
+                "Teleporter to Agon Wastes": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -1777,15 +1789,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 939982960
+                        "teleporter_instance_id": 939982960,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Agon Wastes",
-                        "area": "Agon Energy Controller"
+                        "area": "Agon Energy Controller",
+                        "node": "Teleporter to Great Temple"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Transport": {
                             "type": "and",
@@ -1796,8 +1814,8 @@
                         }
                     }
                 },
-                "Teleport to Torvus Bog - Torvus Energy Controller": {
-                    "node_type": "teleporter",
+                "Teleporter to Torvus Bog": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -1806,15 +1824,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 939982964
+                        "teleporter_instance_id": 939982964,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Torvus Bog",
-                        "area": "Torvus Energy Controller"
+                        "area": "Torvus Energy Controller",
+                        "node": "Teleporter to Great Temple"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Transport": {
                             "type": "and",
@@ -1825,8 +1849,8 @@
                         }
                     }
                 },
-                "Teleport to Sanctuary Fortress - Sanctuary Energy Controller": {
-                    "node_type": "teleporter",
+                "Teleporter to Sanctuary Fortress": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -1835,15 +1859,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 939982965
+                        "teleporter_instance_id": 939982965,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Sanctuary Fortress",
-                        "area": "Sanctuary Energy Controller"
+                        "area": "Sanctuary Energy Controller",
+                        "node": "Teleporter to Great Temple"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Controller Transport": {
                             "type": "and",
@@ -1928,7 +1958,7 @@
             }
         },
         "Temple Transport B": {
-            "default_node": "Elevator to Temple Grounds - Temple Transport B",
+            "default_node": "Elevator to Temple Grounds",
             "extra": {
                 "asset_id": 2399252740,
                 "in_dark_aether": false
@@ -1958,7 +1988,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Temple Grounds - Temple Transport B": {
+                        "Elevator to Temple Grounds": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1969,8 +1999,8 @@
                         }
                     }
                 },
-                "Elevator to Temple Grounds - Temple Transport B": {
-                    "node_type": "teleporter",
+                "Elevator to Temple Grounds": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -1979,15 +2009,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": 2113337837,
-                        "teleporter_instance_id": 524321
+                        "teleporter_instance_id": 524321,
+                        "keep_name_when_vanilla": false
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Temple Grounds",
-                        "area": "Temple Transport B"
+                        "area": "Temple Transport B",
+                        "node": "Elevator to Great Temple"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transport B Access": {
                             "type": "and",
@@ -2099,7 +2135,7 @@
                                 ]
                             }
                         },
-                        "Teleport to Temple Grounds - Sky Temple Gateway": {
+                        "Elevator to Temple Grounds": {
                             "type": "resource",
                             "data": {
                                 "type": "damage",
@@ -2130,7 +2166,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Boost Ball Blast Shield",
+                        "Bomb Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2189,7 +2228,7 @@
                                 ]
                             }
                         },
-                        "Teleport to Temple Grounds - Sky Temple Gateway": {
+                        "Elevator to Temple Grounds": {
                             "type": "resource",
                             "data": {
                                 "type": "damage",
@@ -2200,8 +2239,8 @@
                         }
                     }
                 },
-                "Teleport to Temple Grounds - Sky Temple Gateway": {
-                    "node_type": "teleporter",
+                "Elevator to Temple Grounds": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -2210,15 +2249,21 @@
                     ],
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 589949
+                        "teleporter_instance_id": 589949,
+                        "keep_name_when_vanilla": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "elevator",
+                    "default_connection": {
                         "region": "Temple Grounds",
-                        "area": "Sky Temple Gateway"
+                        "area": "Sky Temple Gateway",
+                        "node": "Spawn Point/Front of Teleporter"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Elevator",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Save Station": {
                             "type": "or",
@@ -2470,7 +2515,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Boost Ball Blast Shield",
+                        "Bomb Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2572,7 +2620,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Boost Ball Blast Shield",
+                        "Bomb Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2616,7 +2667,10 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Boost Ball Blast Shield",
+                        "Bomb Blast Shield"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {

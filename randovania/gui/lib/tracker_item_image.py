@@ -1,5 +1,11 @@
-from PySide6.QtGui import QPixmap, QMouseEvent
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6.QtWidgets import QLabel, QWidget
+
+if TYPE_CHECKING:
+    from PySide6.QtGui import QMouseEvent, QPixmap
 
 
 class TrackerItemImage(QLabel):

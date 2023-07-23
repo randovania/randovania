@@ -6,14 +6,15 @@ Extra - in_dark_aether: False
   * Layers: default
   * Normal Door to Temple Transport Access/Door to Transport to Temple Grounds
   * Extra - dock_name: North
-  > Elevator to Temple Grounds - Transport to Sanctuary Fortress
+  > Elevator to Temple Grounds
       Scan Visor
 
-> Elevator to Temple Grounds - Transport to Sanctuary Fortress; Heals? False; Spawn Point; Default Node
+> Elevator to Temple Grounds; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Temple Grounds - Transport to Sanctuary Fortress
+  * Elevator to Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress
   * Extra - scan_asset_id: 585469310
   * Extra - teleporter_instance_id: 38
+  * Extra - keep_name_when_vanilla: False
   > Door to Temple Transport Access
       Trivial
 
@@ -581,14 +582,14 @@ Extra - low_memory_mode: True
 
 > Door to Central Area Transport West; Heals? False
   * Layers: default
-  * Normal Door to Central Area Transport West/Door to Main Research
+  * Normal Door to Central Area Transport West/Door to Main Research; Excluded from Dock Lock Rando
   * Extra - dock_name: West to 0l_cliff_hall
   > Next to Door to Central Area Transport West
       Trivial
 
 > Door to Transit Station; Heals? False
   * Layers: default
-  * Normal Door to Transit Station/Door to Main Research
+  * Normal Door to Transit Station/Door to Main Research; Dock Lock Rando incompatible with: Seeker Launcher Blast Shield (patched)
   * Extra - dock_name: East2 to 0m_cliff_hall
   > Door to Torvus Transport Access
       Trivial
@@ -608,7 +609,7 @@ Extra - low_memory_mode: True
 
 > Door to Torvus Transport Access; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Power Bomb Blast Shield to Torvus Transport Access/Door to Main Research
+  * Power Bomb Blast Shield to Torvus Transport Access/Door to Main Research; Dock Lock Rando incompatible with: Seeker Launcher Blast Shield (patched)
   * Extra - dock_name: West1 to 0p_cliff_hall
   > Door to Transit Station
       Any of the following:
@@ -849,14 +850,14 @@ Extra - asset_id: 1894024576
 Extra - in_dark_aether: False
 > Door to Main Research; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Normal Door to Main Research/Door to Central Area Transport West
+  * Normal Door to Main Research/Door to Central Area Transport West; Excluded from Dock Lock Rando
   * Extra - dock_name: East_Bottom
   > Door to Watch Station
       Echo Visor and Morph Ball
 
 > Door to Watch Station; Heals? False
   * Layers: default
-  * Normal Door to Watch Station/Door to Central Area Transport West
+  * Normal Door to Watch Station/Door to Central Area Transport West; Excluded from Dock Lock Rando
   * Extra - dock_name: East_Top
   > Door to Main Research
       Morph Ball
@@ -951,14 +952,15 @@ Extra - in_dark_aether: False
   * Layers: default
   * Normal Door to Agon Transport Access/Door to Transport to Agon Wastes
   * Extra - dock_name: West
-  > Elevator to Agon Wastes - Transport to Sanctuary Fortress
+  > Elevator to Agon Wastes
       Scan Visor
 
-> Elevator to Agon Wastes - Transport to Sanctuary Fortress; Heals? False; Spawn Point; Default Node
+> Elevator to Agon Wastes; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Agon Wastes - Transport to Sanctuary Fortress
+  * Elevator to Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress
   * Extra - scan_asset_id: 3282119661
   * Extra - teleporter_instance_id: 1245332
+  * Extra - keep_name_when_vanilla: False
   > Door to Agon Transport Access
       Trivial
 
@@ -1294,14 +1296,15 @@ Extra - in_dark_aether: False
   * Layers: default
   * Normal Door to Torvus Transport Access/Door to Transport to Torvus Bog
   * Extra - dock_name: East
-  > Elevator to Torvus Bog - Transport to Sanctuary Fortress
+  > Elevator to Torvus Bog
       Scan Visor
 
-> Elevator to Torvus Bog - Transport to Sanctuary Fortress; Heals? False; Spawn Point; Default Node
+> Elevator to Torvus Bog; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Torvus Bog - Transport to Sanctuary Fortress
+  * Elevator to Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress
   * Extra - scan_asset_id: 158293345
   * Extra - teleporter_instance_id: 1638535
+  * Extra - keep_name_when_vanilla: False
   > Door to Torvus Transport Access
       Trivial
 
@@ -3167,7 +3170,7 @@ Extra - in_dark_aether: False
   * Extra - dock_name: South
   > Dock to Aerie Access
       Before Dark Samus 2
-  > Elevator to Sanctuary Fortress - Aerie
+  > Elevator to Aerie
       After Dark Samus 2
 
 > Dock to Aerie Access; Heals? False
@@ -3175,11 +3178,12 @@ Extra - in_dark_aether: False
   * Open Passage to Aerie Access/Dock to Aerie Transport Station
   * Extra - dock_name: Ceiling
 
-> Elevator to Sanctuary Fortress - Aerie; Heals? False
+> Elevator to Aerie; Heals? False
   * Layers: default
-  * Teleporter to Sanctuary Fortress - Aerie
+  * Elevator to Aerie/Elevator to Aerie Transport Station
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 204865660
+  * Extra - keep_name_when_vanilla: True
   > Door to Checkpoint Station
       Trivial
 
@@ -3193,11 +3197,11 @@ Extra - in_dark_aether: False
   * Extra - dock_name: North
   > Pickup (Cobalt Translator)
       Trivial
-  > Teleport to Great Temple - Main Energy Controller
+  > Teleporter to Great Temple
       After Main Energy Controller Pickup
-  > Teleport to Agon Wastes - Agon Energy Controller
+  > Teleporter to Agon Wastes
       After Main Energy Controller Pickup
-  > Teleport to Torvus Bog - Torvus Energy Controller
+  > Teleporter to Torvus Bog
       After Main Energy Controller Pickup
   > Event - Sanctuary Energy Returned
       After Ing Hive Energy Taken
@@ -3210,27 +3214,30 @@ Extra - in_dark_aether: False
   > Door to Controller Access
       Trivial
 
-> Teleport to Great Temple - Main Energy Controller; Heals? False
+> Teleporter to Great Temple; Heals? False
   * Layers: default
-  * Teleporter to Great Temple - Main Energy Controller
+  * Teleporter to Main Energy Controller/Teleporter to Sanctuary Fortress
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 137822369
+  * Extra - keep_name_when_vanilla: False
   > Door to Controller Access
       Trivial
 
-> Teleport to Agon Wastes - Agon Energy Controller; Heals? False
+> Teleporter to Agon Wastes; Heals? False
   * Layers: default
-  * Teleporter to Agon Wastes - Agon Energy Controller
+  * Teleporter to Agon Energy Controller/Teleporter to Sanctuary Fortress
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 137822376
+  * Extra - keep_name_when_vanilla: False
   > Door to Controller Access
       Trivial
 
-> Teleport to Torvus Bog - Torvus Energy Controller; Heals? False
+> Teleporter to Torvus Bog; Heals? False
   * Layers: default
-  * Teleporter to Torvus Bog - Torvus Energy Controller
+  * Teleporter to Torvus Energy Controller/Teleporter to Sanctuary Fortress
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 137822482
+  * Extra - keep_name_when_vanilla: False
   > Door to Controller Access
       Trivial
 
@@ -3519,11 +3526,12 @@ Extra - low_memory_mode: True
   > Bottom Floor
       Trivial
 
-> Elevator to Sanctuary Fortress - Aerie Transport Station; Heals? False
+> Elevator to Aerie Transport Station; Heals? False
   * Layers: default
-  * Teleporter to Sanctuary Fortress - Aerie Transport Station
+  * Elevator to Aerie Transport Station/Elevator to Aerie
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 4260106
+  * Extra - keep_name_when_vanilla: True
   > Bottom Floor
       After Dark Samus 2
 
@@ -3545,7 +3553,7 @@ Extra - low_memory_mode: True
       Trivial
   > Pickup (Echo Visor)
       Morph Ball Bomb and Bomb Space Jump (Expert) and Movement (Expert) and Use Screw Attack (Space Jump)
-  > Elevator to Sanctuary Fortress - Aerie Transport Station
+  > Elevator to Aerie Transport Station
       Echo Visor and After Aerie Pickup
 
 > Before Dark Samus; Heals? False

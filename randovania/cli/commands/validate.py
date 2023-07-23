@@ -1,19 +1,24 @@
+from __future__ import annotations
+
 import asyncio
 import time
-from argparse import ArgumentParser
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania.cli import cli_lib
 from randovania.cli.cli_lib import add_debug_argument
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, resolver
 
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+
 
 def validate_command_logic(args):
     debug.set_level(args.debug)
 
     description = LayoutDescription.from_file(args.layout_file)
-    if description.player_count != 1:
+    if description.world_count != 1:
         raise ValueError("Validator does not support layouts with more than 1 player.")
 
     output_file = None

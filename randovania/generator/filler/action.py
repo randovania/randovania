@@ -1,9 +1,14 @@
-from typing import Union, Iterable
+from __future__ import annotations
 
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from typing import TYPE_CHECKING
+
 from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.resources.pickup_entry import PickupEntry
 
-ActionStep = Union[ResourceNode, PickupEntry]
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+ActionStep = ResourceNode | PickupEntry
 
 
 class Action:

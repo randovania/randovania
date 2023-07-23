@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.bitpacking import bitpacking
@@ -18,8 +20,8 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
             for i in ["BombJump", "BSJ", "Dash", "Movement"]
         }}},
     ],
-    name="trick_level_data")
-def _trick_level_data(request, mocker, echoes_game_description):
+)
+def trick_level_data(request, mocker, echoes_game_description):
     tricks = echoes_game_description.resource_database.trick[:14]
     mocker.patch("randovania.layout.base.trick_level_configuration._all_tricks", return_value=tricks)
     return (request.param["encoded"], request.param["bit_count"],
@@ -62,7 +64,7 @@ def test_encode_no_tricks_are_removed():
 
     decoder = BitPackDecoder(encoded)
     decoded = TrickLevelConfiguration.bit_pack_unpack(
-        decoder, {"reference": TrickLevelConfiguration(False, {}, RandovaniaGame.METROID_PRIME_ECHOES), })
+        decoder, {"reference": TrickLevelConfiguration(False, {}, RandovaniaGame.METROID_PRIME_ECHOES) })
 
     assert decoded.specific_levels == {}
 
@@ -85,7 +87,7 @@ def test_pretty_description_minimal_logic(echoes_game_description):
     assert config.pretty_description(echoes_game_description) == "Minimal Logic"
 
 
-@pytest.mark.parametrize(["levels", "expected"], [
+@pytest.mark.parametrize(("levels", "expected"), [
     ({}, "All tricks disabled"),
     ({i: LayoutTrickLevel.HYPERMODE for i in ["Dash", "BombJump", "Movement", "BSJ"]},
      "Enabled tricks: 21 at Disabled, 4 at Hypermode"),

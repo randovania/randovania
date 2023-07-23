@@ -1,12 +1,17 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.pickup.pickup_database import PickupDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime3.patcher.gollop_corruption_patcher import layout_string_for_items
 from randovania.gui.generated.corruption_layout_editor_ui import Ui_CorruptionLayoutEditor
-from randovania.gui.lib import common_qt_lib
+
+if TYPE_CHECKING:
+    from randovania.game_description.pickup.pickup_database import PickupDatabase
 
 
 def _fill_combo(pickup_database: PickupDatabase, combo: QtWidgets.QComboBox):
@@ -19,27 +24,22 @@ def _fill_combo(pickup_database: PickupDatabase, combo: QtWidgets.QComboBox):
         combo.addItem(item, item)
 
 
-class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
+class CorruptionLayoutEditor(QtWidgets.QWidget, Ui_CorruptionLayoutEditor):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        common_qt_lib.set_default_window_icon(self)
 
         self.game_description = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
         pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION)
         region_list = self.game_description.region_list
         self._index_to_combo = {}
 
-        columns = []
-        for i in range(2):
-            columns.append(QtWidgets.QVBoxLayout(self.scroll_area_contents))
-            self.scroll_area_layout.addLayout(columns[-1])
-
-        ids_to_merge = [5406397194789083955,  # Phaaze
-                        16039522250714156185,
-                        10717625015048596485,
-                        14806081023590793725,
-                        ]
+        ids_to_merge = [
+            5406397194789083955,  # Phaaze
+            16039522250714156185,
+            10717625015048596485,
+            14806081023590793725,
+        ]
         nodes_to_merge = []
 
         region_count = 0
@@ -75,7 +75,7 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
                     self._index_to_combo[node.pickup_index] = node_combo
                     area_count += 1
 
-            columns[region_count % len(columns)].addWidget(group)
+            self.scroll_area_layout.addWidget(group)
             region_count += 1
 
         group = QtWidgets.QGroupBox(self.scroll_area_contents)
@@ -98,7 +98,7 @@ class CorruptionLayoutEditor(QtWidgets.QMainWindow, Ui_CorruptionLayoutEditor):
             self._index_to_combo[node.pickup_index] = node_combo
             area_count += 1
 
-        columns[0].addWidget(group)
+        self.scroll_area_layout.addWidget(group)
         # region_count += 1
         self.update_layout_string()
 

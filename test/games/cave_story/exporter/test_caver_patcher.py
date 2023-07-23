@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 from unittest.mock import PropertyMock
 
@@ -5,7 +7,11 @@ import pytest
 
 from randovania.games.cave_story.exporter.patch_data_factory import CSPatchDataFactory
 from randovania.games.cave_story.layout.cs_cosmetic_patches import (
-    CSCosmeticPatches, CSMusic, CSSong, MusicRandoType, MyChar
+    CSCosmeticPatches,
+    CSMusic,
+    CSSong,
+    MusicRandoType,
+    MyChar,
 )
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription

@@ -647,20 +647,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Ridley Room": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega1",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Dock to Hideout Hub Access West": {
@@ -720,15 +710,6 @@
                                         "data": {
                                             "comment": "After killing omega",
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Omega1",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "or",
                                                     "data": {
@@ -799,27 +780,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Before killing omega",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Omega1",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Hijump Wall"
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -853,48 +813,6 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Hideout Hub Access East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Pre First Omega Scan": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Alpha23",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Event - Pre First Omega Scan": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 255.7,
-                        "y": 637.82,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "NestOmegaScan",
-                    "connections": {
-                        "Dock to Hideout Hub Access West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1111,15 +1029,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "NestOmegaScan",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
                                         "data": "Hijump With Power Grip Wall"
                                     }
@@ -1131,15 +1040,6 @@
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "NestOmegaScan",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
                                     {
                                         "type": "template",
                                         "data": "Defeat Alpha"
@@ -1211,59 +1111,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Hideout Alpha Nest Access West": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "NestOmegaScan",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Alpha23",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed Booster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Shinesparking",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Power Grip Wall"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1272,8 +1123,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 820.72,
-                        "y": 85.64,
+                        "x": 627.9745659228123,
+                        "y": 128.68942500887857,
                         "z": 0.0
                     },
                     "description": "",
@@ -1285,6 +1136,41 @@
                     "event_name": "Alpha23",
                     "connections": {
                         "Dock to Hideout Alpha Nest Access West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 938.2,
+                        "y": 150.67,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_372"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 372,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1451,8 +1337,25 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Power Grip Wall"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Power Grip Wall"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Omega1",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "and",
@@ -1483,6 +1386,40 @@
                                                         "type": "tricks",
                                                         "name": "Shinesparking",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ over them https://www.youtube.com/watch?v=I7IayKDp2ss",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 }
@@ -1523,6 +1460,41 @@
                     "event_name": "Omega1",
                     "connections": {
                         "Dock to Hideout Omega Nest Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Omega)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Omega)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 657.74,
+                        "y": 183.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_392"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 392,
+                    "location_category": "major",
+                    "connections": {
+                        "Event - Omega": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2143,12 +2115,38 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageBoost",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 300,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 100,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2240,12 +2238,38 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoost",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Lava",
+                                                                                "amount": 100,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 300,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageBoost",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
@@ -2453,7 +2477,7 @@
             }
         },
         "Omega Nest Entrance Save Station": {
-            "default_node": null,
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a6a15"
             },
@@ -2473,7 +2497,7 @@
                     "extra": {
                         "save_room": 21
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Dock to Skorp Lava Pool Access": {
                             "type": "and",
@@ -3677,7 +3701,7 @@
             }
         },
         "Depths Save Station": {
-            "default_node": null,
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a6b06"
             },
@@ -3697,7 +3721,7 @@
                     "extra": {
                         "save_room": 22
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Dock to Depths Hub": {
                             "type": "and",
@@ -3996,6 +4020,41 @@
                                     }
                                 ]
                             }
+                        },
+                        "Pickup (Omega)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Omega)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 167.24,
+                        "y": 150.69,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_394"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 394,
+                    "location_category": "major",
+                    "connections": {
+                        "Event - Omega": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -4217,6 +4276,41 @@
                                         "data": "Hijump Tunnel Climb"
                                     }
                                 ]
+                            }
+                        },
+                        "Pickup (Omega)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Omega)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 538.43,
+                        "y": 140.7,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_393"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 393,
+                    "location_category": "major",
+                    "connections": {
+                        "Event - Omega": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -4646,6 +4740,41 @@
                                     }
                                 ]
                             }
+                        },
+                        "Pickup (Omega)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Omega)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 161.53,
+                        "y": 144.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_395"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 395,
+                    "location_category": "major",
+                    "connections": {
+                        "Event - Omega": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -4860,36 +4989,8 @@
                         "Above Bomb Blocks": {
                             "type": "and",
                             "data": {
-                                "comment": "The 3 Nest Omegas",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega2",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega3",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega4",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "comment": "New goal removes vanilla requirement",
+                                "items": []
                             }
                         }
                     }
@@ -5369,7 +5470,7 @@
             }
         },
         "Depths Exit Save Station": {
-            "default_node": null,
+            "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a6b16"
             },
@@ -5424,7 +5525,7 @@
                     "extra": {
                         "save_room": 23
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Dock to Depths Skorp Snag": {
                             "type": "and",

@@ -1,15 +1,20 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import functools
 from enum import Enum
-from typing import Iterator, Self
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
+from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 
 class LayoutTranslatorRequirement(BitPackEnum, Enum):

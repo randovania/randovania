@@ -1,4 +1,6 @@
-from unittest.mock import AsyncMock, ANY, MagicMock
+from __future__ import annotations
+
+from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
 

@@ -1,15 +1,22 @@
+from __future__ import annotations
+
 import copy
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator, Self
+from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
+from randovania.game_description.db.dock import DockType, DockWeakness
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.dock import DockWeaknessDatabase
 
 
 class DockRandoMode(BitPackEnum, Enum):
@@ -65,7 +72,7 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
         }
 
     @classmethod
-    def from_json(cls, value: dict, game: RandovaniaGame, dock_type_name: str) -> "DockTypeState":
+    def from_json(cls, value: dict, game: RandovaniaGame, dock_type_name: str) -> DockTypeState:
         weakness_database = cls._get_weakness_database(game)
         return cls(
             game=game,
@@ -89,7 +96,7 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
         )
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "DockTypeState":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> DockTypeState:
         reference: DockTypeState = metadata["reference"]
         ref_change_from = sorted(cls._possible_change_from(reference.game, reference.dock_type_name))
         ref_change_to = sorted(cls._possible_change_to(reference.game, reference.dock_type_name))
@@ -190,6 +197,9 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
 
     def is_enabled(self) -> bool:
         return self.mode != DockRandoMode.VANILLA
+
+    def can_shuffle(self, dock_type: DockType) -> bool:
+        return dock_type in self.weakness_database.dock_rando_params and self.types_state[dock_type].can_shuffle
 
     def settings_incompatible_with_multiworld(self) -> list[str]:
         danger = []

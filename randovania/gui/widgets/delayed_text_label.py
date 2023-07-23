@@ -1,4 +1,6 @@
-from PySide6 import QtWidgets, QtGui
+from __future__ import annotations
+
+from PySide6 import QtGui, QtWidgets
 
 
 class DelayedTextLabel(QtWidgets.QLabel):

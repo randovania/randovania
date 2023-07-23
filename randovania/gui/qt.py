@@ -6,7 +6,6 @@ import logging.handlers
 import os
 import sys
 import typing
-from argparse import ArgumentParser
 from pathlib import Path
 
 from PySide6 import QtCore, QtWidgets
@@ -16,8 +15,12 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence
 
 if typing.TYPE_CHECKING:
-    from randovania.interface_common.preset_manager import PresetManager
+    from argparse import ArgumentParser
+
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    from randovania.gui.multiworld_client import MultiworldClient
     from randovania.interface_common.options import Options
+    from randovania.interface_common.preset_manager import PresetManager
 
 logger = logging.getLogger(__name__)
 
@@ -65,16 +68,16 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
     _migrate_old_base_preset_uuid(preset_manager, options)
     logger.info("Finished loading presets!")
 
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
     network_client: QtNetworkClient = app.network_client
 
+    multiworld_client: MultiworldClient = app.multiworld_client
+
     async def attempt_login():
-        from randovania.network_client.network_client import UnableToConnect
         from randovania.gui.lib import async_dialog
+        from randovania.network_client.network_client import UnableToConnect
 
         try:
-            from randovania.gui import main_online_interaction
-            if not await main_online_interaction.ensure_logged_in(None, network_client):
+            if not await network_client.ensure_logged_in(None):
                 await async_dialog.warning(None, "Login required",
                                            "Logging in is required to use dev builds.")
                 return False
@@ -105,7 +108,7 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
 
     from randovania.gui.main_window import MainWindow
     logger.info("Preparing main window...")
-    main_window = MainWindow(options, preset_manager, network_client, is_preview)
+    main_window = MainWindow(options, preset_manager, network_client, multiworld_client, is_preview)
     app.main_window = main_window
 
     logger.info("Displaying main window")
@@ -143,37 +146,6 @@ async def show_game_details(app: QtWidgets.QApplication, options, file_path: Pat
     app.details_window = details_window
 
 
-async def show_game_session(app: QtWidgets.QApplication, options, session_id: int):
-    from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
-    from randovania.gui.lib.qt_network_client import QtNetworkClient
-    from randovania.interface_common.preset_manager import PresetManager
-
-    network_client: QtNetworkClient = app.network_client
-
-    sessions = [
-        session
-        for session in await network_client.get_multiplayer_session_list(False)
-        if session.id == session_id
-    ]
-    if not sessions:
-        app.quit()
-        return
-
-    new_session = await network_client.join_multiplayer_session(sessions[0], None)
-    # preset_for = preset_manager.default_preset_for_game
-
-    preset_manager = PresetManager(options.presets_path)
-
-    app.game_session_window = await MultiplayerSessionWindow.create_and_update(
-        network_client,
-        new_session,
-        preset_manager,
-        None,
-        options
-    )
-    app.game_session_window.show()
-
-
 async def display_window_for(app: QtWidgets.QApplication, options: Options, command: str, args):
     if command == "tracker":
         await show_tracker(app, options)
@@ -183,8 +155,6 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
         show_data_editor(app, options, RandovaniaGame(args.game))
     elif command == "game":
         await show_game_details(app, options, args.rdvgame)
-    elif command == "session":
-        await show_game_session(app, options, args.session_id)
     else:
         raise RuntimeError(f"Unknown command: {command}")
 
@@ -208,8 +178,8 @@ def add_options_cli_args(parser: ArgumentParser):
 
 async def _load_options(args) -> Options | None:
     logger.info("Loading up user preferences code...")
-    from randovania.interface_common.options import Options
     from randovania.gui.lib import startup_tools, theme
+    from randovania.interface_common.options import Options
 
     logger.info("Restoring saved user preferences...")
     options = Options(args.local_data, args.user_data)
@@ -217,8 +187,8 @@ async def _load_options(args) -> Options | None:
         return None
 
     logger.info("Creating user preferences folder")
-    import dulwich.repo
     import dulwich.errors
+    import dulwich.repo
     try:
         dulwich.repo.Repo(os.fspath(options.user_dir))
 
@@ -234,7 +204,7 @@ async def _load_options(args) -> Options | None:
 
 def start_logger(data_dir: Path, is_preview: bool):
     # Ensure the log dir exists early on
-    log_dir = data_dir.joinpath("logs")
+    log_dir = data_dir.joinpath("logs", randovania.VERSION)
     log_dir.mkdir(parents=True, exist_ok=True)
 
     randovania.setup_logging('DEBUG' if is_preview else 'INFO', log_dir.joinpath("logger.log"))
@@ -262,10 +232,16 @@ async def qt_main(app: QtWidgets.QApplication, args):
         app.exit(1)
         return
 
+    import randovania
+    if options.allow_crash_reporting or randovania.is_dev_version():
+        import randovania.monitoring
+        randovania.monitoring.client_init()
+
     app.network_client = None
     logging.info("Loading server client...")
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     app.network_client = QtNetworkClient(options.data_dir)
+    app.network_client.allow_reporting_username = options.use_user_for_crash_reporting
     logging.info("Server client ready.")
 
     if args.login_as_guest:
@@ -279,8 +255,8 @@ async def qt_main(app: QtWidgets.QApplication, args):
 
     logging.info("Creating the global game connection")
     from randovania.game_connection.game_connection import GameConnection
-    app.game_connection = GameConnection(options)
-    
+    app.game_connection = GameConnection(options, app.world_database)
+
     logging.info("Creating the global multiworld client")
     from randovania.gui.multiworld_client import MultiworldClient
     app.multiworld_client = MultiworldClient(app.network_client, app.game_connection,
@@ -307,7 +283,7 @@ async def qt_main(app: QtWidgets.QApplication, args):
 
 
 def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState):
-    logger.info("New application state: %s", new_state)
+    logger.debug("New application state: %s", new_state)
     import sentry_sdk
     if new_state == QtCore.Qt.ApplicationState.ApplicationActive:
         sentry_sdk.Hub.current.start_session(session_mode="application")
@@ -316,9 +292,6 @@ def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState):
 
 
 def run(args):
-    import randovania.monitoring
-    randovania.monitoring.client_init()
-
     locale.setlocale(locale.LC_ALL, "")  # use system's default locale
     QtWidgets.QApplication.setAttribute(QtCore.Qt.ApplicationAttribute.AA_EnableHighDpiScaling, True)
 
@@ -359,10 +332,6 @@ def create_subparsers(sub_parsers):
     game_parser = gui_parsers.add_parser("game", help="Opens an rdvgame")
     game_parser.add_argument("rdvgame", type=Path, help="Path ")
     game_parser.set_defaults(func=run)
-
-    session_parser = gui_parsers.add_parser("session", help="Connects to a game session")
-    session_parser.add_argument("session_id", type=int, help="Id of the session")
-    session_parser.set_defaults(func=run)
 
     def check_command(args):
         if args.command is None:

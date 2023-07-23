@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.lib import json_lib
@@ -19,3 +21,7 @@ def test_read_ignore_duplicate_keys(tmp_path):
         ("a", 3),
         ("b", 2),
     ]
+
+
+def test_dumps_small():
+    assert json_lib.dumps_small({"a": 1, "b": 3}) == '{"a":1,"b":3}'

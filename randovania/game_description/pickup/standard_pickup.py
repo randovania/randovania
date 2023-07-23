@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from dataclasses import dataclass
 from typing import Self
@@ -20,6 +22,7 @@ class StandardPickupDefinition(JsonDataclass):
     pickup_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
     broad_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
     model_name: str
+    offworld_models: frozendict[RandovaniaGame, str]
     progression: tuple[str, ...]
     default_shuffled_count: int
     default_starting_count: int

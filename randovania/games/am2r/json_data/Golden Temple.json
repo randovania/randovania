@@ -78,7 +78,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "GTVisited",
+                                            "name": "A1Visited",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -87,7 +87,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Guardian",
+                                            "name": "BossGuardian",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -104,7 +104,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "Guardian",
+                                            "name": "BossGuardian",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -401,7 +401,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "events",
-                                                        "name": "GTVisited",
+                                                        "name": "A1Visited",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -425,7 +425,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "Damage",
-                                                                    "amount": 199,
+                                                                    "amount": 130,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -489,7 +489,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Guardian",
+                    "event_name": "BossGuardian",
                     "connections": {
                         "Dock to Needler Shaft": {
                             "type": "and",
@@ -2035,7 +2035,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "GTVisited",
+                    "event_name": "A1Visited",
                     "connections": {
                         "Dock to Gawron Tunnel": {
                             "type": "and",
@@ -2118,6 +2118,41 @@
                     "event_name": "Alpha2",
                     "connections": {
                         "Dock to Golden Temple Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 510.12,
+                        "y": 143.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_351"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 351,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3329,6 +3364,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
                                     }
                                 ]
                             }
@@ -3712,7 +3751,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "GT3Orb",
+                                            "name": "A1Orb3",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -3899,7 +3938,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "GT3Orb",
+                    "event_name": "A1Orb3",
                     "connections": {
                         "Dock to Golden Temple Exterior": {
                             "type": "and",
@@ -4122,10 +4161,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Middle": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw Attack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4152,7 +4210,7 @@
                         "area": "Parkour Course",
                         "node": "Door to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "Golden Temple EMP Activated Door",
+                    "default_dock_weakness": "Golden Temple EMP Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4223,7 +4281,7 @@
                             }
                         },
                         "Dock to Inner Temple Pipe": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -4234,6 +4292,15 @@
                                             "name": "Screw Attack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "ScrewBlocks",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -4260,7 +4327,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "EMP",
+                                            "name": "A5EMPActivated",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4305,7 +4372,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "GTEMP",
+                    "event_name": "EMPA1",
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -4415,7 +4482,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "GT1Orb",
+                                            "name": "A1Orb1",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4515,7 +4582,7 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "GT1Orb",
+                    "event_name": "A1Orb1",
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -4926,7 +4993,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Spider requires another power bomb, or a way to spider at the top",
+                                                                    "comment": "Spider requires 2 power bombs, or a way to spider at the top",
                                                                     "items": [
                                                                         {
                                                                             "type": "or",
@@ -4934,8 +5001,13 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Use Power Bombs"
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Power Bombs",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
                                                                                     },
                                                                                     {
                                                                                         "type": "template",
@@ -5428,10 +5500,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "keep_name_when_vanilla": false,
-                        "editable": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -5545,15 +5614,6 @@
                                         "data": {
                                             "comment": "Necessary to get out of mini-hole in case one failed",
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -5988,6 +6048,41 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1362.93,
+                        "y": 195.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_352"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 352,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -6061,6 +6156,41 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 143.81,
+                        "y": 164.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_353"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 353,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -6129,6 +6259,41 @@
                     "event_name": "Alpha4",
                     "connections": {
                         "Dock to Breeding Grounds Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Alpha)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Alpha)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 523.6,
+                        "y": 148.99,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_name": "oItemDNA_354"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 354,
+                    "location_category": "minor",
+                    "connections": {
+                        "Event - Alpha": {
                             "type": "and",
                             "data": {
                                 "comment": null,

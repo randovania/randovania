@@ -1,13 +1,18 @@
-import math
-import uuid
+from __future__ import annotations
 
-from PySide6 import QtWidgets, QtGui
+import math
+from typing import TYPE_CHECKING
+
+from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
-from randovania.games.game import RandovaniaGame
-from randovania.interface_common.options import Options
-from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.versioned_preset import VersionedPreset
+if TYPE_CHECKING:
+    import uuid
+
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.options import Options
+    from randovania.interface_common.preset_manager import PresetManager
+    from randovania.layout.versioned_preset import VersionedPreset
 
 
 class PresetTreeWidget(QtWidgets.QTreeWidget):

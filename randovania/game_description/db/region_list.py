@@ -1,23 +1,27 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 import typing
-from typing import Iterator, Iterable
 
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockWeakness, DockWeaknessDatabase
-from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import Node, NodeContext, NodeIndex
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.node_provider import NodeProvider
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
-from randovania.game_description.db.region import Region
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.dock import DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.dock_node import DockNode
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
 
 NodeType = typing.TypeVar("NodeType", bound=Node)
 
@@ -115,8 +119,10 @@ class RegionList(NodeProvider):
                 for node in area.nodes:
                     yield region, area, node
 
-    def region_name_from_area(self, area: Area, distinguish_dark_aether: bool = False) -> str:
-        region = self.region_with_area(area)
+    def region_name_from_area(self, area: Area, distinguish_dark_aether: bool = False,
+                              region: Region | None = None) -> str:
+        if region is None:
+            region = self.region_with_area(area)
 
         if distinguish_dark_aether:
             return region.correct_name(area.in_dark_aether)
@@ -124,13 +130,11 @@ class RegionList(NodeProvider):
             return region.name
 
     def region_name_from_node(self, node: Node, distinguish_dark_aether: bool = False) -> str:
-        return self.region_name_from_area(self.nodes_to_area(node), distinguish_dark_aether)
+        region = self.nodes_to_region(node)
+        return self.region_name_from_area(self.nodes_to_area(node), distinguish_dark_aether, region)
 
     def area_name(self, area: Area, separator: str = " - ", distinguish_dark_aether: bool = True) -> str:
-        return "{}{}{}".format(
-            self.region_name_from_area(area, distinguish_dark_aether),
-            separator,
-            area.name)
+        return f"{self.region_name_from_area(area, distinguish_dark_aether)}{separator}{area.name}"
 
     def node_name(self, node: Node, with_region=False, distinguish_dark_aether: bool = False) -> str:
         prefix = f"{self.region_name_from_node(node, distinguish_dark_aether)}/" if with_region else ""
@@ -147,22 +151,6 @@ class RegionList(NodeProvider):
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Node:
         return patches.get_dock_connection_for(node)
 
-    def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Node | None:
-        connection = patches.get_elevator_connection_for(node)
-        if connection is not None:
-            return self.resolve_teleporter_connection(connection)
-
-    def resolve_teleporter_connection(self, connection: AreaIdentifier) -> Node:
-        area = self.area_by_area_location(connection)
-        if area.default_node is None:
-            raise IndexError(f"Area '{area.name}' does not have a default_node")
-
-        node = area.node_with_name(area.default_node)
-        if node is None:
-            raise IndexError(f"Area '{area.name}' default_node ({area.default_node}) is missing")
-
-        return node
-
     def area_connections_from(self, node: Node) -> Iterator[tuple[Node, Requirement]]:
         """
         Queries all nodes from the same area you can go from a given node.
@@ -170,7 +158,7 @@ class RegionList(NodeProvider):
         :return: Generator of pairs Node + Requirement for going to that node
         """
         if self._patched_node_connections is not None:
-            all_nodes = self.all_nodes
+            all_nodes = self._nodes
             for target_index, requirements in self._patched_node_connections[node.node_index].items():
                 yield all_nodes[target_index], requirements
         else:
@@ -255,9 +243,6 @@ class RegionList(NodeProvider):
     def get_pickup_node(self, identifier: NodeIdentifier):
         return self.typed_node_by_identifier(identifier, PickupNode)
 
-    def get_teleporter_node(self, identifier: NodeIdentifier):
-        return self.typed_node_by_identifier(identifier, TeleporterNode)
-
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
         return self.region_and_area_by_area_identifier(location)[1]
 
@@ -272,16 +257,6 @@ class RegionList(NodeProvider):
     def correct_area_identifier_name(self, identifier: AreaIdentifier) -> str:
         region, area = self.region_and_area_by_area_identifier(identifier)
         return f"{region.correct_name(area.in_dark_aether)} - {area.name}"
-
-    def identifier_for_area(self, area: Area) -> AreaIdentifier:
-        region = self.region_with_area(area)
-        return AreaIdentifier(region_name=region.name, area_name=area.name)
-
-    def node_to_area_location(self, node: Node) -> AreaIdentifier:
-        return AreaIdentifier(
-            region_name=self.nodes_to_region(node).name,
-            area_name=self.nodes_to_area(node).name,
-        )
 
     def node_from_pickup_index(self, index: PickupIndex) -> PickupNode:
         self.ensure_has_node_cache()
@@ -314,8 +289,7 @@ def _calculate_nodes_to_area_region(region: Iterable[Region]):
             for node in area.nodes:
                 if node.node_index in nodes_to_area:
                     raise ValueError(
-                        "Trying to map {} to {}, but already mapped to {}".format(
-                            node, area, nodes_to_area[node.node_index]))
+                        f"Trying to map {node} to {area}, but already mapped to {nodes_to_area[node.node_index]}")
                 nodes_to_area[node.node_index] = area
                 nodes_to_region[node.node_index] = region
 

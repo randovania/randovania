@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import dataclasses
 import typing
 
-from PySide6 import QtCore, QtWidgets, QtGui
+from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 import randovania
@@ -10,21 +12,24 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.game_details.dock_lock_details_tab import DockLockDetailsTab
-from randovania.gui.game_details.game_details_tab import GameDetailsTab
+from randovania.gui.game_details.generation_order_widget import GenerationOrderWidget
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
-from randovania.gui.lib.common_qt_lib import set_default_window_icon, prompt_user_for_output_game_log
-from randovania.gui.lib.window_manager import WindowManager
+from randovania.gui.lib.common_qt_lib import prompt_user_for_output_game_log, set_default_window_icon
 from randovania.gui.widgets.game_validator_widget import GameValidatorWidget
-from randovania.interface_common import simplified_patcher
-from randovania.interface_common.options import Options, InfoAlert
+from randovania.interface_common import generator_frontend
+from randovania.interface_common.options import InfoAlert, Options
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import preset_describer
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
+
+if typing.TYPE_CHECKING:
+    from randovania.gui.game_details.game_details_tab import GameDetailsTab
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.layout.layout_description import LayoutDescription
 
 
 def _unique(iterable):
@@ -145,10 +150,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._trick_usage_popup.open()
 
     async def _show_dialog_for_prime3_layout(self):
-        from randovania.games.prime3.patcher import gollop_corruption_patcher
-        from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
-        from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
         from randovania.game_description import default_database
+        from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
+        from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
+        from randovania.games.prime3.patcher import gollop_corruption_patcher
 
         cosmetic = typing.cast(
             CorruptionCosmeticPatches,
@@ -250,7 +255,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
     # Layout Visualization
 
-    def update_layout_description(self, description: LayoutDescription):
+    def update_layout_description(self, description: LayoutDescription, players: list[str] | None = None):
         self.layout_description = description
         self.layout_info_tab.show()
 
@@ -258,27 +263,31 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.export_log_button.setText("Save Spoiler" if description.has_spoiler
                                        else "Save to file")
 
-        self._player_names = {
-            i: f"Player {i + 1}"
-            for i in range(description.player_count)
-        }
+        numbered_players = [
+            f"Player {i + 1}"
+            for i in range(description.world_count)
+        ]
+        if players is None:
+            players = numbered_players
+        self._player_names = dict(enumerate(players))
+        assert len(self._player_names) == len(players)
 
-        self.export_iso_button.setEnabled(description.player_count == 1 or not randovania.is_frozen())
-        if description.player_count > 1:
+        self.export_iso_button.setEnabled(description.world_count == 1 or not randovania.is_frozen())
+        if description.world_count > 1:
             self.export_iso_button.setToolTip("Multiworld games can only be exported from a game session")
         else:
             self.export_iso_button.setToolTip("")
 
-        self.customize_user_preferences_button.setVisible(description.player_count == 1)
+        self.customize_user_preferences_button.setVisible(description.world_count == 1)
 
         self.player_index_combo.clear()
-        for i in range(description.player_count):
+        for i in range(description.world_count):
             self.player_index_combo.addItem(self._player_names[i], i)
         self.player_index_combo.setCurrentIndex(0)
-        self.player_index_combo.setVisible(description.player_count > 1)
+        self.player_index_combo.setVisible(description.world_count > 1)
 
         if description.has_spoiler:
-            if description.player_count == 1:
+            if description.world_count == 1:
                 if self.validator_widget is not None:
                     self.validator_widget.stop_validator()
 
@@ -286,10 +295,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
                 self.layout_info_tab.addTab(self.validator_widget, "Spoiler: Playthrough")
 
             if not any(preset.configuration.should_hide_generation_log() for preset in description.all_presets):
-                action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
-                for item_order in description.item_order:
-                    action_list_widget.addItem(item_order)
-                self.layout_info_tab.addTab(action_list_widget, "Spoiler: Generation Order")
+                self.layout_info_tab.addTab(
+                    GenerationOrderWidget(None, description, players),
+                    "Spoiler: Generation Order"
+                )
 
         self._update_current_player()
 
@@ -341,7 +350,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)
         result = dialog.exec_()
-        if result == QtWidgets.QDialog.Accepted:
+        if result == QtWidgets.QDialog.DialogCode.Accepted:
             with self._options as options:
                 options.set_options_for_game(game, dataclasses.replace(per_game_options,
                                                                        cosmetic_patches=dialog.cosmetic_patches))
@@ -349,7 +358,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
     def enable_buttons_with_background_tasks(self, value: bool):
         self.stop_background_process_button.setEnabled(not value and self._can_stop_background_process)
         self.export_iso_button.setEnabled(value)
-        simplified_patcher.export_busy = not value
+        generator_frontend.export_busy = not value
 
     def update_progress(self, message: str, percentage: int):
         self.progress_label.setText(message)

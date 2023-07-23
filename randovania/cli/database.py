@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import argparse
 import logging
 import typing
@@ -6,13 +8,19 @@ from pathlib import Path
 from typing import Any
 
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.requirements.array_base import RequirementArrayBase
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
-from randovania.games import default_data, binary_data
+from randovania.games import binary_data, default_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 def _get_sorted_list_of_names(input_list: list[Any], prefix: str = "") -> list[str]:
@@ -82,12 +90,12 @@ def create_convert_database_command(sub_parsers):
 
 def export_videos_command_logic(args):
     from randovania.cli.commands.export_db_videos import export_videos
-    games = list()
+    games = []
 
     if args.game is not None:
         games.append(RandovaniaGame(args.game))
     else:
-        games = [g for g in RandovaniaGame]
+        games = list(RandovaniaGame)
 
     for game in games:
         export_videos(game, args.output_dir)
@@ -172,8 +180,7 @@ def view_area_command(sub_parsers):
 
 
 def update_human_readable_logic(args):
-    from randovania.game_description import pretty_print
-    from randovania.game_description import data_reader
+    from randovania.game_description import data_reader, pretty_print
     game = RandovaniaGame(args.game)
 
     path, data = default_data.read_json_then_binary(game)
@@ -193,8 +200,7 @@ def update_human_readable(sub_parsers):
 
 
 def write_game_descriptions(game_descriptions: dict[RandovaniaGame, GameDescription]):
-    from randovania.game_description import pretty_print
-    from randovania.game_description import data_writer
+    from randovania.game_description import data_writer, pretty_print
 
     for game, gd in game_descriptions.items():
         logging.info("Writing %s", game.long_name)
@@ -310,7 +316,7 @@ def list_paths_with_dangerous_logic(args):
                         if individual.negate:
                             area_had_resource = True
                             if not print_only_area:
-                                print("At {0}, from {1} to {2}:\n{3}\n".format(
+                                print("At {}, from {} to {}:\n{}\n".format(
                                     game.region_list.area_name(area),
                                     area,
                                     source.name,
@@ -374,8 +380,9 @@ def list_paths_with_resource_command(sub_parsers):
 def render_region_graph_logic(args):
     import hashlib
     import re
+
     import graphviz
-    from randovania.game_description.db.teleporter_node import TeleporterNode
+
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.requirements.base import Requirement
@@ -441,18 +448,23 @@ def render_region_graph_logic(args):
         )
         added_edges.add(dock_node.identifier)
 
-    def _add_teleporter(dot: graphviz.Digraph, teleporter_node: TeleporterNode):
+    def _add_teleporter(dot: graphviz.Digraph, teleporter_node: DockNode):
         source_region = gd.region_list.nodes_to_region(teleporter_node)
         source_area = gd.region_list.nodes_to_area(teleporter_node)
-        target_node = gd.region_list.resolve_teleporter_connection(teleporter_node.default_connection)
+        target_node = gd.region_list.node_by_identifier(teleporter_node.default_connection)
         target_region = gd.region_list.nodes_to_region(target_node)
         target_area = gd.region_list.nodes_to_area(target_node)
+        weak_name = _weakness_name(teleporter_node.default_dock_weakness.name)
+        color = vulnerabilities_colors.get(weak_name, _hash_to_color(weak_name))
 
         dot.edge(
             f"{source_region.name}-{source_area.name}",
             f"{target_region.name}-{target_area.name}",
-            "Elevator",
+            weak_name, color=color, fontcolor=color,
         )
+
+    def _cross_region_dock(node: DockNode):
+        return node.default_connection.region_name != node.identifier.region_name
 
     per_game_colors = {
         RandovaniaGame.METROID_PRIME_ECHOES: {
@@ -495,7 +507,8 @@ def render_region_graph_logic(args):
 
         for area in region.areas:
             shape = None
-            if any(isinstance(node, TeleporterNode) for node in area.nodes):
+            if any(isinstance(node, DockNode) and _cross_region_dock(node)
+                   for node in area.nodes):
                 shape = "polygon"
 
             c = (dark_colors if area.in_dark_aether else colors)[region.name]
@@ -521,9 +534,9 @@ def render_region_graph_logic(args):
         print(f"Adding docks for {region.name}")
         for area in region.areas:
             for node in area.nodes:
-                if isinstance(node, DockNode):
+                if isinstance(node, DockNode) and not _cross_region_dock(node):
                     _add_connection(per_region_dot[region.name], node)
-                elif isinstance(node, TeleporterNode) and node.editable and args.include_teleporters:
+                elif isinstance(node, DockNode) and _cross_region_dock(node) and args.include_teleporters:
                     _add_teleporter(per_region_dot[region.name], node)
 
     if single_image:
@@ -564,6 +577,72 @@ def pickups_per_area_command(sub_parsers):
     parser.set_defaults(func=pickups_per_area_command_logic)
 
 
+def _find_uncommented_tricks(requirement: Requirement):
+    from randovania.layout.base.trick_level import LayoutTrickLevel
+    if not isinstance(requirement, RequirementArrayBase):
+        return
+
+    trick_resources = []
+    for it in requirement.items:
+        if isinstance(it, RequirementArrayBase):
+            yield from _find_uncommented_tricks(it)
+        elif isinstance(it, ResourceRequirement) and it.resource.resource_type == ResourceType.TRICK:
+            trick_resources.append(it)
+
+    if requirement.comment is None and trick_resources:
+        yield ", ".join(sorted(
+            f"{req.resource.long_name} ({LayoutTrickLevel.from_number(req.amount).long_name})"
+            for req in trick_resources
+        ))
+
+
+def uncommented_trick_usages_logic(args):
+    gd = load_game_description(args)
+    output_path: Path = args.output_path
+
+    lines = []
+    for region in gd.region_list.regions:
+        lines.append(f"# {region.name}")
+        for area in region.areas:
+
+            paths = {}
+            for source, connections in area.connections.items():
+                paths[source.name] = {}
+                for target, requirement in connections.items():
+                    undocumented = sorted(set(_find_uncommented_tricks(requirement)))
+                    if undocumented:
+                        paths[source.name][target.name] = undocumented
+
+            if paths and any(paths.values()):
+                lines.append(f"## {area.name}")
+                for source_name, connections in paths.items():
+                    if connections:
+                        lines.append(f"### {source_name}")
+                        for target_name, undocumented in connections.items():
+                            if len(undocumented) == 1:
+                                lines.append(f"- [ ] {target_name}: {undocumented[0]}\n")
+                            else:
+                                lines.append(f"#### {target_name}")
+                                for it in undocumented:
+                                    lines.append(f"- [ ] {it}\n")
+
+    output_path.write_text("\n".join(lines))
+
+
+def uncommented_trick_usages_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "uncommented-trick-usages",
+        help="Creates a list of all trick usages that are in uncommented groups.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )
+    parser.add_argument(
+        "output_path",
+        type=Path,
+        help="Where to write the output.",
+    )
+    parser.set_defaults(func=uncommented_trick_usages_logic)
+
+
 def create_subparsers(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "database",
@@ -594,6 +673,7 @@ def create_subparsers(sub_parsers):
     render_regions_graph(sub_parsers)
     pickups_per_area_command(sub_parsers)
     create_export_videos_command(sub_parsers)
+    uncommented_trick_usages_command(sub_parsers)
 
     def check_command(args):
         if args.database_command is None:

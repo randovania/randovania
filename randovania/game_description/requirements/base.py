@@ -3,22 +3,21 @@ from __future__ import annotations
 import typing
 from functools import lru_cache
 
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
-
 if typing.TYPE_CHECKING:
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection
 
 MAX_DAMAGE = 9999999
 
 
 class Requirement:
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
                            database: ResourceDatabase) -> Requirement:
@@ -29,7 +28,7 @@ class Requirement:
         :param damage_multiplier: All damage requirements have their value multiplied by this.
         :param database:
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def simplify(self, *, keep_comments: bool = False) -> Requirement:
         """
@@ -40,10 +39,10 @@ class Requirement:
         - RequirementOr with trivial among the items
         :return:
         """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def as_set(self, database: ResourceDatabase) -> RequirementSet:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     @lru_cache
@@ -63,4 +62,4 @@ class Requirement:
         return str(self) < str(other)
 
     def iterate_resource_requirements(self, database: ResourceDatabase) -> typing.Iterator[ResourceRequirement]:
-        raise NotImplementedError()
+        raise NotImplementedError

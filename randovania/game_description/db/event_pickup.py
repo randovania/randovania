@@ -1,12 +1,17 @@
-import dataclasses
+from __future__ import annotations
 
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
+import dataclasses
+from typing import TYPE_CHECKING
+
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.node import NodeContext, Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True)
@@ -15,7 +20,7 @@ class EventPickupNode(ResourceNode):
     pickup_node: PickupNode
 
     @classmethod
-    def create_from(cls, index: int, event_node: EventNode, next_node: PickupNode) -> "EventPickupNode":
+    def create_from(cls, index: int, event_node: EventNode, next_node: PickupNode) -> EventPickupNode:
         return cls(
             event_node.identifier.renamed(
                 f"EventPickup - {event_node.event.long_name} + {next_node.name}",

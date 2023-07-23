@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import copy
 import dataclasses
 
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.game_description import GameDescription
 
 
 def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> GameDescription:
@@ -19,8 +21,6 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
             connections = {
                 node: copy.copy(connection) for node, connection in area.connections.items()
             }
-            has_default_node = area.default_node is not None
-
             for node in area.nodes:
                 if set(node.layers).isdisjoint(active_layers):
                     nodes.remove(node)
@@ -28,12 +28,8 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
                     for connection in connections.values():
                         connection.pop(node, None)
 
-                    if area.default_node == node.name:
-                        has_default_node = False
-
             areas.append(Area(
                 name=area.name,
-                default_node=area.default_node if has_default_node else None,
                 nodes=nodes,
                 connections=connections,
                 extra=area.extra,

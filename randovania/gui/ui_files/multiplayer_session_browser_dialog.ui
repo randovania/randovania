@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>694</width>
+    <width>780</width>
     <height>455</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <widget class="QMenuBar" name="menu_bar"/>
    </item>
    <item>
-    <widget class="QTableWidget" name="table_widget">
+    <widget class="QTableView" name="table_widget">
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -34,39 +34,9 @@
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>24</number>
      </attribute>
-     <column>
-      <property name="text">
-       <string>Name</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>State</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Players</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Password?</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Creator</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Creation Date</string>
-      </property>
-     </column>
     </widget>
    </item>
    <item>
@@ -75,13 +45,36 @@
       <string>Filters</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="1">
-       <widget class="QCheckBox" name="has_password_yes_check">
+      <item row="2" column="2">
+       <widget class="QCheckBox" name="has_password_no_check">
         <property name="text">
-         <string>Yes</string>
+         <string>No</string>
         </property>
         <property name="checked">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="state_setup_check">
+        <property name="text">
+         <string>Setup</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2" colspan="2">
+       <widget class="QSpinBox" name="filter_age_spin">
+        <property name="suffix">
+         <string> days</string>
+        </property>
+        <property name="maximum">
+         <number>365</number>
+        </property>
+        <property name="value">
+         <number>14</number>
         </property>
        </widget>
       </item>
@@ -89,16 +82,6 @@
        <widget class="QCheckBox" name="state_inprogress_check">
         <property name="text">
          <string>In-Progress</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QCheckBox" name="has_password_no_check">
-        <property name="text">
-         <string>No</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -128,20 +111,17 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
-       <widget class="QCheckBox" name="state_finished_check">
+      <item row="4" column="0">
+       <widget class="QLabel" name="filter_age_label">
         <property name="text">
-         <string>Finished</string>
+         <string>Age:</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QCheckBox" name="state_setup_check">
+      <item row="2" column="0">
+       <widget class="QLabel" name="has_password_label">
         <property name="text">
-         <string>Setup</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
+         <string>Has Password?</string>
         </property>
        </widget>
       </item>
@@ -158,20 +138,6 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="has_password_label">
-        <property name="text">
-         <string>Has Password?</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="filter_age_label">
-        <property name="text">
-         <string>Age:</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="1">
        <widget class="QCheckBox" name="filter_age_check">
         <property name="text">
@@ -182,16 +148,47 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="2" colspan="2">
-       <widget class="QSpinBox" name="filter_age_spin">
-        <property name="suffix">
-         <string> days</string>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="has_password_yes_check">
+        <property name="text">
+         <string>Yes</string>
         </property>
-        <property name="maximum">
-         <number>365</number>
+        <property name="checked">
+         <bool>true</bool>
         </property>
-        <property name="value">
-         <number>14</number>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QCheckBox" name="state_finished_check">
+        <property name="text">
+         <string>Finished</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="is_member_label">
+        <property name="text">
+         <string>Is Member?</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QCheckBox" name="is_member_yes_check">
+        <property name="text">
+         <string>Yes</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QCheckBox" name="is_member_no_check">
+        <property name="text">
+         <string>No</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

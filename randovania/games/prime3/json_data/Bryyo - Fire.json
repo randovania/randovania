@@ -4660,7 +4660,7 @@
             }
         },
         "Warp Site Alpha": {
-            "default_node": "Teleport to Bryyo Ice - Warp Site Bravo",
+            "default_node": "Teleporter to Bryyo - Ice",
             "extra": {
                 "asset_id": 4474147916478522354
             },
@@ -4737,7 +4737,7 @@
                                 ]
                             }
                         },
-                        "Teleport to Bryyo Ice - Warp Site Bravo": {
+                        "Teleporter to Bryyo - Ice": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -4769,8 +4769,8 @@
                         }
                     }
                 },
-                "Teleport to Bryyo Ice - Warp Site Bravo": {
-                    "node_type": "teleporter",
+                "Teleporter to Bryyo - Ice": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -4782,12 +4782,17 @@
                         "teleporter_instance_id": 1245247
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Bryyo - Ice",
-                        "area": "Warp Site Bravo"
+                        "area": "Warp Site Bravo",
+                        "node": "Teleporter to Bryyo - Fire"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Main Lift": {
                             "type": "resource",

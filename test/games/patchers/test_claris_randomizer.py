@@ -1,17 +1,18 @@
+from __future__ import annotations
+
 import json
 from pathlib import Path
-from typing import Union
-from unittest.mock import patch, MagicMock, call, ANY
+from typing import TYPE_CHECKING
+from unittest.mock import ANY, MagicMock, call, patch
 
 import pytest
-import pytest_mock
 
 from randovania.games.prime2.patcher import claris_randomizer
 from randovania.interface_common import persistence
-from randovania.layout.layout_description import LayoutDescription
 from randovania.patching.patchers.exceptions import ExportFailure
 
-LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 class CustomException(Exception):
@@ -20,8 +21,8 @@ class CustomException(Exception):
         raise CustomException("test exception")
 
 
-@pytest.fixture(name="valid_tmp_game_root")
-def _valid_tmp_game_root(tmp_path):
+@pytest.fixture()
+def valid_tmp_game_root(tmp_path):
     game_root = tmp_path.joinpath("game_root")
     game_root.joinpath("files").mkdir(parents=True)
     game_root.joinpath("sys").mkdir()

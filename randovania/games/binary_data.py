@@ -1,15 +1,31 @@
+from __future__ import annotations
+
 import copy
-from pathlib import Path
-from typing import BinaryIO
+from typing import TYPE_CHECKING, BinaryIO
 
 import construct
-from construct import (Struct, Int32ub, Const, Byte, Float32b, Flag,
-                       Short, PrefixedArray, Switch, VarInt, Float64b, Compressed)
+from construct import (
+    Byte,
+    Compressed,
+    Const,
+    Flag,
+    Float32b,
+    Float64b,
+    Int32ub,
+    PrefixedArray,
+    Short,
+    Struct,
+    Switch,
+    VarInt,
+)
 
 from randovania.game_description import game_migration
 from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.games.game import RandovaniaGame
-from randovania.lib.construct_lib import String, convert_to_raw_python, OptionalValue, ConstructDict, JsonEncodedValue
+from randovania.lib.construct_lib import ConstructDict, JsonEncodedValue, OptionalValue, String, convert_to_raw_python
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 current_format_version = 10
 
@@ -177,7 +193,7 @@ class NodeAdapter(construct.Adapter):
 
 
 ConstructNode = NodeAdapter(Struct(
-    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, teleporter=3, event=4, configurable_node=5,
+    node_type=construct.Enum(Byte, generic=0, dock=1, pickup=2, event=4, configurable_node=5,
                              hint=6, teleporter_network=7),
     data=Switch(
         lambda this: this.node_type,
@@ -199,12 +215,6 @@ ConstructNode = NodeAdapter(Struct(
                 **NodeBaseFields,
                 pickup_index=VarInt,
                 location_category=construct.Enum(Byte, major=0, minor=1),
-            ),
-            "teleporter": Struct(
-                **NodeBaseFields,
-                destination=ConstructAreaIdentifier,
-                keep_name_when_vanilla=Flag,
-                editable=Flag,
             ),
             "event": Struct(
                 **NodeBaseFields,
@@ -262,12 +272,12 @@ ConstructDockWeaknessDatabase = Struct(
         name=String,
         extra=JsonEncodedValue,
         items=ConstructDict(ConstructDockWeakness),
-        dock_rando=Struct(
-            unlocked=OptionalValue(String),
-            locked=OptionalValue(String),
+        dock_rando=OptionalValue(Struct(
+            unlocked=String,
+            locked=String,
             change_from=PrefixedArray(VarInt, String),
             change_to=PrefixedArray(VarInt, String),
-        ),
+        )),
     )),
     default_weakness=Struct(
         type=String,

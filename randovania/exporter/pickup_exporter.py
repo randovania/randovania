@@ -1,17 +1,29 @@
+from __future__ import annotations
+
 import dataclasses
-from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names
-from randovania.game_description.assignment import PickupTarget
+from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.pickup_entry import (PickupEntry, ConditionalResources, PickupModel,
-                                                                ResourceConversion)
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import ResourceGainTuple
-from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
+from randovania.game_description.resources.pickup_entry import (
+    ConditionalResources,
+    PickupEntry,
+    PickupModel,
+    ResourceConversion,
+)
+from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
+
+if TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.assignment import PickupTarget
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_info import ResourceGainTuple
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalResources]:
@@ -137,11 +149,15 @@ class ExportedPickupDetails:
     conditional_resources: list[ConditionalResources]
     conversion: list[ResourceConversion]
     model: PickupModel
+    original_model: PickupModel
     other_player: bool
     original_pickup: PickupEntry
 
 
 class PickupExporter:
+    def __init__(self, game: RandovaniaGame) -> None:
+        self.game = game
+
     def create_details(self,
                        original_index: PickupIndex,
                        pickup_target: PickupTarget,
@@ -150,7 +166,7 @@ class PickupExporter:
                        name: str,
                        description: str,
                        model: PickupModel) -> ExportedPickupDetails:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def export(self,
                original_index: PickupIndex,
@@ -172,8 +188,9 @@ class PickupExporter:
 
 
 class PickupExporterSolo(PickupExporter):
-    def __init__(self, memo_data: dict[str, str]):
+    def __init__(self, memo_data: dict[str, str], game: RandovaniaGame):
         self.memo_data = memo_data
+        super().__init__(game)
 
     def create_details(self,
                        original_index: PickupIndex,
@@ -192,6 +209,7 @@ class PickupExporterSolo(PickupExporter):
             conditional_resources=_conditional_resources_for_pickup(pickup),
             conversion=list(pickup.convert_resources),
             model=model,
+            original_model=model,
             other_player=False,
             original_pickup=pickup,
         )
@@ -201,6 +219,7 @@ class PickupExporterMulti(PickupExporter):
     def __init__(self, solo_creator: PickupExporter, players_config: PlayersConfiguration):
         self.solo_creator = solo_creator
         self.players_config = players_config
+        super().__init__(self.solo_creator.game)
 
     def create_details(self,
                        original_index: PickupIndex,
@@ -217,6 +236,16 @@ class PickupExporterMulti(PickupExporter):
         else:
             other_name = self.players_config.player_names[pickup_target.player]
 
+            model_pickup = pickup_target.pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
+            offworld_model = PickupModel(
+                model.game,
+                model_pickup.offworld_models.get(
+                    self.game,
+                    default_database.pickup_database_for_game(self.game).default_offworld_model
+                )
+            )
+
+            is_different_game = self.game != model.game
             return ExportedPickupDetails(
                 index=original_index,
                 name=f"{other_name}'s {name}",
@@ -225,10 +254,11 @@ class PickupExporterMulti(PickupExporter):
                 conditional_resources=[ConditionalResources(
                     name=None,
                     item=None,
-                    resources=tuple(),
+                    resources=(),
                 )],
                 conversion=[],
-                model=model,
+                model=offworld_model if is_different_game else model,
+                original_model=model,
                 other_player=True,
                 original_pickup=pickup_target.pickup,
             )
@@ -244,7 +274,7 @@ def _get_visual_model(original_index: int,
     elif data_source == PickupModelDataSource.RANDOM:
         return pickup_list[original_index % len(pickup_list)].pickup
     elif data_source == PickupModelDataSource.LOCATION:
-        raise NotImplementedError()
+        raise NotImplementedError
     else:
         raise ValueError(f"Unknown data_source: {data_source}")
 
@@ -298,8 +328,8 @@ class GenericAcquiredMemo(dict):
         return f"{key} acquired!"
 
 
-def create_pickup_exporter(memo_data: dict, players_config: PlayersConfiguration):
-    exporter = PickupExporterSolo(memo_data)
+def create_pickup_exporter(memo_data: dict, players_config: PlayersConfiguration, game: RandovaniaGame):
+    exporter = PickupExporterSolo(memo_data, game)
     if players_config.is_multiworld:
         exporter = PickupExporterMulti(exporter, players_config)
     return exporter

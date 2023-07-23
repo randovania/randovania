@@ -1,11 +1,17 @@
+from __future__ import annotations
+
 import dataclasses
-from typing import Iterator
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, call
 
 import pytest
 
 from randovania.bitpacking import bitpacking
-from randovania.bitpacking.bitpacking import BitPackDecoder
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.bitpacking.bitpacking import BitPackDecoder
 
 
 @pytest.mark.parametrize("value", [
@@ -43,8 +49,8 @@ def test_encode_int_with_limits_round_trip(value: int,
         (50, (10, 100, 500), [(10, 11), (40, 91)]),
         (500, (10, 100, 500), [(10, 11), (90, 91), (400, 401)]),
     ],
-    name="limits_fixture")
-def _limits_fixture(request):
+)
+def limits_fixture(request):
     return request.param[0], request.param[1], request.param[2]
 
 
@@ -76,7 +82,7 @@ def test_decode_int_with_limits(limits_fixture):
     assert result == value
 
 
-@pytest.mark.parametrize(["value", "limits", "expected"], [
+@pytest.mark.parametrize(("value", "limits", "expected"), [
     (0, (1, 4), "u1"),
     (1, (1, 4), "u1u2"),
     (2, (1, 4), "u1u2"),
@@ -96,8 +102,8 @@ def test_encode_int_with_limits_bitstring(value, limits, expected):
         (False, (0, 2)),
         (True, (1, 2)),
     ],
-    name="bool_fixture")
-def _bool_fixture(request):
+)
+def bool_fixture(request):
     return request.param[0], request.param[1]
 
 
@@ -126,7 +132,7 @@ def test_decode_bool(bool_fixture):
     assert result == value
 
 
-@pytest.mark.parametrize(["value", "metadata"], [
+@pytest.mark.parametrize(("value", "metadata"), [
     (0.0, {"min": 0.0, "max": 1.0, "precision": 1}),
     (0.0, {"min": -1.0, "max": 1.0, "precision": 1}),
     (-0.5, {"min": -1.0, "max": 1.0, "precision": 1}),
@@ -138,7 +144,7 @@ def test_round_trip_float(value: float, metadata: dict):
     assert result == value
 
 
-@pytest.mark.parametrize(["elements", "array"], [
+@pytest.mark.parametrize(("elements", "array"), [
     ([], [10, 20]),
     ([10], [10, 20]),
     ([10, 20], [10, 20]),
@@ -157,7 +163,7 @@ def test_sorted_array_elements_round_trip(elements, array):
     assert elements == decoded_elements
 
 
-@pytest.mark.parametrize(["elements", "array", "expected_size"], [
+@pytest.mark.parametrize(("elements", "array", "expected_size"), [
     ([], [], 0),
     ([], range(100), 8),
     ([90], range(100), 18),
@@ -177,7 +183,7 @@ def test_sorted_array_elements_size(elements, array, expected_size):
 
 
 def test_pack_array_element_missing():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="5 is not in list"):
         list(bitpacking.pack_array_element(5, [10, 25]))
 
 
@@ -185,7 +191,7 @@ def test_pack_array_element_single():
     assert len(list(bitpacking.pack_array_element("x", ["x"]))) == 0
 
 
-@pytest.mark.parametrize(["element", "array"], [
+@pytest.mark.parametrize(("element", "array"), [
     (10, [10, 20]),
     ("x", [10, "x", 20]),
     ("x", ["x"]),
@@ -226,12 +232,12 @@ class DataclassForTest(bitpacking.BitPackDataclass):
     uses_reference: BitPackValueUsingReference
 
 
-@pytest.mark.parametrize(["data_value", "data_reference"], [
+@pytest.mark.parametrize(("data_value", "data_reference"), [
     (5, 5),
     (20, 5),
     (50, 5),
 ])
-@pytest.mark.parametrize(["int_v", "int_reference"], [
+@pytest.mark.parametrize(("int_v", "int_reference"), [
     (15, 5),
     (12, None),
     (None, 20),
@@ -244,7 +250,7 @@ def test_round_trip_dataclass_for_test(int_v, data_value, int_reference, data_re
     assert result == data
 
 
-@pytest.mark.parametrize(["int_v", "int_reference", "data_value", "data_reference", "expected"], [
+@pytest.mark.parametrize(("int_v", "int_reference", "data_value", "data_reference", "expected"), [
     (None, 1, 5, 5, b"\x00"),
     (2, None, 5, 5, b"\xc8"),
     (None, None, 5, 5, b"\x00"),

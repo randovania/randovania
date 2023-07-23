@@ -1,22 +1,42 @@
 from __future__ import annotations
 
 import copy
-import io
 import json
+from typing import TYPE_CHECKING
 from uuid import UUID
-from pathlib import Path
 
 import aiofiles
+import construct
 import slugify
 
 from randovania.games.game import RandovaniaGame
 from randovania.layout import preset_migration
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib
+from randovania.lib.construct_lib import JsonEncodedValue
+
+if TYPE_CHECKING:
+    import io
+    from pathlib import Path
+
+BinaryVersionedPreset = construct.Struct(
+    magic=construct.Const(b"RDVP"),
+    version=construct.Const(1, construct.VarInt),
+    data=construct.Prefixed(
+        construct.VarInt,
+        construct.Compressed(JsonEncodedValue, "zlib")
+    ),
+)
 
 
 class InvalidPreset(Exception):
     def __init__(self, original_exception: Exception):
+        if isinstance(original_exception, KeyError):
+            msg = f"Missing key {original_exception}"
+        else:
+            msg = original_exception
+
+        super().__init__(msg)
         self.original_exception = original_exception
 
 
@@ -99,6 +119,11 @@ class VersionedPreset:
         return cls(json.loads(contents))
 
     @classmethod
+    def from_bytes(cls, contents: bytes) -> VersionedPreset:
+        decoded = BinaryVersionedPreset.parse(contents)
+        return cls(decoded["data"])
+
+    @classmethod
     async def from_file(cls, path: Path) -> VersionedPreset:
         async with aiofiles.open(path) as f:
             return cls.from_str(await f.read())
@@ -108,7 +133,7 @@ class VersionedPreset:
         return VersionedPreset(json_lib.read_path(path))
 
     @classmethod
-    def with_preset(cls, preset: Preset) -> "VersionedPreset":
+    def with_preset(cls, preset: Preset) -> VersionedPreset:
         result = VersionedPreset(None)
         result._preset = preset
         return result
@@ -135,6 +160,11 @@ class VersionedPreset:
         else:
             assert self.data is not None
             return self.data
+
+    def as_bytes(self) -> bytes:
+        return BinaryVersionedPreset.build({
+            "data": self.as_json,
+        })
 
     def recover_old_base_uuid(self) -> UUID | None:
         """Returns the base preset uuid that existed in old versions.

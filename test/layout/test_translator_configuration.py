@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from randovania.bitpacking import bitpacking
@@ -14,8 +16,8 @@ from randovania.games.prime2.layout.translator_configuration import TranslatorCo
             'Temple Grounds/Temple Assembly Site/Translator Gate': "random"
         }}},
     ],
-    name="translator_data")
-def _translator_data(request):
+)
+def translator_data(request):
     return request.param["encoded"], request.param["bit_count"], TranslatorConfiguration.from_json(
         request.param["json"])
 

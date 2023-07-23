@@ -1,9 +1,14 @@
-from unittest.mock import AsyncMock
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 import pytest
 from PySide6 import QtWidgets
 
 from randovania.gui.lib import file_prompts
+
+if TYPE_CHECKING:
+    from unittest.mock import AsyncMock
 
 
 @pytest.mark.parametrize("found", [False, True])

@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 class Determiner:
     s: str
     supports_title: bool

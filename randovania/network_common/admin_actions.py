@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 
 
@@ -27,4 +29,5 @@ class SessionAdminUserAction(Enum):
     CLAIM = "claim"
     UNCLAIM = "unclaim"
     SWITCH_ADMIN = "switch_admin"
+    SWITCH_READY = "switch_ready"
     ABANDON = "abandon"

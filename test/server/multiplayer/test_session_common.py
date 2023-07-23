@@ -1,18 +1,21 @@
-import datetime
+from __future__ import annotations
+
 import datetime
 import uuid
-from unittest.mock import MagicMock, call
+from typing import TYPE_CHECKING
+from unittest.mock import MagicMock
 
 import pytest
-from pytest_mock import MockerFixture
 
 from randovania.bitpacking import construct_pack
 from randovania.network_common import multiplayer_session
-from randovania.network_common.multiplayer_session import MultiplayerSessionAuditLog, \
-    MultiplayerSessionAuditEntry
+from randovania.network_common.multiplayer_session import MultiplayerSessionAuditEntry, MultiplayerSessionAuditLog
 from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.server import database
 from randovania.server.multiplayer import session_common
+
+if TYPE_CHECKING:
+    from pytest_mock import MockerFixture
 
 
 def test_emit_session_meta_update(session_update, flask_app, mocker, default_game_list):
@@ -27,12 +30,14 @@ def test_emit_session_meta_update(session_update, flask_app, mocker, default_gam
                 "id": 1234,
                 "name": "The Name",
                 "admin": True,
+                "ready": False,
                 'worlds': {},
             },
             {
                 "id": 1235,
                 "name": "Other",
                 "admin": False,
+                "ready": True,
                 'worlds': {},
             },
         ],
@@ -76,7 +81,7 @@ def test_emit_session_actions_update(session_update, flask_app, mocker):
             receiver=uuid.UUID('d0f7ed70-66b0-413c-bc13-f9f7fb018726'),
             pickup="The Pickup",
             location=0,
-            time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc),
+            time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
         )]
     )
 
@@ -97,17 +102,17 @@ def test_emit_session_audit_update(session_update, flask_app, mocker):
     mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
 
     database.MultiplayerAuditEntry.create(session=session_update, user=1234, message="Did something",
-                                          time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc))
+                                          time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC))
     database.MultiplayerAuditEntry.create(session=session_update, user=1235, message="Did something else",
-                                          time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.timezone.utc))
+                                          time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.UTC))
 
     audit_log = MultiplayerSessionAuditLog(
         session_id=session_update.id,
         entries=[
             MultiplayerSessionAuditEntry(user="The Name", message="Did something",
-                                         time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.timezone.utc)),
+                                         time=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC)),
             MultiplayerSessionAuditEntry(user="Other", message="Did something else",
-                                         time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.timezone.utc)),
+                                         time=datetime.datetime(2020, 5, 3, 10, 20, tzinfo=datetime.UTC)),
         ]
     )
 
@@ -130,11 +135,11 @@ def test_join_room(mocker: MockerFixture):
     multi_session.id = 1234
 
     session = {}
-    sio = MagicMock()
-    sio.session.return_value.__enter__.return_value = session
+    sa = MagicMock()
+    sa.session.return_value.__enter__.return_value = session
 
     # Run
-    session_common.join_room(sio, multi_session)
+    session_common.join_room(sa, multi_session)
 
     # Assert
     mock_join_room.assert_called_once_with("multiplayer-session-1234")
@@ -151,14 +156,14 @@ def test_leave_room(mocker: MockerFixture, had_session):
     multi_session = MagicMock()
     multi_session.id = 7890
 
-    sio = MagicMock()
+    sa = MagicMock()
 
     session = {"multiplayer_sessions": [7890] if had_session else []}
-    sio.session = MagicMock()
-    sio.session.return_value.__enter__.return_value = session
+    sa.session = MagicMock()
+    sa.session.return_value.__enter__.return_value = session
 
     # Run
-    session_common.leave_room(sio, multi_session.id)
+    session_common.leave_room(sa, multi_session.id)
 
     # Assert
     mock_leave_room.assert_called_once_with("multiplayer-session-7890")
@@ -174,12 +179,12 @@ def test_leave_all_rooms(mocker: MockerFixture, had_session):
         session = {"multiplayer_sessions": [5678]}
     else:
         session = {}
-    sio = MagicMock()
-    sio.session = MagicMock()
-    sio.session.return_value.__enter__.return_value = session
+    sa = MagicMock()
+    sa.session = MagicMock()
+    sa.session.return_value.__enter__.return_value = session
 
     # Run
-    session_common.leave_all_rooms(sio)
+    session_common.leave_all_rooms(sa)
 
     # Assert
     if had_session:

@@ -1,15 +1,19 @@
 from __future__ import annotations
 
 import dataclasses
+import functools
 from math import ceil
+from typing import TYPE_CHECKING
 
-from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -19,7 +23,7 @@ class ResourceRequirement(Requirement):
     negate: bool
 
     def __post_init__(self):
-        assert False, "No ResourceRequirement should be directly created"
+        assert TypeError("No ResourceRequirement should be directly created")
 
     @classmethod
     def create(cls, resource: ResourceInfo, amount: int, negate: bool) -> ResourceRequirement:
@@ -32,6 +36,7 @@ class ResourceRequirement(Requirement):
         return PositiveResourceRequirement(resource, amount, negate)
 
     @classmethod
+    @functools.cache
     def simple(cls, simple: ResourceInfo) -> ResourceRequirement:
         return cls.create(simple, 1, False)
 
@@ -53,11 +58,14 @@ class ResourceRequirement(Requirement):
         return False
 
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
-        return 0
+        if self.satisfied(current_resources, MAX_DAMAGE, database):
+            return 0
+        else:
+            return MAX_DAMAGE
 
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         """Checks if a given resource collection satisfies this requirement"""
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
         return self

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 import typing
 
@@ -148,7 +150,7 @@ def _migrate_v6(json_dict: dict) -> dict:
         for area_name, identify_game in area_name_heuristic.items():
             if area_name in game["locations"]:
                 if identify_game == "prime1":
-                    game["locations"]["Frigate Orpheon"] = dict()
+                    game["locations"]["Frigate Orpheon"] = {}
                     game["teleporters"][
                         "Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"
                     ] = "Tallon Overworld/Landing Site"
@@ -326,6 +328,60 @@ def _migrate_v17(json_dict: dict) -> dict:
     return json_dict
 
 
+def _migrate_v18(data: dict) -> dict:
+    for game in data["game_modifications"]:
+        game_name = game["game"]
+        if game_name in {"prime1", "prime2"}:
+            default_node_per_area = migration_data.get_raw_data(RandovaniaGame(game_name))["default_node_per_area"]
+            # remove teleporters and add to dock_connections
+            for source, target in game["teleporters"].items():
+                target_node = default_node_per_area[target]
+                game["teleporters"][source] = f"{target}/{target_node}"
+
+            game["dock_connections"].update(game.pop("teleporters"))
+        else:
+            game.pop("teleporters")
+
+    return data
+
+
+def _migrate_v19(data: dict) -> dict:
+    game_mod = data["game_modifications"]
+    for game in game_mod:
+        game_name = game["game"]
+        if game_name in {"prime1", "prime2", "prime3"}:
+            mapping = migration_data.get_raw_data(RandovaniaGame(game_name))["rename_teleporter_nodes"]
+
+            # starting location migration
+            old_location = game["starting_location"]
+            world_name, area_name, node_name = old_location.split("/", 2)
+            new_node_name = mapping.get(old_location, None)
+            if new_node_name is not None:
+                 game["starting_location"] = f'{world_name}/{area_name}/{new_node_name}'
+
+            dock_connections = game["dock_connections"]
+            dock_copy = dict(dock_connections.items())
+            for id_from, id_to in dock_copy.items():
+                world_name, area_name, node_name = id_from.split("/", 2)
+                new_node_name_from = mapping.get(id_from, node_name)
+                new_identifier_from = f'{world_name}/{area_name}/{new_node_name_from}'
+                dock_connections[new_identifier_from] = dock_connections.pop(id_from)
+
+                world_name, area_name, node_name = id_to.split("/", 2)
+                new_node_name_to = mapping.get(id_to, node_name)
+                new_identifier_to = f'{world_name}/{area_name}/{new_node_name_to}'
+                dock_connections[new_identifier_from] = new_identifier_to
+
+            if game_name in {"prime1", "prime2"}:
+                mapping = migration_data.get_raw_data(RandovaniaGame(game_name))["dock_connection_fixes"]
+                dock_connections = game["dock_connections"]
+            for id_from, id_to in dock_connections.items():
+                new_target = mapping.get(id_to, id_to)
+                dock_connections[id_from] = new_target
+
+    return data
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -344,6 +400,8 @@ _MIGRATIONS = [
     _migrate_v15,
     _migrate_v16,
     _migrate_v17,
+    _migrate_v18,
+    _migrate_v19,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -1,20 +1,20 @@
 from __future__ import annotations
 
+import json
 import typing
 from dataclasses import dataclass
 from enum import Enum
 from functools import cached_property
-from pathlib import Path
-from random import Random
-from typing import Callable, Iterable
 
 import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+    from pathlib import Path
+
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import BasePatchDataFactory
-    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
@@ -49,7 +49,7 @@ class GameLayout:
     """Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
     get_ingame_hash: Callable[[bytes], str | None] = _get_none
-    """(Optional) Takes a layout hash bytes and produces a string representing how the game 
+    """(Optional) Takes a layout hash bytes and produces a string representing how the game
     will represent the hash in-game. Only override if the game cannot display arbitrary text on the title screen."""
 
 
@@ -71,14 +71,14 @@ class GameGui:
     """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long
     names replaced by the progressive item."""
 
-    spoiler_visualizer: tuple[type[GameDetailsTab], ...] = tuple()
+    spoiler_visualizer: tuple[type[GameDetailsTab], ...] = ()
     """Tuple of specializations of GameDetailsTab for providing extra details when visualizing a LayoutDescription."""
 
 
 @dataclass(frozen=True)
 class GameGenerator:
-    item_pool_creator: Callable[[PoolResults, BaseConfiguration, GameDescription, GamePatches, Random], None]
-    """Extends the base item pools with any specific item pools such as Artifacts."""
+    pickup_pool_creator: Callable[[PoolResults, BaseConfiguration, GameDescription], None]
+    """Extends the base pickup pools with any specific item pools such as Artifacts."""
 
     bootstrap: Bootstrap
     """Modifies the resource database and starting resources before generation."""
@@ -153,7 +153,9 @@ class GameData:
     multiple_start_nodes_per_area: bool = False
     """If this game allows multiple start nodes per area."""
 
+
 class RandovaniaGame(BitPackEnum, Enum):
+    BLANK = "blank"
     METROID_PRIME = "prime1"
     METROID_PRIME_ECHOES = "prime2"
     METROID_PRIME_CORRUPTION = "prime3"
@@ -162,7 +164,6 @@ class RandovaniaGame(BitPackEnum, Enum):
     METROID_SAMUS_RETURNS = "samus_returns"
     CAVE_STORY = "cave_story"
     AM2R = "am2r"
-    BLANK = "blank"
 
     @property
     def data(self) -> GameData:
@@ -191,6 +192,14 @@ class RandovaniaGame(BitPackEnum, Enum):
     @property
     def data_path(self) -> Path:
         return randovania.get_file_path().joinpath("games", self.value)
+
+    @cached_property
+    def hash_words(self) -> list[str] | None:
+        hash_file = self.data_path.joinpath("assets", "hash_words.json")
+        if hash_file.exists():
+            with hash_file.open() as words:
+                return json.load(words)
+        return None
 
     @property
     def short_name(self) -> str:

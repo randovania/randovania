@@ -1,33 +1,34 @@
-import asyncio
+from __future__ import annotations
+
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 
+from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.main_online_interaction import OnlineInteractions
 from randovania.interface_common.options import Options
-from randovania.network_client.network_client import ConnectionState
 
 
-@pytest.fixture(name="default_online_interactions")
-def _default_online_interactions(skip_qtbot, preset_manager) -> OnlineInteractions:
+@pytest.fixture()
+def default_online_interactions(skip_qtbot, preset_manager) -> OnlineInteractions:
     main_window = MagicMock()
     parent = QtWidgets.QWidget()
+    network_client = MagicMock(QtNetworkClient, autospec=True)
     skip_qtbot.add_widget(parent)
 
-    return OnlineInteractions(parent, preset_manager, MagicMock(), main_window, Options(MagicMock()))
+    return OnlineInteractions(parent, preset_manager, network_client, main_window, Options(MagicMock()))
 
 
 @pytest.mark.parametrize("refresh_success", [False, True])
 async def test_browse_for_game_session(skip_qtbot, default_online_interactions, mocker, refresh_success):
     # Setup
     mock_game_session_browser: MagicMock = mocker.patch(
-        "randovania.gui.main_online_interaction.OnlineGameListDialog", autospec=True)
-    mock_create_and_update: AsyncMock = mocker.patch(
-        "randovania.gui.main_online_interaction.MultiplayerSessionWindow.create_and_update", new_callable=AsyncMock)
-    mock_create_and_update.return_value = MagicMock()
-    mock_get_game_connection = mocker.patch("randovania.gui.lib.common_qt_lib.get_game_connection", autospec=True)
+        "randovania.gui.main_online_interaction.MultiplayerSessionBrowserDialog", autospec=True)
+    mock_ensure_session_window = AsyncMock(return_value=MagicMock())
+    default_online_interactions.window_manager.ensure_multiplayer_session_window = mock_ensure_session_window
+
     default_online_interactions._ensure_logged_in = AsyncMock(return_value=True)
     message_box = mocker.patch("PySide6.QtWidgets.QMessageBox")
 
@@ -45,27 +46,24 @@ async def test_browse_for_game_session(skip_qtbot, default_online_interactions, 
     message_box.assert_called_once()
     if refresh_success:
         mock_execute_dialog.assert_awaited_once_with(mock_game_session_browser.return_value)
-        mock_create_and_update.assert_awaited_once_with(
+        mock_ensure_session_window.assert_awaited_once_with(
             default_online_interactions.network_client,
-            mock_game_session_browser.return_value.joined_session,
-            default_online_interactions.window_manager,
+            mock_game_session_browser.return_value.joined_session.id,
             default_online_interactions.options,
         )
-        mock_create_and_update.return_value.show.assert_called_once_with()
     else:
         mock_execute_dialog.assert_not_awaited()
-        mock_create_and_update.assert_not_awaited()
+        mock_ensure_session_window.assert_not_awaited()
 
 
 @patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
 async def test_host_game_session(mock_execute_dialog: AsyncMock,
                                  skip_qtbot, default_online_interactions, mocker):
     # Setup
-    mock_create_and_update: AsyncMock = mocker.patch(
-        "randovania.gui.main_online_interaction.MultiplayerSessionWindow.create_and_update", new_callable=AsyncMock)
-    mock_create_and_update.return_value = MagicMock()
+    mock_ensure_session_window = AsyncMock(return_value=MagicMock())
+    default_online_interactions.window_manager.ensure_multiplayer_session_window = mock_ensure_session_window
     default_online_interactions._ensure_logged_in = AsyncMock(return_value=True)
-    mock_execute_dialog.return_value = QDialog.Accepted
+    mock_execute_dialog.return_value = QDialog.DialogCode.Accepted
     default_online_interactions.network_client.create_new_session = AsyncMock()
 
     # Run
@@ -74,31 +72,9 @@ async def test_host_game_session(mock_execute_dialog: AsyncMock,
     # Assert
     mock_execute_dialog.assert_awaited_once()
     default_online_interactions.network_client.create_new_session.assert_awaited_once_with("")
-    mock_create_and_update.assert_awaited_once_with(
+    mock_ensure_session_window.assert_awaited_once_with(
         default_online_interactions.network_client,
-        default_online_interactions.network_client.create_new_session.return_value,
-        default_online_interactions.window_manager,
+        default_online_interactions.network_client.create_new_session.return_value.id,
         default_online_interactions.options,
     )
-    mock_create_and_update.return_value.show.assert_called_once_with()
 
-
-async def test_ensure_logged_in(default_online_interactions, mocker):
-    # Setup
-    mock_message_box = mocker.patch("PySide6.QtWidgets.QMessageBox")
-
-    async def true(): return True
-
-    connect_task = asyncio.create_task(true())
-
-    network_client = default_online_interactions.network_client
-    network_client.connect_to_server.return_value = connect_task
-    network_client.connection_state = ConnectionState.Disconnected
-    network_client.current_user = MagicMock()
-
-    # Run
-    result = await default_online_interactions._ensure_logged_in()
-
-    # Assert
-    mock_message_box.assert_called_once()
-    assert result

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Qt
 
@@ -9,18 +11,18 @@ class Foldable(QtWidgets.QWidget):
     _content_area: QtWidgets.QFrame
     _folded: bool
 
-    def __init__(self, title: str, initially_folded: bool = True, parent: QtWidgets.QWidget = None):
+    def __init__(self, parent: QtWidgets.QWidget | None, title: str = "", initially_folded: bool = True):
         super().__init__(parent)
 
         self._folded = initially_folded
 
         self._toggle_button = QtWidgets.QToolButton(self)
-        self._toggle_button.setStyleSheet("QToolButton { height: 20px; }")
+        self._toggle_button.setStyleSheet("QToolButton { height: 30px; padding: 0px; }")
         font = self._toggle_button.font()
         font.setBold(True)
         font.setPixelSize(13)
         self._toggle_button.setFont(font)
-        self._toggle_button.setMaximumHeight(20)
+        self._toggle_button.setMaximumHeight(30)
         self._toggle_button.setToolButtonStyle(QtCore.Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         self._toggle_button.setArrowType(QtCore.Qt.ArrowType.RightArrow)
         self._toggle_button.setText(title)
@@ -70,3 +72,6 @@ class Foldable(QtWidgets.QWidget):
             self._fold()
         else:
             self._unfold()
+
+    def setTitle(self, title: str):
+        self._toggle_button.setText(title)

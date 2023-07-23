@@ -5,9 +5,88 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [?.?.0] - 2023-06-??
+## [6.X.X] - 2023-08-??
 
-- WIP: New multiworld in progress (TODO: proper message when done)
+- Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
+- Added: The Generation Order spoiler now has a field to filter it.
+- Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
+- Added: It's now possible to filter the history tab in a Multiworld session.
+- Added: Add Ready checkbox for Multiworld sessions.
+- Added: A new tool was added to the Pickup tab of Game Details that lets you quickly find in which worlds your pickups are.
+- Added: The time a world last had any activity is now displayed in the Multiworld session.
+- Changed: The popup when replacing a preset for a Multiworld Session now has the same features as the solo game interface.
+- Changed: Text prompts now default to accepting when pressing enter.
+- Changed: Reorganized the top menu bar. The Advanced menu is now called Preferences, with an Advanced sub-menu. Opening the Login window is now in the Open menu.
+- Fixed: Multiworld now properly respects major/minor configuration of each world.
+- Fixed: The generation order for multiworld session now correctly handles any kind of names.
+- Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
+- Fixed: Import rdvgames for games that uses certain features, like Sky Temple Keys on Bosses or Metroid DNA in Dread, now works properly.
+- Fixed: Session Browser now properly sorts by creation date and user count. It also now properly defaults to showing recent sessions first.
+- Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
+- Fixed: Sorting the session history and audit log now works properly.
+
+### Metroid Dread
+
+- **Major** - Added: Multiworld support for Dread.
+- Changed: Ryujinx (Legacy) is disabled when auto-tracker support is on, or in a multiworld.
+- Fixed: Dairon - Navigation Station North can no longer be assigned a hint, which would then be replaced with DNA Hints.
+- Added: A new auto-tracker layout featuring progressive items.
+- Added: Custom shields now have alternate and more accessible models, which can be toggled per-shield in Cosmetic Options.
+
+#### Logic Database
+
+- Added: 2 videos to the database
+- Added: Slide from right to left in Cataris - Total Recharge Station South.
+- Added: Grapple Movement to get from Lower Door to Wide Beam Block Room to Upper Door in Artaria - EMMI Zone Hub.
+- Added: Crossing the water gap in Ferenia EMMI Zone Exit East with just Bombs (Hypermode IBJ and DBJ) or Cross Bombs and a Slide Bomb Boost (currently Movement Advanced).
+- Added: Use Speed Booster and Gravity Suit to escape Cataris - Kraid Arena after fighting Kraid.
+- Changed: Make it possible to get to the Diffusion Beam location without Morph Ball.
+- Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
+- Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
+- Removed: In Cataris - Green EMMI Introduction, the advanced Pseudo Wave Beam to break the blob from below is removed.
+- Removed: In Ghavoran - Blue EMMI Introduction, the trickless Ballspark to climb the room has been removed.
+
+### Metroid Prime
+
+- Added: Experimental Option - `Skippable` Cutscene Mode. Keeps all cutscenes in the game but makes it so they can be skipped with the START button
+- Added: Introduction of non-critical fixes and improvements to the base game such as fixed sound effects and removed tutorial popups. Those wanting an untainted experience of the vanilla game may still do so at their own risk by activating "Legacy Mode". For technical description of what's changed, see [qol.jsonc](https://github.com/toasterparty/randomprime/blob/randovania/generated/json_data/qol.jsonc)
+- Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
+
+### Metroid Prime 2: Echoes
+
+- Added: Tracker layout "Debug Info", which also shows details useful for investigating errors.
+- Added: The Coin Chest model from multiplayer is now used for offworld items instead of the ETM model.
+- Changed: The Power Beam and the Morph Ball now use the Coin Chest model when shuffled, instead of the ETM model.
+- Added: 4 new joke hints in the pool.
+- Fixed: The gate in Command Center now opens correctly when using the new patcher.
+
+## [6.0.1] - 2023-07-04
+
+- Added: Option for disabling crash reporting and monitoring.
+- Added: In multiworld sessions, you're prevented from selecting a preset that is incompatible with multiworld.
+- Added: In multiworld sessions, world names must now be unique.
+- Changed: The Privacy Policy has been updated to mention crash reporting and monitoring.
+- Changed: Tweaked the error reporting for generating and exporting games.
+- Fixed: Importing permalinks and spoilers in multiworld no longer fails.
+- Fixed: Generation order is no longer hidden when Door Lock is enabled with Types mode.
+- Fixed: Pickups providing negative resources can now be sent in multiworld games.
+- Fixed: The prompt for a session name no longer deletes spaces at the end, making it easier to split words.
+- Fixed: In multiworld sessions, the copy permalink button is properly disabled before a game is available.
+
+## [6.0.0] - 2023-07-03
+
+- **Major** - Multiworld support has been significantly changed! New features include:
+  *  Sessions now have Worlds instead of rows with users, and users can be associated with any number of Worlds.
+     * This means it's now possible to play a Multiworld entirely solo.
+  *  You can connect to one Dolphin and any number of Nintendont at the same time.
+  *  Multiple sessions can be opened at the same time.
+  *  A session window is no longer required to be kept open. As long as Randovania is connected to a game, the server communication works.
 - Added: It's now possible to drag presets directly into the root of the presets.
 - Added: The order you place presets when drag and dropping is now saved.
 - Added: New command line arguments `--local-data` and `--user-data` to allow configuring where Randovania saves its data.
@@ -15,6 +94,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Interface to customize preset description.
 - Added: It's now possible to save rdvgame files for race games. This is not available for multiworld.
 - Added: When editing a Pickup Node, there's now a button to find an unused pickup index.
+- Added: When viewing the spoiler log in a Multiworld session, it will now display the names for each world rather than "Player 1", "Player 2", etc.
+- Changed: Discord login is now performed via your browser, instead of the Discord client.
 - Changed: Door Lock mode Two-way is now named Doors. The functionality is unchanged.
 - Changed: Improved preset descriptions, making them significantly simpler.
 - Changed: Some preset options which are not ready for wide consumption have been hidden by default. To show all preset options, please select `Advanced > Show Experimental Settings`.
@@ -23,6 +104,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: For Multiworld, it's now preferred to have an additional pickups than placing it in another player's game, when there's no locations left in your game.
 - Changed: Randovania now internally uses the term `Region` for what used to be called a `World`. This is mostly an internal change.
 - Changed: Connecting to Dolphin is now hidden on macOS, as it never was supported.
+- Changed: Door Lock rando generation is now up to 50% faster.
 - Fixed: Issue where the resolver didn't find the paths that lead to taking the least damage.
 - Fixed: The resolver no longer allows events as additional requirements. This fixes a problem that could lead to an event locking itself.
 - Fixed: The `database render-region-graph` command now works properly.
@@ -38,6 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Door Lock Randomizer can randomize doors to be weak to Ice Missile, Storm Missile, Diffusion Beam, Bombs, Cross Bombs, Power Bombs.
 - Added: New option under "Game Modifications" to choose how inconsistencies in Raven Beak's damage resistance are handled.
 - Added: Auto tracker is now supported via a new game connection choice.
+- Added: Exporting now checks if the RomFS folder has some required files.
 - Changed: The doors in Itorash are now excluded from being shuffled in Door Lock Randomizer.
 
 #### Patcher Changes
@@ -65,6 +148,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Allow using Shinesparks in Gravity Suit Tower by storing speed in the upper part of Gravity Suit Room, also when Door Lock rando is enabled.
 - Added: Pseudo-Wave Beam to break the blob in Ferenia Wave Beam Tutorial, from the right.
 - Added: Use Spider Magnet with Grapple Beam in Ghavoran Spider Magnet Elevator.
+- Added: Use Speed Booster to get past the pool of water in Dairon Freezer before turning on the power.
+- Added: Various trick alternatives to get past the pool of water in Dairon Freezer with Bomb Jumps.
+- Added: Water Bomb Jump in Burenia Underneath Drogyga to get up to the left ledge with Normal Bomb, rated as Intermediate.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Wall Jump from Flash Shift for reaching the left Dock to Main Hub Tower Top in Main Hub Tower Middle has been removed; it is now trickless.
 - Changed: Avoid treating Gravity Suit as a dangerous resource, by removing the "No Gravity Suit" constraint from the "Perform WBJ" template.
@@ -73,6 +159,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Using Wall Jump Advanced to climb across Moving Magnet Walls (Small) in Cataris, aka Adam Skip, now correctly requires Spider Magnet.
 - Changed: The Upper Tunnel from Burenia Teleport to Ghavoran to Main Hub Tower Middle has been converted from a Morph Ball Tunnel to a Slide Tunnel. In order to use this tunnel with Slide, Gravity Suit is also required.
 - Changed: In Burenia Teleport to Ghavoran, using Power Bombs to get back up from Early Gravity Speedboost Room now requires 2 ammo units of Power Bomb. The purpose is to account for using one unit on the way down in the first place.
+- Changed: Water Bomb Jump in Artaria First Tutorial, after adding the water has been changed to Infinite Bomb Jump.
+- Changed: Infinite Bomb Jump in Artaria Screw Attack Room to jump out of the water under the Recharge Station has been changed to Water Bomb Jump.
+- Changed: Water Bomb Jump in Burenia Underneath Drogyga to get the pickup is now Beginner with Cross Bombs.
+- Changed: Water Bomb Jump in Burenia Underneath Drogyga to get up to the left ledge with Cross Bomb is now Beginner.
+- Changed: Bomb Jumping to the upper part of Ghavoran Map Station Access now requires Water Bomb Jump Intermediate with Normal Bomb and Beginner with Cross Bomb. This was previously trivial with both of those.
+- Changed: Bomb Jumping to the upper part of Ghavoran EMMI Zone Exit Southeast with Cross Bombs is changed from trivial to Water Bomb Jump Intermediate.
+- Changed: Bomb Jumping to the upper part of Ghavoran EMMI Zone Exit Southeast with Normal Bombs is changed from Infinite Bomb Jump Intermediate to both Water Bomb Jump Intermediate and Diagonal Bomb Jump Intermediate.
 - Fixed: Correctly require breaking the blob in Burenia Teleport to Ghavoran to be able to go from Main Hub Tower Middle to Teleport to Ghavoran through the upper Tunnel.
 - Fixed: Burenia Hub to Dairon Transport Blob from Below giving the wrong event resource.
 - Removed: Use Cross Bombs to skip the blob submerged in water in Artaria Early Cloak room. The point of this connection is to skip breaking the blob, which is no longer dangerous when you have the Morph Ball.
@@ -98,7 +191,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Door Lock randomizer has been added. Note that this feature requires enabling the new patcher.
 - Added: New random elevators mode: Shuffle Regions. In this mode, we keep the game world consistent by shuffling the regions around Temple Grounds, and then changing the elevators to match. See [this map](randovania/data/gui_assets/echoes_elevator_map.png) for reference.
 - Added: When the new patcher is enabled, Security Station B starts in the post-Dark Samus appearance. This change is supported by logic.
-- Added: When both the new patcher and Speed Up Credits are enabled, part of the end game cutscenes are skipped. 
 - Changed: Pickups can be configured to take away some of an item instead of giving more (e.g. missile tanks could take away missiles when collected).
 - Changed: When the new patcher is enabled, some cosmetic effects are removed from Torvus Temple in an attempt to make it crash less.
 - Changed: For Multiworld ISOs, the game name now mentions the session name and world name.
@@ -107,12 +199,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Fixed: Re-Added Vanilla Method to access Storage C to logic.
+- Changed: Movement trick level for reaching the door to Security Station B from Bioenergy Production with a NSJ Screw jump extension from Advanced to Beginner.
+- Changed: Combat/Scan Dash trick level for reaching the door to Security Station B from Bioenergy Production with a Scan Dash from Expert to Intermediate.
 - Added: 142 videos to the logic database
 - Added: Method to climb Forgotten Bridge with Jump Off Enemy (Advanced)
 - Added: Scan Dash to grab the half pipe item in Dark Torvus Arena with Combat/Scan Dash (Intermediate)
 - Added: Method to collect the pickup in Reactor Core using the top Rezbit, Bombs, Bomb Space Jump (Advanced), Standable Terrain (Advanced), Movement (Advanced), and Jump Off Enemies (Expert).
 - Added: Method to reach the top cannon in Sanctuary Entrance using Bombs, Space Jump Boots, Bomb Space Jump (Advanced), and Standable Terrain (Advanced).
 - Added: Method to collect the pickup in Abandoned Worksite using just Screw Attack, and Screw Attack into Tunnels/Openings (Advanced).
+- Added: Method to collect the pickup in Bioenergy Production using Boost Ball, Spider Ball, Screw Attack, and Movement (Advanced).
 
 ## [5.8.0] - 2023-06-05
 

@@ -1,13 +1,23 @@
-from randovania.game_description import default_database
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from open_prime_rando.dol_patching.echoes.beam_configuration import BeamAmmoConfiguration
+
+from randovania.game_description import default_database
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
-    fill_template_strings_from_tree, has_shuffled_item, message_for_required_mains, handle_progressive_expected_counts,
+    fill_template_strings_from_tree,
+    handle_progressive_expected_counts,
+    has_shuffled_item,
+    message_for_required_mains,
 )
+
+if TYPE_CHECKING:
+    from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 def create_beam_configuration_description(beams: BeamConfiguration) -> list[dict[str, bool]]:
@@ -62,9 +72,7 @@ def create_beam_configuration_description(beams: BeamConfiguration) -> list[dict
         return " and ".join(names)
 
     def format_missile_cost(b: BeamAmmoConfiguration) -> str:
-        return "{missiles} missiles for combo".format(
-            missiles=b.combo_missile_cost,
-        )
+        return f"{b.combo_missile_cost} missiles for combo"
 
     for name, default_beam, actual_beam in zip(beam_names, default_config.all_beams, beams.all_beams):
         different = []

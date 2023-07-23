@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import argparse
 import asyncio
 import datetime
@@ -59,6 +61,7 @@ async def post_to_discord():
             "inline": True
         }
         for artifact in os.listdir("packages")
+        if artifact != "Python Package"
     ]
 
     webhook_data = {

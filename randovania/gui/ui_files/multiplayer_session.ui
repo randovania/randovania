@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>773</width>
-    <height>418</height>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Game Session</string>
+   <string>Multiworld Session</string>
   </property>
   <property name="dockNestingEnabled">
    <bool>true</bool>
@@ -23,7 +23,7 @@
      <height>16777215</height>
     </size>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
@@ -31,152 +31,97 @@
       </property>
       <widget class="QWidget" name="tab_players">
        <attribute name="title">
-        <string>Players</string>
+        <string>Users and Worlds</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="tab_session">
        <attribute name="title">
-        <string>Session</string>
+        <string>Session and Connectivity</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="3" column="5" colspan="6">
-         <widget class="QProgressBar" name="progress_bar">
-          <property name="value">
-           <number>0</number>
+       <layout class="QGridLayout" name="session_tab_layout">
+        <item row="0" column="0" colspan="2">
+         <widget class="QGroupBox" name="session_game_group">
+          <property name="title">
+           <string>Session Game</string>
           </property>
-          <property name="invertedAppearance">
-           <bool>false</bool>
-          </property>
+          <layout class="QGridLayout" name="session_game_layout">
+           <item row="1" column="0" colspan="2">
+            <widget class="QLabel" name="generate_game_label">
+             <property name="text">
+              <string>&lt;Game not generated&gt;</string>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QPushButton" name="generate_game_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Generate Game</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="export_game_button">
+             <property name="text">
+              <string>Export Game</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
-        <item row="4" column="0" colspan="11">
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+        <item row="1" column="0" colspan="2">
+         <widget class="QGroupBox" name="session_admin_group">
+          <property name="title">
+           <string>Session Administration</string>
           </property>
+          <layout class="QGridLayout" name="session_admin_layout">
+           <item row="1" column="0">
+            <widget class="QPushButton" name="copy_permalink_button">
+             <property name="text">
+              <string>Copy Permalink</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="session_status_button">
+             <property name="text">
+              <string>Start</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="view_game_details_button">
+             <property name="text">
+              <string>View Spoiler</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="advanced_options_tool">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Advanced options...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
-        <item row="5" column="10">
-         <widget class="QToolButton" name="advanced_options_tool">
-          <property name="text">
-           <string>Advanced options...</string>
-          </property>
-          <property name="popupMode">
-           <enum>QToolButton::InstantPopup</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="8" colspan="3">
-         <widget class="QPushButton" name="copy_permalink_button">
-          <property name="text">
-           <string>Copy Permalink</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QPushButton" name="server_connection_button">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>60</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Connect</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="7">
-         <widget class="QPushButton" name="view_game_details_button">
-          <property name="text">
-           <string>View Spoiler</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="11">
-         <widget class="Line" name="line_generate">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="9">
-         <widget class="Line" name="connection_line_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="4">
-         <widget class="Line" name="connection_line_1">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1" colspan="3">
-         <widget class="QLabel" name="server_connection_label">
-          <property name="text">
-           <string>Server: Disconnected</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="6" colspan="3">
-         <widget class="QLabel" name="session_status_label">
-          <property name="text">
-           <string>Session: Not Started</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="5">
-         <widget class="QToolButton" name="session_status_tool">
-          <property name="maximumSize">
-           <size>
-            <width>80</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Start</string>
-          </property>
-          <property name="popupMode">
-           <enum>QToolButton::MenuButtonPopup</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="4">
-         <widget class="QToolButton" name="background_process_button">
-          <property name="minimumSize">
-           <size>
-            <width>140</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Stop</string>
-          </property>
-          <property name="popupMode">
-           <enum>QToolButton::MenuButtonPopup</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="7">
-         <widget class="QLabel" name="generate_game_label">
-          <property name="text">
-           <string>&lt;Game not generated&gt;</string>
-          </property>
-          <property name="textInteractionFlags">
-           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
+        <item row="4" column="0" colspan="2">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -189,64 +134,113 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="0" colspan="11">
-         <widget class="QLabel" name="progress_label">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+        <item row="2" column="0" colspan="2">
+         <widget class="QGroupBox" name="connectivity_group">
+          <property name="title">
+           <string>Connectivity</string>
           </property>
-          <property name="text">
-           <string/>
+          <layout class="QGridLayout" name="connectivity_layout">
+           <item row="1" column="0">
+            <widget class="QPushButton" name="server_connection_button">
+             <property name="text">
+              <string>Connect to Server</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="edit_game_connections_button">
+             <property name="text">
+              <string>Edit Game Connections</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="server_connection_label">
+             <property name="text">
+              <string>Server: Disconnected</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="multiworld_client_status_label">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::MarkdownText</enum>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_history">
+       <attribute name="title">
+        <string>History</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="history_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="history_filter_layout">
+          <property name="leftMargin">
+           <number>4</number>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          <property name="rightMargin">
+           <number>4</number>
           </property>
-          <property name="wordWrap">
+          <item>
+           <widget class="QComboBox" name="history_filter_provider_combo">
+            <item>
+             <property name="text">
+              <string>All Worlds</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="history_filter_receiver_combo">
+            <item>
+             <property name="text">
+              <string>All Worlds</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="history_filter_edit">
+            <property name="placeholderText">
+             <string>Filter by pickup or location</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableView" name="history_view">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="sortingEnabled">
            <bool>true</bool>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QTableWidget" name="tab_history">
-       <property name="editTriggers">
-        <set>QAbstractItemView::NoEditTriggers</set>
-       </property>
-       <property name="sortingEnabled">
-        <bool>true</bool>
-       </property>
-       <attribute name="title">
-        <string>History</string>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>Provider</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Receiver</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Pickup</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Location</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Time</string>
-        </property>
-       </column>
-      </widget>
-      <widget class="QTableWidget" name="tab_audit">
+      <widget class="QTableView" name="tab_audit">
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -256,23 +250,54 @@
        <attribute name="title">
         <string>Audit Log</string>
        </attribute>
-       <column>
-        <property name="text">
-         <string>User</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Message</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Time</string>
-        </property>
-       </column>
       </widget>
      </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="progress_label">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="background_process_layout">
+      <item>
+       <widget class="QPushButton" name="background_process_button">
+        <property name="minimumSize">
+         <size>
+          <width>140</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Stop</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="progress_bar">
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

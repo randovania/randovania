@@ -1,20 +1,24 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
+from typing import TYPE_CHECKING
 
-from randovania.exporter.hints.hint_formatters import LocationFormatter, TemplatedFormatter, RelativeAreaFormatter
+from randovania.exporter.hints.hint_formatters import LocationFormatter, RelativeAreaFormatter, TemplatedFormatter
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
 from randovania.game_description import default_database
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import RegionList
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.games.game import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
 
+if TYPE_CHECKING:
+    from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.games.game import RandovaniaGame
+    from randovania.interface_common.players_configuration import PlayersConfiguration
 
 # {c0}	White	(Default)
 # {c1}	Yellow
@@ -112,9 +116,7 @@ class DreadHintNamer(HintNamer):
         if resource.short_name.startswith("Artifact"):
             return ""
 
-        return "{} has no need to be located.".format(
-            colorize_text(self.color_item, resource.long_name, with_color)
-        )
+        return f"{colorize_text(self.color_item, resource.long_name, with_color)} has no need to be located."
 
     def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
                                    location: PickupLocation, hide_area: bool, with_color: bool) -> str:

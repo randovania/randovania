@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import json
 import os
-from unittest.mock import MagicMock, ANY, call
+from unittest.mock import ANY, MagicMock, call
 
 import pytest
 
@@ -98,12 +100,30 @@ def test_adjust_model_names():
                 "rooms": {
                     "A room": {
                         "pickups": [
-                            {"model": {"game": "prime1", "name": "Missile"}},
-                            {"model": {"game": "prime1", "name": "Space Jump Boots"}},
-                            {"model": {"game": "prime2", "name": "MissileLauncher"}},
-                            {"model": {"game": "prime2", "name": "BoostBall"}},
-                            {"model": {"game": "prime2", "name": "SpiderBall"}},
-                            {"model": {"game": "prime2", "name": "DarkAmmoExpansion"}},
+                            {
+                                "model": {"game": "prime1", "name": "Missile"},
+                                "original_model": {"game": "prime1", "name": "Missile"}
+                            },
+                            {
+                                "model": {"game": "prime1", "name": "Space Jump Boots"},
+                                "original_model": {"game": "prime1", "name": "Space Jump Boots"}
+                            },
+                            {
+                                "model": {"game": "prime2", "name": "Missile"},
+                                "original_model": {"game": "prime2", "name": "MissileLauncher"}
+                            },
+                            {
+                                "model": {"game": "prime2", "name": "Boost Ball"},
+                                "original_model": {"game": "prime2", "name": "BoostBall"}
+                            },
+                            {
+                                "model": {"game": "prime2", "name": "Spider Ball"},
+                                "original_model": {"game": "prime2", "name": "SpiderBall"}
+                            },
+                            {
+                                "model": {"game": "prime2", "name": "Nothing"},
+                                "original_model": {"game": "prime2", "name": "DarkAmmoExpansion"}
+                            },
                         ]
                     }
                 }
@@ -158,7 +178,7 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
     exporter = PrimeGameExporter()
 
     # Run
-    with pytest.raises(ValueError) as exc:
+    with pytest.raises(ValueError, match="Couldn't find output file.\nAborting Enemy Stat Randomizer"):
         exporter.export_game(
             patch_data,
             PrimeGameExportParams(
@@ -174,7 +194,6 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
         )
 
     # Assert
-    assert str(exc.value) == "Couldn't find output file.\nAborting Enemy Stat Randomizer"
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
     mock_patch_iso_raw.assert_called_once_with(ANY, ANY)
 

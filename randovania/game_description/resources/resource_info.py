@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import copy
 import typing
-from typing import Union
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
@@ -12,10 +11,10 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
-ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo, NodeResourceInfo]
+ResourceInfo = SimpleResourceInfo | ItemResourceInfo | TrickResourceInfo | NodeResourceInfo
 ResourceQuantity = tuple[ResourceInfo, int]
 ResourceGainTuple = tuple[ResourceQuantity, ...]
-ResourceGain = Union[typing.Iterable[ResourceQuantity], typing.ItemsView[ResourceInfo, int]]
+ResourceGain = typing.Iterable[ResourceQuantity] | typing.ItemsView[ResourceInfo, int]
 
 
 class ResourceCollection:
@@ -25,7 +24,7 @@ class ResourceCollection:
     _resource_array: list[int]
     _existing_resources: dict[int, ResourceInfo]
     add_self_as_requirement_to_resources: bool
-    _damage_reduction_cache: dict[ResourceInfo, float] | None
+    _damage_reduction_cache: dict[int, float] | None
 
     def __init__(self):
         self.resource_bitmask = 0
@@ -151,13 +150,13 @@ class ResourceCollection:
 
     def get_damage_reduction_cache(self, resource: ResourceInfo) -> float | None:
         if self._damage_reduction_cache is not None:
-            return self._damage_reduction_cache.get(resource)
+            return self._damage_reduction_cache.get(resource.resource_index)
         return None
 
     def add_damage_reduction_cache(self, resource: ResourceInfo, multiplier: float):
         if self._damage_reduction_cache is None:
             self._damage_reduction_cache = {}
-        self._damage_reduction_cache[resource] = multiplier
+        self._damage_reduction_cache[resource.resource_index] = multiplier
 
     def __copy__(self):
         return self.duplicate()

@@ -1,17 +1,22 @@
+from __future__ import annotations
+
 import dataclasses
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.standard_pickup_state import DEFAULT_MAXIMUM_SHUFFLED
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class MetroidPresetItemPool(PresetItemPool):

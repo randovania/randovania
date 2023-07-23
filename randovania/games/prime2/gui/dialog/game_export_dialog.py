@@ -1,22 +1,32 @@
+from __future__ import annotations
+
 import dataclasses
 import shutil
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-from PySide6.QtWidgets import QLineEdit, QPushButton
-
-from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.common.prime_family.gui.export_validator import is_prime1_iso_validator, is_prime2_iso_validator
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
-    GameExportDialog, prompt_for_output_file, prompt_for_input_file,
-    add_field_validation, output_file_validator, spoiler_path_for, update_validation
+    GameExportDialog,
+    add_field_validation,
+    output_file_validator,
+    prompt_for_input_file,
+    prompt_for_output_file,
+    spoiler_path_for,
+    update_validation,
 )
 from randovania.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
 from randovania.interface_common import game_workdir
-from randovania.interface_common.options import Options
+
+if TYPE_CHECKING:
+    from PySide6.QtWidgets import QLineEdit, QPushButton
+
+    from randovania.exporter.game_exporter import GameExportParams
+    from randovania.interface_common.options import Options
 
 _VALID_GAME_TEXT = "(internal game copy)"
 
@@ -60,8 +70,8 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
     _prompt_input_file: bool
     _use_prime_models: bool
 
-    @property
-    def _game(self):
+    @classmethod
+    def game_enum(cls):
         return RandovaniaGame.METROID_PRIME_ECHOES
 
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
@@ -71,7 +81,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         self._prompt_input_file = check_extracted_game(self.input_file_edit, self.input_file_button,
                                                        self._contents_file_path)
 
-        per_game = options.options_for_game(self._game)
+        per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, EchoesPerGameOptions)
 
         # Input
@@ -118,40 +128,39 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             }
         )
 
+    def update_per_game_options(self, per_game: EchoesPerGameOptions) -> EchoesPerGameOptions:
+        per_game_changes = {}
+        if self._prompt_input_file:
+            per_game_changes["input_path"] = self.input_file
+
+        use_external_models = per_game.use_external_models.copy()
+        if not self.prime_models_check.isHidden():
+            if self._use_prime_models:
+                use_external_models.add(RandovaniaGame.METROID_PRIME)
+            else:
+                use_external_models.discard(RandovaniaGame.METROID_PRIME)
+
+        return dataclasses.replace(
+            per_game,
+            output_directory=self.output_file.parent,
+            use_external_models=use_external_models,
+            **per_game_changes,
+        )
+
     def save_options(self):
+        super().save_options()
+        if not self._use_prime_models:
+            return
+
         with self._options as options:
-            if self._has_spoiler:
-                options.auto_save_spoiler = self.auto_save_spoiler
-
-            per_game = options.options_for_game(self._game)
-            assert isinstance(per_game, EchoesPerGameOptions)
-
-            per_game_changes = {}
-            if self._prompt_input_file:
-                per_game_changes["input_path"] = self.input_file
-
-            use_external_models = per_game.use_external_models.copy()
-            if not self.prime_models_check.isHidden():
-                if self._use_prime_models:
-                    use_external_models.add(RandovaniaGame.METROID_PRIME)
-                else:
-                    use_external_models.discard(RandovaniaGame.METROID_PRIME)
-
-            options.set_options_for_game(self._game, dataclasses.replace(
-                per_game,
-                output_directory=self.output_file.parent,
-                use_external_models=use_external_models,
-                **per_game_changes,
+            from randovania.games.prime1.exporter.options import PrimePerGameOptions
+            prime_options = options.options_for_game(RandovaniaGame.METROID_PRIME)
+            assert isinstance(prime_options, PrimePerGameOptions)
+            options.set_options_for_game(RandovaniaGame.METROID_PRIME, dataclasses.replace(
+                prime_options,
+                input_path=self.prime_file,
             ))
 
-            if self._use_prime_models:
-                from randovania.games.prime1.exporter.options import PrimePerGameOptions
-                prime_options = options.options_for_game(RandovaniaGame.METROID_PRIME)
-                assert isinstance(prime_options, PrimePerGameOptions)
-                options.set_options_for_game(RandovaniaGame.METROID_PRIME, dataclasses.replace(
-                    prime_options,
-                    input_path=self.prime_file,
-                ))
 
     # Getters
     @property

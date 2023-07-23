@@ -50,7 +50,7 @@
                     }
                 },
                 "Escape": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
                         "x": 192.00000000000003,
@@ -67,12 +67,17 @@
                         "different_strongly_connected_component": true
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Crateria",
-                        "area": "Landing Site"
+                        "area": "Landing Site",
+                        "node": "Landing Site Save Station"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": false,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Hallway A": {
                             "type": "and",

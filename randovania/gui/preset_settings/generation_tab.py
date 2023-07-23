@@ -1,19 +1,25 @@
+from __future__ import annotations
+
 import dataclasses
-from typing import Iterable
+from typing import TYPE_CHECKING
 
-from PySide6 import QtWidgets
-
-from randovania.game_description.game_description import GameDescription
-from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_generation_ui import Ui_PresetGeneration
 from randovania.gui.lib import signal_handling
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from PySide6 import QtWidgets
+
+    from randovania.game_description.game_description import GameDescription
+    from randovania.games.game import RandovaniaGame
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class PresetGeneration(PresetTab, Ui_PresetGeneration):

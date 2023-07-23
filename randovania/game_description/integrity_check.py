@@ -1,20 +1,25 @@
-import re
-from typing import Iterator
+from __future__ import annotations
 
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockWeakness, DockType
+import re
+from typing import TYPE_CHECKING
+
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region import Region
-from randovania.game_description.db.teleporter_node import TeleporterNode
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_info import ResourceCollection
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.dock import DockType, DockWeakness
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_suffix_re = re.compile(r" \([^()]+?\)$")
@@ -120,18 +125,10 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
                 if other_node.default_connection != region_list.identifier_for_node(node):
                     yield (f"{node.name} connects to '{node.default_connection}', but that dock connects "
                            f"to '{other_node.default_connection}' instead.")
-            else:
-                yield f"{node.name} connects to '{node.default_connection}' which is not a DockNode"
 
-    elif any(node.name.startswith(dock_type.long_name) for dock_type in game.dock_weakness_database.dock_types):
+    elif any(re.match(fr"{dock_type.long_name}\s*(to|from)", node.name)
+             for dock_type in game.dock_weakness_database.dock_types):
         yield f"{node.name} is not a Dock Node, naming suggests it should be."
-
-    if isinstance(node, TeleporterNode):
-        try:
-            region_list.resolve_teleporter_connection(node.default_connection)
-        except IndexError as e:
-            yield f"{node.name} is a Teleporter Node, but connection {node.default_connection} is invalid: {e}"
-
 
 def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
     nodes_with_paths_in = set()
@@ -147,17 +144,11 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
     # make sure only one start node exists per area like before refacor. this can be removed later if a game supports it
     start_nodes = area.get_start_nodes()
     if len(start_nodes) > 1 and not game.game.data.multiple_start_nodes_per_area:
-        names = list(node.name for node in start_nodes)
+        names = [node.name for node in start_nodes]
         yield f"{area.name} has multiple valid start nodes {names}, but is not allowed for {game.game.long_name}"
 
-    if area.default_node is not None and area.node_with_name(area.default_node) is None:
-        yield f"{area.name} has default node {area.default_node}, but no node with that name exists"
-
-    # elif area.default_node is not None:
-    #     nodes_with_paths_in.add(area.node_with_name(area.default_node))
-
     for node in area.nodes:
-        if isinstance(node, (TeleporterNode, DockNode)) or area.connections[node]:
+        if isinstance(node, DockNode) or area.connections[node]:
             continue
 
         # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
@@ -209,7 +200,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
             # Broken docks
             continue
 
-    starting_node = game.region_list.resolve_teleporter_connection(game.starting_location)
+    starting_node = game.region_list.node_by_identifier(game.starting_location)
 
     for strong_comp in networkx.strongly_connected_components(graph):
         components: set[Node] = strong_comp

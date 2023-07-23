@@ -2417,7 +2417,7 @@
             }
         },
         "Transit Station 2-A": {
-            "default_node": "Train to Command Center - Transit Station 2-B",
+            "default_node": "Teleporter to Transit Station 2-B",
             "extra": {
                 "asset_id": 1933322814469947092
             },
@@ -2450,7 +2450,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Train to Command Center - Transit Station 2-B": {
+                        "Teleporter to Transit Station 2-B": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2461,8 +2461,8 @@
                         }
                     }
                 },
-                "Train to Command Center - Transit Station 2-B": {
-                    "node_type": "teleporter",
+                "Teleporter to Transit Station 2-B": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -2474,12 +2474,17 @@
                         "teleporter_instance_id": 851982
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Pirate Homeworld - Command",
-                        "area": "Transit Station 2-B"
+                        "area": "Transit Station 2-B",
+                        "node": "Teleporter to Transit Station 2-A"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Command Station": {
                             "type": "and",
@@ -2493,7 +2498,7 @@
             }
         },
         "Transit Station 2-B": {
-            "default_node": "Train to Command Center - Transit Station 2-A",
+            "default_node": "Teleporter to Transit Station 2-A",
             "extra": {
                 "asset_id": 9768654166807123312
             },
@@ -2526,7 +2531,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Train to Command Center - Transit Station 2-A": {
+                        "Teleporter to Transit Station 2-A": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2537,8 +2542,8 @@
                         }
                     }
                 },
-                "Train to Command Center - Transit Station 2-A": {
-                    "node_type": "teleporter",
+                "Teleporter to Transit Station 2-A": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -2550,12 +2555,17 @@
                         "teleporter_instance_id": 917798
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Pirate Homeworld - Command",
-                        "area": "Transit Station 2-A"
+                        "area": "Transit Station 2-A",
+                        "node": "Teleporter to Transit Station 2-B"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Leviathan Access Portal": {
                             "type": "and",
@@ -2644,7 +2654,7 @@
                     }
                 },
                 "Teleporter to Leviathan": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -2656,12 +2666,17 @@
                         "teleporter_instance_id": 983248
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Pirate Homeworld - Command",
-                        "area": "Leviathan"
+                        "area": "Leviathan",
+                        "node": "Teleporter to Leviathan Access Portal"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Transit Station 2-B": {
                             "type": "or",
@@ -3690,7 +3705,7 @@
             },
             "nodes": {
                 "Teleporter to Leviathan Access Portal": {
-                    "node_type": "teleporter",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -3702,12 +3717,17 @@
                         "teleporter_instance_id": 1245367
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Pirate Homeworld - Command",
-                        "area": "Leviathan Access Portal"
+                        "area": "Leviathan Access Portal",
+                        "node": "Teleporter to Leviathan"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Control Leviathan Battleship": {
                             "type": "resource",
@@ -4871,7 +4891,7 @@
             }
         },
         "Transit Station 3-B\nLeads to Research Facility": {
-            "default_node": "Train to Research Facility - Transit Station 3-A",
+            "default_node": "Teleporter to Pirate Homeworld - Research",
             "extra": {
                 "asset_id": 10191943231769975720
             },
@@ -4904,7 +4924,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Train to Research Facility - Transit Station 3-A": {
+                        "Teleporter to Pirate Homeworld - Research": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4915,8 +4935,8 @@
                         }
                     }
                 },
-                "Train to Research Facility - Transit Station 3-A": {
-                    "node_type": "teleporter",
+                "Teleporter to Pirate Homeworld - Research": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -4928,12 +4948,17 @@
                         "teleporter_instance_id": 1507642
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Pirate Homeworld - Research",
-                        "area": "Transit Station 3-A\nLeads to Command Center"
+                        "area": "Transit Station 3-A\nLeads to Command Center",
+                        "node": "Teleporter to Pirate Homeworld - Command"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Lift Hub": {
                             "type": "and",
@@ -4947,7 +4972,7 @@
             }
         },
         "Transit Station 4-A\nLeads to Mining Site": {
-            "default_node": "Train to Mining Site - Transit Station 4-B",
+            "default_node": "Teleporter to Pirate Homeworld - Mines",
             "extra": {
                 "asset_id": 12520185503864049660
             },
@@ -4980,7 +5005,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Train to Mining Site - Transit Station 4-B": {
+                        "Teleporter to Pirate Homeworld - Mines": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4991,8 +5016,8 @@
                         }
                     }
                 },
-                "Train to Mining Site - Transit Station 4-B": {
-                    "node_type": "teleporter",
+                "Teleporter to Pirate Homeworld - Mines": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -5004,12 +5029,17 @@
                         "teleporter_instance_id": 1573178
                     },
                     "valid_starting_location": true,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Pirate Homeworld - Mines",
-                        "area": "Transit Station 4-B\nLeads to Command Center"
+                        "area": "Transit Station 4-B\nLeads to Command Center",
+                        "node": "Teleporter to Pirate Homeworld - Command"
                     },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Defense Access": {
                             "type": "and",

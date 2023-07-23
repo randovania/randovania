@@ -1,18 +1,14 @@
-from pathlib import Path
-from typing import Iterator, TextIO
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, TextIO
 
 from randovania.game_description.data_writer import REGION_NAME_TO_FILE_NAME_RE
-from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
-from randovania.game_description.db.teleporter_node import TeleporterNode
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
@@ -20,6 +16,15 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.trick_level import LayoutTrickLevel
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+    from pathlib import Path
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
 
 
 def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
@@ -44,7 +49,7 @@ def pretty_print_requirement_array(requirement: RequirementArrayBase,
         pretty_print_resource_requirement(item)
         for item in sorted(resource_requirements)
     ]
-    sorted_templates = list(sorted(item.template_name for item in template_requirements))
+    sorted_templates = sorted(item.template_name for item in template_requirements)
 
     if isinstance(requirement, RequirementOr):
         title = "Any"
@@ -100,10 +105,6 @@ def pretty_print_node_type(node: Node, region_list: RegionList):
             message += ", ".join(weak.name for weak in node.incompatible_dock_weaknesses)
 
         return message
-
-    elif isinstance(node, TeleporterNode):
-        other = region_list.area_by_area_location(node.default_connection)
-        return f"Teleporter to {region_list.area_name(other)}"
 
     elif isinstance(node, PickupNode):
         return f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
@@ -193,8 +194,8 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
                 output.write("      No lock\n")
             output.write("\n")
 
-        dock_rando = game.dock_weakness_database.dock_rando_params[dock_type]
-        if dock_rando.locked is None or dock_rando.unlocked is None:
+        dock_rando = game.dock_weakness_database.dock_rando_params.get(dock_type)
+        if dock_rando is None:
             output.write("  > Dock Rando: Disabled\n\n")
         else:
             output.write("  > Dock Rando:")

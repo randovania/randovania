@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import contextlib
 import copy
 import pickle
@@ -6,7 +8,8 @@ import pytest
 
 from randovania.layout import description_migration
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.layout.layout_description import LayoutDescription, InvalidLayoutDescription
+from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
+from randovania.layout.versioned_preset import VersionedPreset
 
 
 @pytest.mark.parametrize("value", LayoutTrickLevel)
@@ -68,3 +71,26 @@ def test_no_spoiler_encode(obfuscator_no_secret, multiworld_rdvgame):
     encoded = layout.as_json()
 
     assert set(encoded.keys()) & {"game_modifications", "item_order", "secret"} == set()
+
+
+def test_round_trip_binary_normal(multiworld_rdvgame):
+    layout = LayoutDescription.from_json_dict(multiworld_rdvgame)
+
+    assert LayoutDescription.from_bytes(layout.as_binary()) == layout
+
+
+def test_round_trip_binary_need_preset_decode(multiworld_rdvgame):
+    layout = LayoutDescription.from_json_dict(multiworld_rdvgame)
+
+    encoded = layout.as_binary(include_presets=False)
+    with pytest.raises(InvalidLayoutDescription):
+        LayoutDescription.from_bytes(encoded)
+
+
+def test_round_trip_binary_no_presets(multiworld_rdvgame):
+    layout = LayoutDescription.from_json_dict(multiworld_rdvgame)
+    presets = [VersionedPreset.with_preset(preset) for preset in layout.all_presets]
+
+    encoded = layout.as_binary(include_presets=False)
+    assert LayoutDescription.from_bytes(encoded, presets=presets) == layout
+

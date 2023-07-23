@@ -65,7 +65,7 @@
                                 ]
                             }
                         },
-                        "Teleport to Landing Site": {
+                        "Teleporter to Tallon Overworld": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -120,8 +120,8 @@
                         }
                     }
                 },
-                "Teleport to Landing Site": {
-                    "node_type": "teleporter",
+                "Teleporter to Tallon Overworld": {
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
@@ -133,12 +133,17 @@
                         "teleporter_instance_id": 134218592
                     },
                     "valid_starting_location": false,
-                    "destination": {
+                    "dock_type": "teleporter",
+                    "default_connection": {
                         "region": "Tallon Overworld",
-                        "area": "Landing Site"
+                        "area": "Landing Site",
+                        "node": "Ship"
                     },
-                    "keep_name_when_vanilla": false,
-                    "editable": true,
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Ship Save": {
                             "type": "and",

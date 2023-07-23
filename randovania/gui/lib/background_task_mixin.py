@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import asyncio.futures
 import concurrent.futures
@@ -6,6 +8,10 @@ import threading
 from PySide6.QtCore import Signal
 
 import randovania.games.prime2.patcher.csharp_subprocess
+
+
+class BackgroundTaskInProgressError(Exception):
+    pass
 
 
 class BackgroundTaskMixin:
@@ -32,7 +38,7 @@ class BackgroundTaskMixin:
 
             if self.abort_background_task_requested:
                 self.progress_update_signal.emit(f"{message} - Aborted", int(progress * 100))
-                raise AbortBackgroundTask()
+                raise AbortBackgroundTask
             else:
                 self.progress_update_signal.emit(message, int(progress * 100))
 
@@ -46,7 +52,7 @@ class BackgroundTaskMixin:
                 self.background_tasks_button_lock_signal.emit(True)
 
         if self._background_thread:
-            raise RuntimeError("Trying to start a new background thread while one exists already.")
+            raise BackgroundTaskInProgressError("Trying to start a new background thread while one exists already.")
 
         self.abort_background_task_requested = False
         progress_update(starting_message, 0)

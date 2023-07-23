@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import random
 
@@ -13,28 +15,46 @@ def test_elevator_echoes_shuffled(echoes_game_patches, default_echoes_configurat
 
     # Assert
     simpler = {
-        source.area_identifier.as_string: target.as_string
+        source.as_string: target.as_string
         for source, target in result.items()
     }
     assert simpler == {
-        'Agon Wastes/Transport to Sanctuary Fortress': 'Temple Grounds/Temple Transport B',
-        'Agon Wastes/Transport to Temple Grounds': 'Temple Grounds/Temple Transport A',
-        'Agon Wastes/Transport to Torvus Bog': 'Temple Grounds/Temple Transport C',
-        'Great Temple/Temple Transport A': 'Temple Grounds/Transport to Agon Wastes',
-        'Great Temple/Temple Transport B': 'Sanctuary Fortress/Transport to Agon Wastes',
-        'Great Temple/Temple Transport C': 'Torvus Bog/Transport to Agon Wastes',
-        'Sanctuary Fortress/Transport to Agon Wastes': 'Great Temple/Temple Transport B',
-        'Sanctuary Fortress/Transport to Temple Grounds': 'Temple Grounds/Transport to Sanctuary Fortress',
-        'Sanctuary Fortress/Transport to Torvus Bog': 'Torvus Bog/Transport to Sanctuary Fortress',
-        'Temple Grounds/Temple Transport A': 'Agon Wastes/Transport to Temple Grounds',
-        'Temple Grounds/Temple Transport B': 'Agon Wastes/Transport to Sanctuary Fortress',
-        'Temple Grounds/Temple Transport C': 'Agon Wastes/Transport to Torvus Bog',
-        'Temple Grounds/Transport to Agon Wastes': 'Great Temple/Temple Transport A',
-        'Temple Grounds/Transport to Sanctuary Fortress': 'Sanctuary Fortress/Transport to Temple Grounds',
-        'Temple Grounds/Transport to Torvus Bog': 'Torvus Bog/Transport to Temple Grounds',
-        'Torvus Bog/Transport to Agon Wastes': 'Great Temple/Temple Transport C',
-        'Torvus Bog/Transport to Sanctuary Fortress': 'Sanctuary Fortress/Transport to Torvus Bog',
-        'Torvus Bog/Transport to Temple Grounds': 'Temple Grounds/Transport to Torvus Bog',
+        'Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress':
+        'Temple Grounds/Temple Transport B/Elevator to Great Temple',
+        'Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds':
+        'Temple Grounds/Temple Transport A/Elevator to Great Temple',
+        'Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog':
+        'Temple Grounds/Temple Transport C/Elevator to Great Temple',
+        'Great Temple/Temple Transport A/Elevator to Temple Grounds':
+        'Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes',
+        'Great Temple/Temple Transport B/Elevator to Temple Grounds':
+        'Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes',
+        'Great Temple/Temple Transport C/Elevator to Temple Grounds':
+        'Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes',
+        'Sanctuary Fortress/Transport to Agon Wastes/Elevator to Agon Wastes':
+        'Great Temple/Temple Transport B/Elevator to Temple Grounds',
+        'Sanctuary Fortress/Transport to Temple Grounds/Elevator to Temple Grounds':
+        'Temple Grounds/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress',
+        'Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog':
+        'Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress',
+        'Temple Grounds/Temple Transport A/Elevator to Great Temple':
+        'Agon Wastes/Transport to Temple Grounds/Elevator to Temple Grounds',
+        'Temple Grounds/Temple Transport B/Elevator to Great Temple':
+        'Agon Wastes/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress',
+        'Temple Grounds/Temple Transport C/Elevator to Great Temple':
+        'Agon Wastes/Transport to Torvus Bog/Elevator to Torvus Bog',
+        'Temple Grounds/Transport to Agon Wastes/Elevator to Agon Wastes':
+        'Great Temple/Temple Transport A/Elevator to Temple Grounds',
+        'Temple Grounds/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress':
+        'Sanctuary Fortress/Transport to Temple Grounds/Elevator to Temple Grounds',
+        'Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog':
+        'Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds',
+        'Torvus Bog/Transport to Agon Wastes/Elevator to Agon Wastes':
+        'Great Temple/Temple Transport C/Elevator to Temple Grounds',
+        'Torvus Bog/Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress':
+        'Sanctuary Fortress/Transport to Torvus Bog/Elevator to Torvus Bog',
+        'Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds':
+        'Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog',
     }
 
 

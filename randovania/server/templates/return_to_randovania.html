@@ -1,0 +1,101 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login Successful</title>
+	<style>
+
+        @font-face {
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .cf:before,
+        .cf:after {
+            content: " ";
+            display: table;
+        }
+        .cf:after {
+            clear: both;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            background-color: #fffffe;
+        }
+        body {
+            padding: 0 20px;
+            min-width: 300px;
+            font-family: 'Akkurat-Regular', sans-serif;
+            background-color: #fffffe;
+            color: #1a1a1a;
+            text-align: center;
+            word-wrap: break-word;
+            -webkit-font-smoothing: antialiased
+        }
+        a:link,
+        a:visited {
+            color: #00c2a8;
+        }
+        a:hover,
+        a:active {
+            color: #03a994;
+        }
+
+    .site-header {
+        margin: 0 auto;
+        padding: 80px 0 0;
+        max-width: 820px;
+    }
+    .site-header__title {
+        margin: 0;
+        font-family: Montserrat, sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1.1;
+        text-transform: uppercase;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+    }
+
+    .main-content {
+        margin: 0 auto;
+        max-width: 820px;
+    }
+    .main-content__body {
+        margin: 20px 0 0;
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    @media only screen and (min-width: 40em) {
+        .site-header {
+            padding-top: 150px;
+        }
+        .site-header__title {
+            font-size: 3.25rem;
+        }
+        .main-content__body {
+            font-size: 1.25rem;
+        }
+    }
+	</style>
+</head>
+<body>
+	<header class="site-header" id="header">
+		<h2 class="site-header__title" data-lead-id="site-header-title">
+            Welcome {{ user.name }}.
+        </h2>
+	</header>
+
+	<div class="main-content">
+		<p class="main-content__body" data-lead-id="main-content-body">Please switch back to Randovania to continue.</p>
+	</div>
+</body>
+</html>

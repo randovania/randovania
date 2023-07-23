@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from pathlib import Path
 
@@ -22,7 +24,7 @@ class DreadPerGameOptions(PerGameOptions):
         }
 
     @classmethod
-    def from_json(cls, value: dict) -> "DreadPerGameOptions":
+    def from_json(cls, value: dict) -> DreadPerGameOptions:
         game = RandovaniaGame.METROID_DREAD
         cosmetic_patches = game.data.layout.cosmetic_patches.from_json(value["cosmetic_patches"])
         return cls(
