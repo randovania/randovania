@@ -14,9 +14,9 @@ if TYPE_CHECKING:
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
-DEFAULT_HEALTH_COLOR = (255, 228, 2)
-DEFAULT_ETANK_COLOR = (112, 221, 250)
-DEFAULT_DNA_COLOR = (46, 208, 3)
+DEFAULT_HEALTH_COLOR = (255, 225, 0)
+DEFAULT_ETANK_COLOR = (112, 222, 250)
+DEFAULT_DNA_COLOR = (46, 208, 5)
 
 def hue_rotate_color(original_color: tuple[int, int, int], rotation: int):
     color = QColor.fromRgb(*original_color)
