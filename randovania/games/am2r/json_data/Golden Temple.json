@@ -3364,6 +3364,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
                                     }
                                 ]
                             }
@@ -4989,7 +4993,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Spider requires another power bomb, or a way to spider at the top",
+                                                                    "comment": "Spider requires 2 power bombs, or a way to spider at the top",
                                                                     "items": [
                                                                         {
                                                                             "type": "or",
@@ -4997,8 +5001,13 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Use Power Bombs"
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Power Bombs",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
                                                                                     },
                                                                                     {
                                                                                         "type": "template",
@@ -5605,15 +5614,6 @@
                                         "data": {
                                             "comment": "Necessary to get out of mini-hole in case one failed",
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
