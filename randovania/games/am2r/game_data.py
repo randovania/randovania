@@ -6,8 +6,8 @@ from randovania.layout.preset_describer import GamePresetDescriber
 
 
 def _options():
-    from randovania.interface_common.options import PerGameOptions
-    return PerGameOptions
+    from randovania.games.am2r.exporter.options import AM2RPerGameOptions
+    return AM2RPerGameOptions
 
 
 def _gui() -> game.GameGui:
