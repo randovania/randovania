@@ -46,13 +46,17 @@ certifi==2023.5.7
     #   requests
     #   sentry-sdk
 cffi==1.15.1
-    # via cryptography
+    # via
+    #   clr-loader
+    #   cryptography
 charset-normalizer==3.2.0
     # via
     #   aiohttp
     #   requests
 click==8.1.4
     # via flask
+clr-loader==0.2.5
+    # via pythonnet
 colorama==0.4.6
     # via
     #   click
@@ -249,6 +253,8 @@ python-socketio==5.8.0
     # via
     #   flask-socketio
     #   randovania (setup.py)
+pythonnet==3.0.1
+    # via randovania (setup.py)
 qasync==0.24.0
     # via randovania (setup.py)
 random-enemy-attributes==1.0.3.1
