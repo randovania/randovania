@@ -18,6 +18,11 @@ DEFAULT_HEALTH_COLOR = (255, 225, 0)
 DEFAULT_ETANK_COLOR = (112, 222, 250)
 DEFAULT_DNA_COLOR = (46, 208, 5)
 
+
+# TODO: This function currently exists both in prime's cosmetic options and here with the exact same implementation
+# In order to avoid code smell, this should be put somewhere shared where both can access it, like base_cosmetic_patches
+# or by making it another lib, obviously with the tests these two have implemented.
+# Context: https://github.com/randovania/randovania/pull/4864#discussion_r1271434389
 def hue_rotate_color(original_color: tuple[int, int, int], rotation: int):
     color = QColor.fromRgb(*original_color)
     h = color.hue() + rotation
