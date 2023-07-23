@@ -57,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Chozo Ruins
 
 - Added: The Hall of the Elders Ghost Skip from Reflecting Pool Access to reach Crossway Access South, using advanced level tricks.
-Added: Knowledge (Intermediate) for reaching Elder Chamber without fighting the Chozo Ghost.
+- Added: Knowledge (Intermediate) for reaching Elder Chamber without fighting the Chozo Ghost.
 - Removed: Ice Beam has been removed from the connection to Elder Chamber in Hall of the Elders.
 - Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
 
