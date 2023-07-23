@@ -71,7 +71,7 @@ class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
 
     # Output File
     def _on_output_file_button(self):
-        output_dir = prompt_for_output_directory(self, self.output_file, self.output_file_edit)
+        output_dir = prompt_for_output_directory(self, "AM2R Randomizer", self.output_file_edit)
         if output_dir is not None:
             self.output_file_edit.setText(str(output_dir))
 
