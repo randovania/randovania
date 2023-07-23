@@ -49,7 +49,10 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
                           'spoiler': True,
                           'word_hash': 'Spreader Liftvine Great'},
          'generation_in_progress': None,
-         'allowed_games': ANY},
+         'allowed_games': ANY,
+         'allow_coop': False,
+         'allow_everyone_claim_world': False,
+         },
         room='multiplayer-session-1',
         namespace='/',
     )
@@ -93,7 +96,10 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
               'preset_raw': '{}'}
          ],
          'game_details': None, 'generation_in_progress': None,
-         'allowed_games': ANY},
+         'allowed_games': ANY,
+         'allow_coop': False,
+         'allow_everyone_claim_world': False,
+         },
         room='multiplayer-session-1',
         namespace='/',
     )

@@ -114,6 +114,8 @@ class MultiplayerSessionEntry(JsonDataclass):
     state: MultiplayerSessionState
     generation_in_progress: int | None
     allowed_games: list[RandovaniaGame]
+    allow_coop: bool
+    allow_everyone_claim_world: bool
 
     @property
     def users(self) -> dict[int, MultiplayerUser]:

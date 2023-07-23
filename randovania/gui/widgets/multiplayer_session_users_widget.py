@@ -303,22 +303,23 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                                self._register_debug_connector,
                                world_details)
 
-            if owner is None:
-                world_menu.addSeparator()
-                connect_to(world_menu.addAction("Claim for yourself"),
-                           self._world_claim_with, world_details.id,
-                           self.your_id)
+            if self.is_admin() or self._session.allow_everyone_claim_world:
+                if owner is None:
+                    world_menu.addSeparator()
+                    connect_to(world_menu.addAction("Claim for yourself"),
+                               self._world_claim_with, world_details.id,
+                               self.your_id)
 
-                if self.is_admin():
-                    claim_menu = world_menu.addMenu("Claim for")
-                    for p in self._session.users.values():
-                        connect_to(claim_menu.addAction(p.name),
-                                   self._world_claim_with, world_details.id,
-                                   p.id)
+                    if self.is_admin():
+                        claim_menu = world_menu.addMenu("Claim for")
+                        for p in self._session.users.values():
+                            connect_to(claim_menu.addAction(p.name),
+                                       self._world_claim_with, world_details.id,
+                                       p.id)
 
-            elif self.is_admin():
-                world_menu.addSeparator()
-                connect_to(world_menu.addAction("Unclaim"), self._world_unclaim, world_details.id, owner)
+                else:
+                    world_menu.addSeparator()
+                    connect_to(world_menu.addAction("Unclaim"), self._world_unclaim, world_details.id, owner)
 
             if owner == self.your_id or self.is_admin():
                 world_menu.addSeparator()

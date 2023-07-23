@@ -86,6 +86,8 @@ def sample_session(preset_manager):
         state=MultiplayerSessionState.SETUP,
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
+        allow_coop=False,
+        allow_everyone_claim_world=True,
     )
 
 
@@ -127,6 +129,8 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
         state=MultiplayerSessionState.IN_PROGRESS,
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
+        allow_coop=False,
+        allow_everyone_claim_world=True,
     )
     window = await MultiplayerSessionWindow.create_and_update(network_client, initial_session.id,
                                                               MagicMock(spec=WindowManager), MagicMock())
