@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 from typing import TYPE_CHECKING
+from pathlib import Path
 
 from randovania import get_data_path
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
@@ -75,8 +76,8 @@ class AM2RGameExporter(GameExporter):
         json_file.close()
 
         # AM2RLauncher installations usually have a profile.xml file. For less confusion, remove it if it exists
-        if Path.exists(tempdir.joinpath("profile.xml")):
-            Path.unlink(tempdir.joinpath("profile.xml"))
+        if Path.exists(Path(tempdir.name).joinpath("profile.xml")):
+            Path.unlink(Path(tempdir.name).joinpath("profile.xml"))
 
         # TODO: this is where we'd do some customization options like music shuffler or samus palettes
 
@@ -85,7 +86,7 @@ class AM2RGameExporter(GameExporter):
         Patcher.Main(input_data_win_path, output_data_win_path, json_file.name)
 
         # Move temp dir to output dir and get rid of it. Also delete original data.win
-        Path.unlink(input_data_win_path)
+        Path.unlink(Path(input_data_win_path))
         progress_update("Moving to output directory...", -1)
         shutil.copytree(tempdir.name, export_params.output_path, dirs_exist_ok=True)
         shutil.rmtree(tempdir.name)
@@ -93,12 +94,12 @@ class AM2RGameExporter(GameExporter):
     def _get_data_win_path(self, folder: str) -> Path:
         current_platform = platform.system()
         if current_platform == "Windows":
-            return Path(folder) / "data.win"
+            return Path(folder).joinpath("data.win")
 
         elif current_platform == "Linux":
             # Linux can have the game packed in an AppImage. If it exists, extract it first
             # Also extraction for some reason only does it into CWD, so we temporarily change it
-            appimage = Path(folder) / "AM2R.AppImage"
+            appimage = Path(folder).joinpath("AM2R.AppImage")
             if Path.exists(appimage):
                 cwd = Path.cwd()
                 os.chdir(folder)
@@ -106,14 +107,14 @@ class AM2RGameExporter(GameExporter):
                 os.chdir(cwd)
                 Path.unlink(appimage)
                 # shutil doesn't support moving a directory like this, so I copy + delete
-                shutil.copytree(Path(folder) / "squashfs-root", folder, dirs_exist_ok=True)
-                shutil.rmtree(Path(folder) / "squashfs-root")
-                return Path(folder) / "usr" / "bin" / "assets" / "game.unx"
+                shutil.copytree(Path(folder).joinpath("squashfs-root"), folder, dirs_exist_ok=True)
+                shutil.rmtree(Path(folder).joinpath("squashfs-root"))
+                return Path(folder).joinpath("usr", "bin","assets", "game.unx")
             else:
-                return Path(folder) / "assets" / "game.unx"
+                return Path(folder).joinpath("assets","game.unx")
 
         elif current_platform == "Darwin":
-            return Path(folder) / "AM2R.app" / "Contents" / "Resources" / "game.ios"
+            return Path(folder).joinpath("AM2R.app","Contents","Resources","game.ios")
 
         else:
             raise ValueError(f"Unknown system: {platform.system()}")
