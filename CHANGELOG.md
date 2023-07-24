@@ -62,11 +62,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Crossway - Easier boost only method for item
 - Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner 
 - Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
+- Changed: Ruined Nursery Bombless Standables Logic Adjustments
+- Added: Ruined Nursery Bombless w/ Boost strat
+- Added: Training Chamber Ghost Skip (Door to Training Chamber Access -> Pickup (Energy Tank))
+- Added: Training Chamber Ghost Skip (Pickup (Energy Tank) -> Door to Training Chamber Access)
 
 ##### Phendrana Drifts
 
 - Changed: Quarantine Cave - Various cleanup with Thardus fight logic. Reworked visor requirements. Added Missile strategy (allows Ice Beam only fight logically).
 - Added: Quarantine Cave - Added Quarantine Cave NSJ Scan Dash to Q-Mon Tunnel
+- Added: Dash to Q Mon from Room Center with SJ
+- Added: Reverse Thardus Skip Logic (Scan and Scanless)
+- Added: Thardus Hop (Room Center -> North Quarantine Tunnel) (Before Thardus)
+- Changed: Ice Ruins West Baby Sheegoth Jump  Damage Requirements and Trick Adjustments
+- Added: Gravity Chamber Pickup (Missile) NSJ w/o Grapple/Plasma Dash Method and Bombu Method
+
+##### Phazon Mines
+
+- Added: New Node and Connections in Metroid Quarantine A
+- Added: Metroid Hop to reach Missile from Quarantine Access A
+- Changed: Various Metroid Quarantine A logic adjustments
 
 ### Metroid Prime 2: Echoes
 
