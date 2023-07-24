@@ -129,9 +129,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         game_session_api.widget_root = self
         game_session_api.setParent(self)
         self.users_widget = MultiplayerSessionUsersWidget(options, self._window_manager, game_session_api)
-        self.tabWidget.removeTab(0)
-        self.tabWidget.insertTab(0, self.users_widget, "Players")
-        self.tabWidget.setCurrentIndex(0)
+        self.users_widget.setSizePolicy(QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Preferred,
+            QtWidgets.QSizePolicy.Policy.Expanding
+        ))
+        self.worlds_layout.insertWidget(0, self.users_widget)
+        self.tab_widget.setCurrentIndex(0)
         self._all_locations = set()
         self._all_pickups = set()
 
@@ -201,6 +204,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.duplicate_session_action.triggered.connect(self.duplicate_session)
         self.copy_permalink_button.clicked.connect(self.copy_permalink)
         self.view_game_details_button.clicked.connect(self.view_game_details)
+        self.everyone_can_claim_check.clicked.connect(self._on_everyone_can_claim_check)
 
         # Background Tasks
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -295,6 +299,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.update_game_tab()
         await self.update_logic_settings_window()
         self.update_multiworld_client_status()
+        self.everyone_can_claim_check.setChecked(session.allow_everyone_claim_world)
+        self.everyone_can_claim_check.setEnabled(self.users_widget.is_admin())
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -744,6 +750,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         await self.users_widget.world_export(world_uid)
 
     @asyncSlot()
+    async def _on_everyone_can_claim_check(self):
+        await self.game_session_api.set_everyone_can_claim(self.everyone_can_claim_check.isChecked())
+
+    @asyncSlot()
     async def game_export_listener(self, world_id: uuid.UUID, patch_data: dict):
         world = self._session.get_world(world_id)
         games_by_world: dict[uuid.UUID, RandovaniaGame] = {
@@ -761,7 +771,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         dialog.save_options()
         self._can_stop_background_process = game.exporter.export_can_be_aborted
-        self.tabWidget.setCurrentWidget(self.tab_session)
+        self.tab_widget.setCurrentWidget(self.tab_session)
         await game_exporter.export_game(
             exporter=game.exporter,
             export_dialog=dialog,

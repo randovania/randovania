@@ -52,7 +52,7 @@ def test_list_sessions(clean_database, flask_app, limit):
 
     state = MultiplayerSessionState.SETUP.value
     sio_mock = MagicMock()
-    sio_mock.get_current_user = MagicMock(return_value = someone)
+    sio_mock.get_current_user = MagicMock(return_value=someone)
 
     # Run
     result = session_api.list_sessions(sio_mock, limit)
@@ -101,6 +101,8 @@ def test_create_session(clean_database, preset_manager, default_game_list, mocke
         'game_details': None,
         'generation_in_progress': None,
         'allowed_games': default_game_list,
+        'allow_coop': False,
+        'allow_everyone_claim_world': False,
     }
 
 
@@ -140,6 +142,8 @@ def test_join_session(mock_emit_session_update: MagicMock,
         'game_details': None,
         'generation_in_progress': None,
         'allowed_games': default_game_list,
+        'allow_coop': False,
+        'allow_everyone_claim_world': False,
     }
     mock_join_multiplayer_session.assert_called_once_with(sa, session)
 

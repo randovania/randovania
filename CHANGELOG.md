@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Add Ready checkbox for Multiworld sessions.
 - Added: A new tool was added to the Pickup tab of Game Details that lets you quickly find in which worlds your pickups are.
 - Added: The time a world last had any activity is now displayed in the Multiworld session.
+- Added: A toggle for allowing anyone to claim worlds in a Multiworld session.
 - Changed: The popup when replacing a preset for a Multiworld Session now has the same features as the solo game interface.
 - Changed: Text prompts now default to accepting when pressing enter.
 - Changed: Reorganized the top menu bar. The Advanced menu is now called Preferences, with an Advanced sub-menu. Opening the Login window is now in the Open menu.
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Session Browser now properly sorts by creation date and user count. It also now properly defaults to showing recent sessions first.
 - Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
 - Fixed: Sorting the session history and audit log now works properly.
+- Fixed: In Multiworld session, the Claim world button is now properly disabled when you don't have permissions.
 
 ### Metroid Dread
 
@@ -43,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Make it possible to get to the Diffusion Beam location without Morph Ball.
 - Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 - Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
+- Fixed: Logic issues surrounding ending the Chain Reaction sequence in Artaria, aka the Vanilla Varia Suit area.
 - Removed: In Cataris - Green EMMI Introduction, the advanced Pseudo Wave Beam to break the blob from below is removed.
 - Removed: In Ghavoran - Blue EMMI Introduction, the trickless Ballspark to climb the room has been removed.
 
@@ -57,7 +60,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Chozo Ruins
 
+- Added: Main Plaza - Tree item OoB logic
+- Added: Crossway - Easier boost only method for item
+- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner 
 - Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
+
+##### Phendrana Drifts
+
+- Changed: Quarantine Cave - Various cleanup with Thardus fight logic. Reworked visor requirements. Added Missile strategy (allows Ice Beam only fight logically).
+- Added: Quarantine Cave - Added Quarantine Cave NSJ Scan Dash to Q-Mon Tunnel
 
 ### Metroid Prime 2: Echoes
 

@@ -71,6 +71,8 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         users_list=[],
         worlds=worlds,
         state=MultiplayerSessionState.SETUP,
+        allow_coop=False,
+        allow_everyone_claim_world=False,
     )
     assert result_actions == MultiplayerSessionActions(session_id=1, actions=actions)
 
