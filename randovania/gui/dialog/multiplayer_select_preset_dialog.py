@@ -19,7 +19,7 @@ class MultiplayerSelectPresetDialog(QtWidgets.QDialog, Ui_MultiplayerSelectPrese
     valid_preset: bool
 
     def __init__(self, window_manager: WindowManager, options: Options, *,
-                 allowed_games: list[RandovaniaGame] | None = None,
+                 allowed_games: list[RandovaniaGame] | None = None, default_game: RandovaniaGame | None = None,
                  include_world_name_prompt: bool = False):
         super().__init__()
         self.setupUi(self)
@@ -32,13 +32,16 @@ class MultiplayerSelectPresetDialog(QtWidgets.QDialog, Ui_MultiplayerSelectPrese
         self.allowed_games = allowed_games or list(RandovaniaGame.all_games())
         for game in self.allowed_games:
             self.game_selection_combo.addItem(game.long_name, game)
+        if default_game is not None:
+            signal_handling.set_combo_with_value(self.game_selection_combo, default_game)
 
         self.select_preset_widget.for_multiworld = True
         self.select_preset_widget.setup_ui(
-            self.allowed_games[0], window_manager, options
+            default_game or self.allowed_games[0], window_manager, options
         )
 
         signal_handling.on_combo(self.game_selection_combo, self._on_select_game)
+
         self.select_preset_widget.CanGenerate.connect(self._on_can_generate)
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)

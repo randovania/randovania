@@ -322,6 +322,8 @@ class MultiplayerSession(BaseModel):
             generation_in_progress=(self.generation_in_progress.id
                                     if self.generation_in_progress is not None else None),
             allowed_games=self.allowed_games,
+            allow_coop=self.allow_coop,
+            allow_everyone_claim_world=self.allow_everyone_claim_world,
         )
 
     def get_audit_log(self) -> MultiplayerSessionAuditLog:

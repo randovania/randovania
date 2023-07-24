@@ -289,6 +289,13 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
+    async def set_everyone_can_claim(self, flag: bool):
+        self.logger.info("Setting whether everyone can claim to %s", flag)
+        await self._session_admin_global(
+            admin_actions.SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM, flag,
+        )
+
+    @handle_network_errors
     async def switch_readiness(self, user_id: int):
         self.logger.info("Switching ready-ness of %d", user_id)
         await self._session_admin_player(
@@ -301,3 +308,4 @@ class MultiplayerSessionApi(QtCore.QObject):
             "multiplayer_request_session_update",
             self.current_session_id
         )
+

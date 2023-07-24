@@ -425,6 +425,9 @@ def admin_session(sa: ServerApp, session_id: int, action: str, *args):
     elif action == SessionAdminGlobalAction.CREATE_PATCHER_FILE:
         return _create_patcher_file(sa, session, *args)
 
+    elif action == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
+        _set_allow_everyone_claim(sa, session, *args)
+
     session_common.emit_session_meta_update(session)
 
 
@@ -514,6 +517,17 @@ def _switch_ready(sa: ServerApp, session: MultiplayerSession, membership: Multip
         membership.ready = not membership.ready
         membership.save()
         logger().info(f"{session_common.describe_session(session)}. Switching ready-ness.")
+
+
+def _set_allow_everyone_claim(sa: ServerApp, session: MultiplayerSession, new_state: bool):
+    verify_has_admin(sa, session.id, None)
+
+    with database.db.atomic():
+        session.allow_everyone_claim_world = new_state
+        new_operation = "Allowing" if session.allow_everyone_claim_world else "Disallowing"
+        session_common.add_audit_entry(sa, session,
+                                       f"{new_operation} everyone to claim worlds.")
+        session.save()
 
 
 def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: str, cosmetic_json: dict):
