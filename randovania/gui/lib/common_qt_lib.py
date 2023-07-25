@@ -7,7 +7,7 @@ import subprocess
 import typing
 from pathlib import Path
 
-from PySide6 import QtGui, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 
 import randovania
 from randovania import get_data_path
@@ -237,13 +237,26 @@ def set_clipboard(text: str):
     QtWidgets.QApplication.clipboard().setText(text)
 
 
-def open_directory_in_explorer(path: Path):
-    if platform.system() == "Windows":
-        os.startfile(path)
-    elif platform.system() == "Darwin":
-        subprocess.run(["open", path])
-    else:
-        subprocess.run(["xdg-open", path])
+def open_directory_in_explorer(path: Path, fallback_dialog: tuple[str, str, QtWidgets.QWidget] | None = None):
+    try:
+        if platform.system() == "Windows":
+            os.startfile(path)
+        elif platform.system() == "Darwin":
+            subprocess.run(["open", path])
+        else:
+            subprocess.run(["xdg-open", path])
+
+    except OSError:
+        if fallback_dialog is None:
+            raise
+        else:
+            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.Information,
+                                        fallback_dialog[0],
+                                        fallback_dialog[1],
+                                        QtWidgets.QMessageBox.StandardButton.Ok,
+                                        fallback_dialog[2])
+            box.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
+            box.show()
 
 
 def set_icon_data_paths(label: QtWidgets.QLabel):

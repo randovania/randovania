@@ -662,27 +662,19 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _on_menu_action_previously_generated_games(self):
         path = self._options.game_history_path
-        try:
-            common_qt_lib.open_directory_in_explorer(path)
-
-        except OSError:
-            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.Information, "Game History",
-                                        f"Previously generated games can be found at:\n{path}",
-                                        QtWidgets.QMessageBox.StandardButton.Ok, self)
-            box.setTextInteractionFlags(Qt.TextSelectableByMouse)
-            box.show()
+        common_qt_lib.open_directory_in_explorer(path, (
+            "Game History",
+            f"Previously generated games can be found at:\n{path}",
+            self,
+        ))
 
     def _on_menu_action_log_files_directory(self):
         path = self._options.logs_path
-        try:
-            common_qt_lib.open_directory_in_explorer(path)
-
-        except OSError:
-            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.Information, "Logs",
-                                        f"Randovania logs can be found at:\n{path}",
-                                        QtWidgets.QMessageBox.StandardButton.Ok, self)
-            box.setTextInteractionFlags(Qt.TextSelectableByMouse)
-            box.show()
+        common_qt_lib.open_directory_in_explorer(path, (
+            "Logs",
+            f"Randovania logs can be found at:\n{path}",
+            self,
+        ))
 
     def setup_welcome_text(self):
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))

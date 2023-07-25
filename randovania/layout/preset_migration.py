@@ -981,4 +981,5 @@ def convert_to_current_version(preset: dict) -> dict:
     return migration_lib.apply_migrations(
         preset,
         _MIGRATIONS,
+        version_name="preset version",
     )
