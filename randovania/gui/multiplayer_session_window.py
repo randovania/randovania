@@ -99,7 +99,9 @@ class HistoryFilterModel(QtCore.QSortFilterProxyModel):
 
 class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindow, BackgroundTaskMixin):
     tracker_windows: dict[tuple[uuid.UUID, int], ItemTrackerPopupWindow]
+    _old_session: MultiplayerSessionEntry | None = None
     _session: MultiplayerSessionEntry
+    _last_actions: MultiplayerSessionActions
     has_closed = False
     _logic_settings_window: CustomizePresetDialog | None = None
     _generating_game: bool = False
@@ -137,6 +139,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.tab_widget.setCurrentIndex(0)
         self._all_locations = set()
         self._all_pickups = set()
+        self._last_actions = MultiplayerSessionActions(game_session_api.current_session_id, [])
 
         self.audit_item_model = QtGui.QStandardItemModel(0, 3, self)
         self.audit_item_model.setHorizontalHeaderLabels(["User", "Message", "Time"])
@@ -284,6 +287,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if session.id != self.game_session_api.current_session_id:
             return
 
+        if hasattr(self, "_session"):
+            self._old_session = self._session
         self._session = session
 
         if self.network_client.current_user.id not in session.users:
@@ -411,11 +416,21 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             return "Unknown", "Unknown", f"Invalid location: {e}"
 
     def update_session_actions(self, actions: MultiplayerSessionActions):
+        if actions == self._last_actions:
+            return
+
         scrollbar = self.history_view.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
         self.history_item_model.setRowCount(len(actions.actions))
 
-        for i, action in enumerate(actions.actions):
+        enumerated_actions = list(enumerate(actions.actions))
+
+        # If the new actions
+        last_index = len(self._last_actions.actions)
+        if self._last_actions.actions == actions.actions[:last_index]:
+            enumerated_actions = enumerated_actions[last_index:]
+
+        for i, action in enumerated_actions:
             provider_name, receiver_name, location_name = self._describe_action(action)
             self.history_item_model.setItem(i, 0, QtGui.QStandardItem(provider_name))
             self.history_item_model.setItem(i, 1, QtGui.QStandardItem(receiver_name))
@@ -423,18 +438,29 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             self.history_item_model.setItem(i, 3, QtGui.QStandardItem(location_name))
             self.history_item_model.setItem(i, 4, model_lib.create_date_item(action.time))
 
+        self._last_actions = actions
         if autoscroll:
             self.history_view.scrollToBottom()
 
     def update_history_filter_world_combo(self):
+        if self._old_session is not None:
+            old_world_names = self._old_session.get_world_names()
+        else:
+            old_world_names = []
+
+        new_world_names = self._session.get_world_names()
+
+        if new_world_names == old_world_names:
+            return
+
         for prefix, combo in [("Provider: ", self.history_filter_provider_combo),
                               ("Receiver: ", self.history_filter_receiver_combo)]:
             combo.addItems(
-                [""] * (len(self._session.worlds) + 1 - combo.count())
+                [""] * (len(new_world_names) + 1 - combo.count())
             )
-            for i, world in enumerate(self._session.worlds):
-                combo.setItemText(i + 1, prefix + world.name)
-                combo.setItemData(i + 1, world.name)
+            for i, world_name in enumerate(new_world_names):
+                combo.setItemText(i + 1, prefix + world_name)
+                combo.setItemData(i + 1, world_name)
 
         self.on_history_filter_provider_combo()
         self.on_history_filter_receiver_combo()
