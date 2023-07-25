@@ -134,6 +134,12 @@ class MultiplayerSessionEntry(JsonDataclass):
                 return world
         raise KeyError(f"No world with id {world_id}")
 
+    def get_world_names(self) -> list[str]:
+        return [
+            world.name
+            for world in self.worlds
+        ]
+
 
 @dataclasses.dataclass(frozen=True)
 class MultiplayerSessionAuditEntry(JsonDataclass):
