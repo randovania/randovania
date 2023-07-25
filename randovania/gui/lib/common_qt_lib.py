@@ -237,7 +237,13 @@ def set_clipboard(text: str):
     QtWidgets.QApplication.clipboard().setText(text)
 
 
-def open_directory_in_explorer(path: Path, fallback_dialog: tuple[str, str, QtWidgets.QWidget] | None = None):
+class FallbackDialog(typing.NamedTuple):
+    title: str
+    text: str
+    parent: QtWidgets.QWidget
+
+
+def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | None = None):
     try:
         if platform.system() == "Windows":
             os.startfile(path)
@@ -250,11 +256,13 @@ def open_directory_in_explorer(path: Path, fallback_dialog: tuple[str, str, QtWi
         if fallback_dialog is None:
             raise
         else:
-            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Icon.Information,
-                                        fallback_dialog[0],
-                                        fallback_dialog[1],
-                                        QtWidgets.QMessageBox.StandardButton.Ok,
-                                        fallback_dialog[2])
+            box = QtWidgets.QMessageBox(
+                QtWidgets.QMessageBox.Icon.Information,
+                fallback_dialog.title,
+                fallback_dialog.text,
+                QtWidgets.QMessageBox.StandardButton.Ok,
+                fallback_dialog.parent,
+            )
             box.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
             box.show()
 

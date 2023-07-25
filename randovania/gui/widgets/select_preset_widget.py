@@ -353,7 +353,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         if path is None:
             return
 
-        common_qt_lib.open_directory_in_explorer(path, (
+        common_qt_lib.open_directory_in_explorer(path, common_qt_lib.FallbackDialog(
             "Preset",
             f"The selected preset can be found at:\n{path}",
             self,

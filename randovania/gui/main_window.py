@@ -662,7 +662,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _on_menu_action_previously_generated_games(self):
         path = self._options.game_history_path
-        common_qt_lib.open_directory_in_explorer(path, (
+        common_qt_lib.open_directory_in_explorer(path, common_qt_lib.FallbackDialog(
             "Game History",
             f"Previously generated games can be found at:\n{path}",
             self,
@@ -670,7 +670,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _on_menu_action_log_files_directory(self):
         path = self._options.logs_path
-        common_qt_lib.open_directory_in_explorer(path, (
+        common_qt_lib.open_directory_in_explorer(path, common_qt_lib.FallbackDialog(
             "Logs",
             f"Randovania logs can be found at:\n{path}",
             self,
