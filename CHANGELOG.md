@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Grapple Movement to get from Lower Door to Wide Beam Block Room to Upper Door in Artaria - EMMI Zone Hub.
 - Added: Crossing the water gap in Ferenia EMMI Zone Exit East with just Bombs (Hypermode IBJ and DBJ) or Cross Bombs and a Slide Bomb Boost (currently Movement Advanced).
 - Added: Use Speed Booster and Gravity Suit to escape Cataris - Kraid Arena after fighting Kraid.
+- Added: Using Wall Jump to get past the Flash Shift gate in Burenia - Teleport to Ferenia.
 - Changed: Make it possible to get to the Diffusion Beam location without Morph Ball.
 - Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 - Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
