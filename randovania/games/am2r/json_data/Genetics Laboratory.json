@@ -4079,7 +4079,25 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Event - Queen": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BossQueen",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Dock from Queen Arena Access": {
                     "node_type": "dock",
@@ -4107,7 +4125,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Hatchling Room": {
+                        "Event - Queen": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4267,6 +4285,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Queen": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 591.6,
+                        "y": 96.08,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "BossQueen",
+                    "connections": {
+                        "Dock to Hatchling Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
