@@ -2689,6 +2689,41 @@
                         "Event - Super Missile Rotatable Enky": {
                             "type": "template",
                             "data": "Destroy Enky"
+                        },
+                        "Event - Super Missile Rotatable with Ledge Warp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "LedgeWarp",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "HighDanger",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2955,6 +2990,31 @@
                     "event_name": "GhavoranSuperRotatableEnky",
                     "connections": {
                         "Dock to Spin Boost Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Super Missile Rotatable with Ledge Warp": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1992.84,
+                        "y": -1598.56,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "GhavoranSupersRotatable",
+                    "connections": {
+                        "Door to Navigation Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
