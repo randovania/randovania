@@ -77,7 +77,7 @@ game_data: game.GameData = game.GameData(
         ("What is a Shiny Missile Expansion?",
 
          "Missile Expansions have a 1 in 1024 of being Pokémon-style shiny: "
-         "they look different but behave entirely the same as normal.\n"
+         "they look different but behave entirely the same as normal.\n\n"
          "In a multiworld game, only your own Missile Expansions can be shiny."),
 
         ("What versions of the game are supported?",
