@@ -72,9 +72,8 @@ class DreadRemoteConnector(RemoteConnector):
     def game_enum(self) -> RandovaniaGame:
         return self._game_enum
 
-    # TODO: we could fetch and add the game version here
     def description(self):
-        return f"{self.game_enum.long_name}"
+        return f"{self.game_enum.long_name}: {self.executor.version}"
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
         return (self.in_cooldown, self.current_region)
