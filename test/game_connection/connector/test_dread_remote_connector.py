@@ -21,12 +21,13 @@ def dread_remote_connector():
     executor_mock = MagicMock(DreadExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
     executor_mock.signals = MagicMock(DreadExecutorToConnectorSignals)
+    executor_mock.version = "2.1.0"
     connector = DreadRemoteConnector(executor_mock)
     return connector
 
 async def test_general_class_content(connector: DreadRemoteConnector):
     assert connector.game_enum == RandovaniaGame.METROID_DREAD
-    assert connector.description() == RandovaniaGame.METROID_DREAD.long_name
+    assert connector.description() == f"{RandovaniaGame.METROID_DREAD.long_name}: 2.1.0"
 
     connector.Finished = MagicMock(QtCore.SignalInstance)
     connector.connection_lost()

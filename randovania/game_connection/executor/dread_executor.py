@@ -129,6 +129,7 @@ class DreadExecutor:
         self.logger = logging.getLogger(type(self).__name__)
         self.signals = DreadExecutorToConnectorSignals()
         self._ip = ip
+        self.version = "Unknown version"
 
     @property
     def ip(self):
@@ -158,13 +159,14 @@ class DreadExecutor:
 
             # Send API details request
             self.logger.debug("Requesting API details.")
-            await self.run_lua_code("return string.format('%d,%d,%s,%s', RL.Version, RL.BufferSize,"
-                                     "tostring(RL.Bootstrap), Init.sLayoutUUID)")
+            await self.run_lua_code("return string.format('%d,%d,%s,%s,%s', RL.Version, RL.BufferSize,"
+                                     "tostring(RL.Bootstrap), Init.sLayoutUUID, GameVersion)")
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.debug("Waiting for API details response.")
             response = await self._read_response()
-            api_version, buffer_size, bootstrap, self.layout_uuid_str = response.decode("ascii").split(",")
+            (api_version, buffer_size, bootstrap, self.layout_uuid_str,
+             self.version) = response.decode("ascii").split(",")
             self.logger.debug("Remote replied with API level %s, buffer_size %s, bootstrap %s and layout_uuid %s, "
                               "connection successful.", api_version, buffer_size, bootstrap, self.layout_uuid_str)
             self._socket.api_version = int(api_version)
