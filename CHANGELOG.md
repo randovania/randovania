@@ -66,9 +66,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Chozo Ruins
 
-- Added: Main Plaza - Tree item OoB logic
-- Added: Crossway - Easier boost only method for item
-- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner
+- Added: The Hall of the Elders Ghost Skip from Reflecting Pool Access to reach Crossway Access South, using advanced level tricks.
+- Added: Knowledge (Intermediate) for reaching Elder Chamber without fighting the Chozo Ghost.
+- Added: Main Plaza - Tree item OoB logic.
+- Added: Crossway - Easier boost only method for item.
+- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner .
+- Fixed: Ice Beam has been removed from the connection to Elder Chamber in Hall of the Elders.
 - Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
 
 ##### Phendrana Drifts
@@ -201,7 +204,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-#### Chozo Ruins
+##### Chozo Ruins
 
 - Changed: Reorganized Morph Ball pickup in Ruined Shrine to better fit database good practices.
 
