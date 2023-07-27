@@ -25,6 +25,12 @@
    </property>
    <item row="2" column="2" colspan="2">
     <widget class="QScrollArea" name="create_scroll_area">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -33,7 +39,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>200</width>
+        <width>147</width>
         <height>310</height>
        </rect>
       </property>
@@ -52,12 +58,6 @@
        </property>
        <item>
         <widget class="QLabel" name="create_preset_description">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -81,11 +81,11 @@
    </item>
    <item row="2" column="0" colspan="2">
     <widget class="PresetTreeWidget" name="create_preset_tree">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>0</height>
+      </size>
      </property>
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>

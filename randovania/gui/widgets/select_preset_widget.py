@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import dataclasses
 import logging
+import re
+import traceback
 import uuid
 from typing import TYPE_CHECKING
 
@@ -77,6 +79,11 @@ class PresetMenu(QtWidgets.QMenu):
         self.action_view_deleted.setVisible(False)
 
     def set_preset(self, preset: VersionedPreset | None):
+        try:
+            preset.get_preset()
+        except InvalidPreset:
+            preset = None
+
         self.preset = preset
 
         for p in [self.action_delete, self.action_history, self.action_export]:
@@ -97,6 +104,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
     _window_manager: WindowManager
     _options: Options
     _game: RandovaniaGame
+    _can_generate: bool = False
 
     def __init__(self, parent: QtWidgets.QWidget | None = None):
         super().__init__(parent)
@@ -127,6 +135,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self._preset_menu.action_required_tricks.triggered.connect(self._on_open_required_tricks_for_preset)
         self._preset_menu.action_import.triggered.connect(self._on_import_preset)
         self._preset_menu.action_view_deleted.triggered.connect(self._on_view_deleted)
+        self.create_preset_description.linkActivated.connect(self._on_click_create_preset_description)
 
         self._update_preset_tree_items()
 
@@ -316,16 +325,39 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
                     description += preset_describer.merge_categories(preset_describer.describe(raw_preset))
 
             except InvalidPreset as e:
-                if not isinstance(e.original_exception, UnsupportedVersion):
-                    logging.exception(f"Invalid preset for {preset.name}")
+                if isinstance(e.original_exception, UnsupportedVersion):
+                    exception_desc = f"<p>{e.original_exception}</p>"
+                else:
+                    logging.warning(f"Invalid preset for {preset.name}")
+                    exception_desc = "<pre>{}</pre>".format(
+                        "\n".join(traceback.format_exception(e.original_exception))
+                    )
+
                 description = (
-                    f"Preset {preset.name} can't be used as it contains the following error:"
-                    f"\n{e.original_exception}\n"
-                    f"\nPlease open edit the preset file with id {preset.uuid} manually or delete this preset."
+                    f"<p>Preset {preset.name} can't be used as it contains errors.</p>"
+                    f"<p>Please edit the file named <a href='open-preset://{preset.uuid}'>{preset.uuid}</a> manually "
+                    f"or delete this preset.</p>"
+                    f"{exception_desc}"
                 )
 
         self.create_preset_description.setText(description)
+        self._can_generate = can_generate
         self.CanGenerate.emit(can_generate)
+
+    def _on_click_create_preset_description(self, link: str):
+        info = re.match(r"^open-preset://([0-9a-f\-]{36})$", link)
+        if info is None:
+            return
+
+        path = self._window_manager.preset_manager.data_dir
+        if path is None:
+            return
+
+        common_qt_lib.open_directory_in_explorer(path, common_qt_lib.FallbackDialog(
+            "Preset",
+            f"The selected preset can be found at:\n{path}",
+            self,
+        ))
 
     def change_game(self, game: RandovaniaGame):
         self._game = game
