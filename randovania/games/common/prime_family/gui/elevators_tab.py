@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-import functools
 from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
@@ -114,7 +113,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         check = QtWidgets.QCheckBox(self.elevators_source_group)
         check.setText(name)
         check.area_location = location
-        signal_handling.on_checked(check, functools.partial(self._on_elevator_source_check_changed, location))
+        signal_handling.on_checked(check, self._on_elevator_source_check_changed)
         return check
 
     def _create_source_elevators(self):
@@ -194,12 +193,17 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
                 allow_unvisited_room_names=checked,
             )
 
-    def _on_elevator_source_check_changed(self, location: NodeIdentifier, checked: bool):
+    def _on_elevator_source_check_changed(self, checked: bool):
         with self._editor as editor:
             config = editor.layout_configuration_elevators
             editor.layout_configuration_elevators = dataclasses.replace(
                 config,
-                excluded_teleporters=config.excluded_teleporters.ensure_has_location(location, not checked),
+                excluded_teleporters=TeleporterList.with_elements([
+                    location
+                    for location, check in self._elevator_source_for_location.items()
+                    if not check.isChecked()
+
+                ], self.game_enum)
             )
 
     def _on_elevator_target_check_changed(self, areas: list[NodeIdentifier], checked: bool):
@@ -263,6 +267,8 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
             else:
                 dest_check.setChecked(origin_check.isChecked())
 
+        self.elevators_source_group.setVisible(can_shuffle_source)
+        self.elevators_target_group.setVisible(config_elevators.has_shuffled_target)
         self.elevators_target_group.setEnabled(config_elevators.has_shuffled_target)
         self.skip_final_bosses_check.setChecked(config_elevators.skip_final_bosses)
         self.elevators_allow_unvisited_names_check.setChecked(config_elevators.allow_unvisited_room_names)

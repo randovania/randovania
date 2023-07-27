@@ -8,6 +8,7 @@ if TYPE_CHECKING:
 
 
 def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+    from randovania.games.common.prime_family.gui.elevators_tab import PresetElevators
     from randovania.games.prime2.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
     from randovania.games.prime2.gui.preset_settings.echoes_dock_rando_tab import PresetEchoesDockRando
     from randovania.games.prime2.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal
@@ -15,7 +16,6 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.games.prime2.gui.preset_settings.echoes_item_pool_tab import EchoesPresetItemPool
     from randovania.games.prime2.gui.preset_settings.echoes_patches_tab import PresetEchoesPatches
     from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
-    from randovania.gui.preset_settings.elevators_tab import PresetElevators
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
