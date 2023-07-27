@@ -91,9 +91,6 @@ class TeleporterList(location_list.LocationList):
     def element_type(cls):
         return NodeIdentifier
 
-    def ensure_has_location(self, area_location: NodeIdentifier, enabled: bool) -> TeleporterList:
-        return super().ensure_has_location(area_location, enabled)
-
     def ensure_has_locations(self, area_locations: list[NodeIdentifier], enabled: bool) -> TeleporterList:
         return super().ensure_has_locations(area_locations, enabled)
 

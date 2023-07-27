@@ -410,4 +410,5 @@ def convert_to_current_version(json_dict: dict) -> dict:
     return migration_lib.apply_migrations(
         json_dict,
         _MIGRATIONS,
+        version_name="rdvgame version",
     )

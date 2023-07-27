@@ -10,13 +10,14 @@ from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH, WORLD_NAME_RE
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 from randovania.server.database import (
     MultiplayerAuditEntry,
     MultiplayerMembership,
     MultiplayerSession,
     World,
+    WorldAction,
     WorldUserAssociation,
     is_boolean,
 )
@@ -75,15 +76,6 @@ def _verify_world_has_session(world: World, session: MultiplayerSession):
         raise error.InvalidActionError("Wrong session")
 
 
-def _verify_in_state(session: MultiplayerSession, state: MultiplayerSessionState):
-    if session.state != state:
-        raise error.SessionInWrongStateError(state)
-
-
-def _verify_in_setup(session: MultiplayerSession):
-    _verify_in_state(session, MultiplayerSessionState.SETUP)
-
-
 def _verify_no_layout_description(session: MultiplayerSession):
     if session.layout_description_json is not None:
         raise error.InvalidActionError("Session has a generated game")
@@ -107,7 +99,6 @@ def _create_world(sa: ServerApp, session: MultiplayerSession, name: str, preset_
                   for_user: int | None = None):
     verify_has_admin(sa, session.id, for_user)
 
-    _verify_in_setup(session)
     _verify_no_layout_description(session)
     _verify_not_in_generation(session)
     preset = _get_preset(preset_bytes)
@@ -128,7 +119,6 @@ def _create_world(sa: ServerApp, session: MultiplayerSession, name: str, preset_
 def _change_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UUID, preset_bytes: bytes):
     world = World.get_by_uuid(world_uid)
 
-    _verify_in_setup(session)
     _verify_no_layout_description(session)
     _verify_not_in_generation(session)
     preset = _get_preset(preset_bytes)
@@ -176,7 +166,6 @@ def _delete_world(sa: ServerApp, session: MultiplayerSession, world_uid: str):
 
     verify_has_admin_or_claimed(sa, world)
     _verify_world_has_session(world, session)
-    _verify_in_setup(session)
     _verify_no_layout_description(session)
     _verify_not_in_generation(session)
 
@@ -190,13 +179,13 @@ def _delete_world(sa: ServerApp, session: MultiplayerSession, world_uid: str):
 
 def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_order: list[str]):
     verify_has_admin(sa, session.id, None)
-    _verify_in_setup(session)
 
     world_objects: dict[str, World] = {
         str(world.uuid): world
         for world in session.worlds
     }
     if world_order:
+        _verify_no_layout_description(session)
         used_ids = set(world_objects.keys())
         for world_uuid in world_order:
             if world_uuid not in used_ids:
@@ -225,7 +214,6 @@ def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_
 
 def _change_layout_description(sa: ServerApp, session: MultiplayerSession, description_bytes: bytes | None):
     verify_has_admin(sa, session.id, None)
-    _verify_in_setup(session)
     worlds_to_update = []
 
     if description_bytes is None:
@@ -258,12 +246,19 @@ def _change_layout_description(sa: ServerApp, session: MultiplayerSession, descr
             raise error.InvalidActionError(f"Invalid layout: {e}") from e
 
     with database.db.atomic():
+        if worlds_to_update:
+            # Delete all collected locations. This is only relevant when removing a layout description, and since we're
+            # also creating new layout uuids there's no problem with already exported worlds
+            WorldAction.delete().where(WorldAction.session == session).execute()
+
         for world in worlds_to_update:
             world.save()
 
         session.generation_in_progress = None
         session.layout_description = description
         session.save()
+
+        session_common.emit_session_actions_update(session)
         session_common.add_audit_entry(sa, session,
                                        "Removed generated game" if description is None
                                        else f"Set game to {description.shareable_word_hash}")
@@ -283,26 +278,14 @@ def _download_layout_description(sa: ServerApp, session: MultiplayerSession) -> 
     return session.get_layout_description_as_binary()
 
 
-def _start_session(sa: ServerApp, session: MultiplayerSession):
+def _change_visibility(sa: ServerApp, session: MultiplayerSession, new_visibility: str):
     verify_has_admin(sa, session.id, None)
-    _verify_in_setup(session)
-    if session.layout_description_json is None:
-        raise error.InvalidActionError("Unable to start session, no game is available.")
+    new_visibility = MultiplayerSessionVisibility(new_visibility)
 
-    session.state = MultiplayerSessionState.IN_PROGRESS
-    logger().info(f"{session_common.describe_session(session)}: Starting session.")
+    session.state = new_visibility
+    logger().info("%s: Changing visibility to %s.", session_common.describe_session(session), new_visibility)
     session.save()
-    session_common.add_audit_entry(sa, session, "Started session")
-
-
-def _finish_session(sa: ServerApp, session: MultiplayerSession):
-    verify_has_admin(sa, session.id, None)
-    _verify_in_state(session, MultiplayerSessionState.IN_PROGRESS)
-
-    session.state = MultiplayerSessionState.FINISHED
-    logger().info(f"{session_common.describe_session(session)}: Finishing session.")
-    session.save()
-    session_common.add_audit_entry(sa, session, "Finished session")
+    session_common.add_audit_entry(sa, session, f"Changed visibility to {new_visibility.user_friendly_name}")
 
 
 def _change_password(sa: ServerApp, session: MultiplayerSession, password: str):
@@ -400,11 +383,8 @@ def admin_session(sa: ServerApp, session_id: int, action: str, *args):
     elif action == SessionAdminGlobalAction.DOWNLOAD_LAYOUT_DESCRIPTION:
         return _download_layout_description(sa, session)
 
-    elif action == SessionAdminGlobalAction.START_SESSION:
-        _start_session(sa, session)
-
-    elif action == SessionAdminGlobalAction.FINISH_SESSION:
-        _finish_session(sa, session)
+    elif action == SessionAdminGlobalAction.CHANGE_VISIBILITY:
+        _change_visibility(sa, session, *args)
 
     elif action == SessionAdminGlobalAction.CHANGE_PASSWORD:
         _change_password(sa, session, *args)

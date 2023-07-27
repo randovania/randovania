@@ -467,6 +467,10 @@
                 "long_name": "Boss - Genesis Defeated",
                 "extra": {}
             },
+            "BossQueen": {
+                "long_name": "Boss - Queen Defeated",
+                "extra": {}
+            },
             "EMPA1": {
                 "long_name": "EMP - Golden Temple",
                 "extra": {}
@@ -791,6 +795,11 @@
             },
             "ChargedBombJump": {
                 "long_name": "Charged Bomb Jump",
+                "description": "",
+                "extra": {}
+            },
+            "MissileLessMetroids": {
+                "long_name": "Missile-Less Metroid Fights",
                 "description": "",
                 "extra": {}
             }
@@ -1972,7 +1981,7 @@
                     ]
                 }
             },
-            "Defeat Alpha": {
+            "Defeat non-dodging Alpha": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -2018,7 +2027,93 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Knowledge",
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Damage requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 65,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Defeat dodging Alpha": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Item requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 7,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MissileLessMetroids",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -2037,18 +2132,18 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 4,
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 130,
                                             "negate": false
                                         }
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 66,
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 3,
                                             "negate": false
                                         }
                                     }
@@ -2058,7 +2153,223 @@
                     ]
                 }
             },
-            "Defeat Gamma": {
+            "Defeat Dual Alphas": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Item requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 7,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Damage requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 199,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Defeat Alpha Squad": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 7,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Not sure yet if this is even possible to do",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Damage requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 250,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Fusion low% strat to escape",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Super Missiles",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Defeat dodging Gamma": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -2104,8 +2415,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -2190,8 +2501,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -2319,8 +2630,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -3398,6 +3709,19 @@
                             "data": {
                                 "type": "events",
                                 "name": "BossGenesis",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Metroid Queen-Locked Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "BossQueen",
                                 "amount": 1,
                                 "negate": false
                             }

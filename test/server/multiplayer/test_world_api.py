@@ -10,7 +10,8 @@ from frozendict import frozendict
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
-from randovania.network_common import error, signals
+from randovania.games.game import RandovaniaGame
+from randovania.network_common import error, remote_inventory, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.world_sync import (
     ServerSyncRequest,
@@ -22,34 +23,18 @@ from randovania.server import database
 from randovania.server.multiplayer import world_api
 
 if TYPE_CHECKING:
+    import pytest_mock
     from pytest_mock import MockerFixture
-
-
-def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker):
-    # Setup
-    user = database.User.create(id=1234, discord_id=5678, name="The Name")
-    session = database.MultiplayerSession.create(name="Debug", creator=user)
-    world = database.World.create(session=session, name="W1", preset="{}")
-    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
-
-    sa = MagicMock()
-    sa.get_current_user.return_value = user
-
-    # Run
-    world_api.emit_world_pickups_update(sa, world)
-
-    # Assert
-    mock_emit.assert_not_called()
 
 
 @pytest.mark.parametrize(("progression", "result"), [
     (  # normal
-            [("Power", 1) ],
+            [("Power", 1)],
             ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
              'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35fPr8')
     ),
     (  # negative
-            [("Missile", -5) ],
+            [("Missile", -5)],
             ('C?ypIwY9x9y^)o&8#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rr'
              'mqu378#^m=E0aqcz^Lr4%&tu=WC<>et)vKSE{v@0?oTa+xPo8@R_8YcRyLMqmR3Rrmqu35sC@#!')
     ),
@@ -115,6 +100,22 @@ def test_emit_world_pickups_update_one_action(
         },
         room="world-1179c986-758a-4170-9b07-fe4541d78db0"
     )
+
+
+def test_add_pickup_to_inventory_success(dread_spider_pickup):
+    inventory = remote_inventory.inventory_to_encoded_remote({})
+    new_inventory = world_api._add_pickup_to_inventory(inventory, dread_spider_pickup, RandovaniaGame.METROID_DREAD)
+
+    assert remote_inventory.decode_remote_inventory(new_inventory) == {
+        "Magnet": 1,
+    }
+
+
+def test_add_pickup_to_inventory_bad(dread_spider_pickup):
+    inventory = b"THIS_IS_NOT_A_PROPER_INVENTORY"
+    new_inventory = world_api._add_pickup_to_inventory(inventory, dread_spider_pickup, RandovaniaGame.METROID_DREAD)
+
+    assert new_inventory == inventory
 
 
 def test_game_session_collect_pickup_for_self(
@@ -190,9 +191,14 @@ def test_game_session_collect_pickup_etm(
     ((0, 1), (0, 1)),
 ])
 def test_collect_locations_other(flask_app, two_player_session, echoes_resource_database,
-                                 locations_to_collect, exists, mocker):
-    mock_get_pickup_target: MagicMock = mocker.patch(
+                                 locations_to_collect: tuple[int, ...], exists: tuple[int, ...],
+                                 mocker: pytest_mock.MockerFixture):
+    mock_get_pickup_target = mocker.patch(
         "randovania.server.multiplayer.world_api._get_pickup_target", autospec=True)
+    mock_add_pickup_to_inventory = mocker.patch(
+        "randovania.server.multiplayer.world_api._add_pickup_to_inventory", autospec=True,
+        return_value=b"bar"
+    )
     mock_session_description: PropertyMock = mocker.patch(
         "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock)
     mock_emit_session_update = mocker.patch(
@@ -204,6 +210,9 @@ def test_collect_locations_other(flask_app, two_player_session, echoes_resource_
 
     w1 = database.World.get_by_id(1)
     w2 = database.World.get_by_id(2)
+    assoc = database.WorldUserAssociation.get_by_instances(world=w2, user=1235)
+    assoc.inventory = b"boo"
+    assoc.save()
 
     for existing_id in exists:
         database.WorldAction.create(
@@ -223,6 +232,14 @@ def test_collect_locations_other(flask_app, two_player_session, echoes_resource_
     for location in locations_to_collect:
         database.WorldAction.get(provider=w1, location=location)
 
+    new_locs = [loc for loc in locations_to_collect if loc not in exists]
+    mock_add_pickup_to_inventory.assert_has_calls([
+        call(
+            inv, mock_get_pickup_target.return_value.pickup,
+            mock_session_description.return_value.get_preset.return_value.game
+        )
+        for inv, _ in zip([b"boo", b"bar"], new_locs, strict=False)
+    ])
     mock_emit_session_update.assert_not_called()
     if exists == locations_to_collect:
         assert result == set()

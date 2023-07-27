@@ -3,8 +3,9 @@ from __future__ import annotations
 import copy
 import typing
 
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.item_resource_info import Inventory, InventoryItem, ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
@@ -160,3 +161,10 @@ class ResourceCollection:
 
     def __copy__(self):
         return self.duplicate()
+
+    def as_inventory(self) -> Inventory:
+        return {
+            resource: InventoryItem(quantity, quantity)
+            for resource, quantity in self.as_resource_gain()
+            if resource.resource_type == ResourceType.ITEM
+        }

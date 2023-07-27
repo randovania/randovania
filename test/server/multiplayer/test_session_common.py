@@ -10,7 +10,7 @@ import pytest
 from randovania.bitpacking import construct_pack
 from randovania.network_common import multiplayer_session
 from randovania.network_common.multiplayer_session import MultiplayerSessionAuditEntry, MultiplayerSessionAuditLog
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 from randovania.server.multiplayer import session_common
 
@@ -24,7 +24,7 @@ def test_emit_session_meta_update(session_update, flask_app, mocker, default_gam
     session_json = {
         "id": 1,
         "name": "Debug",
-        "state": MultiplayerSessionState.IN_PROGRESS.value,
+        "visibility": MultiplayerSessionVisibility.VISIBLE.value,
         "users_list": [
             {
                 "id": 1234,

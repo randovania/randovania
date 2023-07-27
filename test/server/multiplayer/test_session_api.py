@@ -9,7 +9,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.network_common import error
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 from randovania.server.multiplayer import session_api
 from randovania.server.server_app import ServerApp
@@ -50,7 +50,7 @@ def test_list_sessions(clean_database, flask_app, limit):
     world1_s2 = database.World.create(session=s2, name="Foobar World 1", preset="I'm a dummy")
     database.WorldUserAssociation.create(world=world1_s2, user=someone)
 
-    state = MultiplayerSessionState.SETUP.value
+    state = MultiplayerSessionVisibility.VISIBLE.value
     sio_mock = MagicMock()
     sio_mock.get_current_user = MagicMock(return_value=someone)
 
@@ -95,7 +95,7 @@ def test_create_session(clean_database, preset_manager, default_game_list, mocke
     assert result == {
         'id': 1,
         'name': 'My Room',
-        'state': MultiplayerSessionState.SETUP.value,
+        'visibility': MultiplayerSessionVisibility.VISIBLE.value,
         'users_list': [{'admin': True, 'ready': False, 'id': 1234, 'name': 'The Name', 'worlds': {}}],
         'worlds': [],
         'game_details': None,
@@ -130,7 +130,7 @@ def test_join_session(mock_emit_session_update: MagicMock,
     mock_emit_session_update.assert_called_once_with(session)
     assert result == {
         'id': 1,
-        'state': MultiplayerSessionState.SETUP.value,
+        'visibility': MultiplayerSessionVisibility.VISIBLE.value,
         'name': 'The Session',
         'users_list': [
             {'admin': True, 'ready': False, 'id': 1235, 'name': 'Other Name', 'worlds': {}},

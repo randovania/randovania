@@ -2,7 +2,9 @@ import base64
 import datetime
 import logging
 import uuid
+from typing import TYPE_CHECKING
 
+import construct
 import flask_socketio
 import peewee
 import sentry_sdk
@@ -14,11 +16,12 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
-from randovania.network_common import error, signals
+from randovania.network_common import error, remote_inventory, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
-from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.network_common.world_sync import (
     ServerSyncRequest,
     ServerSyncResponse,
@@ -29,6 +32,9 @@ from randovania.server.database import MultiplayerSession, User, World, WorldAct
 from randovania.server.lib import logger
 from randovania.server.multiplayer import session_common
 from randovania.server.server_app import ServerApp
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 def _get_world_room(world: World):
@@ -79,8 +85,24 @@ def _get_pickup_target(description: LayoutDescription, provider: int, location: 
     return pickup_assignment.get(PickupIndex(location))
 
 
+def _add_pickup_to_inventory(inventory: bytes, pickup: PickupEntry, game: RandovaniaGame) -> bytes:
+    decoded_or_err = remote_inventory.decode_remote_inventory(inventory)
+    if isinstance(decoded_or_err, construct.ConstructError):
+        return inventory
+
+    db = default_database.resource_database_for(game)
+    collection = ResourceCollection.with_database(db)
+    collection.add_resource_gain(
+        (db.get_item(name), quantity)
+        for name, quantity in decoded_or_err.items()
+    )
+    collection.add_resource_gain(pickup.resource_gain(collection))
+
+    return remote_inventory.inventory_to_encoded_remote(collection.as_inventory())
+
+
 @sentry_sdk.trace
-def _collect_location(session: MultiplayerSession, world: World,
+def _collect_location(sa: ServerApp, session: MultiplayerSession, world: World,
                       description: LayoutDescription,
                       pickup_location: int) -> World | None:
     """
@@ -120,6 +142,19 @@ def _collect_location(session: MultiplayerSession, world: World,
         log("It's a %s for %s, but it was already collected.", pickup_target.pickup.name, target_world.name)
         return None
 
+    target_game = description.get_preset(target_world.order).game
+    associations: Iterable[WorldUserAssociation] = WorldUserAssociation.select().where(
+        WorldUserAssociation.world == target_world,
+        WorldUserAssociation.connection_state == GameConnectionStatus.Disconnected,
+        WorldUserAssociation.inventory.is_null(False)
+    )
+    for assoc in associations:
+        new_inventory = _add_pickup_to_inventory(assoc.inventory, pickup_target.pickup, target_game)
+        if assoc.inventory != new_inventory:
+            assoc.inventory = new_inventory
+            assoc.save()
+            emit_inventory_update(sa, target_world, assoc.user_id, new_inventory)
+
     log("It's a %s for %s.", pickup_target.pickup.name, target_world.name)
     return target_world
 
@@ -129,15 +164,12 @@ def collect_locations(sa: ServerApp, source_world: World, pickup_locations: tupl
                       ) -> set[World]:
     session = source_world.session
 
-    if session.state != MultiplayerSessionState.IN_PROGRESS:
-        raise error.SessionInWrongStateError(MultiplayerSessionState.IN_PROGRESS)
-
     logger().info(f"{session_common.describe_session(session, source_world)} found items {pickup_locations}")
     description = session.layout_description
 
     receiver_worlds = set()
     for location in pickup_locations:
-        target_world = _collect_location(session, source_world, description, location)
+        target_world = _collect_location(sa, session, source_world, description, location)
         if target_world is not None:
             receiver_worlds.add(target_world)
 
@@ -284,10 +316,6 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
 @sentry_sdk.trace
 def emit_world_pickups_update(sa: ServerApp, world: World):
     session = world.session
-
-    if session.state == MultiplayerSessionState.SETUP:
-        logger().warning("Attempting to emit pickups for %s during SETUP", world)
-        return
 
     description = session.layout_description
     resource_database = _get_resource_database(description, world.order)

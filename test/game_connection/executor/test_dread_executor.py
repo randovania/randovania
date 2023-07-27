@@ -22,7 +22,8 @@ async def test_connect(executor, mocker):
     writer.drain = AsyncMock()
     reader.read = AsyncMock()
     handshake_answer = [b'\x01', b'\x00']
-    api_request_answer = [b'\x03', b'\x01', b'\x01\x0a\x00\x00', b'1,4096,nil,00000000-0000-1111-0000-000000000000']
+    api_request_answer = [b'\x03', b'\x01', b'\x01\x0a\x00\x00', b'1,4096,nil,'
+                          b'00000000-0000-1111-0000-000000000000,2.1.0']
     bootstrap_1 = [b'\x03', b'\x02', b'\x01\x03\x00\x00', b'nil']
     bootstrap_2 = [b'\x03', b'\x03', b'\x01\x03\x00\x00', b'nil']
     bootstrap_3 = [b'\x03', b'\x04', b'\x01\x03\x00\x00', b'nil']
@@ -52,7 +53,8 @@ async def test_connect_fail_lua_error(executor, mocker):
     writer.drain = AsyncMock()
     reader.read = AsyncMock()
     handshake_answer = [b'\x01', b'\x00']
-    api_request_answer = [b'\x03', b'\x01', b'\x01\x0a\x00\x00', b'1,4096,nil,00000000-0000-1111-0000-000000000000']
+    api_request_answer = [b'\x03', b'\x01', b'\x01\x0a\x00\x00', b'1,4096,nil,'
+                          b'00000000-0000-1111-0000-000000000000,2.1.0']
     bootstrap_1 = [b'\x03', b'\x02', b'\x00\x03\x00\x00', b'nil']
     reader.read.side_effect = handshake_answer + api_request_answer + bootstrap_1
 
