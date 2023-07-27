@@ -80,7 +80,8 @@ class PresetMenu(QtWidgets.QMenu):
 
     def set_preset(self, preset: VersionedPreset | None):
         try:
-            preset.get_preset()
+            if preset is not None:
+                preset.get_preset()
         except InvalidPreset:
             preset = None
 
@@ -291,7 +292,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             preset = self.create_preset_tree.preset_for_item(item)
 
         self._preset_menu.set_preset(preset)
-        self._preset_menu.exec_(QtGui.QCursor.pos())
+        self._preset_menu.exec(QtGui.QCursor.pos())
 
     @property
     def preset(self) -> VersionedPreset | None:
