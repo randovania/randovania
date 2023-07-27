@@ -5,6 +5,7 @@ import dataclasses
 import itertools
 import json
 import uuid
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, PropertyMock, call
 
 import peewee
@@ -17,10 +18,13 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.multiplayer_session import GameDetails
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 from randovania.server.multiplayer import session_admin
 from randovania.server.server_app import ServerApp
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_audit):
@@ -44,7 +48,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
 
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
-        {'id': 1, 'name': 'Debug', 'state': 'in-progress', 'users_list': [], 'worlds': [],
+        {'id': 1, 'name': 'Debug', 'visibility': 'setup', 'users_list': [], 'worlds': [],
          'game_details': {'seed_hash': 'NMY7DGIN',
                           'spoiler': True,
                           'word_hash': 'Spreader Liftvine Great'},
@@ -80,7 +84,7 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
 
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
-        {'id': 1, 'name': 'Debug', 'state': 'in-progress',
+        {'id': 1, 'name': 'Debug', 'visibility': 'setup',
          'users_list': [
              {'admin': True, 'id': 1234, 'name': 'The Name', 'ready': False,
               'worlds': {'1179c986-758a-4170-9b07-fe4541d78db0': {
@@ -109,7 +113,8 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
 def test_admin_player_create_world_for(mock_emit_session_update: MagicMock, mock_audit,
                                        clean_database, flask_app, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
     sa.get_current_user.return_value = user1
@@ -233,7 +238,8 @@ def test_admin_session_patcher_file_not_associated(flask_app, two_player_session
 
 def test_admin_session_delete_session(mock_emit_session_update: MagicMock, flask_app, clean_database):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
     sa.get_current_user.return_value = user1
@@ -250,7 +256,8 @@ def test_admin_session_delete_session(mock_emit_session_update: MagicMock, flask
 def test_admin_session_create_world(mock_emit_session_update: MagicMock, mock_audit,
                                     clean_database, flask_app, preset_manager):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
     sa.get_current_user.return_value = user1
@@ -272,7 +279,8 @@ def test_admin_session_create_world(mock_emit_session_update: MagicMock, mock_au
 def test_admin_session_create_world_bad(mock_emit_session_update: MagicMock, mock_audit,
                                         clean_database, flask_app, preset_manager, reason):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
     sa.get_current_user.return_value = user1
@@ -301,7 +309,8 @@ def test_admin_session_create_world_bad(mock_emit_session_update: MagicMock, moc
 def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_audit,
                                     clean_database, flask_app, preset_manager, association):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     w1 = database.World.create(session=session, name="W1", preset="{}")
     database.World.create(session=session, name="W2", preset="{}")
     database.MultiplayerMembership.create(user=user1, session=session, admin=association == "admin")
@@ -341,7 +350,8 @@ def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_au
 def test_admin_session_rename_world(mock_emit_session_update: MagicMock, mock_audit,
                                     clean_database, flask_app, valid_name, already_exists):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     w1 = database.World.create(session=session, name="W1", preset="{}")
     database.World.create(session=session, name="W2", preset="{}")
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
@@ -380,7 +390,8 @@ def test_admin_session_rename_world(mock_emit_session_update: MagicMock, mock_au
 def test_admin_session_delete_world(mock_emit_session_update: MagicMock, mock_audit,
                                     clean_database, flask_app, preset_manager, association):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     w1 = database.World.create(session=session, name="W1", preset="{}")
     database.World.create(session=session, name="W2", preset="{}")
     database.MultiplayerMembership.create(user=user1, session=session, admin=association == "admin")
@@ -414,7 +425,8 @@ def test_admin_session_delete_world(mock_emit_session_update: MagicMock, mock_au
 
 def test_admin_session_delete_world_missing(clean_database, flask_app):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
     sa.get_current_user.return_value = user1
@@ -435,7 +447,8 @@ def test_admin_session_update_layout_generation(mock_emit_session_update: MagicM
                                                 clean_database, flask_app, case):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1,
                                                  generation_in_progress=user2 if case == "to_true_busy" else None)
     w1 = database.World.create(session=session, name="W1", preset="{}",
                                uuid=uuid.UUID('00000000-0000-0000-0000-000000000000'))
@@ -489,12 +502,16 @@ def test_admin_session_change_layout_description(clean_database, preset_manager,
                                                  mocker, flask_app, mock_audit):
     mock_verify_no_layout_description = mocker.patch(
         "randovania.server.multiplayer.session_admin._verify_no_layout_description", autospec=True)
+    mock_emit_session_actions_update = mocker.patch(
+        "randovania.server.multiplayer.session_common.emit_session_actions_update", autospec=True
+    )
     mock_from_json_dict: MagicMock = mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.from_bytes")
 
     preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1,
                                                  generation_in_progress=user1)
     database.World.create_for(session=session, name="W1", preset=preset, order=0)
     database.World.create_for(session=session, name="W2", preset=preset, order=1)
@@ -522,6 +539,7 @@ def test_admin_session_change_layout_description(clean_database, preset_manager,
                                     b"layout_description_json")
 
     # Assert
+    mock_emit_session_actions_update.assert_called_once_with(session)
     mock_emit_session_update.assert_called_once_with(session)
     mock_audit.assert_called_once_with(sa, session, "Set game to Hash Words")
     mock_verify_no_layout_description.assert_called_once_with(session)
@@ -533,10 +551,15 @@ def test_admin_session_change_layout_description(clean_database, preset_manager,
 
 
 def test_admin_session_remove_layout_description(mock_emit_session_update: MagicMock, clean_database,
-                                                 flask_app, mock_audit):
+                                                 flask_app, mock_audit, mocker: pytest_mock.MockerFixture):
+    mock_emit_session_actions_update = mocker.patch(
+        "randovania.server.multiplayer.session_common.emit_session_actions_update", autospec=True
+    )
+
     original_uid = uuid.UUID('6b5ac1a1-d250-4f05-0000-ae37e8a92165')
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1,
                                                  generation_in_progress=user1,
                                                  layout_description_json="layout_description_json")
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
@@ -549,6 +572,7 @@ def test_admin_session_remove_layout_description(mock_emit_session_update: Magic
         session_admin.admin_session(sa, 1, SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION.value, None)
 
     # Assert
+    mock_emit_session_actions_update.assert_called_once_with(session)
     mock_emit_session_update.assert_called_once_with(session)
     mock_audit.assert_called_once_with(sa, session, "Removed generated game")
     assert database.MultiplayerSession.get_by_id(1).layout_description_json is None
@@ -561,7 +585,8 @@ def test_admin_session_change_layout_description_invalid(mock_emit_session_updat
                                                          clean_database, other_user, flask_app):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1,
                                                  generation_in_progress=user2 if other_user else None)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
@@ -605,7 +630,7 @@ def test_admin_session_download_layout_description_no_spoiler(clean_database, mo
         "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock)
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(
-        id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
+        id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE, creator=user1,
         layout_description_json="layout_description_json",
         game_details_json=json.dumps(GameDetails(spoiler=False, word_hash="fun", seed_hash="fun").as_json)
     )
@@ -622,71 +647,33 @@ def test_admin_session_download_layout_description_no_spoiler(clean_database, mo
     mock_layout_description.assert_not_called()
 
 
-@pytest.mark.parametrize("has_layout", [False, True])
-def test_admin_session_start_session(mock_emit_session_update,
-                                     clean_database, preset_manager,
-                                     flask_app, mock_audit, has_layout):
+@pytest.mark.parametrize("old_visibility", [MultiplayerSessionVisibility.HIDDEN, MultiplayerSessionVisibility.VISIBLE])
+@pytest.mark.parametrize("new_visibility", [MultiplayerSessionVisibility.HIDDEN, MultiplayerSessionVisibility.VISIBLE])
+def test_admin_session_change_visibility(mock_emit_session_update,
+                                         clean_database, preset_manager,
+                                         flask_app, mock_audit, old_visibility, new_visibility):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1,
-                                                 layout_description_json="{}" if has_layout else None)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=old_visibility, creator=user1,
+                                                 layout_description_json="{}")
     database.World.create(session=session, name="W1", preset="{}")
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
     sa.get_current_user.return_value = user1
 
-    if has_layout:
-        expectation = contextlib.nullcontext()
-    else:
-        expectation = pytest.raises(error.InvalidActionError,
-                                    match="Invalid Action: Unable to start session, no game is available.")
-
     # Run
-    with flask_app.test_request_context(), expectation:
-        session_admin.admin_session(sa, 1, SessionAdminGlobalAction.START_SESSION.value, None)
+    with flask_app.test_request_context():
+        session_admin.admin_session(sa, 1, SessionAdminGlobalAction.CHANGE_VISIBILITY.value, new_visibility)
 
     # Assert
-    if has_layout:
-        mock_emit_session_update.assert_called_once_with(session)
-        mock_audit.assert_called_once_with(sa, session, "Started session")
-        assert database.MultiplayerSession.get_by_id(1).state == MultiplayerSessionState.IN_PROGRESS
-    else:
-        mock_emit_session_update.assert_not_called()
-        mock_audit.assert_not_called()
-        assert database.MultiplayerSession.get_by_id(1).state == MultiplayerSessionState.SETUP
-
-
-@pytest.mark.parametrize("starting_state", [MultiplayerSessionState.SETUP, MultiplayerSessionState.IN_PROGRESS,
-                                            MultiplayerSessionState.FINISHED])
-def test_admin_session_finish_session(clean_database, mock_emit_session_update, starting_state,
-                                      flask_app, mock_audit):
-    user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=starting_state, creator=user1)
-    database.MultiplayerMembership.create(user=user1, session=session, admin=True)
-    sa = MagicMock()
-    sa.get_current_user.return_value = user1
-    if starting_state != MultiplayerSessionState.IN_PROGRESS:
-        expectation = pytest.raises(error.SessionInWrongStateError, match="Session was not in state In-Progress")
-    else:
-        expectation = contextlib.nullcontext()
-
-    # Run
-    with expectation, flask_app.test_request_context():
-        session_admin.admin_session(sa, 1, SessionAdminGlobalAction.FINISH_SESSION.value)
-
-    # Assert
-    if starting_state != MultiplayerSessionState.IN_PROGRESS:
-        mock_emit_session_update.assert_not_called()
-        mock_audit.assert_not_called()
-        assert database.MultiplayerSession.get_by_id(1).state == starting_state
-    else:
-        mock_emit_session_update.assert_called_once_with(session)
-        mock_audit.assert_called_once_with(sa, session, "Finished session")
-        assert database.MultiplayerSession.get_by_id(1).state == MultiplayerSessionState.FINISHED
+    mock_emit_session_update.assert_called_once_with(session)
+    mock_audit.assert_called_once_with(sa, session, f"Changed visibility to {new_visibility.user_friendly_name}")
+    assert database.MultiplayerSession.get_by_id(1).state == new_visibility
 
 
 def test_admin_session_change_password(clean_database, mock_emit_session_update, flask_app, mock_audit):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
     sa.get_current_user.return_value = user1
@@ -705,7 +692,8 @@ def test_admin_session_change_password(clean_database, mock_emit_session_update,
 @pytest.mark.parametrize("valid_name", [False, True])
 def test_admin_session_change_title(clean_database, mock_emit_session_update, flask_app, mock_audit, valid_name):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
     sa.get_current_user.return_value = user1
@@ -735,7 +723,8 @@ def test_admin_session_change_title(clean_database, mock_emit_session_update, fl
 def test_admin_session_duplicate_session(clean_database, mock_emit_session_update, flask_app, mock_audit):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=2345, name="Other Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     database.World.create(session=session, name="W1", preset="{}")
     database.World.create(session=session, name="W2", preset='{"foo": 5}')
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
@@ -783,7 +772,8 @@ def test_admin_session_download_permalink(solo_two_world_session, mock_emit_sess
 
 def test_admin_session_download_permalink_no_layout(clean_database, mock_emit_session_update, flask_app, mock_audit):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.SETUP, creator=user1)
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
+                                                 creator=user1)
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
     sa = MagicMock()
     sa.get_current_user.return_value = user1
@@ -797,24 +787,14 @@ def test_admin_session_download_permalink_no_layout(clean_database, mock_emit_se
     mock_audit.assert_not_called()
 
 
-def test_verify_in_setup(clean_database, flask_app):
-    user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.IN_PROGRESS,
-                                                 creator=user1,
-                                                 layout_description_json="{}")
-
-    with pytest.raises(error.SessionInWrongStateError), flask_app.test_request_context():
-        session_admin._verify_in_setup(session)
-
-
 def test_verify_no_layout_description(clean_database, flask_app):
     user1 = database.User.create(id=1234, name="The Name")
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.IN_PROGRESS,
-                                                 creator=user1,
+    session = database.MultiplayerSession.create(id=1, name="Debug", creator=user1,
                                                  layout_description_json="{}")
 
-    with pytest.raises(error.SessionInWrongStateError), flask_app.test_request_context():
-        session_admin._verify_in_setup(session)
+    with pytest.raises(error.InvalidActionError, match="Session has a generated game"), \
+            flask_app.test_request_context():
+        session_admin._verify_no_layout_description(session)
 
 
 @pytest.mark.parametrize("new_state", [False, True])

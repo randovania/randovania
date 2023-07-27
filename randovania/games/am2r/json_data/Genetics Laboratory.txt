@@ -644,11 +644,13 @@ Extra - map_name: rm_a7b11
 > Dock to Hatchling Room; Heals? False
   * Layers: default
   * Open Passage to Hatchling Room/Dock to Queen Arena
+  > Event - Queen
+      After Boss - Queen Defeated
 
 > Dock from Queen Arena Access; Heals? False
   * Layers: default
   * Back Only to Queen Arena Access/Dock to Queen Arena
-  > Dock to Hatchling Room
+  > Event - Queen
       All of the following:
           Any of the following:
               # Item requirements to damage
@@ -666,6 +668,12 @@ Extra - map_name: rm_a7b11
           Any of the following:
               # Energy requirements
               Combat (Expert) or Normal Damage ≥ 530
+
+> Event - Queen; Heals? False
+  * Layers: default
+  * Event Boss - Queen Defeated
+  > Dock to Hatchling Room
+      Trivial
 
 ----------------
 Hatchling Room

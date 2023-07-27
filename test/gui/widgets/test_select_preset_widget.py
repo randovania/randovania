@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from PySide6 import QtWidgets
+from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.widgets.select_preset_widget import SelectPresetWidget
 from randovania.interface_common.options import Options
@@ -140,3 +140,23 @@ def test_select_preset_incompatible_preset(widget: SelectPresetWidget, preset_ma
 
     can_generate.assert_called_once_with(False)
     assert "The following settings are incompatible with multiworld" in widget.create_preset_description.text()
+
+
+def test_on_tree_context_menu_on_item(widget: SelectPresetWidget):
+    widget._preset_menu.exec = MagicMock()
+
+    widget._on_tree_context_menu(QtCore.QPoint(0, 0))
+
+    # Assert
+    assert widget._preset_menu.preset is not None
+    widget._preset_menu.exec.assert_called_once()
+
+
+def test_on_tree_context_menu_on_nothing(widget: SelectPresetWidget):
+    widget._preset_menu.exec = MagicMock()
+
+    widget._on_tree_context_menu(QtCore.QPoint(0, 500))
+
+    # Assert
+    assert widget._preset_menu.preset is None
+    widget._preset_menu.exec.assert_called_once()

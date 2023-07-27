@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.X.X] - 2023-08-??
 
+- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game. 
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
 - Added: The Generation Order spoiler now has a field to filter it.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
@@ -15,9 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: A new tool was added to the Pickup tab of Game Details that lets you quickly find in which worlds your pickups are.
 - Added: The time a world last had any activity is now displayed in the Multiworld session.
 - Added: A toggle for allowing anyone to claim worlds in a Multiworld session.
+- Added: Sending pickups to an offline world now updates the auto tracker.
 - Changed: The popup when replacing a preset for a Multiworld Session now has the same features as the solo game interface.
 - Changed: Text prompts now default to accepting when pressing enter.
 - Changed: Reorganized the top menu bar. The Advanced menu is now called Preferences, with an Advanced sub-menu. Opening the Login window is now in the Open menu.
+- Changed: The handling for presets that can't be loaded have been improved.
+- Changed: Finishing a session is now called hiding a session, and now can be undone.
 - Fixed: Multiworld now properly respects major/minor configuration of each world.
 - Fixed: The generation order for multiworld session now correctly handles any kind of names.
 - Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
@@ -42,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Grapple Movement to get from Lower Door to Wide Beam Block Room to Upper Door in Artaria - EMMI Zone Hub.
 - Added: Crossing the water gap in Ferenia EMMI Zone Exit East with just Bombs (Hypermode IBJ and DBJ) or Cross Bombs and a Slide Bomb Boost (currently Movement Advanced).
 - Added: Use Speed Booster and Gravity Suit to escape Cataris - Kraid Arena after fighting Kraid.
+- Added: Using Wall Jump to get past the Flash Shift gate in Burenia - Teleport to Ferenia.
 - Changed: Make it possible to get to the Diffusion Beam location without Morph Ball.
 - Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 - Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
@@ -55,14 +60,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Experimental Option - `Competitive (Experimental)` Cutscene Mode Removes some cutscenes from the game which hinder the flow of competitive play. All others are skippable. This will eventually replace the existing Competitive implementation.
 - Added: Introduction of non-critical fixes and improvements to the base game such as fixed sound effects and removed tutorial popups. Those wanting an untainted experience of the vanilla game may still do so at their own risk by activating "Legacy Mode". For technical description of what's changed, see [qol.jsonc](https://github.com/toasterparty/randomprime/blob/randovania/generated/json_data/qol.jsonc)
 - Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
+- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded. 
 
 #### Logic Database
 
 ##### Chozo Ruins
 
-- Added: Main Plaza - Tree item OoB logic
-- Added: Crossway - Easier boost only method for item
-- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner
+- Added: The Hall of the Elders Ghost Skip from Reflecting Pool Access to reach Crossway Access South, using advanced level tricks.
+- Added: Knowledge (Intermediate) for reaching Elder Chamber without fighting the Chozo Ghost.
+- Added: Main Plaza - Tree item OoB logic.
+- Added: Crossway - Easier boost only method for item.
+- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner .
+- Fixed: Ice Beam has been removed from the connection to Elder Chamber in Hall of the Elders.
 - Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
 - Changed: Ruined Nursery Bombless Standables Logic Adjustments
 - Added: Ruined Nursery Bombless w/ Boost strat
@@ -94,6 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The gate in Command Center now opens correctly when using the new patcher.
 - Fixed: Doors in Venomous Pond can no longer become blast shields.
 - Fixed: The door from Sacrificial Chamber Tunnel to Sacrificial Chamber has been excluded from door lock rando.
+- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
 
 ## [6.0.1] - 2023-07-04
 
@@ -209,7 +219,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-#### Chozo Ruins
+##### Chozo Ruins
 
 - Changed: Reorganized Morph Ball pickup in Ruined Shrine to better fit database good practices.
 

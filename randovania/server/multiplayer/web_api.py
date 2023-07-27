@@ -27,7 +27,6 @@ def admin_sessions(user):
             ),
             session.creator.name,
             session.creation_date,
-            session.state.user_friendly_name,
             len(session.members),
             len(session.worlds),
         ])))
@@ -45,7 +44,7 @@ def admin_sessions(user):
             flask.url_for(".admin_sessions", page=page + 1)
         )
 
-    header = ["Name", "Creator", "Creation Date", "State", "Num Users", "Num Worlds"]
+    header = ["Name", "Creator", "Creation Date", "Num Users", "Num Worlds"]
     return (
         "<table border='1'>"
         "<tr>{header}</tr>"

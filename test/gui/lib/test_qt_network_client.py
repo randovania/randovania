@@ -13,7 +13,7 @@ from randovania.gui.lib import qt_network_client
 from randovania.network_client.network_client import ConnectionState
 from randovania.network_common import error
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -112,7 +112,7 @@ async def test_attempt_join(client, mocker, in_session):
     mocker.patch("randovania.network_client.network_client.NetworkClient.join_multiplayer_session",
                  return_value="A Session")
     session = MultiplayerSessionListEntry(
-        id=1, name="A Game", has_password=True, state=MultiplayerSessionState.FINISHED,
+        id=1, name="A Game", has_password=True, state=MultiplayerSessionVisibility.HIDDEN,
         num_users=1, num_worlds=0, creator="You", is_user_in_session=in_session,
         creation_date=datetime.datetime(year=2015, month=5, day=1, tzinfo=datetime.UTC),
         join_date=datetime.datetime(year=2016, month=5, day=1, tzinfo=datetime.UTC),

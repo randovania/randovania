@@ -33,7 +33,7 @@ from randovania.network_common.multiplayer_session import (
     User,
     UserWorldDetail,
 )
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -83,7 +83,7 @@ def sample_session(preset_manager):
             }),
         ],
         game_details=None,
-        state=MultiplayerSessionState.SETUP,
+        visibility=MultiplayerSessionVisibility.VISIBLE,
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
@@ -126,7 +126,7 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
             word_hash="Chykka Required",
             spoiler=True,
         ),
-        state=MultiplayerSessionState.IN_PROGRESS,
+        visibility=MultiplayerSessionVisibility.VISIBLE,
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
@@ -676,27 +676,6 @@ async def test_on_kicked(skip_qtbot, window: MultiplayerSessionWindow, mocker, a
         window.close.assert_called_once_with()
 
 
-@pytest.mark.parametrize("accept", [False, True])
-async def test_finish_session(window: MultiplayerSessionWindow, accept, mocker):
-    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
-    mock_warning.return_value = (
-        QtWidgets.QMessageBox.StandardButton.Yes if accept else QtWidgets.QMessageBox.StandardButton.No
-    )
-
-    window._session = MagicMock()
-    window.game_session_api.finish_session = AsyncMock()
-
-    # Run
-    await window.finish_session()
-
-    # Assert
-    mock_warning.assert_awaited_once()
-    if accept:
-        window.game_session_api.finish_session.assert_awaited_once_with()
-    else:
-        window.game_session_api.finish_session.assert_not_awaited()
-
-
 async def test_game_export_listener(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture,
                                     echoes_game_description, preset_manager):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
@@ -845,3 +824,50 @@ async def test_track_world_listener_create(window: MultiplayerSessionWindow, moc
         (world_uid, user_id): mock_popup_window.return_value
     }
     window.network_client.world_track_inventory.assert_awaited_once_with(world_uid, user_id, True)
+
+
+@pytest.mark.parametrize("visibility", MultiplayerSessionVisibility)
+async def test_session_visibility_button_clicked(window: MultiplayerSessionWindow, visibility):
+    window._session = MagicMock()
+    window._session.visibility = visibility
+    window.game_session_api.change_visibility = AsyncMock()
+
+    if visibility == MultiplayerSessionVisibility.IN_PROGRESS:
+        expectation = pytest.raises(RuntimeError, match=f"Unknown session state: {visibility}")
+    else:
+        expectation = contextlib.nullcontext()
+
+    # Run
+    with expectation:
+        await window._session_visibility_button_clicked_raw()
+
+    if visibility != MultiplayerSessionVisibility.IN_PROGRESS:
+        window.game_session_api.change_visibility.assert_called_once_with(
+            MultiplayerSessionVisibility.VISIBLE
+            if visibility == MultiplayerSessionVisibility.HIDDEN else
+            MultiplayerSessionVisibility.HIDDEN
+        )
+
+
+@pytest.mark.parametrize("accept", [False, True])
+@pytest.mark.parametrize("has_actions", [False, True])
+async def test_clear_generated_game(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture,
+                                    has_actions, accept):
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.yes_no_prompt", new_callable=AsyncMock,
+                                  return_value=accept)
+
+    window._last_actions = MultiplayerSessionActions(0, [1] if has_actions else [])
+    window.game_session_api.clear_generated_game = AsyncMock()
+
+    # Run
+    await window.clear_generated_game()
+
+    # Assert
+    execute_dialog.assert_awaited_once_with(
+        window, "Clear generated game?", ANY,
+        icon=QtWidgets.QMessageBox.Icon.Critical if has_actions else QtWidgets.QMessageBox.Icon.Warning,
+    )
+    if accept:
+        window.game_session_api.clear_generated_game.assert_awaited_once_with()
+    else:
+        window.game_session_api.clear_generated_game.assert_not_awaited()

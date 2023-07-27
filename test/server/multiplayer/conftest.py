@@ -11,7 +11,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.multiplayer_session import GameDetails
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 
 
@@ -34,7 +34,7 @@ def solo_two_world_session(clean_database, test_files_dir):
     user1 = database.User.create(id=1234, name="The Name")
 
     session = database.MultiplayerSession.create(
-        id=1, name="Debug", state=MultiplayerSessionState.IN_PROGRESS,
+        id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
         creator=user1, creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC))
     session.layout_description = description
     session.save()
@@ -59,7 +59,7 @@ def two_player_session(clean_database):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other Name")
 
-    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionState.IN_PROGRESS,
+    session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
                                                  creator=user1)
     w1 = database.World.create(session=session, name="World 1", preset="{}", order=0,
                                uuid=uuid.UUID('1179c986-758a-4170-9b07-fe4541d78db0'))
@@ -104,7 +104,7 @@ def session_update(clean_database, mocker):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")
     session = database.MultiplayerSession.create(
-        id=1, name="Debug", state=MultiplayerSessionState.IN_PROGRESS,
+        id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
         creator=user1, layout_description_json="{}", game_details_json=json.dumps(game_details.as_json),
     )
     database.MultiplayerMembership.create(user=user1, session=session, row=0, admin=True,
