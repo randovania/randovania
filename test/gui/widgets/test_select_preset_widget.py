@@ -155,7 +155,7 @@ def test_on_tree_context_menu_on_item(widget: SelectPresetWidget):
 def test_on_tree_context_menu_on_nothing(widget: SelectPresetWidget):
     widget._preset_menu.exec = MagicMock()
 
-    widget._on_tree_context_menu(QtCore.QPoint(0, -100))
+    widget._on_tree_context_menu(QtCore.QPoint(0, 500))
 
     # Assert
     assert widget._preset_menu.preset is None
