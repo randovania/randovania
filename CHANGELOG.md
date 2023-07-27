@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
 - Fixed: Sorting the session history and audit log now works properly.
 - Fixed: In Multiworld session, the Claim world button is now properly disabled when you don't have permissions.
+- Removed: Connecting to Dolphin on Linux executable builds is now hidden, as it doesn't work properly.
 
 ### Metroid Dread
 
