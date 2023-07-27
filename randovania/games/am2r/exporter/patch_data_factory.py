@@ -57,7 +57,8 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             pickup_obj = pickup_map_dict[object_name]
             shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup_obj["text"]["header"])
 
-            if (shiny_id in self.SHINIES) and not pickup.other_player and rng.randint(0, self._EASTER_EGG_SHINY) == 0:
+            if (not object_name.startswith("oItemDNA_") and shiny_id in self.SHINIES and not pickup.other_player and
+                    rng.randint(0, self._EASTER_EGG_SHINY) == 0):
                 sprite, text = self.SHINIES[shiny_id]
                 pickup_obj["sprite_details"]["name"] = sprite
                 pickup_obj["text"]["header"] = text
