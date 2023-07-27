@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Text prompts now default to accepting when pressing enter.
 - Changed: Reorganized the top menu bar. The Advanced menu is now called Preferences, with an Advanced sub-menu. Opening the Login window is now in the Open menu.
 - Changed: The handling for presets that can't be loaded have been improved.
+- Changed: Finishing a session is now called hiding a session, and now can be undone.
 - Fixed: Multiworld now properly respects major/minor configuration of each world.
 - Fixed: The generation order for multiworld session now correctly handles any kind of names.
 - Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
@@ -28,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
 - Fixed: Sorting the session history and audit log now works properly.
 - Fixed: In Multiworld session, the Claim world button is now properly disabled when you don't have permissions.
+- Removed: Starting sessions is no longer necessary and has been removed as an option.
 
 ### Metroid Dread
 

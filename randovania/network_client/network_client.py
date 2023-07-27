@@ -356,9 +356,8 @@ class NetworkClient:
         await self.on_multiplayer_session_meta_update(entry)
 
     async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry):
-        self.logger.info("name: %s, users: %d, game: %s, %s",
-                         entry.name, len(entry.users), str(entry.game_details),
-                         entry.state.user_friendly_name)
+        self.logger.info("name: %s, users: %d, game: %s",
+                         entry.name, len(entry.users), str(entry.game_details))
 
     async def _on_multiplayer_session_actions_update_raw(self, data: bytes):
         await self.on_multiplayer_session_actions_update(

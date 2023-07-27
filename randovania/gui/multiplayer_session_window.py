@@ -41,7 +41,7 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerUser,
     WorldUserInventory,
 )
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     import uuid
@@ -193,7 +193,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.import_permalink_action.triggered.connect(self.import_permalink)
         self.import_layout_action.triggered.connect(self.import_layout)
         self.generate_game_button.clicked.connect(self.generate_game_button_clicked)
-        self.session_status_button.clicked.connect(self._session_status_button_clicked)
+        self.session_visibility_button.clicked.connect(self._session_visibility_button_clicked)
         self.export_game_button.clicked.connect(self.export_game_button_clicked)
 
         # History
@@ -362,13 +362,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.generate_game_with_spoiler_action.setEnabled(self_is_admin)
         self.generate_game_without_spoiler_action.setEnabled(self_is_admin)
         self.import_permalink_action.setEnabled(self_is_admin)
-        self.session_status_button.setEnabled(self_is_admin and session.state != MultiplayerSessionState.FINISHED)
+        self.session_visibility_button.setEnabled(self_is_admin)
         _state_to_label = {
-            MultiplayerSessionState.SETUP: "Start session",
-            MultiplayerSessionState.IN_PROGRESS: "Finish session",
-            MultiplayerSessionState.FINISHED: "Session finished",
+            MultiplayerSessionVisibility.VISIBLE: "Hide session",
+            MultiplayerSessionVisibility.HIDDEN: "Unhide session",
         }
-        self.session_status_button.setText(_state_to_label[session.state])
+        self.session_visibility_button.setText(_state_to_label[session.visibility])
 
         self.copy_permalink_button.setEnabled(session.game_details is not None)
         if session.game_details is None:
@@ -605,9 +604,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         not_ready_users = [user for user in self._session.users.values() if not user.ready]
         if not_ready_users:
             if not await async_dialog.yes_no_prompt(
-                self, "User not Ready",
-                "The following users are not ready. Do you want to continue generating a game?\n\n" +
-                ", ".join(user.name for user in not_ready_users),
+                    self, "User not Ready",
+                    "The following users are not ready. Do you want to continue generating a game?\n\n" +
+                    ", ".join(user.name for user in not_ready_users),
             ):
                 return
 
@@ -744,25 +743,14 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             async with self.game_session_api.prepare_to_upload_layout(self._get_world_order()) as uploader:
                 await uploader(layout)
 
-    async def finish_session(self):
-        result = await async_dialog.warning(
-            self, "Finish session?",
-            "It's no longer possible to collect items after the session is finished."
-            "\nDo you want to continue?",
-            async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
-            async_dialog.StandardButton.No,
-        )
-        if result == async_dialog.StandardButton.Yes:
-            await self.game_session_api.finish_session()
-
     @asyncSlot()
     @handle_network_errors
-    async def _session_status_button_clicked(self):
-        state = self._session.state
-        if state == MultiplayerSessionState.SETUP:
-            await self.game_session_api.start_session()
-        elif state == MultiplayerSessionState.IN_PROGRESS:
-            await self.finish_session()
+    async def _session_visibility_button_clicked(self):
+        state = self._session.visibility
+        if state == MultiplayerSessionVisibility.VISIBLE:
+            await self.game_session_api.change_visibility(MultiplayerSessionVisibility.HIDDEN)
+        elif state == MultiplayerSessionVisibility.HIDDEN:
+            await self.game_session_api.change_visibility(MultiplayerSessionVisibility.VISIBLE)
         else:
             raise RuntimeError(f"Unknown session state: {state}")
 
@@ -848,8 +836,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             await self.generate_game(True, retries=None)
 
     def update_generate_game_button(self):
-        is_admin = self.current_player_membership.admin
-        is_enabled = self._session.state == MultiplayerSessionState.SETUP and is_admin
+        is_enabled = self.current_player_membership.admin
         has_menu = False
 
         if self._session.game_details is not None:

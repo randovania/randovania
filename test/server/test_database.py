@@ -15,7 +15,7 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
     MultiplayerWorld,
 )
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 
 
@@ -70,7 +70,7 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         name='Debug',
         users_list=[],
         worlds=worlds,
-        state=MultiplayerSessionState.SETUP,
+        visibility=MultiplayerSessionVisibility.VISIBLE,
         allow_coop=False,
         allow_everyone_claim_world=False,
     )

@@ -33,7 +33,7 @@ from randovania.network_common.multiplayer_session import (
     User,
     UserWorldDetail,
 )
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -83,7 +83,7 @@ def sample_session(preset_manager):
             }),
         ],
         game_details=None,
-        state=MultiplayerSessionState.SETUP,
+        visibility=MultiplayerSessionVisibility.VISIBLE,
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
@@ -126,7 +126,7 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
             word_hash="Chykka Required",
             spoiler=True,
         ),
-        state=MultiplayerSessionState.IN_PROGRESS,
+        visibility=MultiplayerSessionVisibility.VISIBLE,
         generation_in_progress=None,
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
@@ -674,27 +674,6 @@ async def test_on_kicked(skip_qtbot, window: MultiplayerSessionWindow, mocker, a
         window.network_client.listen_to_session.assert_awaited_once_with(window._session.id, False)
         mock_warning.assert_awaited_once()
         window.close.assert_called_once_with()
-
-
-@pytest.mark.parametrize("accept", [False, True])
-async def test_finish_session(window: MultiplayerSessionWindow, accept, mocker):
-    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
-    mock_warning.return_value = (
-        QtWidgets.QMessageBox.StandardButton.Yes if accept else QtWidgets.QMessageBox.StandardButton.No
-    )
-
-    window._session = MagicMock()
-    window.game_session_api.finish_session = AsyncMock()
-
-    # Run
-    await window.finish_session()
-
-    # Assert
-    mock_warning.assert_awaited_once()
-    if accept:
-        window.game_session_api.finish_session.assert_awaited_once_with()
-    else:
-        window.game_session_api.finish_session.assert_not_awaited()
 
 
 async def test_game_export_listener(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture,

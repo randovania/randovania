@@ -40,9 +40,6 @@ def handle_network_errors(fn):
         except error.InvalidActionError as e:
             await async_dialog.warning(self, "Invalid action", f"{e}")
 
-        except error.SessionInWrongStateError as e:
-            await async_dialog.warning(self, "Wrong session state", f"{e}")
-
         except error.ServerError:
             await async_dialog.warning(self, "Server error",
                                        "An error occurred on the server while processing your request.")

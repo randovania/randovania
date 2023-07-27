@@ -11,7 +11,7 @@ from qasync import asyncSlot
 from randovania.gui.generated.multiplayer_session_browser_dialog_ui import Ui_MultiplayerSessionBrowserDialog
 from randovania.gui.lib import common_qt_lib, model_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     from randovania.network_client.network_client import ConnectionState
@@ -30,7 +30,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         self.network_client = network_client
 
         self.item_model = QtGui.QStandardItemModel(0, 8, self)
-        self.item_model.setHorizontalHeaderLabels(["Name", "Is Member?", "Join Date", "State", "Players", "Worlds",
+        self.item_model.setHorizontalHeaderLabels(["Name", "Is Member?", "Join Date", "Players", "Worlds",
                                                    "Password?", "Creator","Creation Date"])
 
         self.table_widget.setModel(self.item_model)
@@ -48,9 +48,8 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         checks = (
             self.has_password_yes_check,
             self.has_password_no_check,
-            self.state_setup_check,
-            self.state_inprogress_check,
-            self.state_finished_check,
+            self.state_visibile_check,
+            self.state_hidden_check,
             self.filter_age_check,
             self.is_member_yes_check,
             self.is_member_no_check,
@@ -127,9 +126,8 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
             displayed_is_member.add(False)
 
         displayed_states = set()
-        for (check, state) in ((self.state_setup_check, MultiplayerSessionState.SETUP),
-                               (self.state_inprogress_check, MultiplayerSessionState.IN_PROGRESS),
-                               (self.state_finished_check, MultiplayerSessionState.FINISHED)):
+        for (check, state) in ((self.state_visibile_check, MultiplayerSessionVisibility.VISIBLE),
+                               (self.state_hidden_check, MultiplayerSessionVisibility.HIDDEN)):
             if check.isChecked():
                 displayed_states.add(state)
 
@@ -151,7 +149,6 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         self.item_model.setRowCount(len(visible_sessions))
         for i, session in enumerate(visible_sessions):
             name = QtGui.QStandardItem(session.name)
-            state = QtGui.QStandardItem(session.state.user_friendly_name)
             num_users = model_lib.create_int_item(session.num_users)
             has_password = QtGui.QStandardItem("Yes" if session.has_password else "No")
             creator = QtGui.QStandardItem(session.creator)
@@ -164,12 +161,11 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
             self.item_model.setItem(i, 0, name)
             self.item_model.setItem(i, 1, is_user_in_session)
             self.item_model.setItem(i, 2, join_date)
-            self.item_model.setItem(i, 3, state)
-            self.item_model.setItem(i, 4, num_users)
-            self.item_model.setItem(i, 5, num_worlds)
-            self.item_model.setItem(i, 6, has_password)
-            self.item_model.setItem(i, 7, creator)
-            self.item_model.setItem(i, 8, creation_date)
+            self.item_model.setItem(i, 3, num_users)
+            self.item_model.setItem(i, 4, num_worlds)
+            self.item_model.setItem(i, 5, has_password)
+            self.item_model.setItem(i, 6, creator)
+            self.item_model.setItem(i, 7, creation_date)
         self.status_label.setText(f"{len(self.sessions)} sessions total, {len(visible_sessions)} displayed.")
         for i in range(9):
             self.table_widget.resizeColumnToContents(i)

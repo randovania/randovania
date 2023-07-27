@@ -18,7 +18,7 @@ def test_admin_sessions(server_app, solo_two_world_session):
 
     entry = (
         "<td>The Name</td>"
-        '<td>2020-05-02 10:20:00+00:00</td><td>In-Progress</td><td>1</td><td>2</td></tr>'
+        '<td>2020-05-02 10:20:00+00:00</td><td>1</td><td>2</td></tr>'
     )
     assert entry in result
 
