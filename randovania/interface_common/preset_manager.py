@@ -107,6 +107,10 @@ class PresetManager:
                 self.custom_presets[preset.uuid] = preset
 
     @property
+    def data_dir(self):
+        return self._data_dir
+
+    @property
     def default_preset(self) -> VersionedPreset:
         for preset in self.included_presets.values():
             return preset
@@ -150,7 +154,7 @@ class PresetManager:
         existed_before = new_preset.uuid in self.custom_presets
         self.custom_presets[new_preset.uuid] = new_preset
 
-        path = self._file_name_for_preset(new_preset)
+        path = self._file_path_for_preset(new_preset)
         new_preset.save_to_file(path)
         self._commit(f"Update preset '{new_preset.name}'", path, False)
 
@@ -158,7 +162,7 @@ class PresetManager:
 
     def delete_preset(self, preset: VersionedPreset):
         del self.custom_presets[preset.uuid]
-        path = self._file_name_for_preset(preset)
+        path = self._file_path_for_preset(preset)
         path.unlink()
         self._commit(f"Remove preset '{preset.name}'", path, True)
 
@@ -179,7 +183,7 @@ class PresetManager:
     def preset_for_uuid(self, the_uid: uuid.UUID) -> VersionedPreset | None:
         return self.included_presets.get(the_uid, self.custom_presets.get(the_uid))
 
-    def _file_name_for_preset(self, preset: VersionedPreset) -> Path:
+    def _file_path_for_preset(self, preset: VersionedPreset) -> Path:
         return self._data_dir.joinpath(f"{preset.uuid}.{preset.file_extension()}")
 
     def is_included_preset_uuid(self, the_uid: uuid.UUID) -> bool:
@@ -188,12 +192,12 @@ class PresetManager:
     def get_previous_versions(self, preset: VersionedPreset) -> Iterator[tuple[datetime.datetime, bytes]]:
         yield from _history_for_file(
             self._get_repository_root(),
-            self._file_name_for_preset(preset),
+            self._file_path_for_preset(preset),
         )
 
     def get_previous_version(self, preset: VersionedPreset, version: bytes) -> str:
         return _get_preset_at_version(
             self._get_repository_root(),
             version,
-            self._file_name_for_preset(preset),
+            self._file_path_for_preset(preset),
         )
