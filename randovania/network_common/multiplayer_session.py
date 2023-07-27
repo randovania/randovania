@@ -114,6 +114,8 @@ class MultiplayerSessionEntry(JsonDataclass):
     state: MultiplayerSessionState
     generation_in_progress: int | None
     allowed_games: list[RandovaniaGame]
+    allow_coop: bool
+    allow_everyone_claim_world: bool
 
     @property
     def users(self) -> dict[int, MultiplayerUser]:
@@ -131,6 +133,12 @@ class MultiplayerSessionEntry(JsonDataclass):
             if world.id == world_id:
                 return world
         raise KeyError(f"No world with id {world_id}")
+
+    def get_world_names(self) -> list[str]:
+        return [
+            world.name
+            for world in self.worlds
+        ]
 
 
 @dataclasses.dataclass(frozen=True)

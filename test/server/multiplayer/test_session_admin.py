@@ -49,7 +49,10 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
                           'spoiler': True,
                           'word_hash': 'Spreader Liftvine Great'},
          'generation_in_progress': None,
-         'allowed_games': ANY},
+         'allowed_games': ANY,
+         'allow_coop': False,
+         'allow_everyone_claim_world': False,
+         },
         room='multiplayer-session-1',
         namespace='/',
     )
@@ -93,7 +96,10 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
               'preset_raw': '{}'}
          ],
          'game_details': None, 'generation_in_progress': None,
-         'allowed_games': ANY},
+         'allowed_games': ANY,
+         'allow_coop': False,
+         'allow_everyone_claim_world': False,
+         },
         room='multiplayer-session-1',
         namespace='/',
     )
@@ -809,3 +815,24 @@ def test_verify_no_layout_description(clean_database, flask_app):
 
     with pytest.raises(error.SessionInWrongStateError), flask_app.test_request_context():
         session_admin._verify_in_setup(session)
+
+
+@pytest.mark.parametrize("new_state", [False, True])
+@pytest.mark.parametrize("old_state", [False, True])
+def test_admin_set_allow_everyone_claim(flask_app, two_player_session, mock_audit,
+                                        mock_emit_session_update, old_state, new_state):
+    sa = MagicMock()
+    sa.get_current_user.return_value = database.User.get_by_id(1234)
+    two_player_session.allow_everyone_claim_world = old_state
+    two_player_session.save()
+
+    # Run
+    with flask_app.test_request_context():
+        session_admin.admin_session(sa, 1, SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM.value, new_state)
+
+    assert database.MultiplayerSession.get_by_id(1).allow_everyone_claim_world == new_state
+    mock_audit.assert_called_once_with(
+        sa, two_player_session,
+        f"{'Allowing' if new_state else 'Disallowing'} everyone to claim worlds."
+    )
+    mock_emit_session_update.assert_called_once_with(two_player_session)

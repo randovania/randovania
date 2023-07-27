@@ -80,8 +80,8 @@ game_data: game.GameData = game.GameData(
         ),
         (
             "Can I play on Yuzu?",
-            "Yuzu is not officially supported so you're on your own.\nIt has been reported to work fine, but there are "
-            "planned features that are known to be incompatible."
+            "Yuzu is not officially supported so you're on your own.\n\n"
+            "It has been reported to work fine, but there are planned features that are known to be incompatible."
         ),
         (
             "Can I use other mods?",
@@ -101,12 +101,12 @@ game_data: game.GameData = game.GameData(
         ),
         (
             "I entered the arena for Golzuna/Experiment Z-57 but it isn't there!",
-            "Golzuna and Experiment Z-57 will not appear unless the X have been released from Elun.\n"
+            "Golzuna and Experiment Z-57 will not appear unless the X have been released from Elun.\n\n"
             "To activate the fight against Experiment Z-57, you must use the Morph Ball Launcher to enter the arena."
         ),
         (
             "I opened the Wide Beam door in Dairon's Teleport to Cataris, but it won't let me through!",
-            "Unlocking this door before turning on the power will render it unopenable.\n"
+            "Unlocking this door before turning on the power will render it unopenable.\n\n"
             "To fix this, simply save and reload the game."
         ),
     ],

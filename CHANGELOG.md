@@ -14,9 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Add Ready checkbox for Multiworld sessions.
 - Added: A new tool was added to the Pickup tab of Game Details that lets you quickly find in which worlds your pickups are.
 - Added: The time a world last had any activity is now displayed in the Multiworld session.
+- Added: A toggle for allowing anyone to claim worlds in a Multiworld session.
+- Added: Sending pickups to an offline world now updates the auto tracker.
 - Changed: The popup when replacing a preset for a Multiworld Session now has the same features as the solo game interface.
 - Changed: Text prompts now default to accepting when pressing enter.
 - Changed: Reorganized the top menu bar. The Advanced menu is now called Preferences, with an Advanced sub-menu. Opening the Login window is now in the Open menu.
+- Changed: The handling for presets that can't be loaded have been improved.
 - Fixed: Multiworld now properly respects major/minor configuration of each world.
 - Fixed: The generation order for multiworld session now correctly handles any kind of names.
 - Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
@@ -24,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Session Browser now properly sorts by creation date and user count. It also now properly defaults to showing recent sessions first.
 - Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
 - Fixed: Sorting the session history and audit log now works properly.
+- Fixed: In Multiworld session, the Claim world button is now properly disabled when you don't have permissions.
 
 ### Metroid Dread
 
@@ -40,17 +44,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Grapple Movement to get from Lower Door to Wide Beam Block Room to Upper Door in Artaria - EMMI Zone Hub.
 - Added: Crossing the water gap in Ferenia EMMI Zone Exit East with just Bombs (Hypermode IBJ and DBJ) or Cross Bombs and a Slide Bomb Boost (currently Movement Advanced).
 - Added: Use Speed Booster and Gravity Suit to escape Cataris - Kraid Arena after fighting Kraid.
+- Added: Using Wall Jump to get past the Flash Shift gate in Burenia - Teleport to Ferenia.
 - Changed: Make it possible to get to the Diffusion Beam location without Morph Ball.
 - Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 - Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
+- Fixed: Logic issues surrounding ending the Chain Reaction sequence in Artaria, aka the Vanilla Varia Suit area.
 - Removed: In Cataris - Green EMMI Introduction, the advanced Pseudo Wave Beam to break the blob from below is removed.
 - Removed: In Ghavoran - Blue EMMI Introduction, the trickless Ballspark to climb the room has been removed.
 
 ### Metroid Prime
 
 - Added: Experimental Option - `Skippable` Cutscene Mode. Keeps all cutscenes in the game but makes it so they can be skipped with the START button
+- Added: Experimental Option - `Competitive (Experimental)` Cutscene Mode Removes some cutscenes from the game which hinder the flow of competitive play. All others are skippable. This will eventually replace the existing Competitive implementation.
 - Added: Introduction of non-critical fixes and improvements to the base game such as fixed sound effects and removed tutorial popups. Those wanting an untainted experience of the vanilla game may still do so at their own risk by activating "Legacy Mode". For technical description of what's changed, see [qol.jsonc](https://github.com/toasterparty/randomprime/blob/randovania/generated/json_data/qol.jsonc)
 - Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
+- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded. 
 
 #### Logic Database
 
@@ -76,6 +84,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Power Beam and the Morph Ball now use the Coin Chest model when shuffled, instead of the ETM model.
 - Added: 4 new joke hints in the pool.
 - Fixed: The gate in Command Center now opens correctly when using the new patcher.
+- Fixed: Doors in Venomous Pond can no longer become blast shields.
+- Fixed: The door from Sacrificial Chamber Tunnel to Sacrificial Chamber has been excluded from door lock rando.
+- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
 
 ## [6.0.1] - 2023-07-04
 

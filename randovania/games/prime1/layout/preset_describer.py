@@ -17,7 +17,8 @@ _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.MAJOR: "Major cutscene removal",
     LayoutCutsceneMode.MINOR: "Minor cutscene removal",
     LayoutCutsceneMode.COMPETITIVE: "Competitive cutscene removal",
-    LayoutCutsceneMode.SKIPPABLE: "Skippable cutscenes",
+    LayoutCutsceneMode.SKIPPABLE: "Skippable cutscenes (Experimental)",
+    LayoutCutsceneMode.SKIPPABLE_COMPETITIVE: "Competitive cutscene removal (Experimental)",
     LayoutCutsceneMode.ORIGINAL: None,
 }
 

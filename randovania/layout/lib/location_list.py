@@ -91,16 +91,6 @@ class LocationList(BitPackValue):
         elements = [cls.element_type().from_json(location) for location in value]
         return cls.with_elements(elements, game)
 
-    def ensure_has_location(self: SelfType, node_location: NodeIdentifier, enabled: bool) -> SelfType:
-        new_locations = set(self.locations)
-
-        if enabled:
-            new_locations.add(node_location)
-        elif node_location in new_locations:
-            new_locations.remove(node_location)
-
-        return self.with_elements(iter(new_locations), self.game)
-
     def ensure_has_locations(self: SelfType, node_locations: list[NodeIdentifier], enabled: bool) -> SelfType:
         new_locations = set(self.locations)
 

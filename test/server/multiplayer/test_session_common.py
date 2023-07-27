@@ -56,6 +56,8 @@ def test_emit_session_meta_update(session_update, flask_app, mocker, default_gam
         },
         "generation_in_progress": None,
         'allowed_games': default_game_list,
+        'allow_coop': False,
+        'allow_everyone_claim_world': False,
     }
 
     # Run

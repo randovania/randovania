@@ -99,8 +99,6 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "nest_pipes": self.patches.configuration.nest_pipes,
             "softlock_prevention_blocks": self.patches.configuration.softlock_prevention_blocks,
             "a3_entrance_blocks": self.patches.configuration.a3_entrance_blocks,
-            # TODO: remove the show_unexplored_map from here when cosmetic is done
-            "show_unexplored_map": self.patches.configuration.show_unexplored_map,
             "screw_blocks": self.patches.configuration.screw_blocks,
         }
         for item, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
@@ -165,6 +163,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
         }
 
     def _create_cosmetics(self):
+        # TODO: Add the things from the current cosmetic window
         return {}
 
     def _get_item_data(self):
@@ -233,6 +232,5 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "game_patches": self._create_game_patches(),
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(),
-            # TODO: implement cosmetic window and decide what to even put in there.
             "cosmetics": self._create_cosmetics()
         }

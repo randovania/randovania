@@ -72,9 +72,8 @@ class DreadRemoteConnector(RemoteConnector):
     def game_enum(self) -> RandovaniaGame:
         return self._game_enum
 
-    # TODO: we could fetch and add the game version here
     def description(self):
-        return f"{self.game_enum.long_name}"
+        return f"{self.game_enum.long_name}: {self.executor.version}"
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
         return (self.in_cooldown, self.current_region)
@@ -196,3 +195,8 @@ class DreadRemoteConnector(RemoteConnector):
 
         await self.executor.run_lua_code(execute_string)
         return
+
+    async def display_arbitrary_message(self, message: str):
+        escaped_message = message.replace("\\", "\\\\").replace("'", "\\'")
+        execute_string = f"Game.AddSF(0, 'Scenario.QueueAsyncPopup', 'si', '{escaped_message}', 10.0)"
+        await self.executor.run_lua_code(execute_string)

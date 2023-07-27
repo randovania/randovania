@@ -41,7 +41,7 @@ def test_create_patch_data(test_files_dir, rdvgame_filename,
     expected_results_path = test_files_dir.joinpath("patcher_data", "am2r", expected_results_filename)
 
     # Uncomment to easily view diff of failed test
-    json_lib.write_path(expected_results_path, data)
+    # json_lib.write_path(expected_results_path, data)
 
     expected_data = json_lib.read_path(expected_results_path)
 
