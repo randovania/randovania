@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.X.X] - 2023-08-??
 
+- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game. 
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
 - Added: The Generation Order spoiler now has a field to filter it.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
@@ -29,7 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
 - Fixed: Sorting the session history and audit log now works properly.
 - Fixed: In Multiworld session, the Claim world button is now properly disabled when you don't have permissions.
-- Removed: Starting sessions is no longer necessary and has been removed as an option.
 
 ### Metroid Dread
 

@@ -179,13 +179,13 @@ def _delete_world(sa: ServerApp, session: MultiplayerSession, world_uid: str):
 
 def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_order: list[str]):
     verify_has_admin(sa, session.id, None)
-    _verify_no_layout_description(session)
 
     world_objects: dict[str, World] = {
         str(world.uuid): world
         for world in session.worlds
     }
     if world_order:
+        _verify_no_layout_description(session)
         used_ids = set(world_objects.keys())
         for world_uuid in world_order:
             if world_uuid not in used_ids:

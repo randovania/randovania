@@ -541,14 +541,19 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             await self.game_session_api.duplicate_session(new_name)
 
     async def clear_generated_game(self):
-        result = await async_dialog.warning(
+        if self._last_actions.actions:
+            warning = ("<b>all progress in this session is permanently lost</b>."
+                       "<br /><br />Are you sure you wish to continue?")
+            icon = QtWidgets.QMessageBox.Icon.Critical
+        else:
+            warning = "all players must export the ISOs again."
+            icon = QtWidgets.QMessageBox.Icon.Warning
+
+        if await async_dialog.yes_no_prompt(
             self, "Clear generated game?",
-            "Clearing the generated game will allow presets to be customized again, but all "
-            "players must export the ISOs again.",
-            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
-            QtWidgets.QMessageBox.StandardButton.No
-        )
-        if result == QtWidgets.QMessageBox.StandardButton.Yes:
+            f"Clearing the generated game will allow presets to be customized again, but {warning}",
+            icon=icon,
+        ):
             await self.game_session_api.clear_generated_game()
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:

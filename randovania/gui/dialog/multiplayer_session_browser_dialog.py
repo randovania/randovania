@@ -158,14 +158,17 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
             join_date = model_lib.create_date_item(session.join_date)
 
             name.setData(session, Qt.ItemDataRole.UserRole)
-            self.item_model.setItem(i, 0, name)
-            self.item_model.setItem(i, 1, is_user_in_session)
-            self.item_model.setItem(i, 2, join_date)
-            self.item_model.setItem(i, 3, num_users)
-            self.item_model.setItem(i, 4, num_worlds)
-            self.item_model.setItem(i, 5, has_password)
-            self.item_model.setItem(i, 6, creator)
-            self.item_model.setItem(i, 7, creation_date)
+            for col, item in enumerate((
+                    name,
+                    is_user_in_session,
+                    join_date,
+                    num_users,
+                    num_worlds,
+                    has_password,
+                    creator,
+                    creation_date,
+            )):
+                self.item_model.setItem(i, col, item)
         self.status_label.setText(f"{len(self.sessions)} sessions total, {len(visible_sessions)} displayed.")
         for i in range(9):
             self.table_widget.resizeColumnToContents(i)

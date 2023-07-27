@@ -847,3 +847,27 @@ async def test_session_visibility_button_clicked(window: MultiplayerSessionWindo
             if visibility == MultiplayerSessionVisibility.HIDDEN else
             MultiplayerSessionVisibility.HIDDEN
         )
+
+
+@pytest.mark.parametrize("accept", [False, True])
+@pytest.mark.parametrize("has_actions", [False, True])
+async def test_clear_generated_game(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture,
+                                    has_actions, accept):
+    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.yes_no_prompt", new_callable=AsyncMock,
+                                  return_value=accept)
+
+    window._last_actions = MultiplayerSessionActions(0, [1] if has_actions else [])
+    window.game_session_api.clear_generated_game = AsyncMock()
+
+    # Run
+    await window.clear_generated_game()
+
+    # Assert
+    execute_dialog.assert_awaited_once_with(
+        window, "Clear generated game?", ANY,
+        icon=QtWidgets.QMessageBox.Icon.Critical if has_actions else QtWidgets.QMessageBox.Icon.Warning,
+    )
+    if accept:
+        window.game_session_api.clear_generated_game.assert_awaited_once_with()
+    else:
+        window.game_session_api.clear_generated_game.assert_not_awaited()
