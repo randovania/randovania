@@ -32,7 +32,8 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
     someone = database.User.create(name="Someone")
-    s = database.MultiplayerSession.create(name="Debug", creator=someone)
+    s = database.MultiplayerSession.create(name="Debug", creator=someone,
+                                           state=MultiplayerSessionVisibility.IN_PROGRESS)
     game_details = None
     worlds = []
     actions = []

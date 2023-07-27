@@ -746,6 +746,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     @handle_network_errors
     async def _session_visibility_button_clicked(self):
+        await self._session_visibility_button_clicked_raw()
+
+    async def _session_visibility_button_clicked_raw(self):
         state = self._session.visibility
         if state == MultiplayerSessionVisibility.VISIBLE:
             await self.game_session_api.change_visibility(MultiplayerSessionVisibility.HIDDEN)
