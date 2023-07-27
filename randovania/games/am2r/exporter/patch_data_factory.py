@@ -163,8 +163,14 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
         }
 
     def _create_cosmetics(self):
-        # TODO: Add the things from the current cosmetic window
-        return {}
+        c = self.cosmetic_patches
+        return {
+            "show_unexplored_map": c.show_unexplored_map,
+            "unveiled_blocks": c.unveiled_blocks,
+            "health_hud_rotation": c.health_hud_rotation,
+            "etank_hud_rotation": c.etank_hud_rotation,
+            "dna_hud_rotation": c.dna_hud_rotation
+        }
 
     def _get_item_data(self):
         item_data = json_lib.read_path(
