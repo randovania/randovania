@@ -12,7 +12,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -31,7 +31,7 @@ class MultiplayerSessionListEntry(JsonDataclass):
     id: int
     name: str
     has_password: bool
-    state: MultiplayerSessionState
+    state: MultiplayerSessionVisibility
     num_users: int
     num_worlds: int
     creator: str
@@ -111,7 +111,7 @@ class MultiplayerSessionEntry(JsonDataclass):
     worlds: list[MultiplayerWorld]
     users_list: list[MultiplayerUser]
     game_details: GameDetails | None
-    state: MultiplayerSessionState
+    visibility: MultiplayerSessionVisibility
     generation_in_progress: int | None
     allowed_games: list[RandovaniaGame]
     allow_coop: bool

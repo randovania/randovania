@@ -30,7 +30,6 @@ if TYPE_CHECKING:
 _ERRORS_THAT_STOP_SYNC = (
     error.WorldDoesNotExistError,
     error.WorldNotAssociatedError,
-    error.SessionInWrongStateError,
 )
 
 
@@ -255,10 +254,6 @@ class MultiworldClient(QtCore.QObject):
 
                 case error.WorldNotAssociatedError:
                     error_cleared = uid in user_worlds
-
-                case error.SessionInWrongStateError:
-                    assert isinstance(err, error.SessionInWrongStateError)
-                    error_cleared = uid in worlds_by_id and session.state == err.state
 
             if error_cleared:
                 any_error_cleared = True

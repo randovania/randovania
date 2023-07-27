@@ -22,7 +22,6 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import error, remote_inventory, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
-from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.network_common.world_sync import (
     ServerSyncRequest,
     ServerSyncResponse,
@@ -164,9 +163,6 @@ def _collect_location(sa: ServerApp, session: MultiplayerSession, world: World,
 def collect_locations(sa: ServerApp, source_world: World, pickup_locations: tuple[int, ...],
                       ) -> set[World]:
     session = source_world.session
-
-    if session.state != MultiplayerSessionState.IN_PROGRESS:
-        raise error.SessionInWrongStateError(MultiplayerSessionState.IN_PROGRESS)
 
     logger().info(f"{session_common.describe_session(session, source_world)} found items {pickup_locations}")
     description = session.layout_description
@@ -320,10 +316,6 @@ def world_sync(sa: ServerApp, request: ServerSyncRequest) -> ServerSyncResponse:
 @sentry_sdk.trace
 def emit_world_pickups_update(sa: ServerApp, world: World):
     session = world.session
-
-    if session.state == MultiplayerSessionState.SETUP:
-        logger().warning("Attempting to emit pickups for %s during SETUP", world)
-        return
 
     description = session.layout_description
     resource_database = _get_resource_database(description, world.order)

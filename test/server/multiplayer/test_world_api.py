@@ -27,23 +27,6 @@ if TYPE_CHECKING:
     from pytest_mock import MockerFixture
 
 
-def test_emit_world_pickups_update_not_in_game(flask_app, clean_database, mocker):
-    # Setup
-    user = database.User.create(id=1234, discord_id=5678, name="The Name")
-    session = database.MultiplayerSession.create(name="Debug", creator=user)
-    world = database.World.create(session=session, name="W1", preset="{}")
-    mock_emit: MagicMock = mocker.patch("flask_socketio.emit")
-
-    sa = MagicMock()
-    sa.get_current_user.return_value = user
-
-    # Run
-    world_api.emit_world_pickups_update(sa, world)
-
-    # Assert
-    mock_emit.assert_not_called()
-
-
 @pytest.mark.parametrize(("progression", "result"), [
     (  # normal
             [("Power", 1)],

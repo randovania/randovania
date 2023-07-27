@@ -8,21 +8,21 @@ from PySide6 import QtCore
 
 from randovania.gui.dialog.multiplayer_session_browser_dialog import MultiplayerSessionBrowserDialog
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 
 @pytest.fixture(name="sessions")
 def create_sessions():
     utc = datetime.UTC
     session_a = MultiplayerSessionListEntry(
-        id=1, name="A Game", has_password=False, state=MultiplayerSessionState.FINISHED,
+        id=1, name="A Game", has_password=False, state=MultiplayerSessionVisibility.HIDDEN,
         num_users=1, num_worlds=3, creator="You", is_user_in_session=True,
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=4),
         join_date=datetime.datetime(year=2016, month=5, day=1, tzinfo=utc),
     )
     session_b = MultiplayerSessionListEntry(
         id=2, name="B Game", has_password=True,
-        state=MultiplayerSessionState.IN_PROGRESS,
+        state=MultiplayerSessionVisibility.VISIBLE,
         num_users=2, num_worlds=2, creator="You", is_user_in_session=False,
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=8),
         join_date=datetime.datetime(year=2016, month=5, day=1, tzinfo=utc),
@@ -30,7 +30,7 @@ def create_sessions():
 
     session_c = MultiplayerSessionListEntry(
         id=3, name="C Game", has_password=True,
-        state=MultiplayerSessionState.SETUP,
+        state=MultiplayerSessionVisibility.VISIBLE,
         num_users=2, num_worlds=0, creator="You", is_user_in_session=False,
         creation_date=datetime.datetime.now(utc) - datetime.timedelta(days=4),
         join_date=datetime.datetime(year=2016, month=5, day=1, tzinfo=utc),
@@ -58,7 +58,7 @@ async def test_attempt_join(sessions, skip_qtbot):
 def test_filter(sessions, skip_qtbot):
     # still don't ask me why I need to explicity use the middle (height / 2) to click some of the boxes
     def click_helper(qt_object):
-        skip_qtbot.mouseClick(qt_object, QtCore.Qt.LeftButton, pos=QtCore.QPoint(2, qt_object.height() / 2))
+        skip_qtbot.mouseClick(qt_object, QtCore.Qt.MouseButton.LeftButton, pos=QtCore.QPoint(2, qt_object.height() / 2))
 
     # Setup
     network_client = MagicMock()
@@ -71,7 +71,7 @@ def test_filter(sessions, skip_qtbot):
     assert len(dialog.visible_sessions) == 2
 
     # make all visible
-    click_helper(dialog.state_finished_check)
+    click_helper(dialog.state_hidden_check)
     assert len(dialog.visible_sessions) == 3
 
     # only show where you are member

@@ -29,7 +29,7 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerWorld,
     UserWorldDetail,
 )
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -132,8 +132,8 @@ class MultiplayerSession(BaseModel):
     id: int
     name: str = peewee.CharField(max_length=MAX_SESSION_NAME_LENGTH)
     password: str | None = peewee.CharField(null=True)
-    state: MultiplayerSessionState = EnumField(choices=MultiplayerSessionState,
-                                               default=MultiplayerSessionState.SETUP)
+    state: MultiplayerSessionVisibility = EnumField(choices=MultiplayerSessionVisibility,
+                                                    default=MultiplayerSessionVisibility.VISIBLE)
     layout_description_json: bytes | None = peewee.BlobField(null=True)
     game_details_json: str | None = peewee.CharField(null=True)
     creator: User = peewee.ForeignKeyField(User)
@@ -297,10 +297,14 @@ class MultiplayerSession(BaseModel):
         for association in associations:
             association_by_user[association.user_id].append(association)
 
+        visibility = self.state
+        if visibility == MultiplayerSessionVisibility.IN_PROGRESS:
+            visibility = MultiplayerSessionVisibility.VISIBLE
+
         return multiplayer_session.MultiplayerSessionEntry(
             id=self.id,
             name=self.name,
-            state=self.state,
+            visibility=visibility,
             users_list=[
                 MultiplayerUser(
                     id=member.user_id,
