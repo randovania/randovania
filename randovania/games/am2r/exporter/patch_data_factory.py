@@ -192,24 +192,8 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
     def create_data(self) -> dict:
         db = self.game
 
-        # TODO: instead of manually creating the pickup here, modify pickup_creator.create_nothing_pickup to take an
-        # arg for model name
-        useless_pickup = PickupEntry(
-            name="Nothing",
-            progression=(
-                (db.resource_database.get_item_by_name("Nothing"), 1),
-            ),
-            model=PickupModel(
-                game=db.resource_database.game_enum,
-                name="sItemNothing",
-            ),
-            pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
-            broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
-            generator_params=PickupGeneratorParams(
-                preferred_location_category=LocationCategory.MAJOR,  # TODO
-            ),
-        )
-        useless_target = PickupTarget(useless_pickup, self.players_config.player_index)
+        useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database, "sItemNothing"),
+                                      self.players_config.player_index)
 
         item_data = self._get_item_data()
         memo_data = {
