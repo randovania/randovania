@@ -394,8 +394,7 @@ def _migrate_v20(data: dict) -> dict:
         if dock_weakness is None:
             continue
 
-        for dock in dock_weakness:
-            weakness = dock_weakness[dock]
+        for weakness in dock_weakness.values():
             if weakness["name"] == "Charge Beam Door":
                 weakness["name"] = "Charge Beam Blast Shield"
             elif weakness["name"] == "Bomb Door":
