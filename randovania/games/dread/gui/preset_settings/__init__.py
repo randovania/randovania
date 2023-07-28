@@ -2,12 +2,15 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+import randovania
+
 if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
 
 
 def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+    from randovania.games.common.prime_family.gui.elevators_tab import PresetElevatorsDread
     from randovania.games.dread.gui.preset_settings.dread_energy_tab import PresetDreadEnergy
     from randovania.games.dread.gui.preset_settings.dread_generation_tab import PresetDreadGeneration
     from randovania.games.dread.gui.preset_settings.dread_goal_tab import PresetDreadGoal
@@ -20,6 +23,9 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
     return [
         PresetTrickLevel,
+        *([
+            PresetElevatorsDread,
+        ] if randovania.is_dev_version() else []),
         PresetMetroidStartingArea,
         PresetDockRando,
         PresetDreadGeneration,

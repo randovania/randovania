@@ -108,7 +108,7 @@ class BasePatchesFactory:
 TrilogyConfiguration = PrimeConfiguration | EchoesConfiguration | CorruptionConfiguration
 
 
-class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
+class ElevatorRandoBasePatchesFactory(BasePatchesFactory):
     def add_elevator_connections_to_patches(self, configuration: TrilogyConfiguration, rng: Random,
                                             patches: GamePatches) -> GamePatches:
         elevators = configuration.elevators

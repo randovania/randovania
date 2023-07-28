@@ -12,7 +12,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.generator.base_patches_factory import MissingRng, PrimeTrilogyBasePatchesFactory
+from randovania.generator.base_patches_factory import ElevatorRandoBasePatchesFactory, MissingRng
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -69,7 +69,7 @@ WORLDS = [
 ]
 
 
-class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
+class EchoesBasePatchesFactory(ElevatorRandoBasePatchesFactory):
     def create_base_patches(self,
                             configuration: BaseConfiguration,
                             rng: Random,

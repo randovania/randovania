@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
-from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
+from randovania.generator.base_patches_factory import ElevatorRandoBasePatchesFactory
 
 if TYPE_CHECKING:
     from random import Random
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
+class PrimeBasePatchesFactory(ElevatorRandoBasePatchesFactory):
     def create_base_patches(self,
                             configuration: BaseConfiguration,
                             rng: Random,

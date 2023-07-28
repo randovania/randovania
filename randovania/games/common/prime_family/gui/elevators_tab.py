@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 from PySide6 import QtCore, QtWidgets
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.patch_data_factory import should_keep_elevator_sounds
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
@@ -39,6 +38,8 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
     _elevator_target_for_region: dict[str, QtWidgets.QCheckBox]
     _elevator_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
     _elevator_target_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
+    custom_weights = {}
+    compatible_modes = []
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
@@ -48,7 +49,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         self.teleporter_types = game_description.dock_weakness_database.all_teleporter_dock_types
 
         descriptions = ["<p>Controls where each elevator connects to.</p>"]
-        for value in enum_lib.iterate_enum(TeleporterShuffleMode):
+        for value in self.compatible_modes:
             if value.usable_by_game(editor.game):
                 self.elevators_combo.addItem(value.long_name, value)
                 descriptions.append(
@@ -72,27 +73,6 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
             self._on_elevator_target_check_changed,
         )
         self._elevator_target_for_region, self._elevator_target_for_area, self._elevator_target_for_node = result
-
-        if self.game_enum != RandovaniaGame.METROID_PRIME_ECHOES:
-            self.elevators_allow_unvisited_names_check.setVisible(False)
-            self.elevators_line_3.setVisible(False)
-            self.elevators_help_list_label.setVisible(False)
-
-        if self.game_enum == RandovaniaGame.METROID_PRIME:
-            self.skip_final_bosses_check.setText("Go directly to credits from Artifact Temple")
-            self.skip_final_bosses_label.setText("""<html><head/><body>
-            <p>Change the teleport in Artifact Temple to go directly to the credits, skipping the final bosses.</p>
-            <p>This changes the requirements to <span style=" font-weight:600;">not need the final bosses</span>,
-            turning certain items optional such as Plasma Beam.</p></body></html>
-            """)
-        elif self.game_enum != RandovaniaGame.METROID_PRIME_ECHOES:
-            self.skip_final_bosses_check.setVisible(False)
-            self.skip_final_bosses_label.setVisible(False)
-
-        elif self.game_enum == RandovaniaGame.METROID_PRIME_CORRUPTION:
-            self.elevators_description_label.setText(
-                self.elevators_description_label.text().replace("elevator", "teleporter")
-            )
 
     @classmethod
     def tab_title(cls) -> str:
@@ -120,15 +100,6 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         row = 0
         region_list = self.game_description.region_list
 
-        custom_weights = {}
-        if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
-            custom_weights = {
-                "Great Temple": 0,  # Great Temple
-                "Agon Wastes": 1,  # Agon Wastes
-                "Torvus Bog": 2,  # Torvus Bog
-                "Sanctuary Fortress": 3,  # Sanctuary Fortress
-                "Temple Grounds": 5,  # Temple Grounds
-            }
         locations = TeleporterList.nodes_list(self.game_enum)
         node_identifiers: dict[NodeIdentifier, Area] = {
             loc: region_list.area_by_area_location(loc.area_location)
@@ -141,7 +112,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
         self._elevator_source_destination = {}
 
         for location in sorted(locations,
-                               key=lambda loc: (custom_weights.get(loc.area_location.region_name, 0),
+                               key=lambda loc: (self.custom_weights.get(loc.area_location.region_name, 0),
                                                 checks[loc].text())):
             if location not in checks:
                 continue
@@ -278,4 +249,84 @@ class PresetElevators(PresetTab, Ui_PresetElevators, NodeListHelper):
             self._elevator_target_for_region,
             self._elevator_target_for_area,
             self._elevator_target_for_node
+        )
+
+
+class PresetElevatorsPrime1(PresetElevators):
+    compatible_modes = [
+        value for value in enum_lib.iterate_enum(TeleporterShuffleMode)
+        if value != TeleporterShuffleMode.ECHOES_SHUFFLED
+    ]
+
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
+        self.elevators_allow_unvisited_names_check.setVisible(False)
+        self.elevators_line_3.setVisible(False)
+        self.elevators_help_list_label.setVisible(False)
+
+        self.skip_final_bosses_check.setText("Go directly to credits from Artifact Temple")
+        self.skip_final_bosses_label.setText("""<html><head/><body>
+        <p>Change the teleport in Artifact Temple to go directly to the credits, skipping the final bosses.</p>
+        <p>This changes the requirements to <span style=" font-weight:600;">not need the final bosses</span>,
+        turning certain items optional such as Plasma Beam.</p></body></html>
+        """)
+
+
+class PresetElevatorsPrime2(PresetElevators):
+    compatible_modes = list(enum_lib.iterate_enum(TeleporterShuffleMode))
+
+    custom_weights = {
+            "Great Temple": 0,  # Great Temple
+            "Agon Wastes": 1,  # Agon Wastes
+            "Torvus Bog": 2,  # Torvus Bog
+            "Sanctuary Fortress": 3,  # Sanctuary Fortress
+            "Temple Grounds": 5,  # Temple Grounds
+        }
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
+
+
+class PresetElevatorsPrime3(PresetElevators):
+    compatible_modes = [
+        value for value in enum_lib.iterate_enum(TeleporterShuffleMode)
+        if value != TeleporterShuffleMode.ECHOES_SHUFFLED
+    ]
+
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
+
+        self.elevators_allow_unvisited_names_check.setVisible(False)
+        self.elevators_line_3.setVisible(False)
+        self.elevators_help_list_label.setVisible(False)
+
+        self.skip_final_bosses_check.setVisible(False)
+        self.skip_final_bosses_label.setVisible(False)
+
+        self.elevators_description_label.setText(
+            self.elevators_description_label.text().replace("elevator", "teleporter")
+        )
+
+class PresetElevatorsDread(PresetElevators):
+    compatible_modes = [
+        TeleporterShuffleMode.VANILLA,
+        TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
+        TeleporterShuffleMode.TWO_WAY_UNCHECKED,
+        TeleporterShuffleMode.ONE_WAY_ELEVATOR,
+        TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT,
+    ]
+
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
+
+        self.elevators_allow_unvisited_names_check.setVisible(False)
+        self.elevators_line_3.setVisible(False)
+        self.elevators_help_list_label.setVisible(False)
+
+        self.skip_final_bosses_check.setVisible(False)
+        self.skip_final_bosses_label.setVisible(False)
+
+        self.elevators_target_group.setVisible(False)
+
+        self.elevators_description_label.setText(
+            self.elevators_description_label.text().replace("elevator", "teleporter")
         )
