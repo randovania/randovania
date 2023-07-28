@@ -4,9 +4,6 @@ import pytest
 
 from randovania.exporter import pickup_exporter
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.pickup import pickup_category
-from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.games.am2r.exporter.patch_data_factory import AM2RPatchDataFactory
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
 from randovania.generator.pickup_pool import pickup_creator
