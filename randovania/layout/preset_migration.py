@@ -940,7 +940,7 @@ def _migrate_v59(preset: dict) -> dict:
     for i, x in enumerate(can_change_to):
         if x == "Charge Beam Door":
             can_change_to[i] = "Charge Beam Blast Shield"
-        if x == "Bomb Door":
+        elif x == "Bomb Door":
             can_change_to[i] = "Bomb Blast Shield"
 
     return preset
