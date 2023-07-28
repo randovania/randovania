@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The time a world last had any activity is now displayed in the Multiworld session.
 - Added: A toggle for allowing anyone to claim worlds in a Multiworld session.
 - Added: Sending pickups to an offline world now updates the auto tracker.
+- Added: Warnings now show up in Multiworld sessions if you're not connected to any of your worlds.
 - Changed: The popup when replacing a preset for a Multiworld Session now has the same features as the solo game interface.
 - Changed: Text prompts now default to accepting when pressing enter.
 - Changed: Reorganized the top menu bar. The Advanced menu is now called Preferences, with an Advanced sub-menu. Opening the Login window is now in the Open menu.
@@ -30,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
 - Fixed: Sorting the session history and audit log now works properly.
 - Fixed: In Multiworld session, the Claim world button is now properly disabled when you don't have permissions.
+- Removed: Connecting to Dolphin on Linux executable builds is now hidden on known situations that it doesn't work properly.
 
 ### Metroid Dread
 
