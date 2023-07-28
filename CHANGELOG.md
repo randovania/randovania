@@ -64,7 +64,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 52 videos to logic database
+- Added: 52 videos to logic database, bringing the total available via the Video Directory to 276
+
 ##### Chozo Ruins
 
 - Added: The Hall of the Elders Ghost Skip from Reflecting Pool Access to reach Crossway Access South, using advanced level tricks.
