@@ -947,6 +947,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "heatDamagePerSec": self.configuration.heat_damage,
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,
+                "doorOpenMode": "PrimaryBlastShield",
 
                 "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": starting_items,
