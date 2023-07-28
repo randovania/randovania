@@ -1,0 +1,2442 @@
+{
+    "name": "Hanubia Escape",
+    "extra": {
+        "asset_id": "maps/levels/c10_samus/s080_shipyard/s080_shipyard.brfld",
+        "map_min_x": 50,
+        "map_max_x": 243,
+        "map_min_y": 101,
+        "map_max_y": 119,
+        "scenario_id": "s080_shipyard"
+    },
+    "areas": {
+        "Transport to Ferenia": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": 2400.0,
+                    "x2": 4500.0,
+                    "y1": -3700.0,
+                    "y2": -2558.0
+                },
+                "polygon": [
+                    [
+                        4500.0,
+                        -2558.0
+                    ],
+                    [
+                        2400.0,
+                        -2558.0
+                    ],
+                    [
+                        2400.0,
+                        -3700.0
+                    ],
+                    [
+                        4500.0,
+                        -3700.0
+                    ]
+                ],
+                "asset_id": "collision_camera_000"
+            },
+            "nodes": {
+                "This room is here for technical reasons": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {}
+                }
+            }
+        },
+        "Transport to Ghavoran": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": -14600.0,
+                    "x2": -6400.0,
+                    "y1": -1300.0,
+                    "y2": 800.0
+                },
+                "polygon": [
+                    [
+                        -6400.0,
+                        800.0
+                    ],
+                    [
+                        -14600.0,
+                        800.0
+                    ],
+                    [
+                        -14600.0,
+                        -1300.0
+                    ],
+                    [
+                        -6400.0,
+                        -1300.0
+                    ]
+                ],
+                "asset_id": "collision_camera_001"
+            },
+            "nodes": {
+                "This room is here for technical reasons": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {}
+                }
+            }
+        },
+        "Ferenia Shortcut": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": -800.0,
+                    "x2": 2500.0,
+                    "y1": -3700.0,
+                    "y2": -1500.0
+                },
+                "polygon": [
+                    [
+                        2500.0,
+                        -1500.0
+                    ],
+                    [
+                        -800.0,
+                        -1500.0
+                    ],
+                    [
+                        -800.0,
+                        -3700.0
+                    ],
+                    [
+                        2500.0,
+                        -3700.0
+                    ]
+                ],
+                "asset_id": "collision_camera_002"
+            },
+            "nodes": {
+                "This room is here for technical reasons": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {}
+                }
+            }
+        },
+        "Navigation Station": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": -500.0,
+                    "x2": 1600.0,
+                    "y1": -1100.0,
+                    "y2": 42.0
+                },
+                "polygon": [
+                    [
+                        1600.0,
+                        42.0
+                    ],
+                    [
+                        -500.0,
+                        42.0
+                    ],
+                    [
+                        -500.0,
+                        -1100.0
+                    ],
+                    [
+                        1600.0,
+                        -1100.0
+                    ]
+                ],
+                "asset_id": "collision_camera_003"
+            },
+            "nodes": {
+                "This room is here for technical reasons": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {}
+                }
+            }
+        },
+        "Entrance Tall Room": {
+            "default_node": "Start Point",
+            "extra": {
+                "total_boundings": {
+                    "x1": -6500.0,
+                    "x2": -400.0,
+                    "y1": -7600.0,
+                    "y2": 4200.0
+                },
+                "polygon": [
+                    [
+                        -400.0,
+                        4200.0
+                    ],
+                    [
+                        -6500.0,
+                        4200.0
+                    ],
+                    [
+                        -6500.0,
+                        -7600.0
+                    ],
+                    [
+                        -400.0,
+                        -7600.0
+                    ]
+                ],
+                "asset_id": "collision_camera_004"
+            },
+            "nodes": {
+                "Dock to Escape Room 3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -416.83,
+                        "y": -7355.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Escape Room 3",
+                        "node": "Dock to Entrance Tall Room"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Ship Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Ship Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6574.49,
+                        "y": 2220.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Ship Room",
+                        "node": "Dock to Entrance Tall Room"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Escape Room 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gold Chozo Warrior Arena": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": 3900.0,
+                    "x2": 6300.0,
+                    "y1": 3169.77001953125,
+                    "y2": 4311.77001953125
+                },
+                "polygon": [
+                    [
+                        6300.0,
+                        4311.77001953125
+                    ],
+                    [
+                        3900.0,
+                        4311.77001953125
+                    ],
+                    [
+                        3900.0,
+                        3169.77001953125
+                    ],
+                    [
+                        6300.0,
+                        3169.77001953125
+                    ]
+                ],
+                "asset_id": "collision_camera_005"
+            },
+            "nodes": {
+                "This room is here for technical reasons": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {}
+                }
+            }
+        },
+        "Total Recharge Station North": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": -500.0,
+                    "x2": 4000.0,
+                    "y1": 1500.0,
+                    "y2": 5100.0
+                },
+                "polygon": [
+                    [
+                        4000.0,
+                        5100.0
+                    ],
+                    [
+                        -500.0,
+                        5100.0
+                    ],
+                    [
+                        -500.0,
+                        1500.0
+                    ],
+                    [
+                        4000.0,
+                        1500.0
+                    ]
+                ],
+                "asset_id": "collision_camera_006"
+            },
+            "nodes": {
+                "This room is here for technical reasons": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {}
+                }
+            }
+        },
+        "Transport to Itorash": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": 6200.0,
+                    "x2": 8300.0,
+                    "y1": 3100.0,
+                    "y2": 4242.0
+                },
+                "polygon": [
+                    [
+                        8300.0,
+                        4242.0
+                    ],
+                    [
+                        6200.0,
+                        4242.0
+                    ],
+                    [
+                        6200.0,
+                        3100.0
+                    ],
+                    [
+                        8300.0,
+                        3100.0
+                    ]
+                ],
+                "asset_id": "collision_camera_007"
+            },
+            "nodes": {
+                "This room is here for technical reasons": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {}
+                }
+            }
+        },
+        "Ship Room": {
+            "default_node": "Event - Ship",
+            "extra": {
+                "total_boundings": {
+                    "x1": -19100.0,
+                    "x2": -6400.0,
+                    "y1": 1700.0,
+                    "y2": 9000.0
+                },
+                "polygon": [
+                    [
+                        -7600.0,
+                        9000.0
+                    ],
+                    [
+                        -19100.0,
+                        9000.0
+                    ],
+                    [
+                        -19100.0,
+                        6400.0
+                    ],
+                    [
+                        -12100.0,
+                        5300.0
+                    ],
+                    [
+                        -12100.0,
+                        1700.0
+                    ],
+                    [
+                        -6400.0,
+                        1700.0
+                    ],
+                    [
+                        -6400.0,
+                        4300.0
+                    ],
+                    [
+                        -7600.0,
+                        4900.0
+                    ]
+                ],
+                "asset_id": "collision_camera_008"
+            },
+            "nodes": {
+                "Event - Ship": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12550.0,
+                        "y": 6850.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_Endgame",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "Ship",
+                    "connections": {
+                        "Dock to Entrance Tall Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Elevator to Raven Beak": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Entrance Tall Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6574.49,
+                        "y": 2220.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Entrance Tall Room",
+                        "node": "Dock to Ship Room"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Event - Ship": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Elevator to Raven Beak": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14170.91,
+                        "y": 7187.38,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Itorash",
+                        "area": "Elevator to Raven Beak",
+                        "node": "Start Point"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Speedboost Puzzle Room": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": 1500.0,
+                    "x2": 4500.0,
+                    "y1": -2300.0,
+                    "y2": 600.0
+                },
+                "polygon": [
+                    [
+                        4500.0,
+                        600.0
+                    ],
+                    [
+                        1500.0,
+                        600.0
+                    ],
+                    [
+                        1500.0,
+                        -1350.0
+                    ],
+                    [
+                        2400.0,
+                        -1650.0
+                    ],
+                    [
+                        2400.0,
+                        -2300.0
+                    ],
+                    [
+                        4500.0,
+                        -2300.0
+                    ]
+                ],
+                "asset_id": "collision_camera_009"
+            },
+            "nodes": {
+                "This room is here for technical reasons": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {}
+                }
+            }
+        },
+        "Tank Room": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": 4400.0,
+                    "x2": 6500.0,
+                    "y1": -1800.0,
+                    "y2": 600.0
+                },
+                "polygon": [
+                    [
+                        6500.0,
+                        600.0
+                    ],
+                    [
+                        4400.0,
+                        600.0
+                    ],
+                    [
+                        4400.0,
+                        -1800.0
+                    ],
+                    [
+                        6500.0,
+                        -1800.0
+                    ]
+                ],
+                "asset_id": "collision_camera_010"
+            },
+            "nodes": {
+                "Dock to EMMI Zone Exit West (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6450.0,
+                        "y": -1700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "dooremmy_000",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "EMMI Zone Exit West",
+                        "node": "Dock to Tank Room (Bottom)"
+                    },
+                    "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to EMMI Zone Exit West (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to EMMI Zone Exit West (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6450.0,
+                        "y": -100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "dooremmy_001",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "EMMI Zone Exit West",
+                        "node": "Dock to Tank Room (Top)"
+                    },
+                    "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to EMMI Zone Exit West (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "EMMI Zone Exit West": {
+            "default_node": "Start Point",
+            "extra": {
+                "total_boundings": {
+                    "x1": 6400.0,
+                    "x2": 8500.0,
+                    "y1": -2800.0,
+                    "y2": 650.0
+                },
+                "polygon": [
+                    [
+                        8500.0,
+                        650.0
+                    ],
+                    [
+                        6400.0,
+                        650.0
+                    ],
+                    [
+                        6400.0,
+                        -2800.0
+                    ],
+                    [
+                        8500.0,
+                        -2800.0
+                    ]
+                ],
+                "asset_id": "collision_camera_011"
+            },
+            "nodes": {
+                "Dock to Tank Room (Bottom)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6450.0,
+                        "y": -1700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "dooremmy_000",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Tank Room",
+                        "node": "Dock to EMMI Zone Exit West (Bottom)"
+                    },
+                    "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Escape Room 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Tank Room (Top)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6450.0,
+                        "y": -100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "dooremmy_001",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Tank Room",
+                        "node": "Dock to EMMI Zone Exit West (Top)"
+                    },
+                    "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to Central Unit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Central Unit": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8409.07,
+                        "y": 284.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Central Unit",
+                        "node": "Tunnel to EMMI Zone Exit West"
+                    },
+                    "default_dock_weakness": "Morph Ball Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Tank Room (Top)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Escape Room 3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6441.13,
+                        "y": -2392.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Escape Room 3",
+                        "node": "Dock to EMMI Zone Exit West"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Tank Room (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Central Unit": {
+            "default_node": "Start Point",
+            "extra": {
+                "total_boundings": {
+                    "x1": 8400.0,
+                    "x2": 10500.0,
+                    "y1": -900.0,
+                    "y2": 650.0
+                },
+                "polygon": [
+                    [
+                        10500.0,
+                        650.0
+                    ],
+                    [
+                        8400.0,
+                        650.0
+                    ],
+                    [
+                        8400.0,
+                        -900.0
+                    ],
+                    [
+                        10500.0,
+                        -900.0
+                    ]
+                ],
+                "asset_id": "collision_camera_012"
+            },
+            "nodes": {
+                "Tunnel to EMMI Zone Exit East": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10413.39,
+                        "y": -5.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "EMMI Zone Exit East",
+                        "node": "Tunnel to Central Unit"
+                    },
+                    "default_dock_weakness": "Morph Ball Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Tunnel to EMMI Zone Exit West": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Spin Boost"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Speedbooster",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Speedbooster",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to EMMI Zone Exit West": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8409.07,
+                        "y": 284.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "EMMI Zone Exit West",
+                        "node": "Tunnel to Central Unit"
+                    },
+                    "default_dock_weakness": "Morph Ball Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Start Point": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9500.0,
+                        "y": -450.0,
+                        "z": -0.0039059999398887157
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "centralunitmagmacontroller_000",
+                        "start_point_actor_def": "actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Tunnel to EMMI Zone Exit East": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tunnel to EMMI Zone Exit West": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "HanubiaEMMISpeed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "EMMI Zone Exit East": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": 10400.0,
+                    "x2": 13500.0,
+                    "y1": -2200.0,
+                    "y2": 500.0
+                },
+                "polygon": [
+                    [
+                        13500.0,
+                        500.0
+                    ],
+                    [
+                        10400.0,
+                        500.0
+                    ],
+                    [
+                        10400.0,
+                        -1300.0
+                    ],
+                    [
+                        10700.0,
+                        -1300.0
+                    ],
+                    [
+                        10700.0,
+                        -2200.0
+                    ],
+                    [
+                        13500.0,
+                        -2200.0
+                    ]
+                ],
+                "asset_id": "collision_camera_013"
+            },
+            "nodes": {
+                "Dock to Total Recharge Station East": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13450.0,
+                        "y": -800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "dooremmy_002",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Total Recharge Station East",
+                        "node": "Dock to EMMI Zone Exit East"
+                    },
+                    "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Event - Break EMMI Zone Exit East PB Tube": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
+                        "Tunnel to Central Unit": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s080_shipyard:default:block_pbtube_2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Break EMMI Zone Exit East PB Tube": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11950.0,
+                        "y": -350.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "block_pbtube_2",
+                        "actor_def": "actordef:actors/props/block_pbtube_002/charclasses/block_pbtube_002.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "s080_shipyard:default:block_pbtube_2",
+                    "connections": {
+                        "Dock to Total Recharge Station East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tunnel to Central Unit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tunnel to Central Unit": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10413.39,
+                        "y": -5.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "tunnel",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Central Unit",
+                        "node": "Tunnel to EMMI Zone Exit East"
+                    },
+                    "default_dock_weakness": "Morph Ball Tunnel",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Total Recharge Station East": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s080_shipyard:default:block_pbtube_2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - EMMI Zone Speed Prep": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Speed",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - EMMI Zone Speed Prep": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11950.0,
+                        "y": -250.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "HanubiaEMMISpeed",
+                    "connections": {
+                        "Tunnel to Central Unit": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Orange EMMI Introduction": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": 8400.0,
+                    "x2": 10800.0,
+                    "y1": -2628.360107421875,
+                    "y2": -1486.3599853515625
+                },
+                "polygon": [
+                    [
+                        10800.0,
+                        -1486.3599853515625
+                    ],
+                    [
+                        8400.0,
+                        -1486.3599853515625
+                    ],
+                    [
+                        8400.0,
+                        -2628.360107421875
+                    ],
+                    [
+                        10800.0,
+                        -2628.360107421875
+                    ]
+                ],
+                "asset_id": "collision_camera_014"
+            },
+            "nodes": {
+                "This room is here for technical reasons": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {}
+                }
+            }
+        },
+        "Total Recharge Station East": {
+            "default_node": "Total Recharge",
+            "extra": {
+                "total_boundings": {
+                    "x1": 13400.0,
+                    "x2": 16800.0,
+                    "y1": -4000.0,
+                    "y2": -100.0
+                },
+                "polygon": [
+                    [
+                        16800.0,
+                        -100.0
+                    ],
+                    [
+                        13400.0,
+                        -100.0
+                    ],
+                    [
+                        13400.0,
+                        -4000.0
+                    ],
+                    [
+                        16100.0,
+                        -4000.0
+                    ],
+                    [
+                        16800.0,
+                        -3700.0
+                    ]
+                ],
+                "asset_id": "collision_camera_015"
+            },
+            "nodes": {
+                "Dock to EMMI Zone Exit East": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13450.0,
+                        "y": -800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "dooremmy_002",
+                        "actor_def": "actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "EMMI Zone Exit East",
+                        "node": "Dock to Total Recharge Station East"
+                    },
+                    "default_dock_weakness": "EMMI Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Escape Room 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Escape Room 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13494.89,
+                        "y": -3894.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Escape Room 2",
+                        "node": "Dock to Total Recharge Station East"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to EMMI Zone Exit East": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Escape Room 3": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": -500.0,
+                    "x2": 6500.0,
+                    "y1": -8600.0,
+                    "y2": -1900.0
+                },
+                "polygon": [
+                    [
+                        6500.0,
+                        -1900.0
+                    ],
+                    [
+                        4400.0,
+                        -1900.0
+                    ],
+                    [
+                        4400.0,
+                        -3800.0
+                    ],
+                    [
+                        -500.0,
+                        -3900.0
+                    ],
+                    [
+                        -500.0,
+                        -7600.0
+                    ],
+                    [
+                        900.0,
+                        -7600.0
+                    ],
+                    [
+                        1500.0,
+                        -7900.0
+                    ],
+                    [
+                        2700.0,
+                        -7900.0
+                    ],
+                    [
+                        4100.0,
+                        -8600.0
+                    ],
+                    [
+                        6500.0,
+                        -8600.0
+                    ]
+                ],
+                "asset_id": "collision_camera_016"
+            },
+            "nodes": {
+                "Dock to EMMI Zone Exit West": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6441.13,
+                        "y": -2392.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "EMMI Zone Exit West",
+                        "node": "Dock to Escape Room 3"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Entrance Tall Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Spin Boost"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SWJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Entrance Tall Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -416.83,
+                        "y": -7355.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Entrance Tall Room",
+                        "node": "Dock to Escape Room 3"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to EMMI Zone Exit West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Escape Room 2": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": 11400.0,
+                    "x2": 13500.0,
+                    "y1": -5900.0,
+                    "y2": -3300.0
+                },
+                "polygon": [
+                    [
+                        13500.0,
+                        -3300.0
+                    ],
+                    [
+                        11400.0,
+                        -3300.0
+                    ],
+                    [
+                        11400.0,
+                        -5900.0
+                    ],
+                    [
+                        13500.0,
+                        -5900.0
+                    ]
+                ],
+                "asset_id": "collision_camera_018"
+            },
+            "nodes": {
+                "Dock to Escape Room 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13471.89,
+                        "y": -5584.52,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Escape Room 1",
+                        "node": "Dock to Escape Room 2"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Total Recharge Station East": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Escape",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Screw",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Total Recharge Station East": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13494.89,
+                        "y": -3894.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Total Recharge Station East",
+                        "node": "Dock to Escape Room 2"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Escape Room 1": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Escape",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Screw",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Escape Room 1": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": 13400.0,
+                    "x2": 15500.0,
+                    "y1": -6100.0,
+                    "y2": -4200.0
+                },
+                "polygon": [
+                    [
+                        15500.0,
+                        -4200.0
+                    ],
+                    [
+                        13400.0,
+                        -4200.0
+                    ],
+                    [
+                        13400.0,
+                        -6100.0
+                    ],
+                    [
+                        15500.0,
+                        -6100.0
+                    ]
+                ],
+                "asset_id": "collision_camera_019"
+            },
+            "nodes": {
+                "Dock to Raven Beak X Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15379.89,
+                        "y": -5314.41,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Raven Beak X Arena",
+                        "node": "Dock to Escape Room 1"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Escape Room 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Escape",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Screw",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Escape Room 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13471.89,
+                        "y": -5584.52,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Escape Room 2",
+                        "node": "Dock to Escape Room 1"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Dock to Raven Beak X Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Escape",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Screw",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Raven Beak X Arena": {
+            "default_node": "Raven Beak X Checkpoint",
+            "extra": {
+                "total_boundings": {
+                    "x1": 11800.0,
+                    "x2": 18600.0,
+                    "y1": -8700.0,
+                    "y2": -4500.0
+                },
+                "polygon": [
+                    [
+                        18600.0,
+                        -4500.0
+                    ],
+                    [
+                        15400.0,
+                        -4500.0
+                    ],
+                    [
+                        15400.0,
+                        -6100.0
+                    ],
+                    [
+                        11800.0,
+                        -6100.0
+                    ],
+                    [
+                        11800.0,
+                        -8700.0
+                    ],
+                    [
+                        18600.0,
+                        -8700.0
+                    ]
+                ],
+                "asset_id": "collision_camera_020"
+            },
+            "nodes": {
+                "Event - Escape Sequence": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 14400.0,
+                        "y": -8400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_Escape",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "Escape",
+                    "connections": {
+                        "Raven Beak X Checkpoint": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Raven Beak X Checkpoint": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12800.0,
+                        "y": -8500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_CommanderX",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Escape Sequence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Escape Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Escape",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Escape Room 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15379.89,
+                        "y": -5314.41,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Hanubia Escape",
+                        "area": "Escape Room 1",
+                        "node": "Dock to Raven Beak X Arena"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Raven Beak X Checkpoint": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Escape",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "collision_camera_1000 (H)": {
+            "default_node": null,
+            "extra": {
+                "total_boundings": {
+                    "x1": -14600.0,
+                    "x2": -10100.0,
+                    "y1": -6200.0,
+                    "y2": -4000.0
+                },
+                "polygon": [
+                    [
+                        -10100.0,
+                        -4000.0
+                    ],
+                    [
+                        -14600.0,
+                        -4000.0
+                    ],
+                    [
+                        -14600.0,
+                        -6200.0
+                    ],
+                    [
+                        -10100.0,
+                        -6200.0
+                    ]
+                ],
+                "asset_id": "collision_camera_1000"
+            },
+            "nodes": {
+                "Placeholder": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {}
+                }
+            }
+        }
+    }
+}
