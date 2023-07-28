@@ -59,8 +59,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Experimental Option - `Skippable` Cutscene Mode. Keeps all cutscenes in the game but makes it so they can be skipped with the START button
 - Added: Experimental Option - `Competitive (Experimental)` Cutscene Mode Removes some cutscenes from the game which hinder the flow of competitive play. All others are skippable. This will eventually replace the existing Competitive implementation.
 - Added: Introduction of non-critical fixes and improvements to the base game such as fixed sound effects and removed tutorial popups. Those wanting an untainted experience of the vanilla game may still do so at their own risk by activating "Legacy Mode". For technical description of what's changed, see [qol.jsonc](https://github.com/toasterparty/randomprime/blob/randovania/generated/json_data/qol.jsonc)
+- Added: Completely overhauled how custom Blast Shields and Doors look
+- Added: Morph Ball Bomb and Charge Beam door locks now use Blast Shields so that they only need to be opened once with that weapon
+- Added: New "Gamecube" pickup model which acts as a placeholder for all non-nothing items without a suitable model which can be displayed natively
 - Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
+- Changed: Blast Shields are much more visible in dark rooms
 - Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded. 
+- Fixed: HoTE statue door can now handle a blast shield cover
+- Fixed: Old scan points lingering in Door Lock Rando
+- Fixed: Door Lock Rando shields now make explosion sounds
 
 #### Logic Database
 
@@ -75,11 +82,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner .
 - Fixed: Ice Beam has been removed from the connection to Elder Chamber in Hall of the Elders.
 - Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
+- Changed: Ruined Nursery Bombless Standables Logic Adjustments
+- Added: Ruined Nursery Bombless w/ Boost strat
+- Added: Training Chamber Ghost Skip
 
 ##### Phendrana Drifts
 
 - Changed: Quarantine Cave - Various cleanup with Thardus fight logic. Reworked visor requirements. Added Missile strategy (allows Ice Beam only fight logically).
-- Added: Quarantine Cave - Added Quarantine Cave NSJ Scan Dash to Q-Mon Tunnel
+- Added: Added Quarantine Cave NSJ Scan Dash to Q-Mon Tunnel
+- Added: Dash to Q Mon from Room Center with SJ
+- Added: Reverse Thardus Skip Logic (Scan and Scanless)
+- Added: Thardus Hop
+- Changed: Ice Ruins West Baby Sheegoth Jump Damage Requirements and Trick Adjustments
+- Added: Gravity Chamber Pickup (Missile) NSJ w/o Grapple/Plasma Dash Method and Bombu Method
+
+##### Phazon Mines
+
+- Added: Metroid Hop to reach Missile from Quarantine Access A
+- Changed: Various Metroid Quarantine A logic adjustments
 
 ### Metroid Prime 2: Echoes
 
