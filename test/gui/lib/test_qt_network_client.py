@@ -112,7 +112,7 @@ async def test_attempt_join(client, mocker, in_session):
     mocker.patch("randovania.network_client.network_client.NetworkClient.join_multiplayer_session",
                  return_value="A Session")
     session = MultiplayerSessionListEntry(
-        id=1, name="A Game", has_password=True, state=MultiplayerSessionVisibility.HIDDEN,
+        id=1, name="A Game", has_password=True, visibility=MultiplayerSessionVisibility.HIDDEN,
         num_users=1, num_worlds=0, creator="You", is_user_in_session=in_session,
         creation_date=datetime.datetime(year=2015, month=5, day=1, tzinfo=datetime.UTC),
         join_date=datetime.datetime(year=2016, month=5, day=1, tzinfo=datetime.UTC),

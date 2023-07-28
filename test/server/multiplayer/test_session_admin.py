@@ -48,7 +48,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
 
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
-        {'id': 1, 'name': 'Debug', 'visibility': 'setup', 'users_list': [], 'worlds': [],
+        {'id': 1, 'name': 'Debug', 'visibility': 'visible', 'users_list': [], 'worlds': [],
          'game_details': {'seed_hash': 'NMY7DGIN',
                           'spoiler': True,
                           'word_hash': 'Spreader Liftvine Great'},
@@ -84,7 +84,7 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
 
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
-        {'id': 1, 'name': 'Debug', 'visibility': 'setup',
+        {'id': 1, 'name': 'Debug', 'visibility': 'visible',
          'users_list': [
              {'admin': True, 'id': 1234, 'name': 'The Name', 'ready': False,
               'worlds': {'1179c986-758a-4170-9b07-fe4541d78db0': {
@@ -667,7 +667,7 @@ def test_admin_session_change_visibility(mock_emit_session_update,
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
     mock_audit.assert_called_once_with(sa, session, f"Changed visibility to {new_visibility.user_friendly_name}")
-    assert database.MultiplayerSession.get_by_id(1).state == new_visibility
+    assert database.MultiplayerSession.get_by_id(1).visibility == new_visibility
 
 
 def test_admin_session_change_password(clean_database, mock_emit_session_update, flask_app, mock_audit):
