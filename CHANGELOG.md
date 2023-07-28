@@ -64,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 52 videos to logic database, bringing the total available via the Video Directory to 276
+- Added: 52 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) to 276
 
 ##### Chozo Ruins
 
