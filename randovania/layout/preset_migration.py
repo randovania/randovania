@@ -913,6 +913,38 @@ def _migrate_v58(preset: dict) -> dict:
 
     return preset
 
+def _migrate_v59(preset: dict) -> dict:
+    game = preset["game"]
+
+    if game != "prime1":
+        return preset
+
+    configuration = preset["configuration"]
+
+    dock_rando = configuration.get("dock_rando")
+    if dock_rando is None:
+        return preset
+
+    types_state = dock_rando.get("types_state")
+    if types_state is None:
+        return preset
+
+    door = types_state.get("door")
+    if door is None:
+        return preset
+
+    can_change_to: list[str] = door.get("can_change_to")
+    if can_change_to is None:
+        return preset
+
+    for i, x in enumerate(can_change_to):
+        if x == "Charge Beam Door":
+            can_change_to[i] = "Charge Beam Blast Shield"
+        if x == "Bomb Door":
+            can_change_to[i] = "Bomb Blast Shield"
+
+    return preset
+
 
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -973,6 +1005,7 @@ _MIGRATIONS = [
     _migrate_v56,
     _migrate_v57,
     _migrate_v58,
+    _migrate_v59,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
