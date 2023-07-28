@@ -31,7 +31,7 @@ class MultiplayerSessionListEntry(JsonDataclass):
     id: int
     name: str
     has_password: bool
-    state: MultiplayerSessionVisibility
+    visibility: MultiplayerSessionVisibility
     num_users: int
     num_worlds: int
     creator: str

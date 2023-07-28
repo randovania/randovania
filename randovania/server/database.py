@@ -132,8 +132,9 @@ class MultiplayerSession(BaseModel):
     id: int
     name: str = peewee.CharField(max_length=MAX_SESSION_NAME_LENGTH)
     password: str | None = peewee.CharField(null=True)
-    state: MultiplayerSessionVisibility = EnumField(choices=MultiplayerSessionVisibility,
-                                                    default=MultiplayerSessionVisibility.VISIBLE)
+    visibility: MultiplayerSessionVisibility = EnumField(choices=MultiplayerSessionVisibility,
+                                                         default=MultiplayerSessionVisibility.VISIBLE,
+                                                         column_name="state")
     layout_description_json: bytes | None = peewee.BlobField(null=True)
     game_details_json: str | None = peewee.CharField(null=True)
     creator: User = peewee.ForeignKeyField(User)
@@ -297,7 +298,7 @@ class MultiplayerSession(BaseModel):
         for association in associations:
             association_by_user[association.user_id].append(association)
 
-        visibility = self.state
+        visibility = self.visibility
         if visibility == MultiplayerSessionVisibility.IN_PROGRESS:
             visibility = MultiplayerSessionVisibility.VISIBLE
 

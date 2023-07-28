@@ -8,6 +8,7 @@ from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
     MultiplayerSessionListEntry,
 )
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World
 from randovania.server.multiplayer import session_common
@@ -18,6 +19,8 @@ def list_sessions(sa: ServerApp, limit: int | None):
     # Note: this query fails to list any session that has no memberships
     # But that's fine, because these sessions should've been deleted!
     def construct_helper(**args):
+        if args["visibility"] == MultiplayerSessionVisibility.IN_PROGRESS:
+            args["visibility"] = MultiplayerSessionVisibility.VISIBLE
         args["creation_date"] = datetime.datetime.fromisoformat(args["creation_date"])
         args["join_date"] = datetime.datetime.fromisoformat(args["join_date"])
         args["has_password"] = bool(args["has_password"])
@@ -30,7 +33,7 @@ def list_sessions(sa: ServerApp, limit: int | None):
             MultiplayerSession.id,
             MultiplayerSession.name,
             Case(None, ((MultiplayerSession.password.is_null(), False),), True).alias('has_password'),
-            MultiplayerSession.state,
+            MultiplayerSession.visibility,
             fn.COUNT(MultiplayerMembership.user_id).alias('num_users'),
             world_count_subquery.alias("num_worlds"),
             User.name.alias('creator'),

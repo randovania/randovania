@@ -139,7 +139,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
             session
             for session in self.sessions
             if (session.has_password in displayed_has_password
-                and session.state in displayed_states
+                and session.visibility in displayed_states
                 and name_filter.lower() in session.name.lower()
                 and (dont_filter_age or (now - session.creation_date) < max_session_age)
                 and session.is_user_in_session in displayed_is_member)
