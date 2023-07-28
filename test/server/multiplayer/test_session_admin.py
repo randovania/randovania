@@ -48,7 +48,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
 
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
-        {'id': 1, 'name': 'Debug', 'visibility': 'setup', 'users_list': [], 'worlds': [],
+        {'id': 1, 'name': 'Debug', 'visibility': 'visible', 'users_list': [], 'worlds': [],
          'game_details': {'seed_hash': 'NMY7DGIN',
                           'spoiler': True,
                           'word_hash': 'Spreader Liftvine Great'},
@@ -84,7 +84,7 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
 
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
-        {'id': 1, 'name': 'Debug', 'visibility': 'setup',
+        {'id': 1, 'name': 'Debug', 'visibility': 'visible',
          'users_list': [
              {'admin': True, 'id': 1234, 'name': 'The Name', 'ready': False,
               'worlds': {'1179c986-758a-4170-9b07-fe4541d78db0': {

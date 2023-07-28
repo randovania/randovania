@@ -826,13 +826,13 @@ async def test_track_world_listener_create(window: MultiplayerSessionWindow, moc
     window.network_client.world_track_inventory.assert_awaited_once_with(world_uid, user_id, True)
 
 
-@pytest.mark.parametrize("visibility", MultiplayerSessionVisibility)
+@pytest.mark.parametrize("visibility", list(MultiplayerSessionVisibility) + [None])
 async def test_session_visibility_button_clicked(window: MultiplayerSessionWindow, visibility):
     window._session = MagicMock()
     window._session.visibility = visibility
     window.game_session_api.change_visibility = AsyncMock()
 
-    if visibility == MultiplayerSessionVisibility.IN_PROGRESS:
+    if visibility is None:
         expectation = pytest.raises(RuntimeError, match=f"Unknown session state: {visibility}")
     else:
         expectation = contextlib.nullcontext()
@@ -841,7 +841,7 @@ async def test_session_visibility_button_clicked(window: MultiplayerSessionWindo
     with expectation:
         await window._session_visibility_button_clicked_raw()
 
-    if visibility != MultiplayerSessionVisibility.IN_PROGRESS:
+    if visibility is not None:
         window.game_session_api.change_visibility.assert_called_once_with(
             MultiplayerSessionVisibility.VISIBLE
             if visibility == MultiplayerSessionVisibility.HIDDEN else
