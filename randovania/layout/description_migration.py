@@ -390,7 +390,7 @@ def _migrate_v20(data: dict) -> dict:
         if game_name != "prime1":
             continue
 
-        dock_weakness = game_modifications.get("dock_weakness")
+        dock_weakness = game.get("dock_weakness")
         if dock_weakness is None:
             continue
 
