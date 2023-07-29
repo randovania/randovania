@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
 - Added: Diagonal Bomb Jump in Burenia - Main Hub Tower Top, to the Missile Tank, using either Gravity Suit or an out of water bomb jump.
 - Changed: In Dairon - Teleport to Artaria, breaking the speed blocks is no longer "dangerous". This is done by removing the "Before Event" condition on breaking the blocks from above.
+- Changed: In Artaria - Water Reservoir, breaking the blob is no longer "dangerous", as long as Slide is not randomized. This was previously dangerous because there's a connection in EMMI Zone Exit Southwest that makes use of Speed Booster, however, by simply adding a "Can Slide" option on the same condition, the logic now sees the blob as safe.
 
 ### Metroid Prime 2: Echoes
 
