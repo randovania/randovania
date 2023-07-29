@@ -26,10 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Dairon - Navigation Station North can no longer be assigned a hint, which would then be replaced with DNA Hints.
 - Added: A new auto-tracker layout featuring progressive items.
 
-### Metroid Prime
-
-- Added: The "Hints" page in the "Game" window now lists the location of the Phazon Suit hint.
-
 #### Logic Database
 
 - Added: Slide from right to left in Cataris - Total Recharge Station South.
@@ -40,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 - Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
 - Removed: In Cataris - Green EMMI Introduction, the advanced Pseudo Wave Beam to break the blob from below is removed.
+
+### Metroid Prime
+
+- Added: The "Hints" page in the "Game" window now lists the location of the Phazon Suit hint.
 
 ### Metroid Prime 2: Echoes
 
