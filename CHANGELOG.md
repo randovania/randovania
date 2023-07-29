@@ -114,6 +114,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The door from Sacrificial Chamber Tunnel to Sacrificial Chamber has been excluded from door lock rando.
 - Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
 
+#### Logic Database
+
+- Added: 4 videos to logic database, see the [Video Directory](https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection
+
 ## [6.0.1] - 2023-07-04
 
 - Added: Option for disabling crash reporting and monitoring.
