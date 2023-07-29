@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Dairon - Navigation Station North can no longer be assigned a hint, which would then be replaced with DNA Hints.
 - Added: A new auto-tracker layout featuring progressive items.
 
+### Metroid Prime
+
+- Added: The "Hints" page in the "Game" window now lists the location of the Phazon Suit hint.
+
 #### Logic Database
 
 - Added: Slide from right to left in Cataris - Total Recharge Station South.
