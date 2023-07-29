@@ -148,7 +148,7 @@ def test_on_tree_context_menu_on_item(widget: SelectPresetWidget):
     widget._on_tree_context_menu(QtCore.QPoint(0, 0))
 
     # Assert
-    assert widget._preset_menu.preset is not None
+    assert widget._preset_menu.action_customize.isEnabled()
     widget._preset_menu.exec.assert_called_once()
 
 
@@ -158,5 +158,5 @@ def test_on_tree_context_menu_on_nothing(widget: SelectPresetWidget):
     widget._on_tree_context_menu(QtCore.QPoint(0, 500))
 
     # Assert
-    assert widget._preset_menu.preset is None
+    assert not widget._preset_menu.action_customize.isEnabled()
     widget._preset_menu.exec.assert_called_once()

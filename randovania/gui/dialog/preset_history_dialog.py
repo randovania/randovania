@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
 def _get_old_preset(preset_str: str) -> Preset | str:
     try:
-        old_preset = VersionedPreset(json.loads(preset_str))
+        old_preset = VersionedPreset.from_str(preset_str)
     except json.JSONDecodeError as e:
         return f"Preset at this version contains json errors: {e}"
 
@@ -83,13 +83,13 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
             self._original_lines = None
 
         item = QtWidgets.QListWidgetItem("Current Version")
-        item.setData(QtCore.Qt.UserRole, (None, self._original_lines))
+        item.setData(QtCore.Qt.ItemDataRole.UserRole, (None, self._original_lines))
         self.version_widget.addItem(item)
 
         for date, old_preset, old_description in _calculate_previous_versions(self.preset_manager, self.preset,
                                                                               self._original_lines):
             item = QtWidgets.QListWidgetItem(date.astimezone().strftime("%c"))
-            item.setData(QtCore.Qt.UserRole, (old_preset, old_description))
+            item.setData(QtCore.Qt.ItemDataRole.UserRole, (old_preset, old_description))
             self.version_widget.addItem(item)
 
         self.accept_button.clicked.connect(self.accept)
@@ -101,7 +101,7 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
     def selected_preset(self) -> Preset | None:
         items = self.version_widget.selectedItems()
         if items:
-            return items[0].data(QtCore.Qt.UserRole)[0]
+            return items[0].data(QtCore.Qt.ItemDataRole.UserRole)[0]
         else:
             return None
 
@@ -124,7 +124,7 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
             self.label.setText("Select a version on the left")
             return
 
-        old_preset, old_description = items[0].data(QtCore.Qt.UserRole)
+        old_preset, old_description = items[0].data(QtCore.Qt.ItemDataRole.UserRole)
         self.accept_button.setEnabled(old_preset is not None)
         self.export_button.setEnabled(self.accept_button.isEnabled())
 
@@ -134,7 +134,9 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
                 old_description,
             ))
             description = "\n\n".join(k[2:])
-        else:
+        elif old_description is not None:
             description = "\n\n".join(old_description)
+        else:
+            description = "Preset has errors"
 
         self.label.setText(description)
