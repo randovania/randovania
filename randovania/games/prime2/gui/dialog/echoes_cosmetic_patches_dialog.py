@@ -6,10 +6,11 @@ from typing import TYPE_CHECKING
 
 from open_prime_rando.dol_patching.echoes.user_preferences import SoundMode
 from PySide6.QtCore import QSize
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QColor, QPixmap
 from PySide6.QtWidgets import QCheckBox, QColorDialog, QFrame, QLabel, QLayout, QSizePolicy, QSlider, QWidget
 
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
 from randovania.gui.lib.signal_handling import set_combo_with_value
@@ -35,6 +36,9 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         super().__init__(parent)
         self.setupUi(self)
         self._cosmetic_patches = current
+
+        self.options_foldable.set_content_layout(self.options_foldable_layout)
+        self.suits_foldable.set_content_layout(self.suits_foldable_layout)
 
         self.field_to_slider_mapping = {
             "screen_brightness": self.screen_brightness_slider,
@@ -77,6 +81,13 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         for field_name, check in self.field_to_check_mapping.items():
             check.stateChanged.connect(partial(self._on_check_update, check, field_name))
 
+        self.advanced_check.stateChanged.connect(self._on_suit_check)
+        self.simple_left_button.clicked.connect(partial(self._on_simple_suit_color_changed, True))
+        self.simple_right_button.clicked.connect(partial(self._on_simple_suit_color_changed, False))
+        for suit_name in ("varia", "dark", "light"):
+            getattr(self, f"{suit_name}_left_button").clicked.connect(partial(self._on_suit_color_changed, suit_name, True))
+            getattr(self, f"{suit_name}_right_button").clicked.connect(partial(self._on_suit_color_changed, suit_name, False))
+
     def on_new_cosmetic_patches(self, patches: EchoesCosmeticPatches):
         self.remove_hud_popup_check.setChecked(patches.disable_hud_popup)
         self.faster_credits_check.setChecked(patches.speed_up_credits)
@@ -85,6 +96,69 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         self.pickup_markers_check.setChecked(patches.pickup_markers)
         self.on_new_user_preferences(patches.user_preferences)
         self.custom_hud_color.setChecked(patches.use_hud_color)
+        self._set_suit_colors(patches.suit_colors)
+
+    def _set_suit_colors(self, suit_colors: EchoesSuitPreferences):
+        advanced = suit_colors.randomize_separately
+        self.advanced_check.setChecked(advanced)
+        self.simple_suit_box.setVisible(not advanced)
+        self.varia_suit_box.setVisible(advanced)
+        self.dark_suit_box.setVisible(advanced)
+        self.light_suit_box.setVisible(advanced)
+
+        if not advanced:
+            self.simple_name_label.setText(suit_colors.varia.long_name)
+            self.simple_img_label.setPixmap(QPixmap(str(suit_colors.varia.ui_icons["varia"])))
+        else:
+            for suit_name in ("varia", "dark", "light"):
+                suit: SuitColor = getattr(suit_colors, suit_name)
+                getattr(self, f"{suit_name}_name_label").setText(suit.long_name)
+                getattr(self, f"{suit_name}_img_label").setPixmap(QPixmap(str(suit.ui_icons[suit_name])))
+
+    def _on_suit_check(self, advanced: int):
+        suits = self._cosmetic_patches.suit_colors
+        if not advanced:
+            suits = dataclasses.replace(
+                suits,
+                dark=suits.varia,
+                light=suits.varia,
+            )
+
+        suits=dataclasses.replace(
+            suits,
+            randomize_separately=advanced,
+        )
+
+        self._cosmetic_patches = dataclasses.replace(
+            self._cosmetic_patches,
+            suit_colors=suits,
+        )
+        self._set_suit_colors(suits)
+
+    def _on_suit_color_changed(self, suit_name: str, reverse: bool):
+        suit: SuitColor = getattr(self.cosmetic_patches.suit_colors, suit_name)
+        new_suit = suit.next_color(reverse)
+        self._cosmetic_patches = dataclasses.replace(
+            self._cosmetic_patches,
+            suit_colors=dataclasses.replace(
+                self.cosmetic_patches.suit_colors,
+                **{suit_name: new_suit},
+            )
+        )
+        self._set_suit_colors(self.cosmetic_patches.suit_colors)
+
+    def _on_simple_suit_color_changed(self, reverse: bool):
+        new_suit = self.cosmetic_patches.suit_colors.varia.next_color(reverse)
+        self._cosmetic_patches = dataclasses.replace(
+            self._cosmetic_patches,
+            suit_colors=dataclasses.replace(
+                self.cosmetic_patches.suit_colors,
+                varia=new_suit,
+                dark=new_suit,
+                light=new_suit,
+            )
+        )
+        self._set_suit_colors(self.cosmetic_patches.suit_colors)
 
     def on_new_user_preferences(self, user_preferences: EchoesUserPreferences):
         set_combo_with_value(self.sound_mode_combo, user_preferences.sound_mode)

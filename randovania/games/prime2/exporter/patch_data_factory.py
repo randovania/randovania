@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import sys
 from typing import TYPE_CHECKING
 
 import randovania
@@ -30,10 +31,10 @@ from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import string_lib
 from randovania.patching.prime import elevators
+from random import Random
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
-    from random import Random
 
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game_description.db.area import Area
@@ -732,6 +733,16 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             }
         }
 
+    def add_new_patcher_cosmetics(self) -> dict:
+        cosmetic_rng = Random(self.rng.randrange(sys.maxsize))
+
+        suits = self.cosmetic_patches.suit_colors.randomized(cosmetic_rng).as_json
+        suits.pop("randomize_separately")
+
+        return {
+            "suits": suits,
+        }
+
     def new_patcher_configuration(self):
         regions_patch_data = {}
         self.add_layer_patches(regions_patch_data)
@@ -755,6 +766,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
                 "rubiks": True,
             },
             "inverted": self.configuration.inverted_mode,
+            "cosmetics": self.add_new_patcher_cosmetics(),
         }
 
     def create_logbook_patches(self):
