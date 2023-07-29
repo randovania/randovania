@@ -43,15 +43,23 @@ def test_add_new_preset(widget: SelectPresetWidget, preset_manager):
     options.set_selected_preset_uuid_for.assert_called_once_with(widget._game, preset.uuid)
 
 
+@pytest.mark.parametrize("is_included_preset", [False, True])
 @pytest.mark.parametrize("has_existing_window", [False, True])
-async def test_on_customize_button(widget: SelectPresetWidget, mocker: pytest_mock.MockerFixture, has_existing_window):
+async def test_on_customize_button(widget: SelectPresetWidget, mocker: pytest_mock.MockerFixture,
+                                   has_existing_window, is_included_preset):
     mock_settings_window = mocker.patch("randovania.gui.widgets.select_preset_widget.CustomizePresetDialog")
+    mock_editor = mocker.patch("randovania.gui.widgets.select_preset_widget.PresetEditor")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     mock_execute_dialog.return_value = QtWidgets.QDialog.DialogCode.Accepted
     widget._add_new_preset = MagicMock()
     widget._logic_settings_window = MagicMock() if has_existing_window else None
+    widget._options.get_parent_for_preset = MagicMock()
+
+    versioned_preset = MagicMock()
+    versioned_preset.is_included_preset = is_included_preset
+    old_preset = versioned_preset.get_preset.return_value
     widget.create_preset_tree = MagicMock()
-    widget.create_preset_tree.selectedItems.return_value = [MagicMock()]
+    widget.create_preset_tree.current_preset_data = versioned_preset
 
     # Run
     await widget._on_customize_preset()
@@ -63,9 +71,23 @@ async def test_on_customize_button(widget: SelectPresetWidget, mocker: pytest_mo
         mock_execute_dialog.assert_not_awaited()
         widget._add_new_preset.assert_not_called()
     else:
-        mock_settings_window.assert_called_once()
+        versioned_preset.get_preset.assert_called_once_with()
+
+        if is_included_preset:
+            parent_uuid = old_preset.uuid
+            old_preset.fork.assert_called_once_with()
+            old_preset = old_preset.fork.return_value
+        else:
+            widget._options.get_parent_for_preset.assert_called_once_with(old_preset.uuid)
+            parent_uuid = widget._options.get_parent_for_preset.return_value
+
+        mock_editor.assert_called_once_with(old_preset, widget._options)
+        mock_settings_window.assert_called_once_with(widget._window_manager, mock_editor.return_value)
         mock_execute_dialog.assert_awaited_once_with(mock_settings_window.return_value)
-        widget._add_new_preset.assert_called_once()
+        widget._add_new_preset.assert_called_once_with(
+            VersionedPreset.with_preset(mock_editor.return_value.create_custom_preset_with.return_value),
+            parent=parent_uuid,
+        )
 
 
 def test_on_options_changed_select_preset(widget: SelectPresetWidget, is_dev_version):
