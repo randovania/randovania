@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
@@ -160,3 +161,31 @@ def test_on_tree_context_menu_on_nothing(widget: SelectPresetWidget):
     # Assert
     assert not widget._preset_menu.action_customize.isEnabled()
     widget._preset_menu.exec.assert_called_once()
+
+
+def test_menu_set_preset_broken(widget: SelectPresetWidget):
+    broken_data = copy.deepcopy(widget._window_manager.preset_manager.default_preset_for_game(widget._game).as_json)
+    broken_data["schema_version"] = 6
+
+    broken_preset = VersionedPreset(broken_data)
+    widget._preset_menu.set_preset(broken_preset)
+
+    menu = widget._preset_menu
+    actions = [
+        menu.action_delete,
+        menu.action_history,
+        menu.action_export,
+        menu.action_customize,
+        menu.action_duplicate,
+        menu.action_map_tracker,
+        menu.action_required_tricks,
+    ]
+    assert [p.isEnabled() for p in actions] == [
+        True,
+        True,
+        False,
+        False,
+        False,
+        False,
+        False,
+    ]
