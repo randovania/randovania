@@ -121,7 +121,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 4 videos to logic database, see the [Video Directory](https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection
+- Added: 6 videos to logic database, see the [Video Directory](https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection
+
+##### Sanctuary Fortress
+
+- Added: Workers Path - Screw Attack from Z-Axis now requires BSJ from Dynamo Works
+- Added: Workers Path - Bomb Jump method added to reach cannon NSJ from landing platform
 
 ## [6.0.1] - 2023-07-04
 
