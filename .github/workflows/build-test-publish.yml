@@ -432,7 +432,7 @@ jobs:
       - name: Find Randovania version
         id: randovania_version
         run: |
-          echo version=$(python get_version_from_artifacts.py "packages/Randovania Linux Executable/") >> $GITHUB_OUTPUT
+          echo version=$(python tools/get_version_from_artifacts.py "packages/Randovania Linux Executable/") >> $GITHUB_OUTPUT
 
       - name: Create Sentry release
         uses: getsentry/action-release@v1
