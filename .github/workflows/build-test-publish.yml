@@ -442,7 +442,7 @@ jobs:
         with:
           environment: ${{ steps.decide_env.outputs.env }}
           projects: randovania-client randovania-bot randovania-server
-          version: "v{{ steps.randovania_version.outputs.version }}"
+          version: "v${{ steps.randovania_version.outputs.version }}"
 
       - name: Upload binaries to GitHub Release
         uses: svenstaro/upload-release-action@2.6.1
@@ -473,7 +473,7 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.pypi_password }}
 
       - name: Discord Notifications
-        run: python tools/post_discord_webhook.py --version "{{ steps.randovania_version.outputs.version }}"
+        run: python tools/post_discord_webhook.py --version "${{ steps.randovania_version.outputs.version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
