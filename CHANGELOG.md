@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
 - Fixed: Sorting the session history and audit log now works properly.
 - Fixed: In Multiworld session, the Claim world button is now properly disabled when you don't have permissions.
+- Fixed: Changing a preset no longer causes it to lose its position in the tree.
 - Removed: Connecting to Dolphin on Linux executable builds is now hidden on known situations that it doesn't work properly.
 
 ### Metroid Dread
@@ -103,6 +104,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Metroid Hop to reach Missile from Quarantine Access A
 - Changed: Various Metroid Quarantine A logic adjustments
 
+### Metroid Prime
+
+- Added: The "Hints" page in the "Game" window now lists the location of the Phazon Suit hint.
+
 ### Metroid Prime 2: Echoes
 
 - Added: Tracker layout "Debug Info", which also shows details useful for investigating errors.
@@ -113,6 +118,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Doors in Venomous Pond can no longer become blast shields.
 - Fixed: The door from Sacrificial Chamber Tunnel to Sacrificial Chamber has been excluded from door lock rando.
 - Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
+
+#### Logic Database
+
+- Added: 4 videos to logic database, see the [Video Directory](https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection
 
 ## [6.0.1] - 2023-07-04
 

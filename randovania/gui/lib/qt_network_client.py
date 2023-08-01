@@ -30,6 +30,8 @@ from randovania.network_common.multiplayer_session import (
 if TYPE_CHECKING:
     from pathlib import Path
 
+AnyNetworkError = (error.BaseNetworkError, UnableToConnect)
+
 
 def handle_network_errors(fn):
     @functools.wraps(fn)

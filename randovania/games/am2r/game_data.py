@@ -62,9 +62,6 @@ game_data: game.GameData = game.GameData(
         ("Why can I not fire Missiles / Super Missiles / Power Bombs?",
          "You likely have the 'Required Mains' option enabled. This means you first "
          "need to find the Launcher for your Missiles / Super Missiles / Power Bombs before you can use them."),
-        ("Why does the save menu say that the difficulty is Brutal, even though I selected a different difficulty?",
-         "This is currently a visual bug if you have the 'Fusion Mode' setting enabled. "
-         "The actual difficulty is still what you selected, you just won't be able to see it on the title screen."),
         ("I saved in a place that I can't get out of, what do I do?",
          "You can use the 'Restart from Start Location' option, which will "
          "reload your last save but make you spawn at the original start location."),
