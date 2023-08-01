@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.games.super_metroid.layout import SuperMetroidConfiguration
+from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
