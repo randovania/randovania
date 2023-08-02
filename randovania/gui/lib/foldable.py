@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from PySide6 import QtCore, QtWidgets
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Property, Qt, Signal
 
 
 class Foldable(QtWidgets.QWidget):
@@ -51,10 +51,7 @@ class Foldable(QtWidgets.QWidget):
         return self._content_area
 
     def _on_click(self, checked: bool):
-        if self._folded:
-            self._unfold()
-        else:
-            self._fold()
+        self.setFolded(not self._folded)
 
     def _unfold(self):
         self._folded = False
@@ -75,3 +72,24 @@ class Foldable(QtWidgets.QWidget):
 
     def setTitle(self, title: str):
         self._toggle_button.setText(title)
+
+    def setFolded(self, folded: bool):
+        if folded:
+            self._fold()
+        else:
+            self._unfold()
+
+    @Signal
+    def notify(self):
+        pass
+
+    folded = Property(
+        bool,
+        fset=setFolded,
+        notify=notify,
+    )
+    title = Property(
+        str,
+        fset=setTitle,
+        notify=notify,
+    )

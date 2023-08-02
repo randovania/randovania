@@ -3,6 +3,7 @@ from __future__ import annotations
 import dataclasses
 
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
@@ -20,6 +21,7 @@ class EchoesCosmeticPatches(BaseCosmeticPatches):
     convert_other_game_assets: bool = False
     use_hud_color: bool = False
     hud_color: tuple[int, int, int] = DEFAULT_HUD_COLOR
+    suit_colors: EchoesSuitPreferences = EchoesSuitPreferences()
 
     @classmethod
     def default(cls) -> EchoesCosmeticPatches:

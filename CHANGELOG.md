@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
 
+### Metroid Prime 2: Echoes
+
+- Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
+
 ## [6.1.1] - 2023-08-??
 
 - Nothing.
@@ -83,7 +87,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New "Gamecube" pickup model which acts as a placeholder for all non-nothing items without a suitable model which can be displayed natively
 - Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
 - Changed: Blast Shields are much more visible in dark rooms
-- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded. 
+- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
 - Fixed: HoTE statue door can now handle a blast shield cover
 - Fixed: Old scan points lingering in Door Lock Rando
 - Fixed: Door Lock Rando shields now make explosion sounds
