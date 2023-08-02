@@ -108,7 +108,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
 
         if not advanced:
             self.simple_name_label.setText(suit_colors.varia.long_name)
-            self.simple_img_label.setPixmap(QPixmap(str(suit_colors.varia.ui_icons["varia"])))
+            self.simple_img_label.setPixmap(QPixmap(str(suit_colors.varia.ui_icons["simple"])))
         else:
             for suit_name in ("varia", "dark", "light"):
                 suit: SuitColor = getattr(suit_colors, suit_name)
