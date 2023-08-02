@@ -85,8 +85,10 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         self.simple_left_button.clicked.connect(partial(self._on_simple_suit_color_changed, True))
         self.simple_right_button.clicked.connect(partial(self._on_simple_suit_color_changed, False))
         for suit_name in ("varia", "dark", "light"):
-            getattr(self, f"{suit_name}_left_button").clicked.connect(partial(self._on_suit_color_changed, suit_name, True))
-            getattr(self, f"{suit_name}_right_button").clicked.connect(partial(self._on_suit_color_changed, suit_name, False))
+            on_left = partial(self._on_suit_color_changed, suit_name, True)
+            on_right = partial(self._on_suit_color_changed, suit_name, False)
+            getattr(self, f"{suit_name}_left_button").clicked.connect(on_left)
+            getattr(self, f"{suit_name}_right_button").clicked.connect(on_right)
 
     def on_new_cosmetic_patches(self, patches: EchoesCosmeticPatches):
         self.remove_hud_popup_check.setChecked(patches.disable_hud_popup)
