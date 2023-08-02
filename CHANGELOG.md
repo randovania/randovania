@@ -5,15 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.X.X] - 2023-09-??
+## [6.2.0] - 2023-09-??
+
+### Metroid Dread
+
+#### Logic Database
+
+- Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
 
 ### Metroid Prime 2: Echoes
 
 - Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
 
+## [6.1.1] - 2023-08-??
+
+- Nothing.
+
+### Metroid Dread
+
+- Fixed: The progress bar when exporting no longer reaches 100% earlier than intended in some situations.
+
 ## [6.1.0] - 2023-08-02
 
-- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game.
+- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game. 
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
 - Added: The Generation Order spoiler now has a field to filter it.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
