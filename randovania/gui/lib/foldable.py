@@ -1,8 +1,7 @@
 from __future__ import annotations
-from typing import Any
 
 from PySide6 import QtCore, QtWidgets
-from PySide6.QtCore import Qt, Signal, Property
+from PySide6.QtCore import Property, Qt, Signal
 
 
 class Foldable(QtWidgets.QWidget):

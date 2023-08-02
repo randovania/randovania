@@ -10,12 +10,12 @@ from PySide6.QtGui import QColor, QPixmap
 from PySide6.QtWidgets import QCheckBox, QColorDialog, QFrame, QLabel, QLayout, QSizePolicy, QSlider, QWidget
 
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
+    from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor
     from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 
 

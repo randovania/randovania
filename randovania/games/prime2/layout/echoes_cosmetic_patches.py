@@ -1,16 +1,11 @@
 from __future__ import annotations
 
 import dataclasses
-from enum import Enum
-from pathlib import Path
-from typing import NamedTuple
 
-from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-
 
 DEFAULT_HUD_COLOR = (102, 174, 225)
 

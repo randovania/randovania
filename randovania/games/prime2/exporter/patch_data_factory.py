@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import sys
+from random import Random
 from typing import TYPE_CHECKING
 
 import randovania
@@ -31,7 +32,6 @@ from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import string_lib
 from randovania.patching.prime import elevators
-from random import Random
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
