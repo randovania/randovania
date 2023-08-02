@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-import sys
 from random import Random
 from typing import TYPE_CHECKING
 
@@ -734,7 +733,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         }
 
     def add_new_patcher_cosmetics(self) -> dict:
-        cosmetic_rng = Random(self.rng.randrange(sys.maxsize))
+        cosmetic_rng = Random(self.description.get_seed_for_player(self.players_config.player_index))
 
         suits = self.cosmetic_patches.suit_colors.randomized(cosmetic_rng).as_json
         suits.pop("randomize_separately")
