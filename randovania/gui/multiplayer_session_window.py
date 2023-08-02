@@ -21,7 +21,7 @@ from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layou
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
-from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
+from randovania.gui.lib.qt_network_client import AnyNetworkError, QtNetworkClient, handle_network_errors
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget, connect_to
 from randovania.interface_common import generator_frontend
@@ -666,6 +666,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
             except (asyncio.exceptions.CancelledError, BackgroundTaskInProgressError):
                 pass
+
+            except AnyNetworkError:
+                # We're interested in catching generation failures.
+                # Let network errors be handled by who called us, which will be captured by handle_network_errors
+                raise
 
             except Exception as e:
                 await self.failure_handler.handle_exception(

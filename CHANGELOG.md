@@ -5,7 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.X.X] - 2023-08-??
+## [6.2.0] - 2023-09-??
+
+### Metroid Dread
+
+#### Logic Database
+
+- Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
+
+## [6.1.1] - 2023-08-??
+
+- Nothing.
+
+### Metroid Dread
+
+- Fixed: The progress bar when exporting no longer reaches 100% earlier than intended in some situations.
+
+## [6.1.0] - 2023-08-02
 
 - **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game. 
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
@@ -82,7 +98,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Knowledge (Intermediate) for reaching Elder Chamber without fighting the Chozo Ghost.
 - Added: Main Plaza - Tree item OoB logic.
 - Added: Crossway - Easier boost only method for item.
-- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner .
+- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner.
 - Fixed: Ice Beam has been removed from the connection to Elder Chamber in Hall of the Elders.
 - Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
 - Changed: Ruined Nursery Bombless Standables Logic Adjustments

@@ -2,15 +2,19 @@ from __future__ import annotations
 
 import platform
 from pathlib import Path
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, call
 
 import pytest
 
 from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
 
+if TYPE_CHECKING:
+    from pytest_localftpserver.servers import PytestLocalFTPServer
+
 
 @pytest.mark.skipif(platform.system() == "Darwin", reason="ftpserver fails on macOS")
-def test_upload(ftpserver, tmp_path):
+def test_upload(ftpserver: PytestLocalFTPServer, tmp_path):
     progress_update = MagicMock()
 
     server_home = Path(ftpserver.server_home)
