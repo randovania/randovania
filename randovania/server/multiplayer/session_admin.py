@@ -127,7 +127,7 @@ def _change_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UU
     verify_has_admin_or_claimed(sa, world)
 
     if preset.game not in session.allowed_games:
-        raise error.InvalidActionError(f"Only {preset.game} preset not allowed.")
+        raise error.InvalidActionError(f"{preset.game.long_name} not allowed.")
 
     if not randovania.is_dev_version() and preset.get_preset().configuration.unsupported_features():
         raise error.InvalidActionError("Preset uses unsupported features.")

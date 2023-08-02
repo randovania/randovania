@@ -4,6 +4,7 @@ import contextlib
 import dataclasses
 import itertools
 import json
+import re
 import uuid
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, PropertyMock, call
@@ -306,7 +307,7 @@ def test_admin_session_create_world_bad(mock_emit_session_update: MagicMock, moc
 
 
 @pytest.mark.parametrize("association", ["no", "yes", "admin"])
-def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_audit,
+def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_audit, blank_available_in_multi,
                                     clean_database, flask_app, preset_manager, association):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
@@ -319,6 +320,9 @@ def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_au
 
     if association == "no":
         context = pytest.raises(error.NotAuthorizedForActionError)
+    elif not blank_available_in_multi:
+        context = pytest.raises(error.InvalidActionError,
+                                match=re.escape("Invalid Action: Blank Development Game not allowed."))
     else:
         context = contextlib.nullcontext()
 
@@ -335,7 +339,7 @@ def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_au
 
     new_preset_row = database.World.get_by_id(w1.id)
     # Assert
-    if association == "no":
+    if association == "no" or not blank_available_in_multi:
         mock_emit_session_update.assert_not_called()
         assert new_preset_row.preset == "{}"
         mock_audit.assert_not_called()
