@@ -5,9 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.X.X] - 2023-08-??
+## [6.X.X] - 2023-09-??
 
-- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game. 
+### Metroid Prime 2: Echoes
+
+- Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
+
+## [6.1.0] - 2023-08-02
+
+- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game.
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
 - Added: The Generation Order spoiler now has a field to filter it.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
@@ -67,7 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New "Gamecube" pickup model which acts as a placeholder for all non-nothing items without a suitable model which can be displayed natively
 - Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
 - Changed: Blast Shields are much more visible in dark rooms
-- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded. 
+- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
 - Fixed: HoTE statue door can now handle a blast shield cover
 - Fixed: Old scan points lingering in Door Lock Rando
 - Fixed: Door Lock Rando shields now make explosion sounds
