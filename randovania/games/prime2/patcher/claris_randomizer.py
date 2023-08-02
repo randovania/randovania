@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
     from randovania.lib.status_update_lib import ProgressUpdateCallable
 
-CURRENT_PATCH_VERSION = 3
+CURRENT_PATCH_VERSION = 4
 logger = logging.getLogger(__name__)
 
 

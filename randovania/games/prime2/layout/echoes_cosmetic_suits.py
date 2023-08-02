@@ -50,10 +50,7 @@ class EchoesSuitPreferences(JsonDataclass):
     randomize_separately: bool = False
 
     def randomized(self, rng: Random) -> "EchoesSuitPreferences":
-        if not any(
-            suit == SuitColor.RANDOM
-            for suit in (self.varia, self.dark, self.light)
-        ):
+        if SuitColor.RANDOM not in (self.varia, self.dark, self.light):
             # no change needed
             return self
 
