@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
     from randovania.lib.status_update_lib import ProgressUpdateCallable
 
-CURRENT_PATCH_VERSION = 3
+CURRENT_PATCH_VERSION = 4
 logger = logging.getLogger(__name__)
 
 
@@ -96,10 +96,21 @@ def _base_args(game_root: Path,
 
 _ECHOES_PAKS = tuple(
     [
-        "MiscData.pak",
+        "AudioGrp.pak",
         "FrontEnd.pak",
+        "GGuiSys.pak",
         "LogBook.pak",
+        "MidiData.pak",
+        "MiscData.pak",
+        "NoARAM.pak",
+        "SamGunFx.pak",
+        "SamGunFxLow.pak",
+        "SamGunFxMulti.pak",
+        "SamusGun.pak",
+        "SamusGunLow.pak",
+        "SlideShow.pak",
         "Standard.ntwk",
+        "TestAnim.pak",
     ]
     + [f"Metroid{i}.pak" for i in range(1, 6)])
 
