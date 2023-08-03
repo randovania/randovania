@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
 
-### Echoes: Logic Updates and Video Upload
+### Metroid Prime 2: Echoes
 
 - Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
 
