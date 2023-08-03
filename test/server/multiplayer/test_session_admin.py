@@ -4,6 +4,7 @@ import contextlib
 import dataclasses
 import itertools
 import json
+import re
 import uuid
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, PropertyMock, call
@@ -48,7 +49,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
 
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
-        {'id': 1, 'name': 'Debug', 'visibility': 'setup', 'users_list': [], 'worlds': [],
+        {'id': 1, 'name': 'Debug', 'visibility': 'visible', 'users_list': [], 'worlds': [],
          'game_details': {'seed_hash': 'NMY7DGIN',
                           'spoiler': True,
                           'word_hash': 'Spreader Liftvine Great'},
@@ -84,7 +85,7 @@ def test_admin_player_kick_member(two_player_session, flask_app, mocker, mock_au
 
     mock_emit.assert_called_once_with(
         "multiplayer_session_meta_update",
-        {'id': 1, 'name': 'Debug', 'visibility': 'setup',
+        {'id': 1, 'name': 'Debug', 'visibility': 'visible',
          'users_list': [
              {'admin': True, 'id': 1234, 'name': 'The Name', 'ready': False,
               'worlds': {'1179c986-758a-4170-9b07-fe4541d78db0': {
@@ -306,7 +307,7 @@ def test_admin_session_create_world_bad(mock_emit_session_update: MagicMock, moc
 
 
 @pytest.mark.parametrize("association", ["no", "yes", "admin"])
-def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_audit,
+def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_audit, blank_available_in_multi,
                                     clean_database, flask_app, preset_manager, association):
     user1 = database.User.create(id=1234, name="The Name")
     session = database.MultiplayerSession.create(id=1, name="Debug", state=MultiplayerSessionVisibility.VISIBLE,
@@ -319,6 +320,9 @@ def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_au
 
     if association == "no":
         context = pytest.raises(error.NotAuthorizedForActionError)
+    elif not blank_available_in_multi:
+        context = pytest.raises(error.InvalidActionError,
+                                match=re.escape("Invalid Action: Blank Development Game not allowed."))
     else:
         context = contextlib.nullcontext()
 
@@ -335,7 +339,7 @@ def test_admin_session_change_world(mock_emit_session_update: MagicMock, mock_au
 
     new_preset_row = database.World.get_by_id(w1.id)
     # Assert
-    if association == "no":
+    if association == "no" or not blank_available_in_multi:
         mock_emit_session_update.assert_not_called()
         assert new_preset_row.preset == "{}"
         mock_audit.assert_not_called()
@@ -667,7 +671,7 @@ def test_admin_session_change_visibility(mock_emit_session_update,
     # Assert
     mock_emit_session_update.assert_called_once_with(session)
     mock_audit.assert_called_once_with(sa, session, f"Changed visibility to {new_visibility.user_friendly_name}")
-    assert database.MultiplayerSession.get_by_id(1).state == new_visibility
+    assert database.MultiplayerSession.get_by_id(1).visibility == new_visibility
 
 
 def test_admin_session_change_password(clean_database, mock_emit_session_update, flask_app, mock_audit):

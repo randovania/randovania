@@ -5,7 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.X.X] - 2023-08-??
+## [6.2.0] - 2023-09-??
+
+### Metroid Dread
+
+#### Logic Database
+
+- Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
+- Added: Diagonal Bomb Jump in Burenia - Main Hub Tower Top, to the Missile Tank, using either Gravity Suit or an out of water bomb jump.
+- Changed: In Dairon - Teleport to Artaria, breaking the speed blocks is no longer "dangerous". This is done by removing the "Before Event" condition on breaking the blocks from above.
+- Changed: In Artaria - Water Reservoir, breaking the blob is no longer "dangerous", as long as Slide is not randomized. This was previously dangerous because there's a connection in EMMI Zone Exit Southwest that makes use of Speed Booster, however, by simply adding a "Can Slide" option on the same condition, the logic now sees the blob as safe.
+- Changed: In Burenia: Fighting Drogyga is now only "dangerous" if Highly Dangerous Logic is enabled. This is achieved by adding a Highly Dangerous Logic constraint on all instances where the logic uses "Before Drogyga" on connections in the Underneath Drogyga room.
+- Changed: in Burenia - Main Hub Tower Middle, lowering the Spider Magnet Wall is now "dangerous" only when Highly Dangerous Logic is enabled. The connection from the bottom of the room to the Pickup Platform that uses Grapple Movement requires the Spider Magnet Wall to not be lowered now requires Highly Dangerous Logic. The randomizer currently doesn't have the necessary options to make this connection mandatory in any seeds anyway. 
+
+### Metroid Prime 2: Echoes
+
+- Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
+
+## [6.1.1] - 2023-08-??
+
+- Nothing.
+
+### Metroid Dread
+
+- Fixed: The progress bar when exporting no longer reaches 100% earlier than intended in some situations.
+- Added: Racetime seeds can now be directly imported into Randovania
+
+## [6.1.0] - 2023-08-02
 
 - **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game. 
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
@@ -31,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
 - Fixed: Sorting the session history and audit log now works properly.
 - Fixed: In Multiworld session, the Claim world button is now properly disabled when you don't have permissions.
+- Fixed: Changing a preset no longer causes it to lose its position in the tree.
 - Removed: Connecting to Dolphin on Linux executable builds is now hidden on known situations that it doesn't work properly.
 
 ### Metroid Dread
@@ -64,9 +91,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Completely overhauled how custom Blast Shields and Doors look
 - Added: Morph Ball Bomb and Charge Beam door locks now use Blast Shields so that they only need to be opened once with that weapon
 - Added: New "Gamecube" pickup model which acts as a placeholder for all non-nothing items without a suitable model which can be displayed natively
+- Added: The "Hints" page in the "Game" window now lists the location of the Phazon Suit hint.
 - Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
 - Changed: Blast Shields are much more visible in dark rooms
-- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded. 
+- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
 - Fixed: HoTE statue door can now handle a blast shield cover
 - Fixed: Old scan points lingering in Door Lock Rando
 - Fixed: Door Lock Rando shields now make explosion sounds
@@ -81,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Knowledge (Intermediate) for reaching Elder Chamber without fighting the Chozo Ghost.
 - Added: Main Plaza - Tree item OoB logic.
 - Added: Crossway - Easier boost only method for item.
-- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner .
+- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner.
 - Fixed: Ice Beam has been removed from the connection to Elder Chamber in Hall of the Elders.
 - Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
 - Changed: Ruined Nursery Bombless Standables Logic Adjustments
@@ -113,6 +141,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Doors in Venomous Pond can no longer become blast shields.
 - Fixed: The door from Sacrificial Chamber Tunnel to Sacrificial Chamber has been excluded from door lock rando.
 - Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
+
+#### Logic Database
+
+- Added: 4 videos to logic database, see the [Video Directory](https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection
 
 ## [6.0.1] - 2023-07-04
 

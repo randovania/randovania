@@ -147,7 +147,7 @@ class DreadExecutor:
             self._socket_error = None
             self.logger.debug("Connecting to %s:%d.", self._ip, self._port)
             reader, writer = await asyncio.open_connection(self._ip, self._port)
-            self._socket = DreadSocketHolder(reader, writer, int(1), int(4096), 0)
+            self._socket = DreadSocketHolder(reader, writer, 1, 4096, 0)
             self._socket.request_number = 0
 
             # Send interests

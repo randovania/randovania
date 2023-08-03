@@ -40,8 +40,6 @@ class PresetMenu(QtWidgets.QMenu):
     action_import: QtGui.QAction
     action_view_deleted: QtGui.QAction
 
-    preset: VersionedPreset | None
-
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__(parent)
         self.action_customize = QtGui.QAction(parent)
@@ -79,19 +77,21 @@ class PresetMenu(QtWidgets.QMenu):
         self.action_view_deleted.setVisible(False)
 
     def set_preset(self, preset: VersionedPreset | None):
+        has_any_preset = preset is not None
+        has_valid_preset = has_any_preset
         try:
             if preset is not None:
                 preset.get_preset()
         except InvalidPreset:
-            preset = None
+            has_valid_preset = False
 
-        self.preset = preset
+        for p in [self.action_delete, self.action_history]:
+            p.setEnabled(has_any_preset and not preset.is_included_preset)
 
-        for p in [self.action_delete, self.action_history, self.action_export]:
-            p.setEnabled(preset is not None and not preset.is_included_preset)
+        self.action_export.setEnabled(has_valid_preset and not preset.is_included_preset)
 
         for p in [self.action_customize, self.action_duplicate, self.action_map_tracker, self.action_required_tricks]:
-            p.setEnabled(preset is not None)
+            p.setEnabled(has_valid_preset)
 
 
 class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
@@ -167,7 +167,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             parent_uuid = old_preset.uuid
             old_preset = old_preset.fork()
         else:
-            parent_uuid = None
+            parent_uuid = self._options.get_parent_for_preset(old_preset.uuid)
 
         editor = PresetEditor(old_preset, self._options)
         self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
