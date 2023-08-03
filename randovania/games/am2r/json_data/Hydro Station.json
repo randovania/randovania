@@ -214,18 +214,70 @@
                                     {
                                         "type": "template",
                                         "data": "Space Jump Wall"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         },
                         "Pickup (Missile Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2523,10 +2575,6 @@
                                         "data": "Can Use Any Bombs"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Tunnel Climb"
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -3882,7 +3930,7 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "or",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
@@ -4436,10 +4484,6 @@
                                             "amount": 2,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Spider Ball"
                                     }
                                 ]
                             }
