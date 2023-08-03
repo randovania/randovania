@@ -85,6 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Completely overhauled how custom Blast Shields and Doors look
 - Added: Morph Ball Bomb and Charge Beam door locks now use Blast Shields so that they only need to be opened once with that weapon
 - Added: New "Gamecube" pickup model which acts as a placeholder for all non-nothing items without a suitable model which can be displayed natively
+- Added: The "Hints" page in the "Game" window now lists the location of the Phazon Suit hint.
 - Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
 - Changed: Blast Shields are much more visible in dark rooms
 - Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
@@ -123,10 +124,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Metroid Hop to reach Missile from Quarantine Access A
 - Changed: Various Metroid Quarantine A logic adjustments
-
-### Metroid Prime
-
-- Added: The "Hints" page in the "Game" window now lists the location of the Phazon Suit hint.
 
 ### Metroid Prime 2: Echoes
 
