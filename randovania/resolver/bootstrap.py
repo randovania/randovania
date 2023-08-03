@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.game_description import default_database
-from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
@@ -214,12 +213,8 @@ class Bootstrap:
         return game, starting_state
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
-        target_assignment = [
-            (index, PickupTarget(pickup, patches.player_index))
-            for index, pickup in pool_results.assignment.items()
-        ]
-        return patches.assign_new_pickups(
-            target_assignment
+        return patches.assign_own_pickups(
+            pool_results.assignment.items()
         ).assign_extra_starting_pickups(
             pool_results.starting
         )
