@@ -22,8 +22,7 @@ def unpack_iso(iso: Path,
     try:
         game_files_path.mkdir(parents=True, exist_ok=True)
     except OSError as e:
-        raise RuntimeError("Unable to create files dir {}:\n{}".format(
-            game_files_path, e))
+        raise RuntimeError(f"Unable to create files dir {game_files_path}:\n{e}")
 
     disc, is_wii = nod.open_disc_from_image(iso)
     data_partition = disc.get_data_partition()

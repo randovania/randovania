@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import collections
 import datetime
+import enum
 import json
 import uuid
 import zlib
@@ -24,15 +25,13 @@ from randovania.network_common.multiplayer_session import (
     GameDetails,
     MultiplayerSessionAuditEntry,
     MultiplayerSessionAuditLog,
-    MultiplayerSessionListEntry,
     MultiplayerUser,
     MultiplayerWorld,
     UserWorldDetail,
 )
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
-    import enum
     from collections.abc import Iterable
 
 
@@ -133,8 +132,8 @@ class MultiplayerSession(BaseModel):
     id: int
     name: str = peewee.CharField(max_length=MAX_SESSION_NAME_LENGTH)
     password: str | None = peewee.CharField(null=True)
-    state: MultiplayerSessionState = EnumField(choices=MultiplayerSessionState,
-                                               default=MultiplayerSessionState.SETUP)
+    visibility: MultiplayerSessionVisibility = EnumField(choices=MultiplayerSessionVisibility,
+                                                         default=MultiplayerSessionVisibility.VISIBLE)
     layout_description_json: bytes | None = peewee.BlobField(null=True)
     game_details_json: str | None = peewee.CharField(null=True)
     creator: User = peewee.ForeignKeyField(User)
@@ -207,23 +206,6 @@ class MultiplayerSession(BaseModel):
             return False
         return True
 
-    def create_list_entry(self, user: User):
-        num_users = getattr(self, "num_users", None)
-        if num_users is None:
-            num_users = len(self.members)
-
-        return MultiplayerSessionListEntry(
-            id=self.id,
-            name=self.name,
-            has_password=self.password is not None,
-            state=self.state,
-            num_users=num_users,
-            num_worlds=0,
-            creator=self.creator.name,
-            creation_date=self.creation_datetime,
-            is_user_in_session=self.is_user_in_session(user),
-        )
-
     @property
     def allowed_games(self) -> list[RandovaniaGame]:
         dev_features = self.dev_features or ""
@@ -290,6 +272,7 @@ class MultiplayerSession(BaseModel):
         # Fetch the members, with a Join to also fetch the member name
         members: Iterable[MultiplayerMembership] = MultiplayerMembership.select(
             MultiplayerMembership.admin,
+            MultiplayerMembership.ready,
             User.id,
             User.name,
         ).join(
@@ -317,12 +300,13 @@ class MultiplayerSession(BaseModel):
         return multiplayer_session.MultiplayerSessionEntry(
             id=self.id,
             name=self.name,
-            state=self.state,
+            visibility=self.visibility,
             users_list=[
                 MultiplayerUser(
                     id=member.user_id,
                     name=member.user.name,
                     admin=member.admin,
+                    ready=member.ready,
                     worlds={
                         worlds[association.world_id].id: UserWorldDetail(
                             connection_state=association.connection_state,
@@ -338,6 +322,8 @@ class MultiplayerSession(BaseModel):
             generation_in_progress=(self.generation_in_progress.id
                                     if self.generation_in_progress is not None else None),
             allowed_games=self.allowed_games,
+            allow_coop=self.allow_coop,
+            allow_everyone_claim_world=self.allow_everyone_claim_world,
         )
 
     def get_audit_log(self) -> MultiplayerSessionAuditLog:
@@ -441,6 +427,7 @@ class MultiplayerMembership(BaseModel):
     session: MultiplayerSession = peewee.ForeignKeyField(MultiplayerSession, backref="members")
     session_id: int
     admin: bool = peewee.BooleanField(default=False)
+    ready: bool = peewee.BooleanField(default=False)
     join_date = peewee.DateTimeField(default=_datetime_now)
 
     can_help_layout_generation: bool = peewee.BooleanField(default=False)
@@ -491,8 +478,17 @@ class MultiplayerAuditEntry(BaseModel):
         )
 
 
+class DatabaseMigrations(enum.Enum):
+    ADD_READY_TO_MEMBERSHIP = "ready_membership"
+    SESSION_STATE_TO_VISIBILITY = "session_state_to_visibility"
+
+
+class PerformedDatabaseMigrations(BaseModel):
+    migration = EnumField(DatabaseMigrations, unique=True)
+
+
 all_classes = [
     User, UserAccessToken, MultiplayerSession, World,
     WorldUserAssociation, MultiplayerMembership,
-    WorldAction, MultiplayerAuditEntry,
+    WorldAction, MultiplayerAuditEntry, PerformedDatabaseMigrations,
 ]

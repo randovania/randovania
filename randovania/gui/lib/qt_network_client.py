@@ -7,8 +7,9 @@ import json
 import webbrowser
 from typing import TYPE_CHECKING
 
+import PySide6
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Signal
-from PySide6.QtWidgets import QWidget
 from qasync import asyncSlot
 
 import randovania
@@ -29,6 +30,8 @@ from randovania.network_common.multiplayer_session import (
 if TYPE_CHECKING:
     from pathlib import Path
 
+AnyNetworkError = (error.BaseNetworkError, UnableToConnect)
+
 
 def handle_network_errors(fn):
     @functools.wraps(fn)
@@ -38,9 +41,6 @@ def handle_network_errors(fn):
 
         except error.InvalidActionError as e:
             await async_dialog.warning(self, "Invalid action", f"{e}")
-
-        except error.SessionInWrongStateError as e:
-            await async_dialog.warning(self, "Wrong session state", f"{e}")
 
         except error.ServerError:
             await async_dialog.warning(self, "Server error",
@@ -82,7 +82,7 @@ def handle_network_errors(fn):
     return wrapper
 
 
-class QtNetworkClient(QWidget, NetworkClient):
+class QtNetworkClient(QtCore.QObject, NetworkClient):
     Connect = Signal()
     ConnectError = Signal()
     Disconnect = Signal()
@@ -97,10 +97,16 @@ class QtNetworkClient(QWidget, NetworkClient):
     WorldUserInventoryUpdated = Signal(WorldUserInventory)
 
     def __init__(self, user_data_dir: Path):
-        super().__init__()
-        NetworkClient.__init__(self, user_data_dir.joinpath("network_client"), randovania.get_configuration())
-        from randovania.gui.lib import common_qt_lib
-        common_qt_lib.set_default_window_icon(self)
+        configuration = randovania.get_configuration()
+        user_data_dir = user_data_dir.joinpath("network_client")
+
+        if PySide6.__version_info__ >= (6, 5):
+            super().__init__(None,
+                             user_data_dir=user_data_dir,
+                             configuration=configuration)
+        else:
+            super().__init__(None)
+            NetworkClient.__init__(self, user_data_dir=user_data_dir, configuration=configuration)
 
     @NetworkClient.connection_state.setter
     def connection_state(self, value: ConnectionState):
@@ -198,7 +204,7 @@ class QtNetworkClient(QWidget, NetworkClient):
         except error.WrongPasswordError:
             await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
 
-    async def ensure_logged_in(self, parent: QWidget | None):
+    async def ensure_logged_in(self, parent: QtWidgets.QWidget | None):
         if self.connection_state == ConnectionState.Connected:
             return True
 

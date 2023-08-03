@@ -884,6 +884,68 @@ def _migrate_v57(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v58(preset: dict) -> dict:
+    config = preset["configuration"]
+    game = preset["game"]
+
+    if game in {"prime1", "prime2", "prime3"}:
+        mapping = migration_data.get_raw_data(RandovaniaGame(game))["rename_teleporter_nodes"]
+
+        def replace_location(old_location):
+            identifier = f'{old_location["region"]}/{old_location["area"]}/{old_location["node"]}'
+            new_node_name = mapping.get(identifier, None)
+            if new_node_name is not None:
+                old_location["node"] = new_node_name
+
+        for old_location in config["starting_location"]:
+            replace_location(old_location)
+
+
+        if game in {"prime1", "prime2"}:
+            elevators = config["elevators"]
+            excluded_teleporters = elevators["excluded_teleporters"]
+            for teleporter_obj in excluded_teleporters:
+                replace_location(teleporter_obj)
+
+            excluded_targets = elevators["excluded_targets"]
+            for target_obj in excluded_targets:
+                replace_location(target_obj)
+
+    return preset
+
+def _migrate_v59(preset: dict) -> dict:
+    game = preset["game"]
+
+    if game != "prime1":
+        return preset
+
+    configuration = preset["configuration"]
+
+    dock_rando = configuration.get("dock_rando")
+    if dock_rando is None:
+        return preset
+
+    types_state = dock_rando.get("types_state")
+    if types_state is None:
+        return preset
+
+    door = types_state.get("door")
+    if door is None:
+        return preset
+
+    can_change_to: list[str] = door.get("can_change_to")
+    if can_change_to is None:
+        return preset
+
+    for i, x in enumerate(can_change_to):
+        if x == "Charge Beam Door":
+            can_change_to[i] = "Charge Beam Blast Shield"
+        elif x == "Bomb Door":
+            can_change_to[i] = "Bomb Blast Shield"
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -942,6 +1004,8 @@ _MIGRATIONS = [
     _migrate_v55,
     _migrate_v56,
     _migrate_v57,
+    _migrate_v58,
+    _migrate_v59,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
@@ -950,4 +1014,5 @@ def convert_to_current_version(preset: dict) -> dict:
     return migration_lib.apply_migrations(
         preset,
         _MIGRATIONS,
+        version_name="preset version",
     )

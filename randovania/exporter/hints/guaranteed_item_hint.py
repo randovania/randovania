@@ -98,9 +98,6 @@ def create_guaranteed_hints_for_resources(all_patches: dict[int, GamePatches], p
 
     if len(resulting_hints) != len(items):
         raise ValueError(
-            "Expected to find {} between pickup placement and starting items, found {}".format(
-                len(items),
-                len(resulting_hints)
-            ))
+            f"Expected to find {len(items)} between pickup placement and starting items, found {len(resulting_hints)}")
 
     return resulting_hints

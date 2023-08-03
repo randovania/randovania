@@ -86,8 +86,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>164</width>
-          <height>262</height>
+          <width>156</width>
+          <height>193</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="nodes_scroll_layout">
@@ -170,30 +170,10 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="2">
-         <widget class="QCheckBox" name="node_heals_check">
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Heals?</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="2">
          <widget class="QCheckBox" name="area_spawn_check">
           <property name="text">
            <string>Area spawn</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QCheckBox" name="default_node_check">
-          <property name="text">
-           <string>Default node</string>
           </property>
          </widget>
         </item>
@@ -207,6 +187,19 @@
           </property>
           <property name="openExternalLinks">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QCheckBox" name="node_heals_check">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Heals?</string>
           </property>
          </widget>
         </item>
@@ -238,23 +231,15 @@
         </item>
         <item row="1" column="0" colspan="3">
          <widget class="QTreeWidget" name="other_node_alternatives_contents">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>256</width>
-             <height>210</height>
-            </rect>
+          <attribute name="headerVisible">
+           <bool>false</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string notr="true">1</string>
            </property>
-           <attribute name="headerVisible">
-            <bool>false</bool>
-           </attribute>
-           <column>
-            <property name="text">
-             <string notr="true">1</string>
-            </property>
-           </column>
-          </widget>
+          </column>
+         </widget>
         </item>
         <item row="0" column="1">
          <widget class="QPushButton" name="other_node_connection_swap_button">

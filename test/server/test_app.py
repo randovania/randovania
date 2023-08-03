@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -9,8 +10,15 @@ import randovania
 import randovania.server.client_check
 from randovania.server import app
 
+if TYPE_CHECKING:
+    from pathlib import Path
 
-def test_create_app(mocker, tmpdir):
+    import pytest_mock
+
+    from randovania.server.server_app import ServerApp
+
+
+def test_create_app(mocker: pytest_mock.MockerFixture, tmp_path: Path):
     mocker.patch("randovania.get_configuration").return_value = {
         "discord_client_id": 1234,
         "server_address": "https://somewhere.nice",
@@ -19,7 +27,7 @@ def test_create_app(mocker, tmpdir):
             "secret_key": "key",
             "discord_client_secret": 5678,
             "fernet_key": 's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=',
-            "database_path": str(tmpdir.join("database.db")),
+            "database_path": str(tmp_path.joinpath("database.db")),
             "client_version_checking": "strict",
         }
     }
@@ -31,10 +39,11 @@ def test_create_app(mocker, tmpdir):
     result = app.create_app()
 
     # Assert
-    mock_multiplayer.assert_called_once_with(result.sio)
-    mock_user_session.assert_called_once_with(result.sio)
+    sa: ServerApp = result.sa
+    mock_multiplayer.assert_called_once_with(sa)
+    mock_user_session.assert_called_once_with(sa)
     mock_create_sio.assert_called_once_with(result)
-    assert tmpdir.join("database.db").exists()
+    assert tmp_path.joinpath("database.db").exists()
 
     with result.test_client() as test_client:
         assert test_client.get("/").data.decode("utf-8") == randovania.VERSION
@@ -48,12 +57,12 @@ def test_create_app(mocker, tmpdir):
     encrpyted_value = (
         b'gAAAAABfSh6fY4FOiqfGWMHXdE9A4uNVEu5wfn8BAsgP8EZ0-f-lqbYDqYzdiblhT5xhk-wMmG8sOLgKNN-dUaiV7n6JCydn7Q=='
     )
-    assert result.sio.fernet_encrypt.decrypt(encrpyted_value) == b'banana'
+    assert sa.fernet_encrypt.decrypt(encrpyted_value) == b'banana'
 
 
 @pytest.mark.parametrize("has_user", [False, True])
 def test_custom_formatter(flask_app, has_user):
-    sio = MagicMock()
+    sa = MagicMock()
     if has_user:
         expected_name = "TheName"
         user = MagicMock()
@@ -62,7 +71,7 @@ def test_custom_formatter(flask_app, has_user):
         expected_name = None
         user = None
 
-    flask_app.sio = sio
+    flask_app.sa = sa
     record = logging.LogRecord("Name", logging.DEBUG, "path", 10, "the msg",
                                (), None)
 

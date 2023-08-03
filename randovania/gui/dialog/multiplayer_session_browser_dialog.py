@@ -11,14 +11,14 @@ from qasync import asyncSlot
 from randovania.gui.generated.multiplayer_session_browser_dialog_ui import Ui_MultiplayerSessionBrowserDialog
 from randovania.gui.lib import common_qt_lib, model_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     from randovania.network_client.network_client import ConnectionState
     from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerSessionListEntry
 
 
-class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
+class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
     sessions: list[MultiplayerSessionListEntry]
     visible_sessions: list[MultiplayerSessionListEntry]
     joined_session: MultiplayerSessionEntry | None = None
@@ -29,14 +29,12 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         common_qt_lib.set_default_window_icon(self)
         self.network_client = network_client
 
-        self.item_model = QtGui.QStandardItemModel(0, 6, self)
-        self.item_model.setHorizontalHeaderLabels(["Name", "State", "Players", "Password?", "Creator",
-                                                   "Creation Date"])
+        self.item_model = QtGui.QStandardItemModel(0, 8, self)
+        self.item_model.setHorizontalHeaderLabels(["Name", "Is Member?", "Join Date", "Players", "Worlds",
+                                                   "Password?", "Creator","Creation Date"])
 
         self.table_widget.setModel(self.item_model)
-        self.table_widget.resizeColumnToContents(2)
-        self.table_widget.resizeColumnToContents(3)
-        self.table_widget.sortByColumn(5, QtCore.Qt.SortOrder.DescendingOrder)
+        self.table_widget.sortByColumn(8, QtCore.Qt.SortOrder.DescendingOrder)
 
         self.refresh_button = QPushButton("Refresh")
         self.button_box.addButton(self.refresh_button, QDialogButtonBox.ButtonRole.ResetRole)
@@ -50,10 +48,11 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         checks = (
             self.has_password_yes_check,
             self.has_password_no_check,
-            self.state_setup_check,
-            self.state_inprogress_check,
-            self.state_finished_check,
+            self.state_visibile_check,
+            self.state_hidden_check,
             self.filter_age_check,
+            self.is_member_yes_check,
+            self.is_member_no_check,
         )
         for check in checks:
             check.stateChanged.connect(self.update_list)
@@ -120,12 +119,17 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
         if self.has_password_no_check.isChecked():
             displayed_has_password.add(False)
 
-        displayed_states = set()
-        for (check, state) in ((self.state_setup_check, MultiplayerSessionState.SETUP),
-                               (self.state_inprogress_check, MultiplayerSessionState.IN_PROGRESS),
-                               (self.state_finished_check, MultiplayerSessionState.FINISHED)):
+        displayed_is_member = set()
+        if self.is_member_yes_check.isChecked():
+            displayed_is_member.add(True)
+        if self.is_member_no_check.isChecked():
+            displayed_is_member.add(False)
+
+        displayed_visibilities = set()
+        for (check, visibility) in ((self.state_visibile_check, MultiplayerSessionVisibility.VISIBLE),
+                               (self.state_hidden_check, MultiplayerSessionVisibility.HIDDEN)):
             if check.isChecked():
-                displayed_states.add(state)
+                displayed_visibilities.add(visibility)
 
         dont_filter_age = not self.filter_age_check.isChecked()
         now = datetime.datetime.now(tz=datetime.UTC)
@@ -135,30 +139,39 @@ class OnlineGameListDialog(QDialog, Ui_MultiplayerSessionBrowserDialog):
             session
             for session in self.sessions
             if (session.has_password in displayed_has_password
-                and session.state in displayed_states
+                and session.visibility in displayed_visibilities
                 and name_filter.lower() in session.name.lower()
-                and (dont_filter_age or (now - session.creation_date) < max_session_age))
+                and (dont_filter_age or (now - session.creation_date) < max_session_age)
+                and session.is_user_in_session in displayed_is_member)
         ]
         self.visible_sessions = visible_sessions
 
         self.item_model.setRowCount(len(visible_sessions))
         for i, session in enumerate(visible_sessions):
             name = QtGui.QStandardItem(session.name)
-            state = QtGui.QStandardItem(session.state.user_friendly_name)
             num_users = model_lib.create_int_item(session.num_users)
             has_password = QtGui.QStandardItem("Yes" if session.has_password else "No")
             creator = QtGui.QStandardItem(session.creator)
             creation_date = model_lib.create_date_item(session.creation_date)
+            is_user_in_session = QtGui.QStandardItem("Yes" if session.is_user_in_session else "No")
+            num_worlds = model_lib.create_int_item(session.num_worlds)
+            join_date = model_lib.create_date_item(session.join_date)
 
             name.setData(session, Qt.ItemDataRole.UserRole)
-            self.item_model.setItem(i, 0, name)
-            self.item_model.setItem(i, 1, state)
-            self.item_model.setItem(i, 2, num_users)
-            self.item_model.setItem(i, 3, has_password)
-            self.item_model.setItem(i, 4, creator)
-            self.item_model.setItem(i, 5, creation_date)
-
+            for col, item in enumerate((
+                    name,
+                    is_user_in_session,
+                    join_date,
+                    num_users,
+                    num_worlds,
+                    has_password,
+                    creator,
+                    creation_date,
+            )):
+                self.item_model.setItem(i, col, item)
         self.status_label.setText(f"{len(self.sessions)} sessions total, {len(visible_sessions)} displayed.")
+        for i in range(9):
+            self.table_widget.resizeColumnToContents(i)
 
     def on_server_connection_state_updated(self, state: ConnectionState):
         self.server_connection_label.setText(f"Server: {state.value}")

@@ -91,21 +91,17 @@ class TeleporterList(location_list.LocationList):
     def element_type(cls):
         return NodeIdentifier
 
-    def ensure_has_location(self, area_location: NodeIdentifier, enabled: bool) -> TeleporterList:
-        return super().ensure_has_location(area_location, enabled)
-
     def ensure_has_locations(self, area_locations: list[NodeIdentifier], enabled: bool) -> TeleporterList:
         return super().ensure_has_locations(area_locations, enabled)
 
 
 def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
     if (game in (RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) and
-            area.name == "Credits" and node.name == area.default_node):
+            area.name == "Credits" and node.name in ("Event - Credits", "Event - Dark Samus 3 and 4")):
         return True
 
     has_save_station = any(node.name == "Save Station" for node in area.nodes)
-    return (area.has_start_node() and area.default_node is not None and
-            area.default_node == node.name and not has_save_station)
+    return (area.has_start_node() and node in area.get_start_nodes() and not has_save_station)
 
 
 class TeleporterTargetList(location_list.LocationList):
@@ -152,11 +148,11 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         if self.skip_final_bosses:
             if self.game == RandovaniaGame.METROID_PRIME:
                 crater = NodeIdentifier.create("Tallon Overworld", "Artifact Temple",
-                                               "Teleport to Impact Crater - Crater Impact Point")
+                                               "Teleporter to Impact Crater")
                 static[crater] = NodeIdentifier.create("End of Game", "Credits", "Event - Credits")
             elif self.game == RandovaniaGame.METROID_PRIME_ECHOES:
                 gateway = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
-                                                "Teleport to Great Temple - Sky Temple Energy Controller")
+                                                "Elevator to Great Temple")
                 static[gateway] = NodeIdentifier.create("Temple Grounds", "Credits", "Event - Dark Samus 3 and 4")
             else:
                 raise ValueError(f"Unsupported skip_final_bosses and {self.game}")
@@ -164,9 +160,9 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         return static
 
     @property
-    def valid_targets(self) -> list[AreaIdentifier]:
+    def valid_targets(self) -> list[NodeIdentifier]:
         if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            return [location.area_identifier for location in self.excluded_targets.nodes_list(self.game)
+            return [location for location in self.excluded_targets.nodes_list(self.game)
                     if location not in self.excluded_targets.locations]
 
         elif self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
@@ -181,7 +177,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                     # Valid destinations must be valid starting areas
                     area = region_list.nodes_to_area(node)
                     if area.has_start_node():
-                        result.append(identifier.area_identifier)
+                        result.append(identifier)
                     # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
                     # on the previous room
                     elif area.name == "Metroid Prime Lair":

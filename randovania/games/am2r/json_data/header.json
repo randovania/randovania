@@ -467,6 +467,10 @@
                 "long_name": "Boss - Genesis Defeated",
                 "extra": {}
             },
+            "BossQueen": {
+                "long_name": "Boss - Queen Defeated",
+                "extra": {}
+            },
             "EMPA1": {
                 "long_name": "EMP - Golden Temple",
                 "extra": {}
@@ -736,7 +740,7 @@
             },
             "Walljump": {
                 "long_name": "Walljump",
-                "description": "If this trick is enabled, the player may be expected to get to places by chaining walljumps.",
+                "description": "If this trick is enabled, the player may be expected to get to places by chaining walljumps together.",
                 "extra": {}
             },
             "IBJ": {
@@ -751,7 +755,7 @@
             },
             "Shinesparking": {
                 "long_name": "Shinesparking Tricks",
-                "description": "If this trick is enabled, the player may be expected to do complex shinesparking maneuvers.",
+                "description": "If this trick is enabled, the player may be expected to do complex shinesparking maneuvers. <br>Just running and jumping with speedboost is <b>not</b> considered a shinespark. Only preserving it by crouching is.",
                 "extra": {}
             },
             "MorphGlide": {
@@ -761,7 +765,7 @@
             },
             "Knowledge": {
                 "long_name": "Knowledge",
-                "description": "If this trick is enabled, the player may be expected to know certain hidden passageways or boss weaknesses.",
+                "description": "If this trick is enabled, the player may be expected to know certain hidden passageways or other lesser known facts.",
                 "extra": {}
             },
             "Movement": {
@@ -786,12 +790,17 @@
             },
             "Zip": {
                 "long_name": "Zip Trick",
-                "description": "",
+                "description": "If this trick is enabled, the player may be expected to do instantly teleport between walls, by walljumping with certain conditions.",
                 "extra": {}
             },
             "ChargedBombJump": {
                 "long_name": "Charged Bomb Jump",
-                "description": "",
+                "description": "If this trick is enabled, the player may be expected to reach higher places by charging Charge Beam, morphing and releasing Charge Beam to release lots of bombs at once.",
+                "extra": {}
+            },
+            "MissileLessMetroids": {
+                "long_name": "Missile-Less Metroid Fights",
+                "description": "If this trick is enabled, the player may be expected to kill Metroids with only Charge Beam.",
                 "extra": {}
             }
         },
@@ -822,10 +831,6 @@
         "misc": {
             "Septogg": {
                 "long_name": "Septogg Helpers",
-                "extra": {}
-            },
-            "LevelDesign": {
-                "long_name": "Dynamically change level design",
                 "extra": {}
             },
             "SkipCutscenes": {
@@ -1074,6 +1079,27 @@
                         {
                             "type": "template",
                             "data": "Can Use Spider Ball"
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": "CBJ beginner",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Charged Bomb Jump"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ChargedBombJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
@@ -1133,6 +1159,27 @@
                                 "name": "Walljump",
                                 "amount": 2,
                                 "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": "CBJ intermediate",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Charged Bomb Jump"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ChargedBombJump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
@@ -1224,6 +1271,53 @@
                                             "name": "IBJ",
                                             "amount": 2,
                                             "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": "CBJ with power grip/WJ",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Charged Bomb Jump"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ChargedBombJump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Power Grip",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1362,6 +1456,93 @@
                                             "name": "Bombs",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Low Mid-Air Morph Tunnel Climb": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph Ball",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "A way to get into hole",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Bombs",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Power Grip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spider Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Spring Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1509,88 +1690,22 @@
                                                 }
                                             ]
                                         }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            "Low Mid-Air Morph Tunnel Climb": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph Ball",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": "A way to get into hole",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bombs",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power Grip",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Spider Ball",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Spring Ball",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "CBJ",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph Ball",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Use Charged Bomb Jump"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "MidAirMorph",
-                                                        "amount": 2,
+                                                        "name": "ChargedBombJump",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -1723,6 +1838,27 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "CBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Charged Bomb Jump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ChargedBombJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1754,7 +1890,7 @@
                                         "data": "Can Use Spider Ball"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": "IBJ",
                                             "items": [
@@ -1852,6 +1988,27 @@
                                                                     "name": "Walljump",
                                                                     "amount": 2,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "CBJ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Charged Bomb Jump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ChargedBombJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -1976,7 +2133,7 @@
                     ]
                 }
             },
-            "Defeat Alpha": {
+            "Defeat non-dodging Alpha": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -2022,7 +2179,93 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Knowledge",
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Damage requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 65,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Defeat dodging Alpha": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Item requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 7,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MissileLessMetroids",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -2041,18 +2284,18 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 4,
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 130,
                                             "negate": false
                                         }
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 66,
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 3,
                                             "negate": false
                                         }
                                     }
@@ -2062,7 +2305,223 @@
                     ]
                 }
             },
-            "Defeat Gamma": {
+            "Defeat Dual Alphas": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Item requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 7,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Damage requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 199,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Defeat Alpha Squad": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 7,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Not sure yet if this is even possible to do",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Damage requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 250,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Fusion low% strat to escape",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Super Missiles",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Defeat dodging Gamma": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -2108,8 +2567,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -2194,8 +2653,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -2323,8 +2782,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
+                                                        "name": "MissileLessMetroids",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -3303,13 +3762,8 @@
                         "lock": {
                             "lock_type": "front-blast-back-free-unlock",
                             "requirement": {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Power Bombs",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Can Use Power Bombs"
                             }
                         }
                     },
@@ -3402,6 +3856,19 @@
                             "data": {
                                 "type": "events",
                                 "name": "BossGenesis",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Metroid Queen-Locked Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "BossQueen",
                                 "amount": 1,
                                 "negate": false
                             }

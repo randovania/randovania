@@ -5,19 +5,56 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [6.X.X] - 2023-08-??
+## [6.2.0] - 2023-09-??
 
+### Metroid Dread
+
+#### Logic Database
+
+- Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
+- Added: Diagonal Bomb Jump in Burenia - Main Hub Tower Top, to the Missile Tank, using either Gravity Suit or an out of water bomb jump.
+- Fixed: A typo in the room name Ferenia - East Transport to Dairon has been changed from East Transport to Darion.
+
+### Metroid Prime 2: Echoes
+
+- Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
+
+## [6.1.1] - 2023-08-??
+
+- Nothing.
+
+### Metroid Dread
+
+- Fixed: The progress bar when exporting no longer reaches 100% earlier than intended in some situations.
+
+## [6.1.0] - 2023-08-02
+
+- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game. 
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
+- Added: The Generation Order spoiler now has a field to filter it.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
-- Added: It's now possible to filter the history tab in a Multiworld Session.
+- Added: It's now possible to filter the history tab in a Multiworld session.
+- Added: Add Ready checkbox for Multiworld sessions.
 - Added: A new tool was added to the Pickup tab of Game Details that lets you quickly find in which worlds your pickups are.
+- Added: The time a world last had any activity is now displayed in the Multiworld session.
+- Added: A toggle for allowing anyone to claim worlds in a Multiworld session.
+- Added: Sending pickups to an offline world now updates the auto tracker.
+- Added: Warnings now show up in Multiworld sessions if you're not connected to any of your worlds.
+- Changed: The popup when replacing a preset for a Multiworld Session now has the same features as the solo game interface.
 - Changed: Text prompts now default to accepting when pressing enter.
+- Changed: Reorganized the top menu bar. The Advanced menu is now called Preferences, with an Advanced sub-menu. Opening the Login window is now in the Open menu.
+- Changed: The handling for presets that can't be loaded have been improved.
+- Changed: Finishing a session is now called hiding a session, and now can be undone.
+- Fixed: Multiworld now properly respects major/minor configuration of each world.
 - Fixed: The generation order for multiworld session now correctly handles any kind of names.
 - Fixed: Any buttons for changing presets or deleting worlds are properly disabled when a game is being generated.
 - Fixed: Import rdvgames for games that uses certain features, like Sky Temple Keys on Bosses or Metroid DNA in Dread, now works properly.
 - Fixed: Session Browser now properly sorts by creation date and user count. It also now properly defaults to showing recent sessions first.
 - Fixed: Tracking another user's inventory now properly keeps working after a connection loss.
 - Fixed: Sorting the session history and audit log now works properly.
+- Fixed: In Multiworld session, the Claim world button is now properly disabled when you don't have permissions.
+- Fixed: Changing a preset no longer causes it to lose its position in the tree.
+- Removed: Connecting to Dolphin on Linux executable builds is now hidden on known situations that it doesn't work properly.
 
 ### Metroid Dread
 
@@ -25,22 +62,85 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Ryujinx (Legacy) is disabled when auto-tracker support is on, or in a multiworld.
 - Fixed: Dairon - Navigation Station North can no longer be assigned a hint, which would then be replaced with DNA Hints.
 - Added: A new auto-tracker layout featuring progressive items.
+- Added: Custom shields now have alternate and more accessible models, which can be toggled per-shield in Cosmetic Options.
 
 #### Logic Database
 
+- Added: 2 videos to the database
 - Added: Slide from right to left in Cataris - Total Recharge Station South.
 - Added: Grapple Movement to get from Lower Door to Wide Beam Block Room to Upper Door in Artaria - EMMI Zone Hub.
 - Added: Crossing the water gap in Ferenia EMMI Zone Exit East with just Bombs (Hypermode IBJ and DBJ) or Cross Bombs and a Slide Bomb Boost (currently Movement Advanced).
 - Added: Use Speed Booster and Gravity Suit to escape Cataris - Kraid Arena after fighting Kraid.
+- Added: Using Wall Jump to get past the Flash Shift gate in Burenia - Teleport to Ferenia.
 - Changed: Make it possible to get to the Diffusion Beam location without Morph Ball.
 - Fixed: Entering Hanubia Orange EMMI Introduction from the right now requires having beaten the Red Chozo.
 - Fixed: The Pseudo Wave Beam in Burenia - Burenia Hub to Dairon now correctly requires Wide Beam.
-- Fixed: A typo in the room name Ferenia - East Transport to Dairon has been changed from East Transport to Darion.
+- Fixed: Logic issues surrounding ending the Chain Reaction sequence in Artaria, aka the Vanilla Varia Suit area.
 - Removed: In Cataris - Green EMMI Introduction, the advanced Pseudo Wave Beam to break the blob from below is removed.
+- Removed: In Ghavoran - Blue EMMI Introduction, the trickless Ballspark to climb the room has been removed.
+
+### Metroid Prime
+
+- Added: Experimental Option - `Skippable` Cutscene Mode. Keeps all cutscenes in the game but makes it so they can be skipped with the START button
+- Added: Experimental Option - `Competitive (Experimental)` Cutscene Mode Removes some cutscenes from the game which hinder the flow of competitive play. All others are skippable. This will eventually replace the existing Competitive implementation.
+- Added: Introduction of non-critical fixes and improvements to the base game such as fixed sound effects and removed tutorial popups. Those wanting an untainted experience of the vanilla game may still do so at their own risk by activating "Legacy Mode". For technical description of what's changed, see [qol.jsonc](https://github.com/toasterparty/randomprime/blob/randovania/generated/json_data/qol.jsonc)
+- Added: Completely overhauled how custom Blast Shields and Doors look
+- Added: Morph Ball Bomb and Charge Beam door locks now use Blast Shields so that they only need to be opened once with that weapon
+- Added: New "Gamecube" pickup model which acts as a placeholder for all non-nothing items without a suitable model which can be displayed natively
+- Added: The "Hints" page in the "Game" window now lists the location of the Phazon Suit hint.
+- Changed: Non-NTSC enemies now have their health reset to match NTSC 0-00
+- Changed: Blast Shields are much more visible in dark rooms
+- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
+- Fixed: HoTE statue door can now handle a blast shield cover
+- Fixed: Old scan points lingering in Door Lock Rando
+- Fixed: Door Lock Rando shields now make explosion sounds
+
+#### Logic Database
+
+- Added: 52 videos to logic database, bringing the total available via the [Video Directory](https://randovania.github.io/Metroid%20Prime/) to 276
+
+##### Chozo Ruins
+
+- Added: The Hall of the Elders Ghost Skip from Reflecting Pool Access to reach Crossway Access South, using advanced level tricks.
+- Added: Knowledge (Intermediate) for reaching Elder Chamber without fighting the Chozo Ghost.
+- Added: Main Plaza - Tree item OoB logic.
+- Added: Crossway - Easier boost only method for item.
+- Changed: Tower of Light - Reduced gravityless SJ slope jump to tower chamber to Beginner.
+- Fixed: Ice Beam has been removed from the connection to Elder Chamber in Hall of the Elders.
+- Fixed: The Door in Tower of Light Access that leads to Ruined Shrine is now a normal Door instead of a Wave Beam Door.
+- Changed: Ruined Nursery Bombless Standables Logic Adjustments
+- Added: Ruined Nursery Bombless w/ Boost strat
+- Added: Training Chamber Ghost Skip
+
+##### Phendrana Drifts
+
+- Changed: Quarantine Cave - Various cleanup with Thardus fight logic. Reworked visor requirements. Added Missile strategy (allows Ice Beam only fight logically).
+- Added: Added Quarantine Cave NSJ Scan Dash to Q-Mon Tunnel
+- Added: Dash to Q Mon from Room Center with SJ
+- Added: Reverse Thardus Skip Logic (Scan and Scanless)
+- Added: Thardus Hop
+- Changed: Ice Ruins West Baby Sheegoth Jump Damage Requirements and Trick Adjustments
+- Added: Gravity Chamber Pickup (Missile) NSJ w/o Grapple/Plasma Dash Method and Bombu Method
+
+##### Phazon Mines
+
+- Added: Metroid Hop to reach Missile from Quarantine Access A
+- Changed: Various Metroid Quarantine A logic adjustments
 
 ### Metroid Prime 2: Echoes
 
 - Added: Tracker layout "Debug Info", which also shows details useful for investigating errors.
+- Added: The Coin Chest model from multiplayer is now used for offworld items instead of the ETM model.
+- Changed: The Power Beam and the Morph Ball now use the Coin Chest model when shuffled, instead of the ETM model.
+- Added: 4 new joke hints in the pool.
+- Fixed: The gate in Command Center now opens correctly when using the new patcher.
+- Fixed: Doors in Venomous Pond can no longer become blast shields.
+- Fixed: The door from Sacrificial Chamber Tunnel to Sacrificial Chamber has been excluded from door lock rando.
+- Fixed: Random Elevators settings should no longer have mismatches between the UI and the preset regarding which elevators are excluded.
+
+#### Logic Database
+
+- Added: 4 videos to logic database, see the [Video Directory](https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection
 
 ## [6.0.1] - 2023-07-04
 
@@ -156,7 +256,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-#### Chozo Ruins
+##### Chozo Ruins
 
 - Changed: Reorganized Morph Ball pickup in Ruined Shrine to better fit database good practices.
 

@@ -86,16 +86,19 @@ def test_replace_node_unknown_node(game_editor):
 
 def test_rename_area(game_editor):
     # Setup
+    new_area_name = "Foo Bar Transportation"
     region_list = game_editor.game.region_list
     loc_1 = AreaIdentifier("Temple Grounds", "Transport to Agon Wastes")
     loc_2 = AreaIdentifier("Agon Wastes", "Transport to Temple Grounds")
-    final = AreaIdentifier("Temple Grounds", "Foo Bar Transportation")
+    final = AreaIdentifier("Temple Grounds", new_area_name)
 
     # Run
     game_editor.rename_area(region_list.area_by_area_location(loc_1),
-                            "Foo Bar Transportation")
+                            new_area_name)
 
     # Assert
     assert region_list.area_by_area_location(final) is not None
     area_2 = region_list.area_by_area_location(loc_2)
-    assert area_2.node_with_name("Elevator to Temple Grounds - Foo Bar Transportation") is not None
+    dock_node = area_2.node_with_name("Elevator to Temple Grounds")
+    assert dock_node is not None
+    assert dock_node.default_connection.area_name == new_area_name

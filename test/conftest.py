@@ -9,10 +9,12 @@ from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
+from frozendict import frozendict
 
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.games import default_data
@@ -59,6 +61,17 @@ def echo_tool(request, test_files_dir) -> Path:
 @pytest.fixture()
 def preset_manager(tmp_path) -> PresetManager:
     return PresetManager(tmp_path.joinpath("presets"))
+
+
+@pytest.fixture(params=[False, True])
+def blank_available_in_multi(request) -> bool:
+    data = RandovaniaGame.BLANK.data
+    old_value = data.defaults_available_in_game_sessions
+    try:
+        object.__setattr__(data, "defaults_available_in_game_sessions", request.param)
+        yield request.param
+    finally:
+        object.__setattr__(data, "defaults_available_in_game_sessions", old_value)
 
 
 @pytest.fixture(scope="session")
@@ -202,6 +215,16 @@ def is_dev_version(request, mocker) -> bool:
     return request.param
 
 
+@pytest.fixture(params=[False, True])
+def is_frozen(request, mocker) -> bool:
+    mocker.patch("randovania.is_frozen", return_value=request.param)
+    if request.param:
+        # Mock this call as it fails frequently when frozen
+        mocker.patch("randovania.gui.lib.common_qt_lib.set_default_window_icon")
+
+    return request.param
+
+
 @pytest.fixture()
 def generic_pickup_category() -> PickupCategory:
     return PickupCategory(
@@ -230,6 +253,29 @@ def blank_pickup(echoes_pickup_database, default_generator_params) -> PickupEntr
         pickup_category=echoes_pickup_database.pickup_categories["suit"],
         broad_category=echoes_pickup_database.pickup_categories["life_support"],
         progression=(),
+        generator_params=default_generator_params,
+        resource_lock=None,
+        unlocks_resource=False,
+    )
+
+
+@pytest.fixture()
+def dread_spider_pickup(default_generator_params) -> PickupEntry:
+    dread_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
+    return PickupEntry(
+        name="Spider Magnet",
+        model=PickupModel(
+            game=RandovaniaGame.METROID_DREAD,
+            name="powerup_spidermagnet",
+        ),
+        pickup_category=dread_pickup_database.pickup_categories["misc"],
+        broad_category=dread_pickup_database.pickup_categories["misc"],
+        progression=(
+            (ItemResourceInfo(
+                resource_index=24, long_name='Spider Magnet',
+                short_name='Magnet', max_capacity=1,
+                extra=frozendict({'item_id': 'ITEM_MAGNET_GLOVE'})), 1),
+        ),
         generator_params=default_generator_params,
         resource_lock=None,
         unlocks_resource=False,

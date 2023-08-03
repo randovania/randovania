@@ -9,9 +9,9 @@ from PySide6 import QtCore
 
 from randovania.game_description import default_database
 from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.games.common.prime_family.gui.elevators_tab import PresetElevators
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout import prime_configuration
-from randovania.gui.preset_settings.elevators_tab import PresetElevators
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList
 

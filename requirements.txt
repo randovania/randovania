@@ -6,20 +6,20 @@
 #
 aiofiles==23.1.0
     # via randovania (setup.py)
-aiohttp==3.8.4
+aiohttp==3.8.5
     # via
     #   py-cord
     #   python-socketio
     #   randovania (setup.py)
 aiosignal==1.3.1
     # via aiohttp
-altgraph==0.17.3
-    # via pyinstaller
+anyio==3.7.1
+    # via httpcore
 appdirs==1.4.4
     # via randovania (setup.py)
 async-timeout==4.0.2
     # via aiohttp
-async-wiiload==1.0.2
+async-wiiload==1.0.4
     # via randovania (setup.py)
 attrs==23.1.0
     # via
@@ -40,18 +40,23 @@ cachetools==5.3.1
     #   randovania (setup.py)
 cave-story-randomizer==1.0.0
     # via randovania (setup.py)
-certifi==2023.5.7
+certifi==2023.7.22
     # via
+    #   httpcore
     #   requests
     #   sentry-sdk
 cffi==1.15.1
-    # via cryptography
+    # via
+    #   clr-loader
+    #   cryptography
 charset-normalizer==3.2.0
     # via
     #   aiohttp
     #   requests
 click==8.1.4
     # via flask
+clr-loader==0.2.5
+    # via pythonnet
 colorama==0.4.6
     # via
     #   click
@@ -65,7 +70,7 @@ contourpy==1.1.0
     # via matplotlib
 coverage==7.2.7
     # via pytest-cov
-cryptography==41.0.2
+cryptography==41.0.3
     # via
     #   pyopenssl
     #   randovania (setup.py)
@@ -73,17 +78,15 @@ cycler==0.11.0
     # via matplotlib
 darkdetect==0.7.1
     # via pyqtdarktheme
-dnspython==2.2.1
+dnspython==2.4.0
     # via eventlet
-docopt==0.6.2
-    # via pyqt-distutils
-dolphin-memory-engine==1.1.2
+dolphin-memory-engine==1.1.3
     # via randovania (setup.py)
 dulwich==0.21.5
     # via randovania (setup.py)
 eventlet==0.33.3
     # via randovania (setup.py)
-execnet==1.9.0
+execnet==2.0.2
     # via pytest-xdist
 flask==2.3.2
     # via
@@ -99,7 +102,7 @@ fonttools==4.41.0
     # via matplotlib
 frozendict==2.3.8
     # via randovania (setup.py)
-frozenlist==1.3.3
+frozenlist==1.4.0
     # via
     #   aiohttp
     #   aiosignal
@@ -107,8 +110,13 @@ graphviz==0.20.1
     # via randovania (setup.py)
 greenlet==2.0.2
     # via eventlet
+h11==0.14.0
+    # via httpcore
+httpcore==0.17.3
+    # via dnspython
 idna==3.4
     # via
+    #   anyio
     #   requests
     #   yarl
 iniconfig==2.0.0
@@ -142,8 +150,6 @@ matplotlib==3.7.2
     # via randovania (setup.py)
 mercury-engine-data-structures==0.22.0
     # via open-dread-rando
-mock==5.0.2
-    # via randovania (setup.py)
 mp2hudcolor==1.0.12
     # via randovania (setup.py)
 multidict==6.0.4
@@ -164,9 +170,9 @@ oauthlib==3.2.2
     # via
     #   flask-discord
     #   requests-oauthlib
-open-dread-rando==2.3.2
+open-dread-rando==2.4.0
     # via randovania (setup.py)
-open-prime-rando==0.10.0
+open-prime-rando==0.11.0
     # via randovania (setup.py)
 packaging==23.1
     # via
@@ -174,8 +180,6 @@ packaging==23.1
     #   pytest
 peewee==3.16.2
     # via randovania (setup.py)
-pefile==2023.2.7
-    # via pyinstaller
 pid==3.0.4
     # via randovania (setup.py)
 pillow==10.0.0
@@ -198,7 +202,7 @@ psutil==5.9.5
     #   pytest-xdist
 py-cord==2.4.1
     # via randovania (setup.py)
-py-randomprime==1.13.0
+py-randomprime==1.17.6
     # via
     #   open-prime-rando
     #   randovania (setup.py)
@@ -206,20 +210,12 @@ pycparser==2.21
     # via cffi
 pyftpdlib==1.5.7
     # via pytest-localftpserver
-pyinstaller==5.13.0
-    # via -r tools/requirements/requirements.in
-pyinstaller-hooks-contrib==2023.5
-    # via
-    #   -r tools/requirements/requirements.in
-    #   pyinstaller
 pyjwt==2.7.0
     # via flask-discord
 pyopenssl==23.2.0
     # via pytest-localftpserver
 pyparsing==3.0.9
     # via matplotlib
-pyqt-distutils==0.7.3
-    # via -r tools/requirements/requirements.in
 pyqtdarktheme==2.1.0
     # via randovania (setup.py)
 pyrsistent==0.19.3
@@ -257,8 +253,8 @@ python-socketio==5.8.0
     # via
     #   flask-socketio
     #   randovania (setup.py)
-pywin32-ctypes==0.2.2
-    # via pyinstaller
+pythonnet==3.0.1
+    # via randovania (setup.py)
 qasync==0.24.0
     # via randovania (setup.py)
 random-enemy-attributes==1.0.3.1
@@ -271,7 +267,7 @@ requests-oauthlib==1.3.1
     # via
     #   flask-discord
     #   randovania (setup.py)
-retro-data-structures==0.21.1
+retro-data-structures==0.23.0
     # via
     #   open-prime-rando
     #   randovania (setup.py)
@@ -283,6 +279,11 @@ six==1.16.0
     # via
     #   eventlet
     #   python-dateutil
+sniffio==1.3.0
+    # via
+    #   anyio
+    #   dnspython
+    #   httpcore
 superdupermetroid==2.3.2
     # via randovania (setup.py)
 tenacity==8.2.2
@@ -292,7 +293,9 @@ text-unidecode==1.3
 tsc-utils==0.2.3
     # via randovania (setup.py)
 typing-extensions==4.7.1
-    # via tsc-utils
+    # via
+    #   retro-data-structures
+    #   tsc-utils
 urllib3==2.0.3
     # via
     #   dulwich
@@ -302,7 +305,3 @@ werkzeug==2.3.6
     # via flask
 yarl==1.9.2
     # via aiohttp
-
-# The following packages are considered to be unsafe in a requirements file:
-setuptools==68.0.0
-    # via pyinstaller

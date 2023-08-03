@@ -154,9 +154,7 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
     try:
         preset = versioned_preset.get_preset()
     except ValueError as e:
-        logging.info("Invalid preset '{}' from {}: {}".format(versioned_preset.name,
-                                                              message.author.display_name,
-                                                              e))
+        logging.info(f"Invalid preset '{versioned_preset.name}' from {message.author.display_name}: {e}")
         return
 
     embed = discord.Embed(title=preset.name,

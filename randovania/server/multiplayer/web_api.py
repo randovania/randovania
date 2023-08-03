@@ -27,7 +27,6 @@ def admin_sessions(user):
             ),
             session.creator.name,
             session.creation_date,
-            session.state.user_friendly_name,
             len(session.members),
             len(session.worlds),
         ])))
@@ -45,7 +44,7 @@ def admin_sessions(user):
             flask.url_for(".admin_sessions", page=page + 1)
         )
 
-    header = ["Name", "Creator", "Creation Date", "State", "Num Users", "Num Worlds"]
+    header = ["Name", "Creator", "Creation Date", "Num Users", "Num Worlds"]
     return (
         "<table border='1'>"
         "<tr>{header}</tr>"
@@ -81,10 +80,7 @@ def admin_session(user, session_id):
                 db = default_database.resource_database_for(game)
                 for item_name, item in parsed_inventory.items():
                     if item > 0:
-                        inventory.append("{} x{}".format(
-                            db.get_item(item_name).long_name,
-                            item
-                        ))
+                        inventory.append(f"{db.get_item(item_name).long_name} x{item}")
         else:
             inventory.append("Missing")
 
@@ -103,6 +99,6 @@ def admin_session(user, session_id):
     )
 
 
-def setup_app(sio: ServerApp):
-    sio.route_with_user("/sessions", need_admin=True)(admin_sessions)
-    sio.route_with_user("/session/<session_id>", need_admin=True)(admin_session)
+def setup_app(sa: ServerApp):
+    sa.route_with_user("/sessions", need_admin=True)(admin_sessions)
+    sa.route_with_user("/session/<session_id>", need_admin=True)(admin_session)

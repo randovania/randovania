@@ -58,10 +58,10 @@ def _a(region, area, instance_id=None):
         _m(b'\xc1', 8, 'One-way, elevator room with cycles', mode="one-way-elevator"),
         _m(b'\xc81d', 22, 'One-way, elevator room with cycles; excluded 1 teleporters',
            mode="one-way-elevator", excluded_teleporters=[
-                _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C")
+                _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
             ]),
         _m(b'\xe4\x03,\xd0', 28, 'One-way, anywhere; excluded 1 targets', mode="one-way-anything", excluded_targets=[
-            _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C")
+            _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
         ]),
     ],
 )

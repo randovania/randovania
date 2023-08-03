@@ -31,7 +31,7 @@ def create_am2r_artifact(artifact_number: int,
         progression=((resource_database.get_item(f"Metroid DNA {artifact_number + 1}"), 1),),
         model=PickupModel(
             game=resource_database.game_enum,
-            name="Metroid DNA"
+            name="sItemDNA"
         ),
         pickup_category=METROID_DNA_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,

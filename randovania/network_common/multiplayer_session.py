@@ -4,6 +4,7 @@ import dataclasses
 import datetime
 import re
 import uuid
+from functools import cached_property
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -11,7 +12,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -30,12 +31,13 @@ class MultiplayerSessionListEntry(JsonDataclass):
     id: int
     name: str
     has_password: bool
-    state: MultiplayerSessionState
+    visibility: MultiplayerSessionVisibility
     num_users: int
-    num_worlds: int  # TODO: currently always 0
+    num_worlds: int
     creator: str
     creation_date: datetime.datetime
     is_user_in_session: bool
+    join_date: datetime.datetime
 
     def __post_init__(self):
         tzinfo = self.creation_date.tzinfo
@@ -54,6 +56,7 @@ class MultiplayerUser(JsonDataclass):
     id: int
     name: str
     admin: bool
+    ready: bool
     worlds: dict[uuid.UUID, UserWorldDetail]
 
 
@@ -63,7 +66,7 @@ class MultiplayerWorld(JsonDataclass):
     name: str
     preset_raw: str
 
-    @property
+    @cached_property
     def preset(self) -> VersionedPreset:
         return VersionedPreset.from_str(self.preset_raw)
 
@@ -108,9 +111,11 @@ class MultiplayerSessionEntry(JsonDataclass):
     worlds: list[MultiplayerWorld]
     users_list: list[MultiplayerUser]
     game_details: GameDetails | None
-    state: MultiplayerSessionState
+    visibility: MultiplayerSessionVisibility
     generation_in_progress: int | None
     allowed_games: list[RandovaniaGame]
+    allow_coop: bool
+    allow_everyone_claim_world: bool
 
     @property
     def users(self) -> dict[int, MultiplayerUser]:
@@ -128,6 +133,12 @@ class MultiplayerSessionEntry(JsonDataclass):
             if world.id == world_id:
                 return world
         raise KeyError(f"No world with id {world_id}")
+
+    def get_world_names(self) -> list[str]:
+        return [
+            world.name
+            for world in self.worlds
+        ]
 
 
 @dataclasses.dataclass(frozen=True)

@@ -14,6 +14,7 @@ from randovania.game_connection.builder.connector_builder_option import Connecto
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
+from randovania.game_connection.connector.remote_connector import ImportantStatusMessage, RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.dread.gui.dialog.dread_connector_prompt_dialog import DreadConnectorPromptDialog
 from randovania.games.game import RandovaniaGame
@@ -29,7 +30,6 @@ if TYPE_CHECKING:
     import uuid
 
     from randovania.game_connection.builder.connector_builder import ConnectorBuilder
-    from randovania.game_connection.connector.remote_connector import RemoteConnector
     from randovania.game_connection.game_connection import GameConnection
     from randovania.gui.main_window import MainWindow
     from randovania.gui.multiworld_client import MultiworldClient
@@ -44,6 +44,9 @@ class BuilderUi:
     description: QtWidgets.QLabel
     status: QtWidgets.QLabel
     open_session_action: QtGui.QAction
+    important_message_menu: QtWidgets.QMenu | None = None
+    send_arbitrary_message_action: QtGui.QAction | None = None
+    connector: RemoteConnector | None = None
 
     def __init__(self, parent: QtWidgets.QWidget):
         self.group = QtWidgets.QGroupBox(parent)
@@ -79,6 +82,7 @@ class BuilderUi:
         self.open_session_action.setEnabled(False)
 
     def update_for_remote_connector(self, connector: RemoteConnector, multiworld_client: MultiworldClient):
+        self.connector = connector
         world_uid = connector.layout_uuid
         has_session = False
 
@@ -110,6 +114,45 @@ class BuilderUi:
         self.open_session_action.setEnabled(has_session)
         self.status.setText("\n".join(lines))
 
+    @asyncSlot()
+    async def _send_important_message(self, status_message: ImportantStatusMessage):
+        if self.connector is not None:
+            await self.connector.display_important_message(status_message)
+
+    @asyncSlot()
+    async def _send_arbitrary_message(self):
+        if self.connector is None:
+            return
+
+        message = await TextPromptDialog.prompt(
+            parent=self.group,
+            title="What message to send?",
+            description="What message to send?",
+            is_modal=True,
+            max_length=50,
+        )
+        await self.connector.display_arbitrary_message(message)
+
+    def add_send_message_actions(self):
+        self.menu.addSeparator()
+
+        self.important_message_menu = self.menu.addMenu("Display important message")
+        for status_message in ImportantStatusMessage:
+            self.important_message_menu.addAction(status_message.name).triggered.connect(
+                functools.partial(self._send_important_message, status_message)
+            )
+
+        self.send_arbitrary_message_action = self.menu.addAction("Display arbitrary message")
+        self.send_arbitrary_message_action.triggered.connect(self._send_arbitrary_message)
+
+    def update_send_message_actions(self):
+        if self.important_message_menu is None:
+            return
+
+        self.important_message_menu.setEnabled(self.connector is not None)
+        can_arbitrary_send = self.connector is not None and self.connector.can_display_arbitrary_messages()
+        self.send_arbitrary_message_action.setEnabled(can_arbitrary_send)
+
 
 class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
     ui_for_builder: dict[ConnectorBuilder, BuilderUi]
@@ -137,6 +180,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             self.add_builder_menu.addAction(action)
         self.add_builder_button.setMenu(self.add_builder_menu)
 
+        self.help_label.linkActivated.connect(self.window_manager.open_app_navigation_link)
         self.game_connection.BuildersChanged.connect(self.setup_builder_ui)
         self.game_connection.BuildersUpdated.connect(self.update_builder_ui)
         self.game_connection.GameStateUpdated.connect(self.update_builder_ui)
@@ -271,6 +315,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
                 ui.update_for_disconnected_builder(builder)
             else:
                 ui.update_for_remote_connector(connector, self.window_manager.multiworld_client)
+            ui.update_send_message_actions()
 
     def add_ui_for_builder(self, builder: ConnectorBuilder):
         ui = BuilderUi(self.builders_content)
@@ -301,6 +346,9 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             action.setText("Open debug interface")
             action.triggered.connect(functools.partial(self.open_debug_connector_window, builder))
             ui.menu.addAction(action)
+
+        if not randovania.is_frozen():
+            ui.add_send_message_actions()
 
         ui.description.setText(builder.pretty_text)
         self.ui_for_builder[builder] = ui

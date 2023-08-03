@@ -25,4 +25,8 @@ JOKE_HINTS = [
     "We've been trying to contact you about your ship's extended warranty.",
     "The Scan Visor is useful for gathering information.",
     "Want to become famous? Buy follo... <Transmission blocked>",
+    "Made you look!",
+    "We now pledge sole allegiance to our liberator, the great one, Dark Samus.",
+    "Defeat enemies with the Light Beam to earn Dark Ammo. Defeat enemies with the Dark Beam to earn Light Ammo.",
+    "Your Friend Roster is currently empty.",
 ]

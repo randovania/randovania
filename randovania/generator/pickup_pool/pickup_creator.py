@@ -113,10 +113,11 @@ def create_ammo_pickup(ammo: AmmoPickupDefinition,
     )
 
 
-def create_nothing_pickup(resource_database: ResourceDatabase) -> PickupEntry:
+def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str = "Nothing") -> PickupEntry:
     """
     Creates a Nothing pickup.
     :param resource_database:
+    :param model_name:
     :return:
     """
     return PickupEntry(
@@ -126,7 +127,7 @@ def create_nothing_pickup(resource_database: ResourceDatabase) -> PickupEntry:
         ),
         model=PickupModel(
             game=resource_database.game_enum,
-            name="Nothing",
+            name=model_name,
         ),
         pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
         broad_category=pickup_category.USELESS_PICKUP_CATEGORY,

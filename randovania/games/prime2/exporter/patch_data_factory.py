@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+from random import Random
 from typing import TYPE_CHECKING
 
 import randovania
@@ -33,7 +34,6 @@ from randovania.patching.prime import elevators
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
-    from random import Random
 
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game_description.db.area import Area
@@ -173,9 +173,7 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
 
     num_elevator_nodes = sum(1 for _ in _get_nodes_by_teleporter_id(region_list, elevator_type))
     if len(elevator_fields) != num_elevator_nodes:
-        raise ValueError("Invalid elevator count. Expected {}, got {}.".format(
-            num_elevator_nodes, len(elevator_fields)
-        ))
+        raise ValueError(f"Invalid elevator count. Expected {num_elevator_nodes}, got {len(elevator_fields)}.")
 
     return elevator_fields
 
@@ -463,11 +461,11 @@ def should_keep_elevator_sounds(configuration: EchoesConfiguration):
 
     return not (set(elev.editable_teleporters) & {
         NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
-                              "Teleport to Great Temple - Sky Temple Energy Controller"),
+                              "Elevator to Great Temple"),
         NodeIdentifier.create("Great Temple", "Sky Temple Energy Controller",
-                              "Teleport to Temple Grounds - Sky Temple Gateway"),
+                              "Elevator to Temple Grounds"),
         NodeIdentifier.create("Sanctuary Fortress", "Aerie",
-                              "Elevator to Sanctuary Fortress - Aerie Transport Station"),
+                              "Elevator to Aerie Transport Station"),
     })
 
 
@@ -509,10 +507,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             filtered_name = string_lib.sanitize_for_path(self.players_config.get_own_name())
             filtered_session = string_lib.sanitize_for_path(self.players_config.session_name)
 
-            result["banner_name"] = "Prime 2 Rando - {} - {}".format(
-                filtered_name,
-                filtered_session,
-            )[:40]
+            result["banner_name"] = f"Prime 2 Rando - {filtered_name} - {filtered_session}"[:40]
         else:
             result["banner_name"] = f"Metroid Prime 2: Randomizer - {self.description.shareable_hash}"
 
@@ -737,6 +732,16 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
             }
         }
 
+    def add_new_patcher_cosmetics(self) -> dict:
+        cosmetic_rng = Random(self.description.get_seed_for_player(self.players_config.player_index))
+
+        suits = self.cosmetic_patches.suit_colors.randomized(cosmetic_rng).as_json
+        suits.pop("randomize_separately")
+
+        return {
+            "suits": suits,
+        }
+
     def new_patcher_configuration(self):
         regions_patch_data = {}
         self.add_layer_patches(regions_patch_data)
@@ -760,6 +765,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
                 "rubiks": True,
             },
             "inverted": self.configuration.inverted_mode,
+            "cosmetics": self.add_new_patcher_cosmetics(),
         }
 
     def create_logbook_patches(self):

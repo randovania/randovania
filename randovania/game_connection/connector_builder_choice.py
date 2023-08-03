@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import platform
 from enum import Enum
 from typing import Self
@@ -22,8 +23,14 @@ class ConnectorBuilderChoice(Enum):
             if randovania.is_frozen() or not randovania.is_dev_version():
                 return False
 
-        if self is ConnectorBuilderChoice.DOLPHIN and platform.system() == "Darwin":
-            return False
+        if self is ConnectorBuilderChoice.DOLPHIN:
+            match platform.system():
+                case "Darwin":
+                    return False
+                case "Linux" if randovania.is_frozen():
+                    return os.getuid() == 0 and not randovania.is_flatpak()
+                case _:
+                    return True
 
         return True
 

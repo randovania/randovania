@@ -124,8 +124,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         tab_to_type = {tab: node_type for node_type, tab in self._type_to_tab.items()}
 
         # Dynamic Stuff
-        for i, node_type in enumerate(self._type_to_tab.keys()):
-            self.node_type_combo.setItemData(i, node_type)
+        for node_type in self._type_to_tab.keys():
+            self.node_type_combo.addItem(node_type.__name__, node_type)
 
         self.layers_combo.clear()
         for layer in game.layers:

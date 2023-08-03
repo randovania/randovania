@@ -12,17 +12,22 @@ from randovania.server import database
 
 
 @pytest.fixture()
-def clean_database():
+def empty_database():
     old_db = database.db
     try:
         test_db = SqliteDatabase(':memory:')
         database.db = test_db
         with test_db.bind_ctx(database.all_classes):
             test_db.connect(reuse_if_open=True)
-            test_db.create_tables(database.all_classes)
             yield test_db
     finally:
         database.db = old_db
+
+
+@pytest.fixture()
+def clean_database(empty_database):
+    empty_database.create_tables(database.all_classes)
+    return empty_database
 
 
 @pytest.fixture()

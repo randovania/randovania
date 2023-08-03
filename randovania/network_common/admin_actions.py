@@ -13,13 +13,13 @@ class SessionAdminGlobalAction(Enum):
     CHANGE_LAYOUT_DESCRIPTION = "change_layout_description"
     DOWNLOAD_LAYOUT_DESCRIPTION = "download_layout_description"
     CREATE_PATCHER_FILE = "create_patcher_file"
-    START_SESSION = "start_session"
-    FINISH_SESSION = "finish_session"
+    CHANGE_VISIBILITY = "change_visibility"
     CHANGE_PASSWORD = "change_password"
     CHANGE_TITLE = "change_title"
     DUPLICATE_SESSION = "duplicate_session"
     DELETE_SESSION = "delete_session"
     REQUEST_PERMALINK = "request_permalink"
+    SET_ALLOW_EVERYONE_CLAIM = "set_allow_everyone_claim"
 
 
 class SessionAdminUserAction(Enum):
@@ -29,4 +29,5 @@ class SessionAdminUserAction(Enum):
     CLAIM = "claim"
     UNCLAIM = "unclaim"
     SWITCH_ADMIN = "switch_admin"
+    SWITCH_READY = "switch_ready"
     ABANDON = "abandon"

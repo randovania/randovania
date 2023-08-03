@@ -98,7 +98,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat non-dodging Alpha"
                                     }
                                 ]
                             }
@@ -1248,7 +1248,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat dodging Alpha"
                                     }
                                 ]
                             }
@@ -2313,7 +2313,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat dodging Alpha"
                                     }
                                 ]
                             }
@@ -3426,7 +3426,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Defeat Alpha",
+                                            "comment": "Use water pipe",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3542,7 +3542,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat dodging Alpha"
                                     }
                                 ]
                             }
@@ -7015,12 +7015,46 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Screw Attack",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Screw Attack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed Booster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -7130,7 +7164,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat dodging Alpha"
                                     }
                                 ]
                             }
@@ -7523,7 +7557,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat dodging Alpha"
                                     },
                                     {
                                         "type": "or",
@@ -7725,7 +7759,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Gamma"
+                                        "data": "Defeat dodging Gamma"
                                     },
                                     {
                                         "type": "resource",
@@ -7842,7 +7876,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat dodging Alpha"
                                     },
                                     {
                                         "type": "or",
