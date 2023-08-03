@@ -13,9 +13,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
 
-### Metroid Prime 2: Echoes
+### Echoes: Logic Updates and Video Upload
 
 - Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
+
+#### logic database
+
+- Added: 306 videos to the logic database. see the [Video Directory]
+(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
+
+
+##### Temple Grounds:
+
+- Added:  NSJ Extended Dash (Expert) to cross Grand Windchamber through the middle platform.
+
+##### Agon Wastes:
+
+- Added: NSJ Extended Dash (Advanced) to reach Temple Access Door in Mining Station A.
+
+##### Sky Temple Ground:
+
+- Removed: Phazon Grounds NSJ, No SA -> Invisibil Objects (Hypermode) or Movement (Expert) and Dark Visor. Doesn't exist.
+
+##### Sanctuary Fortress:
+
+- Added: Extended Dash (Expert) to reach the Scan Post in Watch Station Access from Main Gyro Chamber Door.
+- Added: Extended Dash (Expert) to reach Main Gyro Chamber Door in Watch Station Access from the Scan Post Side.
 
 ## [6.1.1] - 2023-08-??
 
