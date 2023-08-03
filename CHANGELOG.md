@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Fixed: The progress bar when exporting no longer reaches 100% earlier than intended in some situations.
+- Added: Racetime seeds can now be directly imported into Randovania
 
 ## [6.1.0] - 2023-08-02
 
