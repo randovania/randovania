@@ -30,7 +30,7 @@ def list_sessions(sa: ServerApp, limit: int | None):
             MultiplayerSession.id,
             MultiplayerSession.name,
             Case(None, ((MultiplayerSession.password.is_null(), False),), True).alias('has_password'),
-            MultiplayerSession.state,
+            MultiplayerSession.visibility,
             fn.COUNT(MultiplayerMembership.user_id).alias('num_users'),
             world_count_subquery.alias("num_worlds"),
             User.name.alias('creator'),

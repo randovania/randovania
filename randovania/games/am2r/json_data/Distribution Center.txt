@@ -1314,17 +1314,37 @@ Serris Arena
 Extra - map_name: rm_a5b03a
 > Door to Serris Arena Access; Heals? False
   * Layers: default
-  * Serris Arena Entrance Door to Serris Arena Access/Door to Serris Arena; Excluded from Dock Lock Rando
+  * Normal Door to Serris Arena Access/Door to Serris Arena; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door
   * Extra - instance_id: 135449
-  > Door to Serris Arena Pipe
+  > Left Platform
       Power Grip Wall
 
 > Door to Serris Arena Pipe; Heals? False
   * Layers: default
-  * Serris Arena Entrance Door to Serris Arena Pipe/Door to Serris Arena; Excluded from Dock Lock Rando
+  * Normal Door to Serris Arena Pipe/Door to Serris Arena; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door
   * Extra - instance_id: 135448
+  > Left Platform
+      Before Area 5 - Distribution Center Item at Ice location Collected or After Boss - Serris Defeated
+  > Inside Serris Trigger
+      After Area 5 - Distribution Center Item at Ice location Collected
+
+> Event - Serris; Heals? False
+  * Layers: default
+  * Event Boss - Serris Defeated
+  > Door to Serris Arena Access
+      Trivial
+
+> Left Platform; Heals? False
+  * Layers: default
   > Door to Serris Arena Access
       Power Grip Wall
+  > Door to Serris Arena Pipe
+      Before Area 5 - Distribution Center Item at Ice location Collected or After Boss - Serris Defeated
+  > Inside Serris Trigger
+      After Area 5 - Distribution Center Item at Ice location Collected
+
+> Inside Serris Trigger; Heals? False
+  * Layers: default
   > Event - Serris
       All of the following:
           All of the following:
@@ -1352,12 +1372,6 @@ Extra - map_name: rm_a5b03a
           Any of the following:
               # Fusion Mode requirements
               Missiles or Super Missiles or Disabled Fusion Mode
-
-> Event - Serris; Heals? False
-  * Layers: default
-  * Event Boss - Serris Defeated
-  > Door to Serris Arena Access
-      Trivial
 
 ----------------
 Serris Arena Pipe

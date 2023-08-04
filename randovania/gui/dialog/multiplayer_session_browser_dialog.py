@@ -125,11 +125,11 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         if self.is_member_no_check.isChecked():
             displayed_is_member.add(False)
 
-        displayed_states = set()
-        for (check, state) in ((self.state_visibile_check, MultiplayerSessionVisibility.VISIBLE),
+        displayed_visibilities = set()
+        for (check, visibility) in ((self.state_visibile_check, MultiplayerSessionVisibility.VISIBLE),
                                (self.state_hidden_check, MultiplayerSessionVisibility.HIDDEN)):
             if check.isChecked():
-                displayed_states.add(state)
+                displayed_visibilities.add(visibility)
 
         dont_filter_age = not self.filter_age_check.isChecked()
         now = datetime.datetime.now(tz=datetime.UTC)
@@ -139,7 +139,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
             session
             for session in self.sessions
             if (session.has_password in displayed_has_password
-                and session.state in displayed_states
+                and session.visibility in displayed_visibilities
                 and name_filter.lower() in session.name.lower()
                 and (dont_filter_age or (now - session.creation_date) < max_session_age)
                 and session.is_user_in_session in displayed_is_member)

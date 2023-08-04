@@ -23,8 +23,9 @@ class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatc
         self.checkboxes = {
             "colorblind_mode": self.colorblind_checkbox,
             "max_ammo_display": self.max_ammo_display_checkbox,
-            "aim_with_any_button": self.aim_with_any_button_checkbox,
             "no_demo": self.no_demo_checkbox,
+            "aim_with_any_button": self.aim_with_any_button_checkbox,
+            "enable_moonwalk_by_default": self.enable_moonwalk_by_default_checkbox,
         }
         self.radio_buttons = {
             MusicMode.VANILLA: self.vanilla_music_option,

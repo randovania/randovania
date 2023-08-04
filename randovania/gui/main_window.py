@@ -154,7 +154,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.progress_update_signal.connect(self.update_progress)
         self.stop_background_process_button.clicked.connect(self.stop_background_process)
 
-        self.multiworld_intro_label.linkActivated.connect(self._on_click_help_link)
+        self.multiworld_intro_label.linkActivated.connect(self.open_app_navigation_link)
 
         self.set_games_selector_visible(True)
 
@@ -737,10 +737,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.reporting_widget.on_options_changed(self._options)
         self.reporting_widget.show()
 
-    def _on_click_help_link(self, link: str):
-        tab_name = re.match(r"^help://(.+)$", link).group(1)
-        if tab_name is None:
-            return
+    def open_app_navigation_link(self, link: str):
+        match = re.match(r"^([^:]+)://(.+)$", link)
+        if match is not None:
+            kind, param = match.group(1, 2)
+            if kind == "help":
+                self._on_click_help_link(param)
+
+    def _on_click_help_link(self, tab_name: str):
         self._on_menu_action_help()
 
         tab = getattr(self.help_window.centralWidget(), tab_name, None)
