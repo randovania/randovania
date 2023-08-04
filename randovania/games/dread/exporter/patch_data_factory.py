@@ -492,7 +492,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 for pickup_item in pickup_list
                 if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
-            # FIXME: keep elevators empty in vanilla mode in case something is broken with patching elevators
             "elevators": elevators if self.configuration.elevators.mode != TeleporterShuffleMode.VANILLA else [],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),

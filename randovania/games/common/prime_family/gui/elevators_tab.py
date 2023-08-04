@@ -276,11 +276,11 @@ class PresetElevatorsPrime2(PresetElevators):
     compatible_modes = list(enum_lib.iterate_enum(TeleporterShuffleMode))
 
     custom_weights = {
-            "Great Temple": 0,  # Great Temple
-            "Agon Wastes": 1,  # Agon Wastes
-            "Torvus Bog": 2,  # Torvus Bog
-            "Sanctuary Fortress": 3,  # Sanctuary Fortress
-            "Temple Grounds": 5,  # Temple Grounds
+            "Great Temple": 0,
+            "Agon Wastes": 1,
+            "Torvus Bog": 2,
+            "Sanctuary Fortress": 3,
+            "Temple Grounds": 5,
         }
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
