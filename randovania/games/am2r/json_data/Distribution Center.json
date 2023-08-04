@@ -8335,13 +8335,16 @@
                         "area": "Serris Arena Access",
                         "node": "Door to Serris Arena"
                     },
-                    "default_dock_weakness": "Serris Arena Entrance Door",
-                    "exclude_from_dock_rando": true,
-                    "incompatible_dock_weaknesses": [],
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Serris Arena Pipe": {
+                        "Left Platform": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8377,11 +8380,99 @@
                         "area": "Serris Arena Pipe",
                         "node": "Door to Serris Arena"
                     },
-                    "default_dock_weakness": "Serris Arena Entrance Door",
-                    "exclude_from_dock_rando": true,
-                    "incompatible_dock_weaknesses": [],
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [
+                        "Spider Ball Door",
+                        "Screw Attack Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Left Platform": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "A5IceItem",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BossSerris",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Inside Serris Trigger": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "A5IceItem",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Serris": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 303.9741957389016,
+                        "y": 267.97725150666326,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "BossSerris",
+                    "connections": {
+                        "Door to Serris Arena Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Left Platform": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 103.58826358826359,
+                        "y": 113.4776334776335,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Serris Arena Access": {
                             "type": "and",
@@ -8395,6 +8486,66 @@
                                 ]
                             }
                         },
+                        "Door to Serris Arena Pipe": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "A5IceItem",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BossSerris",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Inside Serris Trigger": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "A5IceItem",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Inside Serris Trigger": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 71.57287157287158,
+                        "y": 203.98268398268397,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Event - Serris": {
                             "type": "and",
                             "data": {
@@ -8628,31 +8779,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Event - Serris": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 343.46,
-                        "y": 264.42,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "BossSerris",
-                    "connections": {
-                        "Door to Serris Arena Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
