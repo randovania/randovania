@@ -31,17 +31,17 @@ def discover_game(iso_path: Path) -> tuple[str, str] | None:
     return header.game_id.decode("UTF-8"), header.game_title.split(b"\x00")[0].decode("UTF-8")
 
 
-def is_prime1_iso_validator(file: Path | None) -> bool:
+def is_prime1_iso_validator(file: Path | None, *, iso_required: bool = False) -> bool:
     """Validates if the given path is a proper input for Metroid Prime.
     - If input doesn't exist, returns True
-    - If input is ISO, return False if it's Metroid Prime otherwise True
+    - If input is ISO or iso_required is set, return False if it's Metroid Prime otherwise True
     - If input is not ISO, returns False.
     """
     if is_file_validator(file):
         return True
 
     # Check if correct game, but only for ISO files (as we can't for them).
-    if file.suffix.lower() == ".iso":
+    if file.suffix.lower() == ".iso" or iso_required:
         iso_details = discover_game(file)
         if iso_details is None:
             return True

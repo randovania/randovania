@@ -50,7 +50,7 @@ def test_list_sessions(clean_database, flask_app, limit):
     world1_s2 = database.World.create(session=s2, name="Foobar World 1", preset="I'm a dummy")
     database.WorldUserAssociation.create(world=world1_s2, user=someone)
 
-    state = MultiplayerSessionVisibility.VISIBLE.value
+    visibility = MultiplayerSessionVisibility.VISIBLE.value
     sio_mock = MagicMock()
     sio_mock.get_current_user = MagicMock(return_value=someone)
 
@@ -59,13 +59,15 @@ def test_list_sessions(clean_database, flask_app, limit):
 
     # Assert
     expected = [
-        {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_users': 2, 'creator': 'Someone',
+        {'has_password': False, 'id': 3, 'visibility': visibility, 'name': 'Third', 'num_users': 2,
+         'creator': 'Someone',
          'num_worlds': 0, 'creation_date': '2021-01-20T05:02:00+00:00',
          'is_user_in_session': True, 'join_date': '2022-01-20T05:02:00+00:00'},
-        {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_users': 1, 'creator': 'Someone',
+        {'has_password': False, 'id': 2, 'visibility': visibility, 'name': 'Other', 'num_users': 1,
+         'creator': 'Someone',
          'num_worlds': 1, 'creation_date': '2020-01-20T05:02:00+00:00',
          'is_user_in_session': False, 'join_date': '2021-01-20T05:02:00+00:00'},
-        {'has_password': True, 'id': 1, 'state': state, 'name': 'Debug', 'num_users': 1, 'creator': 'Someone',
+        {'has_password': True, 'id': 1, 'visibility': visibility, 'name': 'Debug', 'num_users': 1, 'creator': 'Someone',
          'num_worlds': 2, 'creation_date': '2020-10-02T10:20:00+00:00',
          'is_user_in_session': True, 'join_date': '2021-01-20T05:02:00+00:00'},
     ]

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import os
+import platform
 import sys
 from pathlib import Path
 
@@ -12,6 +14,10 @@ CONFIGURATION_FILE_PATH: Path | None = None
 
 def is_frozen() -> bool:
     return getattr(sys, "frozen", False)
+
+
+def is_flatpak() -> bool:
+    return platform.system() == "Linux" and os.environ.get("container")
 
 
 def is_dirty() -> bool:
