@@ -944,7 +944,14 @@ def _migrate_v59(preset: dict) -> dict:
 
     return preset
 
+
 def _migrate_v60(preset: dict) -> dict:
+    preset["configuration"]["check_if_beatable_after_base_patches"] = False
+
+    return preset
+
+
+def _migrate_v61(preset: dict) -> dict:
     config = preset["configuration"]
     game = preset["game"]
 
@@ -960,10 +967,6 @@ def _migrate_v60(preset: dict) -> dict:
 
     return preset
 
-def _migrate_v60(preset: dict) -> dict:
-    preset["configuration"]["check_if_beatable_after_base_patches"] = False
-
-    return preset
 
 
 _MIGRATIONS = [
@@ -1027,6 +1030,7 @@ _MIGRATIONS = [
     _migrate_v58,
     _migrate_v59,
     _migrate_v60,
+    _migrate_v61,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
