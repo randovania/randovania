@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import dataclasses
+import itertools
 from typing import TYPE_CHECKING
 
 import tenacity
@@ -12,12 +13,12 @@ from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
 from randovania.generator.filler.runner import FillerResults, PlayerPool, run_filler
 from randovania.generator.hint_distributor import PreFillParams
-from randovania.generator.pickup_pool import pool_creator
+from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.resolver import resolver
+from randovania.resolver import debug, resolver
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
 if TYPE_CHECKING:
@@ -26,6 +27,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.generator_parameters import GeneratorParameters
@@ -43,40 +45,69 @@ def _validate_item_pool_size(item_pool: list[PickupEntry], game: GameDescription
                 len(item_pool), game.region_list.num_pickup_nodes, min_starting_items))
 
 
-async def create_player_pool(rng: Random, configuration: BaseConfiguration,
-                             player_index: int, num_players: int, rng_required: bool = True) -> PlayerPool:
+async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
+    patches = patches.assign_extra_starting_pickups(
+        itertools.chain(pool.starting, pool.to_place)
+    ).assign_own_pickups(
+        pool.assignment.items()
+    )
+
+    state, logic = resolver.setup_resolver(patches.configuration, patches)
+
+    with debug.with_level(0):
+        try:
+            return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=1000) is not None
+        except resolver.ResolverTimeout:
+            return False
+
+
+async def create_player_pool(
+        rng: Random, configuration: BaseConfiguration,
+        player_index: int, num_players: int,
+        status_update: Callable[[str], None]
+) -> PlayerPool:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
 
     game_generator = game.game.generator
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
 
-    base_patches = game_generator.base_patches_factory.create_base_patches(configuration, rng, game,
-                                                                           num_players > 1,
-                                                                           player_index=player_index,
-                                                                           rng_required=rng_required)
-
-    base_patches = dock_weakness_distributor.distribute_pre_fill_weaknesses(base_patches, rng)
-
-    base_patches = await game_generator.hint_distributor.assign_pre_filler_hints(
-        base_patches,
-        PreFillParams(
-            rng,
-            configuration,
-            game,
+    for i in range(10):
+        status_update(f"Attempt {i + 1} for initial state for world {player_index + 1}")
+        patches = game_generator.base_patches_factory.create_base_patches(
+            configuration, rng, game,
             num_players > 1,
-        ),
-        rng_required=rng_required
-    )
+            player_index=player_index,
+            rng_required=True
+        )
+        patches = dock_weakness_distributor.distribute_pre_fill_weaknesses(patches, rng)
+        patches = await game_generator.hint_distributor.assign_pre_filler_hints(
+            patches,
+            PreFillParams(
+                rng,
+                configuration,
+                game,
+                num_players > 1,
+            ),
+            rng_required=True,
+        )
 
-    pool_results = pool_creator.calculate_pool_results(configuration, game)
-    patches = game_generator.bootstrap.assign_pool_results(rng, base_patches, pool_results)
+        pool_results = pool_creator.calculate_pool_results(configuration, game)
+        if configuration.check_if_beatable_after_base_patches and not await check_if_beatable(patches, pool_results):
+            continue
 
-    return PlayerPool(
-        game=game,
-        game_generator=game_generator,
-        configuration=configuration,
-        patches=patches,
-        pickups=pool_results.to_place,
+        patches = game_generator.bootstrap.assign_pool_results(rng, patches, pool_results)
+
+        return PlayerPool(
+            game=game,
+            game_generator=game_generator,
+            configuration=configuration,
+            patches=patches,
+            pickups=pool_results.to_place,
+        )
+
+    raise InvalidConfiguration(
+        "Unable to find a valid starting state. "
+        "Please check settings related to random starting locations, elevators/teleporters/portals, door locks."
     )
 
 
@@ -95,7 +126,10 @@ async def _create_pools_and_fill(rng: Random,
 
     for player_index, player_preset in enumerate(presets):
         status_update(f"Creating item pool for player {player_index + 1}")
-        player_pools.append(await create_player_pool(rng, player_preset.configuration, player_index, len(presets)))
+        player_pools.append(await create_player_pool(
+            rng, player_preset.configuration, player_index, len(presets),
+            status_update,
+        ))
 
     for player_pool in player_pools:
         _validate_item_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)

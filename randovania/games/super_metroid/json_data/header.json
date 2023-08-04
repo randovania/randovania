@@ -326,7 +326,48 @@
                 "extra": {}
             }
         },
-        "misc": {},
+        "misc": {
+            "DachoraPitTweaks": {
+                "long_name": "Dachora Pit Tweaks",
+                "extra": {}
+            },
+            "SupersBridgeTweaks": {
+                "long_name": "Early Supers Bridge Tweaks",
+                "extra": {}
+            },
+            "PreHijumpTweaks": {
+                "long_name": "Pre Hi-Jump Tweaks",
+                "extra": {}
+            },
+            "MoatTweaks": {
+                "long_name": "Moat Tweaks",
+                "extra": {}
+            },
+            "PreSpazerTweaks": {
+                "long_name": "Pre Spazer Tweaks",
+                "extra": {}
+            },
+            "RedTowerTweaks": {
+                "long_name": "Red Tower Tweaks",
+                "extra": {}
+            },
+            "NovaBoostTweaks": {
+                "long_name": "Nova Boost Tweaks",
+                "extra": {}
+            },
+            "CantUseSupersOnRedDoors": {
+                "long_name": "Can't Use Supers On Red Doors",
+                "extra": {}
+            },
+            "MBRainbowBeamNerf": {
+                "long_name": "Mother Brain Rainbow Beam Nerf",
+                "extra": {}
+            },
+            "NoLowerNorfairInventoryCheck": {
+                "long_name": "No Lower Norfair Space Jump Check",
+                "extra": {}
+            }
+        },
         "requirement_template": {},
         "damage_reductions": [],
         "energy_tank_item_index": "ETank"
@@ -400,6 +441,32 @@
                                                 "name": "Missile",
                                                 "amount": 5,
                                                 "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Supers",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "CantUseSupersOnRedDoors",
+                                                            "amount": 1,
+                                                            "negate": true
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         }
                                     ]

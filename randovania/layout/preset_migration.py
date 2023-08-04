@@ -853,7 +853,7 @@ def _migrate_v55(preset: dict) -> dict:
     game = preset["game"]
     if game in {"blank", "cave_story", "am2r"}:
         return preset
-    preset["configuration"]["dock_rando"]["types_state"]["teleporter"] = {"can_change_from": [],"can_change_to": []}
+    preset["configuration"]["dock_rando"]["types_state"]["teleporter"] = {"can_change_from": [], "can_change_to": []}
     return preset
 
 
@@ -865,7 +865,6 @@ def _migrate_v56(preset: dict) -> dict:
 
 
 def _migrate_v57(preset: dict) -> dict:
-
     types_table = {
         "am2r": ["tunnel", "teleporter", "other"],
         "blank": ["other"],
@@ -900,7 +899,6 @@ def _migrate_v58(preset: dict) -> dict:
         for old_location in config["starting_location"]:
             replace_location(old_location)
 
-
         if game in {"prime1", "prime2"}:
             elevators = config["elevators"]
             excluded_teleporters = elevators["excluded_teleporters"]
@@ -910,6 +908,45 @@ def _migrate_v58(preset: dict) -> dict:
             excluded_targets = elevators["excluded_targets"]
             for target_obj in excluded_targets:
                 replace_location(target_obj)
+
+    return preset
+
+
+def _migrate_v59(preset: dict) -> dict:
+    game = preset["game"]
+
+    if game != "prime1":
+        return preset
+
+    configuration = preset["configuration"]
+
+    dock_rando = configuration.get("dock_rando")
+    if dock_rando is None:
+        return preset
+
+    types_state = dock_rando.get("types_state")
+    if types_state is None:
+        return preset
+
+    door = types_state.get("door")
+    if door is None:
+        return preset
+
+    can_change_to: list[str] = door.get("can_change_to")
+    if can_change_to is None:
+        return preset
+
+    for i, x in enumerate(can_change_to):
+        if x == "Charge Beam Door":
+            can_change_to[i] = "Charge Beam Blast Shield"
+        elif x == "Bomb Door":
+            can_change_to[i] = "Bomb Blast Shield"
+
+    return preset
+
+
+def _migrate_v60(preset: dict) -> dict:
+    preset["configuration"]["check_if_beatable_after_base_patches"] = False
 
     return preset
 
@@ -973,6 +1010,8 @@ _MIGRATIONS = [
     _migrate_v56,
     _migrate_v57,
     _migrate_v58,
+    _migrate_v59,
+    _migrate_v60,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

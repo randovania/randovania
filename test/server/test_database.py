@@ -33,7 +33,7 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
     someone = database.User.create(name="Someone")
     s = database.MultiplayerSession.create(name="Debug", creator=someone,
-                                           state=MultiplayerSessionVisibility.IN_PROGRESS)
+                                           visibility=MultiplayerSessionVisibility.HIDDEN)
     game_details = None
     worlds = []
     actions = []
@@ -71,7 +71,7 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         name='Debug',
         users_list=[],
         worlds=worlds,
-        visibility=MultiplayerSessionVisibility.VISIBLE,
+        visibility=MultiplayerSessionVisibility.HIDDEN,
         allow_coop=False,
         allow_everyone_claim_world=False,
     )

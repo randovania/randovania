@@ -127,7 +127,7 @@ def _change_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UU
     verify_has_admin_or_claimed(sa, world)
 
     if preset.game not in session.allowed_games:
-        raise error.InvalidActionError(f"Only {preset.game} preset not allowed.")
+        raise error.InvalidActionError(f"{preset.game.long_name} not allowed.")
 
     if not randovania.is_dev_version() and preset.get_preset().configuration.unsupported_features():
         raise error.InvalidActionError("Preset uses unsupported features.")
@@ -282,7 +282,7 @@ def _change_visibility(sa: ServerApp, session: MultiplayerSession, new_visibilit
     verify_has_admin(sa, session.id, None)
     new_visibility = MultiplayerSessionVisibility(new_visibility)
 
-    session.state = new_visibility
+    session.visibility = new_visibility
     logger().info("%s: Changing visibility to %s.", session_common.describe_session(session), new_visibility)
     session.save()
     session_common.add_audit_entry(sa, session, f"Changed visibility to {new_visibility.user_friendly_name}")

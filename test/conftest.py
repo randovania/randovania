@@ -63,6 +63,17 @@ def preset_manager(tmp_path) -> PresetManager:
     return PresetManager(tmp_path.joinpath("presets"))
 
 
+@pytest.fixture(params=[False, True])
+def blank_available_in_multi(request) -> bool:
+    data = RandovaniaGame.BLANK.data
+    old_value = data.defaults_available_in_game_sessions
+    try:
+        object.__setattr__(data, "defaults_available_in_game_sessions", request.param)
+        yield request.param
+    finally:
+        object.__setattr__(data, "defaults_available_in_game_sessions", old_value)
+
+
 @pytest.fixture(scope="session")
 def default_preset() -> Preset:
     return PresetManager(None).default_preset.get_preset()

@@ -23,12 +23,12 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture()
-def client(tmpdir):
-    return NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
+def client(tmp_path):
+    return NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
 
 
-async def test_on_connect_no_restore(tmpdir):
-    client = NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
+async def test_on_connect_no_restore(tmp_path):
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
 
     # Run
     await client.on_connect()

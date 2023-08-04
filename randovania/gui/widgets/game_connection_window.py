@@ -180,6 +180,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             self.add_builder_menu.addAction(action)
         self.add_builder_button.setMenu(self.add_builder_menu)
 
+        self.help_label.linkActivated.connect(self.window_manager.open_app_navigation_link)
         self.game_connection.BuildersChanged.connect(self.setup_builder_ui)
         self.game_connection.BuildersUpdated.connect(self.update_builder_ui)
         self.game_connection.GameStateUpdated.connect(self.update_builder_ui)

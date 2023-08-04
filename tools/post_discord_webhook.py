@@ -6,36 +6,21 @@ import datetime
 import os
 import pprint
 import subprocess
-from pathlib import Path
 
 import aiohttp
 
 
 async def post_to_discord():
     parser = argparse.ArgumentParser()
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--artifact-dir", type=Path)
-    group.add_argument("--version")
+    parser.add_argument("--version", required=True)
     args = parser.parse_args()
 
-    if args.version is None:
-        artifact_dir: Path = args.artifact_dir
-        versions = {
-            file.name.split("-")[1]
-            for file in artifact_dir.glob("randovania-*")
-        }
-        if len(versions) != 1:
-            raise ValueError(f"Found versions {sorted(versions)} in {artifact_dir}, expected just one")
-        version = list(versions)[0]
-    else:
-        version = args.version
-
-    print(version)
+    version = args.version
 
     try:
         current_branch = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"],
                                         check=True, stdout=subprocess.PIPE, text=True).stdout.strip()
-    except Exception:
+    except subprocess.SubprocessError:
         current_branch = "<Unknown Branch>"
 
     git_result = subprocess.run(["git", "show"], check=True, stdout=subprocess.PIPE, text=True).stdout.split("\n")

@@ -235,6 +235,7 @@ def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
         aabb[2] + (aabb[5] - aabb[2]) * z_factor,
     ]
 
+
 # ruff: noqa: C901
 
 def _serialize_dock_modifications(region_data, regions: list[Region], room_rando_mode: RoomRandoMode,
@@ -702,11 +703,12 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         # serialize door modifications
         for region in regions:
             for area in region.areas:
-                dock_nodes = (node for node in area.nodes
-                               if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types)
-                dock_nodes = sorted(dock_nodes, key=lambda n: n.extra["dock_index"])
+                dock_nodes: list[DockNode] = sorted(
+                    (node for node in area.nodes
+                     if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types),
+                    key=lambda n: n.extra["dock_index"]
+                )
                 for node in dock_nodes:
-                    node: DockNode = node
                     if node.extra.get("exclude_dock_rando", False):
                         continue
 
@@ -947,6 +949,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "heatDamagePerSec": self.configuration.heat_damage,
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,
+                "doorOpenMode": "PrimaryBlastShield",
 
                 "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": starting_items,

@@ -43,7 +43,7 @@ async def test_run_filler(echoes_game_description,
                         for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)]
 
     player_pools = [
-        await create_player_pool(rng, default_echoes_configuration, 0, 1),
+        await create_player_pool(rng, default_echoes_configuration, 0, 1, MagicMock()),
     ]
     initial_pickup_count = len(player_pools[0].pickups)
 

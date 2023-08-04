@@ -21,7 +21,7 @@ from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layou
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
-from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
+from randovania.gui.lib.qt_network_client import AnyNetworkError, QtNetworkClient, handle_network_errors
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget, connect_to
 from randovania.interface_common import generator_frontend
@@ -229,6 +229,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self._multiworld_client.SyncFailure.connect(self.update_multiworld_client_status)
         self._multiworld_client.database.WorldDataUpdate.connect(self.update_multiworld_client_status)
         self._multiworld_client.game_connection.GameStateUpdated.connect(self.update_multiworld_client_status)
+        self.not_connected_warning_label.linkActivated.connect(self._window_manager.open_game_connection_window)
 
     def _get_world_order(self) -> list[uuid.UUID]:
         return [world.id for world in self._session.worlds]
@@ -666,6 +667,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             except (asyncio.exceptions.CancelledError, BackgroundTaskInProgressError):
                 pass
 
+            except AnyNetworkError:
+                # We're interested in catching generation failures.
+                # Let network errors be handled by who called us, which will be captured by handle_network_errors
+                raise
+
             except Exception as e:
                 await self.failure_handler.handle_exception(
                     e, self.update_progress,
@@ -943,6 +949,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                     game_connection.get_builder_for_connector(connector).pretty_text,
                 ))
 
+        connected_worlds = {k: v for k, v in connected_worlds.items() if v}
+
         world_status = []
         for uid in user_worlds.keys():
             data = self._multiworld_client.database.get_data_for(uid)
@@ -953,7 +961,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 len(set(data.collected_locations) - set(data.uploaded_locations)),
             )
 
-            if connected_worlds[uid]:
+            if uid in connected_worlds:
                 msg += f" {', '.join(connected_worlds[uid])}."
 
             err = self._multiworld_client.get_world_sync_error(uid)
@@ -967,6 +975,25 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             lines.extend(world_status)
 
         self.multiworld_client_status_label.setText("\n".join(lines))
+
+        warning_message = ""
+
+        if self._session.game_details and user_worlds:
+            if connected_worlds:
+                if not (connected_worlds.keys() & user_worlds.keys()):
+                    plural = "game" if len(connected_worlds) == 1 else "games"
+                    warning_message = (
+                        f"You are connected to {len(connected_worlds)} {plural}, but none for this session. "
+                        "<a href='open://game-connections'>View details?</a>"
+                    )
+            else:
+                warning_message = (
+                    "You are currently connected to no games right now. "
+                    "<a href='open://game-connections'>View details?</a>"
+                )
+
+        self.not_connected_warning_label.setText(warning_message)
+        self.not_connected_warning_label.setVisible(bool(warning_message))
 
     @asyncSlot()
     @handle_network_errors

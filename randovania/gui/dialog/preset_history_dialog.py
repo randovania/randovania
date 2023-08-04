@@ -20,9 +20,16 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_manager import PresetManager
 
 
+def _get_invalid_preset_error(preset: VersionedPreset, error: InvalidPreset) -> str:
+    return (
+        f"Preset {preset.name} at this version can't be used as it contains the following error:"
+        f"\n{error.original_exception}"
+    )
+
+
 def _get_old_preset(preset_str: str) -> Preset | str:
     try:
-        old_preset = VersionedPreset(json.loads(preset_str))
+        old_preset = VersionedPreset.from_str(preset_str)
     except json.JSONDecodeError as e:
         return f"Preset at this version contains json errors: {e}"
 
@@ -30,10 +37,7 @@ def _get_old_preset(preset_str: str) -> Preset | str:
         return old_preset.get_preset()
 
     except InvalidPreset as e:
-        return (
-            f"Preset {old_preset.name} at this version can't be used as it contains the following error:"
-            f"\n{e.original_exception}"
-        )
+        return _get_invalid_preset_error(old_preset, e)
 
 
 def _describe_preset(preset: Preset) -> list[str]:
@@ -68,6 +72,14 @@ def _calculate_previous_versions(preset_manager: PresetManager, preset: Versione
         yield date, old_preset, old_description
 
 
+def _set_item_data(item: QtWidgets.QListWidgetItem, data: tuple[Preset | None, tuple[str, ...]]):
+    item.setData(QtCore.Qt.ItemDataRole.UserRole, data)
+
+
+def _get_item_data(item: QtWidgets.QListWidgetItem) -> tuple[Preset | None, tuple[str, ...]]:
+    return item.data(QtCore.Qt.ItemDataRole.UserRole)
+
+
 class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
     def __init__(self, preset_manager: PresetManager, preset: VersionedPreset):
         super().__init__()
@@ -79,17 +91,19 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
 
         try:
             self._original_lines = tuple(_describe_preset(preset.get_preset()))
-        except InvalidPreset:
+            original_description = self._original_lines
+        except InvalidPreset as e:
             self._original_lines = None
+            original_description = (_get_invalid_preset_error(preset, e),)
 
         item = QtWidgets.QListWidgetItem("Current Version")
-        item.setData(QtCore.Qt.UserRole, (None, self._original_lines))
+        _set_item_data(item, (None, original_description))
         self.version_widget.addItem(item)
 
         for date, old_preset, old_description in _calculate_previous_versions(self.preset_manager, self.preset,
                                                                               self._original_lines):
             item = QtWidgets.QListWidgetItem(date.astimezone().strftime("%c"))
-            item.setData(QtCore.Qt.UserRole, (old_preset, old_description))
+            _set_item_data(item, (old_preset, old_description))
             self.version_widget.addItem(item)
 
         self.accept_button.clicked.connect(self.accept)
@@ -101,7 +115,7 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
     def selected_preset(self) -> Preset | None:
         items = self.version_widget.selectedItems()
         if items:
-            return items[0].data(QtCore.Qt.UserRole)[0]
+            return _get_item_data(items[0])[0]
         else:
             return None
 
@@ -124,7 +138,7 @@ class PresetHistoryDialog(QtWidgets.QDialog, Ui_PresetHistoryDialog):
             self.label.setText("Select a version on the left")
             return
 
-        old_preset, old_description = items[0].data(QtCore.Qt.UserRole)
+        old_preset, old_description = _get_item_data(items[0])
         self.accept_button.setEnabled(old_preset is not None)
         self.export_button.setEnabled(self.accept_button.isEnabled())
 
