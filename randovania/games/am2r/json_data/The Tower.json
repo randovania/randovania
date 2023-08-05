@@ -1243,10 +1243,33 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Top": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1278,10 +1301,33 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Top": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1316,7 +1362,92 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Any Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "MidAirMorph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "SoftlockPrevention",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Space Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1583,37 +1714,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Spider Ball"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Power Grip",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidAirMorph",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
+                                            "comment": "Break the bomb blocks",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1642,7 +1743,7 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "IBJ",
-                                                                                "amount": 2,
+                                                                                "amount": 3,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -1658,21 +1759,55 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Getting up to the tunnel",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Space Jump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Space Jump Climb",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Power Grip",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MidAirMorph",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Shinespark Method",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1688,24 +1823,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Shinesparking",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -1717,9 +1835,9 @@
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "MidAirMorph",
-                                                                                "amount": 2,
+                                                                                "type": "items",
+                                                                                "name": "Power Grip",
+                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -1731,9 +1849,9 @@
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Power Grip",
-                                                                                            "amount": 1,
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 3,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
@@ -1741,21 +1859,12 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "tricks",
-                                                                                            "name": "Movement",
+                                                                                            "name": "MidAirMorph",
                                                                                             "amount": 3,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Walljump",
-                                                                                "amount": 2,
-                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -1765,12 +1874,28 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": "IBJ",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1947,6 +2072,15 @@
                                             "amount": 2,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -2048,6 +2182,15 @@
                                             "type": "tricks",
                                             "name": "Movement",
                                             "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     }
@@ -2428,7 +2571,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "MidAirMorph",
+                                                        "name": "MorphGlide",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -2589,7 +2732,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "MidAirMorph",
+                                                        "name": "MorphGlide",
                                                         "amount": 3,
                                                         "negate": false
                                                     }
@@ -2709,6 +2852,41 @@
                                                                     "name": "MidAirMorph",
                                                                     "amount": 2,
                                                                     "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed Booster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Shinesparking",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
                                                                 }
                                                             }
                                                         ]
@@ -7499,106 +7677,78 @@
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Power Grip",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MidAirMorph",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Speed Booster",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Shinesparking",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "or",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Power Grip",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Use Spring Ball"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Spider Ball"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -7696,6 +7846,173 @@
                                     {
                                         "type": "template",
                                         "data": "Defeat Zeta"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get into Tunnel",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed Booster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Shinesparking",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Power Grip",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Spring Ball",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Power Grip",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "MidAirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Space Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Hi-Jump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -8164,6 +8481,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hi-Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -8338,13 +8664,39 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Power Plant Destroyed Shaft": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Low Mid-Air Morph Tunnel Climb"
+                                        "data": "Tunnel Climb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
