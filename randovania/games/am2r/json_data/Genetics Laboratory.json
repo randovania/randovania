@@ -1459,11 +1459,41 @@
                         "Pipe to Hydro Station": {
                             "type": "and",
                             "data": {
-                                "comment": "New goal removes vanilla requirement",
+                                "comment": "DNA goal removes the collision blocks in the way",
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Power Grip Wall"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Tunnel Climb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Power Grip Wall"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
