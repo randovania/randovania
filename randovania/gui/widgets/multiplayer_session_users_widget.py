@@ -462,7 +462,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         self._session = session
 
         if self._widget_state_for(self._last_session) != self._widget_state_for(session):
-            logger.info("Recreating all widgets as can't update only strings")
+            if self._last_session is not None:
+                logger.info("Recreating all widgets as can't update only strings")
             return self._create_all_widgets_from_scratch()
 
         logger.info("Lightweight widget update")
