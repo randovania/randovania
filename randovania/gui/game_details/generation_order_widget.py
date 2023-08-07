@@ -22,12 +22,8 @@ class GenerationOrderWidget(QtWidgets.QWidget):
         self.root_layout.addWidget(self.filter_edit)
 
         self.item_model = QtGui.QStandardItemModel(0, 1, self)
-        self.proxy_model = QtCore.QSortFilterProxyModel(self)
-        self.proxy_model.setSourceModel(self.item_model)
-        self.filter_edit.textChanged.connect(self.proxy_model.setFilterRegularExpression)
 
         self.list_view = QtWidgets.QListView(self)
-        self.list_view.setModel(self.proxy_model)
         self.root_layout.addWidget(self.list_view)
 
         def get_name(m: re.Match):
@@ -39,3 +35,8 @@ class GenerationOrderWidget(QtWidgets.QWidget):
                 item_order = _player_re.sub(get_name, item_order)
 
             self.item_model.appendRow(QtGui.QStandardItem(item_order))
+
+        self.proxy_model = QtCore.QSortFilterProxyModel(self)
+        self.proxy_model.setSourceModel(self.item_model)
+        self.filter_edit.textChanged.connect(self.proxy_model.setFilterRegularExpression)
+        self.list_view.setModel(self.proxy_model)

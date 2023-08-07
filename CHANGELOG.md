@@ -24,9 +24,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
 
-## [6.1.1] - 2023-08-??
+## [6.1.1] - 2023-08-07
 
-- Nothing.
+- Changed: Improve performance significantly when opening a Multiworld session with long history.
+- Changed: Slightly improve performance when opening game details. 
+- Fixed: The correct error is displayed when the incorrect password is provided for Multiworld Sessions.
 
 ### Metroid Dread
 
