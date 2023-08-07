@@ -130,6 +130,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Metroid Hop to reach Missile from Quarantine Access A
 - Changed: Various Metroid Quarantine A logic adjustments
+- Fixed: NSJ Phazon Processing Center having too few requirements
 
 ### Metroid Prime 2: Echoes
 
