@@ -961,8 +961,6 @@ def _migrate_v61(preset: dict) -> dict:
             "excluded_teleporters": [
             ],
             "excluded_targets": [],
-            "skip_final_bosses": False,
-            "allow_unvisited_room_names": False
         }
 
     return preset

@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 
 def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
-    from randovania.games.common.prime_family.gui.elevators_tab import PresetElevatorsPrime2
+    from randovania.games.common.prime_family.gui.elevators_tab_prime2 import PresetElevatorsPrime2
     from randovania.games.prime2.gui.preset_settings.echoes_beam_configuration_tab import PresetEchoesBeamConfiguration
     from randovania.games.prime2.gui.preset_settings.echoes_dock_rando_tab import PresetEchoesDockRando
     from randovania.games.prime2.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal

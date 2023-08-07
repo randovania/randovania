@@ -33,12 +33,6 @@ class TeleporterShuffleMode(BitPackEnum, Enum):
     ONE_WAY_ELEVATOR_REPLACEMENT = "one-way-elevator-replacement"
     ONE_WAY_ANYTHING = "one-way-anything"
 
-    def usable_by_game(self, game: RandovaniaGame):
-        if self != TeleporterShuffleMode.ECHOES_SHUFFLED:
-            return True
-        else:
-            return game == RandovaniaGame.METROID_PRIME_ECHOES
-
 
 enum_lib.add_long_name(TeleporterShuffleMode, {
     TeleporterShuffleMode.VANILLA: "Original connections",
@@ -118,8 +112,6 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
     mode: TeleporterShuffleMode
     excluded_teleporters: TeleporterList
     excluded_targets: TeleporterTargetList
-    skip_final_bosses: bool
-    allow_unvisited_room_names: bool
 
     @property
     def game(self) -> RandovaniaGame:
@@ -130,10 +122,6 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         return self.mode == TeleporterShuffleMode.VANILLA
 
     @property
-    def can_use_unvisited_room_names(self) -> bool:
-        return self.is_vanilla or self.allow_unvisited_room_names
-
-    @property
     def has_shuffled_target(self):
         return self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING
 
@@ -141,23 +129,6 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
     def editable_teleporters(self) -> list[NodeIdentifier]:
         return [teleporter for teleporter in self.excluded_teleporters.nodes_list(self.game)
                 if teleporter not in self.excluded_teleporters.locations]
-
-    @property
-    def static_teleporters(self) -> dict[NodeIdentifier, NodeIdentifier]:
-        static = {}
-        if self.skip_final_bosses:
-            if self.game == RandovaniaGame.METROID_PRIME:
-                crater = NodeIdentifier.create("Tallon Overworld", "Artifact Temple",
-                                               "Teleporter to Impact Crater")
-                static[crater] = NodeIdentifier.create("End of Game", "Credits", "Event - Credits")
-            elif self.game == RandovaniaGame.METROID_PRIME_ECHOES:
-                gateway = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
-                                                "Elevator to Great Temple")
-                static[gateway] = NodeIdentifier.create("Temple Grounds", "Credits", "Event - Dark Samus 3 and 4")
-            else:
-                raise ValueError(f"Unsupported skip_final_bosses and {self.game}")
-
-        return static
 
     @property
     def valid_targets(self) -> list[NodeIdentifier]:
@@ -186,6 +157,10 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         else:
             return []
 
+    @property
+    def static_teleporters(self) -> dict[NodeIdentifier, NodeIdentifier]:
+        return {}
+
     def description(self):
         result = []
         if self.mode not in {TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.ECHOES_SHUFFLED}:
@@ -204,25 +179,3 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             return ["One-way anywhere elevators"]
         return []
-
-
-@dataclasses.dataclass(frozen=True)
-class DreadTeleporterConfiguration(TeleporterConfiguration):
-    # Dread has only save stations as start nodes in the db. Elevators are no start nodes but
-    # are valid targets and also the only valid targets. Preset settings makes sure
-    # that nothing else is selected
-    @property
-    def valid_targets(self) -> list[NodeIdentifier]:
-        if self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
-            game_description = default_database.game_description_for(self.game)
-            teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
-            region_list = game_description.region_list
-
-            result = []
-            for identifier in self.editable_teleporters:
-                node = region_list.node_by_identifier(identifier)
-                if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
-                    result.append(identifier)
-            return result
-        else:
-            return []
