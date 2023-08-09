@@ -44,7 +44,7 @@
          <x>0</x>
          <y>0</y>
          <width>745</width>
-         <height>770</height>
+         <height>840</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
@@ -213,14 +213,31 @@
            <item>
             <widget class="QCheckBox" name="skip_cutscenes_check">
              <property name="text">
-              <string>Skip most cutscenes</string>
+              <string>Skip gameplay cutscenes</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="skip_cutscenes_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enabling this will skip most cutscene related events, such as the Drill Sequence, the cutscenes you'll see when viewing a Metroid for the first time and similar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enabling this will skip most gameplay related cutscenes, such as the Drill Sequence, the cutscenes you'll see when viewing a Metroid for the first time and similar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="skip_item_cutscenes_check">
+             <property name="text">
+              <string>Skip item acquisition cutscenes</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="skip_item_cutscenes_label">
+             <property name="text">
+              <string>Enabling this will skip item related cutscenes, such as the pause when collecting an item or the cutscene that plays when collecting a suit.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
