@@ -329,7 +329,12 @@
                 "extra": {}
             }
         },
-        "damage": {},
+        "damage": {
+            "Normal": {
+                "long_name": "Normal Damage",
+                "extra": {}
+            }
+        },
         "versions": {
             "NTSC": {
                 "long_name": "NTSC",
@@ -376,6 +381,14 @@
             "NoLowerNorfairInventoryCheck": {
                 "long_name": "No Lower Norfair Space Jump Check",
                 "extra": {}
+            },
+            "EntranceRando": {
+                "long_name": "Entrance Randomizer",
+                "extra": {}
+            },
+            "DoorLockRando": {
+                "long_name": "Door Lock Randomizer",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -401,6 +414,24 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "misc",
+                                "name": "DoorLockRando",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "misc",
+                                "name": "EntranceRando",
+                                "amount": 1,
+                                "negate": true
+                            }
                         }
                     ]
                 }
@@ -414,28 +445,14 @@
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "X-Ray",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
                                 "name": "Bombs",
                                 "amount": 1,
                                 "negate": false
                             }
                         },
                         {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Reserves",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "G-Mode"
                         }
                     ]
                 }
@@ -445,24 +462,6 @@
                 "data": {
                     "comment": null,
                     "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "X-Ray",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Reserves",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         {
                             "type": "or",
                             "data": {
@@ -488,11 +487,15 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            "type": "template",
+                            "data": "G-Mode"
                         }
                     ]
                 }
             },
-            "IBJ": {
+            "Can Lay Bombs": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -518,7 +521,7 @@
                     ]
                 }
             },
-            "Morph+Bombs/PBs": {
+            "Can Lay Any Bombs": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -561,76 +564,7 @@
                     ]
                 }
             },
-            "Energy 1": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "ETank",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Reserves",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
-                }
-            },
-            "Energy 2": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "ETank",
-                                "amount": 2,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "ETank",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Reserves",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            "Energy 3": {
+            "Can Lay Power Bombs": {
                 "type": "and",
                 "data": {
                     "comment": null,
@@ -639,130 +573,18 @@
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "ETank",
-                                "amount": 3,
+                                "name": "Morph",
+                                "amount": 1,
                                 "negate": false
                             }
                         },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "ETank",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Reserves",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "ETank",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Reserves",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            "Energy 4": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
                         {
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "ETank",
-                                "amount": 4,
+                                "name": "PowerBomb",
+                                "amount": 1,
                                 "negate": false
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "ETank",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Reserves",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "ETank",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Reserves",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
                             }
                         }
                     ]
