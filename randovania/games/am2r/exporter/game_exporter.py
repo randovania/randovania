@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import multiprocessing
+import subprocess
 from concurrent.futures import ProcessPoolExecutor
 from typing import TYPE_CHECKING
 
@@ -9,11 +10,14 @@ import randovania
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 
 if TYPE_CHECKING:
-
     from multiprocessing.connection import Connection
     from pathlib import Path
 
     from randovania.lib import status_update_lib
+
+
+class DotnetMissingException(Exception):
+    pass
 
 
 @dataclasses.dataclass(frozen=True)
@@ -41,6 +45,14 @@ class AM2RGameExporter(GameExporter):
 
     def _do_export_game(self, patch_data: dict, export_params: AM2RGameExportParams,
                         progress_update: status_update_lib.ProgressUpdateCallable):
+        # Check if dotnet is available
+        dotnet_process = subprocess.run(["dotnet", "--help"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if dotnet_process.returncode != 0:
+            raise DotnetMissingException("You do not have .NET installed!\n"
+                                         "Please ensure that it is installed and located in PATH. It can be installed "
+                                         "from here:\n"
+                                         "https://aka.ms/dotnet/download")
+
         receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 
         def on_done(_):
@@ -79,4 +91,3 @@ def _run_patcher(patch_data: dict, export_params: AM2RGameExportParams, output_p
         patch_data["configuration_identifier"]["randovania_version"] = f"Randovania {randovania.VERSION}"
         patch_data["configuration_identifier"]["patcher_version"] = f"YAMS {wrapper.get_csharp_version()}"
         wrapper.patch_game(export_params.input_path, export_params.output_path, patch_data, status_update)
-

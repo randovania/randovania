@@ -9,13 +9,27 @@ from unittest.mock import ANY, MagicMock
 import am2r_yams.wrapper
 import pytest
 
-from randovania.games.am2r.exporter.game_exporter import AM2RGameExporter, AM2RGameExportParams, _run_patcher
+from randovania.games.am2r.exporter.game_exporter import (
+    AM2RGameExporter,
+    AM2RGameExportParams,
+    DotnetMissingException,
+    _run_patcher,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Callable
     from multiprocessing.connection import Connection
     from pathlib import Path
 
+
+def test_export_game_raises_without_dotnet(mocker):
+    dotnet_process = mocker.patch("subprocess.run")
+    dotnet_process.returncode = 1
+
+    exporter = AM2RGameExporter()
+
+    with pytest.raises(DotnetMissingException):
+        exporter._do_export_game(MagicMock(), MagicMock(), MagicMock())
 
 @pytest.mark.parametrize("patch_data_name", ["starter_preset", "door_lock"])
 def test_do_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
