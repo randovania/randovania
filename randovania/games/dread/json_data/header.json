@@ -1230,6 +1230,10 @@
                 "long_name": "Separate Beam Behaviors",
                 "extra": {}
             },
+            "SeparateMissiles": {
+                "long_name": "Separate Missile Behaviors",
+                "extra": {}
+            },
             "DoorLocks": {
                 "long_name": "Door Lock Randomizer",
                 "extra": {}
@@ -1416,12 +1420,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Ice",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "SeparateMissiles",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
