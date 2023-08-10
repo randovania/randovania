@@ -15,10 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
 - Added: Diagonal Bomb Jump in Burenia - Main Hub Tower Top, to the Missile Tank, using either Gravity Suit or an out of water bomb jump.
+- Added: In Dairon - West Transport to Ferenia, use Wave Beam to push the Wide Beam Block from above, without Wide Beam.
 - Changed: In Dairon - Teleport to Artaria, breaking the speed blocks is no longer "dangerous". This is done by removing the "Before Event" condition on breaking the blocks from above.
 - Changed: In Artaria - Water Reservoir, breaking the blob is no longer "dangerous", as long as Slide is not randomized. This was previously dangerous because there's a connection in EMMI Zone Exit Southwest that makes use of Speed Booster, however, by simply adding a "Can Slide" option on the same condition, the logic now sees the blob as safe.
 - Changed: In Burenia: Fighting Drogyga is now only "dangerous" if Highly Dangerous Logic is enabled. This is achieved by adding a Highly Dangerous Logic constraint on all instances where the logic uses "Before Drogyga" on connections in the Underneath Drogyga room.
 - Changed: in Burenia - Main Hub Tower Middle, lowering the Spider Magnet Wall is now "dangerous" only when Highly Dangerous Logic is enabled. The connection from the bottom of the room to the Pickup Platform that uses Grapple Movement requires the Spider Magnet Wall to not be lowered now requires Highly Dangerous Logic. The randomizer currently doesn't have the necessary options to make this connection mandatory in any seeds anyway. 
+- Fixed: In Burenia - Teleport to Ghavoran, to open the Plasma Beam door from below, add requirement to have Plasma Beam. This becomes relevant with Separate Beam Behavior.
+- Fixed: In Artaria - Teleport to Dairon, to enter the teleport itself using Wave Beam, add requirements to have Wide Beam and Door Lock Rando being disabled. The former becomes relevant with Separate Beam Behavior.
+- Changed: Most instances of pushing Wide Beam Blocks by using Wave Beam through walls now no longer need Wide Beam. Notable exception is Dairon - West Transport to Ferenia, from below.
 
 ### Metroid Prime 2: Echoes
 

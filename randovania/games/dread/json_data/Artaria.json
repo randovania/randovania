@@ -3970,12 +3970,33 @@
                             }
                         },
                         "Door to EMMI Zone Exit North (Upper)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Wide Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLocks",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -21877,25 +21898,8 @@
                             }
                         },
                         "Event - EMMI Wide Beam Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Push Wide Beam Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Push Wide Beam Block with Wave Beam"
                         }
                     }
                 },
