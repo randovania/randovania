@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: In Burenia - Teleport to Ghavoran, to open the Plasma Beam door from below, add requirement to have Plasma Beam. This becomes relevant with Separate Beam Behavior.
 - Fixed: In Artaria - Teleport to Dairon, to enter the teleport itself using Wave Beam, add requirements to have Wide Beam and Door Lock Rando being disabled. The former becomes relevant with Separate Beam Behavior.
 - Changed: Most instances of pushing Wide Beam Blocks by using Wave Beam through walls now no longer need Wide Beam. Notable exception is Dairon - West Transport to Ferenia, from below.
+- Changed: Boss fight logic using Ice Missile without Super Missile is no longer an option, and effectively requires as many missiles as with normal Missiles.
 
 ### Metroid Prime 2: Echoes
 

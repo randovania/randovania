@@ -4163,7 +4163,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Shoot Ice Missile"
+                                                                "data": "Shoot Super Ice Missile"
                                                             },
                                                             {
                                                                 "type": "or",
@@ -4463,7 +4463,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Shoot Ice Missile"
+                                                                "data": "Shoot Super Ice Missile"
                                                             },
                                                             {
                                                                 "type": "or",
@@ -4724,6 +4724,53 @@
                                 "name": "Wave",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Shoot Super Ice Missile": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Shoot Missile"
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "SeparateMissiles",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Supers",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
