@@ -294,8 +294,9 @@ def test_create_base_patches(mocker):
     )
 
 
+    # Docks Assignment
     mock_dock_connections_assignment.assert_called_once_with(factory, layout_configuration, game, rng)
-    # patches[0].assign_node_configuration.assert_called_once_with(mock_gate_assignment_for_configuration.return_value)
+    patches[0].assign_dock_connections.assert_called_once_with(mock_dock_connections_assignment.return_value)
 
     # Gate Assignment
     mock_gate_assignment_for_configuration.assert_called_once_with(factory, layout_configuration, game, rng)
