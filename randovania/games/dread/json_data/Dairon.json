@@ -353,25 +353,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Push Wide Beam Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Push Wide Beam Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Push Wide Beam Block with Wave Beam"
                         },
                         "Wide Beam Block - Adjacent": {
                             "type": "resource",
@@ -1154,19 +1137,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Push Wide Beam Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
@@ -1174,6 +1144,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Push Wide Beam Block with Wave Beam"
                                     }
                                 ]
                             }
@@ -1489,7 +1463,7 @@
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Ferenia",
-                        "area": "East Transport to Darion",
+                        "area": "East Transport to Dairon",
                         "node": "Elevator to Dairon"
                     },
                     "default_dock_weakness": "Elevator",
@@ -8800,6 +8774,10 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Ferenia Transport Wide Beam Block  Above": {
+                            "type": "template",
+                            "data": "Push Wide Beam Block with Wave Beam"
                         }
                     }
                 },
@@ -8862,6 +8840,31 @@
                     "event_name": "DaironWideBeamBlockFerenia",
                     "connections": {
                         "Door to Navigation Station North (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Ferenia Transport Wide Beam Block  Above": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2522.42,
+                        "y": 6899.28,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "DaironWideBeamBlockFerenia",
+                    "connections": {
+                        "Door to Navigation Station North (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,

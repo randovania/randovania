@@ -10,7 +10,6 @@ from typing import TYPE_CHECKING
 import PySide6
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Signal
-from qasync import asyncSlot
 
 import randovania
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
@@ -180,7 +179,6 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
             methods.append("discord")
         return set(methods)
 
-    @asyncSlot()
     async def attempt_join_with_password_check(self, session: MultiplayerSessionListEntry):
         if session.has_password and not session.is_user_in_session:
             password = await TextPromptDialog.prompt(
@@ -192,17 +190,8 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
                 return
         else:
             password = None
-        return await self.attempt_join(session.id, password)
 
-    @asyncSlot()
-    @handle_network_errors
-    async def attempt_join(self, session_id: int, password: str | None):
-        try:
-            joined_session = await self.join_multiplayer_session(session_id, password)
-            return joined_session
-
-        except error.WrongPasswordError:
-            await async_dialog.warning(self, "Incorrect Password", "The password entered was incorrect.")
+        return await self.join_multiplayer_session(session.id, password)
 
     async def ensure_logged_in(self, parent: QtWidgets.QWidget | None):
         if self.connection_state == ConnectionState.Connected:

@@ -63,8 +63,11 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
 
     def _create_room_dict(self):
         return {
-            area.extra["map_name"]: {"display_name": area.name}
-            for area in self.game.region_list.all_areas
+            area.extra["map_name"]: {
+                "display_name": area.name,
+                "region_name": region.name
+            }
+            for region in self.game.region_list.regions for area in region.areas
         }
 
     def _create_starting_items_dict(self):
