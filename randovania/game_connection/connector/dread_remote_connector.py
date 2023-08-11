@@ -174,7 +174,7 @@ class DreadRemoteConnector(RemoteConnector):
 
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
 
-        from open_dread_rando.lua_util import lua_convert
+        from open_dread_rando.misc_patches.lua_util import lua_convert
         progression_as_lua = lua_convert(items_list, True)
         message = format_received_item(item_name, provider_name)
 
@@ -182,7 +182,7 @@ class DreadRemoteConnector(RemoteConnector):
                           len(remote_pickups), num_pickups, message)
 
         main_item_id = items_list[0][0]["item_id"]
-        from open_dread_rando.lua_editor import LuaEditor
+        from open_dread_rando.pickups.lua_editor import LuaEditor
         parent = LuaEditor.get_parent_for(None, main_item_id)
 
         execute_string = "RL.ReceivePickup({},{},{},{},{})".format(
