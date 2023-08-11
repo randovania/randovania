@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- **Major** - Added: Split beams and missiles. When playing with non-progressive beams or missiles, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades.
+- Changed: The Starter Preset and April Fools 2023 preset now have non-progressive beams and missiles, instead of progressive.
+
 #### Logic Database
 
 - Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
@@ -20,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In Dairon - Teleport to Artaria, breaking the speed blocks is no longer "dangerous". This is done by removing the "Before Event" condition on breaking the blocks from above.
 - Changed: In Artaria - Water Reservoir, breaking the blob is no longer "dangerous", as long as Slide is not randomized. This was previously dangerous because there's a connection in EMMI Zone Exit Southwest that makes use of Speed Booster, however, by simply adding a "Can Slide" option on the same condition, the logic now sees the blob as safe.
 - Changed: In Burenia: Fighting Drogyga is now only "dangerous" if Highly Dangerous Logic is enabled. This is achieved by adding a Highly Dangerous Logic constraint on all instances where the logic uses "Before Drogyga" on connections in the Underneath Drogyga room.
-- Changed: in Burenia - Main Hub Tower Middle, lowering the Spider Magnet Wall is now "dangerous" only when Highly Dangerous Logic is enabled. The connection from the bottom of the room to the Pickup Platform that uses Grapple Movement requires the Spider Magnet Wall to not be lowered now requires Highly Dangerous Logic. The randomizer currently doesn't have the necessary options to make this connection mandatory in any seeds anyway. 
+- Changed: in Burenia - Main Hub Tower Middle, lowering the Spider Magnet Wall is now "dangerous" only when Highly Dangerous Logic is enabled. The connection from the bottom of the room to the Pickup Platform that uses Grapple Movement requires the Spider Magnet Wall to not be lowered now requires Highly Dangerous Logic. The randomizer currently doesn't have the necessary options to make this connection mandatory in any seeds anyway.
 - Fixed: A typo in the room name Ferenia - East Transport to Dairon has been changed from East Transport to Darion.
 - Fixed: In Burenia - Teleport to Ghavoran, to open the Plasma Beam door from below, add requirement to have Plasma Beam. This becomes relevant with Separate Beam Behavior.
 - Fixed: In Artaria - Teleport to Dairon, to enter the teleport itself using Wave Beam, add requirements to have Wide Beam and Door Lock Rando being disabled. The former becomes relevant with Separate Beam Behavior.
@@ -34,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.1.1] - 2023-08-07
 
 - Changed: Improve performance significantly when opening a Multiworld session with long history.
-- Changed: Slightly improve performance when opening game details. 
+- Changed: Slightly improve performance when opening game details.
 - Fixed: The correct error is displayed when the incorrect password is provided for Multiworld Sessions.
 
 ### Metroid Dread
@@ -44,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.1.0] - 2023-08-02
 
-- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game. 
+- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game.
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
 - Added: The Generation Order spoiler now has a field to filter it.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
