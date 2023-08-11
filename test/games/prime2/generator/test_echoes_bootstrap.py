@@ -9,11 +9,13 @@ import pytest
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
+    PrimeTrilogyTeleporterConfiguration,
+)
 from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
 from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.generator.pickup_pool import pool_creator
-from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 _GUARDIAN_INDICES = [
     PickupIndex(43),  # Dark Suit
@@ -36,7 +38,7 @@ def test_misc_resources_for_configuration(echoes_resource_database,
                                           vanilla_elevators: bool,
                                           ):
     # Setup
-    elevators = MagicMock(spec=TeleporterConfiguration)
+    elevators = MagicMock(spec=PrimeTrilogyTeleporterConfiguration)
     configuration = dataclasses.replace(default_echoes_configuration,
                                         elevators=elevators)
     elevators.is_vanilla = vanilla_elevators

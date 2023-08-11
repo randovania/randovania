@@ -951,6 +951,22 @@ def _migrate_v60(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v61(preset: dict) -> dict:
+    config = preset["configuration"]
+    game = preset["game"]
+
+    if game in {"dread"}:
+        config["elevators"] = {
+            "mode": "vanilla",
+            "excluded_teleporters": [
+            ],
+            "excluded_targets": [],
+        }
+
+    return preset
+
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1012,6 +1028,7 @@ _MIGRATIONS = [
     _migrate_v58,
     _migrate_v59,
     _migrate_v60,
+    _migrate_v61,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

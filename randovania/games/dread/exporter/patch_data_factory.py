@@ -7,12 +7,14 @@ from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -472,6 +474,14 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         energy_per_tank = self.configuration.energy_per_tank if self.configuration.immediate_energy_parts else 100.0
 
+        elevators =[{
+                    "teleporter": self._teleporter_ref_for(node),
+                    "destination": self._start_point_ref_for(connection),
+                }
+                for node, connection in self.patches.all_dock_connections()
+                if (isinstance(node, DockNode)
+                    and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types)
+        ]
         return {
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
@@ -482,7 +492,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 for pickup_item in pickup_list
                 if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
-            "elevators": [],
+            "elevators": elevators if self.configuration.elevators.mode != TeleporterShuffleMode.VANILLA else [],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler(),

@@ -5,18 +5,21 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
-from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
+from randovania.generator.base_patches_factory import BasePatchesFactory
+from randovania.generator.elevator_distributor import get_dock_connections_for_elevators
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable
     from random import Random
 
     from randovania.game_description.db.dock import DockWeakness
+    from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
+class PrimeBasePatchesFactory(BasePatchesFactory):
     def create_base_patches(self,
                             configuration: BaseConfiguration,
                             rng: Random,
@@ -49,3 +52,8 @@ class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
                             dock_weakness.append((get_node(node.default_connection, DockNode), power_weak))
 
         return parent.assign_dock_weakness(dock_weakness)
+
+    def dock_connections_assignment(self, configuration: PrimeConfiguration,
+                                    game: GameDescription, rng: Random ) -> Iterable[tuple[DockNode, Node]]:
+        dock_assignment = get_dock_connections_for_elevators(configuration, game, rng)
+        yield from dock_assignment
