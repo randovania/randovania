@@ -9,7 +9,6 @@ from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
@@ -181,7 +180,8 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                     # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
                     # on the previous room
                     elif area.name == "Metroid Prime Lair":
-                        result.append(AreaIdentifier.from_string("Impact Crater/Subchamber Five"))
+                        result.append(NodeIdentifier.create("Impact Crater",
+                                                            "Subchamber Five", "Dock to Subchamber Four"))
             return result
         else:
             return []
