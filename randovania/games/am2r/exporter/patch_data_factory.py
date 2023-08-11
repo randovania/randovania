@@ -239,6 +239,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "etank_hud_rotation": c.etank_hud_rotation,
             "dna_hud_rotation": c.dna_hud_rotation,
             "room_names_on_hud": c.show_room_names.value,
+            # TODO: this works as a basic implementation, but in the future, the json file should dictate on
+            # how exactly which song gets replaced with what
+            "music_shuffle": c.music.name,
         }
 
     def _get_item_data(self):
