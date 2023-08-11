@@ -9,11 +9,11 @@ from PySide6 import QtCore
 
 from randovania.game_description import default_database
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.games.common.prime_family.gui.elevators_tab_prime1 import PresetElevatorsPrime1
-from randovania.games.common.prime_family.gui.elevators_tab_prime2 import PresetElevatorsPrime2
-from randovania.games.dread.gui.preset_settings.dread_elevators_tab import PresetElevatorsDread
+from randovania.games.dread.gui.preset_settings.dread_transporters_tab import PresetTransporterDread
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.gui.preset_settings.prime_elevators_tab import PresetElevatorsPrime1
 from randovania.games.prime1.layout import prime_configuration
+from randovania.games.prime2.gui.preset_settings.echoes_elevators_tab import PresetElevatorsPrime2
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList
 
@@ -31,13 +31,13 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
     elif game == RandovaniaGame.METROID_PRIME_ECHOES:
         window = PresetElevatorsPrime2(editor, default_database.game_description_for(preset.game), MagicMock())
     else:
-        window = PresetElevatorsDread(editor, default_database.game_description_for(preset.game), MagicMock())
+        window = PresetTransporterDread(editor, default_database.game_description_for(preset.game), MagicMock())
     # Run
     window.on_preset_changed(editor.create_custom_preset_with())
 
     # Assert
     num_areas = len(TeleporterTargetList.nodes_list(preset.game))
-    assert len(window._elevator_target_for_area) == num_areas
+    assert len(window._teleporters_target_for_area) == num_areas
 
 
 def test_check_credits(skip_qtbot, preset_manager):
@@ -63,6 +63,6 @@ def test_check_credits(skip_qtbot, preset_manager):
 
     # Run
     skip_qtbot.mouseClick(
-        window._elevator_target_for_area[AreaIdentifier("End of Game", "Credits")],
+        window._teleporters_target_for_area[AreaIdentifier("End of Game", "Credits")],
         QtCore.Qt.MouseButton.LeftButton,
     )

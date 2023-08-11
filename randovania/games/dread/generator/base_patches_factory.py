@@ -80,5 +80,5 @@ class DreadBasePatchesFactory(BasePatchesFactory):
 
     def dock_connections_assignment(self, configuration: DreadConfiguration,
                                     game: GameDescription, rng: Random ) -> Iterable[tuple[DockNode, Node]]:
-        dock_assignment = get_dock_connections_for_elevators(configuration, game, rng)
+        dock_assignment = get_dock_connections_for_elevators(configuration.elevators, game, rng)
         yield from dock_assignment
