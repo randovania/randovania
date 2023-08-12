@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import copy
-import dataclasses
-import functools
 import shutil
 from typing import TYPE_CHECKING
 
@@ -12,8 +10,10 @@ from ppc_asm import dol_file
 from retro_data_structures.asset_manager import AssetManager, PathFileProvider
 from retro_data_structures.game_check import Game as RDSGame
 
-from randovania import get_data_path, monitoring
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
+from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
 from randovania.games.prime2.patcher import claris_randomizer
 from randovania.lib import json_lib, status_update_lib
@@ -21,17 +21,6 @@ from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 
 if TYPE_CHECKING:
     from pathlib import Path
-
-
-@dataclasses.dataclass(frozen=True)
-class EchoesGameExportParams(GameExportParams):
-    input_path: Path | None
-    output_path: Path
-    contents_files_path: Path
-    asset_cache_path: Path
-    backup_files_path: Path
-    prime_path: Path | None
-    use_prime_models: bool
 
 
 class EchoesGameExporter(GameExporter):
@@ -188,12 +177,6 @@ class EchoesGameExporter(GameExporter):
             game_files_path=contents_files_path,
             progress_update=nod_update,
         )
-
-
-@functools.lru_cache
-def decode_randomizer_data() -> dict:
-    randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
-    return json_lib.read_path(randomizer_data_path)
 
 
 def copy_coin_chest(contents_path: Path):
