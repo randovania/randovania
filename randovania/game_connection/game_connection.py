@@ -58,7 +58,6 @@ class GameConnection:
         self._timer = InfiniteTimer(self._auto_update, self._dt)
 
     async def start(self) -> None:
-        return
         self._timer.start()
 
     async def stop(self) -> None:

@@ -17,19 +17,20 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
         areas = []
         for area in region.areas:
             nodes = copy.copy(area.nodes)
-            connections = {node: copy.copy(connection) for node, connection in area.connections.items()}
+            raw_connections = {node: copy.copy(connection) for node, connection in area.raw_connections.items()}
             for node in area.nodes:
                 if set(node.layers).isdisjoint(active_layers):
                     nodes.remove(node)
-                    connections.pop(node, None)
-                    for connection in connections.values():
+                    raw_connections.pop(node, None)
+                    for connection in raw_connections.values():
                         connection.pop(node, None)
 
             areas.append(
                 dataclasses.replace(
                     area.duplicate(),
                     nodes=nodes,
-                    connections=connections,
+                    resource_db=area.resource_db,
+                    raw_connections=raw_connections,
                 )
             )
 

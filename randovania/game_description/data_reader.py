@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import copy
 import typing
 from typing import TYPE_CHECKING, TypeVar
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import game_migration
-from randovania.game_description.db import event_pickup
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import (
@@ -404,7 +402,7 @@ class RegionReader:
         nodes = [self.read_node(node_name, item) for node_name, item in data["nodes"].items()]
         nodes_by_name = {node.name: node for node in nodes}
 
-        connections: dict[Node, dict[Node, Requirement]] = {}
+        connections: dict[Node, dict[Node, dict]] = {}
         for origin in nodes:
             origin_data = data["nodes"][origin.name]
             try:
@@ -415,8 +413,8 @@ class RegionReader:
 
             for target_name, target_requirement in origin_data["connections"].items():
                 try:
-                    the_set = read_requirement(target_requirement, self.resource_database)
-                    connections[origin][nodes_by_name[target_name]] = the_set
+                    # the_set = read_requirement(target_requirement, self.resource_database)
+                    connections[origin][nodes_by_name[target_name]] = target_requirement
                 except (MissingResource, KeyError) as e:
                     raise type(e)(f"In area {area_name}, connection from {origin.name} to {target_name} got error: {e}")
 
@@ -427,20 +425,21 @@ class RegionReader:
                 connections[lock_node] = {}
                 self.next_node_index += 1
 
-        for combo in event_pickup.find_nodes_to_combine(nodes, connections):
-            combo_node = event_pickup.EventPickupNode.create_from(self.next_node_index, *combo)
-            nodes.append(combo_node)
-            for existing_connections in connections.values():
-                if combo[0] in existing_connections:
-                    existing_connections[combo_node] = copy.copy(existing_connections[combo[0]])
-            connections[combo_node] = copy.copy(connections[combo[1]])
-            self.next_node_index += 1
+        # for combo in event_pickup.find_nodes_to_combine(nodes, connections):
+        #     combo_node = event_pickup.EventPickupNode.create_from(self.next_node_index, *combo)
+        #     nodes.append(combo_node)
+        #     for existing_connections in connections.values():
+        #         if combo[0] in existing_connections:
+        #             existing_connections[combo_node] = copy.copy(existing_connections[combo[0]])
+        #     connections[combo_node] = copy.copy(connections[combo[1]])
+        #     self.next_node_index += 1
 
         try:
             return Area(
                 name=area_name,
                 nodes=nodes,
-                connections=connections,
+                resource_db=self.resource_database,
+                raw_connections=connections,
                 extra=data["extra"],
                 default_node=data["default_node"],
                 hint_features=frozenset(self.hint_feature_database[feature] for feature in data["hint_features"]),

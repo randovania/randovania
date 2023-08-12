@@ -4,6 +4,7 @@ import copy
 import dataclasses
 import typing
 
+from randovania.game_description import data_reader
 from randovania.game_description.db.pickup_node import PickupNode
 
 if typing.TYPE_CHECKING:
@@ -13,16 +14,22 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
-@dataclasses.dataclass(frozen=True, slots=True)
+@dataclasses.dataclass(frozen=False, slots=True)
 class Area:
     name: str
     nodes: list[Node]
-    connections: dict[Node, dict[Node, Requirement]]
+    resource_db: ResourceDatabase
+    raw_connections: dict[Node, dict[Node, dict]]
     extra: dict[str, typing.Any]
     default_node: str | None = None
     hint_features: frozenset[HintFeature] = frozenset()
+    _actual_connections: dict[Node, dict[Node, Requirement]] = dataclasses.field(
+        init=False,
+        default_factory=dict,
+    )
 
     def __repr__(self) -> str:
         return f"Area[{self.name}]"
@@ -56,11 +63,20 @@ class Area:
         :return: source, target and the requirements for it
         """
         for source in self.nodes:
-            for target, requirements in self.connections[source].items():
+            for target, requirements in self.get_connections_for(source).items():
                 yield source, target, requirements
 
     def get_connections_for(self, node: Node) -> dict[Node, Requirement]:
-        return self.connections.get(node, {})
+        if node not in self.raw_connections:
+            return {}
+
+        if node not in self._actual_connections:
+            self._actual_connections[node] = {
+                target: data_reader.read_requirement(requirements, self.resource_db)
+                for target, requirements in self.raw_connections[node].items()
+            }
+
+        return self._actual_connections[node]
 
     @property
     def pickup_indices(self) -> Iterator[PickupIndex]:
@@ -85,5 +101,5 @@ class Area:
         return dataclasses.replace(
             self,
             nodes=list(self.nodes),
-            connections={node: copy.copy(connection) for node, connection in self.connections.items()},
+            raw_connections={node: copy.copy(connection) for node, connection in self.raw_connections.items()},
         )
