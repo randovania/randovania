@@ -6,10 +6,10 @@ from unittest.mock import ANY, MagicMock
 
 import pytest
 
+from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
+from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.game_exporter import (
     EchoesGameExporter,
-    EchoesGameExportParams,
-    decode_randomizer_data,
 )
 
 if TYPE_CHECKING:
