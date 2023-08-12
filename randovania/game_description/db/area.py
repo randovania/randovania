@@ -71,6 +71,7 @@ class Area:
             return {}
 
         if node not in self._actual_connections:
+            raise RuntimeError("WE'RE TRYING TO BE FAST")
             self._actual_connections[node] = {
                 target: data_reader.read_requirement(requirements, self.resource_db)
                 for target, requirements in self.raw_connections[node].items()
