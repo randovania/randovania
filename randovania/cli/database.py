@@ -270,25 +270,24 @@ def _list_paths_with_resource(
     for area in game.region_list.all_areas:
         area_had_resource = False
 
-        for source, connection in area.connections.items():
-            for target, requirement in connection.items():
-                for individual in requirement.iterate_resource_requirements(context):
-                    if needed_quantity is None or needed_quantity == individual.amount:
-                        area_had_resource = True
-                        if not print_only_area:
-                            print(
-                                "At {}, from {} to {}:\n{}\n".format(
-                                    game.region_list.area_name(area),
-                                    source.name,
-                                    target.name,
-                                    sorted(
-                                        individual
-                                        for individual in requirement.iterate_resource_requirements(context)
-                                        if individual.resource != resource
-                                    ),
-                                )
+        for source, target, requirement in area.all_connections:
+            for individual in requirement.iterate_resource_requirements(context):
+                if needed_quantity is None or needed_quantity == individual.amount:
+                    area_had_resource = True
+                    if not print_only_area:
+                        print(
+                            "At {}, from {} to {}:\n{}\n".format(
+                                game.region_list.area_name(area),
+                                source.name,
+                                target.name,
+                                sorted(
+                                    individual
+                                    for individual in requirement.iterate_resource_requirements(context)
+                                    if individual.resource != resource
+                                ),
                             )
-                        count += 1
+                        )
+                    count += 1
 
         if area_had_resource and print_only_area:
             print(game.region_list.area_name(area))
@@ -309,20 +308,19 @@ def list_paths_with_dangerous_logic(args: Namespace) -> None:
     for area in game.region_list.all_areas:
         area_had_resource = False
 
-        for source, connection in area.connections.items():
-            for target, requirement in connection.items():
-                for individual in requirement.iterate_resource_requirements(context):
-                    if individual.negate:
-                        area_had_resource = True
-                        if not print_only_area:
-                            sorted_resources = sorted(
-                                individual for individual in requirement.iterate_resource_requirements(context)
-                            )
-                            print(
-                                f"At {game.region_list.area_name(area)}, from {area} to {source.name}:\n"
-                                f"{sorted_resources}\n"
-                            )
-                        count += 1
+        for source, target, requirement in area.all_connections:
+            for individual in requirement.iterate_resource_requirements(context):
+                if individual.negate:
+                    area_had_resource = True
+                    if not print_only_area:
+                        sorted_resources = sorted(
+                            individual for individual in requirement.iterate_resource_requirements(context)
+                        )
+                        print(
+                            f"At {game.region_list.area_name(area)}, from {area} to {source.name}:\n"
+                            f"{sorted_resources}\n"
+                        )
+                    count += 1
 
         if area_had_resource and print_only_area:
             print(game.region_list.area_name(area))

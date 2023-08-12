@@ -59,6 +59,9 @@ class Area:
             for target, requirements in self.connections[source].items():
                 yield source, target, requirements
 
+    def get_connections_for(self, node: Node) -> dict[Node, Requirement]:
+        return self.connections.get(node, {})
+
     @property
     def pickup_indices(self) -> Iterator[PickupIndex]:
         for node in self.nodes:

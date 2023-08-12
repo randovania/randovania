@@ -48,22 +48,18 @@ def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
         dot.node(node.name)
 
     known_edges = set()
-    for source, target in area.connections.items():
-        if source.is_derived_node:
+    for source, target, requirement in area.all_connections:
+        if source.is_derived_node or target.is_derived_node:
             continue
 
-        for target_node, requirement in target.items():
-            if target_node.is_derived_node:
-                continue
+        direction = None
+        if source in area.connections.get(target):
+            direction = "both"
+            known_edges.add((target.name, source.name))
 
-            direction = None
-            if source in area.connections.get(target_node):
-                direction = "both"
-                known_edges.add((target_node.name, source.name))
-
-            if (source.name, target_node.name) not in known_edges:
-                dot.edge(source.name, target_node.name, dir=direction)
-                known_edges.add((source.name, target_node.name))
+        if (source.name, target.name) not in known_edges:
+            dot.edge(source.name, target.name, dir=direction)
+            known_edges.add((source.name, target.name))
 
     output_dir = tempfile.mkdtemp()
     try:
@@ -91,7 +87,7 @@ def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
         draw = ImageDraw.Draw(im)
 
         def draw_connections_from(source_node: Node):
-            for target_node, requirement in area.connections[source_node].items():
+            for target_node, requirement in area.get_connections_for(source_node).items():
                 if target_node.is_derived_node:
                     continue
 

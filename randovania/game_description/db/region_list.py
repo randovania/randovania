@@ -204,7 +204,7 @@ class RegionList(NodeProvider):
         # Area Connections
         self._patched_node_connections = {
             node.node_index: {
-                target.node_index: flatten_to_set(value) for target, value in area.connections[node].items()
+                target.node_index: flatten_to_set(value) for target, value in area.get_connections_for(node).items()
             }
             for _, area, node in self.all_regions_areas_nodes
         }

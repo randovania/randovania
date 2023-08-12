@@ -213,7 +213,7 @@ def collect_game_info(game: RandovaniaGame) -> dict[str, dict[str, AreaVideos]]:
             for node in area.nodes:
                 connections = {}
 
-                for target, requirement in area.connections.get(node, {}).items():
+                for target, requirement in area.get_connections_for(node).items():
                     yt_ids = list(get_yt_ids(requirement, 0))
                     if yt_ids:
                         connections[target.name] = yt_ids
