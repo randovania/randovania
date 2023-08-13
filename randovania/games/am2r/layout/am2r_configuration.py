@@ -4,6 +4,7 @@ import dataclasses
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.games.am2r.layout.am2r_teleporters import AM2RTeleporterConfiguration
 from randovania.games.am2r.layout.hint_configuration import HintConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -18,6 +19,7 @@ class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class AM2RConfiguration(BaseConfiguration):
+    elevators: AM2RTeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     softlock_prevention_blocks: bool
     septogg_helpers: bool

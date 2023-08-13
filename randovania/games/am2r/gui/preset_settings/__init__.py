@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+    from randovania.games.am2r.gui.preset_settings.am2r_elevators_tab import PresetElevatorsAM2R
     from randovania.games.am2r.gui.preset_settings.am2r_goal_tab import PresetAM2RGoal
     from randovania.games.am2r.gui.preset_settings.am2r_hints_tab import PresetAM2RHints
     from randovania.games.am2r.gui.preset_settings.am2r_patches_tab import PresetAM2RPatches
@@ -30,6 +31,6 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetPatcherEnergy,
         PresetMetroidStartingArea,
         PresetDockRando,
-        # TODO: add elevator rando. at one point:tm:
+        PresetElevatorsAM2R,
         PresetAM2RPatches
     ]

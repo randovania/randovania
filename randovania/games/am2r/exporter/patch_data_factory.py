@@ -6,10 +6,12 @@ from randovania.exporter import pickup_exporter
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
@@ -273,6 +275,18 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
+        pipes = {
+            node.extra["instance_id"]: {
+                "dest_x": connection.extra["dest_x"],
+                "dest_y": connection.extra["dest_y"],
+                "dest_room":
+                    self.game.region_list.area_by_area_location(connection.identifier.area_identifier).extra["map_name"]
+            }
+            for node, connection in self.patches.all_dock_connections()
+            if (isinstance(node, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types)
+        }
+
         return {
             "configuration_identifier": self._create_hash_dict(),
             "starting_items": self._create_starting_items_dict(),
@@ -280,6 +294,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "pickups": self._create_pickups_dict(pickup_list, item_data, self.rng),
             "rooms": self._create_room_dict(),
             "game_patches": self._create_game_patches(pickup_list, item_data, self.rng),
+            "pipes": pipes if self.configuration.elevators.mode != TeleporterShuffleMode.VANILLA else {},
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics()
