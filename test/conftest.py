@@ -21,7 +21,7 @@ from randovania.games import default_data
 from randovania.games.blank.layout import BlankConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
-from randovania.games.prime2.exporter.game_exporter import decode_randomizer_data
+from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset

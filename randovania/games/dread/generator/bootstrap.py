@@ -37,7 +37,7 @@ def all_dna_locations(game: GameDescription, config: DreadArtifactConfig):
 class DreadBootstrap(MetroidBootstrap):
     def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
                                     resource_database: ResourceDatabase) -> set[str]:
-        enabled_resources = set()
+        enabled_resources = {"SeparateBeams", "SeparateMissiles"}
 
         logical_patches = {
             "allow_highly_dangerous_logic": "HighDanger",

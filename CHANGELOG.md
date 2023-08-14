@@ -7,11 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.2.0] - 2023-09-??
 
+- Changed: The resolver now tries otherwise safe actions behind a point of no return before it tries actions that give dangerous resources. This makes the solve faster by avoiding some cases of backtracking.
+
 ### Metroid Dread
+- Added: Elevator and Shuttle randomizer.
+
+- **Major** - Added: Split beams and missiles. When playing with non-progressive beams or missiles, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades.
+- Changed: The Starter Preset and April Fools 2023 preset now have non-progressive beams and missiles, instead of progressive.
 
 #### Logic Database
 
 - Added: Diagonal Bomb Jump in Ferenia - Speedboost Slopes Maze.
+- Added: Diagonal Bomb Jump in Burenia - Main Hub Tower Top, to the Missile Tank, using either Gravity Suit or an out of water bomb jump.
+- Added: In Dairon - West Transport to Ferenia, use Wave Beam to push the Wide Beam Block from above, without Wide Beam.
+- Added: Logic to handle having Ice Missiles without Super Missile.
+- Added: In Ghavoran - Teleport to Burenia, Cross Bomb Skip using just Morph Ball to get to and from the Pickup. Rated one level higher than the corresponding usage with Flash Shift or Spin Boost.
+- Changed: In Dairon - Teleport to Artaria, breaking the speed blocks is no longer "dangerous". This is done by removing the "Before Event" condition on breaking the blocks from above.
+- Changed: In Artaria - Water Reservoir, breaking the blob is no longer "dangerous", as long as Slide is not randomized. This was previously dangerous because there's a connection in EMMI Zone Exit Southwest that makes use of Speed Booster, however, by simply adding a "Can Slide" option on the same condition, the logic now sees the blob as safe.
+- Changed: In Burenia: Fighting Drogyga is now only "dangerous" if Highly Dangerous Logic is enabled. This is achieved by adding a Highly Dangerous Logic constraint on all instances where the logic uses "Before Drogyga" on connections in the Underneath Drogyga room.
+- Changed: in Burenia - Main Hub Tower Middle, lowering the Spider Magnet Wall is now "dangerous" only when Highly Dangerous Logic is enabled. The connection from the bottom of the room to the Pickup Platform that uses Grapple Movement requires the Spider Magnet Wall to not be lowered now requires Highly Dangerous Logic. The randomizer currently doesn't have the necessary options to make this connection mandatory in any seeds anyway.
+- Fixed: A typo in the room name Ferenia - East Transport to Dairon has been changed from East Transport to Darion.
+- Fixed: In Burenia - Teleport to Ghavoran, to open the Plasma Beam door from below, add requirement to have Plasma Beam. This becomes relevant with Separate Beam Behavior.
+- Fixed: In Artaria - Teleport to Dairon, to enter the teleport itself using Wave Beam, add requirements to have Wide Beam and Door Lock Rando being disabled. The former becomes relevant with Separate Beam Behavior.
+- Changed: Most instances of pushing Wide Beam Blocks by using Wave Beam through walls now no longer need Wide Beam. Notable exception is Dairon - West Transport to Ferenia, from below.
+- Changed: Boss fight logic using Ice Missile without Super Missile is no longer an option, and effectively requires as many missiles as with normal Missiles.
+
+### Metroid Prime
+
+- Fixed: One-way elevator mode not able to generate.
 
 ### Metroid Prime 2: Echoes
 
@@ -26,17 +49,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Workers Path - Screw Attack from Z-Axis (Intermediate) now requires Bomb Space Jump (Intermediate) from Dynamo Works
 - Added: Workers Path - Bomb Jump (Advanced) method added to reach cannon NSJ from landing platform
 
-## [6.1.1] - 2023-08-??
+## [6.1.1] - 2023-08-07
 
-- Nothing.
+
+- Changed: Improve performance significantly when opening a Multiworld session with long history.
+- Changed: Slightly improve performance when opening game details.
+- Fixed: The correct error is displayed when the incorrect password is provided for Multiworld Sessions.
 
 ### Metroid Dread
 
 - Fixed: The progress bar when exporting no longer reaches 100% earlier than intended in some situations.
+- Added: Racetime seeds can now be directly imported into Randovania
 
 ## [6.1.0] - 2023-08-02
 
-- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game. 
+- **Major** - Removed: Starting sessions is no longer necessary and has been removed as an option. It's now always possible to clear a generated game.
 - Added: Importing permalinks and rdvgames in a multiworld session now creates new worlds if missing.
 - Added: The Generation Order spoiler now has a field to filter it.
 - Added: An "Export Game" button has been added to "Session and Connectivity" tab as a shortcut to export any of your worlds.
@@ -133,6 +160,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Metroid Hop to reach Missile from Quarantine Access A
 - Changed: Various Metroid Quarantine A logic adjustments
+- Fixed: NSJ Phazon Processing Center having too few requirements
 
 ### Metroid Prime 2: Echoes
 

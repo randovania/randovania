@@ -146,6 +146,7 @@ async def _inner_advance_depth(state: State,
     major_pickup_actions = []
     lock_actions = []
     dangerous_actions = []
+    point_of_no_return_actions = []
     rest_of_actions = []
 
     for action, energy in reach.possible_actions(state):
@@ -175,7 +176,7 @@ async def _inner_advance_depth(state: State,
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
             else:
-                dangerous_actions.append((action, energy))
+                point_of_no_return_actions.append((action, energy))
                 continue
 
         action_tuple = (action, energy)
@@ -193,6 +194,7 @@ async def _inner_advance_depth(state: State,
         itertools.chain(major_pickup_actions,
                         lock_actions,
                         rest_of_actions,
+                        point_of_no_return_actions,
                         dangerous_actions)
     ))
     debug.log_checking_satisfiable_actions(state, actions)

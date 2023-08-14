@@ -49,7 +49,8 @@ class AM2RBootstrap(MetroidBootstrap):
             "skip_cutscenes": "SkipCutscenes",
             "respawn_bomb_blocks": "RespawnBombBlocks",
             "a3_entrance_blocks": "A3Entrance",
-            "grave_grotto_blocks": "GraveGrottoBlocks"
+            "grave_grotto_blocks": "GraveGrottoBlocks",
+            "supers_on_missile_doors": "SupersOnMissileDoors",
         }
 
         for name, index in logical_patches.items():

@@ -72,7 +72,7 @@ Extra - asset_id: collision_camera_001
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Event - Push Wide Beam Block
-      Wave Beam and Push Wide Beam Block
+      Push Wide Beam Block with Wave Beam
   > Wide Beam Block - Adjacent
       After Dairon - Wide Beam Block Cataris Transport
   > Wide Beam Block - Above
@@ -93,10 +93,10 @@ Extra - asset_id: collision_camera_001
       Any of the following:
           All of the following:
               # Regular speed charge possible with 1.0 second charge time
-              Speed Booster and Speed Booster Upgrade ≥ 2 and Before Dairon - Teleport To Artaria Speed Blocks Destroyed
+              Speed Booster and Speed Booster Upgrade ≥ 2
           All of the following:
               # Short boost speed charge possible with 1.25 second charge time
-              Speed Booster Upgrade and Before Dairon - Teleport To Artaria Speed Blocks Destroyed and Short Boost (Intermediate) and Can Short Boost
+              Speed Booster Upgrade and Short Boost (Intermediate) and Can Short Boost
 
 > Life Recharge; Heals? True
   * Layers: default
@@ -197,7 +197,7 @@ Extra - asset_id: collision_camera_002
   > Tunnel to Big Hub
       Lay Bomb or Lay Power Bomb
   > Event - Push Wide Beam Block
-      Wave Beam and Movement (Beginner) and Push Wide Beam Block
+      Movement (Beginner) and Push Wide Beam Block with Wave Beam
 
 > Dock to EMMI Zone Exit East; Heals? False
   * Layers: default
@@ -250,7 +250,7 @@ Extra - asset_id: collision_camera_003
 
 > Elevator to Ferenia; Heals? False; Default Node
   * Layers: default
-  * Elevator to East Transport to Darion/Elevator to Dairon
+  * Elevator to East Transport to Dairon/Elevator to Dairon
   * Extra - actor_name: elevator_sanctuary_000
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
   * Extra - elevator_component: CElevatorUsableComponent
@@ -1478,6 +1478,8 @@ Extra - asset_id: collision_camera_019
   * Extra - right_shield_def: None
   > Elevator to Ferenia
       Trivial
+  > Event - Ferenia Transport Wide Beam Block  Above
+      Push Wide Beam Block with Wave Beam
 
 > Elevator to Ferenia; Heals? False; Default Node
   * Layers: default
@@ -1495,6 +1497,12 @@ Extra - asset_id: collision_camera_019
   * Layers: default
   * Event Dairon - Wide Beam Block Ferenia Elevator
   > Door to Navigation Station North (Lower)
+      Trivial
+
+> Event - Ferenia Transport Wide Beam Block  Above; Heals? False
+  * Layers: default
+  * Event Dairon - Wide Beam Block Ferenia Elevator
+  > Door to Navigation Station North (Upper)
       Trivial
 
 ----------------
