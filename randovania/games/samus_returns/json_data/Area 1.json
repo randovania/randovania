@@ -3471,8 +3471,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1338.8170351917367,
-                        "y": 1462.1029637501476,
+                        "x": 1338.82,
+                        "y": 1462.1,
                         "z": 0.0
                     },
                     "description": "",
@@ -3481,13 +3481,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Alpha Shaft Right",
                         "node": "Dock to Alpha Shaft Left"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3597,7 +3597,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Bomb Block"
+                                    }
+                                ]
                             }
                         }
                     }
