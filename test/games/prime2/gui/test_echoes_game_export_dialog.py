@@ -9,7 +9,7 @@ from PySide6 import QtCore
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
-from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
+from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.games.prime2.gui.dialog.game_export_dialog import EchoesGameExportDialog
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches

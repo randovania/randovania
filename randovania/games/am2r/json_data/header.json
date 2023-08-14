@@ -864,6 +864,10 @@
             "ScrewBlocks": {
                 "long_name": "Screw Attack Pipe Blocks",
                 "extra": {}
+            },
+            "SupersOnMissileDoors": {
+                "long_name": "Supers On Missile Doors",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -3715,12 +3719,29 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
+                                            "type": "and",
                                             "data": {
-                                                "type": "items",
-                                                "name": "Super Missiles",
-                                                "amount": 1,
-                                                "negate": false
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Super Missiles",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "misc",
+                                                            "name": "SupersOnMissileDoors",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         }
                                     ]
@@ -4018,36 +4039,6 @@
                         },
                         "lock": null
                     },
-                    "Serris Arena Entrance Door": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "A5IceItem",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BossSerris",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "lock": null
-                    },
                     "Charge Beam Door": {
                         "extra": {},
                         "requirement": {
@@ -4233,7 +4224,9 @@
             },
             "teleporter": {
                 "name": "Pipe",
-                "extra": {},
+                "extra": {
+                    "is_teleporter": true
+                },
                 "items": {
                     "Teleporter": {
                         "extra": {},

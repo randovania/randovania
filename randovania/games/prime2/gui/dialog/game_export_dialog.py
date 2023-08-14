@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 from randovania.games.common.prime_family.gui.export_validator import is_prime1_iso_validator, is_prime2_iso_validator
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
-from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
+from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
@@ -161,7 +161,6 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
                 prime_options,
                 input_path=self.prime_file,
             ))
-
 
     # Getters
     @property

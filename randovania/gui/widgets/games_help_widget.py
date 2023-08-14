@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import typing
 
 from PySide6 import QtGui, QtWidgets
@@ -65,10 +66,13 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
     def ensure_current_game_has_widget(self):
         game = self.current_game()
         if game is not None and game not in self._widget_for_game:
+            logging.info("Creating game tab for %s", game.value)
             new_tab = game.gui.game_tab(self._main_window, self._main_window, self._last_options)
+            logging.info("Game tab created")
             self._widget_for_game[game] = new_tab
             self._layout_for_index[self.currentIndex()].addWidget(new_tab)
             new_tab.on_options_changed(self._last_options)
+            logging.info("Game tab updated for options")
 
     def showEvent(self, arg: QtGui.QShowEvent) -> None:
         if self._first_show:
