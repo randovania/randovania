@@ -45,3 +45,7 @@ class ImpossibleForSolver(GenerationFailure):
             return False
 
         return super().__eq__(other)
+
+
+class ResolverTimeoutError(Exception):
+    pass

@@ -18,7 +18,7 @@ from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.resolver import debug, resolver
+from randovania.resolver import debug, exceptions, resolver
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
 if TYPE_CHECKING:
@@ -57,7 +57,7 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
     with debug.with_level(0):
         try:
             return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=1000) is not None
-        except resolver.ResolverTimeout:
+        except exceptions.ResolverTimeoutError:
             return False
 
 
