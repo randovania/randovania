@@ -12,7 +12,6 @@ from randovania.game_description.requirements.requirement_list import Requiremen
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout import filtered_database
-from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 
@@ -140,12 +139,13 @@ async def _inner_advance_depth(state: State,
         reach = ResolverReach.calculate_reach(logic, state)
 
     _check_attempts(max_attempts)
-    debug.log_new_advance(state, reach)
+    logic.log_new_advance(state, reach)
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
     major_pickup_actions = []
     lock_actions = []
     dangerous_actions = []
+    point_of_no_return_actions = []
     rest_of_actions = []
 
     for action, energy in reach.possible_actions(state):
@@ -170,12 +170,12 @@ async def _inner_advance_depth(state: State,
                         state.node,
                         _simplify_additional_requirement_set(additional, state)
                     )
-                    debug.log_rollback(state, True, True, logic.get_additional_requirements(state.node))
+                    logic.log_rollback(state, True, True, logic.get_additional_requirements(state.node))
 
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
             else:
-                dangerous_actions.append((action, energy))
+                point_of_no_return_actions.append((action, energy))
                 continue
 
         action_tuple = (action, energy)
@@ -193,9 +193,10 @@ async def _inner_advance_depth(state: State,
         itertools.chain(major_pickup_actions,
                         lock_actions,
                         rest_of_actions,
+                        point_of_no_return_actions,
                         dangerous_actions)
     ))
-    debug.log_checking_satisfiable_actions(state, actions)
+    logic.log_checking_satisfiable_actions(state, actions)
     has_action = False
     for action, energy in actions:
         new_result = await _inner_advance_depth(
@@ -227,7 +228,7 @@ async def _inner_advance_depth(state: State,
             state
         )
     )
-    debug.log_rollback(state, has_action, False, logic.get_additional_requirements(state.node))
+    logic.log_rollback(state, has_action, False, logic.get_additional_requirements(state.node))
 
     return None, has_action
 
@@ -258,12 +259,12 @@ def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> tu
 
 async def resolve(configuration: BaseConfiguration,
                   patches: GamePatches,
-                  status_update: Callable[[str], None] | None = None
+                  status_update: Callable[[str], None] | None = None,
                   ) -> State | None:
     if status_update is None:
         status_update = _quiet_print
 
     starting_state, logic = setup_resolver(configuration, patches)
-    debug.log_resolve_start()
+    logic.log_resolve_start()
 
     return await advance_depth(starting_state, logic, status_update)

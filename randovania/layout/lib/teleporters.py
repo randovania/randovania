@@ -9,7 +9,6 @@ from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
-from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
@@ -32,12 +31,6 @@ class TeleporterShuffleMode(BitPackEnum, Enum):
     ONE_WAY_ELEVATOR = "one-way-elevator"
     ONE_WAY_ELEVATOR_REPLACEMENT = "one-way-elevator-replacement"
     ONE_WAY_ANYTHING = "one-way-anything"
-
-    def usable_by_game(self, game: RandovaniaGame):
-        if self != TeleporterShuffleMode.ECHOES_SHUFFLED:
-            return True
-        else:
-            return game == RandovaniaGame.METROID_PRIME_ECHOES
 
 
 enum_lib.add_long_name(TeleporterShuffleMode, {
@@ -118,8 +111,6 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
     mode: TeleporterShuffleMode
     excluded_teleporters: TeleporterList
     excluded_targets: TeleporterTargetList
-    skip_final_bosses: bool
-    allow_unvisited_room_names: bool
 
     @property
     def game(self) -> RandovaniaGame:
@@ -130,10 +121,6 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         return self.mode == TeleporterShuffleMode.VANILLA
 
     @property
-    def can_use_unvisited_room_names(self) -> bool:
-        return self.is_vanilla or self.allow_unvisited_room_names
-
-    @property
     def has_shuffled_target(self):
         return self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING
 
@@ -141,23 +128,6 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
     def editable_teleporters(self) -> list[NodeIdentifier]:
         return [teleporter for teleporter in self.excluded_teleporters.nodes_list(self.game)
                 if teleporter not in self.excluded_teleporters.locations]
-
-    @property
-    def static_teleporters(self) -> dict[NodeIdentifier, NodeIdentifier]:
-        static = {}
-        if self.skip_final_bosses:
-            if self.game == RandovaniaGame.METROID_PRIME:
-                crater = NodeIdentifier.create("Tallon Overworld", "Artifact Temple",
-                                               "Teleporter to Impact Crater")
-                static[crater] = NodeIdentifier.create("End of Game", "Credits", "Event - Credits")
-            elif self.game == RandovaniaGame.METROID_PRIME_ECHOES:
-                gateway = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
-                                                "Elevator to Great Temple")
-                static[gateway] = NodeIdentifier.create("Temple Grounds", "Credits", "Event - Dark Samus 3 and 4")
-            else:
-                raise ValueError(f"Unsupported skip_final_bosses and {self.game}")
-
-        return static
 
     @property
     def valid_targets(self) -> list[NodeIdentifier]:
@@ -181,10 +151,15 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                     # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent
                     # on the previous room
                     elif area.name == "Metroid Prime Lair":
-                        result.append(AreaIdentifier.from_string("Impact Crater/Subchamber Five"))
+                        result.append(NodeIdentifier.create("Impact Crater",
+                                                            "Subchamber Five", "Dock to Subchamber Four"))
             return result
         else:
             return []
+
+    @property
+    def static_teleporters(self) -> dict[NodeIdentifier, NodeIdentifier]:
+        return {}
 
     def description(self):
         result = []

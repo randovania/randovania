@@ -12,7 +12,7 @@ Extra - map_name: rm_a1h01
   * Open Passage to Needler Shaft/Dock to Guardian Arena
   > Dock to Mumbo Manor
       Before Area 1 - Golden Temple Visited or After Boss - Guardian Defeated
-  > Dock to Torture Room
+  > Dock to Guardian Storage
       All of the following:
           After Boss - Guardian Defeated
           Any of the following:
@@ -52,9 +52,9 @@ Extra - map_name: rm_a1h01
               # Energy requirements
               Combat (Beginner) or Normal Damage ≥ 130
 
-> Dock to Torture Room; Heals? False
+> Dock to Guardian Storage; Heals? False
   * Layers: default
-  * Open Passage to Torture Room/Dock to Guardian Arena
+  * Open Passage to Guardian Storage/Dock to Guardian Arena
   > Dock to Needler Shaft
       Trivial
 
@@ -93,14 +93,14 @@ Extra - map_name: rm_a1h03
 > Dock to Guardian Arena; Heals? False
   * Layers: default
   * Open Passage to Guardian Arena/Dock to Needler Shaft
-  > Dock to Gawron Tunnel
+  > Dock to Gawron Gangway
       Trivial
   > Dock to Breeding Grounds Save Station
       Trivial
 
-> Dock to Gawron Tunnel; Heals? False
+> Dock to Gawron Gangway; Heals? False
   * Layers: default
-  * Open Passage to Gawron Tunnel/Dock to Needler Shaft
+  * Open Passage to Gawron Gangway/Dock to Needler Shaft
   > Dock to Guardian Arena
       Trivial
 
@@ -111,26 +111,26 @@ Extra - map_name: rm_a1h03
       Trivial
 
 ----------------
-Gawron Tunnel
+Gawron Gangway
 Extra - map_name: rm_a1h04
 > Dock to Needler Shaft; Heals? False
   * Layers: default
-  * Open Passage to Needler Shaft/Dock to Gawron Tunnel
+  * Open Passage to Needler Shaft/Dock to Gawron Gangway
   > Dock to Golden Temple Exterior
       Trivial
 
 > Dock to Golden Temple Exterior; Heals? False
   * Layers: default
-  * Open Passage to Golden Temple Exterior/Dock to Gawron Tunnel
+  * Open Passage to Golden Temple Exterior/Dock to Gawron Gangway
   > Dock to Needler Shaft
       Trivial
 
 ----------------
 Golden Temple Exterior
 Extra - map_name: rm_a1h05
-> Dock to Gawron Tunnel; Heals? False
+> Dock to Gawron Gangway; Heals? False
   * Layers: default
-  * Open Passage to Gawron Tunnel/Dock to Golden Temple Exterior
+  * Open Passage to Gawron Gangway/Dock to Golden Temple Exterior
   > Event - Golden Temple Visited
       Trivial
 
@@ -287,7 +287,7 @@ Extra - map_name: rm_a1h05
 > Event - Golden Temple Visited; Heals? False
   * Layers: default
   * Event Area 1 - Golden Temple Visited
-  > Dock to Gawron Tunnel
+  > Dock to Gawron Gangway
       Trivial
   > Door to Inner Temple Save Station
       Trivial
@@ -362,13 +362,14 @@ Extra - map_name: rm_a1h08
           Any of the following:
               # Get up the shaft
               Space Jump or Spider Ball or Walljump (Intermediate)
+              Hi-Jump Boots and Walljump (Beginner)
 
 ----------------
-Torture Room
+Guardian Storage
 Extra - map_name: rm_a1h09
 > Dock to Guardian Arena; Heals? False
   * Layers: default
-  * Open Passage to Guardian Arena/Dock to Torture Room
+  * Open Passage to Guardian Arena/Dock to Guardian Storage
   > Door to Storage Cavern
       Any of the following:
           All of the following:
@@ -412,7 +413,7 @@ Extra - map_name: rm_a1h09
 
 > Door to Storage Cavern; Heals? False
   * Layers: default
-  * Power Bomb Door to Storage Cavern/Door to Torture Room
+  * Power Bomb Door to Storage Cavern/Door to Guardian Storage
   * Extra - instance_id: 108232
   > Dock to Guardian Arena
       Can Use Any Bombs
@@ -429,9 +430,9 @@ Extra - map_name: rm_a1h09
 ----------------
 Storage Cavern
 Extra - map_name: rm_a1h10
-> Door to Torture Room; Heals? False
+> Door to Guardian Storage; Heals? False
   * Layers: default
-  * Normal Door to Torture Room/Door to Storage Cavern
+  * Normal Door to Guardian Storage/Door to Storage Cavern
   * Extra - instance_id: 108256
   > Pickup (Power Bomb Tank)
       Trivial
@@ -440,7 +441,7 @@ Extra - map_name: rm_a1h10
   * Layers: default
   * Pickup 112; Category? Minor
   * Extra - object_name: oItemPB_112
-  > Door to Torture Room
+  > Door to Guardian Storage
       Trivial
 
 ----------------
@@ -685,7 +686,9 @@ Extra - map_name: rm_a1a07
   * Layers: default
   * Open Passage to Inner Temple East Hall/Dock to 1-Orb Hallway
   > Middle
-      Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
+      All of the following:
+          Can Use Any Bombs
+          Mid-Air Morph (Beginner) or Tunnel Climb
   > Pickup (Energy Tank)
       After Area 1 - Golden Temple 1 Orb Puzzle
 
@@ -847,6 +850,9 @@ Extra - map_name: rm_a1a11
 > Pipe to Distribution Center; Heals? False
   * Layers: default
   * Teleporter to Pipe Hub/Pipe to Golden Temple
+  * Extra - instance_id: 108742
+  * Extra - dest_x: 152
+  * Extra - dest_y: 128
   > Dock to Inner Temple East Hall
       Morph Ball
 
@@ -862,7 +868,8 @@ Extra - map_name: rm_a1a12
           Screw Attack and Speed Booster and Super Missiles and Shinesparking Tricks (Advanced) and Can Use Any Bombs and Can Use Spring Ball
           Any of the following:
               # Necessary to get out of mini-hole in case one failed
-              Space Jump or Walljump (Advanced)
+              Space Jump or Movement (Advanced) or Walljump (Advanced) or Can Use Spider Ball
+              Hi-Jump Boots and Walljump (Intermediate)
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -884,14 +891,18 @@ Extra - map_name: rm_a1b01
   * Layers: default
   * Open Passage to Breeding Grounds Hub/Dock to Breeding Grounds Entrance
   > Past Bombs
-      Low Mid-Air Morph Tunnel Climb
+      All of the following:
+          Morph Ball
+          Mid-Air Morph (Beginner) or Tunnel Climb
 
 > Past Bombs; Heals? False
   * Layers: default
   > Dock to Breeding Grounds Save Station
       Can Use Any Bombs
   > Dock to Breeding Grounds Hub
-      Low Mid-Air Morph Tunnel Climb
+      All of the following:
+          Morph Ball
+          Mid-Air Morph (Beginner) or Tunnel Climb
 
 ----------------
 Breeding Grounds Hub

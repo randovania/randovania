@@ -4,14 +4,15 @@ import dataclasses
 import random
 
 from randovania.games.prime2.generator.base_patches_factory import EchoesBasePatchesFactory
+from randovania.generator.elevator_distributor import elevator_echoes_shuffled
 
 
-def test_elevator_echoes_shuffled(echoes_game_patches, default_echoes_configuration):
-    factory = EchoesBasePatchesFactory()
+def test_elevator_echoes_shuffled(echoes_game_patches):
+    EchoesBasePatchesFactory()
     rng = random.Random(1000)
 
     # Run
-    result = factory.elevator_echoes_shuffled(default_echoes_configuration, echoes_game_patches, rng)
+    result = elevator_echoes_shuffled(echoes_game_patches.game, rng)
 
     # Assert
     simpler = {

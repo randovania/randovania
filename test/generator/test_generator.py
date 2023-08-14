@@ -48,7 +48,7 @@ async def test_create_patches(mock_distribute_remaining_items: MagicMock,
     # Assert
     generator_parameters.create_rng.assert_called_once_with()
     mock_create_player_pool.assert_has_calls([
-        call(rng, presets[i].configuration, i, num_players)
+        call(rng, presets[i].configuration, i, num_players, status_update)
         for i in range(num_players)
     ])
     mock_validate_item_pool_size.assert_has_calls([

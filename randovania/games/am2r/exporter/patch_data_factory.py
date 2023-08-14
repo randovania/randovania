@@ -63,8 +63,11 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
 
     def _create_room_dict(self):
         return {
-            area.extra["map_name"]: {"display_name": area.name}
-            for area in self.game.region_list.all_areas
+            area.extra["map_name"]: {
+                "display_name": area.name,
+                "region_name": region.name
+            }
+            for region in self.game.region_list.regions for area in region.areas
         }
 
     def _create_starting_items_dict(self):
@@ -91,9 +94,11 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "septogg_helpers": self.patches.configuration.septogg_helpers,
             "respawn_bomb_blocks": self.patches.configuration.respawn_bomb_blocks,
             "skip_cutscenes": self.patches.configuration.skip_cutscenes,
+            "skip_item_cutscenes": self.patches.configuration.skip_item_cutscenes,
             "energy_per_tank": self.patches.configuration.energy_per_tank,
             "grave_grotto_blocks": self.patches.configuration.grave_grotto_blocks,
             "fusion_mode": self.patches.configuration.fusion_mode,
+            "supers_on_missile_doors": self.patches.configuration.supers_on_missile_doors,
             "nest_pipes": self.patches.configuration.nest_pipes,
             "softlock_prevention_blocks": self.patches.configuration.softlock_prevention_blocks,
             "a3_entrance_blocks": self.patches.configuration.a3_entrance_blocks,

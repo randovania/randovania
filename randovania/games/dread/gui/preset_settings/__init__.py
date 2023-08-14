@@ -8,6 +8,7 @@ if TYPE_CHECKING:
 
 
 def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+    from randovania.games.dread.gui.preset_settings.dread_elevators_tab import PresetElevatorsDread
     from randovania.games.dread.gui.preset_settings.dread_energy_tab import PresetDreadEnergy
     from randovania.games.dread.gui.preset_settings.dread_generation_tab import PresetDreadGeneration
     from randovania.games.dread.gui.preset_settings.dread_goal_tab import PresetDreadGoal
@@ -20,6 +21,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
     return [
         PresetTrickLevel,
+        PresetElevatorsDread,
         PresetMetroidStartingArea,
         PresetDockRando,
         PresetDreadGeneration,

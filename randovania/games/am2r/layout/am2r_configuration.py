@@ -22,11 +22,13 @@ class AM2RConfiguration(BaseConfiguration):
     softlock_prevention_blocks: bool
     septogg_helpers: bool
     skip_cutscenes: bool
+    skip_item_cutscenes: bool
     respawn_bomb_blocks: bool
     screw_blocks: bool
     artifacts: AM2RArtifactConfig
     hints: HintConfiguration
     fusion_mode: bool
+    supers_on_missile_doors: bool
     grave_grotto_blocks: bool
     nest_pipes: bool
     a3_entrance_blocks: bool
@@ -38,7 +40,7 @@ class AM2RConfiguration(BaseConfiguration):
     def active_layers(self) -> set[str]:
         result = super().active_layers()
 
-        #if self.include_extra_pickups:
-        #    result.add("extra_pickups")
+        if self.nest_pipes:
+            result.add("new-pipes")
 
         return result

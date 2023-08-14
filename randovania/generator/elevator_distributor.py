@@ -4,7 +4,10 @@ import copy
 from collections import defaultdict
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
+from randovania.generator.base_patches_factory import MissingRng
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 if TYPE_CHECKING:
     from random import Random
@@ -12,8 +15,11 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import ElevatorConnection
-
+    from randovania.games.dread.layout.dread_configuration import DreadConfiguration
+    from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
+    from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 
 class ElevatorHelper:
     teleporter: NodeIdentifier
@@ -157,3 +163,86 @@ def create_elevator_database(region_list: RegionList,
         for helper in all_helpers
         if helper.teleporter in all_teleporters
     )
+
+# TODO: Move to different file?
+
+def get_dock_connections_for_elevators(configuration: PrimeConfiguration | EchoesConfiguration | DreadConfiguration,
+                                       game: GameDescription, rng: Random
+                                        ):
+        elevators = configuration.elevators
+
+        region_list = game.region_list
+        elevator_connection: ElevatorConnection = {}
+
+        if not elevators.is_vanilla:
+            if rng is None:
+                raise MissingRng("Elevator")
+
+            elevator_dock_types = game.dock_weakness_database.all_teleporter_dock_types
+            elevator_db = create_elevator_database(region_list, elevators.editable_teleporters,
+                                                                        elevator_dock_types)
+            if elevators.mode == TeleporterShuffleMode.ECHOES_SHUFFLED:
+                connections = elevator_echoes_shuffled(game, rng)
+
+            elif elevators.mode in {TeleporterShuffleMode.TWO_WAY_RANDOMIZED, TeleporterShuffleMode.TWO_WAY_UNCHECKED}:
+                connections = two_way_elevator_connections(
+                    rng=rng,
+                    elevator_database=elevator_db,
+                    between_areas=elevators.mode == TeleporterShuffleMode.TWO_WAY_RANDOMIZED
+                )
+            else:
+                connections = one_way_elevator_connections(
+                    rng=rng,
+                    elevator_database=elevator_db,
+                    target_locations=elevators.valid_targets,
+                    replacement=elevators.mode != TeleporterShuffleMode.ONE_WAY_ELEVATOR,
+                )
+
+            elevator_connection.update(connections)
+
+        for teleporter, destination in elevators.static_teleporters.items():
+            elevator_connection[teleporter] = destination
+
+        assignment = [
+            (region_list.typed_node_by_identifier(identifier, DockNode), region_list.node_by_identifier(target))
+            for identifier, target in elevator_connection.items()
+        ]
+
+        return assignment
+
+def elevator_echoes_shuffled(game_description: GameDescription, rng: Random) -> ElevatorConnection:
+        from randovania.games.prime2.generator.base_patches_factory import WORLDS
+        worlds = list(WORLDS)
+        rng.shuffle(worlds)
+
+        result = {}
+
+        def area_to_node(identifier: AreaIdentifier):
+            area = game_description.region_list.area_by_area_location(identifier)
+            for node in area.actual_nodes:
+                if node.valid_starting_location:
+                    return node.identifier
+            raise KeyError(f"{identifier} has no valid starting location")
+
+        def link_to(source: AreaIdentifier, target: AreaIdentifier):
+            result[area_to_node(source)] = area_to_node(target)
+            result[area_to_node(target)] = area_to_node(source)
+
+        def tg_link_to(source: str, target: AreaIdentifier):
+            link_to(AreaIdentifier("Temple Grounds", source), target)
+
+        # TG -> GT
+        tg_link_to("Temple Transport A", worlds[0].front)
+        tg_link_to("Temple Transport B", worlds[0].left)
+        tg_link_to("Temple Transport C", worlds[0].right)
+
+        tg_link_to("Transport to Agon Wastes", worlds[1].front)
+        tg_link_to("Transport to Torvus Bog", worlds[2].front)
+        tg_link_to("Transport to Sanctuary Fortress", worlds[3].front)
+
+        # inter areas
+        link_to(worlds[1].right, worlds[2].left)
+        link_to(worlds[2].right, worlds[3].left)
+        link_to(worlds[3].right, worlds[1].left)
+
+        return result

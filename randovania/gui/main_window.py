@@ -322,10 +322,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self._set_main_tab_visible(self.tab_game_list, False)
 
     def _select_game(self, game: RandovaniaGame):
+        # Set the game we want first, so we don't waste CPU creating wrong widgets
+        self.tab_game_details.set_current_game(game)
+
         # Make sure the target tab is visible, but don't use set_games_selector_visible to avoid hiding the current tab
         self.set_games_selector_visible(False)
         self._set_main_tab(self.tab_game_details)
-        self.tab_game_details.set_current_game(game)
+
 
     # Delayed Initialization
     @asyncSlot()

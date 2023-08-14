@@ -9,8 +9,9 @@ from PySide6.QtWidgets import QDialog, QDialogButtonBox, QPushButton, QTableWidg
 from qasync import asyncSlot
 
 from randovania.gui.generated.multiplayer_session_browser_dialog_ui import Ui_MultiplayerSessionBrowserDialog
-from randovania.gui.lib import common_qt_lib, model_lib
+from randovania.gui.lib import async_dialog, common_qt_lib, model_lib
 from randovania.gui.lib.qt_network_client import QtNetworkClient, handle_network_errors
+from randovania.network_common import error
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
@@ -31,7 +32,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
 
         self.item_model = QtGui.QStandardItemModel(0, 8, self)
         self.item_model.setHorizontalHeaderLabels(["Name", "Is Member?", "Join Date", "Players", "Worlds",
-                                                   "Password?", "Creator","Creation Date"])
+                                                   "Password?", "Creator", "Creation Date"])
 
         self.table_widget.setModel(self.item_model)
         self.table_widget.sortByColumn(8, QtCore.Qt.SortOrder.DescendingOrder)
@@ -98,13 +99,20 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
         await self._attempt_join()
 
     @asyncSlot()
+    @handle_network_errors
     async def _attempt_join(self):
         if not self.visible_sessions:
             return
 
         session = self.selected_session
 
-        self.joined_session = await self.network_client.attempt_join_with_password_check(session)
+        try:
+            self.joined_session = await self.network_client.attempt_join_with_password_check(session)
+
+        except error.WrongPasswordError:
+            return await async_dialog.warning(self, "Incorrect Password",
+                                              "The password entered was incorrect.")
+
         if self.joined_session is not None:
             return self.accept()
 
@@ -127,7 +135,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
 
         displayed_visibilities = set()
         for (check, visibility) in ((self.state_visibile_check, MultiplayerSessionVisibility.VISIBLE),
-                               (self.state_hidden_check, MultiplayerSessionVisibility.HIDDEN)):
+                                    (self.state_hidden_check, MultiplayerSessionVisibility.HIDDEN)):
             if check.isChecked():
                 displayed_visibilities.add(visibility)
 

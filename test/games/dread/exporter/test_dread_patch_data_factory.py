@@ -36,6 +36,7 @@ if TYPE_CHECKING:
         ("crazy_settings.rdvgame", "crazy_settings.json", 1),                             # crazy settings
         ("dread_dread_multiworld.rdvgame", "dread_dread_multiworld_expected.json", 2),    # dread-dread multi
         ("dread_prime1_multiworld.rdvgame", "dread_prime1_multiworld_expected.json", 2),  # dread-prime1 multi
+        ("elevator_rando.rdvgame", "elevator_rando.json", 1),                             # elevator_rando multi
     ]
 )
 def test_create_patch_data(test_files_dir, rdvgame_filename,

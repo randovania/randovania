@@ -55,6 +55,56 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+class HistoryItemModel(QtCore.QAbstractTableModel):
+    actions: MultiplayerSessionActions
+
+    def __init__(self, parent: MultiplayerSessionWindow, actions: MultiplayerSessionActions):
+        super().__init__(parent)
+        self.session_window = parent
+        self.actions = actions
+
+    def headerData(self, section: int, orientation: QtCore.Qt.Orientation, role: int = ...):
+        if role != QtCore.Qt.ItemDataRole.DisplayRole:
+            return None
+
+        if orientation == QtCore.Qt.Orientation.Horizontal:
+            return ["Provider", "Receiver", "Pickup", "Location", "Time"][section]
+        else:
+            return section
+
+    def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
+        return len(self.actions.actions)
+
+    def columnCount(self, parent: QtCore.QModelIndex = ...) -> int:
+        return 5
+
+    def data(self, index: QtCore.QModelIndex, role: int = ...):
+        if role != QtCore.Qt.ItemDataRole.DisplayRole:
+            return None
+
+        action = self.actions.actions[index.row()]
+
+        column = index.column()
+
+        if column == 2:
+            return action.pickup
+        elif column == 4:
+            return QtCore.QDateTime.fromSecsSinceEpoch(int(action.time.timestamp()))
+
+        provider_name, receiver_name, location_name = self.session_window._describe_action(action)
+        if column == 0:
+            return provider_name
+        elif column == 1:
+            return receiver_name
+        else:
+            return location_name
+
+    def set_actions(self, actions: MultiplayerSessionActions):
+        self.beginResetModel()
+        self.actions = actions
+        self.endResetModel()
+
+
 class HistoryFilterModel(QtCore.QSortFilterProxyModel):
     def __init__(self, parent: MultiplayerSessionWindow):
         super().__init__(parent)
@@ -102,6 +152,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     _old_session: MultiplayerSessionEntry | None = None
     _session: MultiplayerSessionEntry
     _last_actions: MultiplayerSessionActions
+    _pending_actions: MultiplayerSessionActions | None = None
     has_closed = False
     _logic_settings_window: CustomizePresetDialog | None = None
     _generating_game: bool = False
@@ -146,8 +197,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.tab_audit.setModel(self.audit_item_model)
         self.tab_audit.sortByColumn(2, QtCore.Qt.SortOrder.AscendingOrder)
 
-        self.history_item_model = QtGui.QStandardItemModel(0, 5, self)
-        self.history_item_model.setHorizontalHeaderLabels(["Provider", "Receiver", "Pickup", "Location", "Time"])
+        self.history_item_model = HistoryItemModel(self, self._last_actions)
+        # self.history_item_model.setHorizontalHeaderLabels(["Provider", "Receiver", "Pickup", "Location", "Time"])
         self.history_item_proxy = HistoryFilterModel(self)
         self.history_item_proxy.setSourceModel(self.history_item_model)
         self.history_view.setModel(self.history_item_proxy)
@@ -419,24 +470,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         if actions == self._last_actions:
             return
 
+        self._pending_actions = actions
+
         scrollbar = self.history_view.verticalScrollBar()
         autoscroll = scrollbar.value() == scrollbar.maximum()
-        self.history_item_model.setRowCount(len(actions.actions))
 
-        enumerated_actions = list(enumerate(actions.actions))
-
-        # If the new actions
-        last_index = len(self._last_actions.actions)
-        if self._last_actions.actions == actions.actions[:last_index]:
-            enumerated_actions = enumerated_actions[last_index:]
-
-        for i, action in enumerated_actions:
-            provider_name, receiver_name, location_name = self._describe_action(action)
-            self.history_item_model.setItem(i, 0, QtGui.QStandardItem(provider_name))
-            self.history_item_model.setItem(i, 1, QtGui.QStandardItem(receiver_name))
-            self.history_item_model.setItem(i, 2, QtGui.QStandardItem(action.pickup))
-            self.history_item_model.setItem(i, 3, QtGui.QStandardItem(location_name))
-            self.history_item_model.setItem(i, 4, model_lib.create_date_item(action.time))
+        self.history_item_model.set_actions(actions)
 
         self._last_actions = actions
         if autoscroll:
@@ -551,9 +590,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             icon = QtWidgets.QMessageBox.Icon.Warning
 
         if await async_dialog.yes_no_prompt(
-            self, "Clear generated game?",
-            f"Clearing the generated game will allow presets to be customized again, but {warning}",
-            icon=icon,
+                self, "Clear generated game?",
+                f"Clearing the generated game will allow presets to be customized again, but {warning}",
+                icon=icon,
         ):
             await self.game_session_api.clear_generated_game()
 
