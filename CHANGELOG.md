@@ -23,8 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Sanctuary Fortress
 
-- Added: Workers Path - Screw Attack from Z-Axis now requires BSJ from Dynamo Works
-- Added: Workers Path - Bomb Jump method added to reach cannon NSJ from landing platform
+- Added: Workers Path - Screw Attack from Z-Axis (Intermediate) now requires Bomb Space Jump (Intermediate) from Dynamo Works
+- Added: Workers Path - Bomb Jump (Advanced) method added to reach cannon NSJ from landing platform
 
 ## [6.1.1] - 2023-08-??
 
