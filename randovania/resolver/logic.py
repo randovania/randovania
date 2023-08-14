@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.resolver import debug
+from randovania.resolver.exceptions import ResolverTimeoutError
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
@@ -25,6 +26,7 @@ class Logic:
     game: GameDescription
     configuration: BaseConfiguration
     additional_requirements: list[RequirementSet]
+    _attempts: int
     _current_indent: int = 0
     _last_printed_additional: dict[Node, RequirementSet]
 
@@ -46,12 +48,21 @@ class Logic:
     def _indent(self, offset=0):
         return " " * (self._current_indent - offset)
 
-    def log_resolve_start(self):
+    def get_attempts(self) -> int:
+        return self._attempts
+
+    def resolver_start(self):
+        self._attempts = 0
         self._current_indent = 0
         self._last_printed_additional = {}
 
-    def log_new_advance(self, state: State, reach: ResolverReach):
+    def start_new_attempt(self, state: State, reach: ResolverReach, max_attempts: int | None):
+        if max_attempts is not None and self._attempts >= max_attempts:
+            raise ResolverTimeoutError(f"Timed out after {max_attempts} attempts")
+
+        self._attempts += 1
         self._current_indent += 1
+
         if debug.debug_level() > 0:
             region_list = state.region_list
 
