@@ -358,9 +358,10 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
 
 
     @pytest.fixture()
-    def event_loop(qapp, request: pytest.FixtureRequest):
+    def event_loop(request: pytest.FixtureRequest):
         if "skip_qtbot" in request.fixturenames:
-            loop = EventLoopWithRunningFlag(qapp, set_running_loop=False)
+            loop = EventLoopWithRunningFlag(request.getfixturevalue("qapp"),
+                                            set_running_loop=False)
         else:
             loop = asyncio.get_event_loop_policy().new_event_loop()
         yield loop
