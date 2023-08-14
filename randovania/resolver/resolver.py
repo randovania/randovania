@@ -211,6 +211,7 @@ async def _inner_advance_depth(state: State,
 
 async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None],
                         max_attempts: int | None = None) -> State | None:
+    logic.log_resolve_start()
     return (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
 
 
@@ -239,6 +240,4 @@ async def resolve(configuration: BaseConfiguration,
         status_update = _quiet_print
 
     starting_state, logic = setup_resolver(configuration, patches)
-    logic.log_resolve_start()
-
     return await advance_depth(starting_state, logic, status_update)

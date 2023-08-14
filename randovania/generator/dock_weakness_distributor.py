@@ -216,8 +216,6 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
 
 
 async def _run_resolver(state: State, logic: Logic, max_attempts: int):
-    logic.log_resolve_start()
-
     with debug.with_level(0):
         return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=max_attempts)
 
