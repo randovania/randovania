@@ -51,12 +51,12 @@ class Logic:
     def get_attempts(self) -> int:
         return self._attempts
 
-    def log_resolve_start(self):
+    def resolver_start(self):
         self._attempts = 0
         self._current_indent = 0
         self._last_printed_additional = {}
 
-    def log_new_advance(self, state: State, reach: ResolverReach, max_attempts: int | None):
+    def start_new_attempt(self, state: State, reach: ResolverReach, max_attempts: int | None):
         if max_attempts is not None and self._attempts >= max_attempts:
             raise ResolverTimeoutError(f"Timed out after {max_attempts} attempts")
 

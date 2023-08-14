@@ -115,7 +115,7 @@ async def _inner_advance_depth(state: State,
     if reach is None:
         reach = ResolverReach.calculate_reach(logic, state)
 
-    logic.log_new_advance(state, reach, max_attempts)
+    logic.start_new_attempt(state, reach, max_attempts)
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
     major_pickup_actions = []
@@ -211,7 +211,7 @@ async def _inner_advance_depth(state: State,
 
 async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None],
                         max_attempts: int | None = None) -> State | None:
-    logic.log_resolve_start()
+    logic.resolver_start()
     return (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
 
 
