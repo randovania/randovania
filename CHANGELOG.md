@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Dairon - West Transport to Ferenia, use Wave Beam to push the Wide Beam Block from above, without Wide Beam.
 - Added: Logic to handle having Ice Missiles without Super Missile.
 - Added: In Ghavoran - Teleport to Burenia, Cross Bomb Skip using just Morph Ball to get to and from the Pickup. Rated one level higher than the corresponding usage with Flash Shift or Spin Boost.
-- Added: Ledge Warp usage to flip the spinner in Ghavoran to get to Elun, and in Elun to release the X.
+- Added: Ledge Warp usage to flip the spinner in Ghavoran next the Transport to Elun, and in Elun to release the X.
 - Changed: In Dairon - Teleport to Artaria, breaking the speed blocks is no longer "dangerous". This is done by removing the "Before Event" condition on breaking the blocks from above.
 - Changed: In Artaria - Water Reservoir, breaking the blob is no longer "dangerous", as long as Slide is not randomized. This was previously dangerous because there's a connection in EMMI Zone Exit Southwest that makes use of Speed Booster, however, by simply adding a "Can Slide" option on the same condition, the logic now sees the blob as safe.
 - Changed: In Burenia: Fighting Drogyga is now only "dangerous" if Highly Dangerous Logic is enabled. This is achieved by adding a Highly Dangerous Logic constraint on all instances where the logic uses "Before Drogyga" on connections in the Underneath Drogyga room.
