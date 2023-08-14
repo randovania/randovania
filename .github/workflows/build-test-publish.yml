@@ -101,7 +101,7 @@ jobs:
         run: $PREFIX python -m pytest --cov randovania --cov-report=xml --skip-resolver-tests -n auto --durations=100
         shell: bash
         env:
-          QT_QPA_PLATFORM: xcb
+          QT_QPA_PLATFORM: "${{ matrix.os == 'ubuntu-latest' && 'xcb' || '' }}"
           PREFIX: "${{ matrix.os == 'ubuntu-latest' && 'xvfb-run' || '' }}"
         if: ${{ !matrix.executable && matrix.name != 'Resolver' }}
 
