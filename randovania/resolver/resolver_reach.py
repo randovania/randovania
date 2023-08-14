@@ -10,7 +10,6 @@ from randovania.game_description.game_description import calculate_interesting_r
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.resources import fast_as_set
-from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
@@ -171,8 +170,7 @@ class ResolverReach:
             if additional_requirements.satisfied(state.resources, energy, state.resource_database):
                 yield node, energy
             else:
-                debug.log_skip_action_missing_requirement(node, self._logic.game,
-                                                          self._logic.get_additional_requirements(node))
+                self._logic.log_skip_action_missing_requirement(node, self._logic.game)
 
     def satisfiable_actions(self,
                             state: State,
