@@ -258,10 +258,10 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
                              (db.energy_tank, db.energy_tank.max_capacity),
                              *item_percentage_resource,
                          ))
-    inventory = {
+    inventory = Inventory({
         connector.multiworld_magic_item: InventoryItem(0, 0),
         db.energy_tank: InventoryItem(1, 1),
-    }
+    })
 
     # Run
     patches, message = await connector._patches_for_pickup("Someone", pickup, inventory)
@@ -337,9 +337,9 @@ async def test_receive_required_missile_launcher(connector: EchoesRemoteConnecto
     connector.execute_remote_patches = AsyncMock()
     permanent_pickups = (("Received Missile Launcher from Someone Else", pickup),)
 
-    inventory = {
+    inventory = Inventory({
         connector.multiworld_magic_item: InventoryItem(0, 0),
-    }
+    })
 
     # Run
     await connector.receive_remote_pickups(
