@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import NamedTuple
 
 from frozendict import frozendict
 
@@ -19,11 +18,3 @@ class ItemResourceInfo:
 
     def __str__(self):
         return self.long_name
-
-
-class InventoryItem(NamedTuple):
-    amount: int
-    capacity: int
-
-
-Inventory = dict[ItemResourceInfo, InventoryItem]

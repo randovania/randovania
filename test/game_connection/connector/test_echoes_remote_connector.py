@@ -13,7 +13,7 @@ from retro_data_structures.game_check import Game as RDSGame
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException
-from randovania.game_description.resources.item_resource_info import InventoryItem
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool import pickup_creator
@@ -89,10 +89,10 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
     inventory = await connector.get_inventory()
 
     # Assert
-    assert inventory == {
+    assert inventory == Inventory({
         item: InventoryItem(_override.get(item.short_name, item.max_capacity), item.max_capacity)
         for item in connector.game.resource_database.item
-    }
+    })
 
 
 async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from randovania.game_description.resources.item_resource_info import InventoryItem
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 
 
@@ -41,10 +41,10 @@ def item_tracker_widget(skip_qtbot):
 def test_update_state(widget: ItemTrackerWidget, echoes_resource_database):
     # Setup
     items = echoes_resource_database.item
-    inventory = {
+    inventory = Inventory({
         items[i]: InventoryItem(i % 3, i % 3)
         for i in range(len(items))
-    }
+    })
 
     # Run
     widget.update_state(inventory)
