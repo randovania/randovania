@@ -178,7 +178,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 False  # TODO: set this to true, when patcher supports setting colors!
             )
             ice_hint = {
-                "chozo_labs": ice_hint[ice]
+                "chozo_labs": ice_hint[ice[0]]
             }
         else:
             ice_hint = {
@@ -188,10 +188,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
 
         hints = septogg_hints | ice_hint
 
-        return {
-            key.long_name: value
-            for key, value in hints.items()
-        }
+        return hints
 
     def _create_cosmetics(self):
         c = self.cosmetic_patches
