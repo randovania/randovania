@@ -32,7 +32,7 @@ from randovania.game_description.requirements.requirement_or import RequirementO
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
-from randovania.game_description.resources.damage_resource_info import DamageReduction
+from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -105,8 +105,7 @@ def read_damage_reductions(data: list[dict], items: list[ItemResourceInfo]) -> t
 def read_resource_reductions_dict(data: list[dict], db: ResourceDatabase,
                                   ) -> dict[SimpleResourceInfo, list[DamageReduction]]:
     return {
-        db.get_by_type_and_index(ResourceType.DAMAGE, item["name"]): read_damage_reductions(item["reductions"],
-                                                                                            db.item)
+        db.get_damage(item["name"]): list(read_damage_reductions(item["reductions"], db.item))
         for item in data
     }
 
@@ -347,7 +346,7 @@ class RegionReader:
             elif node_type == "event":
                 return EventNode(
                     **generic_args,
-                    event=self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_name"])
+                    event=self.resource_database.get_event(data["event_name"])
                 )
 
             elif node_type == "configurable_node":

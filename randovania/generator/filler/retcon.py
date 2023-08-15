@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.generator.filler.action import Action
     from randovania.generator.filler.player_state import PlayerState

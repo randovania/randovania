@@ -15,8 +15,8 @@ if TYPE_CHECKING:
 
     from randovania.game_description.pickup.pickup_category import PickupCategory
     from randovania.game_description.resources.location_category import LocationCategory
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import (
-        ResourceCollection,
         ResourceGain,
         ResourceGainTuple,
         ResourceQuantity,

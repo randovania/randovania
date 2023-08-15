@@ -17,8 +17,9 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGainTuple, ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.games.game import RandovaniaGame

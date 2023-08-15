@@ -16,7 +16,7 @@ from retro_data_structures.game_check import Game as RDSGame
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
-from randovania.game_description.resources.pickup_entry import PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate

@@ -9,8 +9,8 @@ from randovania.game_description.assignment import (
     PickupTarget,
 )
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
+from randovania.game_description.pickup.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 
 ElevatorConnection = dict[NodeIdentifier, NodeIdentifier]
@@ -36,6 +36,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.hint import Hint
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 

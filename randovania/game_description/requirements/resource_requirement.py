@@ -12,8 +12,9 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.resource_type import ResourceType
 
 if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
