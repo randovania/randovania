@@ -76,11 +76,17 @@ class AM2RBootstrap(MetroidBootstrap):
         locations = all_dna_locations(patches.game, config)
         rng.shuffle(locations)
 
-        num_of_dna = sum(1 for pickup in pool_results.to_place if pickup.pickup_category is METROID_DNA_CATEGORY)
-        if num_of_dna > len(locations):
+        dna_to_assign = [pickup for pickup in list(pool_results.to_place)
+                     if pickup.pickup_category is METROID_DNA_CATEGORY]
+
+        if len(dna_to_assign) > len(locations):
             raise InvalidConfiguration(
-                f"Has {num_of_dna} DNA in the pool, but only {len(locations)} valid locations."
+                f"Has {len(dna_to_assign)} DNA in the pool, but only {len(locations)} valid locations."
             )
+
+        for dna, location in zip(dna_to_assign, locations, strict=False):
+            pool_results.to_place.remove(dna)
+            pool_results.assignment[location.pickup_index] = dna
 
         return super().assign_pool_results(rng, patches, pool_results)
 
