@@ -5,6 +5,7 @@ import typing
 
 from PySide6 import QtCore
 
+from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import enum_lib
@@ -43,7 +44,7 @@ class RemoteConnector(QtCore.QObject):
 
     PlayerLocationChanged = QtCore.Signal(PlayerLocationEvent)
     PickupIndexCollected = QtCore.Signal(PickupIndex)
-    InventoryUpdated = QtCore.Signal(dict)
+    InventoryUpdated = QtCore.Signal(Inventory)
     Finished = QtCore.Signal()
 
     @property

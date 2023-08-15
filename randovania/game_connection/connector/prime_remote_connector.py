@@ -21,7 +21,7 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperationExecutor,
 )
 from randovania.game_description import default_database
-from randovania.game_description.resources.item_resource_info import Inventory, InventoryItem, ItemResourceInfo
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.game import RandovaniaGame
@@ -33,6 +33,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
@@ -156,7 +157,7 @@ class PrimeRemoteConnector(RemoteConnector):
                 raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")
             inventory[item] = inv
 
-        return inventory
+        return Inventory(inventory)
 
     async def known_collected_locations(self) -> set[PickupIndex]:
         """Fetches pickup indices that have been collected.
