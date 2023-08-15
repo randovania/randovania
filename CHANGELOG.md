@@ -41,7 +41,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
 
+#### Logic Database
+
+- Added: 2 videos to logic database, see the [Video Directory](https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection
+
+##### Sanctuary Fortress
+
+- Added: Workers Path - Screw Attack from Z-Axis (Intermediate) now requires Bomb Space Jump (Intermediate) from Dynamo Works
+- Added: Workers Path - Bomb Jump (Advanced) method added to reach cannon NSJ from landing platform
+
 ## [6.1.1] - 2023-08-07
+
 
 - Changed: Improve performance significantly when opening a Multiworld session with long history.
 - Changed: Slightly improve performance when opening game details.
