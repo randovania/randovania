@@ -54,12 +54,9 @@ class GenerationFailureHandler(QtWidgets.QWidget):
         if isinstance(exception.source, UnableToGenerate):
             box.label.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
             box.setText(
-                "{}\n\n"
+                f"{box.text()}\n\n"
                 "Double check if your settings aren't impossible, or try again.\n\n"
-                "Details: {}".format(
-                    box.text(),
-                    exception.source
-                ))
+                f"Details: {exception.source}")
 
         elif isinstance(exception.source, multiprocessing.TimeoutError):
             box.setText(box.text() + "\n\nRandovania sometimes gets stuck infinitely when trying to verify a game, "
