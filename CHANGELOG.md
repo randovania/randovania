@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.2.0] - 2023-09-??
 
 - Changed: The resolver now tries otherwise safe actions behind a point of no return before it tries actions that give dangerous resources. This makes the solve faster by avoiding some cases of backtracking.
+- Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
 
 ### Metroid Dread
 - Added: Elevator and Shuttle randomizer.

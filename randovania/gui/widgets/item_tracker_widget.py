@@ -71,28 +71,32 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
 
                 visible = True
 
-                def get_label(path):
+                def get_label(path: str, invert_opacity: bool = False):
                     nonlocal visible
                     image_path = get_data_path().joinpath(path)
                     if not image_path.exists():
                         logging.error("Tracker asset not found: %s", image_path)
                     pixmap = QtGui.QPixmap(str(image_path))
 
-                    label = TrackerItemImage(self, paint_with_opacity(pixmap, 0.3),
-                                             paint_with_opacity(pixmap, 1.0))
+                    not_checked_img = paint_with_opacity(pixmap, 0.3)
+                    checked_img = paint_with_opacity(pixmap, 1.0)
+                    if invert_opacity:
+                        not_checked_img, checked_img = checked_img, not_checked_img
+
+                    label = TrackerItemImage(self, not_checked_img, checked_img)
                     label.set_checked(False)
                     label.set_ignore_mouse_events(True)
                     label.setVisible(visible)
                     visible = False
                     return label
 
-                for path in paths:
-                    labels.append(get_label(path))
+                for p in paths:
+                    labels.append(get_label(p))
 
                 if "disabled_image_path" in element:
                     disabled_image = get_label(element["disabled_image_path"])
                 else:
-                    disabled_image = get_label(paths[0])
+                    disabled_image = get_label(paths[0], True)
 
             elif "label" in element:
                 label = QtWidgets.QLabel(self)
@@ -115,7 +119,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                 label.setToolTip(resource.long_name)
 
             self.tracker_elements.append(Element(
-                labels,
+                list(labels),
                 resources,
                 text_template,
                 minimum_to_check,
@@ -124,6 +128,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
             ))
             if disabled_image is not None:
                 labels.append(disabled_image)
+
             for label in labels:
                 self._layout.addWidget(
                     label,
