@@ -242,10 +242,7 @@ class PrimeRemoteConnector(RemoteConnector):
     def _resources_to_give_for_pickup(self, pickup: PickupEntry, inventory: Inventory,
                                       ) -> tuple[str, ResourceCollection]:
         inventory_resources = ResourceCollection.with_database(self.game.resource_database)
-        inventory_resources.add_resource_gain([
-            (item, inv_item.capacity)
-            for item, inv_item in inventory.items()
-        ])
+        inventory_resources.add_resource_gain(inventory.as_resource_gain())
         conditional = pickup.conditional_for_resources(inventory_resources)
         if conditional.name is not None:
             item_name = conditional.name
