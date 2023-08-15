@@ -281,12 +281,12 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="music_sub_label">
          <property name="text">
-          <string>Changes the way music triggers behave.
-&quot;Vanilla&quot; does not shuffle songs.
-&quot;Per Type&quot; will only shuffle songs within certain types, those being &quot;combat&quot;, &quot;exploration&quot; and &quot;fanfares&quot;. This ensures that you won't be hearing boss music while trying to explore an area. The Credits song and 100%-Cutscene song are exempt from shuffling.
-&quot;Full Random&quot; will shuffle all songs.</string>
+          <string>Changes the way music triggers behave.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -304,6 +304,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="vanilla_music_label">
+         <property name="text">
+          <string>Does not shuffle any songs.</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QRadioButton" name="type_music_option">
          <property name="text">
           <string>Per Type</string>
@@ -311,9 +321,32 @@
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="type_music_label">
+         <property name="text">
+          <string>Only shuffles songs within certain types, those being &quot;combat&quot;, &quot;exploration&quot; and &quot;fanfares&quot;. This ensures that you won't be hearing boss music while trying to explore an area. The Credits song and 100%-Cutscene song are exempt from shuffling.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QRadioButton" name="full_music_option">
          <property name="text">
           <string>Full Random</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="full_music_label">
+         <property name="text">
+          <string>Will shuffle all songs.</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
