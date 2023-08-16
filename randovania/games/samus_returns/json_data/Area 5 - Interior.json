@@ -2560,31 +2560,6 @@
                         }
                     }
                 },
-                "Event - Gravity Suit Room Pickup": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6913.22376966149,
-                        "y": 7143.861824238244,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Area 5 (Interior) - Gravity Suit Room Pickup",
-                    "connections": {
-                        "Pickup (Gravity Suit)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Next to Pickup": {
                     "node_type": "generic",
                     "heal": false,
@@ -2602,6 +2577,13 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Gravity Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Underwater Path (Top)": {
                             "type": "resource",
                             "data": {
@@ -2612,13 +2594,6 @@
                             }
                         },
                         "Door from Underwater Path": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Gravity Suit Room Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
