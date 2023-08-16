@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.2.0] - 2023-09-??
 
 - Changed: The resolver now tries otherwise safe actions behind a point of no return before it tries actions that give dangerous resources. This makes the solve faster by avoiding some cases of backtracking.
+- Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
 
 ### Metroid Dread
 - Added: Elevator and Shuttle randomizer.
@@ -42,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: 306 videos to the logic database. see the [Video Directory]
+- Added: 307 videos to the logic database. see the [Video Directory]
 (https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
 
 ##### Temple Grounds:
@@ -61,8 +62,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Extended Dash (Expert) to reach the Scan Post in Watch Station Access from Main Gyro Chamber Door.
 - Added: Extended Dash (Expert) to reach Main Gyro Chamber Door in Watch Station Access from the Scan Post Side.
+- Added: Workers Path - Screw Attack from Z-Axis (Intermediate) now requires Bomb Space Jump (Intermediate) from Dynamo Works
+- Added: Workers Path - Bomb Jump (Advanced) method added to reach cannon NSJ from landing platform
 
 ## [6.1.1] - 2023-08-07
+
 
 - Changed: Improve performance significantly when opening a Multiworld session with long history.
 - Changed: Slightly improve performance when opening game details.

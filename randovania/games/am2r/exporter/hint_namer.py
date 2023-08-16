@@ -79,8 +79,13 @@ class AM2RHintNamer(HintNamer):
         fmt = "{} is located in {}{}."
         location_name = self.format_location(location, with_region=True, with_area=not hide_area, with_color=with_color)
 
+        # TODO: create_guaranteed_hints_for_resources assumes that the resource is used by a singleton pickup, so we
+        # patch the name here instead. Fix it there at one point.
+        name = resource.long_name
+        if resource.short_name.startswith("Metroid DNA "):
+            name = "Metroid DNA"
         return fmt.format(
-            colorize_text(self.color_item, resource.long_name, with_color),
+            colorize_text(self.color_item, name, with_color),
             determiner,
             location_name,
         )

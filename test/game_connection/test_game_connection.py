@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import uuid
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import pytest
@@ -12,9 +13,13 @@ from randovania.game_connection.connector.debug_remote_connector import DebugRem
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.network_common.game_connection_status import GameConnectionStatus
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
 @pytest.fixture()
@@ -141,11 +146,13 @@ async def test_auto_update_remove_connector(connection, qapp):
     assert connection.remote_connectors == {}
 
 
-async def test_connector_state_update(connection, qapp):
+async def test_connector_state_update(connection, qapp, blank_resource_db):
     # Setup
     builder = DebugConnectorBuilder(RandovaniaGame.BLANK.value)
     connection.add_connection_builder(builder)
     debug_connector_uuid = uuid.UUID("00000000-0000-1111-0000-000000000000")
+
+    item = blank_resource_db.item[0]
 
     game_state_updated = MagicMock()
     connection.GameStateUpdated.connect(game_state_updated)
@@ -155,8 +162,8 @@ async def test_connector_state_update(connection, qapp):
     connector = connection.get_connector_for_builder(builder)
     assert isinstance(connector, DebugRemoteConnector)
 
-    def make(status: GameConnectionStatus, inv: dict, indices: set):
-        return ConnectedGameState(debug_connector_uuid, connector, status, inv, indices)
+    def make(status: GameConnectionStatus, inv: dict[ItemResourceInfo, InventoryItem], indices: set):
+        return ConnectedGameState(debug_connector_uuid, connector, status, Inventory(inv), indices)
 
     assert connection.get_backend_choice_for_state(ConnectedGameState(debug_connector_uuid, connector,
                                                                       GameConnectionStatus.TitleScreen)
@@ -173,8 +180,9 @@ async def test_connector_state_update(connection, qapp):
     connector.PlayerLocationChanged.emit(PlayerLocationEvent(MagicMock(), None))
     game_state_updated.assert_called_with(make(GameConnectionStatus.InGame, {}, {PickupIndex(1)}))
 
-    connector.InventoryUpdated.emit({"foo": 5})
-    game_state_updated.assert_called_with(make(GameConnectionStatus.InGame, {"foo": 5}, {PickupIndex(1)}))
+    connector.InventoryUpdated.emit(Inventory({item: InventoryItem(2, 4)}))
+    game_state_updated.assert_called_with(make(GameConnectionStatus.InGame,
+                                               {item: InventoryItem(2, 4)}, {PickupIndex(1)}))
 
 
 

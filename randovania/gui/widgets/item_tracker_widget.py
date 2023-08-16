@@ -3,17 +3,21 @@ from __future__ import annotations
 import dataclasses
 import logging
 from enum import Enum
+from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania import get_data_path
 from randovania.game_description import default_database
-from randovania.game_description.resources.item_resource_info import InventoryItem, ItemResourceInfo
+from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.pixmap_lib import paint_with_opacity
 from randovania.gui.lib.tracker_item_image import TrackerItemImage
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
 class FieldToCheck(Enum):
@@ -42,13 +46,13 @@ class Element:
 
 class ItemTrackerWidget(QtWidgets.QGroupBox):
     give_item_signal = QtCore.Signal(PickupEntry)
-    current_state: dict[ItemResourceInfo, InventoryItem]
+    current_state: Inventory
 
     def __init__(self, tracker_config: dict):
         super().__init__()
         self._layout = QtWidgets.QGridLayout(self)
         self.tracker_config = tracker_config
-        self.current_state = {}
+        self.current_state = Inventory.empty()
 
         self.tracker_elements: list[Element] = []
         game_enum = RandovaniaGame(tracker_config["game"])
@@ -71,28 +75,32 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
 
                 visible = True
 
-                def get_label(path):
+                def get_label(path: str, invert_opacity: bool = False):
                     nonlocal visible
                     image_path = get_data_path().joinpath(path)
                     if not image_path.exists():
                         logging.error("Tracker asset not found: %s", image_path)
                     pixmap = QtGui.QPixmap(str(image_path))
 
-                    label = TrackerItemImage(self, paint_with_opacity(pixmap, 0.3),
-                                             paint_with_opacity(pixmap, 1.0))
+                    not_checked_img = paint_with_opacity(pixmap, 0.3)
+                    checked_img = paint_with_opacity(pixmap, 1.0)
+                    if invert_opacity:
+                        not_checked_img, checked_img = checked_img, not_checked_img
+
+                    label = TrackerItemImage(self, not_checked_img, checked_img)
                     label.set_checked(False)
                     label.set_ignore_mouse_events(True)
                     label.setVisible(visible)
                     visible = False
                     return label
 
-                for path in paths:
-                    labels.append(get_label(path))
+                for p in paths:
+                    labels.append(get_label(p))
 
                 if "disabled_image_path" in element:
                     disabled_image = get_label(element["disabled_image_path"])
                 else:
-                    disabled_image = get_label(paths[0])
+                    disabled_image = get_label(paths[0], True)
 
             elif "label" in element:
                 label = QtWidgets.QLabel(self)
@@ -115,7 +123,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                 label.setToolTip(resource.long_name)
 
             self.tracker_elements.append(Element(
-                labels,
+                list(labels),
                 resources,
                 text_template,
                 minimum_to_check,
@@ -124,6 +132,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
             ))
             if disabled_image is not None:
                 labels.append(disabled_image)
+
             for label in labels:
                 self._layout.addWidget(
                     label,
@@ -138,14 +147,14 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                                                       QtWidgets.QSizePolicy.Policy.Expanding)
         self._layout.addItem(self.inventory_spacer, self._layout.rowCount(), self._layout.columnCount())
 
-    def update_state(self, inventory: dict[ItemResourceInfo, InventoryItem]):
+    def update_state(self, inventory: Inventory):
         self.current_state = inventory
 
         for element in self.tracker_elements:
             if len(element.labels) > 1:
                 satisfied = False
                 for i, resource in reversed(list(enumerate(element.resources))):
-                    current = inventory.get(resource, InventoryItem(0, 0))
+                    current = inventory.get(resource)
                     fields = {"amount": current.amount, "capacity": current.capacity,
                               "max_capacity": resource.max_capacity}
 
@@ -170,7 +179,7 @@ class ItemTrackerWidget(QtWidgets.QGroupBox):
                 capacity = 0
                 max_capacity = 0
                 for resource in element.resources:
-                    current = inventory.get(resource, InventoryItem(0, 0))
+                    current = inventory.get(resource)
                     amount += current.amount
                     capacity += current.capacity
                     max_capacity += resource.max_capacity

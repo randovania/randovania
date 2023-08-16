@@ -9,7 +9,8 @@ import aiohttp.client_exceptions
 import pytest
 import socketio.exceptions
 
-from randovania.game_description.resources.item_resource_info import InventoryItem, ItemResourceInfo
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
@@ -349,9 +350,9 @@ async def test_on_world_user_inventory_raw(client: NetworkClient):
     uid = "00000000-0000-1111-0000-000000000000"
     item = ItemResourceInfo(0, "Super Key", "MyKey", 1)
 
-    inventory = {
+    inventory = Inventory({
         item: InventoryItem(1, 4)
-    }
+    })
     encoded = remote_inventory.inventory_to_encoded_remote(inventory)
 
     await client._on_world_user_inventory_raw(uid, 1234, encoded)

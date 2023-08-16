@@ -11,7 +11,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncClose, asyncSlot
 
 from randovania.game_description import default_database
-from randovania.game_description.resources.item_resource_info import InventoryItem
+from randovania.game_description.resources.inventory import InventoryItem
 from randovania.gui.auto_tracker_window import load_trackers_configuration
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
