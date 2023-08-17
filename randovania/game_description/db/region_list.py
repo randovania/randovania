@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
+import operator
 import typing
 
 from randovania.game_description.db.node import Node, NodeContext, NodeIndex
@@ -25,6 +26,8 @@ if typing.TYPE_CHECKING:
 
 NodeType = typing.TypeVar("NodeType", bound=Node)
 
+_NodesTuple = tuple[Node | None, ...]
+
 
 @dataclasses.dataclass(init=False, slots=True)
 class RegionList(NodeProvider):
@@ -32,7 +35,7 @@ class RegionList(NodeProvider):
 
     _nodes_to_area: dict[NodeIndex, Area]
     _nodes_to_region: dict[NodeIndex, Region]
-    _nodes: tuple[Node | None, ...] | None
+    _nodes: _NodesTuple | None
     _pickup_index_to_node: dict[PickupIndex, PickupNode]
     _identifier_to_node: dict[NodeIdentifier, Node]
     _patched_node_connections: dict[NodeIndex, dict[NodeIndex, Requirement]] | None
@@ -51,7 +54,7 @@ class RegionList(NodeProvider):
         self._patches_dock_lock_requirements = None
         self.invalidate_node_cache()
 
-    def _refresh_node_cache(self):
+    def _refresh_node_cache(self) -> _NodesTuple:
         nodes = tuple(self._iterate_over_nodes())
 
         max_index: NodeIndex = max(node.node_index for node in nodes)
@@ -68,10 +71,12 @@ class RegionList(NodeProvider):
             for node in self._nodes
             if isinstance(node, PickupNode)
         }
+        return self._nodes
 
-    def ensure_has_node_cache(self):
+    def ensure_has_node_cache(self) -> _NodesTuple:
         if self._nodes is None:
-            self._refresh_node_cache()
+            return self._refresh_node_cache()
+        return self._nodes
 
     def invalidate_node_cache(self):
         self._nodes = None
@@ -99,9 +104,8 @@ class RegionList(NodeProvider):
             yield from region.areas
 
     @property
-    def all_nodes(self) -> tuple[Node | None, ...]:
-        self.ensure_has_node_cache()
-        return self._nodes
+    def all_nodes(self) -> _NodesTuple:
+        return self.ensure_has_node_cache()
 
     def iterate_nodes(self) -> Iterator[Node]:
         for node in self.all_nodes:
@@ -159,8 +163,11 @@ class RegionList(NodeProvider):
         """
         if self._patched_node_connections is not None:
             all_nodes = self._nodes
+            assert all_nodes is not None
             for target_index, requirements in self._patched_node_connections[node.node_index].items():
-                yield all_nodes[target_index], requirements
+                n = all_nodes[target_index]
+                assert n is not None
+                yield n, requirements
         else:
             area = self.nodes_to_area(node)
             for target_node, requirements in area.connections[node].items():
@@ -209,7 +216,8 @@ class RegionList(NodeProvider):
         # Dock Weaknesses
         self._patches_dock_open_requirements = []
         self._patches_dock_lock_requirements = []
-        for weakness in sorted(dock_weakness_database.all_weaknesses, key=lambda it: it.weakness_index):
+
+        for weakness in sorted(dock_weakness_database.all_weaknesses, key=operator.attrgetter("weakness_index")):
             assert len(self._patches_dock_open_requirements) == weakness.weakness_index
             self._patches_dock_open_requirements.append(
                 weakness.requirement.patch_requirements(static_resources, damage_multiplier, database).simplify()
@@ -268,23 +276,24 @@ class RegionList(NodeProvider):
         self._nodes_to_region[node.node_index] = self.region_with_area(area)
 
     def open_requirement_for(self, weakness: DockWeakness) -> Requirement:
-        if (self._patches_dock_open_requirements is not None
-            and weakness.weakness_index is not None):
+        if self._patches_dock_open_requirements is not None and weakness.weakness_index is not None:
             return self._patches_dock_open_requirements[weakness.weakness_index]
         return weakness.requirement
 
     def lock_requirement_for(self, weakness: DockWeakness) -> Requirement:
-        if (self._patches_dock_lock_requirements is not None
-            and weakness.weakness_index is not None):
-            return self._patches_dock_lock_requirements[weakness.weakness_index]
+        if self._patches_dock_lock_requirements is not None and weakness.weakness_index is not None:
+            result = self._patches_dock_lock_requirements[weakness.weakness_index]
+            assert result is not None
+            return result
+        assert weakness.lock is not None
         return weakness.lock.requirement
 
 
-def _calculate_nodes_to_area_region(region: Iterable[Region]):
-    nodes_to_area = {}
-    nodes_to_region = {}
+def _calculate_nodes_to_area_region(regions: Iterable[Region]) -> tuple[dict[NodeIndex, Area], dict[NodeIndex, Region]]:
+    nodes_to_area: dict[NodeIndex, Area] = {}
+    nodes_to_region: dict[NodeIndex, Region] = {}
 
-    for region in region:
+    for region in regions:
         for area in region.areas:
             for node in area.nodes:
                 if node.node_index in nodes_to_area:

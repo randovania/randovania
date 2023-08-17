@@ -49,5 +49,5 @@ class NodeIdentifier:
     def area_location(self) -> AreaIdentifier:
         return self.area_identifier
 
-    def renamed(self, new_name: str) -> Self:
+    def renamed(self, new_name: str) -> NodeIdentifier:
         return NodeIdentifier(area_identifier=self.area_identifier, node_name=new_name)
