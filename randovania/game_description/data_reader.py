@@ -495,6 +495,16 @@ def read_minimal_logic_db(data: dict | None) -> MinimalLogicData | None:
     )
 
 
+def read_used_trick_levels(data: dict[str, list[int]] | None, resource_database: ResourceDatabase
+                           ) -> dict[TrickResourceInfo, set[int]] | None:
+    if data is None:
+        return None
+    return {
+        resource_database.get_by_type_and_index(ResourceType.TRICK, trick): set(levels)
+        for trick, levels in data.items()
+    }
+
+
 def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescription]:
     data = game_migration.migrate_to_current(data)
 
@@ -511,6 +521,7 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
     starting_location = NodeIdentifier.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
     minimal_logic = read_minimal_logic_db(data["minimal_logic"])
+    used_trick_levels = read_used_trick_levels(data["used_trick_levels"], resource_database)
 
     return region_reader, GameDescription(
         game=game,
@@ -522,6 +533,7 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
         starting_location=starting_location,
         initial_states=initial_states,
         minimal_logic=minimal_logic,
+        used_trick_levels=used_trick_levels,
     )
 
 
