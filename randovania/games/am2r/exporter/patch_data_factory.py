@@ -38,8 +38,9 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1]
             object_name = self.game.region_list.node_from_pickup_index(pickup.index).extra["object_name"]
-            text_index = 1 if (pickup.original_pickup.resource_lock and
-                               "Locked" in pickup.original_pickup.resource_lock.temporary_item.long_name and
+            res_lock = pickup.original_pickup.resource_lock
+            text_index = 1 if (res_lock is not None and
+                               "Locked" in res_lock.temporary_item.long_name and
                                len(pickup.collection_text) > 1) else 0
 
             pickup_map_dict[object_name] = {
