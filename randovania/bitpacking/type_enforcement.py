@@ -6,9 +6,12 @@ import typing
 
 from randovania.lib import type_lib
 
+if typing.TYPE_CHECKING:
+    from _typeshed import DataclassInstance
+
 
 class DataclassPostInitTypeCheck:
-    def __post_init__(self):
+    def __post_init__(self: DataclassInstance) -> None:
         resolved_types = typing.get_type_hints(type(self))
 
         for f in dataclasses.fields(self):

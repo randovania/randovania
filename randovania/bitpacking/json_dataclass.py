@@ -11,6 +11,9 @@ from frozendict import frozendict
 
 from randovania.lib import type_lib
 
+if typing.TYPE_CHECKING:
+    from _typeshed import DataclassInstance
+
 T = typing.TypeVar("T")
 
 
@@ -105,7 +108,7 @@ def _encode_value(value: typing.Any) -> typing.Any:
             for k, v in value.items()
         }
         if isinstance(value, frozendict):
-            result = frozendict(result)
+            return frozendict(result)
         return result
 
     elif isinstance(value, datetime.datetime):
@@ -120,7 +123,7 @@ def _encode_value(value: typing.Any) -> typing.Any:
 
 class JsonDataclass:
     @property
-    def as_json(self) -> dict:
+    def as_json(self: DataclassInstance) -> dict:
         result = {}
         for field in dataclasses.fields(self):
             if not field.init or field.metadata.get("init_from_extra"):
@@ -141,18 +144,20 @@ class JsonDataclass:
         return result
 
     @classmethod
-    def json_extra_arguments(cls):
+    def json_extra_arguments(cls) -> dict:
         return {}
 
     @classmethod
-    def from_json(cls: type[T], json_dict: dict, **extra) -> T:
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+        assert issubclass(cls, JsonDataclass)
         extra_args = cls.json_extra_arguments()
         extra_args.update(extra)
 
         resolved_types = typing.get_type_hints(cls)
+        dc: type[DataclassInstance] = cls  # type: ignore[assignment]
 
         new_instance = {}
-        for field in dataclasses.fields(cls):
+        for field in dataclasses.fields(dc):
             if not field.init or (field.name not in json_dict and (field.default != dataclasses.MISSING
                                                                    or field.default_factory != dataclasses.MISSING)):
                 continue
