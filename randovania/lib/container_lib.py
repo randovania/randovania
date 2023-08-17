@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 import operator
 import typing
 
-from _typeshed import SupportsRichComparisonT
+if typing.TYPE_CHECKING:
+    from _typeshed import SupportsRichComparisonT
 
 X = typing.TypeVar("X")
 Y = typing.TypeVar("Y")
