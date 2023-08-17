@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import functools
 import typing
 from typing import TYPE_CHECKING, NamedTuple
 
@@ -185,12 +186,22 @@ class OldGeneratorReach(GeneratorReach):
             return
 
         all_nodes = self.all_nodes
+        context = self.node_context()
+
+        @functools.cache
+        def _is_collected(target: int):
+            node: Node = all_nodes[target]
+            if node.is_resource_node:
+                assert isinstance(node, ResourceNode)
+                if node.is_collected(context):
+                    return 0
+                else:
+                    return 1
+            else:
+                return 0
 
         def weight(source: int, target: int, attributes):
-            if self._can_advance(all_nodes[target]):
-                return 0
-            else:
-                return 1
+            return _is_collected(target)
 
         self._reachable_costs, self._reachable_paths = self._digraph.multi_source_dijkstra(
             {self.state.node.node_index},
