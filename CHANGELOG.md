@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Split beams and missiles. When playing with non-progressive beams or missiles, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades.
 - Changed: The Starter Preset and April Fools 2023 preset now have non-progressive beams and missiles, instead of progressive.
+- Changed: Bomb Shields are no longer vulnerable to cross bombs.
 
 #### Logic Database
 
