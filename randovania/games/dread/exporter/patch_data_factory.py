@@ -87,6 +87,12 @@ def get_resources_for_details(pickup: PickupEntry, conditional_resources: list[C
     return resources
 
 
+def _get_destination_room_for_teleportal(connection: Node):
+    return connection.extra.get(
+        "transporter_name",
+        f"{connection.identifier.region_name} - {connection.identifier.area_name}"
+    )
+
 class DreadPatchDataFactory(BasePatchDataFactory):
     cosmetic_patches: DreadCosmeticPatches
     configuration: DreadConfiguration
@@ -358,6 +364,16 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 region_dict[cc_name] = area_name
             all_dict[scenario] = region_dict
 
+        # rename transporters to the correct transporter rooms
+        for node, connection in self.patches.all_dock_connections():
+            if (isinstance(node, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types):
+
+                src_region, src_area = self.game.region_list.region_and_area_by_area_identifier(
+                    node.identifier.area_identifier)
+                src_cc = src_area.extra["asset_id"]
+                dest_name = _get_destination_room_for_teleportal(connection)
+                all_dict[src_region.extra["scenario_id"]][src_cc] = f'Transport to {dest_name}'
         return all_dict
 
     def _cosmetic_patch_data(self) -> dict:
@@ -477,6 +493,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         elevators =[{
                     "teleporter": self._teleporter_ref_for(node),
                     "destination": self._start_point_ref_for(connection),
+                    "connection_name": _get_destination_room_for_teleportal(connection)
                 }
                 for node, connection in self.patches.all_dock_connections()
                 if (isinstance(node, DockNode)

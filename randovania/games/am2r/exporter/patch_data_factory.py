@@ -127,13 +127,13 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             for node, weakness in self.patches.all_dock_weaknesses()
         }
 
-    def _create_hints(self):
+    def _create_hints(self, rng: Random):
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
         ice = [(self.game.resource_database.get_item("Ice Beam"))]
-        artifact_hints = {}
+        dna_hint_mapping = {}
         hint_config = self.patches.configuration.hints
         if hint_config.artifacts != ItemHintMode.DISABLED:
-            artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+            dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 AM2RHintNamer(self.description.all_patches, self.players_config),
@@ -142,7 +142,31 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 False  # TODO: set this to true, when patcher supports setting colors!
             )
         else:
-            artifact_hints = {k: f"{k.long_name} is hidden somewhere on SR-388." for k in artifacts}
+            dna_hint_mapping = {k: f"{k.long_name} is hidden somewhere on SR-388." for k in artifacts}
+
+        # Shuffle DNA hints
+        hint_texts = list(dna_hint_mapping.values())
+        rng.shuffle(hint_texts)
+        dna_hint_mapping = dict(zip(artifacts, hint_texts))
+
+        septogg_hints = {}
+        gm_newline = "#-#"
+        area_to_amount_map = {
+            0: (0, 5),
+            1: (5, 9),
+            2: (9, 17),
+            3: (17, 27),
+            4: (27, 33),
+            5: (33, 41),
+            6: (41, 46)
+        }
+        for i in range(7):
+            start, end = area_to_amount_map[i]
+            shuffled_hints = list(dna_hint_mapping.values())[start:end]
+            shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
+            if not shuffled_hints:
+                shuffled_hints = ["This creature did not give any useful DNA hints."]
+            septogg_hints[f"septogg_a{i}"] = gm_newline.join(shuffled_hints)
 
         ice_hint = {}
         if hint_config.ice_beam != ItemHintMode.DISABLED:
@@ -154,17 +178,18 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 ice,
                 False  # TODO: set this to true, when patcher supports setting colors!
             )
+            ice_hint = {
+                "chozo_labs": ice_hint[ice[0]]
+            }
         else:
             ice_hint = {
-                k: "To combat our creations, we have created the Ice Beam. Unfortunately, we seem to have misplaced it."
-                for k in ice}
+                "chozo_labs": "To combat our creations, we have created the Ice Beam. Unfortunately, "
+                              "we seem to have misplaced it."
+            }
 
-        hints = artifact_hints | ice_hint
+        hints = septogg_hints | ice_hint
 
-        return {
-            key.long_name: value
-            for key, value in hints.items()
-        }
+        return hints
 
     def _create_cosmetics(self):
         c = self.cosmetic_patches
@@ -213,7 +238,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(memo_data, self.players_config, self.game),
+            exporter=pickup_exporter.create_pickup_exporter(memo_data, self.players_config, self.game_enum()),
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
@@ -225,6 +250,6 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "rooms": self._create_room_dict(),
             "game_patches": self._create_game_patches(self.rng),
             "door_locks": self._create_door_locks(),
-            "hints": self._create_hints(),
+            "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics()
         }
