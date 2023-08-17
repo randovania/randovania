@@ -7,8 +7,8 @@ from randovania.lib import json_lib
 
 
 @functools.lru_cache
-def get_raw_data(game: RandovaniaGame):
-    return json_lib.read_path(game.data_path.joinpath("assets", "migration_data.json"))
+def get_raw_data(game: RandovaniaGame) -> dict:
+    return json_lib.read_dict(game.data_path.joinpath("assets", "migration_data.json"))
 
 
 @functools.lru_cache

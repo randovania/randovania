@@ -48,6 +48,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from pathlib import Path
 
+    from randovania.game_description.requirements.array_base import RequirementArrayBase
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
 
@@ -69,7 +70,7 @@ class ResourceReader:
     def __init__(self, next_index: int = 0):
         self.next_index = next_index
 
-    def make_index(self):
+    def make_index(self) -> int:
         result = self.next_index
         self.next_index += 1
         return result
@@ -124,8 +125,8 @@ def read_resource_requirement(data: dict, resource_database: ResourceDatabase
 
 def read_requirement_array(data: dict,
                            resource_database: ResourceDatabase,
-                           cls: type[X],
-                           ) -> X:
+                           cls: type[RequirementArrayBase],
+                           ) -> RequirementArrayBase:
     # Old version
     if isinstance(data["data"], list):
         return cls(
@@ -228,7 +229,7 @@ def read_dock_weakness_database(data: dict,
     dock_rando: dict[DockType, DockRandoParams] = {}
     next_index = 0
 
-    def get_index():
+    def get_index() -> int:
         nonlocal next_index
         result = next_index
         next_index += 1
@@ -382,7 +383,7 @@ class RegionReader:
         nodes = [self.read_node(node_name, item) for node_name, item in data["nodes"].items()]
         nodes_by_name = {node.name: node for node in nodes}
 
-        connections = {}
+        connections: dict[Node, dict[Node, Requirement]] = {}
         for origin in nodes:
             origin_data = data["nodes"][origin.name]
             try:
@@ -499,7 +500,7 @@ def read_used_trick_levels(data: dict[str, list[int]] | None, resource_database:
     if data is None:
         return None
     return {
-        resource_database.get_by_type_and_index(ResourceType.TRICK, trick): set(levels)
+        resource_database.get_trick(trick): set(levels)
         for trick, levels in data.items()
     }
 
@@ -540,9 +541,10 @@ def decode_data(data: dict) -> GameDescription:
     return decode_data_with_region_reader(data)[1]
 
 
-def read_split_file(dir_path: Path):
+def read_split_file(dir_path: Path) -> dict:
     data = json_lib.read_path(dir_path.joinpath("header.json"),
                               raise_on_duplicate_keys=True)
+    assert isinstance(data, dict)
 
     key_name = "regions"
     if key_name not in data:

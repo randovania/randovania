@@ -18,7 +18,7 @@ class Region:
     areas: list[Area]
     extra: dict[str, typing.Any]
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"World[{self.name}]"
 
     @property

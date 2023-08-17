@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 @dataclasses.dataclass(frozen=True, slots=True)
 class ConfigurableNode(Node):
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"ConfigurableNode({self.name!r})"
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:

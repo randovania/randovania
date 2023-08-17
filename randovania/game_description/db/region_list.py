@@ -42,7 +42,7 @@ class RegionList(NodeProvider):
     _patches_dock_open_requirements: list[Requirement] | None
     _patches_dock_lock_requirements: list[Requirement | None] | None
 
-    def __deepcopy__(self, memodict):
+    def __deepcopy__(self, memodict: dict) -> RegionList:
         return RegionList(
             regions=copy.deepcopy(self.regions, memodict),
         )
@@ -78,7 +78,7 @@ class RegionList(NodeProvider):
             return self._refresh_node_cache()
         return self._nodes
 
-    def invalidate_node_cache(self):
+    def invalidate_node_cache(self) -> None:
         self._nodes = None
         self._identifier_to_node = {}
 
@@ -140,7 +140,7 @@ class RegionList(NodeProvider):
     def area_name(self, area: Area, separator: str = " - ", distinguish_dark_aether: bool = True) -> str:
         return f"{self.region_name_from_area(area, distinguish_dark_aether)}{separator}{area.name}"
 
-    def node_name(self, node: Node, with_region=False, distinguish_dark_aether: bool = False) -> str:
+    def node_name(self, node: Node, with_region: bool = False, distinguish_dark_aether: bool = False) -> str:
         prefix = f"{self.region_name_from_node(node, distinguish_dark_aether)}/" if with_region else ""
         return f"{prefix}{self.nodes_to_area(node).name}/{node.name}"
 
@@ -248,7 +248,7 @@ class RegionList(NodeProvider):
         assert isinstance(result, t)
         return result
 
-    def get_pickup_node(self, identifier: NodeIdentifier):
+    def get_pickup_node(self, identifier: NodeIdentifier) -> PickupNode:
         return self.typed_node_by_identifier(identifier, PickupNode)
 
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
@@ -270,7 +270,7 @@ class RegionList(NodeProvider):
         self.ensure_has_node_cache()
         return self._pickup_index_to_node[index]
 
-    def add_new_node(self, area: Area, node: Node):
+    def add_new_node(self, area: Area, node: Node) -> None:
         self.ensure_has_node_cache()
         self._nodes_to_area[node.node_index] = area
         self._nodes_to_region[node.node_index] = self.region_with_area(area)

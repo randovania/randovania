@@ -34,7 +34,7 @@ class NodeIdentifier:
     def from_string(cls, value: str) -> Self:
         return cls.create(*value.split("/", 2))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.area_identifier}/node {self.node_name}"
 
     @property

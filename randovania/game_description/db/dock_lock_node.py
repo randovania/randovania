@@ -44,7 +44,7 @@ class DockLockNode(ResourceNode):
         object.__setattr__(dock, "lock_node", result)
         return result
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"DockLockNode({self.name!r} -> {self.dock.name})"
 
     def resource(self, context: NodeContext) -> ResourceInfo:

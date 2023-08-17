@@ -22,10 +22,10 @@ class Area:
     extra: dict[str, typing.Any]
     default_node: str | None = None
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Area[{self.name}]"
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(("area", self.name))
 
     @property
@@ -67,7 +67,7 @@ class Area:
             if isinstance(node, PickupNode):
                 yield node.pickup_index
 
-    def clear_dock_cache(self):
+    def clear_dock_cache(self) -> None:
         pass
 
     def get_start_nodes(self) -> list[Node]:

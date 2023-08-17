@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import MagicMock
+
 import pytest
 
 from randovania.game_description.data_reader import RegionReader
@@ -10,7 +12,7 @@ from randovania.games.game import RandovaniaGame
 
 def test_invalid_node_type():
     # Setup
-    reader = RegionReader(None, None)
+    reader = RegionReader(MagicMock(), MagicMock())
     reader.current_region_name = "World"
     reader.current_area_name = "Area"
 
@@ -30,8 +32,8 @@ def test_invalid_node_type():
 def test_area_with_invalid_connections():
     # Setup
     db = ResourceDatabase(RandovaniaGame.METROID_PRIME_ECHOES, [], [], [], [], [], [], {},
-                          damage_reductions={}, energy_tank_item=None)
-    reader = RegionReader(db, None)
+                          damage_reductions={}, energy_tank_item=MagicMock())
+    reader = RegionReader(db, MagicMock())
     reader.current_region_name = "World"
 
     with pytest.raises(MissingResource) as e:

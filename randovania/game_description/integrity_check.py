@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_lock_node import DockLockNode
@@ -11,6 +12,7 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.layout.base.base_configuration import BaseConfiguration
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -130,8 +132,9 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
              for dock_type in game.dock_weakness_database.dock_types):
         yield f"{node.name} is not a Dock Node, naming suggests it should be."
 
+
 def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
-    nodes_with_paths_in = set()
+    nodes_with_paths_in: set[Node] = set()
     for node in area.nodes:
         nodes_with_paths_in.update(area.connections[node].keys())
 
@@ -154,7 +157,8 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
         if isinstance(node, EventNode):
             # if this node would satisfy the victory condition, it does not need outgoing connections
-            current = ResourceCollection.from_resource_gain(game.resource_database, node.resource_gain_on_collect(None))
+            current = ResourceCollection.with_database(game.resource_database)
+            current.set_resource(node.event, 1)
             if game.victory_condition.satisfied(current, 0, game.resource_database):
                 continue
 
@@ -169,7 +173,7 @@ def find_region_errors(game: GameDescription, region: Region) -> Iterator[str]:
 
 
 def find_invalid_strongly_connected_components(game: GameDescription) -> Iterator[str]:
-    import networkx
+    import networkx  # type: ignore
     graph = networkx.DiGraph()
 
     for node in game.region_list.iterate_nodes():
@@ -178,7 +182,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
         graph.add_node(node)
 
     context = NodeContext(
-        patches=GamePatches.create_from_game(game, 0, None),
+        patches=GamePatches.create_from_game(game, 0, typing.cast(BaseConfiguration, None)),
         current_resources=ResourceCollection.with_database(game.resource_database),
         database=game.resource_database,
         node_provider=game.region_list,

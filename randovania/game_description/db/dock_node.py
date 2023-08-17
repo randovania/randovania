@@ -48,7 +48,7 @@ class DockNode(Node):
     lock_node: Node = dataclasses.field(init=False, hash=False, compare=False)
     cache_default_connection: int | None = dataclasses.field(init=False, hash=False, compare=False, default=None)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"DockNode({self.name!r} -> {self.default_connection})"
 
     def get_back_weakness(self, context: NodeContext) -> DockWeakness | None:

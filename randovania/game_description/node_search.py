@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.node import Node
+    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -30,14 +31,14 @@ def distances_to_node(region_list: RegionList,
     :param patches:
     :return: Dict keyed by area to shortest distance to starting_node.
     """
-    import networkx
+    import networkx  # type: ignore
     g = networkx.DiGraph()
 
     if patches is None:
-        def get_dock_connection_for(n: DockNode):
+        def get_dock_connection_for(n: DockNode) -> NodeIdentifier:
             return n.default_connection
     else:
-        def get_dock_connection_for(n: DockNode):
+        def get_dock_connection_for(n: DockNode) -> NodeIdentifier:
             return patches.get_dock_connection_for(n).identifier
 
     for area in region_list.all_areas:

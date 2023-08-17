@@ -6,7 +6,7 @@ from randovania.game_description import data_reader, default_database, integrity
 from randovania.games.game import RandovaniaGame
 from randovania.lib.enum_lib import iterate_enum
 
-_acceptable_database_errors = {
+_acceptable_database_errors: dict[RandovaniaGame, bool] = {
 }
 
 

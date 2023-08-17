@@ -46,7 +46,7 @@ class DockLock:
     lock_type: DockLockType
     requirement: Requirement
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.lock_type.name
 
 
@@ -64,10 +64,10 @@ class DockWeakness:
     requirement: Requirement
     lock: DockLock | None
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((self.name, self.extra))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.name
 
     @property
