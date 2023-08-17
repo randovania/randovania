@@ -89,7 +89,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "session_uuid": str(self.players_config.get_own_uuid())
         }
 
-    def _create_game_patches(self):
+    def _create_game_patches(self, rng: Random):
         game_patches = {
             "septogg_helpers": self.patches.configuration.septogg_helpers,
             "respawn_bomb_blocks": self.patches.configuration.respawn_bomb_blocks,
@@ -103,6 +103,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "softlock_prevention_blocks": self.patches.configuration.softlock_prevention_blocks,
             "a3_entrance_blocks": self.patches.configuration.a3_entrance_blocks,
             "screw_blocks": self.patches.configuration.screw_blocks,
+            "sabre_designed_skippy": rng.randint(0, self._EASTER_EGG_SHINY) == 0
         }
         for item, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
             launcher_dict = {
@@ -247,7 +248,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "starting_location": self._create_starting_location(),
             "pickups": self._create_pickups_dict(pickup_list, item_data, self.rng),
             "rooms": self._create_room_dict(),
-            "game_patches": self._create_game_patches(),
+            "game_patches": self._create_game_patches(self.rng),
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics()
