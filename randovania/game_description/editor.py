@@ -96,7 +96,8 @@ class Editor:
         area.clear_dock_cache()
 
         if isinstance(new_node, DockNode):
-            self.add_node(area, DockLockNode.create_from_dock(new_node, self.new_node_index()))
+            self.add_node(area, DockLockNode.create_from_dock(new_node, self.new_node_index(),
+                                                              self.game.resource_database))
 
         self.game.region_list.invalidate_node_cache()
 

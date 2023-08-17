@@ -400,7 +400,7 @@ class RegionReader:
 
         for node in list(nodes):
             if isinstance(node, DockNode):
-                lock_node = DockLockNode.create_from_dock(node, self.next_node_index)
+                lock_node = DockLockNode.create_from_dock(node, self.next_node_index, self.resource_database)
                 nodes.append(lock_node)
                 connections[lock_node] = {}
                 self.next_node_index += 1
