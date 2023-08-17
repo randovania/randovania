@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import typing
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
@@ -11,7 +12,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterable, Iterator
 
     from randovania.game_description.pickup.pickup_category import PickupCategory
     from randovania.game_description.resources.location_category import LocationCategory
@@ -75,15 +76,17 @@ class PickupEntry:
     model: PickupModel
     pickup_category: PickupCategory
     broad_category: PickupCategory
-    progression: ResourceGainTuple
+    progression: tuple[tuple[ItemResourceInfo, int], ...]
     generator_params: PickupGeneratorParams
     extra_resources: ResourceGainTuple = ()
     unlocks_resource: bool = False
     resource_lock: ResourceLock | None = None
     respects_lock: bool = True
-    offworld_models: frozendict[RandovaniaGame, str] = dataclasses.field(default_factory=frozendict)
+    offworld_models: frozendict[RandovaniaGame, str] = dataclasses.field(
+        default_factory=typing.cast(typing.Callable[[], frozendict[RandovaniaGame, str]], frozendict),
+    )
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not isinstance(self.progression, tuple):
             raise ValueError(f"resources should be a tuple, got {self.progression}")
 
@@ -106,14 +109,15 @@ class PickupEntry:
                 if quantity > resource.max_capacity:
                     raise ValueError(f"Attempt to give {quantity} of {resource.long_name}, more than max capacity")
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.name)
 
-    def __lt__(self, other):
+    def __lt__(self, other: object) -> bool:
+        assert isinstance(other, PickupEntry)
         return self.name < other.name
 
     @property
-    def conditional_resources(self):
+    def conditional_resources(self) -> Iterable[ConditionalResources]:
         previous: ItemResourceInfo | None = None
         for progression in self.progression:
             yield ConditionalResources(
@@ -166,7 +170,7 @@ class PickupEntry:
 
         yield from self.conversion_resource_gain(current_resources)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Pickup {self.name}"
 
     @property

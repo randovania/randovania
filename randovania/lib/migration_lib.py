@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import typing
 from collections.abc import Callable
 
 
@@ -8,7 +9,7 @@ class UnsupportedVersion(ValueError):
     pass
 
 
-Migrations = list[Callable[[dict], dict] | None]
+Migrations = typing.Sequence[Callable[[dict], dict] | None]
 
 
 def apply_migrations(data: dict, migrations: Migrations, *, copy_before_migrating: bool = False,

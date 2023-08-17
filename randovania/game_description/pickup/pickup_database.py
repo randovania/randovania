@@ -21,7 +21,7 @@ class PickupDatabase:
     default_offworld_model: str
 
     def get_pickup_with_name(self, name: str) -> StandardPickupDefinition | AmmoPickupDefinition:
-        return self.standard_pickups.get(name) or self.ammo_pickups.get(name)
+        return self.standard_pickups.get(name) or self.ammo_pickups[name]
 
 
 def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
