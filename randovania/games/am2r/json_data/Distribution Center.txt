@@ -233,18 +233,14 @@ Extra - map_name: rm_a5c05
   * Normal Door to Energy Distribution Activation Shaft/Door to Meat Boy Room
   * Extra - instance_id: 133616
   > Door to Energy Distribution Tower West
-      All of the following:
-          Can Use Any Bombs
-          Morph Ball or Screw Attack
+      Can Use Any Bombs
 
 > Door to Energy Distribution Tower West; Heals? False
   * Layers: default
   * Normal Door to Energy Distribution Tower West/Door to Meat Boy Room
   * Extra - instance_id: 133615
   > Door to Energy Distribution Activation Shaft
-      All of the following:
-          Can Use Any Bombs
-          Morph Ball or Screw Attack
+      Can Use Any Bombs
 
 ----------------
 Energy Distribution Activation Shaft
@@ -254,7 +250,9 @@ Extra - map_name: rm_a5c06
   * Normal Door to Meat Boy Room/Door to Energy Distribution Activation Shaft
   * Extra - instance_id: 133682
   > Door to Energy Distribution Activation
-      Space Jump Wall
+      Any of the following:
+          Space Jump Wall
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
 
 > Door to Energy Distribution Activation; Heals? False
   * Layers: default
@@ -270,6 +268,10 @@ Extra - map_name: rm_a5c07
   * Layers: default
   * Distribution Center Energy Restored Door to Energy Distribution Activation Shaft/Door to Energy Distribution Activation
   * Extra - instance_id: 133732
+  > Door to Energy Distribution Emergency Exit
+      Any of the following:
+          Space Jump Wall
+          Speed Booster and Shinesparking Tricks (Beginner)
   > Event - EMP Activation Statue
       Morph Ball
 
@@ -277,7 +279,7 @@ Extra - map_name: rm_a5c07
   * Layers: default
   * Distribution Center Energy Restored Door to Energy Distribution Emergency Exit/Door to Energy Distribution Activation
   * Extra - instance_id: 133731
-  > Event - EMP Activation Statue
+  > Door to Energy Distribution Activation Shaft
       Trivial
 
 > Event - EMP Activation Statue; Heals? False
@@ -285,10 +287,6 @@ Extra - map_name: rm_a5c07
   * Event Area 5 - Distribution Center Energy Activated
   > Door to Energy Distribution Activation Shaft
       Trivial
-  > Door to Energy Distribution Emergency Exit
-      Any of the following:
-          Space Jump Wall
-          Speed Booster and Shinesparking Tricks (Beginner)
 
 ----------------
 Energy Distribution Emergency Exit
@@ -327,14 +325,16 @@ Extra - map_name: rm_a5c09
   * Layers: default
   * Distribution Center EMP Ball Introduction EMP Door to Energy Distribution Robot Home/Door to EMP Ball Introduction
   * Extra - instance_id: 133836
+  > Door to Energy Distribution Emergency Exit
+      Can Use Any Bombs and Space Jump Tunnel Climb
   > Event - EMPPuzzle
-      Trivial
+      Can Use Any Bombs
 
 > Door to Energy Distribution Emergency Exit; Heals? False
   * Layers: default
   * Normal Door to Energy Distribution Emergency Exit/Door to EMP Ball Introduction
   * Extra - instance_id: 133841
-  > Event - EMPPuzzle
+  > Door to Energy Distribution Robot Home
       Can Use Any Bombs
 
 > Event - EMPPuzzle; Heals? False
@@ -342,8 +342,6 @@ Extra - map_name: rm_a5c09
   * Event EMP - Area 5 EMP Ball Introduction
   > Door to Energy Distribution Robot Home
       Trivial
-  > Door to Energy Distribution Emergency Exit
-      Can Use Any Bombs and Space Jump Tunnel Climb
 
 ----------------
 Energy Distribution Robot Home
@@ -352,21 +350,21 @@ Extra - map_name: rm_a5c10
   * Layers: default
   * Distribution Center Robot Home EMP Door to Energy Distribution Tower East/Door to Energy Distribution Robot Home
   * Extra - instance_id: 133903
-  > Event - EMPPuzzle
+  > Door to EMP Ball Introduction
       Trivial
 
 > Door to EMP Ball Introduction; Heals? False
   * Layers: default
   * Normal Door to EMP Ball Introduction/Door to Energy Distribution Robot Home
   * Extra - instance_id: 133904
+  > Door to Energy Distribution Tower East
+      Trivial
   > Event - EMPPuzzle
       Missiles ≥ 2 or Super Missiles or Can Use Bombs
 
 > Event - EMPPuzzle; Heals? False
   * Layers: default
   * Event EMP - Area 5 Robot Home
-  > Door to Energy Distribution Tower East
-      Trivial
   > Door to EMP Ball Introduction
       Trivial
 
@@ -377,7 +375,7 @@ Extra - map_name: rm_a5c11
   * Layers: default
   * Distribution Center Energy Distribution Tower East EMP Door to Energy Distribution Tower West/Door to Energy Distribution Tower East
   * Extra - instance_id: 133914
-  > Door to Energy Distribution Zeta Nest
+  > Bottom
       Trivial
 
 > Door to Energy Distribution Robot Home; Heals? False
@@ -388,28 +386,40 @@ Extra - map_name: rm_a5c11
       Any of the following:
           Can Use Bombs
           Missiles ≥ 10 and Can Use Power Bombs
+  > Bottom
+      Can Use Any Bombs
 
 > Door to Energy Distribution Zeta Nest; Heals? False
   * Layers: default
   * Distribution Center Energy Distribution Tower East EMP Door to Energy Distribution Zeta Nest/Door to Energy Distribution Tower East
   * Extra - instance_id: 133911
-  > Door to Energy Distribution Tower West
+  > Bottom
       Trivial
 
 > Event - EMP Puzzle; Heals? False
   * Layers: default
   * Event EMP - Area 5 Energy Distribution Tower East
+  > Bottom
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
   > Door to Energy Distribution Tower West
       Trivial
   > Door to Energy Distribution Robot Home
       All of the following:
-          Can Use Power Bombs
+          After EMP - Area 5 Energy Distribution Tower East and Can Use Any Bombs
           Any of the following:
               Space Jump or Can Use Spider Ball
-              Hi-Jump Boots and Power Grip
+              All of the following:
+                  # HJ + WJ
+                  Hi-Jump Boots and Walljump (Beginner)
               All of the following:
                   # IBJ
                   Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+              All of the following:
+                  # CBJ
+                  Charged Bomb Jump (Intermediate) and Walljump (Intermediate) and Can Use Charged Bomb Jump
   > Door to Energy Distribution Zeta Nest
       Trivial
 
@@ -442,20 +452,28 @@ Extra - map_name: rm_a5c12
   * Layers: default
   > Door to Distribution Facility Tower West
       All of the following:
-          Power Grip Wall
+          Can Use Any Bombs and Power Grip Wall
           Any of the following:
-              Can Use Power Bombs
+              # Pass by the Zeta
+              Hi-Jump Boots or Space Jump or After Metroids Area 5 - Interior Zeta or Can Use Spider Ball
               All of the following:
-                  Mid-Air Morph (Intermediate)
-                  Hi-Jump Boots or Space Jump or Walljump (Beginner) or Can Use Spider Ball
+                  # Roll underneath
+                  Morph Ball and Movement (Beginner)
+              All of the following:
+                  # Damage Boost over
+                  Damage Boost (Beginner) and Normal Damage ≥ 25
   > Door to Energy Distribution Tower East
       All of the following:
-          Power Grip Wall
+          Can Use Any Bombs and Power Grip Wall
           Any of the following:
-              Can Use Power Bombs
+              # Pass by the Zeta
+              Hi-Jump Boots or Space Jump or After Metroids Area 5 - Interior Zeta or Can Use Spider Ball
               All of the following:
-                  Mid-Air Morph (Intermediate)
-                  Hi-Jump Boots or Space Jump or Walljump (Beginner) or Can Use Spider Ball
+                  # Roll underneath
+                  Morph Ball and Movement (Beginner)
+              All of the following:
+                  # Damage Boost over
+                  Damage Boost (Beginner) and Normal Damage ≥ 25
   > Event - Zeta
       Defeat Zeta
 
@@ -563,6 +581,10 @@ Extra - map_name: rm_a5c14
           Any of the following:
               Mid-Air Morph (Beginner) or Power Grip Wall
               Speed Booster and Shinesparking Tricks (Beginner)
+  > Pipe to The Tower
+      Any of the following:
+          Hijump With Power Grip Wall
+          Speed Booster and Shinesparking Tricks (Beginner)
   > Pipe to Industrial Complex
       All of the following:
           Morph Ball
@@ -598,7 +620,7 @@ Extra - map_name: rm_a5c14
   * Extra - instance_id: 134411
   * Extra - dest_x: 808
   * Extra - dest_y: 128
-  > Pipe to Industrial Complex
+  > Door to Distribution Facility Tower West
       Trivial
 
 > Pipe to Industrial Complex; Heals? False
