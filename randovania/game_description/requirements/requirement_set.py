@@ -36,10 +36,10 @@ class RequirementSet:
             if not any(other.is_proper_subset_of(requirement) for other in input_set)
         )
 
-    def __deepcopy__(self, memodict):
+    def __deepcopy__(self, memodict: dict) -> RequirementSet:
         return self
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         return isinstance(
             other, RequirementSet) and self.alternatives == other.alternatives
 
@@ -48,10 +48,10 @@ class RequirementSet:
             self._cached_hash = hash(self.alternatives)
         return self._cached_hash
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return repr(self.alternatives)
 
-    def pretty_print(self, indent="", print_function=logging.info):
+    def pretty_print(self, indent: str = "", print_function: typing.Callable[[str], None] = logging.info) -> None:
         to_print = []
         if self == RequirementSet.impossible():
             to_print.append("Impossible")
@@ -66,8 +66,8 @@ class RequirementSet:
             print_function(indent + line)
 
     @property
-    def as_str(self):
-        buffer = []
+    def as_str(self) -> str:
+        buffer: list[str] = []
         self.pretty_print(print_function=buffer.append)
         if len(buffer) > 1:
             return " or ".join(f"({it})" for it in buffer)

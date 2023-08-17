@@ -4,6 +4,8 @@ import typing
 from functools import lru_cache
 
 if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -58,8 +60,8 @@ class Requirement:
         from randovania.game_description.requirements.requirement_or import RequirementOr
         return RequirementOr([])
 
-    def __lt__(self, other: Requirement):
+    def __lt__(self, other: Requirement) -> bool:
         return str(self) < str(other)
 
-    def iterate_resource_requirements(self, database: ResourceDatabase) -> typing.Iterator[ResourceRequirement]:
+    def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator[ResourceRequirement]:
         raise NotImplementedError
