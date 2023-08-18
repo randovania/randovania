@@ -96,7 +96,13 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
 
     def _create_game_patches(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random):
         def get_locked_ammo_text(ammo_item: str):
-            return [pickup.collection_text[0] for pickup in pickup_list if pickup.original_pickup.name == ammo_item][0]
+            text = "MISSING TEXT, PLEASE REPORT THIS!"
+            for pickup in pickup_list:
+                if pickup.original_pickup.name != ammo_item:
+                    continue
+                text = pickup.collection_text[0]
+                break
+            return text
         missile_text = get_locked_ammo_text("Missile Expansion")
         super_text = get_locked_ammo_text("Super Missile Expansion")
         pb_text = get_locked_ammo_text("Power Bomb Expansion")
