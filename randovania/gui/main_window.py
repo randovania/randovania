@@ -5,7 +5,6 @@ import base64
 import functools
 import logging
 import os
-import platform
 import re
 import typing
 from functools import partial
@@ -23,7 +22,6 @@ from randovania.gui.lib import async_dialog, common_qt_lib, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
-from randovania.interface_common.installation_check import find_bad_installation
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import enum_lib, json_lib
@@ -233,8 +231,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
         self.menu_action_help.triggered.connect(self._on_menu_action_help)
-        self.menu_action_verify_installation.triggered.connect(self._on_menu_action_verify_installation)
-        self.menu_action_verify_installation.setVisible(randovania.is_frozen() and platform.system() == "Windows")
         self.menu_action_changelog.triggered.connect(self._on_menu_action_changelog)
         self.menu_action_changelog.setVisible(False)
         self.menu_action_about.triggered.connect(self._on_menu_action_about)
@@ -623,9 +619,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         if old_value and not new_value:
             if not await async_dialog.yes_no_prompt(
-                    self, "Disable validation?",
-                    text=_DISABLE_VALIDATION_WARNING,
-                    icon=QtWidgets.QMessageBox.Icon.Warning,
+                self, "Disable validation?",
+                text=_DISABLE_VALIDATION_WARNING,
+                icon=QtWidgets.QMessageBox.Icon.Warning,
             ):
                 self.menu_action_validate_seed_after.setChecked(True)
                 return
@@ -645,8 +641,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         if old_value and not new_value:
             if not await async_dialog.yes_no_prompt(
-                    self, "Run generation in the same process?",
-                    text=_ANOTHER_PROCESS_GENERATION_WARNING,
+                self, "Run generation in the same process?",
+                text=_ANOTHER_PROCESS_GENERATION_WARNING,
             ):
                 self.menu_action_generate_in_another_process.setChecked(True)
                 return
@@ -710,45 +706,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.help_window is None:
             self.help_window = self._create_generic_window(RandovaniaHelpWidget(), "Randovania Help")
         self.help_window.show()
-
-    @asyncSlot()
-    async def _on_menu_action_verify_installation(self):
-        try:
-            hash_list: dict[str, str] = await json_lib.read_path_async(
-                randovania.get_data_path().joinpath("frozen_file_list.json"))
-        except FileNotFoundError:
-            return await async_dialog.warning(
-                self, "File List Missing",
-                "Unable to verify installation: file list is missing."
-            )
-
-        from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
-
-        try:
-            bad_files, extra_files = await BackgroundProcessDialog.open_for_background_task(
-                functools.partial(find_bad_installation, hash_list),
-                "Verifying installation..."
-            )
-        except asyncio.exceptions.CancelledError:
-            return
-
-        if bad_files or extra_files:
-            errors = []
-            if bad_files:
-                errors.append(f"- {len(bad_files)} files are missing or are incorrect")
-            if extra_files:
-                errors.append(f"- {len(extra_files)} files are unexpected")
-
-            await async_dialog.warning(
-                self, "Bad Installation",
-                "The following errors were found:\n" + "\n".join(errors)
-            )
-        else:
-            await async_dialog.message_box(
-                self, QtWidgets.QMessageBox.Icon.Information,
-                "Clean Installation",
-                f"No issues found out of {len(hash_list)} files.",
-            )
 
     def _on_menu_action_changelog(self):
         if self.all_change_logs is None:

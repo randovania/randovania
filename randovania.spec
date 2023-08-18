@@ -1,9 +1,5 @@
 # -*- mode: python -*-
-import hashlib
-import json
-import os
 import platform
-import pathlib
 from PyInstaller.utils.hooks import copy_metadata
 
 import randovania
@@ -61,25 +57,6 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
-
-
-def calculate_hash(file_name: str):
-    print(f"Hashing {file_name}")
-    with open(file_name, "rb") as f:
-        return hashlib.sha256(f.read()).hexdigest()
-
-
-frozen_file_list = pathlib.Path("randovania").joinpath("data", "frozen_file_list.json")
-frozen_file_list.write_text(json.dumps({
-    entry[0]: calculate_hash(entry[1])
-    for entry in a.datas + a.binaries
-}, indent=4))
-a.datas.append((
-    os.path.join("data", "frozen_file_list.json"),
-    os.fspath(frozen_file_list.absolute()),
-    "DATA",
-))
-
 pyz = PYZ(a.pure, a.zipped_data,
           cipher=block_cipher)
 exe = EXE(pyz,
