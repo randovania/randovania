@@ -3672,7 +3672,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Climb room to pipe",
+                                            "comment": "Get to upper platform in front of pipe",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -3729,22 +3729,39 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": "Get into Pipe",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidAirMorph",
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Power Grip Wall"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "MidAirMorph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Power Grip Wall"
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
