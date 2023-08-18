@@ -52,3 +52,10 @@ runtime-evaluated-base-classes = [
     "randovania.bitpacking.json_dataclass.JsonDataclass",
     "randovania.layout.base.base_configuration.BaseConfiguration",
 ]
+
+[tool.mypy]
+files = [
+    "randovania/game_description/resources/",
+    "test/game_description/resources/test_search.py",
+]
+follow_imports = "silent"

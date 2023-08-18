@@ -16,14 +16,14 @@ from randovania.game_connection.connector.remote_connector import (
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.dread.exporter.patch_data_factory import get_resources_for_details
 from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.game_connection.executor.dread_executor import DreadExecutor
     from randovania.game_description.db.region import Region
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 

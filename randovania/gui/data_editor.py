@@ -26,7 +26,7 @@ from randovania.game_description.editor import Editor
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
@@ -46,6 +46,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 SHOW_REGION_MIN_MAX_SPINNER = False
 

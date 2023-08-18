@@ -15,9 +15,9 @@ if TYPE_CHECKING:
     from ppc_asm import assembler
 
     from randovania.game_description.db.region import Region
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.inventory import Inventory
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.pickup_entry import PickupEntry
 
 
 def format_received_item(item_name: str, player_name: str) -> str:

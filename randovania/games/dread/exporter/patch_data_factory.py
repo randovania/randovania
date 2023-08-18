@@ -9,7 +9,7 @@ from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.resources.pickup_entry import PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
@@ -22,9 +22,9 @@ if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
+    from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
-    from randovania.game_description.resources.resource_info import ResourceCollection
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 
 _ALTERNATIVE_MODELS = {

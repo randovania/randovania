@@ -8,8 +8,8 @@ from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
 
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 

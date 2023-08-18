@@ -7,15 +7,15 @@ from frozendict import frozendict
 
 from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY, AmmoPickupDefinition
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY, PickupCategory
-from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import (
+from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupGeneratorParams,
     PickupModel,
     ResourceLock,
 )
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
+from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.standard_pickup_state import StandardPickupState

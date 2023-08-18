@@ -9,8 +9,8 @@ import pytest
 from frozendict import frozendict
 
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.inventory import Inventory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.network_common import error, remote_inventory, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus

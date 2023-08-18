@@ -10,8 +10,9 @@ if typing.TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 class RequirementSet:

@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.trick_usage_popup_ui import Ui_TrickUsagePopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon

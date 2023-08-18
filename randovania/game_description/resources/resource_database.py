@@ -4,15 +4,16 @@ import dataclasses
 import typing
 
 from randovania.game_description.resources import search
+from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
     from collections.abc import Callable
 
     from randovania.game_description.requirements.base import Requirement
-    from randovania.game_description.resources.damage_resource_info import DamageReduction
+    from randovania.game_description.resources.damage_reduction import DamageReduction
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.games.game import RandovaniaGame
@@ -58,7 +59,8 @@ class ResourceDatabase:
                 assert self.resource_by_index[resource.resource_index] is None
                 self.resource_by_index[resource.resource_index] = resource
 
-    def get_by_type(self, resource_type: ResourceType) -> list[ResourceInfo]:
+    def get_by_type(self, resource_type: ResourceType,
+                    ) -> list[ItemResourceInfo] | list[SimpleResourceInfo] | list[TrickResourceInfo]:
         if resource_type == ResourceType.ITEM:
             return self.item
         elif resource_type == ResourceType.EVENT:
@@ -77,13 +79,17 @@ class ResourceDatabase:
 
     def get_by_type_and_index(self, resource_type: ResourceType,
                               name: str) -> ResourceInfo:
-        return search.find_resource_info_with_id(self.get_by_type(resource_type), name, resource_type)
+        return search.find_resource_info_with_id(typing.cast(list[ResourceInfo], self.get_by_type(resource_type)),
+                                                 name, resource_type)
 
     def get_item(self, short_name: str) -> ItemResourceInfo:
-        return self.get_by_type_and_index(ResourceType.ITEM, short_name)
+        return search.find_resource_info_with_id(self.item, short_name, ResourceType.ITEM)
 
     def get_event(self, short_name: str) -> SimpleResourceInfo:
-        return self.get_by_type_and_index(ResourceType.EVENT, short_name)
+        return search.find_resource_info_with_id(self.event, short_name, ResourceType.EVENT)
+
+    def get_damage(self, short_name: str) -> SimpleResourceInfo:
+        return search.find_resource_info_with_id(self.damage, short_name, ResourceType.DAMAGE)
 
     def get_item_by_name(self, name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_long_name(self.item, name)

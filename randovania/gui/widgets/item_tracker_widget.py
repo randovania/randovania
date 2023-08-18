@@ -9,8 +9,8 @@ from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania import get_data_path
 from randovania.game_description import default_database
+from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.pixmap_lib import paint_with_opacity

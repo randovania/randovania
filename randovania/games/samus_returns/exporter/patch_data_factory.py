@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.resource_info import ResourceCollection
+    from randovania.game_description.resources.resource_collection import ResourceCollection
 
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
