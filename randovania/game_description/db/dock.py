@@ -103,6 +103,7 @@ class DockType:
     """Represents a kind of dock for the game. Can be things like Door, Tunnel, Portal."""
     short_name: str
     long_name: str
+    needs_to_connect_to_same_type: bool
     extra: frozendict
 
 

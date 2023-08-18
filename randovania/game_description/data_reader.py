@@ -216,6 +216,7 @@ def read_dock_type(name: str, data: dict) -> DockType:
     return DockType(
         short_name=name,
         long_name=data["name"],
+        needs_to_connect_to_same_type=data["needs_to_connect_to_same_type"],
         extra=frozen_lib.wrap(data["extra"]),
     )
 

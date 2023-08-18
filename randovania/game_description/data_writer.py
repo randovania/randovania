@@ -223,6 +223,7 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
         "types": {
             dock_type.short_name: {
                 "name": dock_type.long_name,
+                "needs_to_connect_to_same_type": dock_type.needs_to_connect_to_same_type,
                 "extra": frozen_lib.unwrap(dock_type.extra),
                 "items": {
                     name: write_dock_weakness(weakness)

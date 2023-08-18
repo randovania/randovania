@@ -86,11 +86,6 @@ def dock_has_correct_name(area: Area, node: DockNode) -> bool:
 def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
     region_list = game.region_list
     area = region_list.nodes_to_area(node)
-    game_is_dlr_compatible = False
-    for params in game.dock_weakness_database.dock_rando_params.values():
-        if params.is_compatible:
-            game_is_dlr_compatible = True
-            break
 
     if invalid_layers := set(node.layers) - set(game.layers):
         yield f"{node.name} has unknown layers {invalid_layers}"
@@ -130,16 +125,16 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
                 if other_node.default_connection != region_list.identifier_for_node(node):
                     yield (f"{node.name} connects to '{node.default_connection}', but that dock connects "
                            f"to '{other_node.default_connection}' instead.")
-                if game_is_dlr_compatible:
-                    if not node.exclude_from_dock_rando and other_node.dock_type != node.dock_type:
-                        yield (f"'{node.name}' is of type '{node.dock_type.long_name}', but the connected dock "
-                               f"'{other_node.name}' is of type '{other_node.dock_type.long_name}' instead.")
+                if node.dock_type.needs_to_connect_to_same_type and other_node.dock_type != node.dock_type:
+                    yield (f"'{node.name}' is of type '{node.dock_type.long_name}', but the connected dock "
+                           f"'{other_node.name}' is of type '{other_node.dock_type.long_name}' instead.")
             else:
                 yield f"{node.name} connects to '{node.default_connection}' which is not a DockNode"
 
     elif any(re.match(fr"{dock_type.long_name}\s*(to|from)", node.name)
              for dock_type in game.dock_weakness_database.dock_types):
         yield f"{node.name} is not a Dock Node, naming suggests it should be."
+
 
 def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
     nodes_with_paths_in = set()
@@ -242,6 +237,13 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
         yield f"Unknown strongly connected component detected containing {len(names)} nodes:\n{names}"
 
 
+def find_invalid_dock_configuration_errors(game: GameDescription) -> Iterator[str]:
+    for dock_type in game.dock_weakness_database.weaknesses:
+        if not dock_type.needs_to_connect_to_same_type and dock_type in game.dock_weakness_database.dock_rando_params:
+            yield (f"Dock Type '{dock_type.long_name}' is marked as being compatible with Dock Rando, but "
+                   f"does not have the 'needs_to_connect_to_same_type' attribute set, which is required for it.")
+
+
 def find_database_errors(game: GameDescription) -> list[str]:
     result = []
 
@@ -252,5 +254,6 @@ def find_database_errors(game: GameDescription) -> list[str]:
     for region in game.region_list.regions:
         result.extend(find_region_errors(game, region))
     result.extend(find_invalid_strongly_connected_components(game))
+    result.extend(find_invalid_dock_configuration_errors(game))
 
     return result
