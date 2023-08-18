@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
 
 
 class ResourceCollection:
@@ -47,8 +47,8 @@ class ResourceCollection:
         return f"<ResourceCollection with {self.num_resources} resources>"
 
     @property
-    def _comparison_tuple(self):
-        return list(self.as_resource_gain()), self.add_self_as_requirement_to_resources
+    def _comparison_tuple(self) -> tuple[ResourceGainTuple, bool]:
+        return tuple(self.as_resource_gain()), self.add_self_as_requirement_to_resources
 
     def __eq__(self, other):
         return isinstance(other, ResourceCollection) and (
@@ -71,6 +71,9 @@ class ResourceCollection:
         return resource.resource_index in self._existing_resources
 
     def set_resource(self, resource: ResourceInfo, quantity: int):
+        """Sets the quantity of the given resource to be exactly the given value.
+        This method should be used in exceptional cases only. For common usage, use `add_resource_gain`.
+        """
         resource_index = resource.resource_index
         self._damage_reduction_cache = None
         try:
@@ -120,6 +123,10 @@ class ResourceCollection:
             yield resource, self._resource_array[index]
 
     def remove_resource(self, resource: ResourceInfo):
+        """
+        Removes the given resource, making `is_resource_set` return False for it.
+        This should be used in exceptional cases only. Consider `add_resource_gain` with negative gain instead.
+        """
         resource_index = resource.resource_index
         self._existing_resources.pop(resource_index, None)
         try:
