@@ -19,7 +19,7 @@ if typing.TYPE_CHECKING:
     from randovania.games.game import RandovaniaGame
 
 
-def default_base_damage_reduction(db: ResourceDatabase, current_resources: ResourceCollection):
+def default_base_damage_reduction(db: ResourceDatabase, current_resources: ResourceCollection) -> float:
     return 1.0
 
 
@@ -44,7 +44,7 @@ class ResourceDatabase:
     base_damage_reduction: Callable[[ResourceDatabase, ResourceCollection], float] = default_base_damage_reduction
     resource_by_index: list[ResourceInfo | None] = dataclasses.field(default_factory=list)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         # Reserve index 0 as a placeholder for things without index
         max_index = max(
             max((resource.resource_index for resource in self.get_by_type(resource_type)), default=0)
@@ -98,7 +98,7 @@ class ResourceDatabase:
     def energy_tank(self) -> ItemResourceInfo:
         return self.energy_tank_item
 
-    def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection):
+    def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
         cached_result = current_resources.get_damage_reduction_cache(resource)
         if cached_result is not None:
             return cached_result
