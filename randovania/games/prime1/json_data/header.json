@@ -1,5 +1,5 @@
 {
-    "schema_version": 22,
+    "schema_version": 23,
     "game": "prime1",
     "resource_database": {
         "items": {
@@ -1360,6 +1360,7 @@
         "types": {
             "door": {
                 "name": "Door",
+                "needs_to_connect_to_same_type": true,
                 "extra": {},
                 "items": {
                     "Normal Door": {
@@ -1835,6 +1836,7 @@
             },
             "morph_ball": {
                 "name": "Morph Ball Door",
+                "needs_to_connect_to_same_type": true,
                 "extra": {},
                 "items": {
                     "Morph Ball Door": {
@@ -1951,6 +1953,7 @@
             },
             "other": {
                 "name": "Dock",
+                "needs_to_connect_to_same_type": true,
                 "extra": {},
                 "items": {
                     "Open Passage": {
@@ -2071,6 +2074,7 @@
             },
             "teleporter": {
                 "name": "Teleporter",
+                "needs_to_connect_to_same_type": false,
                 "extra": {
                     "is_teleporter": true,
                     "ignore_for_hints": true

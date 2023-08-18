@@ -128,7 +128,7 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
                 if node.dock_type.needs_to_connect_to_same_type and other_node.dock_type != node.dock_type:
                     yield (f"'{node.name}' is of type '{node.dock_type.long_name}', but the connected dock "
                            f"'{other_node.name}' is of type '{other_node.dock_type.long_name}' instead.")
-            else:
+            elif node.dock_type.needs_to_connect_to_same_type:
                 yield f"{node.name} connects to '{node.default_connection}' which is not a DockNode"
 
     elif any(re.match(fr"{dock_type.long_name}\s*(to|from)", node.name)

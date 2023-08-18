@@ -93,10 +93,6 @@ class DockRandoParams:
     change_from: set[DockWeakness]
     change_to: set[DockWeakness]
 
-    @property
-    def is_compatible(self) -> bool:
-        return self.change_to and self.change_from
-
 
 @dataclass(frozen=True, slots=True, order=True)
 class DockType:

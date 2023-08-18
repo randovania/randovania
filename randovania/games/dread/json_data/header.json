@@ -1,5 +1,5 @@
 {
-    "schema_version": 22,
+    "schema_version": 23,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -5072,6 +5072,7 @@
         "types": {
             "door": {
                 "name": "Door",
+                "needs_to_connect_to_same_type": true,
                 "extra": {},
                 "items": {
                     "Access Open": {
@@ -5585,6 +5586,7 @@
             },
             "tunnel": {
                 "name": "Tunnel",
+                "needs_to_connect_to_same_type": false,
                 "extra": {},
                 "items": {
                     "Slide Tunnel": {
@@ -5771,6 +5773,7 @@
             },
             "other": {
                 "name": "Dock",
+                "needs_to_connect_to_same_type": false,
                 "extra": {},
                 "items": {
                     "Open Passage": {
@@ -5822,6 +5825,7 @@
             },
             "teleporter": {
                 "name": "Teleporter",
+                "needs_to_connect_to_same_type": false,
                 "extra": {
                     "ignore_for_hints": true
                 },
@@ -5842,6 +5846,7 @@
             },
             "elevator": {
                 "name": "Elevator",
+                "needs_to_connect_to_same_type": false,
                 "extra": {
                     "is_teleporter": true,
                     "ignore_for_hints": true
@@ -5863,6 +5868,7 @@
             },
             "shuttle": {
                 "name": "Shuttle",
+                "needs_to_connect_to_same_type": false,
                 "extra": {
                     "is_teleporter": true,
                     "ignore_for_hints": true

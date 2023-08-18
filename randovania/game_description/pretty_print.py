@@ -175,7 +175,8 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
 
     output.write("\n====================\nDock Weaknesses\n")
     for dock_type in game.dock_weakness_database.dock_types:
-        output.write(f"\n> {dock_type.long_name}")
+        output.write(f"\n> {dock_type.long_name}; "
+                     f"Needs to connect to same type? {dock_type.needs_to_connect_to_same_type}")
         for extra_name, extra_field in dock_type.extra.items():
             output.write(f"\n* Extra - {extra_name}: {extra_field}")
 
