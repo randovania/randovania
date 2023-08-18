@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.generator_parameters import GeneratorParameters
     from randovania.layout.preset import Preset

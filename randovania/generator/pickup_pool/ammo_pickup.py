@@ -7,7 +7,7 @@ from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 

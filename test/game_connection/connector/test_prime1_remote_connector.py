@@ -8,8 +8,8 @@ from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperationException
+from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 
 if TYPE_CHECKING:

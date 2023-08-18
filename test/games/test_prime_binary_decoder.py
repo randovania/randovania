@@ -57,6 +57,7 @@ sample_data = {
             "to_shuffle_proportion": 1.0
         }
     },
+    "used_trick_levels": {},
     "regions": [],
 }
 

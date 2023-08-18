@@ -15,12 +15,12 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.hint import Hint
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.pickup_entry import (
+from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupModel,
     ResourceLock,
 )
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame
