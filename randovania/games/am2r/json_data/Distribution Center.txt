@@ -1102,7 +1102,9 @@ Extra - map_name: rm_a5c27
       Any of the following:
           Ice Beam
           Damage Boost (Beginner) and Normal Damage ≥ 50
-          Gravity Suit and Speed Booster
+          All of the following:
+              Gravity Suit
+              Hi-Jump Boots or Space Jump or Speed Booster or Can Use Spider Ball
 
 > Door to Moheek Hangout; Heals? False
   * Layers: default
@@ -1111,7 +1113,9 @@ Extra - map_name: rm_a5c27
   > Door to Facility Storage Save Station
       Any of the following:
           Ice Beam
-          Gravity Suit and Speed Booster
+          All of the following:
+              Gravity Suit
+              Hi-Jump Boots or Space Jump or Speed Booster or Can Use Spider Ball
           Damage Boost (Beginner) and Normal Damage ≥ 50
 
 ----------------
@@ -1473,9 +1477,11 @@ Extra - map_name: rm_a5b05
               # Suitless Method
               Morph Ball
               Any of the following:
+                  # Get past crumble blocks
                   Mid-Air Morph (Advanced)
                   Power Grip and Movement (Intermediate)
               Any of the following:
+                  # To climb the room
                   All of the following:
                       Walljump (Intermediate)
                       Power Grip or Mid-Air Morph (Advanced)
@@ -1483,8 +1489,16 @@ Extra - map_name: rm_a5b05
                       # IBJ
                       Infinite Bomb Jumping (Advanced) and Can Use Bombs
           All of the following:
-              # Intended Method
-              Gravity Suit and Can Use Spider Ball
+              # Gravity Suit Method
+              Gravity Suit
+              Any of the following:
+                  # Get past crumble blocks
+                  Can Use Spider Ball
+                  All of the following:
+                      Hi-Jump Boots and Movement (Intermediate)
+                      All of the following:
+                          # To climb the room
+                          Hijump Tunnel Climb
 
 > Tunnel to Spiky Spider Trial Reward Room; Heals? False
   * Layers: default
@@ -1598,13 +1612,7 @@ Extra - map_name: rm_a5b15
 > Dock to Facility Storage Tower East; Heals? False
   * Layers: default
   * Open Passage to Facility Storage Tower East/Dock to Spiky Space Jump Trial Entrance
-  > Dock to Spiky Space Jump Trial
-      All of the following:
-          Gravity Suit and Speed Booster and Shinesparking Tricks (Beginner)
-          Any of the following:
-              # Climb Requirements
-              Hi-Jump Boots or Power Grip or Space Jump or Walljump (Beginner)
-  > Bottom
+  > Center
       Any of the following:
           Power Grip or Movement (Beginner) or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
@@ -1618,19 +1626,16 @@ Extra - map_name: rm_a5b15
 > Dock to Spiky Space Jump Trial; Heals? False
   * Layers: default
   * Open Passage to Spiky Space Jump Trial/Dock to Spiky Space Jump Trial Entrance
-  > Bottom
-      Gravity Suit and Speed Booster
+  > Center
+      All of the following:
+          Gravity Suit and Speed Booster
+          Movement (Beginner) or Shinesparking Tricks (Beginner) or Power Grip Wall
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 304; Category? Minor
   * Extra - object_name: oItemM_304
-  > Bottom
-      Trivial
-
-> Bottom; Heals? False
-  * Layers: default
-  > Dock to Facility Storage Tower East
+  > Center
       Any of the following:
           Power Grip or Walljump (Beginner)
           Gravity Suit and Power Grip Wall
@@ -1640,6 +1645,13 @@ Extra - map_name: rm_a5b15
           All of the following:
               # CBJ
               Charged Bomb Jump (Beginner) and Can Use Charged Bomb Jump
+
+> Center; Heals? False
+  * Layers: default
+  > Dock to Facility Storage Tower East
+      Trivial
+  > Dock to Spiky Space Jump Trial
+      Gravity Suit and Speed Booster and Shinesparking Tricks (Beginner)
   > Pickup (Missile Tank)
       Trivial
 
@@ -1666,17 +1678,29 @@ Extra - map_name: rm_a5b16
   * Open Passage to Spiky Space Jump Trial Entrance/Dock to Spiky Space Jump Trial
   > Dock to Spiky Space Jump Trial Reward Room
       Any of the following:
+          # TODO: HJ/DMG boost and DIBJ
           All of the following:
               # With Gravity Suit
               Gravity Suit
               Any of the following:
                   Space Jump
-                  Damage Boost (Advanced) and Walljump (Advanced) and Normal Damage ≥ 120
+                  Damage Boost (Advanced) and Walljump (Advanced) and Normal Damage ≥ 150
           All of the following:
               # Suitless
               Damage Boost (Expert) and Walljump (Hypermode) and Normal Damage ≥ 700
   > Pickup (Super Missile Tank)
-      Gravity Suit and Speed Booster and Shinesparking Tricks (Beginner)
+      All of the following:
+          Gravity Suit and Speed Booster and Shinesparking Tricks (Beginner)
+          Any of the following:
+              Disabled Entrance Rando
+              All of the following:
+                  # Short charge with the plant alive
+                  Short Charge (Intermediate)
+                  Ice Beam or Movement (Beginner)
+              All of the following:
+                  # Regular charge without the plant
+                  Ice Beam
+                  Missiles ≥ 2 or Super Missiles
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
