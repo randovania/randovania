@@ -17,7 +17,7 @@ class ResourceCollection:
     add_self_as_requirement_to_resources: bool
     _damage_reduction_cache: dict[int, float] | None
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.resource_bitmask = 0
         self._resource_array = [0]
         self._existing_resources = {}
@@ -30,12 +30,12 @@ class ResourceCollection:
         result._resource_array = [0] * len(database.resource_by_index)
         return result
 
-    def _resize_array_to(self, size: int):
+    def _resize_array_to(self, size: int) -> None:
         self._resource_array.extend(
             0 for _ in range(len(self._resource_array), size + 1)
         )
 
-    def __getitem__(self, item: ResourceInfo):
+    def __getitem__(self, item: ResourceInfo) -> int:
         resource_index = item.resource_index
         try:
             return self._resource_array[resource_index]
@@ -43,20 +43,20 @@ class ResourceCollection:
             self._resize_array_to(resource_index)
             return self._resource_array[resource_index]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"<ResourceCollection with {self.num_resources} resources>"
 
     @property
     def _comparison_tuple(self) -> tuple[ResourceGainTuple, bool]:
         return tuple(self.as_resource_gain()), self.add_self_as_requirement_to_resources
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         return isinstance(other, ResourceCollection) and (
                 self._comparison_tuple == other._comparison_tuple
         )
 
     @property
-    def num_resources(self):
+    def num_resources(self) -> int:
         return len(self._existing_resources)
 
     def has_resource(self, resource: ResourceInfo) -> bool:
@@ -70,7 +70,7 @@ class ResourceCollection:
         """
         return resource.resource_index in self._existing_resources
 
-    def set_resource(self, resource: ResourceInfo, quantity: int):
+    def set_resource(self, resource: ResourceInfo, quantity: int) -> None:
         """Sets the quantity of the given resource to be exactly the given value.
         This method should be used in exceptional cases only. For common usage, use `add_resource_gain`.
         """
@@ -101,7 +101,7 @@ class ResourceCollection:
         result.add_resource_gain(resource_gain)
         return result
 
-    def add_resource_gain(self, resource_gain: ResourceGain):
+    def add_resource_gain(self, resource_gain: ResourceGain) -> None:
         self._damage_reduction_cache = None
         for resource, quantity in resource_gain:
             resource_index = resource.resource_index
@@ -122,7 +122,7 @@ class ResourceCollection:
         for index, resource in self._existing_resources.items():
             yield resource, self._resource_array[index]
 
-    def remove_resource(self, resource: ResourceInfo):
+    def remove_resource(self, resource: ResourceInfo) -> None:
         """
         Removes the given resource, making `is_resource_set` return False for it.
         This should be used in exceptional cases only. Consider `add_resource_gain` with negative gain instead.
@@ -151,10 +151,10 @@ class ResourceCollection:
             return self._damage_reduction_cache.get(resource.resource_index)
         return None
 
-    def add_damage_reduction_cache(self, resource: ResourceInfo, multiplier: float):
+    def add_damage_reduction_cache(self, resource: ResourceInfo, multiplier: float) -> None:
         if self._damage_reduction_cache is None:
             self._damage_reduction_cache = {}
         self._damage_reduction_cache[resource.resource_index] = multiplier
 
-    def __copy__(self):
+    def __copy__(self) -> ResourceCollection:
         return self.duplicate()

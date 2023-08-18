@@ -33,7 +33,7 @@ class Inventory:
             if resource.resource_type == ResourceType.ITEM
         })
 
-    def __setitem__(self, key: ItemResourceInfo, value: InventoryItem):
+    def __setitem__(self, key: ItemResourceInfo, value: InventoryItem) -> None:
         self.raw[key] = value
 
     def __getitem__(self, item: ItemResourceInfo) -> InventoryItem:
