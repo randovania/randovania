@@ -102,18 +102,17 @@ Extra - asset_id: collision_camera_034
               Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
               Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
           Any of the following:
-              Power Bomb ≥ 2
               All of the following:
                   Bomb and Destroy Missile Block
                   Phase Drift or Spider Ball
+              Power Bomb ≥ 2 and Lay Power Bomb
 
 > Event - Grapple Blocks Bottom; Heals? False
   * Layers: default
   * Event Area 6 - Transport to Area 7 Grapple Blocks Bottom
   > Above Pickup
       All of the following:
-          Morph Ball
-          Bomb or Power Bomb
+          Destroy Bomb Block
           Any of the following:
               Spider Ball
               All of the following:
@@ -247,10 +246,10 @@ Extra - asset_id: collision_camera_038
       Morph Ball and After Area 6 - Stolen Power Bomb Room Grapple Block
   > Event - Grapple Block
       All of the following:
-          Grapple Beam and Morph Ball
+          Grapple Beam
           Any of the following:
-              Bomb or Power Bomb
-              Super Missile and Screw Attack
+              Destroy Bomb Block
+              Morph Ball and Screw Attack and Shoot Super Missile
 
 > Door to Omega Arena Access (Top); Heals? False
   * Layers: default
@@ -272,11 +271,9 @@ Extra - asset_id: collision_camera_038
   * Layers: default
   * Event Area 6 - Stolen Power Bomb Room Grapple Block
   > Door to Omega Arena Access (Bottom)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Bomb or Power Bomb
-              Super Missile and Screw Attack
+      Any of the following:
+          Destroy Bomb Block
+          Morph Ball and Screw Attack and Shoot Super Missile
 
 > Middle Level; Heals? False
   * Layers: default
@@ -914,7 +911,9 @@ Extra - asset_id: collision_camera_060
           Ice Beam and Ice Beam Clip (Intermediate)
           All of the following:
               Grapple Beam and Morph Ball
-              Bomb or Power Bomb ≥ 3
+              Any of the following:
+                  Bomb
+                  Power Bomb ≥ 3 and Lay Power Bomb
               Baby Metroid or Phase Drift or Spider Ball or Movement (Beginner)
   > Door to Crumble Bridge
       Any of the following:
@@ -984,7 +983,9 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_supermissiletank
   > Next to Bottom Puzzle
-      Bomb or Power Bomb ≥ 3
+      Any of the following:
+          Bomb
+          Power Bomb ≥ 3 and Lay Power Bomb
 
 > Chozo Seal; Heals? False
   * Layers: default
@@ -1016,9 +1017,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Save Station
       Trivial
   > Door to Transport to Area 5 Entrance (Top)
-      All of the following:
-          Morph Ball
-          Bomb or Power Bomb ≥ 2
+      Power Bomb ≥ 2 or Lay Bomb or Lay Power Bomb
   > Door to Transport to Area 5 Entrance (Bottom)
       Trivial
 
@@ -1071,8 +1070,8 @@ Extra - asset_id: collision_camera_Hazard_End_A
           Stand on Frozen Enemy (Intermediate) and Walljump (Beginner) and Fully Freeze Enemy
   > Energy Recharge Station
       All of the following:
-          Morph Ball
-          Bomb or Power Bomb ≥ 2
+          Lay Bomb
+          Power Bomb ≥ 2 or Lay Power Bomb
 
 > Door to Transport to Area 5 Entrance (Bottom); Heals? False
   * Layers: default
@@ -1105,12 +1104,10 @@ Extra - asset_id: collision_camera_Hazard_End_A
               Space Jump and Mid-Air Morph (Beginner)
   > Pickup (Super Missile Tank)
       All of the following:
-          Grapple Beam and Morph Ball and Screw Attack and Destroy Missile Block
+          Grapple Beam and Morph Ball and Screw Attack and Destroy Missile Block and Lay Power Bomb
           Movement (Intermediate) or Super Jump (Advanced) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
           Phase Drift or Spider Ball or Movement (Beginner)
-          Any of the following:
-              Power Bomb ≥ 3
-              Bomb and Power Bomb
+          Bomb or Power Bomb ≥ 3
   > Ammo Recharge Station
       Trivial
   > Save Station

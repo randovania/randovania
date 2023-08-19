@@ -1016,6 +1016,15 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MainPB",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     ]
                 }
@@ -1214,12 +1223,24 @@
                             "data": "Shoot Beam Burst"
                         },
                         {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "SMAmmo",
-                                "amount": 5,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
@@ -1253,12 +1274,24 @@
                             "data": "Shoot Beam Burst"
                         },
                         {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "SMAmmo",
-                                "amount": 7,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 7,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
@@ -1292,12 +1325,24 @@
                             }
                         },
                         {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "SMAmmo",
-                                "amount": 7,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 7,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
@@ -1331,12 +1376,24 @@
                             "data": "Shoot Beam Burst"
                         },
                         {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "SMAmmo",
-                                "amount": 9,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 9,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
@@ -1385,13 +1442,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SMAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Shoot Super Missile"
                                                 }
                                             ]
                                         }
@@ -1403,41 +1455,10 @@
                 }
             },
             "Defeat Omega Metroid": {
-                "type": "or",
+                "type": "and",
                 "data": {
                     "comment": null,
                     "items": [
-                        {
-                            "type": "template",
-                            "data": "Shoot Beam Burst"
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MissileAmmo",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Ice",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SMAmmo",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         {
                             "type": "resource",
                             "data": {
@@ -1445,6 +1466,40 @@
                                 "name": "Space",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ice",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam Burst"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
+                                    }
+                                ]
                             }
                         }
                     ]
@@ -1479,13 +1534,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     }
                                 ]
                             }
@@ -1508,13 +1558,8 @@
                             }
                         },
                         {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SMAmmo",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Shoot Super Missile"
                         }
                     ]
                 }
@@ -1630,6 +1675,65 @@
                                             "type": "tricks",
                                             "name": "Freeze",
                                             "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Shoot Super Missile": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "SMAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Supers",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Destroy Blob Throwers/Steel Orbs": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Shoot Beam Burst"
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     }
@@ -1866,8 +1970,25 @@
                                             "data": "Shoot Wave Beam"
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Lay Power Bomb"
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Knowledge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Lay Power Bomb"
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 }
@@ -1897,8 +2018,25 @@
                                             "data": "Shoot Spazer Beam"
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Lay Power Bomb"
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Knowledge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Lay Power Bomb"
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 }
@@ -1933,8 +2071,25 @@
                                             }
                                         },
                                         {
-                                            "type": "template",
-                                            "data": "Lay Power Bomb"
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Knowledge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Lay Power Bomb"
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 }
@@ -1979,13 +2134,8 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "SMAmmo",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Shoot Super Missile"
                             }
                         }
                     },
