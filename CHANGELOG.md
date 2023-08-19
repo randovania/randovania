@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Using Cross Bomb is moved to Combat Beginner
   - For Missiles, Super Missiles and Ice Missiles, the number of required missiles is reduced by 1, which matches the pre-existing comments. These alternatives remain Combat Intermediate.
   - For Missiles, Super Missiles and Ice Missiles, these can now also be used without combat tricks, but you need 1.5x as many units of Missiles ammo as the combat trick version.
+  - Added Storm Missiles.
 - Fixed: A typo in the room name Ferenia - East Transport to Dairon has been changed from East Transport to Darion.
 - Fixed: In Burenia - Teleport to Ghavoran, to open the Plasma Beam door from below, add requirement to have Plasma Beam. This becomes relevant with Separate Beam Behavior.
 - Fixed: In Artaria - Teleport to Dairon, to enter the teleport itself using Wave Beam, add requirements to have Wide Beam and Door Lock Rando being disabled. The former becomes relevant with Separate Beam Behavior.
