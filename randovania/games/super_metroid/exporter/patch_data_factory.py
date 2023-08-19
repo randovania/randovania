@@ -14,10 +14,9 @@ from randovania.generator.pickup_pool import pickup_creator
 if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
-
-_multiplier_for_item = {
-    "Energy Tank": 100, "Reserve Tank": 100,
-}
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+    from randovania.layout.layout_description import LayoutDescription
 
 _mapping = {
     "Missile": "Missile Expansion",
@@ -53,48 +52,57 @@ _effect = {
 }
 
 
-def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails
-                                 ) -> dict:
-    pickup_type = "Nothing"
-    count = 0
-
-    for resource, quantity in detail.conditional_resources[0].resources:
-        if resource.resource_type == ResourceType.ITEM and resource.extra["item_id"] >= 1000:
-            continue
-        pickup_type = resource.long_name
-        count = quantity
-        break
-
-    count *= _multiplier_for_item.get(pickup_type, 1)
-
-    item_name = _mapping.get(pickup_type, pickup_type)
-
-    result = {
-        "item_name": item_name,
-        "quantity_given": count,
-        "pickup_effect": _effect[item_name],
-        "pickup_index": detail.index.index,
-        "native_sprite_name": item_name,
-        "owner_name": None,
-    }
-
-    return result
-
-
-def sm_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
-    item_name = _mapping.get(item.long_name, item.long_name)
-    quantity *= _multiplier_for_item.get(item_name, 1)
-    result = {
-        "item_name": item_name,
-        "quantity_given": quantity,
-        "pickup_effect": _effect[item_name],
-    }
-    return result
-
-
 class SuperMetroidPatchDataFactory(BasePatchDataFactory):
     cosmetic_patches: SuperMetroidCosmeticPatches
     configuration: SuperMetroidConfiguration
+
+    def __init__(self, description: LayoutDescription, players_config: PlayersConfiguration,
+                 cosmetic_patches: BaseCosmeticPatches):
+        super().__init__(description, players_config, cosmetic_patches)
+
+        cfg = self.configuration
+        self._multiplier_for_item = {
+            # Should reserve tanks be different from etanks in the future?
+            "Energy Tank": cfg.energy_per_tank, "Reserve Tank": cfg.energy_per_tank,
+        }
+
+    def sm_pickup_details_to_patcher(self, detail: pickup_exporter.ExportedPickupDetails) -> dict:
+        pickup_type = "Nothing"
+        count = 0
+
+        for resource, quantity in detail.conditional_resources[0].resources:
+            if resource.resource_type == ResourceType.ITEM and resource.extra["item_id"] >= 1000:
+                continue
+            pickup_type = resource.long_name
+            count = quantity
+            break
+
+        count *= self._multiplier_for_item.get(pickup_type, 1)
+
+        item_name = _mapping.get(pickup_type, pickup_type)
+
+        result = {
+            "item_name": item_name,
+            "quantity_given": count,
+            "pickup_effect": _effect[item_name],
+            "pickup_index": detail.index.index,
+            "native_sprite_name": item_name,
+            "owner_name": None,
+        }
+
+        return result
+
+    def sm_starting_items_to_patcher(self, config: SuperMetroidConfiguration,
+                                     item: ItemResourceInfo, quantity: int) -> dict:
+
+        item_name = _mapping.get(item.long_name, item.long_name)
+        quantity *= self._multiplier_for_item.get(item_name, 1)
+        result = {
+            "item_name": item_name,
+            "quantity_given": quantity,
+            "pickup_effect": _effect[item_name],
+        }
+        return result
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.SUPER_METROID
@@ -145,11 +153,11 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
 
         return {
             "pickups": [
-                sm_pickup_details_to_patcher(detail)
+                self.sm_pickup_details_to_patcher(detail)
                 for detail in pickup_list
             ],
             "starting_items": [
-                sm_starting_items_to_patcher(item, qty)
+                self.sm_starting_items_to_patcher(self.configuration, item, qty)
                 for item, qty in self.patches.starting_resources().as_resource_gain()
             ],
             "specific_patches": specific_patches,
