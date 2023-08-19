@@ -8,17 +8,13 @@ from typing import TYPE_CHECKING
 
 import randovania
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     from multiprocessing.connection import Connection
     from pathlib import Path
 
     from randovania.lib import status_update_lib
-
-
-class DotnetMissingException(Exception):
-    pass
-
 
 @dataclasses.dataclass(frozen=True)
 class AM2RGameExportParams(GameExportParams):
@@ -48,7 +44,7 @@ class AM2RGameExporter(GameExporter):
         # Check if dotnet is available
         dotnet_process = subprocess.run(["dotnet", "--help"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         if dotnet_process.returncode != 0:
-            raise DotnetMissingException("You do not have .NET installed!\n"
+            raise UnableToExportError("You do not have .NET installed!\n"
                                          "Please ensure that it is installed and located in PATH. It can be installed "
                                          "from here:\n"
                                          "https://aka.ms/dotnet/download")

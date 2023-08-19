@@ -12,9 +12,9 @@ import pytest
 from randovania.games.am2r.exporter.game_exporter import (
     AM2RGameExporter,
     AM2RGameExportParams,
-    DotnetMissingException,
     _run_patcher,
 )
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -28,7 +28,7 @@ def test_export_game_raises_without_dotnet(mocker):
 
     exporter = AM2RGameExporter()
 
-    with pytest.raises(DotnetMissingException):
+    with pytest.raises(UnableToExportError):
         exporter._do_export_game(MagicMock(), MagicMock(), MagicMock())
 
 @pytest.mark.parametrize("patch_data_name", ["starter_preset", "door_lock"])
