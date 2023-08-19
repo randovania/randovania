@@ -89,17 +89,19 @@ class State:
 
     @property
     def collected_pickup_indices(self) -> Iterator[PickupIndex]:
+        context = self.node_context()
         for resource, count in self.resources.as_resource_gain():
             if count > 0 and isinstance(resource, NodeResourceInfo):
-                node = self.region_list.node_by_identifier(resource.node_identifier)
+                node = resource.to_node(context)
                 if isinstance(node, PickupNode):
                     yield node.pickup_index
 
     @property
     def collected_hints(self) -> Iterator[NodeIdentifier]:
+        context = self.node_context()
         for resource, count in self.resources.as_resource_gain():
             if isinstance(resource, NodeResourceInfo) and count > 0:
-                if isinstance(self.region_list.node_by_identifier(resource.node_identifier), HintNode):
+                if isinstance(resource.to_node(context), HintNode):
                     yield resource.node_identifier
 
     @property

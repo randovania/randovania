@@ -12,15 +12,17 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
 class DockLockNode(ResourceNode):
     dock: DockNode
+    _resource: NodeResourceInfo = dataclasses.field(hash=False, compare=False)
 
     @classmethod
-    def create_from_dock(cls, dock: DockNode, node_index: int) -> DockLockNode:
+    def create_from_dock(cls, dock: DockNode, node_index: int, resource_db: ResourceDatabase) -> DockLockNode:
         lock_identifier = dock.identifier.renamed(f"Lock - {dock.name}")
         result = DockLockNode(
             identifier=lock_identifier,
@@ -31,7 +33,13 @@ class DockLockNode(ResourceNode):
             layers=dock.layers,
             extra={},
             dock=dock,
-            valid_starting_location=dock.valid_starting_location
+            valid_starting_location=dock.valid_starting_location,
+            _resource=NodeResourceInfo(
+                resource_db.first_unused_resource_index() + dock.node_index,
+                dock.identifier,
+                dock.name,
+                dock.name,
+            )
         )
         object.__setattr__(dock, "lock_node", result)
         return result
@@ -40,7 +48,7 @@ class DockLockNode(ResourceNode):
         return f"DockLockNode({self.name!r} -> {self.dock.name})"
 
     def resource(self, context: NodeContext) -> ResourceInfo:
-        return NodeResourceInfo.from_node(self.dock, context)
+        return self._resource
 
     def can_collect(self, context: NodeContext) -> bool:
         dock = self.dock
