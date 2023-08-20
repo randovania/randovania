@@ -123,5 +123,5 @@ class MSRAcquiredMemo(dict):
         )
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
-        result["Aeion Tank"] = "Aeion Tank acquired.\nAieon capacity increased by {Aeion}"
+        result["Aeion Tank"] = "Aeion Tank acquired.\nAeion capacity increased by {Aeion}"
         return result
