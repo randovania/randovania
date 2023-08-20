@@ -202,24 +202,8 @@
                     "item_capacity_id": "ITEM_WEAPON_SUPER_MISSILE_MAX"
                 }
             },
-            "SMLocked": {
-                "long_name": "Locked Super Missile",
-                "max_capacity": 99,
-                "extra": {
-                    "item_id": "ITEM_WEAPON_SUPER_MISSILE_CURRENT",
-                    "item_capacity_id": "ITEM_WEAPON_SUPER_MISSILE_MAX"
-                }
-            },
             "PBAmmo": {
                 "long_name": "Power Bomb",
-                "max_capacity": 99,
-                "extra": {
-                    "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
-                    "item_capacity_id": "ITEM_WEAPON_POWER_BOMB_MAX"
-                }
-            },
-            "PBLocked": {
-                "long_name": "Locked Power Bomb",
                 "max_capacity": 99,
                 "extra": {
                     "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
@@ -1027,6 +1011,15 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MainPB",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     ]
                 }
@@ -1662,6 +1655,15 @@
                             "data": {
                                 "type": "items",
                                 "name": "SMAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Supers",
                                 "amount": 1,
                                 "negate": false
                             }
