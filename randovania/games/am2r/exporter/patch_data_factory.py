@@ -70,7 +70,8 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
         return {
             area.extra["map_name"]: {
                 "display_name": area.name,
-                "region_name": region.name
+                "region_name": region.name,
+                "minimap_data": area.extra["minimap_data"],
             }
             for region in self.game.region_list.regions for area in region.areas
         }
