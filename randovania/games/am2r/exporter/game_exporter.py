@@ -42,7 +42,7 @@ class AM2RGameExporter(GameExporter):
     def _do_export_game(self, patch_data: dict, export_params: AM2RGameExportParams,
                         progress_update: status_update_lib.ProgressUpdateCallable):
         # Check if dotnet is available
-        dotnet_process = subprocess.run(["dotnet", "--help"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        dotnet_process = subprocess.run(["dotnet", "--info"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         if dotnet_process.returncode != 0:
             raise UnableToExportError("You do not have .NET installed!\n"
                                          "Please ensure that it is installed and located in PATH. It can be installed "
