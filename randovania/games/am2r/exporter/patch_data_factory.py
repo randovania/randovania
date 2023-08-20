@@ -94,7 +94,19 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "session_uuid": str(self.players_config.get_own_uuid())
         }
 
-    def _create_game_patches(self, item_info: dict, rng: Random):
+    def _create_game_patches(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random):
+        def get_locked_ammo_text(ammo_item: str):
+            text = "MISSING TEXT, PLEASE REPORT THIS!"
+            for pickup in pickup_list:
+                if pickup.original_pickup.name != ammo_item:
+                    continue
+                text = pickup.collection_text[0]
+                break
+            return text
+        missile_text = get_locked_ammo_text("Missile Expansion")
+        super_text = get_locked_ammo_text("Super Missile Expansion")
+        pb_text = get_locked_ammo_text("Power Bomb Expansion")
+
         game_patches = {
             "septogg_helpers": self.patches.configuration.septogg_helpers,
             "respawn_bomb_blocks": self.patches.configuration.respawn_bomb_blocks,
@@ -111,15 +123,15 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "sabre_designed_skippy": rng.randint(0, self._EASTER_EGG_SHINY) == 0,
             "locked_missile_text": {
                 "header": item_info["Locked Missile Expansion"]["text_header"],
-                "description": item_info["Locked Missile Expansion"]["text_desc"],
+                "description": missile_text
             },
             "locked_super_text": {
                 "header": item_info["Locked Super Missile Expansion"]["text_header"],
-                "description": item_info["Locked Super Missile Expansion"]["text_desc"],
+                "description": super_text,
             },
             "locked_pb_text": {
                 "header": item_info["Locked Power Bomb Expansion"]["text_header"],
-                "description": item_info["Locked Power Bomb Expansion"]["text_desc"],
+                "description": pb_text,
             },
         }
         for item, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
@@ -265,7 +277,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "starting_location": self._create_starting_location(),
             "pickups": self._create_pickups_dict(pickup_list, item_data, self.rng),
             "rooms": self._create_room_dict(),
-            "game_patches": self._create_game_patches(item_data, self.rng),
+            "game_patches": self._create_game_patches(pickup_list, item_data, self.rng),
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics()
