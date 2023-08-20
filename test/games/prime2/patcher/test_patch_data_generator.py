@@ -359,19 +359,19 @@ def test_create_translator_gates_field(echoes_game_description):
     ]
 
 
-@pytest.mark.parametrize("elevators", [TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.TWO_WAY_RANDOMIZED])
-def test_apply_translator_gate_patches(elevators):
+@pytest.mark.parametrize("teleporters", [TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.TWO_WAY_RANDOMIZED])
+def test_apply_translator_gate_patches(teleporters):
     # Setup
     target = {}
 
     # Run
-    patch_data_factory._apply_translator_gate_patches(target, elevators)
+    patch_data_factory._apply_translator_gate_patches(target, teleporters)
 
     # Assert
     assert target == {
         "always_up_gfmc_compound": True,
         "always_up_torvus_temple": True,
-        "always_up_great_temple": elevators != TeleporterShuffleMode.VANILLA,
+        "always_up_great_temple": teleporters != TeleporterShuffleMode.VANILLA,
     }
 
 

@@ -138,7 +138,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
             ],
             "Gameplay": [
                 {f"Translator Gates: {configuration.translator_configuration.description()}": True},
-                {f"Elevators: {configuration.elevators.description()}": not configuration.elevators.is_vanilla},
+                {f"Elevators: {configuration.teleporters.description()}": not configuration.teleporters.is_vanilla},
                 {"Portals: Randomized": configuration.portal_rando},
             ],
             "Game Changes": [
@@ -151,7 +151,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
                 ),
                 {"Warp to start": configuration.warp_to_start,
                  "Menu Mod": configuration.menu_mod,
-                 "Final bosses removed": configuration.elevators.skip_final_bosses,
+                 "Final bosses removed": configuration.teleporters.skip_final_bosses,
                  "Unlocked Save Station doors": configuration.blue_save_doors,
                  "Inverted Aether": configuration.inverted_mode},
                 {"New Patcher": configuration.use_new_patcher},

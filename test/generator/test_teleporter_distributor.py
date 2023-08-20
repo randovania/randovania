@@ -53,13 +53,13 @@ def test_try_randomize_teleporters(seed_number: int,
 
 
 @patch("randovania.generator.teleporter_distributor.try_randomize_teleporters", autospec=True)
-def test_two_way_teleporter_connections_between_areas(mock_try_randomize_teleporers: MagicMock,
+def test_two_way_teleporter_connections_between_areas(mock_try_randomize_teleporters: MagicMock,
                                                     ):
     # Setup
     rng = MagicMock()
     teleporter_a: TeleporterHelper = MagicMock()
     teleporter_b: TeleporterHelper = MagicMock()
-    mock_try_randomize_teleporers.return_value = [
+    mock_try_randomize_teleporters.return_value = [
         teleporter_a, teleporter_b
     ]
 
@@ -67,7 +67,7 @@ def test_two_way_teleporter_connections_between_areas(mock_try_randomize_telepor
     result = teleporter_distributor.two_way_teleporter_connections(rng, (teleporter_a, teleporter_b), True)
 
     # Assert
-    mock_try_randomize_teleporers.assert_called_once_with(rng, (teleporter_a, teleporter_b))
+    mock_try_randomize_teleporters.assert_called_once_with(rng, (teleporter_a, teleporter_b))
     assert result == {
         teleporter_a.teleporter: teleporter_a.connected_teleporter.teleporter,
         teleporter_b.teleporter: teleporter_b.connected_teleporter.teleporter,

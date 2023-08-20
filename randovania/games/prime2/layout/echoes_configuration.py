@@ -49,8 +49,7 @@ class LayoutSafeZone(BitPackDataclass, JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class EchoesConfiguration(BaseConfiguration):
-    # TODO @Thanatos rename
-    elevators: PrimeTrilogyTeleporterConfiguration
+    teleporters: PrimeTrilogyTeleporterConfiguration
     sky_temple_keys: LayoutSkyTempleKeyMode
     translator_configuration: TranslatorConfiguration
     hints: HintConfiguration

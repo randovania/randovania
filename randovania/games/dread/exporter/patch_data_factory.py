@@ -509,7 +509,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 for pickup_item in pickup_list
                 if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
-            "elevators": teleporters if self.configuration.elevators.mode != TeleporterShuffleMode.VANILLA else [],
+            "elevators": teleporters if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else [],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler(),

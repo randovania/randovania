@@ -27,18 +27,17 @@ class TeleporterShuffleMode(BitPackEnum, Enum):
     ECHOES_SHUFFLED = "echoes-shuffled"
     TWO_WAY_RANDOMIZED = "randomized"
     TWO_WAY_UNCHECKED = "two-way-unchecked"
-    ONE_WAY_ELEVATOR = "one-way-elevator"
-    ONE_WAY_ELEVATOR_REPLACEMENT = "one-way-elevator-replacement"
+    ONE_WAY_TELEPORTER = "one-way-teleporter"
+    ONE_WAY_TELEPORTER_REPLACEMENT = "one-way-teleporter-replacement"
     ONE_WAY_ANYTHING = "one-way-anything"
 
-# TODO: @Thanatos Rename + Migrate
 enum_lib.add_long_name(TeleporterShuffleMode, {
     TeleporterShuffleMode.VANILLA: "Original connections",
     TeleporterShuffleMode.ECHOES_SHUFFLED: "Shuffle regions",
     TeleporterShuffleMode.TWO_WAY_RANDOMIZED: "Two-way, between regions",
     TeleporterShuffleMode.TWO_WAY_UNCHECKED: "Two-way, unchecked",
-    TeleporterShuffleMode.ONE_WAY_ELEVATOR: "One-way, elevator room with cycles",
-    TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT: "One-way, elevator room with replacement",
+    TeleporterShuffleMode.ONE_WAY_TELEPORTER: "One-way, teleporter room with cycles",
+    TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT: "One-way, teleporter room with replacement",
     TeleporterShuffleMode.ONE_WAY_ANYTHING: "One-way, anywhere",
 })
 
@@ -112,7 +111,8 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
             return [location for location in self.excluded_targets.nodes_list(self.game)
                     if location not in self.excluded_targets.locations]
 
-        elif self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
+        elif self.mode in {TeleporterShuffleMode.ONE_WAY_TELEPORTER,
+                           TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT}:
             game_description = default_database.game_description_for(self.game)
             teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
             region_list = game_description.region_list
@@ -154,5 +154,5 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
 
     def dangerous_settings(self):
         if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
-            return ["One-way anywhere elevators"]
+            return ["One-way anywhere teleporters"]
         return []

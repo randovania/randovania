@@ -452,7 +452,7 @@ def _get_model_mapping(randomizer_data: dict):
 
 
 def should_keep_elevator_sounds(configuration: EchoesConfiguration):
-    elev = configuration.elevators
+    elev = configuration.teleporters
     if elev.is_vanilla:
         return True
 
@@ -540,7 +540,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
                 "visor": default_pickups[pickup_category_visors].name,
                 "beam": default_pickups[pickup_category_beams].name,
             },
-            "unvisited_room_names": (self.configuration.elevators.can_use_unvisited_room_names
+            "unvisited_room_names": (self.configuration.teleporters.can_use_unvisited_room_names
                                      and self.cosmetic_patches.unvisited_room_names),
             "teleporter_sounds": should_keep_elevator_sounds(self.configuration),
             "dangerous_energy_tank": self.configuration.dangerous_energy_tank,
@@ -576,9 +576,9 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
 
         result["logbook_patches"] = self.create_logbook_patches()
 
-        if not self.configuration.elevators.is_vanilla and (
+        if not self.configuration.teleporters.is_vanilla and (
                 self.cosmetic_patches.unvisited_room_names
-                and self.configuration.elevators.can_use_unvisited_room_names
+                and self.configuration.teleporters.can_use_unvisited_room_names
         ):
             exclude_map_ids = _ELEVATOR_ROOMS_MAP_ASSET_IDS
         else:
@@ -586,7 +586,7 @@ class EchoesPatchDataFactory(BasePatchDataFactory):
         result["maps_to_always_reveal"] = _ENERGY_CONTROLLER_MAP_ASSET_IDS
         result["maps_to_never_reveal"] = exclude_map_ids
 
-        _apply_translator_gate_patches(result["specific_patches"], self.configuration.elevators.mode)
+        _apply_translator_gate_patches(result["specific_patches"], self.configuration.teleporters.mode)
 
         if self.configuration.use_new_patcher:
             result["new_patcher"] = self.new_patcher_configuration()

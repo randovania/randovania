@@ -786,7 +786,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
 
-        if self.cosmetic_patches.open_map and self.configuration.elevators.is_vanilla:
+        if self.cosmetic_patches.open_map and self.configuration.teleporters.is_vanilla:
             map_default_state = "visible"
         else:
             map_default_state = "default"

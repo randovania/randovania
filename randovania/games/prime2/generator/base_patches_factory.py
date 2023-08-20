@@ -86,8 +86,8 @@ class EchoesBasePatchesFactory(BasePatchesFactory):
 
     def dock_connections_assignment(self, configuration: EchoesConfiguration,
                                     game: GameDescription, rng: Random ) -> Iterable[tuple[DockNode, Node]]:
-        teleporter_connection = get_teleporter_connections_echoes(configuration.elevators, game, rng)
-        dock_assignment = get_dock_connections_assignment_for_teleporter(configuration.elevators,
+        teleporter_connection = get_teleporter_connections_echoes(configuration.teleporters, game, rng)
+        dock_assignment = get_dock_connections_assignment_for_teleporter(configuration.teleporters,
                                                                          game, teleporter_connection)
 
         if not configuration.portal_rando:

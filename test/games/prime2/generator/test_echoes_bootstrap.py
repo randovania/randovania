@@ -32,16 +32,16 @@ _SUB_GUARDIAN_INDICES = [
 ]
 
 
-@pytest.mark.parametrize("vanilla_elevators", [False, True])
+@pytest.mark.parametrize("vanilla_teleporters", [False, True])
 def test_misc_resources_for_configuration(echoes_resource_database,
                                           default_echoes_configuration,
-                                          vanilla_elevators: bool,
+                                          vanilla_teleporters: bool,
                                           ):
     # Setup
-    elevators = MagicMock(spec=PrimeTrilogyTeleporterConfiguration)
+    teleporters = MagicMock(spec=PrimeTrilogyTeleporterConfiguration)
     configuration = dataclasses.replace(default_echoes_configuration,
-                                        elevators=elevators)
-    elevators.is_vanilla = vanilla_elevators
+                                        teleporters=teleporters)
+    teleporters.is_vanilla = vanilla_teleporters
     gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGFMCGate")
     torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaTorvusTempleGate")
     great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGreatTempleEmeraldGate")
@@ -60,7 +60,7 @@ def test_misc_resources_for_configuration(echoes_resource_database,
     assert relevant_tricks == {
         gfmc_resource: 0,
         torvus_resource: 0,
-        great_resource: 0 if not vanilla_elevators else 1,
+        great_resource: 0 if not vanilla_teleporters else 1,
     }
 
 

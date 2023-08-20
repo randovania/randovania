@@ -18,7 +18,8 @@ class DreadTeleporterConfiguration(TeleporterConfiguration):
     # that nothing else is selected
     @property
     def valid_targets(self) -> list[NodeIdentifier]:
-        if self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
+        if self.mode in {TeleporterShuffleMode.ONE_WAY_TELEPORTER,
+                         TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT}:
             game_description = default_database.game_description_for(self.game)
             teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
             region_list = game_description.region_list

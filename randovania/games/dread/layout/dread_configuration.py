@@ -47,8 +47,7 @@ enum_lib.add_long_name(DreadRavenBeakDamageMode, {
 
 @dataclasses.dataclass(frozen=True)
 class DreadConfiguration(BaseConfiguration):
-    # TODO @Thanatos rename
-    elevators: DreadTeleporterConfiguration
+    teleporters: DreadTeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     immediate_energy_parts: bool
     hanubia_shortcut_no_grapple: bool

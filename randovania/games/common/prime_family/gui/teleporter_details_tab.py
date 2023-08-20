@@ -25,7 +25,7 @@ class TeleporterDetailsTab(BaseConnectionDetailsTab):
     def should_appear_for(cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
                           players: PlayersConfiguration) -> bool:
         assert isinstance(configuration, PrimeConfiguration | EchoesConfiguration)
-        return not configuration.elevators.is_vanilla
+        return not configuration.teleporters.is_vanilla
 
     def _fill_per_region_connections(self,
                                      per_region: dict[str, dict[str, str]],

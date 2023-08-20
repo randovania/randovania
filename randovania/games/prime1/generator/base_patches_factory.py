@@ -58,7 +58,7 @@ class PrimeBasePatchesFactory(BasePatchesFactory):
 
     def dock_connections_assignment(self, configuration: PrimeConfiguration,
                                     game: GameDescription, rng: Random ) -> Iterable[tuple[DockNode, Node]]:
-        teleporter_connection = get_teleporter_connections(configuration.elevators, game, rng)
-        dock_assignment = get_dock_connections_assignment_for_teleporter(configuration.elevators,
+        teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
+        dock_assignment = get_dock_connections_assignment_for_teleporter(configuration.teleporters,
                                                                          game, teleporter_connection)
         yield from dock_assignment

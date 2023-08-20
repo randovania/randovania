@@ -70,7 +70,7 @@ class BasePatchesFactory:
     def dock_connections_assignment(self, configuration: BaseConfiguration,
                                     game: GameDescription, rng: Random ) -> Iterable[tuple[DockNode, Node]]:
         """
-        Adds dock connections if a game's patcher factory overwrites it. e.g. add teleporers
+        Adds dock connections if a game's patcher factory overwrites it. e.g. add teleporters
         :param configuration:
         :param rng:
         :param patches:

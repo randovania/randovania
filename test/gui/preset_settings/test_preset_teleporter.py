@@ -50,8 +50,8 @@ def test_check_credits(skip_qtbot, preset_manager):
         uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
         configuration=dataclasses.replace(
             base.configuration,
-            elevators=dataclasses.replace(
-                base.configuration.elevators,
+            teleporters=dataclasses.replace(
+                base.configuration.teleporters,
                 mode=TeleporterShuffleMode.ONE_WAY_ANYTHING,
             ),
         )

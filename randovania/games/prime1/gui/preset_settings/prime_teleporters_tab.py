@@ -34,8 +34,8 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
         TeleporterShuffleMode.VANILLA,
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
         TeleporterShuffleMode.TWO_WAY_UNCHECKED,
-        TeleporterShuffleMode.ONE_WAY_ELEVATOR,
-        TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT,
+        TeleporterShuffleMode.ONE_WAY_TELEPORTER,
+        TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
         TeleporterShuffleMode.ONE_WAY_ANYTHING,
     ]
     teleporter_mode_to_description = {
@@ -47,10 +47,10 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
             "This is the only setting that guarantees all regions are reachable.",
         TeleporterShuffleMode.TWO_WAY_UNCHECKED:
             "After taking an elevator, the elevator in the room you are in will bring you back to where you were.",
-        TeleporterShuffleMode.ONE_WAY_ELEVATOR:
+        TeleporterShuffleMode.ONE_WAY_TELEPORTER:
             "All elevators bring you to an elevator room, but going backwards can go somewhere else. "
             "All rooms are used as a destination exactly once, causing all elevators to be separated into loops.",
-        TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT:
+        TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT:
             "All elevators bring you to an elevator room, but going backwards can go somewhere else. "
             "Rooms can be used as a destination multiple times, causing elevators which you can possibly"
              " not come back to.",
@@ -124,7 +124,7 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
 
     def on_preset_changed(self, preset: Preset):
         config: PrimeConfiguration = preset.configuration
-        config_teleporters: PrimeTrilogyTeleporterConfiguration = config.elevators
+        config_teleporters: PrimeTrilogyTeleporterConfiguration = config.teleporters
 
         descriptions = [
             "<p>Controls where each elevator connects to.</p>",

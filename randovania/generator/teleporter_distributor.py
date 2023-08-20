@@ -202,7 +202,7 @@ def get_teleporter_connections(teleporters: TeleporterConfiguration,
                 rng=rng,
                 teleporter_database=teleporter_db,
                 target_locations=teleporters.valid_targets,
-                replacement=teleporters.mode != TeleporterShuffleMode.ONE_WAY_ELEVATOR,
+                replacement=teleporters.mode != TeleporterShuffleMode.ONE_WAY_TELEPORTER,
             )
 
         teleporter_connection.update(connections)

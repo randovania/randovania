@@ -51,7 +51,7 @@ class EchoesBootstrap(MetroidBootstrap):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.elevators.is_vanilla:
+        if configuration.teleporters.is_vanilla:
             # Vanilla Great Temple Emerald Translator Gate
             enabled_resources.add("VanillaGreatTempleEmeraldGate")
 
