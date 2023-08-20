@@ -12,7 +12,7 @@ Extra - map_name: rm_a1h01
   * Open Passage to Needler Shaft/Dock to Guardian Arena
   > Dock to Mumbo Manor
       Before Area 1 - Golden Temple Visited or After Boss - Guardian Defeated
-  > Dock to Torture Room
+  > Dock to Guardian Storage
       All of the following:
           After Boss - Guardian Defeated
           Any of the following:
@@ -52,9 +52,9 @@ Extra - map_name: rm_a1h01
               # Energy requirements
               Combat (Beginner) or Normal Damage ≥ 130
 
-> Dock to Torture Room; Heals? False
+> Dock to Guardian Storage; Heals? False
   * Layers: default
-  * Open Passage to Torture Room/Dock to Guardian Arena
+  * Open Passage to Guardian Storage/Dock to Guardian Arena
   > Dock to Needler Shaft
       Trivial
 
@@ -93,14 +93,14 @@ Extra - map_name: rm_a1h03
 > Dock to Guardian Arena; Heals? False
   * Layers: default
   * Open Passage to Guardian Arena/Dock to Needler Shaft
-  > Dock to Gawron Tunnel
+  > Dock to Gawron Gangway
       Trivial
   > Dock to Breeding Grounds Save Station
       Trivial
 
-> Dock to Gawron Tunnel; Heals? False
+> Dock to Gawron Gangway; Heals? False
   * Layers: default
-  * Open Passage to Gawron Tunnel/Dock to Needler Shaft
+  * Open Passage to Gawron Gangway/Dock to Needler Shaft
   > Dock to Guardian Arena
       Trivial
 
@@ -111,26 +111,26 @@ Extra - map_name: rm_a1h03
       Trivial
 
 ----------------
-Gawron Tunnel
+Gawron Gangway
 Extra - map_name: rm_a1h04
 > Dock to Needler Shaft; Heals? False
   * Layers: default
-  * Open Passage to Needler Shaft/Dock to Gawron Tunnel
+  * Open Passage to Needler Shaft/Dock to Gawron Gangway
   > Dock to Golden Temple Exterior
       Trivial
 
 > Dock to Golden Temple Exterior; Heals? False
   * Layers: default
-  * Open Passage to Golden Temple Exterior/Dock to Gawron Tunnel
+  * Open Passage to Golden Temple Exterior/Dock to Gawron Gangway
   > Dock to Needler Shaft
       Trivial
 
 ----------------
 Golden Temple Exterior
 Extra - map_name: rm_a1h05
-> Dock to Gawron Tunnel; Heals? False
+> Dock to Gawron Gangway; Heals? False
   * Layers: default
-  * Open Passage to Gawron Tunnel/Dock to Golden Temple Exterior
+  * Open Passage to Gawron Gangway/Dock to Golden Temple Exterior
   > Event - Golden Temple Visited
       Trivial
 
@@ -171,7 +171,7 @@ Extra - map_name: rm_a1h05
   * Normal Door to Inner Temple Save Station/Door to Golden Temple Exterior
   * Extra - instance_id: 108039
   > Door to Inner Temple East Hall
-      ZipFromDestroyable
+      Disabled Door Lock Rando and Zip From Destroyable Object
   > Middle
       Any of the following:
           Space Jump or Walljump (Intermediate) or Can Use Spider Ball
@@ -205,7 +205,7 @@ Extra - map_name: rm_a1h05
   > Dock to Outer Temple Save Station
       Trivial
   > Door to Inner Temple Save Station
-      ZipFromDestroyable
+      Disabled Door Lock Rando and Zip From Destroyable Object
   > Top
       Any of the following:
           Space Jump or Walljump (Advanced) or Can Use Spider Ball
@@ -262,9 +262,23 @@ Extra - map_name: rm_a1h05
   > Door to Inner Temple East Hall
       Trivial
   > Dock to Exterior Alpha Nest
-      All of the following:
-          Hi-Jump Boots and Morph Ball and Morph Glide (Expert)
-          Power Grip or Walljump (Intermediate)
+      Any of the following:
+          All of the following:
+              Hi-Jump Boots and Morph Ball and Morph Glide (Expert)
+              Power Grip or Walljump (Intermediate)
+          All of the following:
+              Speed Booster
+              Any of the following:
+                  Hi-Jump Boots
+                  All of the following:
+                      Morph Ball
+                      Any of the following:
+                          # Morph glide completely
+                          Mid-Air Morph (Advanced)
+                          All of the following:
+                              # Morph glide just before it and get up at the ledge
+                              Morph Glide (Intermediate)
+                              Power Grip or Walljump (Advanced)
   > Middle
       Trivial
   > Pickup (Missile Tank)
@@ -287,7 +301,7 @@ Extra - map_name: rm_a1h05
 > Event - Golden Temple Visited; Heals? False
   * Layers: default
   * Event Area 1 - Golden Temple Visited
-  > Dock to Gawron Tunnel
+  > Dock to Gawron Gangway
       Trivial
   > Door to Inner Temple Save Station
       Trivial
@@ -365,11 +379,11 @@ Extra - map_name: rm_a1h08
               Hi-Jump Boots and Walljump (Beginner)
 
 ----------------
-Torture Room
+Guardian Storage
 Extra - map_name: rm_a1h09
 > Dock to Guardian Arena; Heals? False
   * Layers: default
-  * Open Passage to Guardian Arena/Dock to Torture Room
+  * Open Passage to Guardian Arena/Dock to Guardian Storage
   > Door to Storage Cavern
       Any of the following:
           All of the following:
@@ -413,7 +427,7 @@ Extra - map_name: rm_a1h09
 
 > Door to Storage Cavern; Heals? False
   * Layers: default
-  * Power Bomb Door to Storage Cavern/Door to Torture Room
+  * Power Bomb Door to Storage Cavern/Door to Guardian Storage
   * Extra - instance_id: 108232
   > Dock to Guardian Arena
       Can Use Any Bombs
@@ -430,9 +444,9 @@ Extra - map_name: rm_a1h09
 ----------------
 Storage Cavern
 Extra - map_name: rm_a1h10
-> Door to Torture Room; Heals? False
+> Door to Guardian Storage; Heals? False
   * Layers: default
-  * Normal Door to Torture Room/Door to Storage Cavern
+  * Normal Door to Guardian Storage/Door to Storage Cavern
   * Extra - instance_id: 108256
   > Pickup (Power Bomb Tank)
       Trivial
@@ -441,7 +455,7 @@ Extra - map_name: rm_a1h10
   * Layers: default
   * Pickup 112; Category? Minor
   * Extra - object_name: oItemPB_112
-  > Door to Torture Room
+  > Door to Guardian Storage
       Trivial
 
 ----------------
@@ -746,7 +760,11 @@ Extra - map_name: rm_a1a08
               All of the following:
                   # Spider
                   Spider Ball
-                  Spring Ball or Mid-Air Morph (Beginner) or Can Use Any Bombs
+                  Any of the following:
+                      Spring Ball or Mid-Air Morph (Beginner) or Can Use Bombs
+                      All of the following:
+                          # Spider from previous room
+                          Disabled Entrance Rando and Can Use Any Bombs
               All of the following:
                   # Expert midair morph
                   Mid-Air Morph (Expert) and Walljump (Advanced)
@@ -850,6 +868,9 @@ Extra - map_name: rm_a1a11
 > Pipe to Distribution Center; Heals? False
   * Layers: default
   * Teleporter to Pipe Hub/Pipe to Golden Temple
+  * Extra - instance_id: 108742
+  * Extra - dest_x: 152
+  * Extra - dest_y: 128
   > Dock to Inner Temple East Hall
       Morph Ball
 

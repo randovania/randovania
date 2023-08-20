@@ -25,8 +25,8 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import Region, RegionList
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection
     from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
 

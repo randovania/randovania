@@ -429,6 +429,13 @@ def write_minimal_logic_db(db: MinimalLogicData | None) -> dict | None:
     }
 
 
+def write_used_trick_levels(game: GameDescription) -> dict[str, list[int]]:
+    return {
+        trick.short_name: sorted(levels)
+        for trick, levels in game.get_used_trick_levels(ignore_cache=True).items()
+    }
+
+
 def write_game_description(game: GameDescription) -> dict:
     return {
         "schema_version": game_migration.CURRENT_VERSION,
@@ -442,6 +449,7 @@ def write_game_description(game: GameDescription) -> dict:
         "victory_condition": write_requirement(game.victory_condition),
 
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
+        "used_trick_levels": write_used_trick_levels(game),
         "regions": write_region_list(game.region_list),
     }
 

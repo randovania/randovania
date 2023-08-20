@@ -16,11 +16,10 @@ from retro_data_structures.game_check import Game as RDSGame
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
-from randovania.game_description.resources.pickup_entry import PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
-from randovania.patching.prime import asset_conversion
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -203,6 +202,7 @@ class PrimeGameExporter(GameExporter):
         if random_enemy_attributes is not None:
             enemy_updater = split_updater.create_split()
 
+        from randovania.patching.prime import asset_conversion
         assets_meta = {}
         if export_params.use_echoes_models:
             assets_path = export_params.asset_cache_path

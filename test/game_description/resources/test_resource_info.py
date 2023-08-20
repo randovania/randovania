@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 
 
 def test_remove_resource_exists(echoes_resource_database):

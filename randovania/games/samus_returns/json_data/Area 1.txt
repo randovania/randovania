@@ -31,18 +31,18 @@ Extra - asset_id: collision_camera_000
           Morph Ball and Melee Clip (Intermediate)
           Ice Beam and Ice Beam Clip (Intermediate)
 
-> Elevator to Surface East - Transport to Area 1; Heals? False; Spawn Point; Default Node
+> Elevator to Surface - East; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 1/Elevator to Area 1 - Chozo Seal
+  * Elevator to Transport to Area 1/Elevator to Area 1
   * Extra - actor_name: LE_Platform_Elevator_FromArea00
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea00
   > Save Station
       Trivial
 
-> Elevator to Area 2 Entrance - Chozo Seal; Heals? False
+> Elevator to Area 2 - Entrance; Heals? False
   * Layers: default
-  * Teleporter to Chozo Seal/Elevator To Area 1 - Chozo Seal
+  * Elevator to Chozo Seal/Elevator to Area 1
   * Extra - actor_name: LE_Platform_Elevator_FromArea02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02
@@ -55,7 +55,7 @@ Extra - asset_id: collision_camera_000
   * Extra - actor_type: weightactivatedplatform
   > Chozo Seal
       Trivial
-  > Elevator to Surface East - Transport to Area 1
+  > Elevator to Surface - East
       Trivial
 
 > Door to Entrance Shaft; Heals? False
@@ -94,7 +94,7 @@ Extra - asset_id: collision_camera_000
 
 > Above Bottom Elevator; Heals? False
   * Layers: default
-  > Elevator to Area 2 Entrance - Chozo Seal
+  > Elevator to Area 2 - Entrance
       Morph Ball or Screw Attack
   > Door to Chozo Seal Storage
       Any of the following:
@@ -297,12 +297,10 @@ Extra - asset_id: collision_camera_014
           Morph Ball
           Any of the following:
               Ice Beam or Space Jump or Simple IBJ
-              All of the following:
-                  Spider Ball
-                  Bomb or Power Bomb
+              Spider Ball and Destroy Bomb Block
               High Jump Boots and Gravity Suit
   > Tunnel to Spider Ball Room
-      Lay Bomb or Lay Power Bomb
+      Destroy Bomb Block
 
 > Tunnel to Spider Ball Room; Heals? False
   * Layers: default
@@ -345,7 +343,7 @@ Extra - asset_id: collision_camera_016
   * Layers: default
   * Tunnel with Bomb Block to Spider Ball Balcony/Tunnel to Spider Ball Room
   > Pickup (Missile Tank)
-      Morph Ball
+      Destroy Bomb Block
 
 > Tunnel to Outer Hub; Heals? False
   * Layers: default
@@ -410,7 +408,7 @@ Extra - asset_id: collision_camera_017
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_004_Checkpoint
   > Door from Outer Hub
-      After Area 1 - Alpha Metroid North
+      Trivial
   > Event - Alpha Metroid
       Defeat Alpha Metroid
   > Above Arena
@@ -584,9 +582,9 @@ Extra - asset_id: collision_camera_023
   > Start Point
       Trivial
 
-> Door to Alpha Shaft Right; Heals? False
+> Dock to Alpha Shaft Right; Heals? False
   * Layers: default
-  * Access Open to Alpha Shaft Right/Dock to Alpha Shaft Left
+  * Open Passage to Alpha Shaft Right/Dock to Alpha Shaft Left
   > Tunnel to Energy Recharge Room
       Spider Ball and Destroy Bomb Block
   > Dock to Alpha Arena West Access
@@ -603,8 +601,8 @@ Extra - asset_id: collision_camera_023
   * Open Passage to Alpha Arena West Access/Dock to Alpha Shaft Left
   > Door to Alpha Arena South
       Trivial
-  > Door to Alpha Shaft Right
-      Trivial
+  > Dock to Alpha Shaft Right
+      Destroy Bomb Block
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -678,7 +676,7 @@ Extra - asset_id: collision_camera_025
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_002_Checkpoint
   > Door to Alpha Shaft Left
-      After Area 1 - Alpha Metroid South
+      Trivial
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
@@ -705,7 +703,7 @@ Extra - asset_id: collision_camera_027
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_003_Checkpoint
   > Door to Alpha Arena East Access
-      After Area 1 - Alpha Metroid East
+      Trivial
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
@@ -874,7 +872,7 @@ Extra - asset_id: collision_camera_033
           Morph Ball and Spider Ball and Varia Suit
   > Pickup (Super Missile Tank)
       All of the following:
-          Gravity Suit and Morph Ball and Super Missile
+          Gravity Suit and Morph Ball and Shoot Super Missile
           Any of the following:
               Space Jump or Can Spiderspark or Simple IBJ
               All of the following:
@@ -1106,7 +1104,7 @@ Extra - asset_id: collision_camera_044
 
 > Dock to Alpha Shaft Left; Heals? False
   * Layers: default
-  * Open Passage to Alpha Shaft Left/Door to Alpha Shaft Right
+  * Open Passage to Alpha Shaft Left/Dock to Alpha Shaft Right
   > Dock to Alpha Arena East Access
       Trivial
 

@@ -158,7 +158,7 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
             self.messages_item_model.setItem(i, QtGui.QStandardItem(message))
 
     def update_inventory_table(self):
-        for resource, quantity in self.connector.inventory.as_resource_gain():
+        for resource, quantity in self.connector.item_collection.as_resource_gain():
             if resource in self._resource_to_item:
                 self._update_item_amount(resource, quantity)
 
@@ -176,5 +176,5 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         value: int | bool = widget.data(QtCore.Qt.ItemDataRole.DisplayRole)
         value = int(value)
 
-        self.connector.inventory.set_resource(item, value)
+        self.connector.item_collection.set_resource(item, value)
         self.connector.emit_inventory()

@@ -13,7 +13,7 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.layout import filtered_database
@@ -22,7 +22,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 _ETM_NAME = "Energy Transfer Module"

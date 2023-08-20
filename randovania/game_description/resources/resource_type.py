@@ -4,7 +4,7 @@ import enum
 
 
 @enum.unique
-class ResourceType(int, enum.Enum):
+class ResourceType(enum.IntEnum):
     ITEM = 0
     EVENT = enum.auto()
     TRICK = enum.auto()
@@ -38,7 +38,7 @@ class ResourceType(int, enum.Enum):
         return _NAME_TO_TYPE[name]
 
     @property
-    def as_string(self):
+    def as_string(self) -> str:
         return self.names()[self]
 
     @property
@@ -58,9 +58,6 @@ class ResourceType(int, enum.Enum):
             return "Enabled "
         else:
             return ""
-
-    def __lt__(self, other):
-        return self.type_index < other.type_index
 
 
 _NAME_TO_TYPE = {

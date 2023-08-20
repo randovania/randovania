@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -7,7 +8,10 @@ import pytest
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+from randovania.game_description.resources.resource_collection import ResourceCollection
+
+if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 @pytest.fixture(params=[False, True])

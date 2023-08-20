@@ -7,13 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.2.0] - 2023-09-??
 
+- Added: "Help -> Verify Installation" menu option, to verify that your Randovania installation is correct. This is only present on Windows.
+- Changed: Game generation is now up to 150% faster.
 - Changed: The resolver now tries otherwise safe actions behind a point of no return before it tries actions that give dangerous resources. This makes the solve faster by avoiding some cases of backtracking.
+- Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
 
 ### Metroid Dread
-- Added: Elevator and Shuttle randomizer.
+- **Major** - Added: Elevator and Shuttle randomizer. The destination is shown on the elevator/shuttle's minimap icon and in the room name, if enabled. This will show different area names to the logic database for some items. 
 
 - **Major** - Added: Split beams and missiles. When playing with non-progressive beams or missiles, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades.
+- Added: An in-game icon will appear if the player becomes disconnected from the multiworld server. 
 - Changed: The Starter Preset and April Fools 2023 preset now have non-progressive beams and missiles, instead of progressive.
+- Changed: Bomb Shields are no longer vulnerable to Cross Bombs.
 
 #### Logic Database
 
@@ -21,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Diagonal Bomb Jump in Burenia - Main Hub Tower Top, to the Missile Tank, using either Gravity Suit or an out of water bomb jump.
 - Added: In Dairon - West Transport to Ferenia, use Wave Beam to push the Wide Beam Block from above, without Wide Beam.
 - Added: Logic to handle having Ice Missiles without Super Missile.
+- Added: In Ghavoran - Teleport to Burenia, Cross Bomb Skip using just Morph Ball to get to and from the Pickup. Rated one level higher than the corresponding usage with Flash Shift or Spin Boost.
 - Changed: In Dairon - Teleport to Artaria, breaking the speed blocks is no longer "dangerous". This is done by removing the "Before Event" condition on breaking the blocks from above.
 - Changed: In Artaria - Water Reservoir, breaking the blob is no longer "dangerous", as long as Slide is not randomized. This was previously dangerous because there's a connection in EMMI Zone Exit Southwest that makes use of Speed Booster, however, by simply adding a "Can Slide" option on the same condition, the logic now sees the blob as safe.
 - Changed: In Burenia: Fighting Drogyga is now only "dangerous" if Highly Dangerous Logic is enabled. This is achieved by adding a Highly Dangerous Logic constraint on all instances where the logic uses "Before Drogyga" on connections in the Underneath Drogyga room.
@@ -31,11 +37,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Most instances of pushing Wide Beam Blocks by using Wave Beam through walls now no longer need Wide Beam. Notable exception is Dairon - West Transport to Ferenia, from below.
 - Changed: Boss fight logic using Ice Missile without Super Missile is no longer an option, and effectively requires as many missiles as with normal Missiles.
 
+### Metroid Prime
+
+- Fixed: One-way elevator mode not able to generate.
+
 ### Metroid Prime 2: Echoes
 
 - Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
 
+#### Logic Database
+
+- Added: 307 videos to the logic database. see the [Video Directory]
+(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
+
+##### Temple Grounds:
+
+- Added:  NSJ Extended Dash (Expert) to cross Grand Windchamber through the middle platform.
+
+##### Agon Wastes:
+
+- Added: NSJ Extended Dash (Advanced) to reach Temple Access Door in Mining Station A.
+
+##### Sky Temple Ground:
+
+- Removed: Phazon Grounds NSJ, No SA -> Invisibil Objects (Hypermode) or Movement (Expert) and Dark Visor. Doesn't exist.
+
+##### Sanctuary Fortress:
+
+- Added: Extended Dash (Expert) to reach the Scan Post in Watch Station Access from Main Gyro Chamber Door.
+- Added: Extended Dash (Expert) to reach Main Gyro Chamber Door in Watch Station Access from the Scan Post Side.
+- Added: Workers Path - Screw Attack from Z-Axis (Intermediate) now requires Bomb Space Jump (Intermediate) from Dynamo Works
+- Added: Workers Path - Bomb Jump (Advanced) method added to reach cannon NSJ from landing platform
+
 ## [6.1.1] - 2023-08-07
+
 
 - Changed: Improve performance significantly when opening a Multiworld session with long history.
 - Changed: Slightly improve performance when opening game details.

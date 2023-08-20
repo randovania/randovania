@@ -11,10 +11,10 @@ def create_box_for_exception(val: Exception) -> QtWidgets.QMessageBox:
     box = QtWidgets.QMessageBox(
         QtWidgets.QMessageBox.Critical,
         "An exception was raised",
-        ("An unhandled Exception occurred:\n{}\n\n"
+        (f"An unhandled Exception occurred:\n{val}\n\n"
          "When reporting, make sure to paste the entire contents of the following box."
          "\nIt has already be copied to your clipboard."
-         ).format(val),
+         ),
         QtWidgets.QMessageBox.Ok,
     )
     from randovania.gui.lib import common_qt_lib

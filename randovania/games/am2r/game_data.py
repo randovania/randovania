@@ -70,14 +70,16 @@ game_data: game.GameData = game.GameData(
         ("Can I defeat Serris without Ice Beam?",
          "Yes, Serris automatically changes her weakness to not "
          "require Ice Beam if you fight her before acquiring it."),
-        ("Where can I find the Wisdom Septoggs?", "There are seven Wisdom Septoggs. They can can be found in:\n\n"
-            "- Main Caves - Research Site Storage\n"
+        ("Where can I find the Hints?", "There are eight hints in total, and the map will show "
+                                        "an 'H' icon on places where hints exist. They can can be found in:\n\n"
+            "- Main Caves - Research Site Access\n"
             "- Golden Temple - Breeding Grounds Hub\n"
             "- Hydro Station - Breeding Grounds Lobby\n"
             "- Industrial Complex - Breeding Grounds Fly Stadium\n"
             "- The Tower - Tower Exterior North\n"
             "- Distribution Center - Distribution Facility Tower East\n"
-            "- The Nest - Depths Shinespark Cave East"),
+            "- The Nest - Depths Shinespark Cave East\n"
+            "- Genetics Laboratory - Destroyed Chozo Memorial"),
         ("What are shinies?",
          "Some items have a 1 in 1024 chance of being a Pokémon-style shiny: "
          "they look different but behave entirely the same as normal. "

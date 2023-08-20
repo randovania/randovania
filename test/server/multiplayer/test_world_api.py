@@ -9,7 +9,8 @@ import pytest
 from frozendict import frozendict
 
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.inventory import Inventory
 from randovania.games.game import RandovaniaGame
 from randovania.network_common import error, remote_inventory, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus
@@ -103,7 +104,7 @@ def test_emit_world_pickups_update_one_action(
 
 
 def test_add_pickup_to_inventory_success(dread_spider_pickup):
-    inventory = remote_inventory.inventory_to_encoded_remote({})
+    inventory = remote_inventory.inventory_to_encoded_remote(Inventory.empty())
     new_inventory = world_api._add_pickup_to_inventory(inventory, dread_spider_pickup, RandovaniaGame.METROID_DREAD)
 
     assert remote_inventory.decode_remote_inventory(new_inventory) == {

@@ -17,7 +17,7 @@ def is_frozen() -> bool:
 
 
 def is_flatpak() -> bool:
-    return platform.system() == "Linux" and os.environ.get("container")
+    return platform.system() == "Linux" and os.environ.get("container", "") != ""
 
 
 def is_dirty() -> bool:
@@ -94,7 +94,7 @@ def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = Fa
     import logging.handlers
     import time
 
-    handlers = {
+    handlers: dict = {
         'default': {
             'level': default_level,
             'formatter': 'default',

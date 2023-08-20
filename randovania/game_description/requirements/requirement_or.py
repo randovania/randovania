@@ -10,8 +10,8 @@ from randovania.game_description.requirements.requirement_set import Requirement
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection
 
 
 def _halt_damage_on_zero(items: Iterable[Requirement], current_resources: ResourceCollection,

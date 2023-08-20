@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup import pickup_category
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import PoolResults

@@ -148,7 +148,8 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_forest_000_platform",
                         "start_point_actor_name": "elevator_aqua_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "transporter_name": "Ghavoran - Robot"
                     },
                     "valid_starting_location": false,
                     "dock_type": "elevator",
@@ -10473,8 +10474,8 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "CrossSkip",
+                                                        "type": "items",
+                                                        "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -10485,28 +10486,61 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Flash",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "CrossSkip",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Flash",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Use Spin Boost"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Use Spin Boost"
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/4YU9S5yxUXY",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "CrossSkip",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -10598,9 +10632,9 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "CrossSkip",
-                                                        "amount": 2,
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -10610,28 +10644,61 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Flash",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "CrossSkip",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Flash",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Use Spin Boost"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Use Spin Boost"
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/4YU9S5yxUXY",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "CrossSkip",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -12223,7 +12290,8 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_forest_000_platform",
                         "start_point_actor_name": "wagontrain_sanctuary_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "transporter_name": "Ghavoran - Storm Gate"
                     },
                     "valid_starting_location": false,
                     "dock_type": "shuttle",
@@ -14265,7 +14333,8 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_forest_000_platform",
                         "start_point_actor_name": "wagontrain_shipyard_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "transporter_name": "Ghavoran - Golzuna"
                     },
                     "valid_starting_location": false,
                     "dock_type": "shuttle",
@@ -15016,7 +15085,8 @@
                         "elevator_component": "CTrainUsableComponentCutScene",
                         "target_spawn_point": "wagontrain_forest_000_platform",
                         "start_point_actor_name": "wagontrain_quarantine_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "transporter_name": "Ghavoran - Flipper"
                     },
                     "valid_starting_location": false,
                     "dock_type": "shuttle",
@@ -15132,7 +15202,8 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_forest_000_platform",
                         "start_point_actor_name": "elevator_baselab_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "transporter_name": "Ghavoran - Early Supers"
                     },
                     "valid_starting_location": false,
                     "dock_type": "elevator",
