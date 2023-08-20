@@ -17,5 +17,5 @@ class SimpleResourceInfo:
     resource_type: ResourceType
     extra: frozendict = dataclasses.field(hash=False, default_factory=frozendict)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.long_name

@@ -8,6 +8,7 @@ from PySide6 import QtCore
 from randovania.game_connection.connector.dread_remote_connector import DreadRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.executor.dread_executor import DreadExecutor, DreadExecutorToConnectorSignals
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 
@@ -60,33 +61,30 @@ async def test_new_player_location(connector: DreadRemoteConnector):
     assert connector.inventory_index is None
     connector.PlayerLocationChanged.emit.assert_called_once_with(PlayerLocationEvent(None, None))
 
+
 async def test_new_inventory_received(connector: DreadRemoteConnector):
     connector.InventoryUpdated = MagicMock(QtCore.SignalInstance)
 
-    assert connector.last_inventory == {}
+    assert connector.last_inventory == Inventory.empty()
     connector.new_inventory_received("{}")
-    assert connector.last_inventory == {}
+    assert connector.last_inventory == Inventory.empty()
     connector.InventoryUpdated.emit.assert_not_called()
 
     assert connector.inventory_index is None
     connector.new_inventory_received('{"index": 69, "inventory": [0,1,0]}')
     assert connector.inventory_index == 69
+
     # check wide beam
     wide_beam = connector.game.resource_database.get_item_by_name("Wide Beam")
-    wide_beam_inv_item = connector.last_inventory.get(wide_beam)
-    assert wide_beam_inv_item is not None
-    assert wide_beam_inv_item.capacity == 1
+    assert connector.last_inventory[wide_beam].capacity == 1
 
     # check plasma beam
     plasma_beam = connector.game.resource_database.get_item_by_name("Plasma Beam")
-    plasma_beam_inv_item = connector.last_inventory.get(plasma_beam)
-    assert plasma_beam_inv_item is not None
-    assert plasma_beam_inv_item.capacity == 0
+    assert connector.last_inventory[plasma_beam].capacity == 0
 
     # check wave beam
     wave_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
-    wave_beam_inv_item = connector.last_inventory.get(wave_beam)
-    assert wave_beam_inv_item is None
+    assert connector.last_inventory.get(wave_beam) == InventoryItem(0, 0)
 
     connector.InventoryUpdated.emit.assert_called_once()
 

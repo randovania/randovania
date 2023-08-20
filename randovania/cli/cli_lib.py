@@ -26,12 +26,7 @@ def add_validate_argument(parser: ArgumentParser):
 
 def print_report_multiple_times(total_times: list[float]):
     print(
-        "Result after doing {repeat} times:\n"
-        "Mean: {mean:.3f} seconds\n"
-        "stdev: {stdev:.3f} seconds\n"
-        "Median: {median:.3f} seconds".format(
-            repeat=len(total_times),
-            mean=statistics.mean(total_times),
-            median=statistics.median(total_times),
-            stdev=statistics.stdev(total_times)
-        ))
+        f"Result after doing {len(total_times)} times:\n"
+        f"Mean: {statistics.mean(total_times):.3f} seconds\n"
+        f"stdev: {statistics.stdev(total_times):.3f} seconds\n"
+        f"Median: {statistics.median(total_times):.3f} seconds")

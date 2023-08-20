@@ -36,6 +36,10 @@ class NodeProvider:
     def all_areas(self) -> Iterator[Area]:
         raise NotImplementedError
 
+    @property
+    def all_nodes(self) -> tuple[Node | None, ...]:
+        raise NotImplementedError
+
     def iterate_nodes(self) -> tuple[Node, ...]:
         raise NotImplementedError
 

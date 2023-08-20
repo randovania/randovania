@@ -1459,7 +1459,7 @@
             }
         },
         "Chozo Seals": {
-            "default_node": "Elevator to Area 3 Exterior - Transport to Area 4 West",
+            "default_node": "Elevator to Area 3 - Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": 8100.0,
@@ -1569,7 +1569,7 @@
                         }
                     }
                 },
-                "Elevator to Area 3 Exterior - Transport to Area 4 West": {
+                "Elevator to Area 3 - Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1587,13 +1587,13 @@
                         "start_point_actor_name": "ST_FromArea03"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 3 - Exterior",
                         "area": "Transport to Area 4 West",
-                        "node": "Elevator to Area 4 West - Chozo Seals"
+                        "node": "Elevator to Area 4 - West"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1608,7 +1608,7 @@
                         }
                     }
                 },
-                "Elevator to Area 4 East - Transport to Area 4 West": {
+                "Elevator to Area 4 - East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1626,13 +1626,13 @@
                         "start_point_actor_name": "ST_FromArea05"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 4 - East",
                         "area": "Transport to Area 4 West",
-                        "node": "Elevator to Area 4 West - Chozo Seals"
+                        "node": "Elevator to Area 4 - West"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1805,13 +1805,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -2015,7 +2010,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 4 East - Transport to Area 4 West": {
+                        "Elevator to Area 4 - East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2615,7 +2610,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 3 Exterior - Transport to Area 4 West": {
+                        "Elevator to Area 3 - Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2910,12 +2905,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Alpha+ Arena Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 17",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid+": {
@@ -3234,13 +3227,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -3488,29 +3476,12 @@
                                         "data": "Destroy Bomb Block"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3559,29 +3530,12 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3889,12 +3843,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Gamma Access Path Upper": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Gamma 9",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Dock to Gamma Access Path Lower": {
@@ -4034,13 +3986,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
                                                 },
                                                 {
                                                     "type": "and",
@@ -5488,7 +5435,7 @@
             }
         },
         "Transport to Area 5 Entrance": {
-            "default_node": "Elevator to Area 5 Entrance - Chozo Seal",
+            "default_node": "Elevator to Area 5 - Entrance",
             "extra": {
                 "total_boundings": {
                     "x1": 10100.0,
@@ -5525,7 +5472,7 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
-                "Elevator to Area 5 Entrance - Chozo Seal": {
+                "Elevator to Area 5 - Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5543,13 +5490,13 @@
                         "start_point_actor_name": "ST_FromArea06"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Entrance",
                         "area": "Chozo Seal",
-                        "node": "Elevator to Area 4 West - Transport to Area 5 Entrance"
+                        "node": "Elevator to Area 4 - West"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5659,7 +5606,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 Entrance - Chozo Seal": {
+                        "Elevator to Area 5 - Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5774,7 +5721,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 5 Entrance - Chozo Seal": {
+                        "Elevator to Area 5 - Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5876,13 +5823,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     },
                                     {
                                         "type": "resource",

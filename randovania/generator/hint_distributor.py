@@ -32,7 +32,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.generator.filler.runner import PlayerPool
     from randovania.layout.base.base_configuration import BaseConfiguration
 

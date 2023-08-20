@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, NamedTuple
 from randovania.game_description import default_database
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.resolver.state import State, StateGameData
 
@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration

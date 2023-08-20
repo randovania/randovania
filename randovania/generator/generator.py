@@ -18,7 +18,7 @@ from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.resolver import debug, resolver
+from randovania.resolver import debug, exceptions, resolver
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
 if TYPE_CHECKING:
@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.generator_parameters import GeneratorParameters
     from randovania.layout.preset import Preset
@@ -57,7 +57,7 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
     with debug.with_level(0):
         try:
             return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=1000) is not None
-        except resolver.ResolverTimeout:
+        except exceptions.ResolverTimeoutError:
             return False
 
 

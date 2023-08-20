@@ -198,7 +198,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             "There is no integrated patcher for Metroid Prime 3: Corruption games.\n"
             "Download the randomizer for it from #corruption-general in the Metroid Prime Randomizer Discord, "
             "and use the following commands as a seed.\n\n"
-            "\n{}").format(commands)
+            f"\n{commands}")
 
         message_box = ScrollLabelDialog(dialog_text, "Commands for patcher", self)
         message_box.resize(750, 200)
@@ -311,14 +311,14 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         ingame_hash = preset.game.data.layout.get_ingame_hash(description.shareable_hash_bytes)
         ingame_hash_str = f"In-game Hash: {ingame_hash}<br/>" if ingame_hash is not None else ""
-        title_text = """
+        title_text = f"""
         <p>
             Generated with Randovania {description.randovania_version_text}<br />
             Seed Hash: {description.shareable_word_hash} ({description.shareable_hash})<br/>
             {ingame_hash_str}
             Preset Name: {preset.name}
         </p>
-        """.format(description=description, ingame_hash_str=ingame_hash_str, preset=preset)
+        """
         self.layout_title_label.setText(title_text)
 
         categories = list(preset_describer.describe(preset))

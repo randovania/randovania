@@ -19,7 +19,7 @@ from randovania.game_description.resources.node_resource_info import NodeResourc
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import random_lib
-from randovania.resolver import debug, resolver
+from randovania.resolver import debug, exceptions, resolver
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 
@@ -216,9 +216,6 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tup
 
 
 async def _run_resolver(state: State, logic: Logic, max_attempts: int):
-    debug.log_resolve_start()
-
-    resolver.set_attempts(0)
     with debug.with_level(0):
         return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=max_attempts)
 
@@ -244,11 +241,11 @@ async def _run_dock_resolver(dock: DockNode,
         new_state = await _run_resolver(
             state, logic, state.patches.game.dock_weakness_database.dock_rando_config.resolver_attempts,
         )
-    except resolver.ResolverTimeout:
+    except exceptions.ResolverTimeoutError:
         new_state = None
-        result = f"Timeout ({resolver.get_attempts()} attempts)"
+        result = f"Timeout ({logic.get_attempts()} attempts)"
     else:
-        result = f"Finished resolver ({resolver.get_attempts()} attempts)"
+        result = f"Finished resolver ({logic.get_attempts()} attempts)"
 
     debug.debug_print(result)
 
@@ -321,7 +318,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
             new_state = await _run_resolver(
                 state, logic, patches.game.dock_weakness_database.dock_rando_config.resolver_attempts * 2,
             )
-        except resolver.ResolverTimeout:
+        except exceptions.ResolverTimeoutError:
             new_state = None
 
         if new_state is None:

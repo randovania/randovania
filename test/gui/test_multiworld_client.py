@@ -8,6 +8,7 @@ import pytest
 from frozendict import frozendict
 
 from randovania.game_connection.game_connection import ConnectedGameState
+from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.multiworld_client import MultiworldClient
 from randovania.interface_common.players_configuration import INVALID_UUID
@@ -141,21 +142,21 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
             id=uid_1,
             source=MagicMock(),
             status=GameConnectionStatus.InGame,
-            current_inventory={},
+            current_inventory=Inventory.empty(),
             collected_indices=MagicMock(),
         ),
         MagicMock(): ConnectedGameState(
             id=INVALID_UUID,
             source=MagicMock(),
             status=GameConnectionStatus.InGame,
-            current_inventory={},
+            current_inventory=Inventory.empty(),
             collected_indices=MagicMock(),
         ),
         MagicMock(): ConnectedGameState(
             id=uid_4,
             source=MagicMock(),
             status=GameConnectionStatus.InGame,
-            current_inventory={},
+            current_inventory=Inventory.empty(),
             collected_indices=MagicMock(),
         ),
     }
@@ -216,7 +217,6 @@ async def test_server_sync(client, mocker: MockerFixture):
     uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
     uid_2 = uuid.UUID("00000000-0000-1111-0000-000000000000")
     uid_3 = uuid.UUID("000000000000-0000-0000-0000-11111111")
-
 
     request = ServerSyncRequest(worlds=frozendict({
         uid_1: ServerWorldSync(
