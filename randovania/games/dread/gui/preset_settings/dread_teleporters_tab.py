@@ -19,21 +19,11 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.game_description import GameDescription
     from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-    from randovania.gui.lib.window_manager import WindowManager
-    from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
 
 class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, NodeListHelper):
-    compatible_modes = [
-        TeleporterShuffleMode.VANILLA,
-        TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
-        TeleporterShuffleMode.TWO_WAY_UNCHECKED,
-        TeleporterShuffleMode.ONE_WAY_TELEPORTER,
-        TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
-    ]
     teleporter_mode_to_description = {
         TeleporterShuffleMode.VANILLA:
             "All transporters are connected to where they do in the original game.",
@@ -52,9 +42,6 @@ class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, Nod
             "Rooms can be used as a destination multiple times, causing transporter which you can possibly"
              " not come back to.",
     }
-
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
-        super().__init__(editor, game_description, window_manager)
 
     def setup_ui(self):
         self.setupUi(self)

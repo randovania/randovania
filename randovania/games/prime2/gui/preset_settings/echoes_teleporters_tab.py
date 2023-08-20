@@ -39,16 +39,6 @@ class PresetTeleportersPrime2(PresetTeleporterTab, Ui_PresetTeleportersPrime2, N
             "Sanctuary Fortress": 3,
             "Temple Grounds": 5,
         }
-    compatible_modes = [
-        TeleporterShuffleMode.VANILLA,
-        TeleporterShuffleMode.ECHOES_SHUFFLED,
-        TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
-        TeleporterShuffleMode.TWO_WAY_UNCHECKED,
-        TeleporterShuffleMode.ONE_WAY_TELEPORTER,
-        TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
-        TeleporterShuffleMode.ONE_WAY_ANYTHING,
-        TeleporterShuffleMode.ECHOES_SHUFFLED
-    ]
     teleporter_mode_to_description = {
         TeleporterShuffleMode.VANILLA:
             "All elevators are connected to where they do in the original game.",

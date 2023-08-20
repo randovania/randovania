@@ -28,7 +28,6 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
     _teleporters_target_for_region: dict[str, QtWidgets.QCheckBox]
     _teleporters_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
     _teleporters_target_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
-    compatible_modes = []
     teleporter_mode_to_description = []
     teleporters_layout: QtWidgets.QVBoxLayout
     teleporters_combo: ScrollProtectedComboBox
@@ -44,7 +43,7 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
         self.teleporters_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.teleporter_types = game_description.dock_weakness_database.all_teleporter_dock_types
 
-        for value in self.compatible_modes:
+        for value in self.teleporter_mode_to_description:
             self.teleporters_combo.addItem(value.long_name, value)
 
         self.teleporters_combo.currentIndexChanged.connect(self._update_teleporter_mode)

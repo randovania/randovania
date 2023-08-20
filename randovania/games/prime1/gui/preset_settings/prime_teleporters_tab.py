@@ -30,14 +30,6 @@ if TYPE_CHECKING:
 
 
 class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, NodeListHelper):
-    compatible_modes = [
-        TeleporterShuffleMode.VANILLA,
-        TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
-        TeleporterShuffleMode.TWO_WAY_UNCHECKED,
-        TeleporterShuffleMode.ONE_WAY_TELEPORTER,
-        TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
-        TeleporterShuffleMode.ONE_WAY_ANYTHING,
-    ]
     teleporter_mode_to_description = {
         TeleporterShuffleMode.VANILLA:
             "All elevators are connected to where they do in the original game.",
