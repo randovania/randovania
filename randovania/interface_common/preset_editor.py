@@ -106,11 +106,11 @@ class PresetEditor:
         self.set_configuration_field("damage_strictness", value)
 
     @property
-    def layout_configuration_elevators(self) -> TeleporterConfiguration:
+    def layout_configuration_teleporters(self) -> TeleporterConfiguration:
         return self.configuration.elevators
 
-    @layout_configuration_elevators.setter
-    def layout_configuration_elevators(self, value: TeleporterConfiguration):
+    @layout_configuration_teleporters.setter
+    def layout_configuration_teleporters(self, value: TeleporterConfiguration):
         self.set_configuration_field("elevators", value)
 
     @property

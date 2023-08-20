@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 @dataclasses.dataclass(frozen=True)
 class DreadTeleporterConfiguration(TeleporterConfiguration):
-    # Dread has only save stations as start nodes in the db. Elevators are no start nodes but
+    # Dread has only save stations as start nodes in the db. Teleporters are no start nodes but
     # are valid targets and also the only valid targets. Preset settings makes sure
     # that nothing else is selected
     @property

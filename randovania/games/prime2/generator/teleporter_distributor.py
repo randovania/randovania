@@ -2,10 +2,31 @@ from random import Random
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import ElevatorConnection
+from randovania.game_description.game_patches import TeleporterConnection
+from randovania.generator.base_patches_factory import MissingRng
+from randovania.generator.teleporter_distributor import get_teleporter_connections
+from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode
 
 
-def elevator_echoes_shuffled(game_description: GameDescription, rng: Random) -> ElevatorConnection:
+def get_teleporter_connections_echoes(teleporters: TeleporterConfiguration,
+                                      game: GameDescription, rng: Random) -> TeleporterConnection:
+    teleporter_connection: TeleporterConnection = {}
+
+    if not teleporters.is_vanilla:
+        if rng is None:
+            raise MissingRng("Teleporter")
+
+        if teleporters.mode in {TeleporterShuffleMode.ECHOES_SHUFFLED}:
+            connections = elevator_echoes_shuffled(game, rng)
+        else:
+            connections = get_teleporter_connections(teleporters, game, rng)
+
+        teleporter_connection.update(connections)
+
+    return teleporter_connection
+
+
+def elevator_echoes_shuffled(game_description: GameDescription, rng: Random) -> TeleporterConnection:
     from randovania.games.prime2.generator.base_patches_factory import WORLDS
     worlds = list(WORLDS)
     rng.shuffle(worlds)

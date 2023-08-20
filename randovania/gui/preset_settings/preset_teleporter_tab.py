@@ -23,12 +23,13 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
 
 
-class PresetTransporterTab(PresetTab, NodeListHelper):
+class PresetTeleporterTab(PresetTab, NodeListHelper):
     _teleporters_source_for_location: dict[NodeIdentifier, QtWidgets.QCheckBox]
     _teleporters_target_for_region: dict[str, QtWidgets.QCheckBox]
     _teleporters_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
     _teleporters_target_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
     compatible_modes = []
+    teleporter_mode_to_description = []
     teleporters_layout: QtWidgets.QVBoxLayout
     teleporters_combo: ScrollProtectedComboBox
     teleporters_description_label: QtWidgets.QLabel
@@ -43,14 +44,8 @@ class PresetTransporterTab(PresetTab, NodeListHelper):
         self.teleporters_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.teleporter_types = game_description.dock_weakness_database.all_teleporter_dock_types
 
-        descriptions = ["<p>Controls where each transporter connects to.</p>"]
         for value in self.compatible_modes:
             self.teleporters_combo.addItem(value.long_name, value)
-            descriptions.append(
-                f'<p><span style="font-weight:600;">{value.long_name}</span>: {value.description}</p>'
-            )
-
-        self.teleporters_description_label.setText("".join(descriptions))
 
         self.teleporters_combo.currentIndexChanged.connect(self._update_teleporter_mode)
 
@@ -80,15 +75,15 @@ class PresetTransporterTab(PresetTab, NodeListHelper):
 
     def _update_teleporter_mode(self):
         with self._editor as editor:
-            editor.layout_configuration_elevators = dataclasses.replace(
-                editor.layout_configuration_elevators,
+            editor.layout_configuration_teleporters = dataclasses.replace(
+                editor.layout_configuration_teleporters,
                 mode=self.teleporters_combo.currentData(),
             )
 
     def _on_teleporter_source_check_changed(self, checked: bool):
         with self._editor as editor:
-            config = editor.layout_configuration_elevators
-            editor.layout_configuration_elevators = dataclasses.replace(
+            config = editor.layout_configuration_teleporters
+            editor.layout_configuration_teleporters = dataclasses.replace(
                 config,
                 excluded_teleporters=TeleporterList.with_elements([
                     location
@@ -100,8 +95,8 @@ class PresetTransporterTab(PresetTab, NodeListHelper):
 
     def _on_teleporter_target_check_changed(self, areas: list[NodeIdentifier], checked: bool):
         with self._editor as editor:
-            config = editor.layout_configuration_elevators
-            editor.layout_configuration_elevators = dataclasses.replace(
+            config = editor.layout_configuration_teleporters
+            editor.layout_configuration_teleporters = dataclasses.replace(
                 config,
                 excluded_targets=config.excluded_targets.ensure_has_locations(areas, not checked),
             )

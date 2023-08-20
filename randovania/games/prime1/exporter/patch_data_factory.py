@@ -633,7 +633,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         )
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
-        elevator_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
+        teleporter_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
 
         # Initialize serialized db data
         level_data = {}
@@ -649,11 +649,11 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     "doors": {},
                 }
 
-        # serialize elevator modifications
+        # serialize teleporter modifications
         for region in regions:
             for area in region.areas:
                 for node in area.nodes:
-                    is_teleporter = isinstance(node, DockNode) and node.dock_type in elevator_dock_types
+                    is_teleporter = isinstance(node, DockNode) and node.dock_type in teleporter_dock_types
                     if not is_teleporter:
                         continue
 
@@ -705,7 +705,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             for area in region.areas:
                 dock_nodes: list[DockNode] = sorted(
                     (node for node in area.nodes
-                     if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types),
+                     if isinstance(node, DockNode) and node.dock_type not in teleporter_dock_types),
                     key=lambda n: n.extra["dock_index"]
                 )
                 for node in dock_nodes:

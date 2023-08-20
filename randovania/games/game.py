@@ -40,7 +40,7 @@ def _get_none(h):
 @dataclass(frozen=True)
 class GameLayout:
     configuration: type[BaseConfiguration]
-    """Logic and gameplay settings such as elevator shuffling."""
+    """Logic and gameplay settings such as teleporter shuffling."""
 
     cosmetic_patches: type[BaseCosmeticPatches]
     """Cosmetic settings such as item icons on maps."""
@@ -84,7 +84,7 @@ class GameGenerator:
     """Modifies the resource database and starting resources before generation."""
 
     base_patches_factory: BasePatchesFactory
-    """Creates base patches, such as elevator or configurable node assignments."""
+    """Creates base patches, such as teleporter or configurable node assignments."""
 
     hint_distributor: HintDistributor | None = None
     """(Optional) """

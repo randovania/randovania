@@ -11,10 +11,11 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.prime2.generator.teleporter_distributor import get_teleporter_connections_echoes
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng
-from randovania.generator.elevator_distributor import get_dock_connections_for_elevators
+from randovania.generator.teleporter_distributor import get_dock_connections_assignment_for_teleporter
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -85,7 +86,9 @@ class EchoesBasePatchesFactory(BasePatchesFactory):
 
     def dock_connections_assignment(self, configuration: EchoesConfiguration,
                                     game: GameDescription, rng: Random ) -> Iterable[tuple[DockNode, Node]]:
-        dock_assignment = get_dock_connections_for_elevators(configuration.elevators, game, rng)
+        teleporter_connection = get_teleporter_connections_echoes(configuration.elevators, game, rng)
+        dock_assignment = get_dock_connections_assignment_for_teleporter(configuration.elevators,
+                                                                         game, teleporter_connection)
 
         if not configuration.portal_rando:
             yield from dock_assignment

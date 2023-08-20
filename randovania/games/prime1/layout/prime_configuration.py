@@ -45,6 +45,7 @@ class EnemyAttributeRandomizer(BitPackDataclass, JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class PrimeConfiguration(BaseConfiguration):
+    # TODO @Thanatos rename
     elevators: PrimeTrilogyTeleporterConfiguration
     hints: HintConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
