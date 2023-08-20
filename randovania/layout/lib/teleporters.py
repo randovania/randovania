@@ -36,8 +36,8 @@ enum_lib.add_long_name(TeleporterShuffleMode, {
     TeleporterShuffleMode.ECHOES_SHUFFLED: "Shuffle regions",
     TeleporterShuffleMode.TWO_WAY_RANDOMIZED: "Two-way, between regions",
     TeleporterShuffleMode.TWO_WAY_UNCHECKED: "Two-way, unchecked",
-    TeleporterShuffleMode.ONE_WAY_TELEPORTER: "One-way, teleporter room with cycles",
-    TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT: "One-way, teleporter room with replacement",
+    TeleporterShuffleMode.ONE_WAY_TELEPORTER: "One-way, with cycles",
+    TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT: "One-way, with replacement",
     TeleporterShuffleMode.ONE_WAY_ANYTHING: "One-way, anywhere",
 })
 
@@ -138,11 +138,11 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
     def static_teleporters(self) -> dict[NodeIdentifier, NodeIdentifier]:
         return {}
 
-    def description(self):
+    def description(self, teleporter_name: str):
         result = []
         if self.mode not in {TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.ECHOES_SHUFFLED}:
             if not self.is_vanilla and self.excluded_teleporters.locations:
-                result.append(f"{len(self.excluded_teleporters.locations)} teleporters")
+                result.append(f"{len(self.excluded_teleporters.locations)} {teleporter_name}")
 
             if self.has_shuffled_target and self.excluded_targets.locations:
                 result.append(f"{len(self.excluded_targets.locations)} targets")

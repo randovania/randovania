@@ -87,7 +87,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                 }
             ],
             "Gameplay": [
-                {f"Elevators/Shuttles: {configuration.teleporters.description()}":
+                {f"Elevators/Shuttles: {configuration.teleporters.description('transporters')}":
                  not configuration.teleporters.is_vanilla}
             ],
             "Goal": describe_artifacts(configuration.artifacts),

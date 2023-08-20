@@ -108,7 +108,8 @@ class PrimePresetDescriber(GamePresetDescriber):
                 {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
             ],
             "Gameplay": [
-                {f"Elevators: {configuration.teleporters.description()}": not configuration.teleporters.is_vanilla},
+                {f"Elevators: {configuration.teleporters.description('elevators')}":
+                 not configuration.teleporters.is_vanilla},
                 {
                     "Dangerous Gravity Suit Logic":
                         configuration.allow_underwater_movement_without_gravity,

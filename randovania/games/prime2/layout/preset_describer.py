@@ -138,7 +138,8 @@ class EchoesPresetDescriber(GamePresetDescriber):
             ],
             "Gameplay": [
                 {f"Translator Gates: {configuration.translator_configuration.description()}": True},
-                {f"Elevators: {configuration.teleporters.description()}": not configuration.teleporters.is_vanilla},
+                {f"Elevators: {configuration.teleporters.description('elevators')}":
+                 not configuration.teleporters.is_vanilla},
                 {"Portals: Randomized": configuration.portal_rando},
             ],
             "Game Changes": [
