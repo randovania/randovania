@@ -227,7 +227,8 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "unveiled_blocks": c.unveiled_blocks,
             "health_hud_rotation": c.health_hud_rotation,
             "etank_hud_rotation": c.etank_hud_rotation,
-            "dna_hud_rotation": c.dna_hud_rotation
+            "dna_hud_rotation": c.dna_hud_rotation,
+            "room_names_on_hud": c.show_room_names.value,
         }
 
     def _get_item_data(self):
