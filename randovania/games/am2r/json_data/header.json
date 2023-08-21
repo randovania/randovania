@@ -3748,10 +3748,45 @@
         "Default": []
     },
     "minimal_logic": {
-        "items_to_exclude": [],
-        "custom_item_amount": [],
-        "events_to_exclude": [],
-        "description": "Nothing is checked."
+        "items_to_exclude": [
+            {
+                "name": "Bombs",
+                "when_shuffled": null
+            },
+            {
+                "name": "Ice Beam",
+                "when_shuffled": null
+            },
+            {
+                "name": "Screw Attack",
+                "when_shuffled": null
+            }
+        ],
+        "custom_item_amount": [
+            {
+                "name": "Energy Tank",
+                "value": 10
+            },
+            {
+                "name": "Missiles",
+                "value": 250
+            },
+            {
+                "name": "Super Missiles",
+                "value": 10
+            },
+            {
+                "name": "Power Bombs",
+                "value": 10
+            }
+        ],
+        "events_to_exclude": [
+            {
+                "name": "VictoryEvent",
+                "reason": "Victory Condition"
+            }
+        ],
+        "description": "Items checked for: Bombs, Ice Beam and Screw Attack."
     },
     "victory_condition": {
         "type": "and",
