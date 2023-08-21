@@ -22,7 +22,94 @@ if TYPE_CHECKING:
     from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
 
 
-class AM2RPatchDataFactory(PatchDataFactory):
+def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random):
+    combat_list = [
+        "musalphafight",
+        "musancientguardian",
+        "musarachnus",
+        "museris",
+        "musgammafight",
+        "musgenesis",
+        "musomegafight",
+        "musqueen",
+        "musqueen2",
+        "musqueen3",
+        "musreactor",
+        "mustorizoa",
+        "mustorizob",
+        "muszetafight",
+        "mustester",
+    ]
+
+    exploration_list = [
+        "musarea1a",
+        "musarea1b",
+        "musarea2a",
+        "musarea2b",
+        "musarea3a",
+        "musarea3b",
+        "musarea4a",
+        "musarea4b",
+        "musarea5a",
+        "musarea5b",
+        "musarea6a",
+        "musarea7a",
+        "musarea7c",
+        "musarea8",
+        "muscaveambience",
+        "muscaveambiencea4",
+        "mushatchling",
+        "musitemamb",
+        "musitemamb2",
+        "muslabambience",
+        "musmaincave",
+        "musmaincave2",
+        "mustitle",
+    ]
+
+    fanfare_list = [
+        "musarea7b",
+        "musfanfare",
+        "musitemget",
+        "musmetroidappear",
+        "musqueenbreak",
+        "musqueenintro",
+    ]
+
+    excluded_list = [
+        "musarea7d",
+        "muscredits",
+        "musending",
+        "musintroseq",
+    ]
+
+    if music_mode == MusicMode.VANILLA:
+        return {}
+
+    # Music is now either TYPE or FULL
+    assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
+
+    shuffled_combat = combat_list.copy()
+    shuffled_exploration = exploration_list.copy()
+    shuffled_fanfare = fanfare_list.copy()
+    rng.shuffle(shuffled_combat)
+    rng.shuffle(shuffled_exploration)
+    rng.shuffle(shuffled_fanfare)
+
+    total_orig = combat_list + exploration_list + fanfare_list
+    total_new = shuffled_combat + shuffled_exploration + shuffled_fanfare
+    if music_mode == MusicMode.FULL:
+        total_orig += excluded_list
+        total_new = total_orig.copy()
+        rng.shuffle(total_new)
+
+    return {
+        f"{orig}.ogg": f"{new}.ogg"
+        for orig, new in zip(total_orig, total_new)
+    }
+
+
+class AM2RPatchDataFactory(BasePatchDataFactory):
     _EASTER_EGG_SHINY = 1024
     cosmetic_patches: AM2RCosmeticPatches
     configuration: AM2RConfiguration
@@ -240,94 +327,10 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "etank_hud_rotation": c.etank_hud_rotation,
             "dna_hud_rotation": c.dna_hud_rotation,
             "room_names_on_hud": c.show_room_names.value,
-            "music_shuffle": self._construct_music_shuffle_dict(c.music, rng),
+            "music_shuffle": _construct_music_shuffle_dict(c.music, rng),
         }
 
-    def _construct_music_shuffle_dict(self, music_mode: MusicMode, rng: Random):
-        combat_list = [
-            "musalphafight",
-            "musancientguardian",
-            "musarachnus",
-            "museris",
-            "musgammafight",
-            "musgenesis",
-            "musomegafight",
-            "musqueen",
-            "musqueen2",
-            "musqueen3",
-            "musreactor",
-            "mustorizoa",
-            "mustorizob",
-            "muszetafight",
-            "mustester",
-        ]
 
-        exploration_list = [
-            "musarea1a",
-            "musarea1b",
-            "musarea2a",
-            "musarea2b",
-            "musarea3a",
-            "musarea3b",
-            "musarea4a",
-            "musarea4b",
-            "musarea5a",
-            "musarea5b",
-            "musarea6a",
-            "musarea7a",
-            "musarea7c",
-            "musarea8",
-            "muscaveambience",
-            "muscaveambiencea4",
-            "mushatchling",
-            "musitemamb",
-            "musitemamb2",
-            "muslabambience",
-            "musmaincave",
-            "musmaincave2",
-            "mustitle",
-        ]
-
-        fanfare_list = [
-            "musarea7b",
-            "musfanfare",
-            "musitemget",
-            "musmetroidappear",
-            "musqueenbreak",
-            "musqueenintro",
-        ]
-
-        excluded_list = [
-            "musarea7d",
-            "muscredits",
-            "musending",
-            "musintroseq",
-        ]
-
-        if music_mode == MusicMode.VANILLA:
-            return {}
-
-        # Music is now either TYPE or FULL
-        assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
-
-        shuffled_combat = combat_list.copy()
-        shuffled_exploration = exploration_list.copy()
-        shuffled_fanfare = fanfare_list.copy()
-        rng.shuffle(shuffled_combat)
-        rng.shuffle(shuffled_exploration)
-        rng.shuffle(shuffled_fanfare)
-
-        total_orig = combat_list + exploration_list + fanfare_list
-        total_new = shuffled_combat + shuffled_exploration + shuffled_fanfare
-        if music_mode == MusicMode.FULL:
-            total_orig += excluded_list
-            total_new = total_orig.copy()
-            rng.shuffle(total_new)
-
-        return {
-            f"{orig}.ogg": f"{new}.ogg"
-            for orig, new in zip(total_orig, total_new)
-        }
 
     def _get_item_data(self):
         item_data = json_lib.read_path(
