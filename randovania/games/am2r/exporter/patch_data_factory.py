@@ -8,6 +8,7 @@ from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import JOKE_HINTS
+from randovania.games.am2r.layout.am2r_cosmetic_patches import MusicMode
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
@@ -230,7 +231,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
         return hints
 
-    def _create_cosmetics(self) -> dict:
+    def _create_cosmetics(self, rng: Random) -> dict:
         c = self.cosmetic_patches
         return {
             "show_unexplored_map": c.show_unexplored_map,
@@ -239,9 +240,93 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "etank_hud_rotation": c.etank_hud_rotation,
             "dna_hud_rotation": c.dna_hud_rotation,
             "room_names_on_hud": c.show_room_names.value,
-            # TODO: this works as a basic implementation, but in the future, the json file should dictate on
-            # how exactly which song gets replaced with what
-            "music_shuffle": c.music.name,
+            "music_shuffle": self._construct_music_shuffle_dict(c.music, rng),
+        }
+
+    def _construct_music_shuffle_dict(self, music_mode: MusicMode, rng: Random):
+        combat_list = [
+            "musalphafight",
+            "musancientguardian",
+            "musarachnus",
+            "museris",
+            "musgammafight",
+            "musgenesis",
+            "musomegafight",
+            "musqueen",
+            "musqueen2",
+            "musqueen3",
+            "musreactor",
+            "mustorizoa",
+            "mustorizob",
+            "muszetafight",
+            "mustester",
+        ]
+
+        exploration_list = [
+            "musarea1a",
+            "musarea1b",
+            "musarea2a",
+            "musarea2b",
+            "musarea3a",
+            "musarea3b",
+            "musarea4a",
+            "musarea4b",
+            "musarea5a",
+            "musarea5b",
+            "musarea6a",
+            "musarea7a",
+            "musarea7c",
+            "musarea8",
+            "muscaveambience",
+            "muscaveambiencea4",
+            "mushatchling",
+            "musitemamb",
+            "musitemamb2",
+            "muslabambience",
+            "musmaincave",
+            "musmaincave2",
+            "mustitle",
+        ]
+
+        fanfare_list = [
+            "musarea7b",
+            "musfanfare",
+            "musitemget",
+            "musmetroidappear",
+            "musqueenbreak",
+            "musqueenintro",
+        ]
+
+        excluded_list = [
+            "musarea7d",
+            "muscredits",
+            "musending",
+            "musintroseq",
+        ]
+
+        if music_mode == MusicMode.VANILLA:
+            return {}
+
+        # Music is now either TYPE or FULL
+        assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
+
+        shuffled_combat = combat_list.copy()
+        shuffled_exploration = exploration_list.copy()
+        shuffled_fanfare = fanfare_list.copy()
+        rng.shuffle(shuffled_combat)
+        rng.shuffle(shuffled_exploration)
+        rng.shuffle(shuffled_fanfare)
+
+        total_orig = combat_list + exploration_list + fanfare_list
+        total_new = shuffled_combat + shuffled_exploration + shuffled_fanfare
+        if music_mode == MusicMode.FULL:
+            total_orig += excluded_list
+            total_new = total_orig.copy()
+            rng.shuffle(total_new)
+
+        return {
+            f"{orig}.ogg": f"{new}.ogg"
+            for orig, new in zip(total_orig, total_new)
         }
 
     def _get_item_data(self):
@@ -294,5 +379,5 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "game_patches": self._create_game_patches(self.configuration, pickup_list, item_data, self.rng),
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
-            "cosmetics": self._create_cosmetics()
+            "cosmetics": self._create_cosmetics(self.rng)
         }
