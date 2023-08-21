@@ -78,7 +78,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
     def _create_starting_items_dict(self):
         starting_resources = self.patches.starting_resources()
         return {
-            resource.short_name: quantity
+            resource.long_name: quantity
             for resource, quantity in starting_resources.as_resource_gain()
         }
 
