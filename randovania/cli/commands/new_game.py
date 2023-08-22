@@ -328,6 +328,7 @@ def new_game_command_logic(args):
             "--game",
             enum_value,
         ],
+        check=False,
     ).returncode)
 
 
