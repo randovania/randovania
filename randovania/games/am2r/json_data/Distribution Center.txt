@@ -1912,7 +1912,7 @@ Extra - map_name: rm_a5a03
 Extra - minimap_data: [{'x': 68, 'y': 38}, {'x': 68, 'y': 39}]
 > Door to Gravity Area Corridor; Heals? False
   * Layers: default
-  * Normal Door to Gravity Area Corridor/Door to Gravity Area One-Way Route; Dock Lock Rando incompatible with: Spider Ball Door, Screw Attack Door
+  * Normal Door to Gravity Area Corridor/Door to Gravity Area One-Way Route; Dock Lock Rando incompatible with: Bomb Door
   * Extra - instance_id: 136529
   > Door to Gravity Area Moto Room
       All of the following:
@@ -1984,7 +1984,14 @@ Extra - minimap_data: [{'x': 72, 'y': 38}, {'x': 72, 'y': 39}, {'x': 72, 'y': 40
   * Normal Door to Gravity Area Corridor/Door to Gravity Area Shaft
   * Extra - instance_id: 136637
   > Door to Gravity Chamber Access
-      Trivial
+      Any of the following:
+          # Cannot open the door unless these conditions are met
+          Gravity Suit
+          All of the following:
+              Can Use Any Bombs
+              Any of the following:
+                  Missile Launcher and Missiles
+                  Super Missile Launcher and Super Missiles
 
 > Door to Gravity Chamber Access; Heals? False
   * Layers: default
@@ -2000,7 +2007,7 @@ Extra - minimap_data: [{'x': 72, 'y': 38}, {'x': 72, 'y': 39}, {'x': 72, 'y': 40
 
 > Door to Gravity Area Blockade; Heals? False
   * Layers: default
-  * Missile Door to Gravity Area Blockade/Door to Gravity Area Shaft
+  * Missile Door to Gravity Area Blockade/Door to Gravity Area Shaft; Dock Lock Rando incompatible with: Missile Door, Super Missile Door, Charge Beam Door, Spazer Beam Door, Plasma Beam Door, Ice Beam Door, Bomb Door
   * Extra - instance_id: 136636
   > Top
       Trivial
