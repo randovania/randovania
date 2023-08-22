@@ -3,7 +3,7 @@ from __future__ import annotations
 import construct
 
 from randovania.bitpacking import construct_pack
-from randovania.game_description.resources.item_resource_info import Inventory, InventoryItem
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 
 OldRemoteInventory = dict[str, InventoryItem]
 RemoteInventory = dict[str, int]
@@ -11,8 +11,8 @@ RemoteInventory = dict[str, int]
 
 def inventory_to_encoded_remote(inventory: Inventory) -> bytes:
     return construct_pack.encode(
-        {item.short_name: item_state.capacity
-         for item, item_state in inventory.items()},
+        {item.short_name: capacity
+         for item, capacity in inventory.as_resource_gain()},
         RemoteInventory
     )
 

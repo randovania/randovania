@@ -13,12 +13,13 @@ if TYPE_CHECKING:
 
 @dataclasses.dataclass(frozen=True)
 class DreadTeleporterConfiguration(TeleporterConfiguration):
-    # Dread has only save stations as start nodes in the db. Elevators are no start nodes but
+    # Dread has only save stations as start nodes in the db. Teleporters are no start nodes but
     # are valid targets and also the only valid targets. Preset settings makes sure
     # that nothing else is selected
     @property
     def valid_targets(self) -> list[NodeIdentifier]:
-        if self.mode in {TeleporterShuffleMode.ONE_WAY_ELEVATOR, TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT}:
+        if self.mode in {TeleporterShuffleMode.ONE_WAY_TELEPORTER,
+                         TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT}:
             game_description = default_database.game_description_for(self.game)
             teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
             region_list = game_description.region_list

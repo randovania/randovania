@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from randovania.games import game
 from randovania.games.samus_returns import layout
+from randovania.games.samus_returns.pickup_database import progressive_items
 from randovania.layout.preset_describer import GamePresetDescriber
 
 
@@ -18,7 +19,7 @@ def _gui() -> game.GameGui:
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
-        progressive_item_gui_tuples=(),
+        progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(),
     )
 

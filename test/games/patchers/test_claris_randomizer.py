@@ -8,8 +8,8 @@ from unittest.mock import ANY, MagicMock, call, patch
 import pytest
 
 from randovania.games.prime2.patcher import claris_randomizer
+from randovania.games.prime2.patcher.claris_randomizer import ClarisRandomizerExportError
 from randovania.interface_common import persistence
-from randovania.patching.patchers.exceptions import ExportFailure
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -86,7 +86,7 @@ def test_run_with_args_failure(mock_process_command: MagicMock):
     mock_process_command.side_effect = side_effect
 
     # Run
-    with pytest.raises(ExportFailure) as error:
+    with pytest.raises(ClarisRandomizerExportError) as error:
         claris_randomizer._run_with_args([], input_data, finish_string, status_update)
 
     # Assert

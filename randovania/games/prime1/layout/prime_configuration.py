@@ -45,7 +45,7 @@ class EnemyAttributeRandomizer(BitPackDataclass, JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class PrimeConfiguration(BaseConfiguration):
-    elevators: PrimeTrilogyTeleporterConfiguration
+    teleporters: PrimeTrilogyTeleporterConfiguration
     hints: HintConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifact_target: LayoutArtifactMode

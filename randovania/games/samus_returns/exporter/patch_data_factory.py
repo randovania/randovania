@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.resource_info import ResourceCollection
+    from randovania.game_description.resources.resource_collection import ResourceCollection
 
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
@@ -123,5 +123,5 @@ class MSRAcquiredMemo(dict):
         )
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
-        result["Aeion Tank"] = "Aeion Tank acquired.\nAieon capacity increased by {Aeion}"
+        result["Aeion Tank"] = "Aeion Tank acquired.\nAeion capacity increased by {Aeion}"
         return result

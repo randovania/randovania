@@ -78,21 +78,18 @@ Transport to Area 5 Interior (East)
 Extra - total_boundings: {'x1': -5200.0, 'x2': -2400.0, 'y1': -4700.0, 'y2': -700.0}
 Extra - polygon: [[-5200.0, -700.0], [-5200.0, -4700.0], [-2400.0, -4700.0], [-2400.0, -700.0]]
 Extra - asset_id: collision_camera_002
-> Elevator to Area 5 Interior - Transport to Area 5 Entrance (East); Heals? False; Spawn Point; Default Node
+> Elevator to Area 5 - Interior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 5 Entrance (East)/Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)
+  * Elevator to Transport to Area 5 Entrance (East)/Elevator to Area 5 - Entrance
   * Extra - actor_name: LE_Platform_Elevator_FromArea06C_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06C_01
   > Door to Pool West
       Any of the following:
-          Space Jump
+          Space Jump or Lay Power Bomb or Use Spider Ball
           All of the following:
               High Jump Boots
               Phase Drift or Shoot Beam Burst
-          All of the following:
-              Morph Ball
-              Power Bomb or Spider Ball
   > Door to Phase Drift Tutorial
       Trivial
 
@@ -101,12 +98,8 @@ Extra - asset_id: collision_camera_002
   * Access Locked to Pool West/Door to Transport to Area 5 Interior (East)
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerclosed
-  > Elevator to Area 5 Interior - Transport to Area 5 Entrance (East)
-      Any of the following:
-          Phase Drift or Space Jump or Shoot Beam Burst
-          All of the following:
-              Morph Ball
-              Power Bomb or Spider Ball
+  > Elevator to Area 5 - Interior
+      Phase Drift or Space Jump or Lay Power Bomb or Shoot Beam Burst or Use Spider Ball
   > Door to Phase Drift Tutorial
       Trivial
 
@@ -115,7 +108,7 @@ Extra - asset_id: collision_camera_002
   * Power Beam Door to Phase Drift Tutorial/Door to Transport to Area 5 Interior (East)
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 5 Interior - Transport to Area 5 Entrance (East)
+  > Elevator to Area 5 - Interior
       Any of the following:
           Can Spiderspark
           Phase Drift and Space Jump
@@ -162,7 +155,7 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: LE_Platform_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
-  > Elevator to Area 4 West - Transport to Area 5 Entrance
+  > Elevator to Area 4 - West
       Any of the following:
           Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
           Morph Ball and Unmorph Extend (Beginner)
@@ -173,18 +166,18 @@ Extra - asset_id: collision_camera_004
   > Below Chozo Seal
       Trivial
 
-> Elevator to Area 4 West - Transport to Area 5 Entrance; Heals? False; Spawn Point; Default Node
+> Elevator to Area 4 - West; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 5 Entrance/Elevator to Area 5 Entrance - Chozo Seal
+  * Elevator to Transport to Area 5 Entrance/Elevator to Area 5 - Entrance
   * Extra - actor_name: LE_Platform_Elevator_FromArea04
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea04
   > Chozo Seal
       Trivial
 
-> Elevator to Area 6 - Transport to Area 5 Entrance; Heals? False
+> Elevator to Area 6; Heals? False
   * Layers: default
-  * Teleporter to Transport to Area 5 Entrance/Elevator to Area 5 Entrance - Chozo Seal
+  * Elevator to Transport to Area 5 Entrance/Elevator to Area 5 - Entrance
   * Extra - actor_name: LE_Platform_Elevator_FromArea07
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea07
@@ -238,7 +231,7 @@ Extra - asset_id: collision_camera_004
   > Tunnel to Transport Hub Access
       Morph Ball
   > Above Center Tunnel
-      Lighting Armor
+      Lightning Armor
   > Bottom of Right Shaft
       Morph Ball
 
@@ -248,7 +241,7 @@ Extra - asset_id: collision_camera_004
       Can Spiderspark
   > Below Chozo Seal
       Any of the following:
-          Lighting Armor
+          Lightning Armor
           Morph Ball and Screw Attack
   > Below Center Tunnel
       Screw Attack
@@ -270,15 +263,15 @@ Extra - asset_id: collision_camera_004
 > Event - Grapple Block Bottom; Heals? False
   * Layers: default
   * Event Area 5 (Entrance) - Chozo Seal Grapple Block Bottom
-  > Elevator to Area 6 - Transport to Area 5 Entrance
+  > Elevator to Area 6
       Trivial
 
 > Below Center Tunnel; Heals? False
   * Layers: default
   > Ammo Recharge Station
       Morph Ball and After Area 5 (Entrance) - Chozo Seal Grapple Block Middle
-  > Elevator to Area 6 - Transport to Area 5 Entrance
-      Morph Ball and Super Missile and After Area 5 (Entrance) - Chozo Seal Grapple Block Bottom and Destroy Bomb Block
+  > Elevator to Area 6
+      Morph Ball and After Area 5 (Entrance) - Chozo Seal Grapple Block Bottom and Destroy Bomb Block and Shoot Super Missile
   > Above Center Tunnel
       All of the following:
           Screw Attack
@@ -288,7 +281,7 @@ Extra - asset_id: collision_camera_004
   > Event - Grapple Block Middle
       Grapple Beam
   > Event - Grapple Block Bottom
-      Grapple Beam and Super Missile and Destroy Bomb Block
+      Grapple Beam and Destroy Bomb Block and Shoot Super Missile
   > Bottom of Right Shaft
       Climb Rooms Vertically (High Jump)
 
@@ -347,7 +340,7 @@ Extra - asset_id: collision_camera_006
       Trivial
   > Next to Teleporter
       All of the following:
-          Lighting Armor
+          Lightning Armor
           Baby Metroid or Lay Power Bomb
 
 > Teleporter; Heals? False; Default Node
@@ -421,7 +414,7 @@ Extra - asset_id: collision_camera_006
   * Layers: default
   > Pickup (Power Bomb Tank)
       All of the following:
-          Lighting Armor
+          Lightning Armor
           Baby Metroid or Lay Power Bomb
           Any of the following:
               Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
@@ -497,9 +490,9 @@ Transport to Area 5 Interior (West)
 Extra - total_boundings: {'x1': -12800.0, 'x2': -11500.0, 'y1': -679.427001953125, 'y2': 79.42769622802734}
 Extra - polygon: [[-12800.0, 79.42769622802734], [-12800.0, -679.427001953125], [-11500.0, -679.427001953125], [-11500.0, 79.42769622802734]]
 Extra - asset_id: collision_camera_010
-> Elevator to Area 5 Interior - Transport to Area 5 Entrance (West); Heals? False
+> Elevator to Area 5 - Interior; Heals? False
   * Layers: default
-  * Teleporter to Transport to Area 5 Entrance (West)/Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West)
+  * Elevator to Transport to Area 5 Entrance (West)/Elevator to Area 5 - Entrance
   * Extra - actor_name: LE_Platform_Elevator_FromArea06C_02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06C_02
@@ -511,7 +504,7 @@ Extra - asset_id: collision_camera_010
   * Power Beam Door to Pool West/Door to Transport to Area 5 Interior (West)
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerclosed
-  > Elevator to Area 5 Interior - Transport to Area 5 Entrance (West)
+  > Elevator to Area 5 - Interior
       Trivial
 
 ----------------
@@ -542,9 +535,7 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: Door001
   * Extra - actor_type: doorchargecharge
   > Next to Teleporter
-      All of the following:
-          Morph Ball
-          Lighting Armor or After Area 5 (Interior) - Gravity Suit Room Pickup
+      Lightning Armor and Morph Ball
 
 > Door to Alpha+ Arena; Heals? False
   * Layers: default
@@ -581,7 +572,7 @@ Extra - asset_id: collision_camera_011
   > Door to Transport Hub Access
       All of the following:
           Morph Ball
-          Lighting Armor or After Area 5 (Interior) - Gravity Suit Room Pickup or Melee Clip (Beginner)
+          Lightning Armor or Melee Clip (Beginner)
   > Door to Alpha+ Arena
       Trivial
   > Event - Teleporter Unlocked
@@ -649,9 +640,9 @@ Extra - asset_id: collision_camera_012
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
   > Door to Pool East
-      After Area 5 (Entrance) - Alpha Metroid+
+      Trivial
   > Door to Alpha+ Arena Access
-      After Area 5 (Entrance) - Alpha Metroid+
+      Trivial
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
 

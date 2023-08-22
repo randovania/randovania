@@ -93,9 +93,7 @@ class BuilderUi:
             data = multiworld_client.database.get_data_for(world_uid)
             if data.server_data is not None:
                 has_session = True
-                name = "World '{0.world_name}' for session '{0.session_name}'.".format(
-                    data.server_data
-                )
+                name = f"World '{data.server_data.world_name}' for session '{data.server_data.session_name}'."
             else:
                 name = "Unknown Multiworld game."
 

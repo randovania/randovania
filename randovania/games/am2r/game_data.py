@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from randovania.games import game
 from randovania.games.am2r import layout
-from randovania.layout.preset_describer import GamePresetDescriber
 
 
 def _options():
@@ -90,7 +89,7 @@ game_data: game.GameData = game.GameData(
     layout=game.GameLayout(
         configuration=layout.AM2RConfiguration,
         cosmetic_patches=layout.AM2RCosmeticPatches,
-        preset_describer=GamePresetDescriber(),
+        preset_describer=layout.AM2RPresetDescriber(),
     ),
 
     options=_options,

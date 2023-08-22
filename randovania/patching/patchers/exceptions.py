@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 
-class ExportFailure(Exception):
-    def __init__(self, reason: str, output: str | None):
-        super().__init__(reason)
-        self.output = output
+class UnableToExportError(Exception):
+    """
+    An exception that gets raised if a game export was unable to be performed due to user environment limitations.
+    """
 
-    def detailed_text(self) -> str:
-        result = []
-        if self.output is not None:
-            result.append(self.output)
-        return "\n".join(result)
+    def __init__(self, reason: str):
+        super().__init__(reason)
+        self.reason = reason

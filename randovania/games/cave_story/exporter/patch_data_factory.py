@@ -13,8 +13,8 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash

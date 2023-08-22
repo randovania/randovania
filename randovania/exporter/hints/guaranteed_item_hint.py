@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.generator.bootstrap import PrimeBootstrap
 

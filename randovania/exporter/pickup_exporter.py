@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.exporter import item_names
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.resources.pickup_entry import (
+from randovania.game_description.pickup.pickup_entry import (
     ConditionalResources,
     PickupEntry,
     PickupModel,

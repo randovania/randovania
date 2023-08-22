@@ -15,10 +15,10 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.default_database import default_prime2_memo_data
+from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
@@ -359,19 +359,19 @@ def test_create_translator_gates_field(echoes_game_description):
     ]
 
 
-@pytest.mark.parametrize("elevators", [TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.TWO_WAY_RANDOMIZED])
-def test_apply_translator_gate_patches(elevators):
+@pytest.mark.parametrize("teleporters", [TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.TWO_WAY_RANDOMIZED])
+def test_apply_translator_gate_patches(teleporters):
     # Setup
     target = {}
 
     # Run
-    patch_data_factory._apply_translator_gate_patches(target, elevators)
+    patch_data_factory._apply_translator_gate_patches(target, teleporters)
 
     # Assert
     assert target == {
         "always_up_gfmc_compound": True,
         "always_up_torvus_temple": True,
-        "always_up_great_temple": elevators != TeleporterShuffleMode.VANILLA,
+        "always_up_great_temple": teleporters != TeleporterShuffleMode.VANILLA,
     }
 
 

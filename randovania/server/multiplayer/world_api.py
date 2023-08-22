@@ -13,10 +13,11 @@ from frozendict import frozendict
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.pickup.pickup_entry import PickupEntry
+from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import error, remote_inventory, signals
@@ -98,7 +99,7 @@ def _add_pickup_to_inventory(inventory: bytes, pickup: PickupEntry, game: Randov
     )
     collection.add_resource_gain(pickup.resource_gain(collection))
 
-    return remote_inventory.inventory_to_encoded_remote(collection.as_inventory())
+    return remote_inventory.inventory_to_encoded_remote(Inventory.from_collection(collection))
 
 
 @sentry_sdk.trace

@@ -7,7 +7,7 @@ from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 
 if TYPE_CHECKING:
@@ -17,9 +17,10 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 def _energy_tank_difference(new_resources: ResourceCollection,
@@ -88,17 +89,19 @@ class State:
 
     @property
     def collected_pickup_indices(self) -> Iterator[PickupIndex]:
+        context = self.node_context()
         for resource, count in self.resources.as_resource_gain():
             if count > 0 and isinstance(resource, NodeResourceInfo):
-                node = self.region_list.node_by_identifier(resource.node_identifier)
+                node = resource.to_node(context)
                 if isinstance(node, PickupNode):
                     yield node.pickup_index
 
     @property
     def collected_hints(self) -> Iterator[NodeIdentifier]:
+        context = self.node_context()
         for resource, count in self.resources.as_resource_gain():
             if isinstance(resource, NodeResourceInfo) and count > 0:
-                if isinstance(self.region_list.node_by_identifier(resource.node_identifier), HintNode):
+                if isinstance(resource.to_node(context), HintNode):
                     yield resource.node_identifier
 
     @property

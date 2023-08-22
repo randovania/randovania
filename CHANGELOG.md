@@ -7,13 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [6.2.0] - 2023-09-??
 
+- Added: "Help -> Verify Installation" menu option, to verify that your Randovania installation is correct. This is only present on Windows.
+- Changed: Game generation is now up to 150% faster.
 - Changed: The resolver now tries otherwise safe actions behind a point of no return before it tries actions that give dangerous resources. This makes the solve faster by avoiding some cases of backtracking.
+- Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
 
 ### Metroid Dread
-- Added: Elevator and Shuttle randomizer.
+- **Major** - Added: Elevator and Shuttle randomizer. The destination is shown on the elevator/shuttle's minimap icon and in the room name, if enabled. This will show different area names to the logic database for some items. 
 
 - **Major** - Added: Split beams and missiles. When playing with non-progressive beams or missiles, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades.
+- Added: An in-game icon will appear if the player becomes disconnected from the multiworld server. 
 - Changed: The Starter Preset and April Fools 2023 preset now have non-progressive beams and missiles, instead of progressive.
+- Changed: Bomb Shields are no longer vulnerable to Cross Bombs.
 
 #### Logic Database
 
@@ -26,10 +31,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In Dairon - Teleport to Artaria, breaking the speed blocks is no longer "dangerous". This is done by removing the "Before Event" condition on breaking the blocks from above.
 - Changed: In Artaria - Water Reservoir, breaking the blob is no longer "dangerous", as long as Slide is not randomized. This was previously dangerous because there's a connection in EMMI Zone Exit Southwest that makes use of Speed Booster, however, by simply adding a "Can Slide" option on the same condition, the logic now sees the blob as safe.
 - Changed: In Burenia: Fighting Drogyga is now only "dangerous" if Highly Dangerous Logic is enabled. This is achieved by adding a Highly Dangerous Logic constraint on all instances where the logic uses "Before Drogyga" on connections in the Underneath Drogyga room.
-- Changed: in Burenia - Main Hub Tower Middle, lowering the Spider Magnet Wall is now "dangerous" only when Highly Dangerous Logic is enabled. The connection from the bottom of the room to the Pickup Platform that uses Grapple Movement requires the Spider Magnet Wall to not be lowered now requires Highly Dangerous Logic. The randomizer currently doesn't have the necessary options to make this connection mandatory in any seeds anyway.
+- Changed: In Burenia - Main Hub Tower Middle, lowering the Spider Magnet Wall is now "dangerous" only when Highly Dangerous Logic is enabled. The connection from the bottom of the room to the Pickup Platform that uses Grapple Movement requires the Spider Magnet Wall to not be lowered now requires Highly Dangerous Logic. The randomizer currently doesn't have the necessary options to make this connection mandatory in any seeds anyway.
 - Changed: Most instances of pushing Wide Beam Blocks by using Wave Beam through walls now no longer need Wide Beam. Notable exception is Dairon - West Transport to Ferenia, from below.
 - Changed: Boss fight logic using Ice Missile without Super Missile is no longer an option, and effectively requires as many missiles as with normal Missiles.
-- Changed: Exclude Ghavoran door between FLipper Room and Elun Transport Access from being shuffled as a Grapple Beam door in Door Lock rando. This is to enable a Ledge Warp to flip the Spinner from below.
+- Changed: Exclude Ghavoran door between Flipper Room and Elun Transport Access from being shuffled as a Grapple Beam door in Door Lock rando. This is to enable a Ledge Warp to flip the Spinner from below.
+- Changed: Revised logic for fighting Corpius
+  - When using missiles without an ammo requirement, the X must not have been released.
+  - Using Cross Bomb is moved to Combat Beginner
+  - For Missiles, Super Missiles and Ice Missiles, the number of required missiles is reduced by 1, which matches the pre-existing comments. These alternatives remain Combat Intermediate.
+  - For Missiles, Super Missiles and Ice Missiles, these can now also be used without combat tricks, but you need 1.5x as many units of Missiles ammo as the combat trick version.
+  - Added Storm Missiles.
 - Fixed: A typo in the room name Ferenia - East Transport to Dairon has been changed from East Transport to Darion.
 - Fixed: In Burenia - Teleport to Ghavoran, to open the Plasma Beam door from below, add requirement to have Plasma Beam. This becomes relevant with Separate Beam Behavior.
 - Fixed: In Artaria - Teleport to Dairon, to enter the teleport itself using Wave Beam, add requirements to have Wide Beam and Door Lock Rando being disabled. The former becomes relevant with Separate Beam Behavior.
@@ -42,7 +53,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
 
+#### Logic Database
+
+- Added: 307 videos to the logic database. see the [Video Directory]
+(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
+
+##### Temple Grounds:
+
+- Added:  NSJ Extended Dash (Expert) to cross Grand Windchamber through the middle platform.
+
+##### Agon Wastes:
+
+- Added: NSJ Extended Dash (Advanced) to reach Temple Access Door in Mining Station A.
+
+##### Sky Temple Ground:
+
+- Removed: Phazon Grounds NSJ, No SA -> Invisibil Objects (Hypermode) or Movement (Expert) and Dark Visor. Doesn't exist.
+
+##### Sanctuary Fortress:
+
+- Added: Extended Dash (Expert) to reach the Scan Post in Watch Station Access from Main Gyro Chamber Door.
+- Added: Extended Dash (Expert) to reach Main Gyro Chamber Door in Watch Station Access from the Scan Post Side.
+- Added: Workers Path - Screw Attack from Z-Axis (Intermediate) now requires Bomb Space Jump (Intermediate) from Dynamo Works
+- Added: Workers Path - Bomb Jump (Advanced) method added to reach cannon NSJ from landing platform
+
 ## [6.1.1] - 2023-08-07
+
 
 - Changed: Improve performance significantly when opening a Multiworld session with long history.
 - Changed: Slightly improve performance when opening game details.

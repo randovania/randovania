@@ -90,29 +90,6 @@ def _should_check_if_action_is_safe(state: State,
              or _is_major_or_key_pickup_node(action, state))
 
 
-class ResolverTimeout(Exception):
-    pass
-
-
-attempts = 0
-
-
-def set_attempts(value: int):
-    global attempts
-    attempts = value
-
-
-def get_attempts() -> int:
-    return attempts
-
-
-def _check_attempts(max_attempts: int | None):
-    global attempts
-    if max_attempts is not None and attempts >= max_attempts:
-        raise ResolverTimeout(f"Timed out after {max_attempts} attempts")
-    attempts += 1
-
-
 async def _inner_advance_depth(state: State,
                                logic: Logic,
                                status_update: Callable[[str], None],
@@ -138,8 +115,7 @@ async def _inner_advance_depth(state: State,
     if reach is None:
         reach = ResolverReach.calculate_reach(logic, state)
 
-    _check_attempts(max_attempts)
-    logic.log_new_advance(state, reach)
+    logic.start_new_attempt(state, reach, max_attempts)
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
     major_pickup_actions = []
@@ -235,6 +211,7 @@ async def _inner_advance_depth(state: State,
 
 async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None],
                         max_attempts: int | None = None) -> State | None:
+    logic.resolver_start()
     return (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
 
 
@@ -243,8 +220,6 @@ def _quiet_print(s):
 
 
 def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> tuple[State, Logic]:
-    set_attempts(0)
-
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
     bootstrap = game.game.generator.bootstrap
 
@@ -265,6 +240,4 @@ async def resolve(configuration: BaseConfiguration,
         status_update = _quiet_print
 
     starting_state, logic = setup_resolver(configuration, patches)
-    logic.log_resolve_start()
-
     return await advance_depth(starting_state, logic, status_update)

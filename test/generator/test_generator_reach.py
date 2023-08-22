@@ -18,7 +18,7 @@ from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.games.game import RandovaniaGame

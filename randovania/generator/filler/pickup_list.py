@@ -4,16 +4,17 @@ import itertools
 from typing import TYPE_CHECKING
 
 from randovania.game_description import game_description
+from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
     from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.generator_reach import GeneratorReach
     from randovania.resolver.state import State
 
