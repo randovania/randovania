@@ -15,14 +15,16 @@ def _options():
 
 
 def _gui() -> game.GameGui:
-    from randovania.games.common.prime_family.gui.teleporter_details_tab import TeleporterDetailsTab
+    from randovania.games.common.prime_family.gui.prime_trilogy_teleporter_details_tab import (
+        PrimeTrilogyTeleporterDetailsTab,
+    )
     from randovania.games.prime1 import gui
 
     return game.GameGui(
         tab_provider=gui.prime1_preset_tabs,
         cosmetic_dialog=gui.PrimeCosmeticPatchesDialog,
         export_dialog=gui.PrimeGameExportDialog,
-        spoiler_visualizer=(TeleporterDetailsTab,),
+        spoiler_visualizer=(PrimeTrilogyTeleporterDetailsTab,),
         game_tab=gui.PrimeGameTabWidget,
     )
 
