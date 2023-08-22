@@ -2661,7 +2661,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: If the elevator to Dairon is shuffled is also an alternative",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2677,6 +2677,15 @@
                                                     "data": {
                                                         "type": "events",
                                                         "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "Teleporters",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2790,12 +2799,29 @@
                             }
                         },
                         "Tunnel to Spider Magnet Elevator": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "GhavoranSupersRotatable",
-                                "amount": 1,
-                                "negate": true
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranSupersRotatable",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "Teleporters",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2957,15 +2983,6 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Elun Transport Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "GhavoranSupersRotatable",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        },
-                        "Event - Super Missile Rotatable": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2979,6 +2996,23 @@
                                             "negate": true
                                         }
                                     },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "Teleporters",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Super Missile Rotatable": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
                                     {
                                         "type": "resource",
                                         "data": {
