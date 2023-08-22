@@ -20,7 +20,7 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.DreadCosmeticPatchesDialog,
         export_dialog=gui.DreadGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(gui.DreadHintDetailsTab,),
+        spoiler_visualizer=(gui.DreadHintDetailsTab, gui.DreadTeleporterDetailsTab),
         game_tab=gui.DreadGameTabWidget,
     )
 
