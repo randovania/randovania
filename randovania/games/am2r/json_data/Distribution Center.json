@@ -13409,92 +13409,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gravity Chamber Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": "Cannot open the door unless these conditions are met",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity Suit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Any Bombs"
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Missile Launcher",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Missiles",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Super Missile Launcher",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Super Missiles",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -13523,12 +13441,7 @@
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": true,
-                    "incompatible_dock_weaknesses": [
-                        "Charge Beam Door",
-                        "Plasma Beam Door",
-                        "Ice Beam Door",
-                        "Bomb Door"
-                    ],
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -13674,15 +13587,7 @@
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [
-                        "Missile Door",
-                        "Super Missile Door",
-                        "Charge Beam Door",
-                        "Spazer Beam Door",
-                        "Plasma Beam Door",
-                        "Ice Beam Door",
-                        "Bomb Door"
-                    ],
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
