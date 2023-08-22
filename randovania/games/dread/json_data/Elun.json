@@ -371,6 +371,27 @@
                         "Tunnel to Ammo Recharge Station": {
                             "type": "template",
                             "data": "Lay Bomb"
+                        },
+                        "Event - Release X with Ledge Warp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "LedgeWarp",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -450,6 +471,31 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
+                    "connections": {
+                        "Door to Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Release X with Ledge Warp": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 606.1,
+                        "y": 663.41,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ElunReleaseX",
                     "connections": {
                         "Door to Ammo Recharge Station": {
                             "type": "and",

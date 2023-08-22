@@ -248,9 +248,9 @@ def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | Non
         if platform.system() == "Windows":
             os.startfile(path)
         elif platform.system() == "Darwin":
-            subprocess.run(["open", path])
+            subprocess.run(["open", path], check=False)
         else:
-            subprocess.run(["xdg-open", path])
+            subprocess.run(["xdg-open", path], check=False)
 
     except OSError:
         if fallback_dialog is None:

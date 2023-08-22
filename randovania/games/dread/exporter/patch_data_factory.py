@@ -490,7 +490,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         energy_per_tank = self.configuration.energy_per_tank if self.configuration.immediate_energy_parts else 100.0
 
-        elevators =[{
+        teleporters =[{
                     "teleporter": self._teleporter_ref_for(node),
                     "destination": self._start_point_ref_for(connection),
                     "connection_name": _get_destination_room_for_teleportal(connection)
@@ -509,7 +509,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 for pickup_item in pickup_list
                 if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
-            "elevators": elevators if self.configuration.elevators.mode != TeleporterShuffleMode.VANILLA else [],
+            "elevators": teleporters if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else [],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler(),
