@@ -1983,20 +1983,15 @@ Extra - minimap_data: [{'x': 72, 'y': 38}, {'x': 72, 'y': 39}, {'x': 72, 'y': 40
   * Layers: default
   * Normal Door to Gravity Area Corridor/Door to Gravity Area Shaft
   * Extra - instance_id: 136637
-  > Door to Gravity Chamber Access
+  > Bottom
       Trivial
 
 > Door to Gravity Chamber Access; Heals? False
   * Layers: default
-  * Missile Door to Gravity Chamber Access/Door to Gravity Area Shaft; Excluded from Dock Lock Rando
+  * Missile Door to Gravity Chamber Access/Door to Gravity Area Shaft
   * Extra - instance_id: 136632
-  > Door to Gravity Area Corridor
-      No Gravity Suit and Walljump (Intermediate) and Enabled Septogg Helpers
-  > Top
-      Any of the following:
-          Space Jump Wall
-          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
-          Gravity Suit and Enabled Septogg Helpers
+  > Bottom
+      Trivial
 
 > Door to Gravity Area Blockade; Heals? False
   * Layers: default
@@ -2011,6 +2006,20 @@ Extra - minimap_data: [{'x': 72, 'y': 38}, {'x': 72, 'y': 39}, {'x': 72, 'y': 40
       Trivial
   > Door to Gravity Area Blockade
       Gravity Suit
+
+> Bottom; Heals? False
+  * Layers: default
+  > Door to Gravity Area Corridor
+      No Gravity Suit and Walljump (Intermediate) and Enabled Septogg Helpers
+  > Door to Gravity Chamber Access
+      Any of the following:
+          # The door cannot be opened unless these conditions are met.
+          Gravity Suit or Missiles or Super Missiles
+  > Top
+      Any of the following:
+          Space Jump Wall
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+          Gravity Suit and Enabled Septogg Helpers
 
 ----------------
 Gravity Chamber Access
