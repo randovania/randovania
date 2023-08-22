@@ -4,7 +4,7 @@ import dataclasses
 import random
 
 from randovania.games.prime2.generator.base_patches_factory import EchoesBasePatchesFactory
-from randovania.generator.elevator_distributor import elevator_echoes_shuffled
+from randovania.games.prime2.generator.teleporter_distributor import elevator_echoes_shuffled
 
 
 def test_elevator_echoes_shuffled(echoes_game_patches):

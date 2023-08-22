@@ -57,9 +57,9 @@ def _a(region, area, instance_id=None):
     params=[
         _m(b'\x08', 5, 'Original connections'),
         _m(b'\x18', 5, 'Original connections', skip_final_bosses=True),
-        _m(b'\xc1', 8, 'One-way, elevator room with cycles', mode="one-way-elevator"),
-        _m(b'\xc81d', 22, 'One-way, elevator room with cycles; excluded 1 teleporters',
-           mode="one-way-elevator", excluded_teleporters=[
+        _m(b'\xc1', 8, 'One-way, with cycles', mode="one-way-teleporter"),
+        _m(b'\xc81d', 22, 'One-way, with cycles; excluded 1 elevators',
+           mode="one-way-teleporter", excluded_teleporters=[
                 _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
             ]),
         _m(b'\xe4\x03,\xd0', 28, 'One-way, anywhere; excluded 1 targets', mode="one-way-anything", excluded_targets=[
@@ -111,4 +111,4 @@ def test_encode(test_data):
 
 
 def test_description(test_data):
-    assert test_data.expected.description() == test_data.description
+    assert test_data.expected.description("elevators") == test_data.description

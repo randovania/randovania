@@ -13,7 +13,7 @@ from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 
-ElevatorConnection = dict[NodeIdentifier, NodeIdentifier]
+TeleporterConnection = dict[NodeIdentifier, NodeIdentifier]
 StartingEquipment = list[PickupEntry] | ResourceCollection
 
 

@@ -42,7 +42,8 @@ class MSRPresetDescriber(GamePresetDescriber):
                 }
             ],
             "Gameplay": [
-                {f"Elevators/Shuttles: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
+                {f"Elevators/Shuttles: {configuration.teleporters.description()}":
+                 not configuration.teleporters.is_vanilla}
             ],
             "Game Changes": [
                 message_for_required_mains(
