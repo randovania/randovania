@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: "Help -> Verify Installation" menu option, to verify that your Randovania installation is correct. This is only present on Windows.
 - Changed: Game generation is now up to 150% faster.
 - Changed: The resolver now tries otherwise safe actions behind a point of no return before it tries actions that give dangerous resources. This makes the solve faster by avoiding some cases of backtracking.
+- Changed: Comments no longer prevent And/Or requirements from being displayed as short form.
 - Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
 
 ### Metroid Dread
