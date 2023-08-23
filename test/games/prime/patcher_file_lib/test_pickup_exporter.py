@@ -164,7 +164,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         model_style,
         PickupModelDataSource.ETM,
         creator,
-        pickup_creator.create_visual_etm(),
+        pickup_creator.create_visual_nothing(),
     )
 
     # Assert
@@ -301,7 +301,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         PickupModelStyle.HIDE_ALL,
         PickupModelDataSource.RANDOM,
         creator,
-        pickup_creator.create_visual_etm(),
+        pickup_creator.create_visual_nothing(),
     )
 
     # Assert

@@ -827,7 +827,7 @@ def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: 
         configuration.pickup_model_style,
         configuration.pickup_model_data_source,
         exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, RandovaniaGame.METROID_PRIME_ECHOES),
-        visual_etm=pickup_creator.create_visual_etm(),
+        visual_etm=pickup_creator.create_visual_nothing(),
     )
     multiworld_item = game.resource_database.get_item(echoes_items.MULTIWORLD_ITEM)
 

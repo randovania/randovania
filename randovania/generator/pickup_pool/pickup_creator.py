@@ -137,11 +137,14 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
     )
 
 
-def create_visual_etm(game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
-                      model_name: str = echoes_items.USELESS_PICKUP_MODEL,
-                      pickup_name: str = "Unknown item") -> PickupEntry:
+def create_visual_nothing(game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
+                          model_name: str = echoes_items.USELESS_PICKUP_MODEL,
+                          pickup_name: str = "Unknown item") -> PickupEntry:
     """
-    Creates an ETM that should only be used as a visual pickup.
+    Creates a Nothing pickup that should only be used for visual purposes.
+    :param game: The game from where the model comes from. Defaults to Echoes.
+    :param model_name: The model name for the Nothing pickup. Defaults to "EnergyTransferModule".
+    :param pickup_name: The name of the Nothing pickup. Defaults to "Unknown item".
     :return:
     """
     return PickupEntry(
