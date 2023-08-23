@@ -8,6 +8,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
+from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.gui.generated.preset_patcher_energy_ui import Ui_PresetPatcherEnergy
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -75,7 +76,8 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         config = preset.configuration
         assert isinstance(
             config,
-            PrimeConfiguration | EchoesConfiguration | CorruptionConfiguration | AM2RConfiguration
+            PrimeConfiguration | EchoesConfiguration | CorruptionConfiguration |
+            AM2RConfiguration | SuperMetroidConfiguration
         )
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 
