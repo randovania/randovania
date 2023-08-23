@@ -23,6 +23,15 @@ if TYPE_CHECKING:
 
 
 def test_export_game_raises_without_dotnet(mocker):
+    mocker.patch("subprocess.run", side_effect=FileNotFoundError)
+
+    exporter = AM2RGameExporter()
+
+    with pytest.raises(UnableToExportError):
+        exporter._do_export_game(MagicMock(), MagicMock(), MagicMock())
+
+
+def test_export_game_raises_with_wrong_dotnet_exit_code(mocker):
     dotnet_process = mocker.patch("subprocess.run")
     dotnet_process.returncode = 1
 

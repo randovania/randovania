@@ -2694,7 +2694,7 @@
                                         "data": {
                                             "type": "damage",
                                             "name": "Damage",
-                                            "amount": 99,
+                                            "amount": 199,
                                             "negate": false
                                         }
                                     }
@@ -2856,7 +2856,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Super Missile Launcher",
+                                            "name": "Super Missiles",
                                             "amount": 7,
                                             "negate": false
                                         }
@@ -3748,10 +3748,45 @@
         "Default": []
     },
     "minimal_logic": {
-        "items_to_exclude": [],
-        "custom_item_amount": [],
-        "events_to_exclude": [],
-        "description": "Nothing is checked."
+        "items_to_exclude": [
+            {
+                "name": "Bombs",
+                "when_shuffled": null
+            },
+            {
+                "name": "Ice Beam",
+                "when_shuffled": null
+            },
+            {
+                "name": "Screw Attack",
+                "when_shuffled": null
+            }
+        ],
+        "custom_item_amount": [
+            {
+                "name": "Energy Tank",
+                "value": 10
+            },
+            {
+                "name": "Missiles",
+                "value": 250
+            },
+            {
+                "name": "Super Missiles",
+                "value": 10
+            },
+            {
+                "name": "Power Bombs",
+                "value": 10
+            }
+        ],
+        "events_to_exclude": [
+            {
+                "name": "VictoryEvent",
+                "reason": "Victory Condition"
+            }
+        ],
+        "description": "Items checked for: Bombs, Ice Beam and Screw Attack."
     },
     "victory_condition": {
         "type": "and",
@@ -3882,7 +3917,7 @@
                             }
                         }
                     },
-                    "Water Turbine Door": {
+                    "Hydro Station Water Turbine": {
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -4261,6 +4296,7 @@
                         "Distribution Center Robot Home EMP Door",
                         "Golden Temple EMP Door",
                         "Hydro Station EMP Door",
+                        "Hydro Station Water Turbine",
                         "Industrial Complex EMP Door",
                         "Missile Door",
                         "Normal Door",
@@ -4284,6 +4320,7 @@
                         "Golden Temple EMP Door",
                         "Guardian-Locked Door",
                         "Hydro Station EMP Door",
+                        "Hydro Station Water Turbine",
                         "Ice Beam Door",
                         "Industrial Complex EMP Door",
                         "Locked Door",
@@ -4302,6 +4339,46 @@
                         "Wave Beam Door"
                     ]
                 }
+            },
+            "horizontal_dock": {
+                "name": "Horizontal Dock",
+                "extra": {},
+                "items": {
+                    "4-Tiles High Dock": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "5-Tiles High Dock": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "3-Tiles High Dock": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
             },
             "tunnel": {
                 "name": "Tunnel",
@@ -4338,6 +4415,26 @@
                                 "name": "Morph Ball",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
+            "area_transition": {
+                "name": "Area Transition",
+                "extra": {
+                    "is_area_transition": true
+                },
+                "items": {
+                    "Open Passage": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "lock": null

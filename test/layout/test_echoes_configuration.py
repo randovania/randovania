@@ -91,7 +91,7 @@ def layout_config_with_data(request, default_echoes_configuration):
         "standard_pickup_configuration": StandardPickupConfiguration,
         "ammo_pickup_configuration": AmmoPickupConfiguration,
 
-        "elevators": PrimeTrilogyTeleporterConfiguration,
+        "teleporters": PrimeTrilogyTeleporterConfiguration,
         "translator_configuration": TranslatorConfiguration,
         "hints": HintConfiguration,
         "beam_configuration": BeamConfiguration,

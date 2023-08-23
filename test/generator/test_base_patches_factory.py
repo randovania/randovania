@@ -42,7 +42,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
 
     config = default_echoes_configuration
     config = dataclasses.replace(config,
-                                 elevators=dataclasses.replace(config.elevators,
+                                 teleporters=dataclasses.replace(config.teleporters,
                                                                skip_final_bosses=skip_final_bosses))
 
     # Run
@@ -68,8 +68,8 @@ def test_add_elevator_connections_to_dock_connections_random(echoes_game_descrip
     patches_factory = echoes_game_description.game.generator.base_patches_factory
     layout_configuration = dataclasses.replace(
         default_echoes_configuration,
-        elevators=dataclasses.replace(
-            default_echoes_configuration.elevators,
+        teleporters=dataclasses.replace(
+            default_echoes_configuration.teleporters,
             mode=TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
             skip_final_bosses=skip_final_bosses,
         ),

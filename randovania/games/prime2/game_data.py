@@ -12,7 +12,9 @@ def _options():
 
 
 def _gui() -> game.GameGui:
-    from randovania.games.common.prime_family.gui.teleporter_details_tab import TeleporterDetailsTab
+    from randovania.games.common.prime_family.gui.prime_trilogy_teleporter_details_tab import (
+        PrimeTrilogyTeleporterDetailsTab,
+    )
     from randovania.games.prime2 import gui
     from randovania.games.prime2.pickup_database import progressive_items
 
@@ -22,7 +24,7 @@ def _gui() -> game.GameGui:
         export_dialog=gui.EchoesGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(
-            TeleporterDetailsTab,
+            PrimeTrilogyTeleporterDetailsTab,
             gui.TranslatorGateDetailsTab,
             gui.PortalDetailsTab,
             gui.EchoesHintDetailsTab,

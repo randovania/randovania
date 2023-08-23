@@ -966,6 +966,16 @@ def _migrate_v61(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v62(preset: dict) -> dict:
+    config = preset["configuration"]
+    if "elevators" in config:
+        if config["elevators"]["mode"] == "one-way-elevator":
+            config["elevators"]["mode"] = "one-way-teleporter"
+        elif config["elevators"]["mode"] == "one-way-elevator-replacement":
+            config["elevators"]["mode"] = "one-way-teleporter-replacement"
+        config["teleporters"] = config.pop("elevators")
+    return preset
+
 
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -1029,6 +1039,7 @@ _MIGRATIONS = [
     _migrate_v59,
     _migrate_v60,
     _migrate_v61,
+    _migrate_v62,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
