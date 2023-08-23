@@ -137,17 +137,19 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
     )
 
 
-def create_visual_etm() -> PickupEntry:
+def create_visual_etm(game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
+                      model_name: str = echoes_items.USELESS_PICKUP_MODEL,
+                      pickup_name: str = "Unknown item") -> PickupEntry:
     """
     Creates an ETM that should only be used as a visual pickup.
     :return:
     """
     return PickupEntry(
-        name="Unknown item",
+        name=pickup_name,
         progression=(),
         model=PickupModel(
-            game=RandovaniaGame.METROID_PRIME_ECHOES,
-            name=echoes_items.USELESS_PICKUP_MODEL,
+            game=game,
+            name=model_name,
         ),
         pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
         broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
