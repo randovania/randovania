@@ -1,5 +1,5 @@
 
-## Required Changes
+# Required Changes
 
 Randovania provides a command line tool for making the necessary changes to start adding a new game:
 
@@ -16,7 +16,7 @@ The command check if the provided values fit the naming rules for each of these.
 
 Make sure you have followed the Developer setup and activated the virtual environment before running the command.
 
-### Correctly generating games
+## Correctly generating games
 
 For a game to be correctly generated, it's necessary to be able to reach the victory condition. This will normally be
 some requirement for a final boss event.
@@ -31,14 +31,85 @@ game to have proper pickups:
 2. Update `standard_pickup_configuration` and `ammo_pickup_configuration` in your game's starter preset.
 
 
+## Exporting games
 
-### Exporting games
+Up to now, everything is just theoretical values inside Randovania. The next step is making these modifications be
+applied to the game. 
 
-In order to export a game, a patcher is required. Typically, the patcher will be included in Randovania for seamless exports. This is a requirement for non-experimental games. Experimental games, however, may prefer an alternative implementation: refer to Corruption as an example of exporting data to be passed to a standalone patcher.
+In most cases, this involves readings the files from a user-provided copy of the game and creating either
+a new ROM/ISO file or a mod file.
 
-**TODO**: details
+This process is split into two parts:
 
+### Patch Data Factory
+
+Each game defines a class that inherits from `PatchDataFactory`. Given a `LayoutDescription`, a `CosmeticPatches` and 
+`PlayersConfiguration`, it creates a JSON Object that will be passed as an argument to the Game Exporter.
+
+### Game Exporter
+
+Each game also defines a class that inherits from `GameExporter`. Given the JSON created by the `PatchDataFactory` and a
+`GameExportParams`, provided by your game's `GameExportDialog`, it's expected to create all the necessary files for the
+user to play the game.
+
+Since Randovania does not modify the game files, a separate Python package must be created which is responsible for
+these changes. This package is called the patcher for the game.
+
+You are free to implement this package however you want, but we recommend the following:
+
+#### Input Data
+
+The arguments for the patcher should be:
+- A json file, also called the patcher data
+- Paths to necessary game files (input path)
+- Paths to an output folder (output path)
+- A status update function
+
+Any other parameter should come from the json file.
+
+#### Language
+
+Best:
+- Python
+
+Good (Known to integrate without issues):
+- C
+- C++
+- Rust
+- Lua
+
+Likely Good (Should integrate well, never tested):
+- Languages that compile to static library, such as Go
+
+Ok (Expect additional work to integrate properly, avoid if possible):
+- C#
+
+Avoid languages that require the user to install a runtime, such as Java.
+
+#### Standalone Use
+
+Allow your patcher to be used directly in the command line, by passing the game files and a json file.
+
+This makes it easy to test the patcher without having to run it through Randovania, and helps better identify issues.
+
+#### Json Schema
+
+Define a [JSON Schema](https://json-schema.org/understanding-json-schema/) that defines the structure of the patcher data.
+This makes for a good documentation of what is the input for the patcher, as well as a very good safety against
+misconfiguration in Randovania.
 
 ### Multiworld
 
+Before a game can work in Multiworld, it must first work properly as a solo game. It is highly recommended to finish the basic integration first.
+
 **TODO**
+
+# Rules for new games
+
+Randovania has a high bar of quality for our game integrations, and we wish to keep it that way. In order to help
+with that goal, there are rules that need to be met before we can accept a game.
+
+- An owner for the game. The owner is expected to be available and willing to maintain their game for the foreseeable future.
+- A reviewer of Logic changes, separate from the owner.
+- An open source patcher, with a license that allows us to fork your patcher and continue it in case of abandonment. Licenses such as GPLv3 or Apache 2 are great options.
+- Proper test coverage of new code, at least the part included in Randovania.

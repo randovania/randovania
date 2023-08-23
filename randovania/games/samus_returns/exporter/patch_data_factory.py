@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
@@ -25,7 +25,7 @@ def get_item_id_for_item(item: ItemResourceInfo) -> str:
         raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
-class MSRPatchDataFactory(BasePatchDataFactory):
+class MSRPatchDataFactory(PatchDataFactory):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.memo_data = MSRAcquiredMemo.with_expansion_text()

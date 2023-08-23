@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
@@ -93,7 +93,7 @@ def _get_destination_room_for_teleportal(connection: Node):
         f"{connection.identifier.region_name} - {connection.identifier.area_name}"
     )
 
-class DreadPatchDataFactory(BasePatchDataFactory):
+class DreadPatchDataFactory(PatchDataFactory):
     cosmetic_patches: DreadCosmeticPatches
     configuration: DreadConfiguration
     spawnpoint_name_prefix = "SP_RDV_"

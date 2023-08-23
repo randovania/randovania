@@ -14,7 +14,7 @@ if typing.TYPE_CHECKING:
     from pathlib import Path
 
     from randovania.exporter.game_exporter import GameExporter
-    from randovania.exporter.patch_data_factory import BasePatchDataFactory
+    from randovania.exporter.patch_data_factory import PatchDataFactory
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
@@ -140,7 +140,7 @@ class GameData:
     generator: Callable[[], GameGenerator]
     """Contains game-specific generation data."""
 
-    patch_data_factory: Callable[[], type[BasePatchDataFactory]]
+    patch_data_factory: Callable[[], type[PatchDataFactory]]
 
     exporter: Callable[[], GameExporter]
     """Capable of exporting everything needed to play the randomized game."""
@@ -232,7 +232,7 @@ class RandovaniaGame(BitPackEnum, Enum):
         return self.data.generator()
 
     @cached_property
-    def patch_data_factory(self) -> type[BasePatchDataFactory]:
+    def patch_data_factory(self) -> type[PatchDataFactory]:
         return self.data.patch_data_factory()
 
     @cached_property
