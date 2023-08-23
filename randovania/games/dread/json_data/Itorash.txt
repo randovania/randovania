@@ -205,11 +205,26 @@ Extra - asset_id: collision_camera_004
 
 > Boss - Raven Beak; Heals? False
   * Layers: default
-  > Dock to Hanubia
+  > Event - Escape Sequence
+      All of the following:
+          Lay Power Bomb
+          Any of the following:
+              Space Jump or Simple IBJ
+              All of the following:
+                  Speed Booster and Spin Boost
+                  Movement (Intermediate) or Speed Booster Conservation (Beginner)
+                  Single-wall Wall Jump (Intermediate) or Wall Jump (Beginner)
+
+> Event - Escape Sequence; Heals? True
+  * Layers: default
+  * Event Ship
+  * End of the game
+  * Extra - start_point_actor_name: SP_Checkpoint_Endgame
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Dock to Elevator to Raven Beak
       Trivial
 
-> Dock to Hanubia; Heals? True
+> Dock to Elevator to Raven Beak; Heals? False
   * Layers: default
-  * Open Passage to Raven Beak X Arena/Raven Beak X Checkpoint
-  * To the escape sequence
+  * Open Passage to Elevator to Raven Beak/Start Point
 
