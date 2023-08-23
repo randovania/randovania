@@ -36,8 +36,8 @@ game to have proper pickups:
 Up to now, everything is just theoretical values inside Randovania. The next step is making these modifications be
 applied to the game. 
 
-In most cases, this involves readings the files from a user-provided copy of the game and creating either
-a new ROM/ISO file or a mod file.
+In most cases, this involves reading the files from a user-provided copy of the game and creating either a new ROM/ISO
+file or a mod file.
 
 This process is split into two parts:
 
@@ -106,8 +106,8 @@ Before a game can work in Multiworld, it must first work properly as a solo game
 
 # Rules for new games
 
-Randovania has a high bar of quality for our game integrations, and we wish to keep it that way. In order to help
-with that goal, there are rules that need to be met before we can accept a game.
+Randovania maintains a high quality standard for game integration. In order for a new game to be accepted,
+the following rules must be adhered to:
 
 - An owner for the game. The owner is expected to be available and willing to maintain their game for the foreseeable future.
 - A reviewer of Logic changes, separate from the owner.
