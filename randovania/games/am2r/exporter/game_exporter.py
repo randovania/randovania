@@ -44,16 +44,15 @@ class AM2RGameExporter(GameExporter):
         # Check if dotnet is available
         dotnet_ran_fine = False
         try:
-            dotnet_process = subprocess.run(["dotnet", "--info"],
-                                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+            dotnet_process = subprocess.run(["dotnet", "--info"], check=False)
             dotnet_ran_fine = dotnet_process.returncode == 0
         except FileNotFoundError:
             dotnet_ran_fine = False
         if not dotnet_ran_fine:
             raise UnableToExportError("You do not have .NET installed!\n"
-                                         "Please ensure that it is installed and located in PATH. It can be installed "
-                                         "from here:\n"
-                                         "https://aka.ms/dotnet/download")
+                                      "Please ensure that it is installed and located in PATH. It can be installed "
+                                      "from here:\n"
+                                      "https://aka.ms/dotnet/download")
 
         receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 
