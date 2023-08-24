@@ -27,6 +27,7 @@ if TYPE_CHECKING:
 
     from randovania.exporter.game_exporter import GameExportParams
     from randovania.interface_common.options import Options
+    from randovania.patching.patchers.exceptions import UnableToExportError
 
 _VALID_GAME_TEXT = "(internal game copy)"
 
@@ -233,3 +234,8 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             prime_path=self.prime_file,
             use_prime_models=self._use_prime_models,
         )
+
+    async def handle_unable_to_export(self, error: UnableToExportError):
+        delete_internal_copy(self._options.internal_copies_path)
+
+        return await super().handle_unable_to_export(error)

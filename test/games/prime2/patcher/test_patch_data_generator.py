@@ -30,6 +30,7 @@ from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
+from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
@@ -173,7 +174,7 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
 
 def test_create_elevators_field_no_elevator(empty_patches, echoes_game_description):
-    with pytest.raises(ValueError, match="Invalid elevator count. Expected 22, got 0."):
+    with pytest.raises(InvalidConfiguration, match="Invalid elevator count. Expected 22, got 0."):
         patch_data_factory._create_elevators_field(
             empty_patches,
             echoes_game_description,

@@ -11,9 +11,35 @@ from randovania.games.prime2.exporter.export_params import EchoesGameExportParam
 from randovania.games.prime2.exporter.game_exporter import (
     EchoesGameExporter,
 )
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     import pytest_mock
+
+
+def test_do_export_broken_internal_copy(tmp_path: Path):
+    patch_data = {
+        "menu_mod": False,
+    }
+
+    export_params = EchoesGameExportParams(
+        input_path=None,
+        output_path=MagicMock(),
+        contents_files_path=tmp_path.joinpath("contents"),
+        asset_cache_path=tmp_path.joinpath("asset_cache_path"),
+        backup_files_path=tmp_path.joinpath("backup"),
+        prime_path=MagicMock(),
+        use_prime_models=False,
+        spoiler_output=None,
+    )
+    progress_update = MagicMock()
+    exporter = EchoesGameExporter()
+
+    # Run
+    with pytest.raises(UnableToExportError):
+        exporter._do_export_game(patch_data, export_params, progress_update)
 
 
 @pytest.mark.parametrize("has_input_iso", [False, True])

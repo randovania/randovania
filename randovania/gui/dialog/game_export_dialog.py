@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, TypeVar
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox
 
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExportParams
     from randovania.games.game import RandovaniaGame
     from randovania.interface_common.options import Options, PerGameOptions
+    from randovania.patching.patchers.exceptions import UnableToExportError
 
 T = TypeVar("T")
 
@@ -78,6 +79,17 @@ class GameExportDialog(QtWidgets.QDialog):
     def get_game_export_params(self) -> GameExportParams:
         """Get the export params defined by the user. It'll be sent over to the `GameExporter`."""
         raise NotImplementedError
+
+    async def handle_unable_to_export(self, error: UnableToExportError):
+        """Called when exporting a game fails with `UnableToExportError`.
+        Default implementation shows an error dialog, but custom implementations can
+        perform additional troubleshooting."""
+        await async_dialog.message_box(
+            None,
+            QtWidgets.QMessageBox.Icon.Critical,
+            "Error during exporting",
+            error.reason
+        )
 
 
 def _prompt_for_output_common(parent: QtWidgets.QWidget, suggested_name: str,
