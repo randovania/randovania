@@ -33,8 +33,7 @@ game to have proper pickups:
 
 ## Exporting games
 
-Up to now, everything is just theoretical values inside Randovania. The next step is making these modifications be
-applied to the game. 
+Up to now, everything is just theoretical values inside Randovania. The next step is applying these modifications to the game. 
 
 In most cases, this involves reading the files from a user-provided copy of the game and creating either a new ROM/ISO
 file or a mod file.
