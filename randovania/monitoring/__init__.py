@@ -12,7 +12,6 @@ import sentry_sdk.integrations.logging
 import sentry_sdk.scrubber
 
 import randovania
-from randovania.version_hash import full_git_hash
 
 _CLIENT_DEFAULT_URL = "https://44282e1a237c48cfaf8120c40debc2fa@o4504594031509504.ingest.sentry.io/4504594037211137"
 _SERVER_DEFAULT_URL = "https://c2147c86fecc490f8e7dcfc201d35895@o4504594031509504.ingest.sentry.io/4504594037276672"
@@ -109,7 +108,7 @@ def _init(include_flask: bool, default_url: str, sampling_rate: float = 1.0, exc
     sentry_sdk.init(
         dsn=sentry_url,
         integrations=integrations,
-        release=full_git_hash,
+        release=f"v{randovania.VERSION}",
         environment="staging" if randovania.is_dev_version() else "production",
         traces_sampler=traces_sampler,
         profiles_sample_rate=profiles_sample_rate,
