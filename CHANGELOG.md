@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.3.0] - 2023-10-??
+
+- Nothing yet.
+
+## [6.2.1] - 2023-09-??
+
+- Nothing.
+
 ## [6.2.0] - 2023-09-??
 
 - Added: "Help -> Verify Installation" menu option, to verify that your Randovania installation is correct. This is only present on Windows.
@@ -14,8 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
 
 ### Metroid Dread
-- **Major** - Added: Elevator and Shuttle randomizer. The destination is shown on the elevator/shuttle's minimap icon and in the room name, if enabled. This will show different area names to the logic database for some items. 
 
+- **Major** - Added: Elevator and Shuttle randomizer. The destination is shown on the elevator/shuttle's minimap icon and in the room name, if enabled. This will show different area names to the logic database for some items.
 - **Major** - Added: Split beams and missiles. When playing with non-progressive beams or missiles, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades.
 - Added: An in-game icon will appear if the player becomes disconnected from the multiworld server. 
 - Changed: The Starter Preset and April Fools 2023 preset now have non-progressive beams and missiles, instead of progressive.
@@ -63,21 +71,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: 307 videos to the logic database. see the [Video Directory]
-(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
+(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection. 
 
-##### Temple Grounds:
+##### Temple Grounds
 
 - Added:  NSJ Extended Dash (Expert) to cross Grand Windchamber through the middle platform.
 
-##### Agon Wastes:
-
-- Added: NSJ Extended Dash (Advanced) to reach Temple Access Door in Mining Station A.
-
-##### Sky Temple Ground:
+##### Sky Temple Ground
 
 - Removed: Phazon Grounds NSJ, No SA -> Invisibil Objects (Hypermode) or Movement (Expert) and Dark Visor. Doesn't exist.
 
-##### Sanctuary Fortress:
+##### Agon Wastes
+
+- Added: NSJ Extended Dash (Advanced) to reach Temple Access Door in Mining Station A.
+
+##### Sanctuary Fortress
 
 - Added: Extended Dash (Expert) to reach the Scan Post in Watch Station Access from Main Gyro Chamber Door.
 - Added: Extended Dash (Expert) to reach Main Gyro Chamber Door in Watch Station Access from the Scan Post Side.
