@@ -629,7 +629,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 self.players_config,
                 self.game_enum()
             ),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
         )
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
