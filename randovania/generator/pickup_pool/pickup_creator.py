@@ -5,8 +5,6 @@ from typing import TYPE_CHECKING
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.games.game import RandovaniaGame
-from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -16,6 +14,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceQuantity
+    from randovania.games.game import RandovaniaGame
     from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
@@ -137,13 +136,13 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
     )
 
 
-def create_visual_nothing(game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
-                          model_name: str = echoes_items.USELESS_PICKUP_MODEL,
+def create_visual_nothing(game: RandovaniaGame,
+                          model_name: str,
                           pickup_name: str = "Unknown item") -> PickupEntry:
     """
     Creates a Nothing pickup that should only be used for visual purposes.
-    :param game: The game from where the model comes from. Defaults to Echoes.
-    :param model_name: The model name for the Nothing pickup. Defaults to "EnergyTransferModule".
+    :param game: The game from where the model comes from.
+    :param model_name: The model name for the Nothing pickup.
     :param pickup_name: The name of the Nothing pickup. Defaults to "Unknown item".
     :return:
     """

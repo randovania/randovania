@@ -819,6 +819,7 @@ def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: 
     else:
         memo_data = default_prime2_memo_data()
 
+    echoes_game = RandovaniaGame.METROID_PRIME_ECHOES
     pickup_list = pickup_exporter.export_all_indices(
         patches,
         useless_target,
@@ -826,8 +827,8 @@ def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: 
         rng,
         configuration.pickup_model_style,
         configuration.pickup_model_data_source,
-        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, RandovaniaGame.METROID_PRIME_ECHOES),
-        visual_nothing=pickup_creator.create_visual_nothing(),
+        exporter=pickup_exporter.create_pickup_exporter(memo_data, players_config, echoes_game),
+        visual_nothing=pickup_creator.create_visual_nothing(echoes_game, "EnergyTransferModule"),
     )
     multiworld_item = game.resource_database.get_item(echoes_items.MULTIWORLD_ITEM)
 
