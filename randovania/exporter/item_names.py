@@ -3,13 +3,14 @@ from __future__ import annotations
 import collections
 from typing import TYPE_CHECKING
 
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 _RESOURCE_NAME_TRANSLATION = {

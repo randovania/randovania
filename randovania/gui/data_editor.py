@@ -26,7 +26,7 @@ from randovania.game_description.editor import Editor
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
@@ -46,6 +46,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 SHOW_REGION_MIN_MAX_SPINNER = False
 
@@ -272,7 +273,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _on_image_spin_update(self):
         w = self.current_region
-        if type(w.extra) != dict:
+        if not isinstance(w.extra, dict):
             object.__setattr__(w, "extra", dict(w.extra))
         w.extra["map_min_x"] = self.spin_min_x.value()
         w.extra["map_min_y"] = self.spin_min_y.value()

@@ -10,7 +10,7 @@
     },
     "areas": {
         "Tower": {
-            "default_node": "Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)",
+            "default_node": "Elevator to Area 5 - Interior",
             "extra": {
                 "total_boundings": {
                     "x1": -11000.0,
@@ -284,7 +284,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)": {
+                        "Elevator to Area 5 - Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -305,7 +305,7 @@
                         }
                     }
                 },
-                "Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)": {
+                "Elevator to Area 5 - Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -323,13 +323,13 @@
                         "start_point_actor_name": "ST_FromArea06C_01"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Interior",
                         "area": "Transport to Area 5 Exterior (East)",
-                        "node": "Transport to Area 5 Exterior - Tower"
+                        "node": "Elevator to Area 5 - Exterior"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -445,7 +445,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)": {
+                        "Elevator to Area 5 - Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1098,7 +1098,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)": {
+                        "Elevator to Area 5 - Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1857,33 +1857,7 @@
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
-                                                                                        "data": "Shoot Beam Burst"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "and",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "PBAmmo",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "Knowledge",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
+                                                                                        "data": "Destroy Blob Throwers/Steel Orbs"
                                                                                     },
                                                                                     {
                                                                                         "type": "and",
@@ -2890,13 +2864,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
                                                 },
                                                 {
                                                     "type": "or",
@@ -2922,29 +2891,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Baby",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PBAmmo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "Baby",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -3047,7 +2999,7 @@
             }
         },
         "Transport to Area 5 Interior": {
-            "default_node": "Elevator to Area 5 Interior - Transport to Area 5 Exterior (West)",
+            "default_node": "Elevator to Area 5 - Interior",
             "extra": {
                 "total_boundings": {
                     "x1": -4700.0,
@@ -3076,7 +3028,7 @@
                 "asset_id": "collision_camera_011"
             },
             "nodes": {
-                "Elevator to Area 5 Interior - Transport to Area 5 Exterior (West)": {
+                "Elevator to Area 5 - Interior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3094,13 +3046,13 @@
                         "start_point_actor_name": "ST_FromArea06C_02"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Interior",
                         "area": "Transport to Area 5 Exterior (West)",
-                        "node": "Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)"
+                        "node": "Elevator to Area 5 - Exterior"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3144,7 +3096,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 Interior - Transport to Area 5 Exterior (West)": {
+                        "Elevator to Area 5 - Interior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3266,21 +3218,64 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Zeta Arena Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Zeta 3",
+                                            "type": "items",
+                                            "name": "Boots",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spiderspark"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Spiderspark",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -3288,16 +3283,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Boots",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
+                                                        "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -3306,60 +3292,9 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "SuperJump",
-                                                        "amount": 2,
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Spiderspark"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Spiderspark",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Morph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "UnmorphExtend",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4949,29 +4884,12 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Gamma+ Arena Access": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Gamma 13",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Event - Gamma Metroid+": {

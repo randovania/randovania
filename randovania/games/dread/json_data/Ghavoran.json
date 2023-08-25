@@ -148,7 +148,8 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_forest_000_platform",
                         "start_point_actor_name": "elevator_aqua_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "transporter_name": "Ghavoran - Robot"
                     },
                     "valid_starting_location": false,
                     "dock_type": "elevator",
@@ -2689,6 +2690,58 @@
                         "Event - Super Missile Rotatable Enky": {
                             "type": "template",
                             "data": "Destroy Enky"
+                        },
+                        "Event - Super Missile Rotatable with Ledge Warp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "LedgeWarp",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSupersAreaAccess",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2721,7 +2774,9 @@
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Grapple Beam Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2932,6 +2987,71 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Super Missile Rotatable with Ledge Warp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "LedgeWarp",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSupersAreaAccess",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2955,6 +3075,31 @@
                     "event_name": "GhavoranSuperRotatableEnky",
                     "connections": {
                         "Dock to Spin Boost Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Super Missile Rotatable with Ledge Warp": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1992.84,
+                        "y": -1598.56,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "GhavoranSupersRotatable",
+                    "connections": {
+                        "Door to Navigation Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3161,6 +3306,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Super Missile Area Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3265,6 +3417,31 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Super Missile Room Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Super Missile Area Access": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -532.81,
+                        "y": -4457.73,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "GhavoranSupersAreaAccess",
                     "connections": {
                         "Door to Super Missile Room Access": {
                             "type": "and",
@@ -12289,7 +12466,8 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_forest_000_platform",
                         "start_point_actor_name": "wagontrain_sanctuary_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "transporter_name": "Ghavoran - Storm Gate"
                     },
                     "valid_starting_location": false,
                     "dock_type": "shuttle",
@@ -12607,7 +12785,9 @@
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Grapple Beam Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -14331,7 +14511,8 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_forest_000_platform",
                         "start_point_actor_name": "wagontrain_shipyard_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "transporter_name": "Ghavoran - Golzuna"
                     },
                     "valid_starting_location": false,
                     "dock_type": "shuttle",
@@ -15082,7 +15263,8 @@
                         "elevator_component": "CTrainUsableComponentCutScene",
                         "target_spawn_point": "wagontrain_forest_000_platform",
                         "start_point_actor_name": "wagontrain_quarantine_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "transporter_name": "Ghavoran - Flipper"
                     },
                     "valid_starting_location": false,
                     "dock_type": "shuttle",
@@ -15198,7 +15380,8 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_forest_000_platform",
                         "start_point_actor_name": "elevator_baselab_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "transporter_name": "Ghavoran - Early Supers"
                     },
                     "valid_starting_location": false,
                     "dock_type": "elevator",

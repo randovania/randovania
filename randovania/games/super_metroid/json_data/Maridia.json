@@ -2892,7 +2892,7 @@
                                 ]
                             }
                         },
-                        "Door to Pants Room Right": {
+                        "Door to Pants Room (Left Door)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2929,7 +2929,7 @@
                     "default_connection": {
                         "region": "Maridia",
                         "area": "Shaktool Room",
-                        "node": "Door to Pants Room Right"
+                        "node": "Door to Pants Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2937,7 +2937,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pants Room": {
+                        "Door to Pants Room (Right Door)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2946,7 +2946,7 @@
                         }
                     }
                 },
-                "Door to Pants Room Right": {
+                "Door to Pants Room (Left Door)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2963,8 +2963,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Maridia",
-                        "area": "Pants Room Right",
-                        "node": "Door to Pants Room"
+                        "area": "Pants Room",
+                        "node": "Door to Pants Room (Right Door)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2991,7 +2991,7 @@
                         }
                     }
                 },
-                "Door to Pants Room": {
+                "Door to Pants Room (Right Door)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3009,7 +3009,7 @@
                     "default_connection": {
                         "region": "Maridia",
                         "area": "Pants Room",
-                        "node": "Door to Pants Room Right"
+                        "node": "Door to Pants Room (Left Door)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3056,121 +3056,14 @@
                 }
             }
         },
-        "Pants Room Right": {
-            "default_node": "Door to Shaktool Room",
-            "extra": {
-                "map_name": "7D69A",
-                "asset_id": 138
-            },
-            "nodes": {
-                "Door to Shaktool Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 477.7842190016103,
-                        "y": 770.4734299516908,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Maridia",
-                        "area": "Shaktool Room",
-                        "node": "Door to Pants Room Right"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Pants Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Pants Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 27.62,
-                        "y": 257.65,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Maridia",
-                        "area": "Pants Room",
-                        "node": "Door to Pants Room Right"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Shaktool Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Ice",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "IBA",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "Shaktool Room": {
-            "default_node": "Door to Pants Room Right",
+            "default_node": "Door to Pants Room",
             "extra": {
                 "map_name": "7D8C5",
                 "asset_id": 139
             },
             "nodes": {
-                "Door to Pants Room Right": {
+                "Door to Pants Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3187,7 +3080,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Maridia",
-                        "area": "Pants Room Right",
+                        "area": "Pants Room",
                         "node": "Door to Shaktool Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -3250,7 +3143,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pants Room Right": {
+                        "Door to Pants Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,

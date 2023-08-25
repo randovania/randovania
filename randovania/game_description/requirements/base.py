@@ -6,8 +6,8 @@ from functools import lru_cache
 if typing.TYPE_CHECKING:
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection
 
 MAX_DAMAGE = 9999999
 

@@ -8,12 +8,12 @@ Extra - asset_id: collision_camera_005
   * Pickup 34; Category? Minor
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_missiletank
-  > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
+  > Elevator to Area 2 - Entrance
       Trivial
 
-> Elevator to Area 2 Interior - Main Hub; Heals? False
+> Elevator to Area 2 - Interior; Heals? False
   * Layers: default
-  * Teleporter to Main Hub/Elevator to Area 2 Exterior - Outer Hub
+  * Elevator to Main Hub/Elevator to Area 2 - Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea02B
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02B
@@ -28,9 +28,9 @@ Extra - asset_id: collision_camera_005
   > Event - Teleporter Unlocked
       Trivial
 
-> Elevator to Area 2 Entrance - Transport to Area 2 Exterior; Heals? False; Spawn Point; Default Node
+> Elevator to Area 2 - Entrance; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 2 Exterior/Elevator to Area 2 Exterior - Outer Hub
+  * Elevator to Transport to Area 2 Exterior/Elevator to Area 2 - Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea02C
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02C
@@ -60,7 +60,7 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_name: LE_Platform_SaveStation002
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation002
-  > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
+  > Elevator to Area 2 - Entrance
       Trivial
 
 > Teleporter; Heals? False
@@ -69,7 +69,7 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_name: LE_Platform_Teleporter_02_02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_Teleporter_02_02
-  > Elevator to Area 2 Interior - Main Hub
+  > Elevator to Area 2 - Interior
       Trivial
 
 > Door to Arachnus Arena; Heals? False
@@ -87,7 +87,7 @@ Extra - asset_id: collision_camera_005
   * Access Locked to Outer Hub Shaft/Door to Outer Hub (Bottom)
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerclosed
-  > Elevator to Area 2 Interior - Main Hub
+  > Elevator to Area 2 - Interior
       Baby Metroid or Destroy Bomb Block
 
 > Door to Outer Hub Shaft (Top); Heals? False
@@ -95,7 +95,7 @@ Extra - asset_id: collision_camera_005
   * Power Beam Door to Outer Hub Shaft/Door to Outer Hub (Top)
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 2 Interior - Main Hub
+  > Elevator to Area 2 - Interior
       Trivial
 
 > Door to Rock Icicle Path; Heals? False
@@ -103,14 +103,14 @@ Extra - asset_id: collision_camera_005
   * Power Beam Door to Rock Icicle Path/Door to Outer Hub
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 2 Interior - Main Hub
+  > Elevator to Area 2 - Interior
       Trivial
   > Save Station Left
       Trivial
   > Door to Alpha+ Arena North
       Any of the following:
           Space Jump or Can Spiderspark or Simple IBJ
-          Lighting Armor and Spider Ball
+          Lightning Armor and Spider Ball
   > Top of Wall
       Climb Rooms Vertically (No High Jump)
 
@@ -127,7 +127,7 @@ Extra - asset_id: collision_camera_005
   * Power Beam Door to Split Pathways/Door to Outer Hub
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
+  > Elevator to Area 2 - Entrance
       Trivial
 
 > Door to Alpha+ Arena North; Heals? False
@@ -143,18 +143,18 @@ Extra - asset_id: collision_camera_005
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
   * Event Area 2 (Exterior) - Teleporter Unlocked (Upper)
-  > Elevator to Area 2 Interior - Main Hub
+  > Elevator to Area 2 - Interior
       Trivial
 
 > Tunnel to Split Pathways; Heals? False
   * Layers: default
   * Tunnel to Split Pathways/Tunnel to Outer Hub
-  > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
+  > Elevator to Area 2 - Entrance
       Morph Ball
 
 > Top of Wall; Heals? False
   * Layers: default
-  > Elevator to Area 2 Entrance - Transport to Area 2 Exterior
+  > Elevator to Area 2 - Entrance
       Trivial
   > Door to Arachnus Arena
       Trivial
@@ -346,7 +346,7 @@ Extra - asset_id: collision_camera_023
   > Pickup (Super Missile Tank)
       All of the following:
           Destroy Bomb Block
-          Baby Metroid or Super Missile
+          Baby Metroid or Shoot Super Missile
           Phase Drift or Spider Ball
   > Tunnel to Grapple Gap (Bottom)
       Morph Ball
@@ -541,29 +541,25 @@ Extra - asset_id: collision_camera_028
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_003_Checkpoint
   > Door to Hot Split
-      All of the following:
-          After Area 2 (Exterior) - Alpha Metroid West
-          Any of the following:
-              High Jump Boots or Gravity Suit or Space Jump or Use Spider Ball
-              All of the following:
-                  Bomb
-                  Any of the following:
-                      Diagonal Bomb Jump (Beginner)
-                      All of the following:
-                          Infinite Bomb Jump (Beginner)
-                          Spring Ball or Mid-Air Morph (Intermediate)
+      Any of the following:
+          High Jump Boots or Gravity Suit or Space Jump or Use Spider Ball
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Diagonal Bomb Jump (Beginner)
+                  All of the following:
+                      Infinite Bomb Jump (Beginner)
+                      Spring Ball or Mid-Air Morph (Intermediate)
   > Door to Alpha Shaft
-      All of the following:
-          After Area 2 (Exterior) - Alpha Metroid West
-          Any of the following:
-              High Jump Boots or Gravity Suit or Space Jump or Use Spider Ball
-              All of the following:
-                  Bomb
-                  Any of the following:
-                      Diagonal Bomb Jump (Beginner)
-                      All of the following:
-                          Infinite Bomb Jump (Beginner)
-                          Spring Ball or Mid-Air Morph (Intermediate)
+      Any of the following:
+          High Jump Boots or Gravity Suit or Space Jump or Use Spider Ball
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Diagonal Bomb Jump (Beginner)
+                  All of the following:
+                      Infinite Bomb Jump (Beginner)
+                      Spring Ball or Mid-Air Morph (Intermediate)
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
@@ -781,7 +777,7 @@ Extra - asset_id: collision_camera_033
   > Door to Alpha+ Storage
       Trivial
   > Door to Outer Hub
-      After Area 2 (Exterior) - Alpha Metroid+ North
+      Trivial
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
 
@@ -805,9 +801,8 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_type: doorpowerpower
   > Pickup (Super Missile Tank)
       All of the following:
-          Any of the following:
-              # Reaching the pickup
-              Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
+          # Reaching the pickup
+          Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
           Any of the following:
               # Collecting the pickup
               Lay Bomb
@@ -838,7 +833,7 @@ Extra - asset_id: collision_camera_035
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_005_Checkpoint
   > Door to Fiery Crossing
-      Varia Suit and After Area 2 (Exterior) - Alpha Metroid+ Heat
+      Varia Suit
   > Event - Alpha Metroid+
       Varia Suit and Defeat Alpha Metroid+
 
@@ -865,7 +860,7 @@ Extra - asset_id: collision_camera_036
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_006_Checkpoint
   > Door to Split Pathways
-      After Area 2 (Exterior) - Alpha Metroid North
+      Trivial
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 

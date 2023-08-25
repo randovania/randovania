@@ -25,8 +25,8 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import Region, RegionList
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection
     from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
 
@@ -629,7 +629,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 self.players_config,
                 self.game_enum()
             ),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
         )
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
@@ -786,7 +786,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
 
-        if self.cosmetic_patches.open_map and self.configuration.elevators.is_vanilla:
+        if self.cosmetic_patches.open_map and self.configuration.teleporters.is_vanilla:
             map_default_state = "visible"
         else:
             map_default_state = "default"

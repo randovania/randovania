@@ -1,5 +1,5 @@
 {
-    "schema_version": 21,
+    "schema_version": 22,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -764,10 +764,6 @@
                 "long_name": "Hanubia - Ferenia Shortcut Grapple Block",
                 "extra": {}
             },
-            "Escape": {
-                "long_name": "Escape Sequence",
-                "extra": {}
-            },
             "HanubiaRedChozo": {
                 "long_name": "Hanubia - Red Chozo Fight",
                 "extra": {}
@@ -890,6 +886,10 @@
             },
             "GhavoranSupersRotatable": {
                 "long_name": "Ghavoran - Super Missile Rotatable",
+                "extra": {}
+            },
+            "GhavoranSupersAreaAccess": {
+                "long_name": "Ghavoran - Super Missile Area Access",
                 "extra": {}
             },
             "GhavoraSupersMagnetPlatformLowered": {
@@ -1190,6 +1190,11 @@
             "DBJ": {
                 "long_name": "Diagonal Bomb Jump",
                 "description": "This is a special kind of bomb jump where you gain diagonal momentum from bombs that explode sligtly to the side.",
+                "extra": {}
+            },
+            "LedgeWarp": {
+                "long_name": "Ledge Warp",
+                "description": "A frame perfect trick that allows you to warp to a ledge you have previously been at by entering Morph Ball during the mantle animation. See https://youtu.be/3QE0tEC2tgc",
                 "extra": {}
             }
         },
@@ -3827,13 +3832,30 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4010,6 +4032,58 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Energy Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 499,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 299,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4085,13 +4159,30 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4323,6 +4414,58 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Energy Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 699,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 399,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4359,13 +4502,30 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4641,6 +4801,58 @@
                                                                     "type": "tricks",
                                                                     "name": "Combat",
                                                                     "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Energy Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 799,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 499,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -5268,8 +5480,30 @@
                         "lock": {
                             "lock_type": "front-blast-back-if-matching",
                             "requirement": {
-                                "type": "template",
-                                "data": "Lay Bomb"
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Morph",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bomb",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         }
                     },
@@ -5654,6 +5888,135 @@
             "resolver_attempts": 250,
             "to_shuffle_proportion": 0.6
         }
+    },
+    "used_trick_levels": {
+        "Knowledge": [
+            1,
+            2,
+            3
+        ],
+        "FlashSkip": [
+            1,
+            2
+        ],
+        "Walljump": [
+            1,
+            2,
+            3
+        ],
+        "IBJ": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "Speedbooster": [
+            1,
+            2,
+            3
+        ],
+        "FrozenEnemy": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "Pseudo": [
+            1,
+            2,
+            3
+        ],
+        "TunnelSlope": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "GrappleMovement": [
+            1,
+            2,
+            3
+        ],
+        "SWJ": [
+            1,
+            2,
+            3
+        ],
+        "Movement": [
+            1,
+            2,
+            3,
+            5
+        ],
+        "Slide": [
+            1,
+            2
+        ],
+        "DBJ": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "Combat": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "Suitless": [
+            1,
+            2,
+            3
+        ],
+        "WBJ": [
+            1,
+            2
+        ],
+        "DiffusionAbuse": [
+            1,
+            2,
+            5
+        ],
+        "DBoost": [
+            1,
+            2,
+            3
+        ],
+        "ShortBoost": [
+            2,
+            4
+        ],
+        "WSJ": [
+            1,
+            2,
+            3
+        ],
+        "RGrapple": [
+            1
+        ],
+        "CrossSkip": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "ADC": [
+            2,
+            3,
+            4
+        ],
+        "SSC": [
+            2,
+            4
+        ],
+        "LedgeWarp": [
+            2
+        ]
     },
     "regions": [
         "Artaria.json",

@@ -1,17 +1,18 @@
 ----------------
 Outer Caverns Save Station
 Extra - map_name: rm_a3h01
+Extra - minimap_data: [{'x': 52, 'y': 24}]
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 9
-  > Dock to Mines Access
+  > Area Transition to Main Caves
       Trivial
   > Dock to Outer Caverns Crossroads
       Trivial
 
-> Dock to Mines Access; Heals? False
+> Area Transition to Main Caves; Heals? False
   * Layers: default
-  * Open Passage to Mines Access/Dock to Outer Caverns Save Station
+  * Open Passage to Mines Access/Area Transition to Industrial Complex
   > Save Station
       Trivial
 
@@ -30,6 +31,7 @@ Extra - map_name: rm_a3h01
 ----------------
 Outer Caverns Crossroads
 Extra - map_name: rm_a3h02
+Extra - minimap_data: [{'x': 53, 'y': 22}, {'x': 53, 'y': 23}, {'x': 53, 'y': 24}, {'x': 53, 'y': 25}, {'x': 53, 'y': 26}]
 > Dock to Outer Caverns Save Station; Heals? False
   * Layers: default
   * Open Passage to Outer Caverns Save Station/Dock to Outer Caverns Crossroads
@@ -91,6 +93,7 @@ Extra - map_name: rm_a3h02
 ----------------
 Industrial Complex Exterior Access
 Extra - map_name: rm_a3h03
+Extra - minimap_data: [{'x': 54, 'y': 22}, {'x': 55, 'y': 22}, {'x': 56, 'y': 22}, {'x': 57, 'y': 22}]
 > Dock to Outer Caverns Crossroads; Heals? False
   * Layers: default
   * Open Passage to Outer Caverns Crossroads/Dock to Industrial Complex Exterior Access
@@ -110,13 +113,13 @@ Extra - map_name: rm_a3h03
               Any of the following:
                   Can Use Any Bombs
                   Morph Ball and Disabled Industrial Complex Entrance Blocks
-          All of the following:
-              # Top way
-              Speed Booster and Disabled Entrance Rando
+          # Top way
+          Speed Booster and Disabled Entrance Rando
 
 ----------------
 Industrial Complex Exterior
 Extra - map_name: rm_a3h04
+Extra - minimap_data: [{'x': 58, 'y': 20}, {'x': 58, 'y': 21}, {'x': 58, 'y': 22}, {'x': 58, 'y': 23}, {'x': 58, 'y': 24}, {'x': 59, 'y': 19}, {'x': 59, 'y': 20}, {'x': 59, 'y': 21}, {'x': 59, 'y': 22}, {'x': 59, 'y': 23}, {'x': 59, 'y': 24}, {'x': 60, 'y': 19}, {'x': 60, 'y': 20}, {'x': 60, 'y': 21}, {'x': 61, 'y': 18}, {'x': 61, 'y': 19}, {'x': 61, 'y': 20}, {'x': 61, 'y': 21}, {'x': 62, 'y': 18}, {'x': 62, 'y': 19}, {'x': 62, 'y': 20}, {'x': 62, 'y': 21}, {'x': 62, 'y': 22}, {'x': 62, 'y': 23}, {'x': 63, 'y': 18}, {'x': 63, 'y': 19}, {'x': 63, 'y': 20}, {'x': 63, 'y': 21}, {'x': 63, 'y': 22}, {'x': 63, 'y': 23}, {'x': 64, 'y': 18}, {'x': 64, 'y': 19}, {'x': 64, 'y': 20}, {'x': 65, 'y': 18}, {'x': 65, 'y': 19}, {'x': 65, 'y': 20}, {'x': 66, 'y': 18}, {'x': 66, 'y': 19}, {'x': 66, 'y': 20}, {'x': 66, 'y': 21}, {'x': 66, 'y': 22}, {'x': 66, 'y': 23}, {'x': 66, 'y': 24}]
 > Dock to Exterior Gamma Nest Access; Heals? False
   * Layers: default
   * Open Passage to Exterior Gamma Nest Access/Dock to Industrial Complex Exterior
@@ -127,12 +130,10 @@ Extra - map_name: rm_a3h04
               # Get up with septogg
               Walljump (Advanced) and Power Grip Wall
               Hi-Jump Boots or Enabled Septogg Helpers
-          All of the following:
-              # Shinespark from next room
-              Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Expert) and Can Use Bombs
+          # Shinespark from next room
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+          # IBJ
+          Infinite Bomb Jumping (Expert) and Can Use Bombs
 
 > Dock to Industrial Complex Exterior Access; Heals? False
   * Layers: default
@@ -140,9 +141,8 @@ Extra - map_name: rm_a3h04
   > Dock to Upper Factory Save Station
       All of the following:
           Can Use Spider Ball
-          Any of the following:
-              # Reach the ceiling
-              Mid-Air Morph (Advanced) or Can Use Bombs or Can Use Spring Ball
+          # Reach the ceiling
+          Mid-Air Morph (Advanced) or Can Use Bombs or Can Use Spring Ball
   > Left Septogg
       Trivial
   > Pickup (Left Missile Tank)
@@ -174,26 +174,22 @@ Extra - map_name: rm_a3h04
   > Door to Exterior Puzzle Cavern
       Any of the following:
           Space Jump or Can Use Spider Ball
-          All of the following:
-              # shinespark
-              Speed Booster and Shinesparking Tricks (Beginner)
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Expert) and Can Use Bombs
+          # shinespark
+          Speed Booster and Shinesparking Tricks (Beginner)
+          # IBJ
+          Infinite Bomb Jumping (Expert) and Can Use Bombs
 
 > Door to Torizo Arena; Heals? False
   * Layers: default
-  * Missile Door to Torizo Arena/Door to Industrial Complex Exterior
+  * Missile Door to Torizo Arena/Door to Industrial Complex Exterior; Dock Lock Rando incompatible with: Hydro Station Water Turbine
   * Extra - instance_id: 114250
   > Dock to Upper Factory Save Station
       Any of the following:
           Space Jump or Enabled Septogg Helpers
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Advanced) and Can Use Bombs
-          All of the following:
-              # Walljump up
-              Damage Boost (Intermediate) and Walljump (Advanced) and Normal Damage ≥ 10
+          # IBJ
+          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          # Walljump up
+          Damage Boost (Intermediate) and Walljump (Advanced) and Normal Damage ≥ 10
   > Above torizo
       Space Jump Wall
 
@@ -212,9 +208,8 @@ Extra - map_name: rm_a3h04
       Any of the following:
           Hi-Jump Boots or Space Jump or Can Use Spider Ball
           Enabled Septogg Helpers and Power Grip Wall
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          # IBJ
+          Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
 > Pickup (Left Missile Tank); Heals? False
   * Layers: default
@@ -240,18 +235,17 @@ Extra - map_name: rm_a3h04
 ----------------
 Exterior Gamma Nest Access
 Extra - map_name: rm_a3h05
+Extra - minimap_data: [{'x': 67, 'y': 24}, {'x': 68, 'y': 24}, {'x': 69, 'y': 23}, {'x': 69, 'y': 24}, {'x': 70, 'y': 23}, {'x': 70, 'y': 24}, {'x': 71, 'y': 24}]
 > Dock to Exterior Gamma Nest; Heals? False
   * Layers: default
   * Open Passage to Exterior Gamma Nest/Dock to Exterior Gamma Nest Access
   > Dock to Industrial Complex Exterior
       Any of the following:
           Hi-Jump Boots or Space Jump or Speed Booster or Can Use Spider Ball
-          All of the following:
-              # WJ to right and glide over
-              Morph Glide (Intermediate) and Walljump (Intermediate)
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          # WJ to right and glide over
+          Morph Glide (Intermediate) and Walljump (Intermediate)
+          # IBJ
+          Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
 > Dock to Industrial Complex Exterior; Heals? False
   * Layers: default
@@ -259,13 +253,13 @@ Extra - map_name: rm_a3h05
   > Dock to Exterior Gamma Nest
       Any of the following:
           Hi-Jump Boots or Space Jump or Speed Booster or Walljump (Hypermode) or Can Use Spider Ball
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          # IBJ
+          Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
 ----------------
 Exterior Gamma Nest
 Extra - map_name: rm_a3h06
+Extra - minimap_data: [{'x': 72, 'y': 24}, {'x': 73, 'y': 24}]
 > Dock to Exterior Gamma Nest Access; Heals? False
   * Layers: default
   * Open Passage to Exterior Gamma Nest Access/Dock to Exterior Gamma Nest
@@ -297,6 +291,7 @@ Extra - map_name: rm_a3h06
 ----------------
 Exterior Puzzle Cavern
 Extra - map_name: rm_a3h07
+Extra - minimap_data: [{'x': 67, 'y': 19}, {'x': 68, 'y': 19}]
 > Door to Industrial Complex Exterior; Heals? False
   * Layers: default
   * Normal Door to Industrial Complex Exterior/Door to Exterior Puzzle Cavern
@@ -314,6 +309,7 @@ Extra - map_name: rm_a3h07
 ----------------
 EMP Sentry Cavern
 Extra - map_name: rm_a3h08
+Extra - minimap_data: [{'x': 51, 'y': 23}, {'x': 52, 'y': 22}, {'x': 52, 'y': 23}]
 > Dock to Outer Caverns Crossroads (Top); Heals? False
   * Layers: default
   * Open Passage to Outer Caverns Crossroads/Dock to EMP Sentry Cavern (Top)
@@ -366,6 +362,7 @@ Extra - map_name: rm_a3h08
 ----------------
 Sentry Cavern Vault
 Extra - map_name: rm_a3h09
+Extra - minimap_data: [{'x': 50, 'y': 23}]
 > Door to EMP Sentry Cavern; Heals? False
   * Layers: default
   * Normal Door to EMP Sentry Cavern/Door to Sentry Cavern Vault
@@ -383,9 +380,10 @@ Extra - map_name: rm_a3h09
 ----------------
 Torizo Arena
 Extra - map_name: rm_a3a01
+Extra - minimap_data: [{'x': 60, 'y': 22}, {'x': 60, 'y': 23}, {'x': 61, 'y': 22}, {'x': 61, 'y': 23}]
 > Door to Industrial Complex Exterior; Heals? False
   * Layers: default
-  * Normal Door to Industrial Complex Exterior/Door to Torizo Arena
+  * Normal Door to Industrial Complex Exterior/Door to Torizo Arena; Dock Lock Rando incompatible with: Hydro Station Water Turbine
   * Extra - instance_id: 115254
   > Pickup (Space Jump)
       Trivial
@@ -396,9 +394,8 @@ Extra - map_name: rm_a3a01
   * Extra - object_name: oItemSpaceJump
   > Event - Torizo
       All of the following:
-          Any of the following:
-              # Item requirements
-              Space Jump or Combat (Expert)
+          # Item requirements
+          Space Jump or Combat (Expert)
           Any of the following:
               # Energy requirements
               All of the following:
@@ -409,9 +406,8 @@ Extra - map_name: rm_a3a01
                   # Without space jump
                   No Space Jump
                   Combat (Hypermode) or Normal Damage ≥ 399
-          Any of the following:
-              # Fusion Mode requirements
-              Missiles or Super Missiles or Disabled Fusion Mode
+          # Fusion Mode requirements
+          Missiles or Super Missiles or Disabled Fusion Mode
 
 > Event - Torizo; Heals? False
   * Layers: default
@@ -422,14 +418,14 @@ Extra - map_name: rm_a3a01
 ----------------
 Upper Factory Save Station
 Extra - map_name: rm_a3a02
+Extra - minimap_data: [{'x': 64, 'y': 21}, {'x': 65, 'y': 21}]
 > In Sand; Heals? False
   * Layers: default
   > Dock to Industrial Complex Exterior
       Any of the following:
           Space Jump or Can Use Spider Ball
-          All of the following:
-              # With sand
-              Movement (Intermediate) and Hijump Wall
+          # With sand
+          Movement (Intermediate) and Hijump Wall
   > Save Station
       Any of the following:
           Tunnel Climb
@@ -460,9 +456,8 @@ Extra - map_name: rm_a3a02
               # Get into tunnel
               Tunnel Climb
               Morph Ball and Mid-Air Morph (Beginner)
-          Any of the following:
-              # Destroy Sand
-              Missiles or Super Missiles or Wave Beam or Can Use Any Bombs
+          # Destroy Sand
+          Missiles or Super Missiles or Wave Beam or Can Use Any Bombs
   > Dock to Upper Factory Intersection
       Trivial
 
@@ -476,6 +471,7 @@ Extra - map_name: rm_a3a02
 ----------------
 Upper Factory Intersection
 Extra - map_name: rm_a3a03
+Extra - minimap_data: [{'x': 64, 'y': 22}, {'x': 64, 'y': 23}, {'x': 64, 'y': 24}]
 > Dock to Upper Factory Save Station; Heals? False
   * Layers: default
   * Open Passage to Upper Factory Save Station/Dock to Upper Factory Intersection
@@ -491,9 +487,8 @@ Extra - map_name: rm_a3a03
           All of the following:
               # Get up using sand
               Movement (Intermediate)
-              Any of the following:
-                  # Get up through dock at the top
-                  Hi-Jump Boots or Walljump (Beginner)
+              # Get up through dock at the top
+              Hi-Jump Boots or Walljump (Beginner)
   > Dock to Spazer Beam Chamber Access
       Trivial
 
@@ -503,23 +498,21 @@ Extra - map_name: rm_a3a03
   > Dock to Upper Factory Gamma Nest
       Any of the following:
           Space Jump or Can Use Spider Ball
-          All of the following:
-              # Get up using sand
-              Movement (Intermediate) and Power Grip Wall
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          # Get up using sand
+          Movement (Intermediate) and Power Grip Wall
+          # IBJ
+          Infinite Bomb Jumping (Advanced) and Can Use Bombs
 
 ----------------
 Spazer Beam Chamber Access
 Extra - map_name: rm_a3a04
+Extra - minimap_data: [{'x': 60, 'y': 24}, {'x': 61, 'y': 24}, {'x': 61, 'y': 25}, {'x': 62, 'y': 24}, {'x': 62, 'y': 25}, {'x': 63, 'y': 24}]
 > Dock to Upper Factory Intersection; Heals? False
   * Layers: default
   * Open Passage to Upper Factory Intersection/Dock to Spazer Beam Chamber Access
   > Door to Spazer Beam
-      All of the following:
-          # Speedboost
-          Speed Booster and Knowledge (Intermediate) and Shinesparking Tricks (Intermediate)
+      # Speedboost
+      Speed Booster and Knowledge (Intermediate) and Shinesparking Tricks (Intermediate)
   > Bottom
       Trivial
 
@@ -528,9 +521,8 @@ Extra - map_name: rm_a3a04
   * Missile Door to Spazer Beam/Door to Spazer Beam Chamber Access
   * Extra - instance_id: 116035
   > Dock to Upper Factory Intersection
-      All of the following:
-          # Speedboost
-          Speed Booster and Knowledge (Intermediate) and Shinesparking Tricks (Intermediate)
+      # Speedboost
+      Speed Booster and Knowledge (Intermediate) and Shinesparking Tricks (Intermediate)
   > Bottom
       Trivial
 
@@ -552,6 +544,7 @@ Extra - map_name: rm_a3a04
 ----------------
 Spazer Beam
 Extra - map_name: rm_a3a05
+Extra - minimap_data: [{'x': 59, 'y': 24}]
 > Door to Spazer Beam Chamber Access; Heals? False
   * Layers: default
   * Normal Door to Spazer Beam Chamber Access/Door to Spazer Beam
@@ -569,6 +562,7 @@ Extra - map_name: rm_a3a05
 ----------------
 Exterior Maze
 Extra - map_name: rm_a3a06
+Extra - minimap_data: [{'x': 65, 'y': 22}]
 > Tunnel to Industrial Complex Exterior (Top); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Industrial Complex Exterior/Tunnel to Exterior Maze (Top)
@@ -598,6 +592,7 @@ Extra - map_name: rm_a3a06
 ----------------
 Upper Factory Gamma Nest
 Extra - map_name: rm_a3a07
+Extra - minimap_data: [{'x': 65, 'y': 23}, {'x': 65, 'y': 24}, {'x': 65, 'y': 25}]
 > Dock to Upper Factory Intersection; Heals? False
   * Layers: default
   * Open Passage to Upper Factory Intersection/Dock to Upper Factory Gamma Nest
@@ -614,17 +609,15 @@ Extra - map_name: rm_a3a07
                   Space Jump or Walljump (Expert)
               All of the following:
                   # General Methods
-                  Any of the following:
-                      # Way to break the blocks easily
-                      Screw Attack or Wave Beam
+                  # Way to break the blocks easily
+                  Screw Attack or Wave Beam
                   Any of the following:
                       All of the following:
                           # HJ method
                           Hi-Jump Boots and Shinesparking Tricks (Advanced)
                           Power Grip or Walljump (Beginner)
-                      All of the following:
-                          # HJ+SJ Method
-                          Hi-Jump Boots and Space Jump and Shinesparking Tricks (Intermediate)
+                      # HJ+SJ Method
+                      Hi-Jump Boots and Space Jump and Shinesparking Tricks (Intermediate)
 
 > Dock to Upper Factory Autoad Fork; Heals? False
   * Layers: default
@@ -672,6 +665,7 @@ Extra - map_name: rm_a3a07
 ----------------
 Upper Factory Autoad Fork
 Extra - map_name: rm_a3a08
+Extra - minimap_data: [{'x': 65, 'y': 26}]
 > Dock to Upper Factory Gamma Nest; Heals? False
   * Layers: default
   * Open Passage to Upper Factory Gamma Nest/Dock to Upper Factory Autoad Fork
@@ -695,6 +689,7 @@ Extra - map_name: rm_a3a08
 ----------------
 Speed Booster Chamber Access
 Extra - map_name: rm_a3a09
+Extra - minimap_data: [{'x': 61, 'y': 26}, {'x': 62, 'y': 26}, {'x': 63, 'y': 26}, {'x': 64, 'y': 26}]
 > Door to Speed Booster Chamber; Heals? False
   * Layers: default
   * Missile Door to Speed Booster Chamber/Door to Speed Booster Chamber Access
@@ -721,6 +716,7 @@ Extra - map_name: rm_a3a09
 ----------------
 Speed Booster Chamber
 Extra - map_name: rm_a3a10
+Extra - minimap_data: [{'x': 60, 'y': 26}]
 > Door to Speed Booster Chamber Access; Heals? False
   * Layers: default
   * Normal Door to Speed Booster Chamber Access/Door to Speed Booster Chamber
@@ -738,6 +734,7 @@ Extra - map_name: rm_a3a10
 ----------------
 Shirk Prisons
 Extra - map_name: rm_a3a11
+Extra - minimap_data: [{'x': 66, 'y': 26}, {'x': 67, 'y': 26}, {'x': 68, 'y': 26}, {'x': 69, 'y': 26}]
 > Dock to Treadmill Room; Heals? False
   * Layers: default
   * Open Passage to Treadmill Room/Dock to Shirk Prisons
@@ -753,6 +750,7 @@ Extra - map_name: rm_a3a11
 ----------------
 Treadmill Room
 Extra - map_name: rm_a3a12
+Extra - minimap_data: [{'x': 70, 'y': 26}, {'x': 71, 'y': 26}, {'x': 72, 'y': 26}]
 > Dock to Shirk Prisons; Heals? False
   * Layers: default
   * Open Passage to Shirk Prisons/Dock to Treadmill Room
@@ -765,9 +763,8 @@ Extra - map_name: rm_a3a12
   > Dock to Shirk Prisons
       All of the following:
           Speed Booster
-          Any of the following:
-              # A way to climb the left
-              Movement (Beginner) or Power Grip Wall
+          # A way to climb the left
+          Movement (Beginner) or Power Grip Wall
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball and Speed Booster and Shinesparking Tricks (Beginner)
@@ -786,18 +783,17 @@ Extra - map_name: rm_a3a12
 ----------------
 Spiky Shaft
 Extra - map_name: rm_a3a13
+Extra - minimap_data: [{'x': 73, 'y': 25}, {'x': 73, 'y': 26}]
 > Dock to Treadmill Room; Heals? False
   * Layers: default
   * Open Passage to Treadmill Room/Dock to Spiky Shaft
   > Top
       Any of the following:
           Space Jump
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Advanced) and Can Use Bombs
-          All of the following:
-              # Speedboost
-              Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+          # IBJ
+          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          # Speedboost
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
           Any of the following:
               # Walljump
               Walljump (Advanced)
@@ -809,9 +805,8 @@ Extra - map_name: rm_a3a13
   > Dock to Lower Factory Entrance
       All of the following:
           Can Use Spider Ball
-          Any of the following:
-              # Get to ceiling
-              Mid-Air Morph (Intermediate) or Can Use Bombs or Can Use Spring Ball
+          # Get to ceiling
+          Mid-Air Morph (Intermediate) or Can Use Bombs or Can Use Spring Ball
   > Top
       Trivial
 
@@ -821,9 +816,8 @@ Extra - map_name: rm_a3a13
   > Dock to Upper Factory Alpha Nest Access
       All of the following:
           Can Use Spider Ball
-          Any of the following:
-              # Get to ceiling
-              Mid-Air Morph (Intermediate) or Can Use Bombs or Can Use Spring Ball
+          # Get to ceiling
+          Mid-Air Morph (Intermediate) or Can Use Bombs or Can Use Spring Ball
   > Top
       Trivial
 
@@ -839,6 +833,7 @@ Extra - map_name: rm_a3a13
 ----------------
 Upper Factory Alpha Nest Access
 Extra - map_name: rm_a3a14
+Extra - minimap_data: [{'x': 69, 'y': 25}, {'x': 70, 'y': 25}, {'x': 71, 'y': 25}, {'x': 72, 'y': 25}]
 > Dock to Spiky Shaft; Heals? False
   * Layers: default
   * Open Passage to Spiky Shaft/Dock to Upper Factory Alpha Nest Access
@@ -854,6 +849,7 @@ Extra - map_name: rm_a3a14
 ----------------
 Upper Factory Alpha Nest
 Extra - map_name: rm_a3a15
+Extra - minimap_data: [{'x': 66, 'y': 25}, {'x': 67, 'y': 25}, {'x': 68, 'y': 25}]
 > Tunnel to Upper Factory Alpha Nest Access; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Upper Factory Alpha Nest Access/Tunnel to Upper Factory Alpha Nest
@@ -894,6 +890,7 @@ Extra - map_name: rm_a3a15
 ----------------
 Lower Factory Entrance
 Extra - map_name: rm_a3a16
+Extra - minimap_data: [{'x': 74, 'y': 25}, {'x': 74, 'y': 26}, {'x': 74, 'y': 27}, {'x': 74, 'y': 28}]
 > Dock to Spiky Shaft; Heals? False
   * Layers: default
   * Open Passage to Spiky Shaft/Dock to Lower Factory Entrance
@@ -922,6 +919,7 @@ Extra - map_name: rm_a3a16
 ----------------
 Lower Factory Save Station
 Extra - map_name: rm_a3a17
+Extra - minimap_data: [{'x': 73, 'y': 28}]
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 11
@@ -945,6 +943,7 @@ Extra - map_name: rm_a3a17
 ----------------
 Lower Factory Tunnel
 Extra - map_name: rm_a3a18
+Extra - minimap_data: [{'x': 73, 'y': 27}]
 > Tunnel to Lower Factory Hub; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Lower Factory Hub/Tunnel to Lower Factory Tunnel
@@ -960,6 +959,7 @@ Extra - map_name: rm_a3a18
 ----------------
 Lower Factory Hub
 Extra - map_name: rm_a3a19
+Extra - minimap_data: [{'x': 69, 'y': 27}, {'x': 69, 'y': 28}, {'x': 70, 'y': 27}, {'x': 70, 'y': 28}, {'x': 71, 'y': 27}, {'x': 71, 'y': 28}, {'x': 72, 'y': 27}, {'x': 72, 'y': 28}]
 > Dock to Lower Factory Intersection; Heals? False
   * Layers: default
   * Open Passage to Lower Factory Intersection/Dock to Lower Factory Hub
@@ -980,12 +980,10 @@ Extra - map_name: rm_a3a19
   > Top right
       Any of the following:
           Speed Booster or Walljump (Advanced)
-          All of the following:
-              # Shinespark
-              Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Advanced) and Can Use Any Bombs
+          # Shinespark
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+          # IBJ
+          Infinite Bomb Jumping (Advanced) and Can Use Any Bombs
           All of the following:
               # Spider Ball
               Can Use Spider Ball
@@ -993,12 +991,10 @@ Extra - map_name: rm_a3a19
   > Top left
       Any of the following:
           Space Jump or Walljump (Expert) or Can Use Spider Ball
-          All of the following:
-              # Shinespark
-              Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          # Shinespark
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+          # IBJ
+          Infinite Bomb Jumping (Advanced) and Can Use Bombs
           Power Grip and Walljump (Intermediate)
           Hi-Jump Boots and Walljump (Beginner)
 
@@ -1039,6 +1035,7 @@ morph gliding come to mind here.
 ----------------
 Lower Factory Intersection
 Extra - map_name: rm_a3a20
+Extra - minimap_data: [{'x': 67, 'y': 29}, {'x': 67, 'y': 30}, {'x': 68, 'y': 28}, {'x': 68, 'y': 29}]
 > Dock to Lower Factory Hub; Heals? False
   * Layers: default
   * Open Passage to Lower Factory Hub/Dock to Lower Factory Intersection
@@ -1062,6 +1059,7 @@ Extra - map_name: rm_a3a20
 ----------------
 Weapon Testing
 Extra - map_name: rm_a3a21
+Extra - minimap_data: [{'x': 68, 'y': 30}, {'x': 69, 'y': 30}, {'x': 70, 'y': 30}, {'x': 71, 'y': 30}]
 > Dock to Lower Factory Intersection; Heals? False
   * Layers: default
   * Open Passage to Lower Factory Intersection/Dock to Weapon Testing
@@ -1077,6 +1075,7 @@ Extra - map_name: rm_a3a21
 ----------------
 Skippy Room
 Extra - map_name: rm_a3a22
+Extra - minimap_data: [{'x': 72, 'y': 29}, {'x': 72, 'y': 30}, {'x': 73, 'y': 29}, {'x': 73, 'y': 30}, {'x': 74, 'y': 29}, {'x': 74, 'y': 30}]
 > Dock to Weapon Testing; Heals? False
   * Layers: default
   * Open Passage to Weapon Testing/Dock to Skippy Room
@@ -1085,9 +1084,8 @@ Extra - map_name: rm_a3a22
   > Event - Past Super Blocks
       All of the following:
           Hijump With Power Grip Wall
-          Any of the following:
-              # Get past super blocks
-              Super Missiles ≥ 3 or After Area 3 - Industrial Complex Skippy Minigame Cleared
+          # Get past super blocks
+          Super Missiles ≥ 3 or After Area 3 - Industrial Complex Skippy Minigame Cleared
 
 > Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
@@ -1112,6 +1110,7 @@ Extra - map_name: rm_a3a22
 ----------------
 Super Missile Chamber Access
 Extra - map_name: rm_a3a23
+Extra - minimap_data: [{'x': 74, 'y': 31}, {'x': 74, 'y': 32}]
 > Dock to Skippy Room; Heals? False
   * Layers: default
   * Open Passage to Skippy Room/Dock to Super Missile Chamber Access
@@ -1137,6 +1136,7 @@ Extra - map_name: rm_a3a23
 ----------------
 Super Missile Chamber
 Extra - map_name: rm_a3a23a
+Extra - minimap_data: [{'x': 72, 'y': 32}, {'x': 73, 'y': 32}]
 > Dock to Super Missile Chamber Access; Heals? False
   * Layers: default
   * Open Passage to Super Missile Chamber Access/Dock to Super Missile Chamber
@@ -1172,6 +1172,7 @@ Extra - map_name: rm_a3a23a
 ----------------
 Lower Factory Lava Lake Access
 Extra - map_name: rm_a3a24
+Extra - minimap_data: [{'x': 66, 'y': 30}, {'x': 66, 'y': 31}]
 > Dock to Lower Factory Intersection; Heals? False
   * Layers: default
   * Open Passage to Lower Factory Intersection/Dock to Lower Factory Lava Lake Access
@@ -1187,6 +1188,7 @@ Extra - map_name: rm_a3a24
 ----------------
 Lower Factory Lava Lake
 Extra - map_name: rm_a3a25
+Extra - minimap_data: [{'x': 67, 'y': 31}, {'x': 67, 'y': 32}, {'x': 68, 'y': 31}, {'x': 68, 'y': 32}, {'x': 69, 'y': 31}, {'x': 69, 'y': 32}, {'x': 70, 'y': 31}, {'x': 70, 'y': 32}, {'x': 71, 'y': 31}, {'x': 71, 'y': 32}]
 > Dock to Lower Factory Gamma Nest; Heals? False
   * Layers: default
   * Open Passage to Lower Factory Gamma Nest/Dock to Lower Factory Lava Lake
@@ -1214,6 +1216,7 @@ Extra - map_name: rm_a3a25
 ----------------
 Lower Factory Gamma Nest
 Extra - map_name: rm_a3a26
+Extra - minimap_data: [{'x': 72, 'y': 31}, {'x': 73, 'y': 31}]
 > Dock to Lower Factory Lava Lake; Heals? False
   * Layers: default
   * Open Passage to Lower Factory Lava Lake/Dock to Lower Factory Gamma Nest
@@ -1238,6 +1241,7 @@ Extra - map_name: rm_a3a26
 ----------------
 Upper Factory Pipe
 Extra - map_name: rm_a3a27
+Extra - minimap_data: [{'x': 63, 'y': 25}, {'x': 64, 'y': 25}]
 > Dock to Spazer Beam Chamber Access; Heals? False; Default Node
   * Layers: default
   * Open Passage to Spazer Beam Chamber Access/Dock to Upper Factory Pipe
@@ -1256,6 +1260,7 @@ Extra - map_name: rm_a3a27
 ----------------
 Breeding Grounds Access East
 Extra - map_name: rm_a3b01
+Extra - minimap_data: [{'x': 54, 'y': 24}, {'x': 55, 'y': 24}, {'x': 56, 'y': 24}]
 > Dock to Outer Caverns Crossroads; Heals? False
   * Layers: default
   * Open Passage to Outer Caverns Crossroads/Dock to Breeding Grounds Access East
@@ -1271,6 +1276,7 @@ Extra - map_name: rm_a3b01
 ----------------
 Breeding Grounds Crossroads
 Extra - map_name: rm_a3b02
+Extra - minimap_data: [{'x': 56, 'y': 25}, {'x': 56, 'y': 26}, {'x': 56, 'y': 27}, {'x': 56, 'y': 28}, {'x': 56, 'y': 29}, {'x': 56, 'y': 30}]
 > Dock to Breeding Grounds Access East; Heals? False
   * Layers: default
   * Open Passage to Breeding Grounds Access East/Dock to Breeding Grounds Crossroads
@@ -1294,24 +1300,19 @@ Extra - map_name: rm_a3b02
               Walljump (Advanced)
               Any of the following:
                   Enabled Septogg Helpers
-                  All of the following:
-                      # IBJ
-                      Infinite Bomb Jumping (Advanced) and Can Use Bombs
-                  All of the following:
-                      # Charged bomb jump
-                      Charged Bomb Jump (Advanced) and Can Use Charged Bomb Jump
-          All of the following:
-              # WJ + hijump
-              Hi-Jump Boots and Walljump (Intermediate)
-          All of the following:
-              # IBJ expert
-              Infinite Bomb Jumping (Expert) and Mid-Air Morph (Expert) and Can Use Bombs
+                  # IBJ
+                  Infinite Bomb Jumping (Advanced) and Can Use Bombs
+                  # Charged bomb jump
+                  Charged Bomb Jump (Advanced) and Can Use Charged Bomb Jump
+          # WJ + hijump
+          Hi-Jump Boots and Walljump (Intermediate)
+          # IBJ expert
+          Infinite Bomb Jumping (Expert) and Mid-Air Morph (Expert) and Can Use Bombs
   > Dock to Breeding Grounds Gamma Nest West
       Any of the following:
           Space Jump Wall
-          All of the following:
-              # Septogg
-              No Hi-Jump Boots and Enabled Septogg Helpers
+          # Septogg
+          No Hi-Jump Boots and Enabled Septogg Helpers
   > Dock to Breeding Grounds Gamma Nest Bottom
       Morph Ball and Can Use Any Bombs
 
@@ -1324,6 +1325,7 @@ Extra - map_name: rm_a3b02
 ----------------
 Breeding Grounds Gamma Nest West
 Extra - map_name: rm_a3b03
+Extra - minimap_data: [{'x': 53, 'y': 27}, {'x': 54, 'y': 27}, {'x': 55, 'y': 27}]
 > Dock to Outer Caverns Crossroads; Heals? False
   * Layers: default
   * Open Passage to Outer Caverns Crossroads/Dock to Breeding Grounds Gamma Nest West
@@ -1359,6 +1361,7 @@ Extra - map_name: rm_a3b03
 ----------------
 Breeding Grounds Gamma Nest Middle
 Extra - map_name: rm_a3b04
+Extra - minimap_data: [{'x': 57, 'y': 28}, {'x': 58, 'y': 28}]
 > Dock to Breeding Grounds Crossroads; Heals? False
   * Layers: default
   * Open Passage to Breeding Grounds Crossroads/Dock to Breeding Grounds Gamma Nest Middle
@@ -1391,6 +1394,7 @@ Extra - map_name: rm_a3b04
 ----------------
 Breeding Grounds Alpha Nest Access
 Extra - map_name: rm_a3b05
+Extra - minimap_data: [{'x': 59, 'y': 26}, {'x': 59, 'y': 27}, {'x': 59, 'y': 28}, {'x': 59, 'y': 29}]
 > Dock to Breeding Grounds Alpha Nest; Heals? False
   * Layers: default
   * Open Passage to Breeding Grounds Alpha Nest/Dock to Breeding Grounds Alpha Nest Access
@@ -1408,6 +1412,7 @@ Extra - map_name: rm_a3b05
 ----------------
 Breeding Grounds Alpha Nest
 Extra - map_name: rm_a3b06
+Extra - minimap_data: [{'x': 58, 'y': 25}, {'x': 59, 'y': 25}]
 > Dock to Breeding Grounds Alpha Nest Access; Heals? False
   * Layers: default
   * Open Passage to Breeding Grounds Alpha Nest Access/Dock to Breeding Grounds Alpha Nest
@@ -1440,6 +1445,7 @@ Extra - map_name: rm_a3b06
 ----------------
 Breeding Grounds Gamma Nest Top
 Extra - map_name: rm_a3b07
+Extra - minimap_data: [{'x': 60, 'y': 25}]
 > Tunnel to Breeding Grounds Alpha Nest; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Breeding Grounds Alpha Nest/Tunnel to Breeding Grounds Gamma Nest Top
@@ -1464,6 +1470,7 @@ Extra - map_name: rm_a3b07
 ----------------
 Breeding Grounds Gamma Nest Bottom
 Extra - map_name: rm_a3b08
+Extra - minimap_data: [{'x': 57, 'y': 30}, {'x': 57, 'y': 31}, {'x': 58, 'y': 30}, {'x': 58, 'y': 31}, {'x': 59, 'y': 30}, {'x': 59, 'y': 31}]
 > Dock to Breeding Grounds Crossroads; Heals? False
   * Layers: default
   * Open Passage to Breeding Grounds Crossroads/Dock to Breeding Grounds Gamma Nest Bottom
@@ -1481,12 +1488,10 @@ Extra - map_name: rm_a3b08
   > Dock to Breeding Grounds Crossroads
       Any of the following:
           Space Jump or Can Use Spider Ball
-          All of the following:
-              # Septogg
-              Power Beam and After Metroids Area 3 - Breeding Grounds Middle Bottom Gamma and Enabled Septogg Helpers
-          All of the following:
-              # IBJ
-              After Metroids Area 3 - Breeding Grounds Middle Bottom Gamma and Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          # Septogg
+          Power Beam and After Metroids Area 3 - Breeding Grounds Middle Bottom Gamma and Enabled Septogg Helpers
+          # IBJ
+          After Metroids Area 3 - Breeding Grounds Middle Bottom Gamma and Infinite Bomb Jumping (Advanced) and Can Use Bombs
   > Dock to Breeding Grounds Fly Stadium Access
       Any of the following:
           Space Jump or Can Use Spider Ball
@@ -1494,9 +1499,8 @@ Extra - map_name: rm_a3b08
               # High jump
               Hi-Jump Boots
               Power Grip or Walljump (Intermediate)
-          All of the following:
-              # IBJ
-              After Metroids Area 3 - Breeding Grounds Middle Bottom Gamma and Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          # IBJ
+          After Metroids Area 3 - Breeding Grounds Middle Bottom Gamma and Infinite Bomb Jumping (Intermediate) and Can Use Bombs
           All of the following:
               # Option to have shoot blocks appear on right
               Enabled Softlock Prevention
@@ -1522,6 +1526,7 @@ Extra - map_name: rm_a3b08
 ----------------
 Breeding Grounds Fly Stadium Access
 Extra - map_name: rm_a3b09
+Extra - minimap_data: [{'x': 60, 'y': 28}, {'x': 60, 'y': 29}, {'x': 60, 'y': 30}]
 > Dock to Breeding Grounds Gamma Nest Bottom; Heals? False
   * Layers: default
   * Open Passage to Breeding Grounds Gamma Nest Bottom/Dock to Breeding Grounds Fly Stadium Access
@@ -1537,15 +1542,15 @@ Extra - map_name: rm_a3b09
 ----------------
 Breeding Grounds Fly Stadium
 Extra - map_name: rm_a3b10
+Extra - minimap_data: [{'x': 61, 'y': 27}, {'x': 61, 'y': 28}, {'x': 62, 'y': 27}, {'x': 62, 'y': 28}, {'x': 63, 'y': 27}, {'x': 63, 'y': 28}, {'x': 64, 'y': 27}, {'x': 64, 'y': 28}]
 > Dock to Breeding Grounds Fly Stadium Access; Heals? False
   * Layers: default
   * Open Passage to Breeding Grounds Fly Stadium Access/Dock to Breeding Grounds Fly Stadium
   > Top Near Pinchers
       Any of the following:
           Hi-Jump Boots or Space Jump or Can Use Spider Ball
-          All of the following:
-              # IBJ
-              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          # IBJ
+          Infinite Bomb Jumping (Intermediate) and Can Use Bombs
 
 > Dock to Breeding Grounds Maze; Heals? False
   * Layers: default
@@ -1572,14 +1577,14 @@ Extra - map_name: rm_a3b10
 ----------------
 Breeding Grounds Maze
 Extra - map_name: rm_a3b11
+Extra - minimap_data: [{'x': 65, 'y': 27}, {'x': 65, 'y': 28}, {'x': 65, 'y': 29}, {'x': 65, 'y': 30}, {'x': 65, 'y': 31}]
 > Dock to Breeding Grounds Gamma Nest East; Heals? False
   * Layers: default
   * Open Passage to Breeding Grounds Gamma Nest East/Dock to Breeding Grounds Maze
   > Dock to Breeding Grounds Fly Stadium
       Any of the following:
-          All of the following:
-              # Right side
-              Knowledge (Beginner) and Space Jump Wall and Tunnel Climb
+          # Right side
+          Knowledge (Beginner) and Space Jump Wall and Tunnel Climb
           All of the following:
               # Left side
               Can Use Any Bombs and Hijump Tunnel Climb and Power Grip Wall and Tunnel Climb
@@ -1599,6 +1604,7 @@ Extra - map_name: rm_a3b11
 ----------------
 Breeding Grounds Gamma Nest East
 Extra - map_name: rm_a3b12
+Extra - minimap_data: [{'x': 64, 'y': 31}, {'x': 64, 'y': 32}, {'x': 64, 'y': 33}]
 > Dock to Breeding Grounds Maze; Heals? False
   * Layers: default
   * Open Passage to Breeding Grounds Maze/Dock to Breeding Grounds Gamma Nest East

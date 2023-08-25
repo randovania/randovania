@@ -9,7 +9,6 @@ from randovania import get_data_path, monitoring
 from randovania.games.prime2.patcher import csharp_subprocess
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.lib import json_lib, status_update_lib
-from randovania.patching.patchers.exceptions import ExportFailure
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -20,6 +19,17 @@ if TYPE_CHECKING:
 CURRENT_PATCH_VERSION = 4
 logger = logging.getLogger(__name__)
 
+
+class ClarisRandomizerExportError(Exception):
+    def __init__(self, reason: str, output: str | None):
+        super().__init__(reason)
+        self.output = output
+
+    def detailed_text(self) -> str:
+        result = []
+        if self.output is not None:
+            result.append(self.output)
+        return "\n".join(result)
 
 def _patch_version_file(game_root: Path) -> Path:
     return game_root.joinpath("randovania_patch_version.txt")
@@ -75,7 +85,7 @@ def _run_with_args(args: list[str | Path],
     csharp_subprocess.process_command(new_args, input_data, read_callback)
 
     if not finished_updates:
-        raise ExportFailure(
+        raise ClarisRandomizerExportError(
             f"External tool did not send '{finish_string}'.",
             "\n".join(all_lines),
         )
@@ -188,7 +198,7 @@ def apply_patcher_file(game_root: Path,
 
     last_version = get_patch_version(game_root)
     if last_version > CURRENT_PATCH_VERSION:
-        raise ExportFailure(f"Game at {game_root} was last patched with version {last_version}, "
+        raise ClarisRandomizerExportError(f"Game at {game_root} was last patched with version {last_version}, "
                             f"which is above supported version {CURRENT_PATCH_VERSION}. "
                             f"\nPlease press 'Delete internal copy'.", None)
 

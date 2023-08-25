@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 
 from randovania.gui.lib import async_dialog, error_message_box
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     from PySide6.QtCore import Signal
@@ -50,6 +51,15 @@ async def export_game(
 
     except asyncio.exceptions.CancelledError:
         pass
+
+    except UnableToExportError as e:
+        logging.warning(e.reason)
+        await async_dialog.message_box(
+                None,
+                QtWidgets.QMessageBox.Icon.Critical,
+                "Error during exporting",
+                e.reason
+            )
 
     except Exception as e:
         logging.exception("Unable to export game")

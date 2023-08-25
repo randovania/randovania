@@ -38,6 +38,7 @@ Extra - asset_id: collision_camera_000
   * Extra - target_spawn_point: elevator_forest_000_platform
   * Extra - start_point_actor_name: elevator_aqua_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  * Extra - transporter_name: Ghavoran - Robot
   > Door to Right Entrance
       Trivial
 
@@ -274,9 +275,8 @@ Extra - asset_id: collision_camera_003
           Morph Ball
           Any of the following:
               Flash Shift or Grapple Beam or Space Jump or Speed Booster
-              All of the following:
-                  # Bomb horizontally to reach the item
-                  Bomb and Diagonal Bomb Jump (Expert)
+              # Bomb horizontally to reach the item
+              Bomb and Diagonal Bomb Jump (Expert)
   > Alcove
       Lay Bomb or Lay Power Bomb
 
@@ -356,12 +356,10 @@ Extra - asset_id: collision_camera_004
           Spider Magnet or Simple IBJ or Use Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
           Flash Shift and Wall Jump (Beginner)
-          All of the following:
-              # https://www.youtube.com/watch?v=c12yQVQB2BY
-              Morph Ball and Single-wall Wall Jump (Intermediate)
-          All of the following:
-              # https://www.youtube.com/watch?v=aqBoiZywFr8
-              Speed Booster Conservation (Intermediate) and Ballspark
+          # https://www.youtube.com/watch?v=c12yQVQB2BY
+          Morph Ball and Single-wall Wall Jump (Intermediate)
+          # https://www.youtube.com/watch?v=aqBoiZywFr8
+          Speed Booster Conservation (Intermediate) and Ballspark
   > Dock to Navigation Station Access
       Can Slide
 
@@ -470,15 +468,18 @@ Extra - asset_id: collision_camera_007
   > Event - Super Missile Rotatable
       All of the following:
           Morph Ball and Before Ghavoran - Super Missile Rotatable
-          Any of the following:
-              # TODO: If the elevator to Dairon is shuffled is also an alternative
-              After Ghavoran - Burenia Transport Grapple Box or After Dairon - Power Switch 2
+          # TODO: If the elevator to Dairon is shuffled is also an alternative
+          After Ghavoran - Burenia Transport Grapple Box or After Dairon - Power Switch 2
   > Event - Super Missile Rotatable Enky
       Destroy Enky
+  > Event - Super Missile Rotatable with Ledge Warp
+      All of the following:
+          Morph Ball and Ledge Warp (Intermediate)
+          After Ghavoran - Super Missile Area Access or Enabled Highly Dangerous Logic
 
 > Door to Elun Transport Access; Heals? False
   * Layers: default
-  * Super Missile Door to Elun Transport Access/Door to Flipper Room
+  * Super Missile Door to Elun Transport Access/Door to Flipper Room; Dock Lock Rando incompatible with: Grapple Beam Door
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_001
@@ -523,12 +524,22 @@ Extra - asset_id: collision_camera_007
   > Door to Elun Transport Access
       Before Ghavoran - Super Missile Rotatable
   > Event - Super Missile Rotatable
-      Morph Ball and Before Ghavoran - Super Missile Rotatable
+      Morph Ball and Before Ghavoran - Super Missile Rotatable and Knowledge (Intermediate)
+  > Event - Super Missile Rotatable with Ledge Warp
+      All of the following:
+          Knowledge (Intermediate) and Ledge Warp (Intermediate) and Lay Bomb
+          After Ghavoran - Super Missile Area Access or Enabled Highly Dangerous Logic
 
 > Event - Super Missile Rotatable Enky; Heals? False
   * Layers: default
   * Event Ghavoran - Super Missile Rotatable Enky
   > Dock to Spin Boost Tower
+      Trivial
+
+> Event - Super Missile Rotatable with Ledge Warp; Heals? False
+  * Layers: default
+  * Event Ghavoran - Super Missile Rotatable
+  > Door to Navigation Station
       Trivial
 
 ----------------
@@ -567,6 +578,8 @@ Extra - asset_id: collision_camera_008
       Any of the following:
           Simple IBJ or Use Spin Boost
           Speed Booster and Disabled Door Lock Randomizer
+  > Event - Super Missile Area Access
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -587,6 +600,12 @@ Extra - asset_id: collision_camera_008
 > Tunnel to Super Missile Room Access; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Super Missile Room Access/Tunnel to Dairon Transport Access
+  > Door to Super Missile Room Access
+      Trivial
+
+> Event - Super Missile Area Access; Heals? False
+  * Layers: default
+  * Event Ghavoran - Super Missile Area Access
   > Door to Super Missile Room Access
       Trivial
 
@@ -759,9 +778,8 @@ Extra - asset_id: collision_camera_011
   > Dock to Map Station Access (Lower)
       Trivial
   > Dock to EMMI Zone Exit West
-      All of the following:
-          # If you start in the room direclty below this one, you can carry a speed boost all the way to here
-          Morph Ball and Speed Booster and Speed Booster Conservation (Advanced) and Disabled Door Lock Randomizer and Shoot Plasma Beam
+      # If you start in the room direclty below this one, you can carry a speed boost all the way to here
+      Morph Ball and Speed Booster and Speed Booster Conservation (Advanced) and Disabled Door Lock Randomizer and Shoot Plasma Beam
 
 > Dock to Map Station Access (Lower); Heals? False
   * Layers: default
@@ -781,9 +799,8 @@ Extra - asset_id: collision_camera_011
               Any of the following:
                   Lay Cross Bomb
                   Diagonal Bomb Jump (Intermediate) and Lay Normal Bomb
-          All of the following:
-              # If you start in the room directly below this one, you can carry a speed boost all the way here
-              Morph Ball and Speed Booster and Speed Booster Conservation (Advanced) and Disabled Door Lock Randomizer and Shoot Plasma Beam
+          # If you start in the room directly below this one, you can carry a speed boost all the way here
+          Morph Ball and Speed Booster and Speed Booster Conservation (Advanced) and Disabled Door Lock Randomizer and Shoot Plasma Beam
 
 > Dock to Map Station Access (Upper); Heals? False
   * Layers: default
@@ -1350,9 +1367,8 @@ Extra - asset_id: collision_camera_021
           All of the following:
               # You can reach the platform directly with these
               Grapple Beam
-              Any of the following:
-                  # Pull the block
-                  Movement (Beginner) or Shoot Ice Missile
+              # Pull the block
+              Movement (Beginner) or Shoot Ice Missile
               Any of the following:
                   # Methods of reaching platform
                   Simple IBJ or Use Spin Boost
@@ -1487,9 +1503,8 @@ Extra - asset_id: collision_camera_021
           Use Spin Boost
           Diagonal Bomb Jump (Intermediate) and Lay Normal Bomb
           Flash Shift and Speed Booster and After Ghavoran - Ammo Recharge Enky Above and Speed Booster Conservation (Intermediate)
-          All of the following:
-              # https://www.youtube.com/watch?v=rQiQbXvvCSA
-              Flash Shift and Climb Sloped Tunnels (Advanced) and Wall Jump (Advanced)
+          # https://www.youtube.com/watch?v=rQiQbXvvCSA
+          Flash Shift and Climb Sloped Tunnels (Advanced) and Wall Jump (Advanced)
   > E-Tank Alcove
       Trivial
 
@@ -1642,9 +1657,8 @@ Extra - asset_id: collision_camera_024
   > Door to Save Station East
       Trivial
   > Pickup (Energy Part)
-      All of the following:
-          # Eye doors are exluded from door lock shuffe
-          Spin Boost and Ballspark
+      # Eye doors are exluded from door lock shuffe
+      Spin Boost and Ballspark
 
 > Door to Energy Recharge Station; Heals? False
   * Layers: default
@@ -1716,9 +1730,8 @@ Extra - asset_id: collision_camera_024
               Lay Power Bomb
               All of the following:
                   Shoot Charge Beam
-                  Any of the following:
-                      # The pseudo for this is a melee pseudo next to the tunnel
-                      Wave Beam or Pseudo-Wave Beam (Beginner)
+                  # The pseudo for this is a melee pseudo next to the tunnel
+                  Wave Beam or Pseudo-Wave Beam (Beginner)
   > Dock to Energy Recharge Station
       Any of the following:
           Lay Bomb
@@ -1823,9 +1836,8 @@ Extra - asset_id: collision_camera_024
                   All of the following:
                       Cross Bomb Skip (Beginner)
                       Flash Shift or Use Spin Boost
-                  All of the following:
-                      # https://youtu.be/4YU9S5yxUXY
-                      Cross Bomb Skip (Intermediate)
+                  # https://youtu.be/4YU9S5yxUXY
+                  Cross Bomb Skip (Intermediate)
 
 > Tunnel to Energy Recharge Station (Top); Heals? False
   * Layers: default
@@ -1849,9 +1861,8 @@ Extra - asset_id: collision_camera_024
                   All of the following:
                       Cross Bomb Skip (Intermediate)
                       Flash Shift or Use Spin Boost
-                  All of the following:
-                      # https://youtu.be/4YU9S5yxUXY
-                      Cross Bomb Skip (Advanced)
+                  # https://youtu.be/4YU9S5yxUXY
+                  Cross Bomb Skip (Advanced)
 
 > Dock to Total Recharge Station North; Heals? False
   * Layers: default
@@ -1882,9 +1893,8 @@ Extra - asset_id: collision_camera_025
           # TODO: Figure out a good way to put in the shinespark here. It requires either short boost or charging speed in the room to the left.
           Use Spin Boost
           Diagonal Bomb Jump (Beginner) and Lay Normal Bomb
-          All of the following:
-              # https://youtu.be/YWkTAyzTwLA
-              Cross Bomb and Knowledge (Intermediate) and Simple IBJ
+          # https://youtu.be/YWkTAyzTwLA
+          Cross Bomb and Knowledge (Intermediate) and Simple IBJ
   > Event - Ferenia Transport Enky Left
       Before Ghavoran - Ferenia Transport Grapple Box and Destroy Enky
 
@@ -2037,9 +2047,8 @@ Extra - asset_id: collision_camera_026
               # Requirements for dodging attacks. Not needed if at least beginner combat.
               Combat (Beginner)
               All of the following:
-                  All of the following:
-                      # Dodge its slam attack
-                      Can Slide
+                  # Dodge its slam attack
+                  Can Slide
                   Any of the following:
                       # Dodge its zappy attacks
                       Use Spin Boost
@@ -2056,24 +2065,21 @@ Extra - asset_id: collision_camera_026
                           Shoot Super Ice Missile
                           Any of the following:
                               Missiles ≥ 40
-                              All of the following:
-                                  # Minimum: 18 Ice Missiles + 1 Shinespark
-                                  Missiles ≥ 20 and Speed Booster
+                              # Minimum: 18 Ice Missiles + 1 Shinespark
+                              Missiles ≥ 20 and Speed Booster
                       All of the following:
                           # Minimum: 94 Super Missiles
                           Shoot Super Missile
                           Any of the following:
                               Missiles ≥ 100
-                              All of the following:
-                                  # Minimum: 47 Super Missiles + 1 Shinespark
-                                  Missiles ≥ 50 and Speed Booster
+                              # Minimum: 47 Super Missiles + 1 Shinespark
+                              Missiles ≥ 50 and Speed Booster
                       All of the following:
                           # Minimum: 280 Normal Missiles
                           Any of the following:
                               Missiles ≥ 300
-                              All of the following:
-                                  # Minimum: 140 Normal Missiles + 1 Shinespark
-                                  Missiles ≥ 150 and Speed Booster
+                              # Minimum: 140 Normal Missiles + 1 Shinespark
+                              Missiles ≥ 150 and Speed Booster
           Any of the following:
               # Energy Requirements
               Combat (Intermediate) or Normal Damage ≥ 699
@@ -2133,6 +2139,7 @@ Extra - asset_id: collision_camera_027
   * Extra - target_spawn_point: wagontrain_forest_000_platform
   * Extra - start_point_actor_name: wagontrain_sanctuary_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+  * Extra - transporter_name: Ghavoran - Storm Gate
   > Dock to Total Recharge Station North
       Trivial
 
@@ -2176,7 +2183,7 @@ Extra - polygon: [[4100.0, -1800.0], [-1000.0, -1800.0], [-1000.0, -3500.0], [-8
 Extra - asset_id: collision_camera_029
 > Door to Flipper Room; Heals? False
   * Layers: default
-  * Super Missile Door to Flipper Room/Door to Elun Transport Access
+  * Super Missile Door to Flipper Room/Door to Elun Transport Access; Dock Lock Rando incompatible with: Grapple Beam Door
   * Normally a power beam door, but listed as supers to prevent logic issues with
 blast shields
 
@@ -2217,9 +2224,8 @@ blast shields
   > Door to Transport to Elun
       Trivial
   > Pickup (Missile Tank)
-      All of the following:
-          # Currently, this item does not care which direction you come from. if you can enter here, you can get the item. Will need looked at once Random Start/Transports is supported.
-          Speed Booster
+      # Currently, this item does not care which direction you come from. if you can enter here, you can get the item. Will need looked at once Random Start/Transports is supported.
+      Speed Booster
 
 ----------------
 Spin Boost Room
@@ -2299,9 +2305,8 @@ Extra - asset_id: collision_camera_031
   > Dock to Teleport to Burenia
       Any of the following:
           Gravity Suit
-          All of the following:
-              # https://www.youtube.com/watch?v=3CYTkKutYFo
-              Spin Boost and Water Space Jump (Advanced) and Perform WBJ
+          # https://www.youtube.com/watch?v=3CYTkKutYFo
+          Spin Boost and Water Space Jump (Advanced) and Perform WBJ
   > Left Water Ledge
       Gravity Suit or Perform WBJ or Use Spin Boost
 
@@ -2498,6 +2503,7 @@ Extra - asset_id: collision_camera_034
   * Extra - target_spawn_point: wagontrain_forest_000_platform
   * Extra - start_point_actor_name: wagontrain_shipyard_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+  * Extra - transporter_name: Ghavoran - Golzuna
   > Door to Cross Bomb Tutorial
       Trivial
 
@@ -2629,6 +2635,7 @@ Extra - asset_id: collision_camera_037
   * Extra - target_spawn_point: wagontrain_forest_000_platform
   * Extra - start_point_actor_name: wagontrain_quarantine_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+  * Extra - transporter_name: Ghavoran - Flipper
   > Door to Elun Transport Access
       Trivial
 
@@ -2658,6 +2665,7 @@ Extra - asset_id: collision_camera_038
   * Extra - target_spawn_point: elevator_forest_000_platform
   * Extra - start_point_actor_name: elevator_baselab_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  * Extra - transporter_name: Ghavoran - Early Supers
   > Door to Dairon Transport Access
       Trivial
 
@@ -2686,9 +2694,8 @@ Extra - asset_id: collision_camera_039
   > Door to Golzuna Tower
       All of the following:
           Morph Ball
-          Any of the following:
-              # Movement is for shooting the block while on the ledge, pseudo is performed in the little alcove under the block with a melee pseudo
-              Movement (Beginner) or Pseudo-Wave Beam (Beginner) or Lay Bomb or Lay Power Bomb or Shoot Diffusion or Wave
+          # Movement is for shooting the block while on the ledge, pseudo is performed in the little alcove under the block with a melee pseudo
+          Movement (Beginner) or Pseudo-Wave Beam (Beginner) or Lay Bomb or Lay Power Bomb or Shoot Diffusion or Wave
   > Start Point
       Morph Ball
   > Tunnel to Golzuna Tower

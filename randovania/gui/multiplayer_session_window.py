@@ -11,7 +11,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncClose, asyncSlot
 
 from randovania.game_description import default_database
-from randovania.game_description.resources.inventory import InventoryItem
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.gui.auto_tracker_window import load_trackers_configuration
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
@@ -374,10 +374,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         dock = self.tracker_windows.get((inventory.world_id, inventory.user_id))
         if dock is not None:
             tracker = dock.item_tracker
-            tracker.update_state({
+            tracker.update_state(Inventory({
                 tracker.resource_database.get_item(name): InventoryItem(0, capacity)
                 for name, capacity in inventory.inventory.items()
-            })
+            }))
 
     async def _on_kicked(self):
         if self._already_kicked:
@@ -975,8 +975,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         try:
             user_worlds = self._session.users[self.network_client.current_user.id].worlds
-        except AttributeError:
-            # _session hasn't been set yet
+        except (AttributeError, KeyError):
+            # _session hasn't been set yet or user isn't in session
             user_worlds = {}
 
         game_connection = self._multiworld_client.game_connection
@@ -1017,7 +1017,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         warning_message = ""
 
-        if self._session.game_details and user_worlds:
+        if user_worlds and self._session.game_details:
             if connected_worlds:
                 if not (connected_worlds.keys() & user_worlds.keys()):
                     plural = "game" if len(connected_worlds) == 1 else "games"

@@ -56,7 +56,9 @@ def pretty_print_requirement_array(requirement: RequirementArrayBase,
     else:
         title = "All"
 
-    if len(other_requirements) == 0 and requirement.comment is None:
+    if len(other_requirements) == 0:
+        if requirement.comment is not None:
+            yield level, f"# {requirement.comment}"
         yield level, requirement.combinator().join(pretty_resources + sorted_templates)
     else:
         yield level, f"{title} of the following:"

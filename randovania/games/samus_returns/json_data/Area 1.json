@@ -10,7 +10,7 @@
     },
     "areas": {
         "Chozo Seal": {
-            "default_node": "Elevator to Surface East - Transport to Area 1",
+            "default_node": "Elevator to Surface - East",
             "extra": {
                 "total_boundings": {
                     "x1": -20550.0,
@@ -364,7 +364,7 @@
                         }
                     }
                 },
-                "Elevator to Surface East - Transport to Area 1": {
+                "Elevator to Surface - East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -382,13 +382,13 @@
                         "start_point_actor_name": "ST_FromArea00"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Transport to Area 1",
-                        "node": "Elevator to Area 1 - Chozo Seal"
+                        "node": "Elevator to Area 1"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -403,7 +403,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 Entrance - Chozo Seal": {
+                "Elevator to Area 2 - Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -421,13 +421,13 @@
                         "start_point_actor_name": "ST_FromArea02"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
                         "area": "Chozo Seal",
-                        "node": "Elevator To Area 1 - Chozo Seal"
+                        "node": "Elevator to Area 1"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -486,7 +486,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator to Surface East - Transport to Area 1": {
+                        "Elevator to Surface - East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -739,7 +739,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 2 Entrance - Chozo Seal": {
+                        "Elevator to Area 2 - Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1866,30 +1866,8 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Bomb",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PBAmmo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Destroy Bomb Block"
                                                             }
                                                         ]
                                                     }
@@ -1949,20 +1927,8 @@
                             }
                         },
                         "Tunnel to Spider Ball Room": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -2198,13 +2164,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Destroy Bomb Block"
                         }
                     }
                 },
@@ -2536,12 +2497,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door from Outer Hub": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 2",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid": {
@@ -4165,12 +4124,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Alpha Shaft Left": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 4",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid": {
@@ -4292,12 +4249,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Alpha Arena East Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 3",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid": {
@@ -5327,13 +5282,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     },
                                     {
                                         "type": "or",

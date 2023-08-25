@@ -4,7 +4,7 @@ import copy
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.game_description.resources.damage_resource_info import DamageReduction
+from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
@@ -51,7 +51,7 @@ class EchoesBootstrap(MetroidBootstrap):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.elevators.is_vanilla:
+        if configuration.teleporters.is_vanilla:
             # Vanilla Great Temple Emerald Translator Gate
             enabled_resources.add("VanillaGreatTempleEmeraldGate")
 

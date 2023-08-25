@@ -33,7 +33,7 @@ Extra - asset_id: collision_camera_002
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoRecharge
   * Extra - actor_type: weightactivatedplatform
-  > Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)
+  > Elevator to Area 5 - Interior
       Trivial
   > Door to Zeta Arena Access
       Climb Rooms Vertically (No High Jump)
@@ -42,9 +42,9 @@ Extra - asset_id: collision_camera_002
   > Top of Tower Right Side
       Climb Rooms Vertically (No High Jump)
 
-> Elevator to Area 5 Interior - Transport to Area 5 Exterior (East); Heals? False; Spawn Point; Default Node
+> Elevator to Area 5 - Interior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 5 Exterior (East)/Transport to Area 5 Exterior - Tower
+  * Elevator to Transport to Area 5 Exterior (East)/Elevator to Area 5 - Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea06C_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06C_01
@@ -70,7 +70,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: LE_Platform_SaveStation002
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation002
-  > Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)
+  > Elevator to Area 5 - Interior
       Trivial
 
 > Teleporter; Heals? False
@@ -141,7 +141,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_type: doorpowerpower
   > Top of Tower Right Side
       Any of the following:
-          Lighting Armor or Space Jump
+          Lightning Armor or Space Jump
           Spiderspark (Beginner) and Can Spiderspark
 
 > Door to Gamma Arena; Heals? False
@@ -149,7 +149,7 @@ Extra - asset_id: collision_camera_002
   * Charge Beam Door to Gamma Arena/Door to Tower
   * Extra - actor_name: Door010
   * Extra - actor_type: doorchargecharge
-  > Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)
+  > Elevator to Area 5 - Interior
       Trivial
 
 > Pickup (Missile Tank Hidden); Heals? False
@@ -190,7 +190,7 @@ Extra - asset_id: collision_camera_002
       Any of the following:
           Space Jump
           All of the following:
-              Lighting Armor
+              Lightning Armor
               Simple IBJ or Use Spider Ball
           Spiderspark (Beginner) and Can Spiderspark
 
@@ -236,8 +236,7 @@ Extra - asset_id: collision_camera_002
                   All of the following:
                       Grapple Beam
                       Any of the following:
-                          Shoot Beam Burst
-                          Power Bomb and Knowledge (Beginner)
+                          Destroy Blob Throwers/Steel Orbs
                           Phase Drift and Damage Boost (Beginner) and Movement (Intermediate)
                       Phase Drift or Spider Ball or Phase Drift Skip (Expert)
 
@@ -393,10 +392,8 @@ Extra - asset_id: collision_camera_008
       Any of the following:
           Lay Bomb
           All of the following:
-              Morph Ball
-              Any of the following:
-                  Lighting Armor or Power Bomb ≥ 2
-                  Baby Metroid and Power Bomb
+              Lay Power Bomb
+              Lightning Armor or Baby Metroid or Power Bomb ≥ 2
 
 > Door to Tower; Heals? False
   * Layers: default
@@ -405,7 +402,7 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_type: doorpowerpower
   > Pickup (Aeion Tank)
       Any of the following:
-          Lighting Armor and Morph Ball
+          Lightning Armor and Morph Ball
           Baby Metroid and Destroy Bomb Block
 
 ----------------
@@ -413,9 +410,9 @@ Transport to Area 5 Interior
 Extra - total_boundings: {'x1': -4700.0, 'x2': -3400.0, 'y1': -2958.300048828125, 'y2': -2200.0}
 Extra - polygon: [[-4700.0, -2200.0], [-4700.0, -2958.300048828125], [-3400.0, -2958.300048828125], [-3400.0, -2200.0]]
 Extra - asset_id: collision_camera_011
-> Elevator to Area 5 Interior - Transport to Area 5 Exterior (West); Heals? False; Spawn Point; Default Node
+> Elevator to Area 5 - Interior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 5 Exterior (West)/Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)
+  * Elevator to Transport to Area 5 Exterior (West)/Elevator to Area 5 - Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea06C_02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06C_02
@@ -427,7 +424,7 @@ Extra - asset_id: collision_camera_011
   * Power Beam Door to Tower/Door to Transport to Area 5 Interior
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 5 Interior - Transport to Area 5 Exterior (West)
+  > Elevator to Area 5 - Interior
       Trivial
 
 ----------------
@@ -453,12 +450,10 @@ Extra - asset_id: collision_camera_012
   * Layers: default
   * Extra - start_point_actor_name: ST_Zeta_001_Checkpoint
   > Door to Zeta Arena Access
-      All of the following:
-          After Area 5 (Exterior) - Zeta Metroid
-          Any of the following:
-              High Jump Boots or Space Jump or Super Jump (Intermediate) or Simple IBJ
-              Spiderspark (Beginner) and Can Spiderspark
-              Morph Ball and Unmorph Extend (Beginner)
+      Any of the following:
+          High Jump Boots or Space Jump or Super Jump (Intermediate) or Simple IBJ
+          Spiderspark (Beginner) and Can Spiderspark
+          Morph Ball and Unmorph Extend (Beginner)
   > Event - Zeta Metroid
       Defeat Zeta Metroid
 
@@ -639,7 +634,7 @@ Extra - asset_id: collision_camera_017
   > Door to Gamma+ Arena
       All of the following:
           Varia Suit
-          Lighting Armor or Space Jump or Can Spiderspark
+          Lightning Armor or Space Jump or Can Spiderspark
 
 > Door to Gamma+ Arena; Heals? False
   * Layers: default
@@ -649,7 +644,7 @@ Extra - asset_id: collision_camera_017
   > Door to Tower
       All of the following:
           Varia Suit
-          Lighting Armor or Space Jump or Can Spiderspark
+          Lightning Armor or Space Jump or Can Spiderspark
   > Start Point
       Trivial
 
@@ -686,7 +681,7 @@ Extra - asset_id: collision_camera_018
   * Layers: default
   * Extra - start_point_actor_name: ST_Gamma_002_Checkpoint
   > Door to Gamma+ Arena Access
-      Varia Suit and After Area 5 (Exterior) - Gamma Metroid+
+      Varia Suit
   > Event - Gamma Metroid+
       All of the following:
           Varia Suit and Defeat Gamma Metroid+

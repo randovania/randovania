@@ -116,7 +116,7 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
                 self.players_config,
                 self.game_enum()
             ),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
         )
 
         gameplay_patch_list = [field.name for field in dataclasses.fields(self.configuration.patches)]

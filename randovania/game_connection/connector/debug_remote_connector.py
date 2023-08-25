@@ -7,7 +7,7 @@ from PySide6.QtCore import Signal
 from randovania.game_connection.connector.remote_connector import PickupEntryWithOwner, RemoteConnector
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 
 if TYPE_CHECKING:
     import uuid

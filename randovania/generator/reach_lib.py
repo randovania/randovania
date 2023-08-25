@@ -28,8 +28,9 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 
 
 def _filter_collectable(resource_nodes: Iterator[ResourceNode], reach: GeneratorReach) -> Iterator[ResourceNode]:
+    context = reach.node_context()
     for resource_node in resource_nodes:
-        if resource_node.can_collect(reach.node_context()):
+        if resource_node.can_collect(context):
             yield resource_node
 
 

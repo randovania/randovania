@@ -38,6 +38,11 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1]
             object_name = self.game.region_list.node_from_pickup_index(pickup.index).extra["object_name"]
+            res_lock = pickup.original_pickup.resource_lock
+            text_index = 1 if (res_lock is not None and
+                               "Locked" in res_lock.temporary_item.long_name and
+                               len(pickup.collection_text) > 1) else 0
+
             pickup_map_dict[object_name] = {
                 "sprite_details": {
                     "name": pickup.model.name,
@@ -47,7 +52,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                 "quantity": quantity,
                 "text": {
                     "header": item_info[pickup.name]["text_header"],
-                    "description": pickup.collection_text[0]
+                    "description": pickup.collection_text[text_index]
                 }
             }
 
@@ -65,7 +70,8 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
         return {
             area.extra["map_name"]: {
                 "display_name": area.name,
-                "region_name": region.name
+                "region_name": region.name,
+                "minimap_data": area.extra["minimap_data"],
             }
             for region in self.game.region_list.regions for area in region.areas
         }
@@ -73,7 +79,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
     def _create_starting_items_dict(self):
         starting_resources = self.patches.starting_resources()
         return {
-            resource.short_name: quantity
+            resource.long_name: quantity
             for resource, quantity in starting_resources.as_resource_gain()
         }
 
@@ -89,7 +95,19 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "session_uuid": str(self.players_config.get_own_uuid())
         }
 
-    def _create_game_patches(self):
+    def _create_game_patches(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random):
+        def get_locked_ammo_text(ammo_item: str):
+            text = "MISSING TEXT, PLEASE REPORT THIS!"
+            for pickup in pickup_list:
+                if pickup.original_pickup.name != ammo_item:
+                    continue
+                text = pickup.collection_text[0]
+                break
+            return text
+        missile_text = get_locked_ammo_text("Missile Expansion")
+        super_text = get_locked_ammo_text("Super Missile Expansion")
+        pb_text = get_locked_ammo_text("Power Bomb Expansion")
+
         game_patches = {
             "septogg_helpers": self.patches.configuration.septogg_helpers,
             "respawn_bomb_blocks": self.patches.configuration.respawn_bomb_blocks,
@@ -103,6 +121,19 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "softlock_prevention_blocks": self.patches.configuration.softlock_prevention_blocks,
             "a3_entrance_blocks": self.patches.configuration.a3_entrance_blocks,
             "screw_blocks": self.patches.configuration.screw_blocks,
+            "sabre_designed_skippy": rng.randint(0, self._EASTER_EGG_SHINY) == 0,
+            "locked_missile_text": {
+                "header": item_info["Locked Missile Expansion"]["text_header"],
+                "description": missile_text
+            },
+            "locked_super_text": {
+                "header": item_info["Locked Super Missile Expansion"]["text_header"],
+                "description": super_text,
+            },
+            "locked_pb_text": {
+                "header": item_info["Locked Power Bomb Expansion"]["text_header"],
+                "description": pb_text,
+            },
         }
         for item, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
             launcher_dict = {
@@ -197,7 +228,8 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "unveiled_blocks": c.unveiled_blocks,
             "health_hud_rotation": c.health_hud_rotation,
             "etank_hud_rotation": c.etank_hud_rotation,
-            "dna_hud_rotation": c.dna_hud_rotation
+            "dna_hud_rotation": c.dna_hud_rotation,
+            "room_names_on_hud": c.show_room_names.value,
         }
 
     def _get_item_data(self):
@@ -238,7 +270,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
             exporter=pickup_exporter.create_pickup_exporter(memo_data, self.players_config, self.game_enum()),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "sItemNothing"),
         )
 
         return {
@@ -247,7 +279,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             "starting_location": self._create_starting_location(),
             "pickups": self._create_pickups_dict(pickup_list, item_data, self.rng),
             "rooms": self._create_room_dict(),
-            "game_patches": self._create_game_patches(),
+            "game_patches": self._create_game_patches(pickup_list, item_data, self.rng),
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics()

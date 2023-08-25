@@ -493,7 +493,8 @@
                         "elevator_component": "CCapsuleUsableComponent",
                         "target_spawn_point": "elevator_skybase_000_platform",
                         "start_point_actor_name": "elevator_shipyard_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "transporter_name": "Itorash"
                     },
                     "valid_starting_location": true,
                     "dock_type": "elevator",
@@ -1328,7 +1329,139 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Hanubia": {
+                        "Event - Escape Sequence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spin",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Speedbooster",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SWJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Escape Sequence": {
+                    "node_type": "event",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 5736.34,
+                        "y": 2267.28,
+                        "z": 0.0
+                    },
+                    "description": "End of the game",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "SP_Checkpoint_Endgame",
+                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+                    },
+                    "valid_starting_location": false,
+                    "event_name": "Ship",
+                    "connections": {
+                        "Dock to Elevator to Raven Beak": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1337,15 +1470,15 @@
                         }
                     }
                 },
-                "Dock to Hanubia": {
+                "Dock to Elevator to Raven Beak": {
                     "node_type": "dock",
-                    "heal": true,
+                    "heal": false,
                     "coordinates": {
-                        "x": 5736.34,
-                        "y": 2267.28,
+                        "x": 6299.61,
+                        "y": 2370.1,
                         "z": 0.0
                     },
-                    "description": "To the escape sequence",
+                    "description": "",
                     "layers": [
                         "default"
                     ],
@@ -1353,9 +1486,9 @@
                     "valid_starting_location": false,
                     "dock_type": "other",
                     "default_connection": {
-                        "region": "Hanubia",
-                        "area": "Raven Beak X Arena",
-                        "node": "Raven Beak X Checkpoint"
+                        "region": "Itorash",
+                        "area": "Elevator to Raven Beak",
+                        "node": "Start Point"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,

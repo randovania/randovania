@@ -10,7 +10,7 @@
     },
     "areas": {
         "Transport to Area 5 Entrance (East)": {
-            "default_node": "Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)",
+            "default_node": "Elevator to Area 5 - Entrance",
             "extra": {
                 "total_boundings": {
                     "x1": -9200.0,
@@ -59,7 +59,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)": {
+                "Elevator to Area 5 - Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -77,13 +77,13 @@
                         "start_point_actor_name": "ST_FromArea06A_01"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Entrance",
                         "area": "Transport to Area 5 Interior (East)",
-                        "node": "Elevator to Area 5 Interior - Transport to Area 5 Entrance (East)"
+                        "node": "Elevator to Area 5 - Interior"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -136,7 +136,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)": {
+                        "Elevator to Area 5 - Entrance": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -176,7 +176,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 Entrance - Transport to Area 5 Interior (East)": {
+                        "Elevator to Area 5 - Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -935,7 +935,7 @@
             }
         },
         "Transport to Area 5 Exterior (East)": {
-            "default_node": "Transport to Area 5 Exterior - Tower",
+            "default_node": "Elevator to Area 5 - Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": -3500.0,
@@ -972,7 +972,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Transport to Area 5 Exterior - Tower": {
+                "Elevator to Area 5 - Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -990,13 +990,13 @@
                         "start_point_actor_name": "ST_FromArea062B_01"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Exterior",
                         "area": "Tower",
-                        "node": "Elevator to Area 5 Interior - Transport to Area 5 Exterior (East)"
+                        "node": "Elevator to Area 5 - Interior"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1054,7 +1054,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Transport to Area 5 Exterior - Tower": {
+                        "Elevator to Area 5 - Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1092,7 +1092,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Transport to Area 5 Exterior - Tower": {
+                        "Elevator to Area 5 - Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1130,7 +1130,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Transport to Area 5 Exterior - Tower": {
+                        "Elevator to Area 5 - Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2560,31 +2560,6 @@
                         }
                     }
                 },
-                "Event - Gravity Suit Room Pickup": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6913.22376966149,
-                        "y": 7143.861824238244,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Area 5 (Interior) - Gravity Suit Room Pickup",
-                    "connections": {
-                        "Pickup (Gravity Suit)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Next to Pickup": {
                     "node_type": "generic",
                     "heal": false,
@@ -2602,6 +2577,13 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Gravity Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Underwater Path (Top)": {
                             "type": "resource",
                             "data": {
@@ -2612,13 +2594,6 @@
                             }
                         },
                         "Door from Underwater Path": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Gravity Suit Room Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3258,7 +3233,7 @@
             }
         },
         "Transport to Area 5 Entrance (West)": {
-            "default_node": "Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West)",
+            "default_node": "Elevator to Area 5 - Entrance",
             "extra": {
                 "total_boundings": {
                     "x1": -12800.0,
@@ -3287,7 +3262,7 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West)": {
+                "Elevator to Area 5 - Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3305,13 +3280,13 @@
                         "start_point_actor_name": "ST_FromArea06A_02"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Entrance",
                         "area": "Transport to Area 5 Interior (West)",
-                        "node": "Door to Pool West"
+                        "node": "Elevator to Area 5 - Interior"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3355,7 +3330,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 Entrance (West) - Transport to Area 5 Interior (West)": {
+                        "Elevator to Area 5 - Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4702,7 +4677,7 @@
             }
         },
         "Transport to Area 5 Exterior (West)": {
-            "default_node": "Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)",
+            "default_node": "Elevator to Area 5 - Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": -9050.0,
@@ -4739,7 +4714,7 @@
                 "asset_id": "collision_camera_018"
             },
             "nodes": {
-                "Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)": {
+                "Elevator to Area 5 - Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4757,13 +4732,13 @@
                         "start_point_actor_name": "ST_FromArea06B_02"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Exterior",
                         "area": "Transport to Area 5 Interior",
-                        "node": "Elevator to Area 5 Interior - Transport to Area 5 Exterior (West)"
+                        "node": "Elevator to Area 5 - Interior"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4807,7 +4782,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 5 Exterior - Transport to Area 5 Interior (West)": {
+                        "Elevator to Area 5 - Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5710,15 +5685,6 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Gamma 12",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -6239,21 +6205,47 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Zeta+ Arena Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Zeta 2",
+                                            "type": "items",
+                                            "name": "Boots",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SuperJump",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Spiderspark"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -6261,16 +6253,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Boots",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
+                                                        "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -6279,43 +6262,9 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "SuperJump",
-                                                        "amount": 4,
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Spiderspark"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Morph",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "UnmorphExtend",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
                                                     }
                                                 }
                                             ]

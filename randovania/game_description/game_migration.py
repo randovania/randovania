@@ -282,7 +282,6 @@ def _migrate_v19(data: dict) -> dict:
         if game == "prime2":
             data["dock_weakness_database"]["types"]["portal"]["extra"]["ignore_for_hints"] = True
 
-
     regions_data = data["regions"]
 
     # iterate overall nodes and checks if they are teleporter nodes
@@ -308,6 +307,12 @@ def _migrate_v20(data: dict) -> dict:
     return data
 
 
+def _migrate_v21(data: dict) -> dict:
+    data["used_trick_levels"] = None
+
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -329,6 +334,7 @@ _MIGRATIONS = [
     _migrate_v18,
     _migrate_v19,
     _migrate_v20,
+    _migrate_v21,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

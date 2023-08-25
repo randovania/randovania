@@ -4,7 +4,7 @@ import traceback
 
 from PySide6 import QtWidgets
 
-from randovania.patching.patchers.exceptions import ExportFailure
+from randovania.games.prime2.patcher.claris_randomizer import ClarisRandomizerExportError
 
 
 def create_box_for_exception(val: Exception) -> QtWidgets.QMessageBox:
@@ -21,7 +21,7 @@ def create_box_for_exception(val: Exception) -> QtWidgets.QMessageBox:
     common_qt_lib.set_default_window_icon(box)
 
     detailed_exception = "".join(traceback.format_exception(val))
-    if isinstance(val, ExportFailure):
+    if isinstance(val, ClarisRandomizerExportError):
         detailed_exception += "\n\n"
         detailed_exception += val.detailed_text()
 
