@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The resolver now tries otherwise safe actions behind a point of no return before it tries actions that give dangerous resources. This makes the solve faster by avoiding some cases of backtracking.
 - Changed: Comments no longer prevent And/Or requirements from being displayed as short form.
 - Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
+- Fixed: Opening race rdvgame files from older Randovania versions now works properly. 
 
 ### Metroid Dread
 
