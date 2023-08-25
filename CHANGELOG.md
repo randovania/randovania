@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Comments no longer prevent And/Or requirements from being displayed as short form.
 - Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
 - Fixed: Opening race rdvgame files from older Randovania versions now works properly. 
+- Fixed: Exporting games with hidden Nothing models don't crash during the exporting process anymore.
 
 ### Metroid Dread
 
