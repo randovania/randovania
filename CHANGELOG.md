@@ -77,6 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Timing of Metroids in Metroid Quarantine A
 - Fixed: Stuck camera in control tower
 - Fixed: Timing of flying pirates in control tower
+- Fixed: Echoes Unlimited Missiles model now appears larger
 - Added: More Quality of life improvements over vanilla
   - Colorblind friendlier flamethrower model
   - Power Bombs now have a heat signature
