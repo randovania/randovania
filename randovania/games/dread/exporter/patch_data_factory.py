@@ -485,7 +485,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
             exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
-            visual_etm=pickup_creator.create_visual_nothing(),
+            visual_nothing=pickup_creator.create_visual_nothing(),
         )
 
         energy_per_tank = self.configuration.energy_per_tank if self.configuration.immediate_energy_parts else 100.0
