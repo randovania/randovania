@@ -974,6 +974,16 @@ def _migrate_v62(preset: dict) -> dict:
         elif config["elevators"]["mode"] == "one-way-elevator-replacement":
             config["elevators"]["mode"] = "one-way-teleporter-replacement"
         config["teleporters"] = config.pop("elevators")
+
+    return preset
+
+def _migrate_v63(preset: dict) -> dict:
+    config = preset["configuration"]
+    pickups = config["ammo_pickup_configuration"]["pickups_state"]
+
+    for pickup in pickups.values():
+        pickup["starting_count"] = 0
+
     return preset
 
 
@@ -1040,6 +1050,7 @@ _MIGRATIONS = [
     _migrate_v60,
     _migrate_v61,
     _migrate_v62,
+    _migrate_v63,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

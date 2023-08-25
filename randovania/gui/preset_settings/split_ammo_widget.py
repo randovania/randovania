@@ -17,6 +17,7 @@ if TYPE_CHECKING:
 
 
 class AmmoPickupWidgets(NamedTuple):
+    starting_spinbox: QtWidgets.QSpinBox
     pickup_spinbox: QtWidgets.QSpinBox
     expected_count: QtWidgets.QLabel
     pickup_box: QtWidgets.QGroupBox

@@ -125,7 +125,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         ammo_provided = major_configuration.calculate_provided_ammo()
         for ammo, state in ammo_configuration.pickups_state.items():
             for ammo_index, count in enumerate(state.ammo_count):
-                ammo_provided[ammo.items[ammo_index]] += count * state.pickup_count
+                ammo_provided[ammo.items[ammo_index]] += (count * state.pickup_count) + (count * state.starting_count)
 
         resource_database = self.game_description.resource_database
 
@@ -137,6 +137,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         for ammo, state in ammo_configuration.pickups_state.items():
             widgets = self._ammo_pickup_widgets[ammo]
             widgets.pickup_spinbox.setValue(state.pickup_count)
+            widgets.starting_spinbox.setValue(state.starting_count)
 
             if widgets.require_main_item_check is not None:
                 widgets.require_main_item_check.setChecked(state.requires_main_item)
@@ -145,11 +146,11 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             self_counts = []
             for ammo_index, count in enumerate(state.ammo_count):
-                self_counts.append(count * state.pickup_count)
+                self_counts.append((count * state.pickup_count) + (count * state.starting_count))
                 self._ammo_item_count_spinboxes[ammo.name][ammo_index].setValue(count)
 
             try:
-                if state.pickup_count == 0:
+                if state.pickup_count == 0 and state.starting_count == 0:
                     widgets.expected_count.setText("No expansions will be created.")
                     continue
 
@@ -366,15 +367,25 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 add_row(item_count_label, item_count_spinbox)
 
             # Pickup Count
-            count_label = QtWidgets.QLabel(pickup_box)
-            count_label.setText("Pickup Count")
-            count_label.setToolTip("How many instances of this expansion should be placed.")
+            shuffled_label = QtWidgets.QLabel(pickup_box)
+            shuffled_label.setText("Shuffled Pickup Count")
+            shuffled_label.setToolTip("How many instances of this expansion should be placed.")
 
             pickup_spinbox = ScrollProtectedSpinBox(pickup_box)
             pickup_spinbox.setMaximum(999)
             pickup_spinbox.valueChanged.connect(partial(self._on_update_ammo_pickup_num_count_spinbox, ammo))
 
-            add_row(count_label, pickup_spinbox)
+            add_row(shuffled_label, pickup_spinbox)
+
+            starting_label = QtWidgets.QLabel(pickup_box)
+            starting_label.setText("Starting Pickup Count")
+            starting_label.setToolTip("How many instances of this expansion should be started with.")
+
+            starting_spinbox = ScrollProtectedSpinBox(pickup_box)
+            starting_spinbox.setMaximum(999)
+            starting_spinbox.valueChanged.connect(partial(self._on_update_ammo_starting_count_spinbox, ammo))
+
+            add_row(starting_label, starting_spinbox)
 
             # FIXME: hardcoded check to hide required mains for Prime 1
             if ammo.temporary:
@@ -394,7 +405,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             layout.addWidget(expected_count, current_row, 0, 1, 2)
             current_row += 1
 
-            self._ammo_pickup_widgets[ammo] = AmmoPickupWidgets(pickup_spinbox, expected_count,
+            self._ammo_pickup_widgets[ammo] = AmmoPickupWidgets(starting_spinbox, pickup_spinbox, expected_count,
                                                                 pickup_box, require_main_item_check)
             category_layout.addWidget(pickup_box)
 
@@ -408,6 +419,14 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             options.ammo_pickup_configuration = ammo_configuration.replace_state_for_ammo(
                 ammo,
                 dataclasses.replace(state, ammo_count=tuple(ammo_count))
+            )
+
+    def _on_update_ammo_starting_count_spinbox(self, ammo: AmmoPickupDefinition, value: int):
+        with self._editor as options:
+            ammo_configuration = options.ammo_pickup_configuration
+            options.ammo_pickup_configuration = ammo_configuration.replace_state_for_ammo(
+                ammo,
+                dataclasses.replace(ammo_configuration.pickups_state[ammo], starting_count=value)
             )
 
     def _on_update_ammo_pickup_num_count_spinbox(self, ammo: AmmoPickupDefinition, value: int):

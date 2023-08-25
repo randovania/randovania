@@ -17,6 +17,7 @@ if TYPE_CHECKING:
 class AmmoPickupState(BitPackValue):
     ammo_count: tuple[int, ...] = (0,)
     pickup_count: int = 0
+    starting_count: int = 0
     requires_main_item: bool = True
 
     def check_consistency(self, ammo: AmmoPickupDefinition):
@@ -33,7 +34,10 @@ class AmmoPickupState(BitPackValue):
                                  f"in range [{minimum_count}, {ammo_item.max_capacity}].")
 
         if self.pickup_count < 0:
-            raise ValueError(f"Pickup count must be at least 0, got {self.pickup_count}")
+            raise ValueError(f"Shuffled Pickup count must be at least 0, got {self.pickup_count}")
+
+        if self.starting_count < 0:
+            raise ValueError(f"Starting Pickup count must be at least 0, got {self.starting_count}")
 
     def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         ammo: AmmoPickupDefinition = metadata["ammo"]
@@ -49,6 +53,7 @@ class AmmoPickupState(BitPackValue):
                 yield from bitpacking.encode_bool(count < 0) # Negative?
 
         yield from bitpacking.encode_big_int(self.pickup_count)
+        yield from bitpacking.encode_big_int(self.starting_count)
         if ammo.unlocked_by is not None:
             yield from bitpacking.encode_bool(self.requires_main_item)
 
@@ -71,6 +76,7 @@ class AmmoPickupState(BitPackValue):
 
         # Pickup Count
         pickup_count = bitpacking.decode_big_int(decoder)
+        starting_count = bitpacking.decode_big_int(decoder)
 
         # Require Main Item
         requires_main_item = True
@@ -80,6 +86,7 @@ class AmmoPickupState(BitPackValue):
         return cls(
             ammo_count=tuple(ammo_count),
             pickup_count=pickup_count,
+            starting_count=starting_count,
             requires_main_item=requires_main_item,
         )
 
