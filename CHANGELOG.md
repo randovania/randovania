@@ -64,7 +64,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Fixed: One-way elevator mode not able to generate.
+- Fixed: One-way elevator mode not able to generate
+- Fixed: Doors openable underneath blast shields
+- Fixed: Doors and Blast shields hurting the player with reflected shots
+- Fixed: Starting items getting  ignored when starting in Connection Elevator to Deck Alpha
+- Fixed: Skipping the cutscene in Connection Elevator to Deck Alpha also skips item loss
+- Fixed: Doors in Omega Research not locking
+- Fixed: Elite Control entry Barrier activating again
+- Fixed: Hall of the Elders "New Path Opened" HUD Memo not appearing
+- Fixed: Some unskippable cutscenes
+- Fixed: Removed HUD Memos in Emergency Evacuation Area
+- Fixed: Timing of Metroids in Metroid Quarantine A
+- Fixed: Stuck camera in control tower
+- Fixed: Timing of flying pirates in control tower
+- Fixed: Echoes Unlimited Missiles model now appears larger
+- Added: More Quality of life improvements over vanilla
+  - Colorblind friendlier flamethrower model
+  - Power Bombs now have a heat signature
+  - Power Conduits activate even if only 1 of 3 wave particles hit
+  - Main Quarry power conduit no longer reflects charged wave
+  - Added lock to top door during Phazon Elite fight
+  - Doors unlock from picking up the artifact item instead of the Phazon Elite dying
 
 ### Metroid Prime 2: Echoes
 

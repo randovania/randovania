@@ -138,6 +138,10 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         "respawn": False,
         "showIcon": pickup_markers
     }
+
+    if detail.original_model.name == "UnlimitedMissiles":
+        result["scale"] = [1.8, 1.8, 1.8]
+
     if modal_hud_override:
         result["modalHudmemo"] = True
 
