@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 import platform
 import re
 from asyncio import IncompleteReadError, StreamReader, StreamWriter
@@ -9,12 +10,17 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+    from os import _Environ
 
 IO_LOOP: asyncio.AbstractEventLoop | None = None
 
 
 def is_windows() -> bool:
     return platform.system() == "Windows"
+
+
+def is_mac() -> bool:
+    return platform.system() == "Darwin"
 
 
 async def _write_data(stream: StreamWriter, data: str):
@@ -40,11 +46,13 @@ async def _read_data(stream: StreamReader, read_callback: Callable[[str], None])
             break
 
 
-async def _process_command_async(args: list[str], input_data: str, read_callback: Callable[[str], None]):
+async def _process_command_async(args: list[str], input_data: str, read_callback: Callable[[str], None],
+                                 envs: _Environ | dict = os.environ):
     process = await asyncio.create_subprocess_exec(*args,
                                                    stdin=asyncio.subprocess.PIPE,
                                                    stdout=asyncio.subprocess.PIPE,
-                                                   stderr=asyncio.subprocess.STDOUT)
+                                                   stderr=asyncio.subprocess.STDOUT,
+                                                   env=envs)
 
     await asyncio.gather(
         _write_data(process.stdin, input_data),
@@ -58,9 +66,18 @@ def process_command(args: list[str], input_data: str, read_callback: Callable[[s
     if not Path(args[0]).is_file():
         raise FileNotFoundError(f"{args[0]} not found")
 
+    envs = os.environ
     if add_mono_if_needed and not is_windows():
         args = ["mono", *args]
-    work = _process_command_async(args, input_data, read_callback)
+        # Add common Mono paths to PATH, as they aren't there by default
+        if is_mac():
+            envs = envs.copy()
+            envs["PATH"] = (f"{envs['PATH']}:"
+                            "/Library/Frameworks/Mono.framework/Versions/Current/Commands:"
+                            "/usr/local/bin:"
+                            "/opt/homebrew/bin")
+
+    work = _process_command_async(args, input_data, read_callback, envs)
 
     if IO_LOOP is None:
         if is_windows():

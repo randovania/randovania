@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
 - Fixed: Opening race rdvgame files from older Randovania versions now works properly. 
 - Fixed: Exporting games with hidden Nothing models don't crash during the exporting process anymore.
+- Fixed: For macOS, exporting Metroid Prime 2: Echoes games does not require you to run Randovania from within a terminal anymore to see the Mono installation.
 
 ### Metroid Dread
 

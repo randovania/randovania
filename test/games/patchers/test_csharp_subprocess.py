@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 import sys
 from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, call, patch
@@ -16,6 +17,12 @@ if TYPE_CHECKING:
 @pytest.fixture(params=[False, True])
 def mock_is_windows(request):
     with patch("randovania.games.prime2.patcher.csharp_subprocess.is_windows", return_value=request.param):
+        yield request.param
+
+
+@pytest.fixture(params=[False, True])
+def mock_is_mac(request):
+    with patch("randovania.games.prime2.patcher.csharp_subprocess.is_mac", return_value=request.param):
         yield request.param
 
 
@@ -35,8 +42,11 @@ def test_is_windows(mocker, system_name, expected):
 
 
 @pytest.mark.parametrize("add_mono", [False, True])
-def test_process_command_no_thread(mock_is_windows, mocker: pytest_mock.MockerFixture, monkeypatch,
+def test_process_command_no_thread(mock_is_windows, mock_is_mac, mocker: pytest_mock.MockerFixture, monkeypatch,
                                    tmp_path, add_mono):
+    if mock_is_mac and mock_is_windows:
+        pytest.skip("Impossible to be two different OS at the same time.")
+
     one = tmp_path.joinpath("one")
     one.write_text("hi")
 
@@ -65,12 +75,18 @@ def test_process_command_no_thread(mock_is_windows, mocker: pytest_mock.MockerFi
     )
 
     # Assert
+    mac_env = os.environ.copy()
+    mac_env["PATH"] = (f"{mac_env['PATH']}:"
+                       "/Library/Frameworks/Mono.framework/Versions/Current/Commands:"
+                       "/usr/local/bin:"
+                       "/opt/homebrew/bin")
     mock_process.assert_called_once_with(
         [
             *(["mono"] if add_mono and not mock_is_windows else []),
             str(one),
             "two",
-        ], input_data, read_callback
+        ], input_data, read_callback,
+        os.environ if not add_mono or add_mono and not mock_is_mac else mac_env
     )
 
     mock_run.assert_called_once_with(mock_process.return_value)
