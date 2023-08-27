@@ -42,7 +42,6 @@ def hue_rotate_color(original_color: tuple[int, int, int], rotation: int):
 class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatchesDialog):
     _cosmetic_patches: AM2RCosmeticPatches
 
-
     def __init__(self, parent: QWidget, current: BaseCosmeticPatches):
         super().__init__(parent)
         self.setupUi(self)
@@ -96,7 +95,7 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatche
 
         return persist
 
-    def _on_music_option_changed(self, option: MusicMode, value: bool):
+    def _on_music_option_changed(self, option: MusicMode, value: bool) -> None:
         if value:
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, music=option)
 

@@ -13,12 +13,13 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
 
 
-def test_construct_music_shuffle_dict_vanilla(mocker):
+def test_construct_music_shuffle_dict_vanilla() -> None:
     music_dict = _construct_music_shuffle_dict(MusicMode.VANILLA, Random())
 
     assert music_dict == {}
 
-def test_construct_music_shuffle_dict_type(mocker):
+
+def test_construct_music_shuffle_dict_type() -> None:
     excluded_list = [
         "musarea7d",
         "muscredits",
@@ -32,7 +33,8 @@ def test_construct_music_shuffle_dict_type(mocker):
         assert song not in music_dict
     assert len(music_dict) == 44
 
-def test_construct_music_shuffle_dict_full(mocker):
+
+def test_construct_music_shuffle_dict_full() -> None:
     music_dict = _construct_music_shuffle_dict(MusicMode.FULL, Random())
 
     assert len(music_dict) == 48

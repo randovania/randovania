@@ -22,6 +22,8 @@ enum_lib.add_long_name(AM2RRoomGuiType, {
     AM2RRoomGuiType.WITH_FADE: "When entering a room",
     AM2RRoomGuiType.ALWAYS: "Always"
 })
+
+
 class MusicMode(BitPackEnum, Enum):
     VANILLA = "vanilla_music"
     TYPE = "type_music"

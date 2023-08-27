@@ -8,7 +8,7 @@ from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import JOKE_HINTS
-from randovania.games.am2r.layout.am2r_cosmetic_patches import MusicMode
+from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
 
 
-def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random):
+def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
     combat_list = [
         "musalphafight",
         "musancientguardian",
@@ -109,7 +109,7 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random):
     }
 
 
-class AM2RPatchDataFactory(BasePatchDataFactory):
+class AM2RPatchDataFactory(PatchDataFactory):
     _EASTER_EGG_SHINY = 1024
     cosmetic_patches: AM2RCosmeticPatches
     configuration: AM2RConfiguration
