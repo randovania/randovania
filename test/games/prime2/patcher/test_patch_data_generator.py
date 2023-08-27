@@ -599,12 +599,13 @@ def test_create_string_patches(
     # Run
     result = patch_data_factory._create_string_patches(
         HintConfiguration(sky_temple_keys=stk_mode),
+        False,
         game,
         all_patches,
         namer,
         player_config,
         rng,
-        []
+        None,
     )
 
     # Assert
@@ -667,7 +668,7 @@ def test_generate_patcher_data(test_files_dir, use_new_patcher):
     assert len(result["translator_gates"]) == 17
 
     assert isinstance(result["string_patches"], list)
-    assert len(result["string_patches"]) == 61
+    assert len(result["string_patches"]) == 43 if use_new_patcher else 61
 
     assert result["specific_patches"] == {
         "hive_chamber_b_post_state": True,
