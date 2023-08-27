@@ -104,6 +104,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Phendrana Drifts
 
 - Changed: Phendrana Canyon Pickup NSJ Bombless Triple Boost Adjustments
+- Changed: Control Tower Plasma Skip is now Beginner
 - Added: Hunter Cave Bunny Hop to reach Hunter Cave Access from Lower Edge Tunnel
 - Added: Hunter Cave Slope Jump to reach Chamber Access from Lake Tunnel
 
