@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
 from randovania.exporter.hints import guaranteed_item_hint
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
 
 
-class AM2RPatchDataFactory(BasePatchDataFactory):
+class AM2RPatchDataFactory(PatchDataFactory):
     _EASTER_EGG_SHINY = 1024
 
     # Effect, sprite, header => new_sprite, new_header

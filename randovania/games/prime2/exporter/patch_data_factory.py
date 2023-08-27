@@ -8,7 +8,7 @@ import randovania
 import randovania.games.prime2.exporter.hints
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
@@ -469,7 +469,7 @@ def should_keep_elevator_sounds(configuration: EchoesConfiguration):
     })
 
 
-class EchoesPatchDataFactory(BasePatchDataFactory):
+class EchoesPatchDataFactory(PatchDataFactory):
     cosmetic_patches: EchoesCosmeticPatches
     configuration: EchoesConfiguration
 

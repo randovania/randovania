@@ -34,6 +34,11 @@ Has two meanings:
 
 Connects two [Nodes](#node) in the same area. Contains a set of [Requirements](#requirement) that define whether the [Generator](#generator) and [Solver](#solver) are allowed to cross it.
 
+## Cosmetic Patches
+
+Settings that do not impact the permalink/generation, but can be used when exporting the game to optionally tweak certain things.
+Commonly used for custom hud color, player model/sprite, different defaults for in-game settings.
+
 ## Dangerous Action
 
 Any action which, upon being performed, cuts off access to nodes that were previously accessible.
