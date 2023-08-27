@@ -8,7 +8,7 @@ from tsc_utils.numbers import num_to_tsc_value
 
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.hints.joke_hints import JOKE_HINTS
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
@@ -30,7 +30,7 @@ if TYPE_CHECKING:
 
 # ruff: noqa: C901
 
-class CSPatchDataFactory(BasePatchDataFactory):
+class CSPatchDataFactory(PatchDataFactory):
     cosmetic_patches: CSCosmeticPatches
     configuration: CSConfiguration
 

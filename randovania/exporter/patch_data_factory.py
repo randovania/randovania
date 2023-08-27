@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from randovania.layout.layout_description import LayoutDescription
 
 
-class BasePatchDataFactory:
+class PatchDataFactory:
     description: LayoutDescription
     players_config: PlayersConfiguration
     game: GameDescription

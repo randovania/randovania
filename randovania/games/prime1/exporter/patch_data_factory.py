@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 import randovania
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.pickup_node import PickupNode
@@ -579,7 +579,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                         rng.shuffle(candidates)
 
 
-class PrimePatchDataFactory(BasePatchDataFactory):
+class PrimePatchDataFactory(PatchDataFactory):
     cosmetic_patches: PrimeCosmeticPatches
     configuration: PrimeConfiguration
 
