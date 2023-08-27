@@ -86,6 +86,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added lock to top door during Phazon Elite fight
   - Doors unlock from picking up the artifact item instead of the Phazon Elite dying
 
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Reverse Flaahgra in Sun Tower is now logical
+- Added: Furnace E Tank Wall Boost Escape
+- Added: Transport Access North Wallboost to Hive Totem from Elevator
+- Added: Trigger Ghosts from Sun Tower Access without Bombs or Spider
+
+##### Phazon Mines
+
+- Added: Fungal Hall A now has Energy and Combat Logic
+- Added: Fungal Hall A SJ Scan Dash Grapple Skip
+- Added: Fungal Hall Access NSJ Bombless Escape to Fungal Hall A
+
+##### Phendrana Drifts
+
+- Changed: Phendrana Canyon Pickup NSJ Bombless Triple Boost Adjustments
+- Added: Hunter Cave Bunny Hop to reach Hunter Cave Access from Lower Edge Tunnel
+- Added: Hunter Cave Slope Jump to reach Chamber Access from Lake Tunnel
+
+##### Tallon Overworld
+
+- Added: Root Cave Climb NSJ Boost Strat
+
 ### Metroid Prime 2: Echoes
 
 - Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
