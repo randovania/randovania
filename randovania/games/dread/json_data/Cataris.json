@@ -10543,7 +10543,7 @@
                     "default_connection": {
                         "region": "Cataris",
                         "area": "Kraid Arena",
-                        "node": "Dock to Above Kraid"
+                        "node": "Dock from Above Kraid"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -26680,7 +26680,7 @@
                         }
                     }
                 },
-                "Dock to Above Kraid": {
+                "Dock from Above Kraid": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -26700,7 +26700,7 @@
                         "area": "Above Kraid",
                         "node": "Dock to Kraid Arena"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Blocked Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -26910,15 +26910,11 @@
                                 "items": []
                             }
                         },
-                        "Event - Kraid": {
+                        "Dock from Above Kraid": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Charge Beam"
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -26936,6 +26932,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Charge Beam"
                                     }
                                 ]
                             }
