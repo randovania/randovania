@@ -589,7 +589,7 @@ Extra - minimap_data: [{'x': 50, 'y': 24}, {'x': 50, 'y': 25}, {'x': 50, 'y': 26
   > Area Transition to Mines 3-Shape Shaft
       After Surface - Mines Entrance Crystal Destroyed
   > Dock to Hidden Mines Route
-      Speed Booster and Knowledge (Intermediate)
+      Speed Booster
   > Middle
       Hijump Wall
   > Event - Crystal
@@ -659,8 +659,10 @@ Extra - minimap_data: [{'x': 46, 'y': 23}, {'x': 46, 'y': 24}, {'x': 46, 'y': 25
   * Layers: default
   > Dock to Surface Gunzoo Room
       All of the following:
-          Power Grip Wall and Tunnel Climb
+          # Get up to ledge
           Enabled Septogg Helpers or Hijump With Power Grip Wall
+          # From ledge to dock
+          Low Mid-Air Morph Tunnel Climb and Power Grip Wall
   > Dock to Octroll Lava Pool
       Trivial
 
@@ -825,8 +827,6 @@ Extra - minimap_data: [{'x': 44, 'y': 40}, {'x': 44, 'y': 41}, {'x': 45, 'y': 40
   * Open Passage to The Pit/Dock to Fat Crocomire Room
   > Dock to Skreek Street
       Trivial
-  > Pickup (Missile Tank)
-      Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
 
 > Dock to Skreek Street; Heals? False
   * Layers: default
@@ -841,6 +841,8 @@ Extra - minimap_data: [{'x': 44, 'y': 40}, {'x': 44, 'y': 41}, {'x': 45, 'y': 40
               Infinite Bomb Jumping (Intermediate) and Can Use Bombs
           # Septogg
           Enabled Septogg Helpers and Power Grip Wall
+  > Pickup (Missile Tank)
+      Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -873,7 +875,7 @@ Extra - minimap_data: [{'x': 40, 'y': 41}, {'x': 41, 'y': 41}, {'x': 41, 'y': 42
   > Near hidden wall
       Any of the following:
           Can Use Power Bombs and Power Grip Wall
-          Super Missiles ≥ 2 and Power Grip Climb and Space Jump Wall
+          Super Missiles ≥ 2 and Knowledge (Advanced) and Power Grip Climb and Space Jump Wall
 
 > Near hidden wall; Heals? False
   * Layers: default
@@ -882,11 +884,7 @@ Extra - minimap_data: [{'x': 40, 'y': 41}, {'x': 41, 'y': 41}, {'x': 41, 'y': 42
   > Dock to The Descent
       Any of the following:
           Can Use Power Bombs
-          All of the following:
-              Super Missiles ≥ 2 and Knowledge (Advanced)
-              Any of the following:
-                  Tunnel Climb
-                  Morph Ball and Mid-Air Morph (Beginner)
+          Super Missiles ≥ 2 and Knowledge (Advanced) and Low Mid-Air Morph Tunnel Climb
 
 ----------------
 Tower East Exterior Access
@@ -1040,7 +1038,17 @@ Extra - minimap_data: [{'x': 35, 'y': 53}, {'x': 36, 'y': 53}, {'x': 37, 'y': 53
   > Right side of morph ball tunnel
       Morph Ball
   > Pickup (Missile Tank)
-      Gravity Suit and Speed Booster and Shinesparking Tricks (Intermediate) and Can Use Spring Ball
+      All of the following:
+          Speed Booster
+          Any of the following:
+              # Intended method
+              Shinesparking Tricks (Intermediate) and Can Use Spring Ball
+              # Mockball method
+              Morph Ball and Shinesparking Tricks (Advanced)
+          Any of the following:
+              # Go Through Lava
+              Gravity Suit
+              Damage Boost (Beginner) and Lava Damage ≥ 10
 
 > Dock to Depths Halzyn Hallway; Heals? False
   * Layers: default
@@ -1301,7 +1309,10 @@ Extra - minimap_data: [{'x': 47, 'y': 34}, {'x': 47, 'y': 35}, {'x': 48, 'y': 35
   * Layers: default
   * Open Passage to Drill Excavation/Dock to Drill Excavation Access
   > Dock to Long Moto Corridor
-      Power Grip Wall
+      Any of the following:
+          Hijump Wall
+          # Stand in between shoot blocks
+          Movement (Beginner) and Power Grip Wall
 
 ----------------
 Drill Excavation
@@ -1331,7 +1342,7 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
       Any of the following:
           Space Jump Wall
           # Shinespark
-          Speed Booster and Shinesparking Tricks (Beginner)
+          Speed Booster and After Surface - Mines Drill Crystal Destroyed and Shinesparking Tricks (Beginner)
   > Dock to Drill Excavation Access
       After Surface - Mines Drill Crystal Destroyed
 
@@ -1349,7 +1360,7 @@ Extra - minimap_data: [{'x': 53, 'y': 34}, {'x': 53, 'y': 35}, {'x': 53, 'y': 36
   * Layers: default
   * Open Passage to Drill Excavation/Dock to Mines Intersection
   > Dock to Mining Facility Save Station
-      Movement (Beginner) or Power Grip Wall
+      Movement (Beginner) or Hijump Wall
 
 > Dock to Mining Facility Save Station; Heals? False
   * Layers: default
@@ -1432,13 +1443,15 @@ Extra - minimap_data: [{'x': 48, 'y': 36}, {'x': 48, 'y': 37}, {'x': 48, 'y': 38
   * Event Metroids Surface - Mines Alpha
   > Dock to Mines Alpha Nest Access
       Any of the following:
-          Space Jump or Can Use Spider Ball
+          Space Jump
           # Shinespark
           Gravity Suit and Speed Booster and Shinesparking Tricks (Intermediate)
           # Septogg
-          No Hi-Jump Boots and No Speed Booster and Enabled Septogg Helpers
+          Enabled Septogg Helpers
+          # Spider Ball
+          Can Use Spider Ball
           # IBJ
-          After Metroids Surface - Mines Alpha and Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Infinite Bomb Jumping (Advanced) and Can Use Bombs
   > Pickup (Alpha)
       Trivial
 
@@ -1458,16 +1471,22 @@ Extra - minimap_data: [{'x': 55, 'y': 37}, {'x': 55, 'y': 38}, {'x': 56, 'y': 37
   * Open Passage to Mines Intersection/Dock to Mines Gamma Nest Access
   > Dock to Mines Gamma Nest
       Any of the following:
-          Gravity Suit or Space Jump
-          Damage Boost (Intermediate) and Lava Damage ≥ 70
+          Space Jump
+          Any of the following:
+              # Go Through Lava
+              Gravity Suit
+              Damage Boost (Intermediate) and Lava Damage ≥ 70
 
 > Dock to Mines Gamma Nest; Heals? False
   * Layers: default
   * Open Passage to Mines Gamma Nest/Dock to Mines Gamma Nest Access
   > Dock to Mines Intersection
       Any of the following:
-          Gravity Suit or Space Jump
-          Damage Boost (Intermediate) and Lava Damage ≥ 50
+          Space Jump
+          Any of the following:
+              # Go Through Lava
+              Gravity Suit
+              Damage Boost (Intermediate) and Lava Damage ≥ 50
 
 ----------------
 Mines Gamma Nest
@@ -1484,10 +1503,13 @@ Extra - minimap_data: [{'x': 58, 'y': 37}, {'x': 58, 'y': 38}, {'x': 58, 'y': 39
   * Event Metroids Surface - Mines Gamma
   > Dock to Mines Gamma Nest Access
       Any of the following:
-          Space Jump or Can Use Spider Ball
-          No Hi-Jump Boots and No Speed Booster and Enabled Septogg Helpers
+          Space Jump
+          # Septogg
+          Enabled Septogg Helpers
+          # Spider Method
+          Can Use Spider Ball
           # IBJ
-          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Infinite Bomb Jumping (Expert) and Can Use Bombs
   > Pickup (Gamma)
       Trivial
 
