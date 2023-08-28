@@ -13,7 +13,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--game", required=True)
     parser.add_argument("--preset", default="Starter Preset")
-    parser.add_argument("--target-seed-count", type=int, default=2)
+    parser.add_argument("--target-seed-count", type=int, default=100)
     parser.add_argument("--process-count", type=int, default=6)
     args = parser.parse_args()
 
