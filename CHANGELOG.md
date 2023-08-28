@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: An in-game icon will appear if the player becomes disconnected from the multiworld server. 
 - Changed: The Starter Preset and April Fools 2023 preset now have non-progressive beams and missiles, instead of progressive.
 - Changed: Bomb Shields are no longer vulnerable to Cross Bombs.
+- Fixed: The door model for certain door types now uses the intended textures correctly.
+- Fixed: The save file percentage counter and the per-region percentage counter are now all updated correctly.
 
 #### Logic Database
 
