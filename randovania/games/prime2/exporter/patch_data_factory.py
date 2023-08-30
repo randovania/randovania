@@ -28,6 +28,7 @@ from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import string_lib
 from randovania.patching.prime import elevators
@@ -173,7 +174,9 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
 
     num_elevator_nodes = sum(1 for _ in _get_nodes_by_teleporter_id(region_list, elevator_type))
     if len(elevator_fields) != num_elevator_nodes:
-        raise ValueError(f"Invalid elevator count. Expected {num_elevator_nodes}, got {len(elevator_fields)}.")
+        raise InvalidConfiguration(
+            f"Invalid elevator count. Expected {num_elevator_nodes}, got {len(elevator_fields)}."
+        )
 
     return elevator_fields
 
@@ -770,26 +773,26 @@ class EchoesPatchDataFactory(PatchDataFactory):
 
     def create_logbook_patches(self):
         return [
-            {"asset_id": 25, "connections": [81, 166, 195] },
-            {"asset_id": 38, "connections": [4, 33, 120, 251, 364] },
-            {"asset_id": 60, "connections": [38, 74, 154, 196] },
-            {"asset_id": 74, "connections": [59, 75, 82, 102, 260] },
-            {"asset_id": 81, "connections": [148, 151, 156] },
-            {"asset_id": 119, "connections": [60, 254, 326] },
-            {"asset_id": 124, "connections": [35, 152, 355] },
-            {"asset_id": 129, "connections": [29, 118, 367] },
-            {"asset_id": 154, "connections": [169, 200, 228, 243, 312, 342] },
-            {"asset_id": 166, "connections": [45, 303, 317] },
-            {"asset_id": 194, "connections": [1, 6] },
-            {"asset_id": 195, "connections": [159, 221, 231] },
-            {"asset_id": 196, "connections": [17, 19, 23, 162, 183, 379] },
-            {"asset_id": 233, "connections": [58, 191, 373] },
-            {"asset_id": 241, "connections": [223, 284] },
-            {"asset_id": 254, "connections": [129, 233, 319] },
-            {"asset_id": 318, "connections": [119, 216, 277, 343] },
-            {"asset_id": 319, "connections": [52, 289, 329] },
-            {"asset_id": 326, "connections": [124, 194, 241, 327] },
-            {"asset_id": 327, "connections": [46, 275] },
+            {"asset_id": 25, "connections": [81, 166, 195]},
+            {"asset_id": 38, "connections": [4, 33, 120, 251, 364]},
+            {"asset_id": 60, "connections": [38, 74, 154, 196]},
+            {"asset_id": 74, "connections": [59, 75, 82, 102, 260]},
+            {"asset_id": 81, "connections": [148, 151, 156]},
+            {"asset_id": 119, "connections": [60, 254, 326]},
+            {"asset_id": 124, "connections": [35, 152, 355]},
+            {"asset_id": 129, "connections": [29, 118, 367]},
+            {"asset_id": 154, "connections": [169, 200, 228, 243, 312, 342]},
+            {"asset_id": 166, "connections": [45, 303, 317]},
+            {"asset_id": 194, "connections": [1, 6]},
+            {"asset_id": 195, "connections": [159, 221, 231]},
+            {"asset_id": 196, "connections": [17, 19, 23, 162, 183, 379]},
+            {"asset_id": 233, "connections": [58, 191, 373]},
+            {"asset_id": 241, "connections": [223, 284]},
+            {"asset_id": 254, "connections": [129, 233, 319]},
+            {"asset_id": 318, "connections": [119, 216, 277, 343]},
+            {"asset_id": 319, "connections": [52, 289, 329]},
+            {"asset_id": 326, "connections": [124, 194, 241, 327]},
+            {"asset_id": 327, "connections": [46, 275]},
         ]
 
 

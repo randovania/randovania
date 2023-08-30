@@ -17,6 +17,7 @@ from randovania.games.prime2.exporter.export_params import EchoesGameExportParam
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
 from randovania.games.prime2.patcher import claris_randomizer
 from randovania.lib import json_lib, status_update_lib
+from randovania.patching.patchers.exceptions import UnableToExportError
 from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 
 if TYPE_CHECKING:
@@ -94,7 +95,7 @@ class EchoesGameExporter(GameExporter):
                     backups_update
                 )
             except FileNotFoundError:
-                raise RuntimeError(
+                raise UnableToExportError(
                     "Your internal copy is missing files.\nPlease press 'Delete internal copy' and select "
                     "a clean game ISO.")
 

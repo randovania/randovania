@@ -9,6 +9,7 @@ from randovania import get_data_path, monitoring
 from randovania.games.prime2.patcher import csharp_subprocess
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.lib import json_lib, status_update_lib
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -20,7 +21,7 @@ CURRENT_PATCH_VERSION = 4
 logger = logging.getLogger(__name__)
 
 
-class ClarisRandomizerExportError(Exception):
+class ClarisRandomizerExportError(UnableToExportError):
     def __init__(self, reason: str, output: str | None):
         super().__init__(reason)
         self.output = output
@@ -30,6 +31,7 @@ class ClarisRandomizerExportError(Exception):
         if self.output is not None:
             result.append(self.output)
         return "\n".join(result)
+
 
 def _patch_version_file(game_root: Path) -> Path:
     return game_root.joinpath("randovania_patch_version.txt")
@@ -198,9 +200,9 @@ def apply_patcher_file(game_root: Path,
 
     last_version = get_patch_version(game_root)
     if last_version > CURRENT_PATCH_VERSION:
-        raise ClarisRandomizerExportError(f"Game at {game_root} was last patched with version {last_version}, "
-                            f"which is above supported version {CURRENT_PATCH_VERSION}. "
-                            f"\nPlease press 'Delete internal copy'.", None)
+        raise UnableToExportError(
+            "The internal game copy was outdated and has been deleted. Please export again and select an ISO.",
+        )
 
     json_lib.write_path(_get_custom_data_path(), randomizer_data)
     _run_with_args(_base_args(game_root),
