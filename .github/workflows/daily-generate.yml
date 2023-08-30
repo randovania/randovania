@@ -40,25 +40,25 @@ jobs:
 
       - name: Bulk Generate (Cave Story)
         run: venv/bin/python tools/bulk_generate_for_discord.py --game cave_story
-        if: ${{ inputs.game == "cave_story" || github.event.schedule == '0 16 * * 3' }}
+        if: inputs.game == 'cave_story' || github.event.schedule == '0 16 * * 3'
         env:
           WEBHOOK_URL: ${{ secrets.CAVE_STORY_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Dread)
         run: venv/bin/python tools/bulk_generate_for_discord.py --game dread
-        if: ${{ inputs.game == "dread" || github.event.schedule == '0 23 * * *' }}
+        if: inputs.game == 'dread' || github.event.schedule == '0 23 * * *'
         env:
           WEBHOOK_URL: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Prime 1)
         run: venv/bin/python tools/bulk_generate_for_discord.py --game prime1
-        if: ${{ inputs.game == "prime1" || github.event.schedule == '0 16 * * 2' }}
+        if: inputs.game == 'prime1' || github.event.schedule == '0 16 * * 2'
         env:
           WEBHOOK_URL: ${{ secrets.PRIME_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Echoes)
         run: venv/bin/python tools/bulk_generate_for_discord.py --game prime2
-        if: ${{ inputs.game == "prime2" || github.event.schedule == '0 16 * * 1' }}
+        if: inputs.game == 'prime2' || github.event.schedule == '0 16 * * 1'
         env:
           WEBHOOK_URL: ${{ secrets.ECHOES_DEV_TALK_WEBHOOK }}
 
