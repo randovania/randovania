@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game_description.assignment import PickupAssignment
-    from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.db.node import Node, NodeContext, NodeIndex
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -47,20 +47,23 @@ class UncollectedState(NamedTuple):
     indices: set[PickupIndex]
     logbooks: set[NodeIdentifier]
     events: set[ResourceInfo]
+    nodes: set[NodeIndex]
 
     @classmethod
     def from_reach(cls, reach: GeneratorReach) -> UncollectedState:
         return UncollectedState(
             _filter_not_in_dict(reach.state.collected_pickup_indices, reach.state.patches.pickup_assignment),
             _filter_not_in_dict(reach.state.collected_hints, reach.state.patches.hints),
-            set(reach.state.collected_events)
+            set(reach.state.collected_events),
+            {node.node_index for node in reach.nodes if reach.is_reachable_node(node)}
         )
 
     def __sub__(self, other: UncollectedState) -> UncollectedState:
         return UncollectedState(
             self.indices - other.indices,
             self.logbooks - other.logbooks,
-            self.events - other.events
+            self.events - other.events,
+            self.nodes - other.nodes,
         )
 
 
