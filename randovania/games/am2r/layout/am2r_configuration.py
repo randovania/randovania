@@ -22,6 +22,7 @@ class AM2RConfiguration(BaseConfiguration):
     softlock_prevention_blocks: bool
     septogg_helpers: bool
     skip_cutscenes: bool
+    skip_save_cutscene: bool
     skip_item_cutscenes: bool
     respawn_bomb_blocks: bool
     screw_blocks: bool
