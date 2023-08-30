@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import asyncio
-import os
 import sys
 from typing import TYPE_CHECKING
 from unittest.mock import MagicMock, call, patch
@@ -75,18 +74,16 @@ def test_process_command_no_thread(mock_is_windows, mock_is_mac, mocker: pytest_
     )
 
     # Assert
-    mac_env = os.environ.copy()
-    mac_env["PATH"] = (f"{mac_env['PATH']}:"
-                       "/Library/Frameworks/Mono.framework/Versions/Current/Commands:"
-                       "/usr/local/bin:"
-                       "/opt/homebrew/bin")
+    mac_paths = ("/Library/Frameworks/Mono.framework/Versions/Current/Commands",
+                 "/usr/local/bin",
+                 "/opt/homebrew/bin")
     mock_process.assert_called_once_with(
         [
             *(["mono"] if add_mono and not mock_is_windows else []),
             str(one),
             "two",
         ], input_data, read_callback,
-        os.environ if not add_mono or add_mono and not mock_is_mac else mac_env
+        () if not add_mono or add_mono and not mock_is_mac else mac_paths
     )
 
     mock_run.assert_called_once_with(mock_process.return_value)
