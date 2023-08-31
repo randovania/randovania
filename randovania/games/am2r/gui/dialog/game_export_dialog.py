@@ -53,6 +53,10 @@ class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
         per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, AM2RPerGameOptions)
 
+        import json
+        with open('/home/narr/Dokumente/am2r 1.5.5/output/assets/yams-data.json', 'w', encoding='utf-8') as f:
+            json.dump(patch_data, f, ensure_ascii=False, indent=4)
+
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)
 

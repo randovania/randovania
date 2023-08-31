@@ -14,13 +14,14 @@ class ConnectorBuilderChoice(Enum):
     NINTENDONT = "nintendont"
     DREAD = "dread"
     CS = "cave-story"
+    AM2R = "am2r"
 
     @property
     def pretty_text(self) -> str:
         return _pretty_backend_name[self]
 
     def is_usable(self) -> bool:
-        if self is ConnectorBuilderChoice.DEBUG:
+        if self is ConnectorBuilderChoice.DEBUG or self is ConnectorBuilderChoice.AM2R:
             if randovania.is_frozen() or not randovania.is_dev_version():
                 return False
 
@@ -49,4 +50,5 @@ _pretty_backend_name = {
     ConnectorBuilderChoice.NINTENDONT: "Nintendont",
     ConnectorBuilderChoice.DREAD: "Dread",
     ConnectorBuilderChoice.CS: "Cave Story",
+    ConnectorBuilderChoice.AM2R: "AM2R",
 }

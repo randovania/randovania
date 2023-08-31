@@ -257,6 +257,9 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
                 return
             args["ip"] = new_ip
 
+        if choice == ConnectorBuilderChoice.AM2R:
+            args["ip"] = "localhost"
+
         if choice == ConnectorBuilderChoice.DEBUG:
             new_game = await self._prompt_for_game("Choose Game", "Select the game to use for the debug connection.")
             if new_game is None:
