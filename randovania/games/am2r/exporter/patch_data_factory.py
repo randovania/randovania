@@ -36,7 +36,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
     def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random):
         pickup_map_dict = {}
         for pickup in pickup_list:
-            quantity = pickup.conditional_resources[0].resources[0][1]
+            quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.other_player else 0
             object_name = self.game.region_list.node_from_pickup_index(pickup.index).extra["object_name"]
             res_lock = pickup.original_pickup.resource_lock
             text_index = 1 if (res_lock is not None and
@@ -48,10 +48,11 @@ class AM2RPatchDataFactory(PatchDataFactory):
                     "name": pickup.model.name,
                     "speed": item_info[pickup.original_pickup.name]["sprite_speed"]
                 },
-                "item_effect": pickup.original_pickup.name,
+                "item_effect": pickup.original_pickup.name if not pickup.other_player else "Nothing",
                 "quantity": quantity,
                 "text": {
-                    "header": item_info[pickup.name]["text_header"],
+                    "header": item_info[pickup.name]["text_header"] if not self.players_config.is_multiworld
+                    else pickup.name,
                     "description": pickup.collection_text[text_index]
                 }
             }
