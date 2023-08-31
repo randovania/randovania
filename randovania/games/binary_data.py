@@ -271,6 +271,7 @@ ConstructMinimalLogicDatabase = Struct(
 ConstructDockWeaknessDatabase = Struct(
     types=ConstructDict(Struct(
         name=String,
+        needs_to_connect_to_same_type=Flag,
         extra=JsonEncodedValue,
         items=ConstructDict(ConstructDockWeakness),
         dock_rando=OptionalValue(Struct(

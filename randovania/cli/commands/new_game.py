@@ -131,8 +131,8 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
     )
 
     dock_types = [
-        DockType("Door", "Door", frozendict()),
-        DockType("Other", "Other", frozendict()),
+        DockType("Door", "Door", False, frozendict()),
+        DockType("Other", "Other", False, frozendict()),
     ]
     impossible_weak = DockWeakness(0, "Not Determined", frozendict(), Requirement.impossible(), None)
 
