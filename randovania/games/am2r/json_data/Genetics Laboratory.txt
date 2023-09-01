@@ -702,9 +702,9 @@ Extra - minimap_data: [{'x': 4, 'y': 20}, {'x': 5, 'y': 20}, {'x': 6, 'y': 20}]
   > Event - Baby
       Trivial
 
-> Area Transition to Crystal Climb East; Heals? False
+> Area Transition to Crystal Climb West; Heals? False
   * Layers: default
-  * Open Passage to Crystal Climb East/Area Transition to Hatchling Room
+  * Open Passage to Crystal Climb West/Area Transition to Hatchling Room
   > Event - Baby
       Trivial
 
@@ -713,17 +713,17 @@ Extra - minimap_data: [{'x': 4, 'y': 20}, {'x': 5, 'y': 20}, {'x': 6, 'y': 20}]
   * Event Collected the Baby Metroid
   > Dock to Queen Arena
       Trivial
-  > Area Transition to Crystal Climb East
+  > Area Transition to Crystal Climb West
       Trivial
 
 ----------------
-Crystal Climb East
+Crystal Climb West
 Extra - map_name: rm_a7c02
 Extra - minimap_data: [{'x': 3, 'y': 14}, {'x': 3, 'y': 15}, {'x': 3, 'y': 16}, {'x': 3, 'y': 17}, {'x': 3, 'y': 18}, {'x': 3, 'y': 19}, {'x': 3, 'y': 20}]
 > Area Transition to Hatchling Room; Heals? False
   * Layers: default
-  * Open Passage to Hatchling Room/Area Transition to Crystal Climb East
-  > Dock to Crystal Corridor East
+  * Open Passage to Hatchling Room/Area Transition to Crystal Climb West
+  > Dock to Crystal Corridor West
       All of the following:
           After Collected the Baby Metroid
           Any of the following:
@@ -736,57 +736,57 @@ Extra - minimap_data: [{'x': 3, 'y': 14}, {'x': 3, 'y': 15}, {'x': 3, 'y': 16}, 
               # IBJ
               Infinite Bomb Jumping (Expert) and Can Use Bombs
 
-> Dock to Crystal Corridor East; Heals? False
+> Dock to Crystal Corridor West; Heals? False
   * Layers: default
-  * Open Passage to Crystal Corridor East/Dock to Crystal Climb East
+  * Open Passage to Crystal Corridor West/Dock to Crystal Climb West
   > Area Transition to Hatchling Room
       After Collected the Baby Metroid
 
 ----------------
-Crystal Corridor East
+Crystal Corridor West
 Extra - map_name: rm_a7c03
 Extra - minimap_data: [{'x': 4, 'y': 13}, {'x': 4, 'y': 14}, {'x': 5, 'y': 13}, {'x': 6, 'y': 13}, {'x': 7, 'y': 12}, {'x': 7, 'y': 13}]
-> Dock to Crystal Climb East; Heals? False
-  * Layers: default
-  * Open Passage to Crystal Climb East/Dock to Crystal Corridor East
-  > Dock to Crystal Corridor West
-      After Collected the Baby Metroid and Power Grip Wall
-
-> Dock to Crystal Corridor West; Heals? False
-  * Layers: default
-  * Open Passage to Crystal Corridor West/Dock to Crystal Corridor East
-  > Dock to Crystal Climb East
-      After Collected the Baby Metroid
-
-----------------
-Crystal Corridor West
-Extra - map_name: rm_a7c04
-Extra - minimap_data: [{'x': 8, 'y': 12}, {'x': 9, 'y': 12}, {'x': 10, 'y': 12}, {'x': 11, 'y': 12}, {'x': 12, 'y': 11}, {'x': 12, 'y': 12}, {'x': 13, 'y': 11}, {'x': 14, 'y': 11}, {'x': 15, 'y': 11}]
-> Dock to Crystal Corridor East; Heals? False
-  * Layers: default
-  * Open Passage to Crystal Corridor East/Dock to Crystal Corridor West
-  > Dock to Crystal Climb West
-      After Collected the Baby Metroid and Hijump Wall
-
 > Dock to Crystal Climb West; Heals? False
   * Layers: default
   * Open Passage to Crystal Climb West/Dock to Crystal Corridor West
   > Dock to Crystal Corridor East
+      After Collected the Baby Metroid and Power Grip Wall
+
+> Dock to Crystal Corridor East; Heals? False
+  * Layers: default
+  * Open Passage to Crystal Corridor East/Dock to Crystal Corridor West
+  > Dock to Crystal Climb West
       After Collected the Baby Metroid
 
 ----------------
-Crystal Climb West
-Extra - map_name: rm_a7c05
-Extra - minimap_data: [{'x': 16, 'y': 9}, {'x': 16, 'y': 10}, {'x': 16, 'y': 11}, {'x': 17, 'y': 8}, {'x': 17, 'y': 9}]
+Crystal Corridor East
+Extra - map_name: rm_a7c04
+Extra - minimap_data: [{'x': 8, 'y': 12}, {'x': 9, 'y': 12}, {'x': 10, 'y': 12}, {'x': 11, 'y': 12}, {'x': 12, 'y': 11}, {'x': 12, 'y': 12}, {'x': 13, 'y': 11}, {'x': 14, 'y': 11}, {'x': 15, 'y': 11}]
 > Dock to Crystal Corridor West; Heals? False
   * Layers: default
-  * Open Passage to Crystal Corridor West/Dock to Crystal Climb West
+  * Open Passage to Crystal Corridor West/Dock to Crystal Corridor East
+  > Dock to Crystal Climb East
+      After Collected the Baby Metroid and Hijump Wall
+
+> Dock to Crystal Climb East; Heals? False
+  * Layers: default
+  * Open Passage to Crystal Climb East/Dock to Crystal Corridor East
+  > Dock to Crystal Corridor West
+      After Collected the Baby Metroid
+
+----------------
+Crystal Climb East
+Extra - map_name: rm_a7c05
+Extra - minimap_data: [{'x': 16, 'y': 9}, {'x': 16, 'y': 10}, {'x': 16, 'y': 11}, {'x': 17, 'y': 8}, {'x': 17, 'y': 9}]
+> Dock to Crystal Corridor East; Heals? False
+  * Layers: default
+  * Open Passage to Crystal Corridor East/Dock to Crystal Climb East
   > Dock to Landing Site
       After Collected the Baby Metroid and Space Jump Wall
 
 > Dock to Landing Site; Heals? False
   * Layers: default
-  * Open Passage to Landing Site/Dock to Crystal Climb West
-  > Dock to Crystal Corridor West
+  * Open Passage to Landing Site/Dock to Crystal Climb East
+  > Dock to Crystal Corridor East
       After Collected the Baby Metroid
 
