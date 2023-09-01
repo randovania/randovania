@@ -64,8 +64,9 @@ game_data: game.GameData = game.GameData(
         ("I saved in a place that I can't get out of, what do I do?",
          "You can use the 'Restart from Start Location' option, which will "
          "reload your last save but make you spawn at the original start location."),
-        ("When does Serris spawn?",
-         "Serris spawns once you collect the vanilla Ice Beam location in Distribution Center."),
+        ("What causes Serris to spawn?",
+         "Serris will spawn once you collect the item in Distribution Center - Ice Beam Chamber and hit "
+         "the fight trigger on the left side of the Serris Arena."),
         ("Can I defeat Serris without Ice Beam?",
          "Yes, Serris automatically changes her weakness to not "
          "require Ice Beam if you fight her before acquiring it."),

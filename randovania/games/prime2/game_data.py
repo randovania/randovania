@@ -98,7 +98,7 @@ This means you need Boost Ball to fight Spider Guardian."""),
 
          "The Flying Ing Cache in this room appears only after you collect the item that appears after defeating Power Bomb Guardian."),
 
-        ("When causes the Dark Missile Trooper to spawn?",
+        ("What causes the Dark Missile Trooper to spawn?",
 
          "Defeating the Bomb Guardian."),
 
