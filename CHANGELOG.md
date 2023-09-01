@@ -54,6 +54,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In Burenia - Main Hub Tower Middle, lowering the Spider Magnet Wall is now "dangerous" only when Highly Dangerous Logic is enabled. The connection from the bottom of the room to the Pickup Platform that uses Grapple Movement requires the Spider Magnet Wall to not be lowered now requires Highly Dangerous Logic. The randomizer currently doesn't have the necessary options to make this connection mandatory in any seeds anyway.
 - Changed: Most instances of pushing Wide Beam Blocks by using Wave Beam through walls now no longer need Wide Beam. Notable exception is Dairon - West Transport to Ferenia, from below.
 - Changed: Boss fight logic using Ice Missile without Super Missile is no longer an option, and effectively requires as many missiles as with normal Missiles.
+- Changed: Boss fight logic now understands how damage values work with Split Beams behavior.
+  - Affected bosses: Robot Chozo fights, Chozo X fights and Raven Beak.
+  - Having only Plasma Beam or only Wave Beam is only used to fight the Robot Chozos, at Combat Intermediate.
+  - Having both Plasma Beam and Wave Beam is considered as the same bracket as only Wide Beam.
+  - Having Wide Beam and Wave Beam is considered as the same bracket as Wide Beam and Plasma Beam.
 - Changed: Exclude Ghavoran door between Flipper Room and Elun Transport Access from being shuffled as a Grapple Beam door in Door Lock rando. This is to enable a Ledge Warp to flip the Spinner from below.
 - Changed: In Ghavoran - Flipper Room, rotating the flipper the normal way can now be in logic before having pulled the Grapple Block at Right Entrance or having turned on Power Switch 2 in Dairon, if Transport Randomizer is enabled.
 - Changed: Revised logic for fighting Corpius
