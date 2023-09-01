@@ -687,8 +687,12 @@ Extra - minimap_data: [{'x': 44, 'y': 28}, {'x': 44, 'y': 29}, {'x': 44, 'y': 30
           Any of the following:
               Power Grip
               All of the following:
-                  Morph Ball and Mid-Air Morph (Intermediate)
-                  Space Jump or Walljump (Intermediate)
+                  Morph Ball
+                  Any of the following:
+                      All of the following:
+                          Mid-Air Morph (Intermediate)
+                          Space Jump or Walljump (Intermediate)
+                      Hi-Jump Boots and Mid-Air Morph (Beginner) and Walljump (Beginner)
   > Middle 
       Space Jump Wall
 
@@ -819,7 +823,8 @@ Extra - minimap_data: [{'x': 46, 'y': 37}, {'x': 46, 'y': 38}, {'x': 46, 'y': 39
               Space Jump or Walljump (Hypermode) or Can Use Spider Ball
               # IBJ
               Infinite Bomb Jumping (Expert) and Can Use Bombs
-          # Shinespark
+              Hi-Jump Boots and Walljump (Advanced)
+          # Shinespark (TODO: add short charge option)
           Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
 
 ----------------
@@ -1248,10 +1253,11 @@ Extra - minimap_data: [{'x': 51, 'y': 29}, {'x': 51, 'y': 30}, {'x': 51, 'y': 31
           Any of the following:
               Space Jump or Can Use Spider Ball
               All of the following:
+                  # Reach highest level with Septogg
                   Enabled Septogg Helpers
                   Any of the following:
+                      # Reach Septogg from below
                       Hijump Wall
-                      # Shinespark to Septogg
                       Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
               # IBJ
               Infinite Bomb Jumping (Advanced) and Can Use Bombs
@@ -1338,7 +1344,7 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
   * Open Passage to Drill Excavation Access/Dock to Drill Excavation
   > After Drill Sequence
       After Surface - Mines Drill Crystal Destroyed
-  > Event - DrillCrystal
+  > Event - DrillCrystal from left
       All of the following:
           Super Missiles
           Any of the following:
@@ -1354,12 +1360,20 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
           Speed Booster and After Surface - Mines Drill Crystal Destroyed and Shinesparking Tricks (Beginner)
   > Dock to Drill Excavation Access
       After Surface - Mines Drill Crystal Destroyed
+  > Event - DrillCrystal from right
+      Super Missiles
 
-> Event - DrillCrystal; Heals? False
+> Event - DrillCrystal from left; Heals? False
   * Layers: default
   * Event Surface - Mines Drill Crystal Destroyed
   > Dock to Drill Excavation Access
       Can Use Any Bombs and Tunnel Climb
+
+> Event - DrillCrystal from right; Heals? False
+  * Layers: default
+  * Event Surface - Mines Drill Crystal Destroyed
+  > After Drill Sequence
+      Trivial
 
 ----------------
 Mines Intersection
