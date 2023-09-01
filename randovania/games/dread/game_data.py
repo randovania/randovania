@@ -109,6 +109,11 @@ game_data: game.GameData = game.GameData(
             "Unlocking this door before turning on the power will render it unopenable.\n\n"
             "To fix this, simply save and reload the game."
         ),
+        (
+            "I received a Beam/Missile upgrade from an E.M.M.I., and now my arm cannon doesn't work!",
+            "Reload from checkpoint immediately to fix the issue. "
+            "Your checkpoint was saved after killing the E.M.M.I., so you will not lose progress."
+        ),
     ],
 
     layout=game.GameLayout(
