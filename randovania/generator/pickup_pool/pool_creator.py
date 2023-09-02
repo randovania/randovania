@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, NamedTuple
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator.pickup_pool import PoolResults
-from randovania.generator.pickup_pool.ammo_pickup import add_ammo_pickups
+from randovania.generator.pickup_pool.ammo_pickup import add_ammo_pickups, add_starting_ammo_pickups
 from randovania.generator.pickup_pool.standard_pickup import add_standard_pickups
 from randovania.layout import filtered_database
 
@@ -30,6 +30,8 @@ def calculate_pool_results(layout_configuration: BaseConfiguration, game: GameDe
                                                   layout_configuration.ammo_pickup_configuration))
 
     # Adding ammo to the pool
+    base_results.starting.extend(add_starting_ammo_pickups(game.resource_database,
+                                                           layout_configuration.ammo_pickup_configuration))
     base_results.to_place.extend(add_ammo_pickups(game.resource_database,
                                                   layout_configuration.ammo_pickup_configuration))
 

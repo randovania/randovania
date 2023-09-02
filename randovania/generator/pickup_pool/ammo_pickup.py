@@ -24,3 +24,16 @@ def add_ammo_pickups(resource_database: ResourceDatabase,
     for ammo, state in ammo_configuration.pickups_state.items():
         for _ in range(state.pickup_count):
             yield create_ammo_pickup(ammo, state.ammo_count, state.requires_main_item, resource_database)
+
+def add_starting_ammo_pickups(resource_database: ResourceDatabase,
+             ammo_configuration: AmmoPickupConfiguration,
+             ) -> Iterator[PickupEntry]:
+    """
+    Creates the necessary pickups for the given ammo_configuration.
+    :param resource_database:
+    :param ammo_configuration:
+    :return:
+    """
+    for ammo, state in ammo_configuration.pickups_state.items():
+        for _ in range(state.starting_count):
+            yield create_ammo_pickup(ammo, state.ammo_count, state.requires_main_item, resource_database)
