@@ -764,10 +764,6 @@
                 "long_name": "Hanubia - Ferenia Shortcut Grapple Block",
                 "extra": {}
             },
-            "Escape": {
-                "long_name": "Escape Sequence",
-                "extra": {}
-            },
             "HanubiaRedChozo": {
                 "long_name": "Hanubia - Red Chozo Fight",
                 "extra": {}
@@ -1249,6 +1245,10 @@
             },
             "HighDanger": {
                 "long_name": "Highly Dangerous Logic",
+                "extra": {}
+            },
+            "Teleporters": {
+                "long_name": "Transport Randomizer",
                 "extra": {}
             }
         },
@@ -2291,7 +2291,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Shoot Plasma Beam"
+                                                    "data": "Beam Damage 120"
                                                 },
                                                 {
                                                     "type": "and",
@@ -2599,6 +2599,27 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Beam Pierces Enemies"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -2785,7 +2806,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Shoot Plasma Beam"
+                                                    "data": "Beam Damage 120"
                                                 },
                                                 {
                                                     "type": "and",
@@ -3127,6 +3148,27 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Beam Pierces Enemies"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -3313,7 +3355,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Shoot Plasma Beam"
+                                                    "data": "Beam Damage 120"
                                                 },
                                                 {
                                                     "type": "and",
@@ -3655,6 +3697,27 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Beam Pierces Enemies"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -3836,13 +3899,30 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -3854,7 +3934,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Shoot Plasma Beam"
+                                                    "data": "Beam Damage 120"
                                                 },
                                                 {
                                                     "type": "and",
@@ -4003,7 +4083,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Shoot Wide Beam"
+                                                                "data": "Beam Damage 75"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -4015,6 +4095,58 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Energy Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 499,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 299,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -4094,13 +4226,30 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4291,7 +4440,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Shoot Wide Beam"
+                                                                "data": "Beam Damage 75"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -4328,7 +4477,59 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Shoot Plasma Beam"
+                                                    "data": "Beam Damage 120"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Energy Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 699,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 399,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4368,13 +4569,30 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4591,7 +4809,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Shoot Wide Beam"
+                                                                "data": "Beam Damage 75"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -4627,11 +4845,53 @@
                                                     }
                                                 },
                                                 {
+                                                    "type": "template",
+                                                    "data": "Beam Damage 240"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Beam Damage 120"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Energy Requirements",
+                                            "items": [
+                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Wave",
-                                                        "amount": 1,
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 799,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -4641,15 +4901,20 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Shoot Plasma Beam"
-                                                            },
-                                                            {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Combat",
                                                                     "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 499,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -4775,6 +5040,281 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Supers",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Beam Pierces Enemies": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Plasma",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Beam Damage 75": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wide",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Plasma",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "SeparateBeams",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Plasma",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Beam Damage 120": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Plasma",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "SeparateBeams",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Plasma",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Beam Damage 240": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wide",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Plasma",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "SeparateBeams",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
                                             "amount": 1,
                                             "negate": false
                                         }

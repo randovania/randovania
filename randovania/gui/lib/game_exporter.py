@@ -54,12 +54,7 @@ async def export_game(
 
     except UnableToExportError as e:
         logging.warning(e.reason)
-        await async_dialog.message_box(
-                None,
-                QtWidgets.QMessageBox.Icon.Critical,
-                "Error during exporting",
-                e.reason
-            )
+        await export_dialog.handle_unable_to_export(e)
 
     except Exception as e:
         logging.exception("Unable to export game")

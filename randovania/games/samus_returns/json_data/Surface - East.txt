@@ -69,7 +69,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: LE_Item_006
   * Extra - actor_type: item_missiletank
   > Door to Morph Ball Room
-      Trivial
+      Morph Ball
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
@@ -90,7 +90,7 @@ Extra - asset_id: collision_camera_002
 
 > Door to Morph Ball Room; Heals? False
   * Layers: default
-  * Power Beam Door to Morph Ball Room/Door to Melee Tutorial Pathway
+  * Missile Door to Morph Ball Room/Door to Melee Tutorial Pathway
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Pickup (Missile Tank)
@@ -128,15 +128,15 @@ Extra - asset_id: collision_camera_003
       All of the following:
           Morph Ball
           Any of the following:
-              High Jump Boots or Spider Ball or Super Jump (Advanced) or Unmorph Extend (Intermediate) or Simple IBJ
+              Super Jump (Advanced) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
+              # Freeze Enemy
               Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
-              Space Jump and Movement (Beginner)
   > Door to Chozo Seal
       Trivial
 
 > Door to Melee Tutorial Pathway; Heals? False
   * Layers: default
-  * Power Beam Door to Melee Tutorial Pathway/Door to Morph Ball Room
+  * Missile Door to Melee Tutorial Pathway/Door to Morph Ball Room
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Pickup (Morph Ball)
@@ -171,7 +171,7 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_missiletank
   > Tunnel to Transport to Area 1
-      Destroy Bomb Block
+      Morph Ball
 
 > Chozo Seal; Heals? False; Default Node
   * Layers: default
@@ -203,7 +203,7 @@ Extra - asset_id: collision_camera_004
   > Chozo Seal
       Trivial
   > Tunnel to Scan Pulse Room
-      Trivial
+      Morph Ball
 
 > Door to Transport to Area 1; Heals? False
   * Layers: default
@@ -213,6 +213,7 @@ Extra - asset_id: collision_camera_004
   > Chozo Seal
       Any of the following:
           Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          # Climb Frozen Enemy
           Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
 
 > Tunnel to Scan Pulse Room; Heals? False
@@ -276,7 +277,7 @@ Extra - asset_id: collision_camera_006
   * Layers: default
   * Tunnel to Chozo Seal/Tunnel to Transport to Area 1
   > Next to Teleporter
-      Destroy Bomb Block
+      Lay Any Bomb
 
 > Dock to Transport Storage; Heals? False
   * Layers: default
@@ -299,12 +300,13 @@ Extra - asset_id: collision_camera_006
   > Elevator to Area 1
       Trivial
   > Teleporter
-      After Surface (East) - Teleporter Unlocked
+      Trivial
   > Door to Chozo Seal
       Trivial
   > Tunnel to Chozo Seal
-      Destroy Bomb Block
+      Lay Any Bomb
   > Dock to Transport Storage
+      # TODO: doesn't need jumping requirements? Doesn't look like you can reach it with just PBs
       Baby Metroid or Lay Power Bomb
   > Event - Teleporter Unlocked
       Trivial
@@ -392,7 +394,7 @@ Extra - asset_id: collision_camera_010
   > Dock to Side Path
       Trivial
   > Inside Arena
-      Morph Ball and Destroy Missile Block
+      Morph Ball and Shoot Any Missile
   > Tunnel to Alpha Arena Access
       Morph Ball
 
@@ -434,9 +436,9 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
   > Save Station
-      Morph Ball and Destroy Missile Block
+      Morph Ball and Shoot Any Missile
   > Door to Ammo Recharge Station
-      After Surface (East) - Alpha Metroid
+      Trivial
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
@@ -444,7 +446,7 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   * Tunnel to Alpha Arena Access/Tunnel to Alpha Arena
   > Save Station
-      Trivial
+      Morph Ball
 
 ----------------
 Scan Pulse Room
@@ -470,7 +472,7 @@ Extra - asset_id: collision_camera_011
       Morph Ball
   > Door to Charge Beam Shaft
       Morph Ball
-  > Right of Statue
+  > Start Point - Right of Statue
       Trivial
 
 > Door to Charge Beam Shaft; Heals? False
@@ -486,7 +488,7 @@ Extra - asset_id: collision_camera_011
   * Open Passage to One-Way Drop/Dock to Scan Pulse Room
   > Pickup (Scan Pulse)
       Morph Ball
-  > Left of Statue
+  > Start Point - Left of Statue
       Trivial
 
 > Tunnel to Chozo Seal; Heals? False
@@ -495,13 +497,13 @@ Extra - asset_id: collision_camera_011
   > Door to Chozo Seal
       Morph Ball
 
-> Left of Statue; Heals? False
+> Start Point - Left of Statue; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_001
   > Dock to One-Way Drop
       Trivial
 
-> Right of Statue; Heals? False; Default Node
+> Start Point - Right of Statue; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_Bestowal
   > Door to Chozo Seal
@@ -556,7 +558,9 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Tunnel to Upper Storage
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Walljump (Beginner) or Climb Rooms Vertically (High Jump)
   > Start Point
       Trivial
 
@@ -649,21 +653,37 @@ Extra - asset_id: collision_camera_016
   * Access Open to Melee Tutorial Pathway/Door to Entrance Pathway
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
-  > Dock to Landing Site
-      Trivial
   > Start Point
+      Trivial
+  > Highest Point
       Trivial
 
 > Dock to Landing Site; Heals? False
   * Layers: default
   * Open Passage to Landing Site/Dock to Entrance Pathway
-  > Door to Melee Tutorial Pathway
-      Missile ≥ 3
+  > Past First Missile Block
+      Morph Ball or Shoot Any Missile
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_MeleeTutoCutscene
   > Door to Melee Tutorial Pathway
+      Trivial
+
+> Past First Missile Block; Heals? False
+  * Layers: default
+  > Dock to Landing Site
+      Trivial
+  > Highest Point
+      Any of the following:
+          Missile ≥ 2 or Walljump (Beginner)
+          Super Missile ≥ 2 and Shoot Super Missile
+
+> Highest Point; Heals? False
+  * Layers: default
+  > Door to Melee Tutorial Pathway
+      Trivial
+  > Past First Missile Block
       Trivial
 
 ----------------
@@ -686,7 +706,7 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_type: doorpowerpower
   > Room Center
       All of the following:
-          Morph Ball and Destroy Missile Block
+          Morph Ball and Shoot Any Missile
           Any of the following:
               Grapple Beam or Phase Drift
               Spiderspark (Beginner) and Can Spiderspark
@@ -709,7 +729,7 @@ Extra - asset_id: collision_camera_018
                       Space Jump and Phase Drift Skip (Advanced)
   > Door to Landing Site
       All of the following:
-          Morph Ball and Destroy Missile Block
+          Morph Ball and Shoot Any Missile
           Any of the following:
               Phase Drift or Can Spiderspark
               Bomb and Spider Ball and Diagonal Bomb Jump (Intermediate)
@@ -800,6 +820,7 @@ Extra - asset_id: collision_camera_023
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
+          # TODO: test whether this can be done with just a normal Walljump
           Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
   > Tunnel to Alpha Arena
       Morph Ball
@@ -822,7 +843,7 @@ Extra - asset_id: collision_camera_023
   > Energy Recharge Station
       Trivial
   > Door to One-Way Drop
-      Trivial
+      Morph Ball
 
 > Tunnel to Alpha Arena; Heals? False
   * Layers: default

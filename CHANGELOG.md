@@ -5,20 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.3.0] - 2023-10-??
+
+- Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
+
+## [6.2.1] - 2023-09-??
+
+- Nothing.
+
 ## [6.2.0] - 2023-09-??
 
 - Added: "Help -> Verify Installation" menu option, to verify that your Randovania installation is correct. This is only present on Windows.
 - Changed: Game generation is now up to 150% faster.
 - Changed: The resolver now tries otherwise safe actions behind a point of no return before it tries actions that give dangerous resources. This makes the solve faster by avoiding some cases of backtracking.
+- Changed: Comments no longer prevent And/Or requirements from being displayed as short form.
 - Fixed: Auto Tracker icons that were supposed to be always visible no longer show as disabled.
+- Fixed: Opening race rdvgame files from older Randovania versions now works properly. 
+- Fixed: Exporting games with hidden Nothing models don't crash during the exporting process anymore.
+- Fixed: For macOS, exporting Metroid Prime 2: Echoes games does not require you to run Randovania from within a terminal anymore to see the Mono installation.
 
 ### Metroid Dread
-- **Major** - Added: Elevator and Shuttle randomizer. The destination is shown on the elevator/shuttle's minimap icon and in the room name, if enabled. This will show different area names to the logic database for some items. 
 
+- **Major** - Added: Elevator and Shuttle randomizer. The destination is shown on the elevator/shuttle's minimap icon and in the room name, if enabled. This will show different area names to the logic database for some items.
 - **Major** - Added: Split beams and missiles. When playing with non-progressive beams or missiles, each individual upgrade provides a unique effect instead of providing the effects of all previous upgrades.
 - Added: An in-game icon will appear if the player becomes disconnected from the multiworld server. 
 - Changed: The Starter Preset and April Fools 2023 preset now have non-progressive beams and missiles, instead of progressive.
 - Changed: Bomb Shields are no longer vulnerable to Cross Bombs.
+- Fixed: The door model for certain door types now uses the intended textures correctly.
+- Fixed: The save file percentage counter and the per-region percentage counter are now all updated correctly.
 
 #### Logic Database
 
@@ -28,9 +42,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Logic to handle having Ice Missiles without Super Missile.
 - Added: In Ghavoran - Teleport to Burenia, Cross Bomb Skip using just Morph Ball to get to and from the Pickup. Rated one level higher than the corresponding usage with Flash Shift or Spin Boost.
 - Added: Ledge Warp usage to flip the spinner in Ghavoran next the Transport to Elun, and in Elun to release the X.
+- Added: All Chozo-X encounters now have energy requirements.
+- Changed: Added Wide Beam to missile farming during Kraid's fight.
+- Changed: Fighting Kraid in Phase 2 without going up is moved from Beginner Combat to Intermediate.
+- Changed: Fighting Kraid with no energy is now Intermediate Combat. Fighting with 1 Energy Tank is Beginner.
+- Changed: Dodging in all Chozo-X fights now has Flash Shift as trivial, Spin Boost with Beginner Combat, and nothing with Intermediate.
 - Changed: In Dairon - Teleport to Artaria, breaking the speed blocks is no longer "dangerous". This is done by removing the "Before Event" condition on breaking the blocks from above.
 - Changed: In Artaria - Water Reservoir, breaking the blob is no longer "dangerous", as long as Slide is not randomized. This was previously dangerous because there's a connection in EMMI Zone Exit Southwest that makes use of Speed Booster, however, by simply adding a "Can Slide" option on the same condition, the logic now sees the blob as safe.
 - Changed: In Burenia: Fighting Drogyga is now only "dangerous" if Highly Dangerous Logic is enabled. This is achieved by adding a Highly Dangerous Logic constraint on all instances where the logic uses "Before Drogyga" on connections in the Underneath Drogyga room.
+- Changed: Move victory condition to after Raven Beak, and encode all requirements to finish the escape sequence to that connection. This avoids having a "dangerous" resource at the end of the game.
 - Changed: In Burenia - Main Hub Tower Middle, lowering the Spider Magnet Wall is now "dangerous" only when Highly Dangerous Logic is enabled. The connection from the bottom of the room to the Pickup Platform that uses Grapple Movement requires the Spider Magnet Wall to not be lowered now requires Highly Dangerous Logic. The randomizer currently doesn't have the necessary options to make this connection mandatory in any seeds anyway.
 - Changed: In Artaria - EMMI Zone Spinner, the connection to the pickup that is available before flipping the spinner now also requires door lock rando to be enabled. The result is that the spinner event is now not a dangerous resource unless door lock rando is enabled.
 - Changed: In Dairon - Yellow EMMI Introduction, using Speed Booster to go through the Shutter Gate, right to left, no longer requires Flash Shift Skip.
@@ -39,7 +59,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In Ferenia - Purple EMMI Introduction, using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Intermediate instead of Flash Shift Skip Beginner.
 - Changed: Most instances of pushing Wide Beam Blocks by using Wave Beam through walls now no longer need Wide Beam. Notable exception is Dairon - West Transport to Ferenia, from below.
 - Changed: Boss fight logic using Ice Missile without Super Missile is no longer an option, and effectively requires as many missiles as with normal Missiles.
+- Changed: Boss fight logic now understands how damage values work with Split Beams behavior.
+  - Affected bosses: Robot Chozo fights, Chozo X fights and Raven Beak.
+  - Having only Plasma Beam or only Wave Beam is only used to fight the Robot Chozos, at Combat Intermediate.
+  - Having both Plasma Beam and Wave Beam is considered as the same bracket as only Wide Beam.
+  - Having Wide Beam and Wave Beam is considered as the same bracket as Wide Beam and Plasma Beam.
 - Changed: Exclude Ghavoran door between Flipper Room and Elun Transport Access from being shuffled as a Grapple Beam door in Door Lock rando. This is to enable a Ledge Warp to flip the Spinner from below.
+- Changed: In Ghavoran - Flipper Room, rotating the flipper the normal way can now be in logic before having pulled the Grapple Block at Right Entrance or having turned on Power Switch 2 in Dairon, if Transport Randomizer is enabled.
 - Changed: Revised logic for fighting Corpius
   - When using missiles without an ammo requirement, the X must not have been released.
   - Using Cross Bomb is moved to Combat Beginner
@@ -49,33 +75,81 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: A typo in the room name Ferenia - East Transport to Dairon has been changed from East Transport to Darion.
 - Fixed: In Burenia - Teleport to Ghavoran, to open the Plasma Beam door from below, add requirement to have Plasma Beam. This becomes relevant with Separate Beam Behavior.
 - Fixed: In Artaria - Teleport to Dairon, to enter the teleport itself using Wave Beam, add requirements to have Wide Beam and Door Lock Rando being disabled. The former becomes relevant with Separate Beam Behavior.
+- Fixed: In Cataris - Kraid Area, when using Wave Beam to fight Kraid from behind, you now also need the rest of the rest of the requirements to fight Kraid.
 
 ### Metroid Prime
 
-- Fixed: One-way elevator mode not able to generate.
+- Fixed: One-way elevator mode not able to generate
+- Fixed: Doors openable underneath blast shields
+- Fixed: Doors and Blast shields hurting the player with reflected shots
+- Fixed: Starting items getting  ignored when starting in Connection Elevator to Deck Alpha
+- Fixed: Skipping the cutscene in Connection Elevator to Deck Alpha also skips item loss
+- Fixed: Doors in Omega Research not locking
+- Fixed: Elite Control entry Barrier activating again
+- Fixed: Hall of the Elders "New Path Opened" HUD Memo not appearing
+- Fixed: Some unskippable cutscenes
+- Fixed: Removed HUD Memos in Emergency Evacuation Area
+- Fixed: Timing of Metroids in Metroid Quarantine A
+- Fixed: Stuck camera in control tower
+- Fixed: Timing of flying pirates in control tower
+- Fixed: Echoes Unlimited Missiles model now appears larger
+- Added: More Quality of life improvements over vanilla
+  - Colorblind friendlier flamethrower model
+  - Power Bombs now have a heat signature
+  - Power Conduits activate even if only 1 of 3 wave particles hit
+  - Main Quarry power conduit no longer reflects charged wave
+  - Added lock to top door during Phazon Elite fight
+  - Doors unlock from picking up the artifact item instead of the Phazon Elite dying
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Reverse Flaahgra in Sun Tower is now logical
+- Added: Furnace E Tank Wall Boost Escape
+- Added: Transport Access North Wallboost to Hive Totem from Elevator
+- Added: Trigger Ghosts from Sun Tower Access without Bombs or Spider
+
+##### Phazon Mines
+
+- Added: Fungal Hall A now has Energy and Combat Logic
+- Added: Fungal Hall A SJ Scan Dash Grapple Skip
+- Added: Fungal Hall Access NSJ Bombless Escape to Fungal Hall A
+
+##### Phendrana Drifts
+
+- Changed: Phendrana Canyon Pickup NSJ Bombless Triple Boost Adjustments
+- Changed: Control Tower Plasma Skip is now Beginner
+- Added: Hunter Cave Bunny Hop to reach Hunter Cave Access from Lower Edge Tunnel
+- Added: Hunter Cave Slope Jump to reach Chamber Access from Lake Tunnel
+
+##### Tallon Overworld
+
+- Added: Root Cave Climb NSJ Boost Strat
 
 ### Metroid Prime 2: Echoes
 
 - Added: New cosmetic suit options. Please note that these suits require the experimental patcher to be enabled.
+- Added: The internal game copy is automatically deleted when exporting a game fails in certain situations.
 
 #### Logic Database
 
 - Added: 307 videos to the logic database. see the [Video Directory]
-(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection 
+(https://randovania.github.io/Metroid%20Prime%202%20Echoes/) for the full collection. 
 
-##### Temple Grounds:
+##### Temple Grounds
 
 - Added:  NSJ Extended Dash (Expert) to cross Grand Windchamber through the middle platform.
 
-##### Agon Wastes:
-
-- Added: NSJ Extended Dash (Advanced) to reach Temple Access Door in Mining Station A.
-
-##### Sky Temple Ground:
+##### Sky Temple Ground
 
 - Removed: Phazon Grounds NSJ, No SA -> Invisibil Objects (Hypermode) or Movement (Expert) and Dark Visor. Doesn't exist.
 
-##### Sanctuary Fortress:
+##### Agon Wastes
+
+- Added: NSJ Extended Dash (Advanced) to reach Temple Access Door in Mining Station A.
+
+##### Sanctuary Fortress
 
 - Added: Extended Dash (Expert) to reach the Scan Post in Watch Station Access from Main Gyro Chamber Door.
 - Added: Extended Dash (Expert) to reach Main Gyro Chamber Door in Watch Station Access from the Scan Post Side.

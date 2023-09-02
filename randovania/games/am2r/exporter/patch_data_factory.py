@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
 from randovania.exporter.hints import guaranteed_item_hint
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
 
 
-class AM2RPatchDataFactory(BasePatchDataFactory):
+class AM2RPatchDataFactory(PatchDataFactory):
     _EASTER_EGG_SHINY = 1024
 
     # Effect, sprite, header => new_sprite, new_header
@@ -36,7 +36,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
     def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random):
         pickup_map_dict = {}
         for pickup in pickup_list:
-            quantity = pickup.conditional_resources[0].resources[0][1]
+            quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.other_player else 0
             object_name = self.game.region_list.node_from_pickup_index(pickup.index).extra["object_name"]
             res_lock = pickup.original_pickup.resource_lock
             text_index = 1 if (res_lock is not None and
@@ -48,10 +48,11 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
                     "name": pickup.model.name,
                     "speed": item_info[pickup.original_pickup.name]["sprite_speed"]
                 },
-                "item_effect": pickup.original_pickup.name,
+                "item_effect": pickup.original_pickup.name if not pickup.other_player else "Nothing",
                 "quantity": quantity,
                 "text": {
-                    "header": item_info[pickup.name]["text_header"],
+                    "header": item_info[pickup.name]["text_header"] if not self.players_config.is_multiworld
+                    else pickup.name,
                     "description": pickup.collection_text[text_index]
                 }
             }
@@ -70,7 +71,8 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
         return {
             area.extra["map_name"]: {
                 "display_name": area.name,
-                "region_name": region.name
+                "region_name": region.name,
+                "minimap_data": area.extra["minimap_data"],
             }
             for region in self.game.region_list.regions for area in region.areas
         }
@@ -269,7 +271,7 @@ class AM2RPatchDataFactory(BasePatchDataFactory):
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
             exporter=pickup_exporter.create_pickup_exporter(memo_data, self.players_config, self.game_enum()),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "sItemNothing"),
         )
 
         return {

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import json
 import logging
 import re
 import traceback
@@ -247,10 +248,10 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         raise RuntimeError("Feature not implemented")
 
     def import_preset_file(self, path: Path):
-        preset = VersionedPreset.from_file_sync(path)
         try:
+            preset = VersionedPreset.from_file_sync(path)
             preset.get_preset()
-        except InvalidPreset:
+        except (InvalidPreset, json.JSONDecodeError):
             QtWidgets.QMessageBox.critical(
                 self._window_manager,
                 "Error loading preset",

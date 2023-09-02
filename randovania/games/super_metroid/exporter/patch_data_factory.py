@@ -4,7 +4,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
@@ -92,7 +92,7 @@ def sm_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
     return result
 
 
-class SuperMetroidPatchDataFactory(BasePatchDataFactory):
+class SuperMetroidPatchDataFactory(PatchDataFactory):
     cosmetic_patches: SuperMetroidCosmeticPatches
     configuration: SuperMetroidConfiguration
 
@@ -116,7 +116,7 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
                 self.players_config,
                 self.game_enum()
             ),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
         )
 
         gameplay_patch_list = [field.name for field in dataclasses.fields(self.configuration.patches)]

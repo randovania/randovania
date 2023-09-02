@@ -975,8 +975,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         try:
             user_worlds = self._session.users[self.network_client.current_user.id].worlds
-        except AttributeError:
-            # _session hasn't been set yet
+        except (AttributeError, KeyError):
+            # _session hasn't been set yet or user isn't in session
             user_worlds = {}
 
         game_connection = self._multiworld_client.game_connection
@@ -1017,7 +1017,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         warning_message = ""
 
-        if self._session.game_details and user_worlds:
+        if user_worlds and self._session.game_details:
             if connected_worlds:
                 if not (connected_worlds.keys() & user_worlds.keys()):
                     plural = "game" if len(connected_worlds) == 1 else "games"
