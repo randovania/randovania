@@ -364,7 +364,9 @@ Extra - minimap_data: [{'x': 47, 'y': 16}, {'x': 47, 'y': 17}]
 > Bottom; Heals? False
   * Layers: default
   > Tunnel to Grave Grotto
-      Morph Ball and Low Mid-Air Morph Tunnel Climb
+      All of the following:
+          Morph Ball
+          Mid-Air Morph (Beginner) or Tunnel Climb
   > Pickup (Top Missile Tank)
       All of the following:
           Morph Ball
@@ -375,8 +377,8 @@ Extra - minimap_data: [{'x': 47, 'y': 16}, {'x': 47, 'y': 17}]
               Infinite Bomb Jumping (Advanced) and Can Use Bombs
               # Intended spider ball way
               Can Use Bombs and Can Use Spider Ball
-              # Shinespark up
-              Speed Booster and Shinesparking Tricks (Intermediate) and Disabled Entrance Rando
+              # Shinespark Up (Stored from previous room)
+              Speed Booster and Shinesparking Tricks (Advanced) and Disabled Entrance Rando
               All of the following:
                   Movement (Hypermode) and Walljump (Intermediate)
                   # Frame perfectly jump off of crumble blocks
@@ -450,9 +452,9 @@ Extra - minimap_data: [{'x': 47, 'y': 21}, {'x': 47, 'y': 22}, {'x': 47, 'y': 23
   > Tunnel to Grave Grotto
       Morph Ball
   > Tunnel to Surface Space Jump Challenge
-      Any of the following:
-          Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
-          Speed Booster and Charged Bomb Jump (Advanced) and Mid-Air Morph (Advanced) and Shinesparking Tricks (Advanced) and Can Use Charged Bomb Jump
+      All of the following:
+          Can Use Any Bombs
+          Mid-Air Morph (Beginner) or Tunnel Climb
   > Dock to Grave Grotto
       Trivial
   > Tunnel to Bend Chasm
@@ -685,8 +687,12 @@ Extra - minimap_data: [{'x': 44, 'y': 28}, {'x': 44, 'y': 29}, {'x': 44, 'y': 30
           Any of the following:
               Power Grip
               All of the following:
-                  Morph Ball and Mid-Air Morph (Beginner)
-                  Space Jump or Walljump (Beginner)
+                  Morph Ball
+                  Any of the following:
+                      All of the following:
+                          Mid-Air Morph (Intermediate)
+                          Space Jump or Walljump (Intermediate)
+                      Hi-Jump Boots and Mid-Air Morph (Beginner) and Walljump (Beginner)
   > Middle 
       Space Jump Wall
 
@@ -817,6 +823,9 @@ Extra - minimap_data: [{'x': 46, 'y': 37}, {'x': 46, 'y': 38}, {'x': 46, 'y': 39
               Space Jump or Walljump (Hypermode) or Can Use Spider Ball
               # IBJ
               Infinite Bomb Jumping (Expert) and Can Use Bombs
+              Hi-Jump Boots and Walljump (Advanced)
+          # Shinespark (TODO: add short charge option)
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
 
 ----------------
 Fat Crocomire Room
@@ -1243,7 +1252,13 @@ Extra - minimap_data: [{'x': 51, 'y': 29}, {'x': 51, 'y': 30}, {'x': 51, 'y': 31
           Space Jump Wall
           Any of the following:
               Space Jump or Can Use Spider Ball
-              Enabled Septogg Helpers and Hijump Wall
+              All of the following:
+                  # Reach highest level with Septogg
+                  Enabled Septogg Helpers
+                  Any of the following:
+                      # Reach Septogg from below
+                      Hijump Wall
+                      Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
               # IBJ
               Infinite Bomb Jumping (Advanced) and Can Use Bombs
 
@@ -1329,7 +1344,7 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
   * Open Passage to Drill Excavation Access/Dock to Drill Excavation
   > After Drill Sequence
       After Surface - Mines Drill Crystal Destroyed
-  > Event - DrillCrystal
+  > Event - DrillCrystal from left
       All of the following:
           Super Missiles
           Any of the following:
@@ -1345,12 +1360,20 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
           Speed Booster and After Surface - Mines Drill Crystal Destroyed and Shinesparking Tricks (Beginner)
   > Dock to Drill Excavation Access
       After Surface - Mines Drill Crystal Destroyed
+  > Event - DrillCrystal from right
+      Super Missiles
 
-> Event - DrillCrystal; Heals? False
+> Event - DrillCrystal from left; Heals? False
   * Layers: default
   * Event Surface - Mines Drill Crystal Destroyed
   > Dock to Drill Excavation Access
       Can Use Any Bombs and Tunnel Climb
+
+> Event - DrillCrystal from right; Heals? False
+  * Layers: default
+  * Event Surface - Mines Drill Crystal Destroyed
+  > After Drill Sequence
+      Trivial
 
 ----------------
 Mines Intersection
@@ -1374,7 +1397,10 @@ Extra - minimap_data: [{'x': 53, 'y': 34}, {'x': 53, 'y': 35}, {'x': 53, 'y': 36
   * Layers: default
   * Open Passage to Mines Alpha Nest Access/Dock to Mines Intersection
   > Dock to Mining Facility Save Station
-      Hijump With Power Grip Wall
+      Any of the following:
+          Hijump With Power Grip Wall
+          # Shinespark
+          Speed Booster and Shinesparking Tricks (Beginner)
   > Dock to Mines Gamma Nest Access
       Trivial
 
@@ -1416,6 +1442,8 @@ Extra - minimap_data: [{'x': 50, 'y': 36}, {'x': 51, 'y': 36}, {'x': 52, 'y': 36
               Any of the following:
                   Gravity Suit
                   Damage Boost (Beginner) and Lava Damage ≥ 35
+          # Shinespark
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
 
 > Dock to Mines Alpha Nest; Heals? False
   * Layers: default
@@ -1427,6 +1455,8 @@ Extra - minimap_data: [{'x': 50, 'y': 36}, {'x': 51, 'y': 36}, {'x': 52, 'y': 36
               # Lava
               Gravity Suit
               Damage Boost (Beginner) and Lava Damage ≥ 35
+          # Shinespark
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
 
 ----------------
 Mines Alpha Nest
@@ -1476,6 +1506,8 @@ Extra - minimap_data: [{'x': 55, 'y': 37}, {'x': 55, 'y': 38}, {'x': 56, 'y': 37
               # Go Through Lava
               Gravity Suit
               Damage Boost (Intermediate) and Lava Damage ≥ 70
+          # Shinespark
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
 
 > Dock to Mines Gamma Nest; Heals? False
   * Layers: default
@@ -1487,6 +1519,8 @@ Extra - minimap_data: [{'x': 55, 'y': 37}, {'x': 55, 'y': 38}, {'x': 56, 'y': 37
               # Go Through Lava
               Gravity Suit
               Damage Boost (Intermediate) and Lava Damage ≥ 50
+          # Shinespark
+          Speed Booster and Shinesparking Tricks (Beginner) and Short Charge (Intermediate) and Disabled Entrance Rando
 
 ----------------
 Mines Gamma Nest
@@ -1503,6 +1537,7 @@ Extra - minimap_data: [{'x': 58, 'y': 37}, {'x': 58, 'y': 38}, {'x': 58, 'y': 39
   * Event Metroids Surface - Mines Gamma
   > Dock to Mines Gamma Nest Access
       Any of the following:
+          # TODO: Add shinespark with shortcharge using the flitts
           Space Jump
           # Septogg
           Enabled Septogg Helpers
