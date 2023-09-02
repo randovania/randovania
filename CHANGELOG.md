@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Changed: EMMI Zone Spinner: The connection to the pickup that is available before flipping the spinner now also requires door lock rando to be enabled. The result is that the spinner event is now not a dangerous resource unless door lock rando is enabled.
+
+##### Burenia
+
+- Changed: Teleport to Ferenia: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Beginner.
+
+##### Cataris
+
+- Changed: Thermal Device Room South: The connections to the thermal door that closes after using the thermal device now logically remains open when door lock rando is disabled and the "Can Slide" and "Shoot Beam" templates are satisfied. This is a handwave that makes the thermal device no longer a dangerous resource.
+
+##### Dairon
+
+- Changed: Yellow EMMI Introduction: Using Speed Booster to go through the Shutter Gate, right to left, no longer requires Flash Shift Skip.
+
+##### Ferenia
+
+- Changed: Purple EMMI Introduction: Using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Intermediate instead of Flash Shift Skip Beginner.
+
 ## [6.2.1] - 2023-09-??
 
 - Nothing.
@@ -52,11 +76,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: In Burenia: Fighting Drogyga is now only "dangerous" if Highly Dangerous Logic is enabled. This is achieved by adding a Highly Dangerous Logic constraint on all instances where the logic uses "Before Drogyga" on connections in the Underneath Drogyga room.
 - Changed: Move victory condition to after Raven Beak, and encode all requirements to finish the escape sequence to that connection. This avoids having a "dangerous" resource at the end of the game.
 - Changed: In Burenia - Main Hub Tower Middle, lowering the Spider Magnet Wall is now "dangerous" only when Highly Dangerous Logic is enabled. The connection from the bottom of the room to the Pickup Platform that uses Grapple Movement requires the Spider Magnet Wall to not be lowered now requires Highly Dangerous Logic. The randomizer currently doesn't have the necessary options to make this connection mandatory in any seeds anyway.
-- Changed: In Artaria - EMMI Zone Spinner, the connection to the pickup that is available before flipping the spinner now also requires door lock rando to be enabled. The result is that the spinner event is now not a dangerous resource unless door lock rando is enabled.
-- Changed: In Dairon - Yellow EMMI Introduction, using Speed Booster to go through the Shutter Gate, right to left, no longer requires Flash Shift Skip.
-- Changed: In Cataris - Thermal Device Room South, the connections to the thermal door that closes after using the thermal device now logically remains open when door lock rando is disabled and the "Can Slide" and "Shoot Beam" templates are satisfied. This is a handwave that makes the thermal device no longer a dangerous resource.
-- Changed: In Burenia - Teleport to Ferenia, using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Beginner.
-- Changed: In Ferenia - Purple EMMI Introduction, using Speed Booster to get past the Shutter Gate now requires Speed Booster Conservation Intermediate instead of Flash Shift Skip Beginner.
 - Changed: Most instances of pushing Wide Beam Blocks by using Wave Beam through walls now no longer need Wide Beam. Notable exception is Dairon - West Transport to Ferenia, from below.
 - Changed: Boss fight logic using Ice Missile without Super Missile is no longer an option, and effectively requires as many missiles as with normal Missiles.
 - Changed: Boss fight logic now understands how damage values work with Split Beams behavior.
