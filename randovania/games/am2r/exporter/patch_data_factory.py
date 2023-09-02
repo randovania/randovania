@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from random import Random
 from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
@@ -15,11 +16,9 @@ from randovania.generator.pickup_pool import pickup_creator
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
-    from random import Random
 
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
-    from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
 
 
 def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
@@ -318,7 +317,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
         return hints
 
-    def _create_cosmetics(self, rng: Random) -> dict:
+    def _create_cosmetics(self, seed_number: int) -> dict:
         c = self.cosmetic_patches
         return {
             "show_unexplored_map": c.show_unexplored_map,
@@ -327,7 +326,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "etank_hud_rotation": c.etank_hud_rotation,
             "dna_hud_rotation": c.dna_hud_rotation,
             "room_names_on_hud": c.show_room_names.value,
-            "music_shuffle": _construct_music_shuffle_dict(c.music, rng),
+            "music_shuffle": _construct_music_shuffle_dict(c.music, Random(seed_number)),
         }
 
 
@@ -382,5 +381,5 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "game_patches": self._create_game_patches(self.configuration, pickup_list, item_data, self.rng),
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
-            "cosmetics": self._create_cosmetics(self.rng)
+            "cosmetics": self._create_cosmetics(self.description.get_seed_for_player(self.players_config.player_index))
         }
