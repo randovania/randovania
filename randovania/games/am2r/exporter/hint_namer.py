@@ -34,7 +34,7 @@ def _area_name(region_list: RegionList, pickup_node: PickupNode, hide_region: bo
         return region_list.area_name(area)
 
 
-def colorize_text(color: AM2RColor, text: str, with_color: bool):
+def colorize_text(color: AM2RColor, text: str, with_color: bool) -> str:
     if with_color:
         return f"{color.value}{text}{AM2RColor.WHITE.value}"
     else:
