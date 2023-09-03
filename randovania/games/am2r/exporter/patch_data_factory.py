@@ -113,6 +113,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "septogg_helpers": self.patches.configuration.septogg_helpers,
             "respawn_bomb_blocks": self.patches.configuration.respawn_bomb_blocks,
             "skip_cutscenes": self.patches.configuration.skip_cutscenes,
+            "skip_save_cutscene": self.patches.configuration.skip_save_cutscene,
             "skip_item_cutscenes": self.patches.configuration.skip_item_cutscenes,
             "energy_per_tank": self.patches.configuration.energy_per_tank,
             "grave_grotto_blocks": self.patches.configuration.grave_grotto_blocks,
