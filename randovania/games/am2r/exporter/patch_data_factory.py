@@ -118,6 +118,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "septogg_helpers": config.septogg_helpers,
             "respawn_bomb_blocks": config.respawn_bomb_blocks,
             "skip_cutscenes": config.skip_cutscenes,
+            "skip_save_cutscene": config.skip_save_cutscene,
             "skip_item_cutscenes": config.skip_item_cutscenes,
             "energy_per_tank": config.energy_per_tank,
             "grave_grotto_blocks": config.grave_grotto_blocks,
@@ -276,7 +277,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
             exporter=pickup_exporter.create_pickup_exporter(memo_data, self.players_config, self.game_enum()),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "sItemNothing"),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "sItemUnknown"),
         )
 
         return {
