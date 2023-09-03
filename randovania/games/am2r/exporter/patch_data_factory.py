@@ -272,7 +272,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
             exporter=pickup_exporter.create_pickup_exporter(memo_data, self.players_config, self.game_enum()),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "sItemNothing"),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "sItemUnknown"),
         )
 
         return {
