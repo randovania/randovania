@@ -7,6 +7,7 @@ from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
+from randovania.games.am2r.exporter.joke_hints import JOKE_HINTS
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
@@ -188,6 +189,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
         septogg_hints = {}
         gm_newline = "#-#"
+        dud_hint = "This creature did not give any useful DNA hints."
         area_to_amount_map = {
             0: (0, 5),
             1: (5, 9),
@@ -202,7 +204,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             shuffled_hints = list(dna_hint_mapping.values())[start:end]
             shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
             if not shuffled_hints:
-                shuffled_hints = ["This creature did not give any useful DNA hints."]
+                shuffled_hints = [rng.choice(JOKE_HINTS + [dud_hint])]
             septogg_hints[f"septogg_a{i}"] = gm_newline.join(shuffled_hints)
 
         ice_hint = {}
