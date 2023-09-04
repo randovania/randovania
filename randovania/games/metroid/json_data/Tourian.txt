@@ -1,0 +1,135 @@
+----------------
+Entrance shaft
+Extra - map_name: Tourian/x40_y75
+> Teleporter to Brinstar; Heals? False
+  * Layers: default
+  * Teleporter to Transport to Tourian/Teleporter to Tourian; Excluded from Dock Lock Rando
+  * Extra - object_id: 100022
+  > Door to Lava passage
+      Trivial
+
+> Door to Lava passage; Heals? False
+  * Layers: default
+  * 10 Missiles Door to Lava passage/Door to Entrance shaft
+  > Teleporter to Brinstar
+      Trivial
+
+----------------
+Lava passage
+Extra - map_name: Tourian/x96_y97
+> Door to Entrance shaft; Heals? False
+  * Layers: default
+  * 10 Missiles Door to Entrance shaft/Door to Lava passage
+  > Door to Ledged shaft
+      Trivial
+
+> Door to Ledged shaft; Heals? False
+  * Layers: default
+  * Missile Door to Ledged shaft/Door to Lava passage
+  > Door to Entrance shaft
+      Trivial
+
+----------------
+Ledged shaft
+Extra - map_name: Tourian/x152_y127
+> Door to Lava passage; Heals? False
+  * Layers: default
+  * Missile Door to Lava passage/Door to Ledged shaft
+  > Door to Rinka hall
+      Trivial
+
+> Door to Rinka hall; Heals? False
+  * Layers: default
+  * Missile Door to Rinka hall/Door to Ledged shaft
+  > Door to Lava passage
+      Trivial
+
+----------------
+Rinka hall
+Extra - map_name: Tourian/x104_y157
+> Door to Ledged shaft; Heals? False
+  * Layers: default
+  * Missile Door to Ledged shaft/Door to Rinka hall
+  > Door to Zebesian Command Center
+      Trivial
+
+> Door to Zebesian Command Center; Heals? False
+  * Layers: default
+  * Normal Door to Zebesian Command Center/Door to Rinka hall
+  > Door to Ledged shaft
+      Trivial
+
+----------------
+Zebesian Command Center
+Extra - map_name: Tourian/x40_y157
+> Door to Rinka hall; Heals? False
+  * Layers: default
+  * Normal Door to Rinka hall/Door to Zebesian Command Center
+  * Extra - different_strongly_connected_component: True
+  > Gate 1
+      Trivial
+
+> Gate 1; Heals? False
+  * Layers: default
+  * Extra - different_strongly_connected_component: True
+  > Gate 2
+      Missiles ≥ 10
+
+> Gate 2; Heals? False
+  * Layers: default
+  * Extra - different_strongly_connected_component: True
+  > Gate 3
+      Missiles ≥ 10
+
+> Gate 3; Heals? False
+  * Layers: default
+  * Extra - different_strongly_connected_component: True
+  > Gate 4
+      Missiles ≥ 10
+
+> Gate 4; Heals? False
+  * Layers: default
+  * Extra - different_strongly_connected_component: True
+  > Gate 5
+      Missiles ≥ 10
+
+> Gate 5; Heals? False
+  * Layers: default
+  * Extra - different_strongly_connected_component: True
+  > Mother Brain
+      Missiles ≥ 10
+
+> Mother Brain; Heals? False
+  * Layers: default
+  * Extra - different_strongly_connected_component: True
+  > Event - Mother Brain Killed
+      Missiles ≥ 33
+
+> Event - Mother Brain Killed; Heals? False
+  * Layers: default
+  * Event Mother Brain Boss Killed
+  * Extra - different_strongly_connected_component: True
+  > Dock to Escape shaft
+      Trivial
+
+> Dock to Escape shaft; Heals? False
+  * Layers: default
+  * Open Passage to Escape shaft/Door to Zebesian Command Center
+  * Extra - different_strongly_connected_component: True
+
+----------------
+Escape shaft
+Extra - map_name: Tourian/x8_y97
+> Door to Zebesian Command Center; Heals? False
+  * Layers: default
+  * Normal Door to Zebesian Command Center/Dock to Escape shaft
+  * Extra - different_strongly_connected_component: True
+  > Teleporter to Credits
+      Trivial
+
+> Teleporter to Credits; Heals? False
+  * Layers: default
+  * Teleporter to Credits/Event - Credits
+  > Door to Zebesian Command Center
+      Trivial
+

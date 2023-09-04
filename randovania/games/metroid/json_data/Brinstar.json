@@ -1,0 +1,2995 @@
+{
+    "name": "Brinstar",
+    "extra": {},
+    "areas": {
+        "Corridor 1": {
+            "default_node": "Spawn Point",
+            "extra": {
+                "map_name": "Brinstar/x47_y202"
+            },
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 440.0,
+                        "y": 64.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Pickup (Morph Ball)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Morph Ball)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 152.0,
+                        "y": 88.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100018
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 0,
+                    "location_category": "major",
+                    "connections": {
+                        "Door to Fake Block shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hi-Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Fake Block shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1048.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Fake Block shaft",
+                        "node": "Door to Corridor 1"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Morph Ball)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Fake Block shaft": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x88_y233"
+            },
+            "nodes": {
+                "Door to Corridor 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 1128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 1",
+                        "node": "Door to Fake Block shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Kraid Elevator": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Overhang corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Kraid Elevator": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 224.0,
+                        "y": 168.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Kraid Elevator",
+                        "node": "Door to Fake Block shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Corridor 1": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
+                        }
+                    }
+                },
+                "Door to Overhang corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 224.0,
+                        "y": 1128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Overhang corridor",
+                        "node": "Door to Fake Block shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Corridor 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Overhang corridor": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x128_y202"
+            },
+            "nodes": {
+                "Door to Fake Block shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Fake Block shaft",
+                        "node": "Door to Overhang corridor"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Blue-tinted shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph Ball",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Energy Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hi-Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Blue-tinted shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 992.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Blue-tinted shaft",
+                        "node": "Door to Overhang corridor"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Fake Block shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 552.0,
+                        "y": 216.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100027
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 1,
+                    "location_category": "minor",
+                    "connections": {
+                        "Door to Fake Block shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Blue-tinted shaft": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x168_y112"
+            },
+            "nodes": {
+                "Door to Overhang corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 184.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Overhang corridor",
+                        "node": "Door to Blue-tinted shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Vestibule": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Vestibule": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 1864.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Vestibule",
+                        "node": "Door to Blue-tinted shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Overhang corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Long Beam corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Corridor 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 3064.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 2",
+                        "node": "Door to Blue-tinted shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Long Beam corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Long Beam corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 2344.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Long Beam corridor",
+                        "node": "Door to Blue-tinted shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Vestibule": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Corridor 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Long Beam corridor": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x136_y67"
+            },
+            "nodes": {
+                "Door to Long Beam room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Long Beam room",
+                        "node": "Door to Long Beam corridor"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Blue-tinted shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Blue-tinted shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 744.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Blue-tinted shaft",
+                        "node": "Door to Long Beam corridor"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Long Beam room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Long Beam room": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x104_y65"
+            },
+            "nodes": {
+                "Door to Long Beam corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 72.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Long Beam corridor",
+                        "node": "Door to Long Beam room"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Long Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Long Beam)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 120.0,
+                        "y": 120.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100028
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 2,
+                    "location_category": "major",
+                    "connections": {
+                        "Door to Long Beam corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Corridor 2": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x112_y22"
+            },
+            "nodes": {
+                "Door to Blue-tinted shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1512.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Blue-tinted shaft",
+                        "node": "Door to Corridor 2"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Entrance to Tourian": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Entrance to Tourian": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Entrance to Tourian",
+                        "node": "Door to Corridor 2"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Blue-tinted shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Entrance to Tourian": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x56_y22"
+            },
+            "nodes": {
+                "Door to Corridor 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 2",
+                        "node": "Door to Entrance to Tourian"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Transport to Tourian": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Transport to Tourian": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Transport to Tourian",
+                        "node": "Door to Entrance to Tourian"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
+                }
+            }
+        },
+        "Vestibule": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x184_y96"
+            },
+            "nodes": {
+                "Door to Blue-tinted shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 40.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Blue-tinted shaft",
+                        "node": "Door to Vestibule"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Gold-colored shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Gold-colored shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 40.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Gold-colored shaft",
+                        "node": "Door to Vestibule"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Blue-tinted shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Gold-colored shaft": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x200_y90"
+            },
+            "nodes": {
+                "Door to Vestibule": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 1144.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Vestibule",
+                        "node": "Door to Gold-colored shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Center of room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Corridor 4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 1144.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 4",
+                        "node": "Door to Gold-colored shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Center of room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Corridor 5": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 184.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 5",
+                        "node": "Door to Gold-colored shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Center of room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Corridor 3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 2104.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 3",
+                        "node": "Door to Gold-colored shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Center of room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Center of room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 128.0,
+                        "y": 1144.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Vestibule": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Corridor 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Corridor 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Corridor 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Corridor 5": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x272_y157"
+            },
+            "nodes": {
+                "Pickup (Missile Launcher)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1144.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100035
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 9,
+                    "location_category": "major",
+                    "connections": {
+                        "Center of room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Gold-colored shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Gold-colored shaft",
+                        "node": "Door to Corridor 5"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Center of room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Transport to Norfair": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2024.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Transport to Norfair",
+                        "node": "Door to Corridor 5"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Center of room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Center of room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1144.0,
+                        "y": 148.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Missile Launcher)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Gold-colored shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Transport to Norfair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Transport to Norfair": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x344_y155"
+            },
+            "nodes": {
+                "Door to Corridor 5": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 104.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 5",
+                        "node": "Door to Transport to Norfair"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Teleporter to Norfair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Teleporter to Norfair": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 128.0,
+                        "y": 80.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100024
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Norfair",
+                        "area": "Transport to Brinstar",
+                        "node": "Teleporter to Brinstar"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Corridor 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Corridor 3": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x256_y37"
+            },
+            "nodes": {
+                "Door to Gold-colored shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Gold-colored shaft",
+                        "node": "Door to Corridor 3"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Corridor-connecting room": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
+                        }
+                    }
+                },
+                "Door to Corridor-connecting room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1512.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor-connecting room",
+                        "node": "Door to Corridor 3"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Gold-colored shaft": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
+                        }
+                    }
+                }
+            }
+        },
+        "Corridor-connecting room": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x312_y30"
+            },
+            "nodes": {
+                "Door to Corridor 3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 3",
+                        "node": "Door to Corridor-connecting room"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 376.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Varia Suit corridor",
+                        "node": "Door to Corridor-connecting room"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Corridor 7": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 7",
+                        "node": "Door to Corridor-connecting room"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Bridge": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 128.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Corridor 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Varia Suit corridor": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Hi-Jump",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Corridor 7": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Varia Suit corridor": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x272_y22"
+            },
+            "nodes": {
+                "Door to Corridor-connecting room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1000.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor-connecting room",
+                        "node": "Door to Varia Suit corridor"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Varia Suit room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Varia Suit room",
+                        "node": "Door to Varia Suit corridor"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Corridor-connecting room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Varia Suit room": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x232_y20"
+            },
+            "nodes": {
+                "Pickup (Varia Suit)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 120.0,
+                        "y": 184.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100029
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 3,
+                    "location_category": "major",
+                    "connections": {
+                        "Door to Varia Suit corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Varia Suit corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Varia Suit corridor",
+                        "node": "Door to Varia Suit room"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Varia Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "End shaft": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x472_y67"
+            },
+            "nodes": {
+                "Door to Corridor 7": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 1144.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 7",
+                        "node": "Door to End shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Bomb access corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Bomb access corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 664.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Bomb access corridor",
+                        "node": "Door to End shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Corridor 7": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Ice Beam",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Corridor 6": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Corridor 6": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 184.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 6",
+                        "node": "Door to End shaft"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Bomb access corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Bomb access corridor": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x432_y67"
+            },
+            "nodes": {
+                "Door to Bomb room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Bomb room",
+                        "node": "Door to Bomb access corridor"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to End shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to End shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1000.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "End shaft",
+                        "node": "Door to Bomb access corridor"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Bomb room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Bomb room": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x392_y67"
+            },
+            "nodes": {
+                "Pickup (Bombs)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 120.0,
+                        "y": 184.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100032
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 6,
+                    "location_category": "major",
+                    "connections": {
+                        "Door to Bomb access corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Bomb access corridor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Bomb access corridor",
+                        "node": "Door to Bomb room"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Bombs)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Kraid Elevator": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x104_y260"
+            },
+            "nodes": {
+                "Door to Fake Block shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 88.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Fake Block shaft",
+                        "node": "Door to Kraid Elevator"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Teleporter to Kraid": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Teleporter to Kraid": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 128.0,
+                        "y": 56.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100019
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Kraid",
+                        "area": "Entrance shaft",
+                        "node": "Teleporter to Brinstar"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Fake Block shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Corridor 4": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x240_y97"
+            },
+            "nodes": {
+                "Door to Gold-colored shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Gold-colored shaft",
+                        "node": "Door to Corridor 4"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Bomb Block shaft (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Bomb Block shaft (Left)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1000.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Bomb Block shaft (Left)",
+                        "node": "Door to Corridor 4"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Gold-colored shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Cavernous hall": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x320_y127"
+            },
+            "nodes": {
+                "Door to Bomb Block shaft (Right)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 488.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Bomb Block shaft (Right)",
+                        "node": "Door to Cavernous hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Ice Beam room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Ice Beam room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Ice Beam room",
+                        "node": "Door to Cavernous hall"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Bomb Block shaft (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Ice Beam room": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x296_y127"
+            },
+            "nodes": {
+                "Door to Cavernous hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Cavernous hall",
+                        "node": "Door to Ice Beam room"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Ice Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Ice Beam)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 120.0,
+                        "y": 184.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100034
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 8,
+                    "location_category": "major",
+                    "connections": {
+                        "Door to Cavernous hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Transport to Tourian": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x40_y22"
+            },
+            "nodes": {
+                "Door to Entrance to Tourian": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Entrance to Tourian",
+                        "node": "Door to Transport to Tourian"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Teleporter to Tourian": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Teleporter to Tourian": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 128.0,
+                        "y": 104.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100023
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Entrance shaft",
+                        "node": "Teleporter to Brinstar"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Entrance to Tourian": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Corridor 6": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x464_y97"
+            },
+            "nodes": {
+                "Door to End shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1768.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "End shaft",
+                        "node": "Door to Corridor 6"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Bomb Block shaft (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Bomb Block shaft (Right)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Bomb Block shaft (Right)",
+                        "node": "Door to Corridor 6"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to End shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 632.0,
+                        "y": 104.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100033
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 7,
+                    "location_category": "minor",
+                    "connections": {
+                        "Door to Bomb Block shaft (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Corridor 7": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x392_y37"
+            },
+            "nodes": {
+                "Door to Corridor-connecting room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor-connecting room",
+                        "node": "Door to Corridor 7"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Secret Path": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to End shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2280.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "End shaft",
+                        "node": "Door to Corridor 7"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Secret Path": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
+                        }
+                    }
+                },
+                "Pickup (Missile Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 888.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100030
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 4,
+                    "location_category": "minor",
+                    "connections": {
+                        "Door to Corridor-connecting room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Energy Tank)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1656.0,
+                        "y": 104.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100031
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 5,
+                    "location_category": "minor",
+                    "connections": {
+                        "Door to End shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Secret Path": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1312.0,
+                        "y": 80.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Corridor-connecting room": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
+                        },
+                        "Door to End shaft": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
+                        }
+                    }
+                }
+            }
+        },
+        "Bomb Block shaft (Left)": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x280_y113"
+            },
+            "nodes": {
+                "Door to Corridor 4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 648.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 4",
+                        "node": "Door to Bomb Block shaft (Left)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Bomb Block shaft connecting room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Bomb Block shaft connecting room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 648.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Bomb Block shaft connecting room",
+                        "node": "Door to Bomb Block shaft (Left)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Corridor 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Bomb Block shaft connecting room": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x312_y97"
+            },
+            "nodes": {
+                "Door to Bomb Block shaft (Left)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Bomb Block shaft (Left)",
+                        "node": "Door to Bomb Block shaft connecting room"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Bomb Block shaft (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Bomb Block shaft (Right)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 744.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Bomb Block shaft (Right)",
+                        "node": "Door to Bomb Block shaft connecting room"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Bomb Block shaft (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Bomb Block shaft (Right)": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Brinstar/x344_y113"
+            },
+            "nodes": {
+                "Door to Corridor 6": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 632.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Corridor 6",
+                        "node": "Door to Bomb Block shaft (Right)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Bomb Block shaft connecting room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 632.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Bomb Block shaft connecting room",
+                        "node": "Door to Bomb Block shaft (Right)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Cavernous hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 152.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Cavernous hall",
+                        "node": "Door to Bomb Block shaft (Right)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Bridge": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 128.0,
+                        "y": 632.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Corridor 6": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Bomb Block shaft connecting room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Cavernous hall": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
