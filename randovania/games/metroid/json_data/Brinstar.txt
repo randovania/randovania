@@ -1,0 +1,597 @@
+----------------
+Corridor 1
+Extra - map_name: Brinstar/x47_y202
+> Spawn Point; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  > Pickup (Morph Ball)
+      Trivial
+
+> Pickup (Morph Ball); Heals? False
+  * Layers: default
+  * Pickup 0; Category? Major
+  * Extra - object_id: 100018
+  > Door to Fake Block shaft
+      Hi-Jump Boots or Morph Ball
+
+> Door to Fake Block shaft; Heals? False
+  * Layers: default
+  * Normal Door to Fake Block shaft/Door to Corridor 1
+  > Spawn Point
+      Trivial
+  > Pickup (Morph Ball)
+      Trivial
+
+----------------
+Fake Block shaft
+Extra - map_name: Brinstar/x88_y233
+> Door to Corridor 1; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 1/Door to Fake Block shaft
+  > Door to Kraid Elevator
+      Can Use Bombs
+  > Door to Overhang corridor
+      Trivial
+
+> Door to Kraid Elevator; Heals? False
+  * Layers: default
+  * Normal Door to Kraid Elevator/Door to Fake Block shaft
+  > Door to Corridor 1
+      Can Use Bombs
+
+> Door to Overhang corridor; Heals? False
+  * Layers: default
+  * Normal Door to Overhang corridor/Door to Fake Block shaft
+  > Door to Corridor 1
+      Trivial
+
+----------------
+Overhang corridor
+Extra - map_name: Brinstar/x128_y202
+> Door to Fake Block shaft; Heals? False
+  * Layers: default
+  * Normal Door to Fake Block shaft/Door to Overhang corridor
+  > Door to Blue-tinted shaft
+      Morph Ball
+  > Pickup (Energy Tank)
+      Hi-Jump Boots
+
+> Door to Blue-tinted shaft; Heals? False
+  * Layers: default
+  * Normal Door to Blue-tinted shaft/Door to Overhang corridor
+  > Door to Fake Block shaft
+      Morph Ball
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 1; Category? Minor
+  * Extra - object_id: 100027
+  > Door to Fake Block shaft
+      Trivial
+
+----------------
+Blue-tinted shaft
+Extra - map_name: Brinstar/x168_y112
+> Door to Overhang corridor; Heals? False
+  * Layers: default
+  * Normal Door to Overhang corridor/Door to Blue-tinted shaft
+  > Door to Vestibule
+      Trivial
+
+> Door to Vestibule; Heals? False
+  * Layers: default
+  * Normal Door to Vestibule/Door to Blue-tinted shaft
+  > Door to Overhang corridor
+      Trivial
+  > Door to Long Beam corridor
+      Trivial
+
+> Door to Corridor 2; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 2/Door to Blue-tinted shaft
+  > Door to Long Beam corridor
+      Trivial
+
+> Door to Long Beam corridor; Heals? False
+  * Layers: default
+  * Normal Door to Long Beam corridor/Door to Blue-tinted shaft
+  > Door to Vestibule
+      Trivial
+  > Door to Corridor 2
+      Trivial
+
+----------------
+Long Beam corridor
+Extra - map_name: Brinstar/x136_y67
+> Door to Long Beam room; Heals? False
+  * Layers: default
+  * Missile Door to Long Beam room/Door to Long Beam corridor
+  > Door to Blue-tinted shaft
+      Trivial
+
+> Door to Blue-tinted shaft; Heals? False
+  * Layers: default
+  * Normal Door to Blue-tinted shaft/Door to Long Beam corridor
+  > Door to Long Beam room
+      Trivial
+
+----------------
+Long Beam room
+Extra - map_name: Brinstar/x104_y65
+> Door to Long Beam corridor; Heals? False
+  * Layers: default
+  * Missile Door to Long Beam corridor/Door to Long Beam room
+  > Pickup (Long Beam)
+      Trivial
+
+> Pickup (Long Beam); Heals? False
+  * Layers: default
+  * Pickup 2; Category? Major
+  * Extra - object_id: 100028
+  > Door to Long Beam corridor
+      Trivial
+
+----------------
+Corridor 2
+Extra - map_name: Brinstar/x112_y22
+> Door to Blue-tinted shaft; Heals? False
+  * Layers: default
+  * Normal Door to Blue-tinted shaft/Door to Corridor 2
+  > Door to Entrance to Tourian
+      Trivial
+
+> Door to Entrance to Tourian; Heals? False
+  * Layers: default
+  * Missile Door to Entrance to Tourian/Door to Corridor 2
+  > Door to Blue-tinted shaft
+      Trivial
+
+----------------
+Entrance to Tourian
+Extra - map_name: Brinstar/x56_y22
+> Door to Corridor 2; Heals? False
+  * Layers: default
+  * Missile Door to Corridor 2/Door to Entrance to Tourian
+  > Door to Transport to Tourian
+      Morph Ball and After Kraid Boss Killed and After Ridley Boss Killed
+
+> Door to Transport to Tourian; Heals? False
+  * Layers: default
+  * Normal Door to Transport to Tourian/Door to Entrance to Tourian
+  * Extra - different_strongly_connected_component: True
+
+----------------
+Vestibule
+Extra - map_name: Brinstar/x184_y96
+> Door to Blue-tinted shaft; Heals? False
+  * Layers: default
+  * Normal Door to Blue-tinted shaft/Door to Vestibule
+  > Door to Gold-colored shaft
+      Trivial
+
+> Door to Gold-colored shaft; Heals? False
+  * Layers: default
+  * Normal Door to Gold-colored shaft/Door to Vestibule
+  > Door to Blue-tinted shaft
+      Trivial
+
+----------------
+Gold-colored shaft
+Extra - map_name: Brinstar/x200_y90
+> Door to Vestibule; Heals? False
+  * Layers: default
+  * Normal Door to Vestibule/Door to Gold-colored shaft
+  > Center of room
+      Trivial
+
+> Door to Corridor 4; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 4/Door to Gold-colored shaft
+  > Center of room
+      Trivial
+
+> Door to Corridor 5; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 5/Door to Gold-colored shaft
+  > Center of room
+      Trivial
+
+> Door to Corridor 3; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 3/Door to Gold-colored shaft
+  > Center of room
+      Trivial
+
+> Center of room; Heals? False
+  * Layers: default
+  * Extra - different_strongly_connected_component: True
+  > Door to Vestibule
+      Trivial
+  > Door to Corridor 4
+      Trivial
+  > Door to Corridor 5
+      Trivial
+  > Door to Corridor 3
+      Trivial
+
+----------------
+Corridor 5
+Extra - map_name: Brinstar/x272_y157
+> Pickup (Missile Launcher); Heals? False
+  * Layers: default
+  * Pickup 9; Category? Major
+  * Extra - object_id: 100035
+  > Center of room
+      Trivial
+
+> Door to Gold-colored shaft; Heals? False
+  * Layers: default
+  * Normal Door to Gold-colored shaft/Door to Corridor 5
+  > Center of room
+      Trivial
+
+> Door to Transport to Norfair; Heals? False
+  * Layers: default
+  * Normal Door to Transport to Norfair/Door to Corridor 5
+  > Center of room
+      Trivial
+
+> Center of room; Heals? False
+  * Layers: default
+  * Extra - different_strongly_connected_component: True
+  > Pickup (Missile Launcher)
+      Trivial
+  > Door to Gold-colored shaft
+      Trivial
+  > Door to Transport to Norfair
+      Trivial
+
+----------------
+Transport to Norfair
+Extra - map_name: Brinstar/x344_y155
+> Door to Corridor 5; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 5/Door to Transport to Norfair
+  > Teleporter to Norfair
+      Trivial
+
+> Teleporter to Norfair; Heals? False
+  * Layers: default
+  * Teleporter to Transport to Brinstar/Teleporter to Brinstar; Excluded from Dock Lock Rando
+  * Extra - object_id: 100024
+  > Door to Corridor 5
+      Trivial
+
+----------------
+Corridor 3
+Extra - map_name: Brinstar/x256_y37
+> Door to Gold-colored shaft; Heals? False
+  * Layers: default
+  * Normal Door to Gold-colored shaft/Door to Corridor 3
+  > Door to Corridor-connecting room
+      Can Use Bombs
+
+> Door to Corridor-connecting room; Heals? False
+  * Layers: default
+  * Normal Door to Corridor-connecting room/Door to Corridor 3
+  > Door to Gold-colored shaft
+      Can Use Bombs
+
+----------------
+Corridor-connecting room
+Extra - map_name: Brinstar/x312_y30
+> Door to Corridor 3; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 3/Door to Corridor-connecting room
+  > Bridge
+      Trivial
+
+> Door to Varia Suit corridor; Heals? False
+  * Layers: default
+  * Normal Door to Varia Suit corridor/Door to Corridor-connecting room
+  > Bridge
+      Trivial
+
+> Door to Corridor 7; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 7/Door to Corridor-connecting room
+  > Bridge
+      Trivial
+
+> Bridge; Heals? False
+  * Layers: default
+  * Extra - different_strongly_connected_component: True
+  > Door to Corridor 3
+      Trivial
+  > Door to Varia Suit corridor
+      Hi-Jump Boots
+  > Door to Corridor 7
+      Trivial
+
+----------------
+Varia Suit corridor
+Extra - map_name: Brinstar/x272_y22
+> Door to Corridor-connecting room; Heals? False
+  * Layers: default
+  * Normal Door to Corridor-connecting room/Door to Varia Suit corridor
+  > Door to Varia Suit room
+      Trivial
+
+> Door to Varia Suit room; Heals? False
+  * Layers: default
+  * Missile Door to Varia Suit room/Door to Varia Suit corridor
+  > Door to Corridor-connecting room
+      Trivial
+
+----------------
+Varia Suit room
+Extra - map_name: Brinstar/x232_y20
+> Pickup (Varia Suit); Heals? False
+  * Layers: default
+  * Pickup 3; Category? Major
+  * Extra - object_id: 100029
+  > Door to Varia Suit corridor
+      Trivial
+
+> Door to Varia Suit corridor; Heals? False
+  * Layers: default
+  * Missile Door to Varia Suit corridor/Door to Varia Suit room
+  > Pickup (Varia Suit)
+      Trivial
+
+----------------
+End shaft
+Extra - map_name: Brinstar/x472_y67
+> Door to Corridor 7; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 7/Door to End shaft
+  > Door to Bomb access corridor
+      Trivial
+
+> Door to Bomb access corridor; Heals? False
+  * Layers: default
+  * Normal Door to Bomb access corridor/Door to End shaft
+  > Door to Corridor 7
+      Ice Beam
+  > Door to Corridor 6
+      Trivial
+
+> Door to Corridor 6; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 6/Door to End shaft
+  > Door to Bomb access corridor
+      Trivial
+
+----------------
+Bomb access corridor
+Extra - map_name: Brinstar/x432_y67
+> Door to Bomb room; Heals? False
+  * Layers: default
+  * Missile Door to Bomb room/Door to Bomb access corridor
+  > Door to End shaft
+      Trivial
+
+> Door to End shaft; Heals? False
+  * Layers: default
+  * Normal Door to End shaft/Door to Bomb access corridor
+  > Door to Bomb room
+      Trivial
+
+----------------
+Bomb room
+Extra - map_name: Brinstar/x392_y67
+> Pickup (Bombs); Heals? False
+  * Layers: default
+  * Pickup 6; Category? Major
+  * Extra - object_id: 100032
+  > Door to Bomb access corridor
+      Trivial
+
+> Door to Bomb access corridor; Heals? False
+  * Layers: default
+  * Missile Door to Bomb access corridor/Door to Bomb room
+  > Pickup (Bombs)
+      Trivial
+
+----------------
+Kraid Elevator
+Extra - map_name: Brinstar/x104_y260
+> Door to Fake Block shaft; Heals? False
+  * Layers: default
+  * Normal Door to Fake Block shaft/Door to Kraid Elevator
+  > Teleporter to Kraid
+      Trivial
+
+> Teleporter to Kraid; Heals? False
+  * Layers: default
+  * Teleporter to Entrance shaft/Teleporter to Brinstar; Excluded from Dock Lock Rando
+  * Extra - object_id: 100019
+  > Door to Fake Block shaft
+      Trivial
+
+----------------
+Corridor 4
+Extra - map_name: Brinstar/x240_y97
+> Door to Gold-colored shaft; Heals? False
+  * Layers: default
+  * Normal Door to Gold-colored shaft/Door to Corridor 4
+  > Door to Bomb Block shaft (Left)
+      Trivial
+
+> Door to Bomb Block shaft (Left); Heals? False
+  * Layers: default
+  * Normal Door to Bomb Block shaft (Left)/Door to Corridor 4
+  > Door to Gold-colored shaft
+      Trivial
+
+----------------
+Cavernous hall
+Extra - map_name: Brinstar/x320_y127
+> Door to Bomb Block shaft (Right); Heals? False
+  * Layers: default
+  * Normal Door to Bomb Block shaft (Right)/Door to Cavernous hall
+  > Door to Ice Beam room
+      Trivial
+
+> Door to Ice Beam room; Heals? False
+  * Layers: default
+  * Missile Door to Ice Beam room/Door to Cavernous hall
+  > Door to Bomb Block shaft (Right)
+      Trivial
+
+----------------
+Ice Beam room
+Extra - map_name: Brinstar/x296_y127
+> Door to Cavernous hall; Heals? False
+  * Layers: default
+  * Missile Door to Cavernous hall/Door to Ice Beam room
+  > Pickup (Ice Beam)
+      Trivial
+
+> Pickup (Ice Beam); Heals? False
+  * Layers: default
+  * Pickup 8; Category? Major
+  * Extra - object_id: 100034
+  > Door to Cavernous hall
+      Trivial
+
+----------------
+Transport to Tourian
+Extra - map_name: Brinstar/x40_y22
+> Door to Entrance to Tourian; Heals? False
+  * Layers: default
+  * Normal Door to Entrance to Tourian/Door to Transport to Tourian
+  > Teleporter to Tourian
+      Trivial
+
+> Teleporter to Tourian; Heals? False
+  * Layers: default
+  * Teleporter to Entrance shaft/Teleporter to Brinstar; Excluded from Dock Lock Rando
+  * Extra - object_id: 100023
+  > Door to Entrance to Tourian
+      Trivial
+
+----------------
+Corridor 6
+Extra - map_name: Brinstar/x464_y97
+> Door to End shaft; Heals? False
+  * Layers: default
+  * Normal Door to End shaft/Door to Corridor 6
+  > Door to Bomb Block shaft (Right)
+      Trivial
+
+> Door to Bomb Block shaft (Right); Heals? False
+  * Layers: default
+  * Normal Door to Bomb Block shaft (Right)/Door to Corridor 6
+  > Door to End shaft
+      Trivial
+  > Pickup (Energy Tank)
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 7; Category? Minor
+  * Extra - object_id: 100033
+  > Door to Bomb Block shaft (Right)
+      Trivial
+
+----------------
+Corridor 7
+Extra - map_name: Brinstar/x392_y37
+> Door to Corridor-connecting room; Heals? False
+  * Layers: default
+  * Normal Door to Corridor-connecting room/Door to Corridor 7
+  > Pickup (Missile Tank)
+      Trivial
+  > Secret Path
+      Trivial
+
+> Door to End shaft; Heals? False
+  * Layers: default
+  * Normal Door to End shaft/Door to Corridor 7
+  > Pickup (Energy Tank)
+      Trivial
+  > Secret Path
+      Can Use Bombs
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 4; Category? Minor
+  * Extra - object_id: 100030
+  > Door to Corridor-connecting room
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 5; Category? Minor
+  * Extra - object_id: 100031
+  > Door to End shaft
+      Trivial
+
+> Secret Path; Heals? False
+  * Layers: default
+  * Extra - different_strongly_connected_component: True
+  > Door to Corridor-connecting room
+      Can Use Bombs
+  > Door to End shaft
+      Can Use Bombs
+
+----------------
+Bomb Block shaft (Left)
+Extra - map_name: Brinstar/x280_y113
+> Door to Corridor 4; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 4/Door to Bomb Block shaft (Left)
+  > Door to Bomb Block shaft connecting room
+      Trivial
+
+> Door to Bomb Block shaft connecting room; Heals? False
+  * Layers: default
+  * Normal Door to Bomb Block shaft connecting room/Door to Bomb Block shaft (Left)
+  > Door to Corridor 4
+      Trivial
+
+----------------
+Bomb Block shaft connecting room
+Extra - map_name: Brinstar/x312_y97
+> Door to Bomb Block shaft (Left); Heals? False
+  * Layers: default
+  * Normal Door to Bomb Block shaft (Left)/Door to Bomb Block shaft connecting room
+  > Door to Bomb Block shaft (Right)
+      Trivial
+
+> Door to Bomb Block shaft (Right); Heals? False
+  * Layers: default
+  * Normal Door to Bomb Block shaft (Right)/Door to Bomb Block shaft connecting room
+  > Door to Bomb Block shaft (Left)
+      Trivial
+
+----------------
+Bomb Block shaft (Right)
+Extra - map_name: Brinstar/x344_y113
+> Door to Corridor 6; Heals? False
+  * Layers: default
+  * Normal Door to Corridor 6/Door to Bomb Block shaft (Right)
+  > Bridge
+      Trivial
+
+> Door to Bomb Block shaft connecting room; Heals? False
+  * Layers: default
+  * Normal Door to Bomb Block shaft connecting room/Door to Bomb Block shaft (Right)
+  > Bridge
+      Trivial
+
+> Door to Cavernous hall; Heals? False
+  * Layers: default
+  * Normal Door to Cavernous hall/Door to Bomb Block shaft (Right)
+  > Bridge
+      Trivial
+
+> Bridge; Heals? False
+  * Layers: default
+  > Door to Corridor 6
+      Trivial
+  > Door to Bomb Block shaft connecting room
+      Trivial
+  > Door to Cavernous hall
+      Can Use Bombs
+
