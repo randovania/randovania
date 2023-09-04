@@ -78,7 +78,7 @@ game_data: game.GameData = game.GameData(
             "- Industrial Complex - Breeding Grounds Fly Stadium\n"
             "- The Tower - Tower Exterior North\n"
             "- Distribution Center - Distribution Facility Tower East\n"
-            "- The Depths - Lair Shinespark Cave East\n"
+            "- The Depths - Bubble Lair Shinespark Cave\n"
             "- Genetics Laboratory - Destroyed Chozo Memorial"),
         ("What are shinies?",
          "Some items have a 1 in 1024 chance of being a Pokémon-style shiny: "
