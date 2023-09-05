@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: During generation, if no alternatives have a non-zero weight, try weighting by how many additional Nodes are reachable.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Ghavoran
+
+- Changed: The connection of EMMI Zone Exit Southeast and EMMI Zone Exit West is now a proper door. This enables it to now be shuffled in door lock rando.
+
 ## [6.2.1] - 2023-09-??
 
 - Nothing.
