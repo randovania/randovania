@@ -2618,8 +2618,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Low Mid-Air Morph Tunnel Climb"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Tunnel Climb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2692,7 +2709,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Shinespark up",
+                                                        "comment": "Shinespark Up (Stored from previous room)",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2708,7 +2725,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Shinesparking",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -3112,7 +3129,7 @@
                         }
                     }
                 },
-                "Tunnel to Surface Space Jump Challenge": {
+                "Tunnel to Surface Hi-Jump Challenge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3129,7 +3146,7 @@
                     "dock_type": "tunnel",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Surface Space Jump Challenge",
+                        "area": "Surface Hi-Jump Challenge",
                         "node": "Tunnel to Surface Gunzoo Room"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
@@ -3259,26 +3276,14 @@
                                 ]
                             }
                         },
-                        "Tunnel to Surface Space Jump Challenge": {
-                            "type": "or",
+                        "Tunnel to Surface Hi-Jump Challenge": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Any Bombs"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Low Mid-Air Morph Tunnel Climb"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
                                     },
                                     {
                                         "type": "or",
@@ -3286,51 +3291,16 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "template",
+                                                    "data": "Tunnel Climb"
+                                                },
+                                                {
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Speed Booster",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MidAirMorph",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Charged Bomb Jump"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "ChargedBombJump",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Shinesparking",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -3357,7 +3327,7 @@
                 }
             }
         },
-        "Surface Space Jump Challenge": {
+        "Surface Hi-Jump Challenge": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h09A",
@@ -3399,7 +3369,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Surface Gunzoo Room",
-                        "node": "Tunnel to Surface Space Jump Challenge"
+                        "node": "Tunnel to Surface Hi-Jump Challenge"
                     },
                     "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
@@ -3780,7 +3750,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Mines Access": {
+                "Dock to Mining Facility Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3797,7 +3767,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Access",
+                        "area": "Mining Facility Access",
                         "node": "Dock to Spike Maze"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -3973,7 +3943,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Mines Access": {
+                        "Dock to Mining Facility Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4061,7 +4031,7 @@
                 }
             }
         },
-        "Mines Access": {
+        "Mining Facility Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h10a",
@@ -4111,7 +4081,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Spike Maze",
-                        "node": "Dock to Mines Access"
+                        "node": "Dock to Mining Facility Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4128,7 +4098,7 @@
                         }
                     }
                 },
-                "Area Transition to Mines 3-Shape Shaft": {
+                "Area Transition to Mining Facility 3-Shape Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4145,8 +4115,8 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines 3-Shape Shaft",
-                        "node": "Area Transition to Mines Access"
+                        "area": "Mining Facility 3-Shape Shaft",
+                        "node": "Area Transition to Mining Facility Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4225,7 +4195,7 @@
                         }
                     }
                 },
-                "Dock to Hidden Mines Route": {
+                "Dock to Hidden Mining Facility Route": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4242,8 +4212,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Hidden Mines Route",
-                        "node": "Dock to Mines Access"
+                        "area": "Hidden Mining Facility Route",
+                        "node": "Dock to Mining Facility Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4310,7 +4280,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Area Transition to Mines 3-Shape Shaft": {
+                        "Area Transition to Mining Facility 3-Shape Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4327,7 +4297,7 @@
                                 ]
                             }
                         },
-                        "Dock to Hidden Mines Route": {
+                        "Dock to Hidden Mining Facility Route": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4402,7 +4372,7 @@
                 }
             }
         },
-        "Hidden Mines Route": {
+        "Hidden Mining Facility Route": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h10b",
@@ -4422,7 +4392,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Mines Access": {
+                "Dock to Mining Facility Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4439,8 +4409,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Access",
-                        "node": "Dock to Hidden Mines Route"
+                        "area": "Mining Facility Access",
+                        "node": "Dock to Hidden Mining Facility Route"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4475,7 +4445,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Bend Chasm",
-                        "node": "Dock to Hidden Mines Route"
+                        "node": "Dock to Hidden Mining Facility Route"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4483,7 +4453,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Mines Access": {
+                        "Dock to Mining Facility Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4642,7 +4612,7 @@
                         }
                     }
                 },
-                "Dock to Hidden Mines Route": {
+                "Dock to Hidden Mining Facility Route": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4659,7 +4629,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Hidden Mines Route",
+                        "area": "Hidden Mining Facility Route",
                         "node": "Dock to Bend Chasm"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -4979,32 +4949,6 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Space Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Walljump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
@@ -5014,12 +4958,89 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MidAirMorph",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Space Jump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "MidAirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Hi-Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "MidAirMorph",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -5867,6 +5888,67 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark (TODO: add short charge option)",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6708,7 +6790,7 @@
                                 ]
                             }
                         },
-                        "Dock to Depths Shaft": {
+                        "Dock to Rite of the Serpent": {
                             "type": "and",
                             "data": {
                                 "comment": "New goal removes vanilla requirement",
@@ -6766,7 +6848,7 @@
                         }
                     }
                 },
-                "Dock to Depths Shaft": {
+                "Dock to Rite of the Serpent": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6783,7 +6865,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Depths Shaft",
+                        "area": "Rite of the Serpent",
                         "node": "Dock to The Descent"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -6808,7 +6890,7 @@
                 }
             }
         },
-        "Depths Shaft": {
+        "Rite of the Serpent": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h32",
@@ -6854,7 +6936,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "The Descent",
-                        "node": "Dock to Depths Shaft"
+                        "node": "Dock to Rite of the Serpent"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6897,7 +6979,7 @@
                         }
                     }
                 },
-                "Dock to Depths Save Station": {
+                "Dock to Southern Cave Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6914,8 +6996,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Depths Save Station",
-                        "node": "Dock to Depths Shaft"
+                        "area": "Southern Cave Save Station",
+                        "node": "Dock to Rite of the Serpent"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7078,7 +7160,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Depths Save Station": {
+                        "Dock to Southern Cave Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7221,7 +7303,7 @@
                 }
             }
         },
-        "Depths Save Station": {
+        "Southern Cave Save Station": {
             "default_node": "Save Station",
             "extra": {
                 "map_name": "rm_a0h33",
@@ -7250,14 +7332,14 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Depths Shaft": {
+                        "Dock to Rite of the Serpent": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Depths Halzyn Hallway": {
+                        "Dock to Halzyn Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7266,7 +7348,7 @@
                         }
                     }
                 },
-                "Dock to Depths Shaft": {
+                "Dock to Rite of the Serpent": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7283,8 +7365,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Depths Shaft",
-                        "node": "Dock to Depths Save Station"
+                        "area": "Rite of the Serpent",
+                        "node": "Dock to Southern Cave Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7301,7 +7383,7 @@
                         }
                     }
                 },
-                "Dock to Depths Halzyn Hallway": {
+                "Dock to Halzyn Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7318,8 +7400,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Depths Halzyn Hallway",
-                        "node": "Dock to Depths Save Station"
+                        "area": "Halzyn Hallway",
+                        "node": "Dock to Southern Cave Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7338,7 +7420,7 @@
                 }
             }
         },
-        "Depths Halzyn Hallway": {
+        "Halzyn Hallway": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h34",
@@ -7362,7 +7444,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Depths Save Station": {
+                "Dock to Southern Cave Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7379,8 +7461,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Depths Save Station",
-                        "node": "Dock to Depths Halzyn Hallway"
+                        "area": "Southern Cave Save Station",
+                        "node": "Dock to Halzyn Hallway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7388,7 +7470,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Depths Drivel Road": {
+                        "Dock to Drivel Drive": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7397,7 +7479,7 @@
                         }
                     }
                 },
-                "Dock to Depths Drivel Road": {
+                "Dock to Drivel Drive": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7414,8 +7496,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Depths Drivel Road",
-                        "node": "Dock to Depths Halzyn Hallway"
+                        "area": "Drivel Drive",
+                        "node": "Dock to Halzyn Hallway"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7423,7 +7505,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Depths Save Station": {
+                        "Dock to Southern Cave Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7434,7 +7516,7 @@
                 }
             }
         },
-        "Depths Drivel Road": {
+        "Drivel Drive": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h35",
@@ -7466,7 +7548,7 @@
                 ]
             },
             "nodes": {
-                "Area Transition to The Nest": {
+                "Area Transition to The Depths": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7482,7 +7564,7 @@
                     "valid_starting_location": false,
                     "dock_type": "area_transition",
                     "default_connection": {
-                        "region": "The Nest",
+                        "region": "The Depths",
                         "area": "Hideout Entrance",
                         "node": "Area Transition to Main Caves"
                     },
@@ -7634,7 +7716,7 @@
                         }
                     }
                 },
-                "Dock to Depths Halzyn Hallway": {
+                "Dock to Halzyn Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7651,8 +7733,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Depths Halzyn Hallway",
-                        "node": "Dock to Depths Drivel Road"
+                        "area": "Halzyn Hallway",
+                        "node": "Dock to Drivel Drive"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7684,7 +7766,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Area Transition to The Nest": {
+                        "Area Transition to The Depths": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7701,7 +7783,7 @@
                                 ]
                             }
                         },
-                        "Dock to Depths Halzyn Hallway": {
+                        "Dock to Halzyn Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7734,7 +7816,7 @@
                     "pickup_index": 56,
                     "location_category": "minor",
                     "connections": {
-                        "Area Transition to The Nest": {
+                        "Area Transition to The Depths": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8562,7 +8644,7 @@
                 }
             }
         },
-        "Mines 3-Shape Shaft": {
+        "Mining Facility 3-Shape Shaft": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h16",
@@ -8586,7 +8668,7 @@
                 ]
             },
             "nodes": {
-                "Area Transition to Mines Access": {
+                "Area Transition to Mining Facility Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8603,8 +8685,8 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Access",
-                        "node": "Area Transition to Mines 3-Shape Shaft"
+                        "area": "Mining Facility Access",
+                        "node": "Area Transition to Mining Facility 3-Shape Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8612,7 +8694,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Mines O-Shape Shaft": {
+                        "Dock to Mining Facility O-Shape Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8621,7 +8703,7 @@
                         }
                     }
                 },
-                "Dock to Mines O-Shape Shaft": {
+                "Dock to Mining Facility O-Shape Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8638,8 +8720,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines O-Shape Shaft",
-                        "node": "Dock to Mines 3-Shape Shaft"
+                        "area": "Mining Facility O-Shape Shaft",
+                        "node": "Dock to Mining Facility 3-Shape Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8647,7 +8729,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Area Transition to Mines Access": {
+                        "Area Transition to Mining Facility Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8663,7 +8745,7 @@
                 }
             }
         },
-        "Mines O-Shape Shaft": {
+        "Mining Facility O-Shape Shaft": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h17",
@@ -8687,7 +8769,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Mines 3-Shape Shaft": {
+                "Dock to Mining Facility 3-Shape Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8704,8 +8786,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines 3-Shape Shaft",
-                        "node": "Dock to Mines O-Shape Shaft"
+                        "area": "Mining Facility 3-Shape Shaft",
+                        "node": "Dock to Mining Facility O-Shape Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8713,7 +8795,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Small Moto Corridor": {
+                        "Dock to Moto Miners": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8722,7 +8804,7 @@
                         }
                     }
                 },
-                "Dock to Small Moto Corridor": {
+                "Dock to Moto Miners": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8739,8 +8821,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Small Moto Corridor",
-                        "node": "Dock to Mines O-Shape Shaft"
+                        "area": "Moto Miners",
+                        "node": "Dock to Mining Facility O-Shape Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8748,7 +8830,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Mines 3-Shape Shaft": {
+                        "Dock to Mining Facility 3-Shape Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8765,7 +8847,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Reach highest level with Septogg",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -8777,8 +8859,51 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Hijump Wall"
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Reach Septogg from below",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Hijump Wall"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Speed Booster",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Shinesparking",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "misc",
+                                                                                            "name": "EntranceRando",
+                                                                                            "amount": 1,
+                                                                                            "negate": true
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -8827,7 +8952,7 @@
                 }
             }
         },
-        "Small Moto Corridor": {
+        "Moto Miners": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h17a",
@@ -8847,7 +8972,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Mines O-Shape Shaft": {
+                "Dock to Mining Facility O-Shape Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8864,8 +8989,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines O-Shape Shaft",
-                        "node": "Dock to Small Moto Corridor"
+                        "area": "Mining Facility O-Shape Shaft",
+                        "node": "Dock to Moto Miners"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8900,7 +9025,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Destroyed Drill Cavern",
-                        "node": "Dock to Small Moto Corridor"
+                        "node": "Dock to Moto Miners"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8908,7 +9033,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Mines O-Shape Shaft": {
+                        "Dock to Mining Facility O-Shape Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8935,7 +9060,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Small Moto Corridor": {
+                "Dock to Moto Miners": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8952,7 +9077,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Small Moto Corridor",
+                        "area": "Moto Miners",
                         "node": "Dock to Destroyed Drill Cavern"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -8961,7 +9086,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Long Moto Corridor": {
+                        "Dock to Moto Mania": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8970,7 +9095,7 @@
                         }
                     }
                 },
-                "Dock to Long Moto Corridor": {
+                "Dock to Moto Mania": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8987,7 +9112,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Long Moto Corridor",
+                        "area": "Moto Mania",
                         "node": "Dock to Destroyed Drill Cavern"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -8996,7 +9121,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Small Moto Corridor": {
+                        "Dock to Moto Miners": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9012,7 +9137,7 @@
                 }
             }
         },
-        "Long Moto Corridor": {
+        "Moto Mania": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h17c",
@@ -9070,7 +9195,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Drill Excavation Access",
-                        "node": "Dock to Long Moto Corridor"
+                        "node": "Dock to Moto Mania"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9105,7 +9230,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Destroyed Drill Cavern",
-                        "node": "Dock to Long Moto Corridor"
+                        "node": "Dock to Moto Mania"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9144,7 +9269,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Long Moto Corridor": {
+                "Dock to Moto Mania": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9161,7 +9286,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Long Moto Corridor",
+                        "area": "Moto Mania",
                         "node": "Dock to Drill Excavation Access"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -9205,7 +9330,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Long Moto Corridor": {
+                        "Dock to Moto Mania": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9270,7 +9395,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Mines Intersection": {
+                "Dock to Mining Facility Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9287,7 +9412,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Intersection",
+                        "area": "Mining Facility Intersection",
                         "node": "Dock to Drill Excavation"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -9348,7 +9473,7 @@
                                 ]
                             }
                         },
-                        "Event - DrillCrystal": {
+                        "Event - DrillCrystal from left": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9415,7 +9540,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Mines Intersection": {
+                        "Dock to Mining Facility Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9478,10 +9603,27 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - DrillCrystal from right": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
-                "Event - DrillCrystal": {
+                "Event - DrillCrystal from left": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -9514,10 +9656,35 @@
                             }
                         }
                     }
+                },
+                "Event - DrillCrystal from right": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 757.63,
+                        "y": 141.78,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "A0DrillCrystal",
+                    "connections": {
+                        "After Drill Sequence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "Mines Intersection": {
+        "Mining Facility Intersection": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h18",
@@ -9563,7 +9730,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Drill Excavation",
-                        "node": "Dock to Mines Intersection"
+                        "node": "Dock to Mining Facility Intersection"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9612,7 +9779,7 @@
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Mining Facility Save Station",
-                        "node": "Dock to Mines Intersection"
+                        "node": "Dock to Mining Facility Intersection"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9641,7 +9808,7 @@
                                 ]
                             }
                         },
-                        "Dock to Mines Alpha Nest Access": {
+                        "Dock to Mining Facility Alpha Nest Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9650,7 +9817,7 @@
                         }
                     }
                 },
-                "Dock to Mines Alpha Nest Access": {
+                "Dock to Mining Facility Alpha Nest Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9667,8 +9834,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Alpha Nest Access",
-                        "node": "Dock to Mines Intersection"
+                        "area": "Mining Facility Alpha Nest Access",
+                        "node": "Dock to Mining Facility Intersection"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9677,18 +9844,44 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Mining Facility Save Station": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Hijump With Power Grip Wall"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         },
-                        "Dock to Mines Gamma Nest Access": {
+                        "Dock to Mining Facility Gamma Nest Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9697,7 +9890,7 @@
                         }
                     }
                 },
-                "Dock to Mines Gamma Nest Access": {
+                "Dock to Mining Facility Gamma Nest Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9714,8 +9907,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Gamma Nest Access",
-                        "node": "Dock to Mines Intersection"
+                        "area": "Mining Facility Gamma Nest Access",
+                        "node": "Dock to Mining Facility Intersection"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9723,7 +9916,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Mines Alpha Nest Access": {
+                        "Dock to Mining Facility Alpha Nest Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9763,7 +9956,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Mines Intersection": {
+                        "Dock to Mining Facility Intersection": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9772,7 +9965,7 @@
                         }
                     }
                 },
-                "Dock to Mines Intersection": {
+                "Dock to Mining Facility Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9789,7 +9982,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Intersection",
+                        "area": "Mining Facility Intersection",
                         "node": "Dock to Mining Facility Save Station"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -9809,7 +10002,7 @@
                 }
             }
         },
-        "Mines Alpha Nest Access": {
+        "Mining Facility Alpha Nest Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h20",
@@ -9829,7 +10022,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Mines Intersection": {
+                "Dock to Mining Facility Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9846,8 +10039,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Intersection",
-                        "node": "Dock to Mines Alpha Nest Access"
+                        "area": "Mining Facility Intersection",
+                        "node": "Dock to Mining Facility Alpha Nest Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9855,7 +10048,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Mines Alpha Nest": {
+                        "Dock to Mining Facility Alpha Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9923,13 +10116,48 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Dock to Mines Alpha Nest": {
+                "Dock to Mining Facility Alpha Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9946,8 +10174,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Alpha Nest",
-                        "node": "Dock to Mines Alpha Nest Access"
+                        "area": "Mining Facility Alpha Nest",
+                        "node": "Dock to Mining Facility Alpha Nest Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -9955,7 +10183,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Mines Intersection": {
+                        "Dock to Mining Facility Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10011,6 +10239,41 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -10019,7 +10282,7 @@
                 }
             }
         },
-        "Mines Alpha Nest": {
+        "Mining Facility Alpha Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h21",
@@ -10051,7 +10314,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Mines Alpha Nest Access": {
+                "Dock to Mining Facility Alpha Nest Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10068,8 +10331,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Alpha Nest Access",
-                        "node": "Dock to Mines Alpha Nest"
+                        "area": "Mining Facility Alpha Nest Access",
+                        "node": "Dock to Mining Facility Alpha Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -10107,7 +10370,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha17",
                     "connections": {
-                        "Dock to Mines Alpha Nest Access": {
+                        "Dock to Mining Facility Alpha Nest Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10248,7 +10511,7 @@
                 }
             }
         },
-        "Mines Gamma Nest Access": {
+        "Mining Facility Gamma Nest Access": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h22",
@@ -10280,7 +10543,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Mines Intersection": {
+                "Dock to Mining Facility Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10297,8 +10560,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Intersection",
-                        "node": "Dock to Mines Gamma Nest Access"
+                        "area": "Mining Facility Intersection",
+                        "node": "Dock to Mining Facility Gamma Nest Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -10306,7 +10569,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Mines Gamma Nest": {
+                        "Dock to Mining Facility Gamma Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10362,13 +10625,48 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Dock to Mines Gamma Nest": {
+                "Dock to Mining Facility Gamma Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10385,8 +10683,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Gamma Nest",
-                        "node": "Dock to Mines Gamma Nest Access"
+                        "area": "Mining Facility Gamma Nest",
+                        "node": "Dock to Mining Facility Gamma Nest Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -10394,7 +10692,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Mines Intersection": {
+                        "Dock to Mining Facility Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10450,6 +10748,50 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShortCharge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -10458,7 +10800,7 @@
                 }
             }
         },
-        "Mines Gamma Nest": {
+        "Mining Facility Gamma Nest": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a0h23",
@@ -10486,7 +10828,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Mines Gamma Nest Access": {
+                "Dock to Mining Facility Gamma Nest Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10503,8 +10845,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Main Caves",
-                        "area": "Mines Gamma Nest Access",
-                        "node": "Dock to Mines Gamma Nest"
+                        "area": "Mining Facility Gamma Nest Access",
+                        "node": "Dock to Mining Facility Gamma Nest"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -10542,10 +10884,10 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma10",
                     "connections": {
-                        "Dock to Mines Gamma Nest Access": {
+                        "Dock to Mining Facility Gamma Nest Access": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: Add shinespark with shortcharge using the flitts",
                                 "items": [
                                     {
                                         "type": "and",

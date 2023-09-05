@@ -7,6 +7,7 @@ from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
+from randovania.games.am2r.exporter.joke_hints import JOKE_HINTS
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
@@ -16,10 +17,14 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
+    from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
 
 
 class AM2RPatchDataFactory(PatchDataFactory):
     _EASTER_EGG_SHINY = 1024
+    cosmetic_patches: AM2RCosmeticPatches
+    configuration: AM2RConfiguration
 
     # Effect, sprite, header => new_sprite, new_header
     SHINIES = {
@@ -33,7 +38,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
         ("Nothing", "sItemNothing", "Nothing acquired"): ("sItemShinyNothing", "Shiny Nothing acquired"),
     }
 
-    def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random):
+    def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random) -> dict:
         pickup_map_dict = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.other_player else 0
@@ -67,7 +72,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
         return pickup_map_dict
 
-    def _create_room_dict(self):
+    def _create_room_dict(self) -> dict:
         return {
             area.extra["map_name"]: {
                 "display_name": area.name,
@@ -77,27 +82,28 @@ class AM2RPatchDataFactory(PatchDataFactory):
             for region in self.game.region_list.regions for area in region.areas
         }
 
-    def _create_starting_items_dict(self):
+    def _create_starting_items_dict(self) -> dict:
         starting_resources = self.patches.starting_resources()
         return {
             resource.long_name: quantity
             for resource, quantity in starting_resources.as_resource_gain()
         }
 
-    def _create_starting_location(self):
+    def _create_starting_location(self) -> dict:
         return {
             "save_room": self.game.region_list.node_by_identifier(self.patches.starting_location).extra["save_room"]
         }
 
-    def _create_hash_dict(self):
+    def _create_hash_dict(self) -> dict:
         return {
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
             "session_uuid": str(self.players_config.get_own_uuid())
         }
 
-    def _create_game_patches(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random):
-        def get_locked_ammo_text(ammo_item: str):
+    def _create_game_patches(self, config: AM2RConfiguration, pickup_list: list[ExportedPickupDetails],
+                             item_info: dict, rng: Random) -> dict:
+        def get_locked_ammo_text(ammo_item: str) -> str:
             text = "MISSING TEXT, PLEASE REPORT THIS!"
             for pickup in pickup_list:
                 if pickup.original_pickup.name != ammo_item:
@@ -110,18 +116,19 @@ class AM2RPatchDataFactory(PatchDataFactory):
         pb_text = get_locked_ammo_text("Power Bomb Expansion")
 
         game_patches = {
-            "septogg_helpers": self.patches.configuration.septogg_helpers,
-            "respawn_bomb_blocks": self.patches.configuration.respawn_bomb_blocks,
-            "skip_cutscenes": self.patches.configuration.skip_cutscenes,
-            "skip_item_cutscenes": self.patches.configuration.skip_item_cutscenes,
-            "energy_per_tank": self.patches.configuration.energy_per_tank,
-            "grave_grotto_blocks": self.patches.configuration.grave_grotto_blocks,
-            "fusion_mode": self.patches.configuration.fusion_mode,
-            "supers_on_missile_doors": self.patches.configuration.supers_on_missile_doors,
-            "nest_pipes": self.patches.configuration.nest_pipes,
-            "softlock_prevention_blocks": self.patches.configuration.softlock_prevention_blocks,
-            "a3_entrance_blocks": self.patches.configuration.a3_entrance_blocks,
-            "screw_blocks": self.patches.configuration.screw_blocks,
+            "septogg_helpers": config.septogg_helpers,
+            "respawn_bomb_blocks": config.respawn_bomb_blocks,
+            "skip_cutscenes": config.skip_cutscenes,
+            "skip_save_cutscene": config.skip_save_cutscene,
+            "skip_item_cutscenes": config.skip_item_cutscenes,
+            "energy_per_tank": config.energy_per_tank,
+            "grave_grotto_blocks": config.grave_grotto_blocks,
+            "fusion_mode": config.fusion_mode,
+            "supers_on_missile_doors": config.supers_on_missile_doors,
+            "nest_pipes": config.nest_pipes,
+            "softlock_prevention_blocks": config.softlock_prevention_blocks,
+            "a3_entrance_blocks": config.a3_entrance_blocks,
+            "screw_blocks": config.screw_blocks,
             "sabre_designed_skippy": rng.randint(0, self._EASTER_EGG_SHINY) == 0,
             "locked_missile_text": {
                 "header": item_info["Locked Missile Expansion"]["text_header"],
@@ -136,7 +143,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
                 "description": pb_text,
             },
         }
-        for item, state in self.patches.configuration.ammo_pickup_configuration.pickups_state.items():
+        for item, state in config.ammo_pickup_configuration.pickups_state.items():
             launcher_dict = {
                 "Missile Expansion": "require_missile_launcher",
                 "Super Missile Expansion": "require_super_launcher",
@@ -150,7 +157,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             game_patches[key] = state.requires_main_item
         return game_patches
 
-    def _create_door_locks(self):
+    def _create_door_locks(self) -> dict:
         return {
             str(node.extra["instance_id"]): {
                 "lock": weakness.long_name
@@ -158,11 +165,11 @@ class AM2RPatchDataFactory(PatchDataFactory):
             for node, weakness in self.patches.all_dock_weaknesses()
         }
 
-    def _create_hints(self, rng: Random):
+    def _create_hints(self, rng: Random) -> dict:
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
         ice = [(self.game.resource_database.get_item("Ice Beam"))]
         dna_hint_mapping = {}
-        hint_config = self.patches.configuration.hints
+        hint_config = self.configuration.hints
         if hint_config.artifacts != ItemHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
@@ -182,6 +189,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
         septogg_hints = {}
         gm_newline = "#-#"
+        dud_hint = "This creature did not give any useful DNA hints."
         area_to_amount_map = {
             0: (0, 5),
             1: (5, 9),
@@ -196,12 +204,12 @@ class AM2RPatchDataFactory(PatchDataFactory):
             shuffled_hints = list(dna_hint_mapping.values())[start:end]
             shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
             if not shuffled_hints:
-                shuffled_hints = ["This creature did not give any useful DNA hints."]
+                shuffled_hints = [rng.choice(JOKE_HINTS + [dud_hint])]
             septogg_hints[f"septogg_a{i}"] = gm_newline.join(shuffled_hints)
 
         ice_hint = {}
         if hint_config.ice_beam != ItemHintMode.DISABLED:
-            ice_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+            temp_ice_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 AM2RHintNamer(self.description.all_patches, self.players_config),
@@ -210,7 +218,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
                 False  # TODO: set this to true, when patcher supports setting colors!
             )
             ice_hint = {
-                "chozo_labs": ice_hint[ice[0]]
+                "chozo_labs": temp_ice_hint[ice[0]]
             }
         else:
             ice_hint = {
@@ -222,7 +230,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
         return hints
 
-    def _create_cosmetics(self):
+    def _create_cosmetics(self) -> dict:
         c = self.cosmetic_patches
         return {
             "show_unexplored_map": c.show_unexplored_map,
@@ -261,7 +269,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             key: value["text_desc"]
             for key, value in item_data.items()
         }
-        memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=self.patches.configuration.energy_per_tank)
+        memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=self.configuration.energy_per_tank)
 
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
@@ -271,7 +279,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
             exporter=pickup_exporter.create_pickup_exporter(memo_data, self.players_config, self.game_enum()),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "sItemNothing"),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "sItemUnknown"),
         )
 
         return {
@@ -280,7 +288,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "starting_location": self._create_starting_location(),
             "pickups": self._create_pickups_dict(pickup_list, item_data, self.rng),
             "rooms": self._create_room_dict(),
-            "game_patches": self._create_game_patches(pickup_list, item_data, self.rng),
+            "game_patches": self._create_game_patches(self.configuration, pickup_list, item_data, self.rng),
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics()
