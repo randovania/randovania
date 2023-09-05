@@ -3,13 +3,16 @@ from __future__ import annotations
 import asyncio
 import sys
 from typing import TYPE_CHECKING
-from unittest.mock import MagicMock, call, patch
+from unittest.mock import AsyncMock, MagicMock, call, patch
 
 import pytest
 
 from randovania.games.prime2.patcher import csharp_subprocess
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     import pytest_mock
 
 
@@ -93,7 +96,24 @@ def test_process_command_no_thread(mock_is_windows, mock_is_mac, mocker: pytest_
         mock_set_event.assert_not_called()
 
 
-def test_process_command_file_doesnt_exist(tmp_path):
+def test_process_command_no_mono(mocker: pytest_mock.MockerFixture, tmp_path: Path, mock_is_windows) -> None:
+    executable = tmp_path.joinpath("executable.bin")
+    executable.write_bytes(b"hi")
+
+    mocker.patch("randovania.games.prime2.patcher.csharp_subprocess._process_command_async",
+                 new_callable=AsyncMock,
+                 side_effect=FileNotFoundError)
+
+    if mock_is_windows:
+        expectation = pytest.raises(FileNotFoundError)
+    else:
+        expectation = pytest.raises(UnableToExportError)
+
+    with expectation:
+        csharp_subprocess.process_command([str(executable)], "", MagicMock())
+
+
+def test_process_command_file_doesnt_exist(tmp_path: Path) -> None:
     with pytest.raises(FileNotFoundError):
         csharp_subprocess.process_command([str(tmp_path.joinpath("missing.txt"))], "", MagicMock())
 

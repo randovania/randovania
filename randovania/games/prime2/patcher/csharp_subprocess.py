@@ -8,6 +8,8 @@ from asyncio import IncompleteReadError, StreamReader, StreamWriter
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from randovania.patching.patchers.exceptions import UnableToExportError
+
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
 
@@ -69,8 +71,10 @@ def process_command(args: list[str], input_data: str, read_callback: Callable[[s
     if not Path(args[0]).is_file():
         raise FileNotFoundError(f"{args[0]} not found")
 
+    needs_mono = add_mono_if_needed and not is_windows()
     additional_paths = ()
-    if add_mono_if_needed and not is_windows():
+
+    if needs_mono:
         args = ["mono", *args]
         # Add common Mono paths to PATH, as they aren't there by default
         if is_mac():
@@ -80,9 +84,20 @@ def process_command(args: list[str], input_data: str, read_callback: Callable[[s
 
     work = _process_command_async(args, input_data, read_callback, additional_paths)
 
-    if IO_LOOP is None:
-        if is_windows():
-            asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
-        asyncio.run(work)
-    else:
-        asyncio.run_coroutine_threadsafe(work, IO_LOOP).result()
+    try:
+        if IO_LOOP is None:
+            if is_windows():
+                asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+            asyncio.run(work)
+        else:
+            asyncio.run_coroutine_threadsafe(work, IO_LOOP).result()
+
+    except FileNotFoundError:
+        if needs_mono:
+            raise UnableToExportError(
+                "Unable to find mono.<br /><br />"
+                "Please install it from the "
+                "<a href='https://www.mono-project.com/download/stable'>official website</a>."
+            )
+        else:
+            raise
