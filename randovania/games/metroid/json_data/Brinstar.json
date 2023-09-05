@@ -807,13 +807,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph Ball",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
                                     },
                                     {
                                         "type": "resource",
@@ -850,9 +845,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "different_strongly_connected_component": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
@@ -865,7 +858,29 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Door to Corridor 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hi-Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1105,9 +1120,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "different_strongly_connected_component": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Vestibule": {
@@ -1258,9 +1271,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "different_strongly_connected_component": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Launcher)": {
@@ -1331,7 +1342,7 @@
                 },
                 "Teleporter to Norfair": {
                     "node_type": "dock",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": 128.0,
                         "y": 80.0,
@@ -1563,9 +1574,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "different_strongly_connected_component": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Corridor 3": {
@@ -2058,7 +2067,7 @@
                 },
                 "Teleporter to Kraid": {
                     "node_type": "dock",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": 128.0,
                         "y": 56.0,
@@ -2365,7 +2374,7 @@
                 },
                 "Teleporter to Tourian": {
                     "node_type": "dock",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": 128.0,
                         "y": 104.0,
@@ -2670,9 +2679,7 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "different_strongly_connected_component": true
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Corridor-connecting room": {
