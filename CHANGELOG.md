@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The connection of EMMI Zone Exit Southeast and EMMI Zone Exit West is now a proper door. This enables it to now be shuffled in door lock rando.
 
 ### Metroid Prime 2: Echoes
-- Changed: The default shuffle amount for Progressive Grapple is now 2 instead of 1.
+- Changed: The default shuffle amount for Progressive Grapple is now 2 instead of 0.
 
 ## [6.2.1] - 2023-09-??
 
