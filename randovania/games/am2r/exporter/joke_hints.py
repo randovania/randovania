@@ -14,7 +14,7 @@ JOKE_HINTS = [
     "*Hear the words of O-Lir, last Sentin- wait, wrong game.*",
     "*Skippy is on an epic quest to unravel its true destiny.*",
     "*Uh oh! It seems your Metroid can't crawl, please contact Wisdom Septogg S.A. for help.*",
-    "*Translating Wisdom Septogg noises. It mumbles the words \"The Baby\" over and over.*",
+    "*Translating Wisdom Septogg noises. It mumbles the words 'The Baby' over and over.*",
     "*You know, you should never trust strangers, Sammy.*",
     "*Ash was here! Gary is a Looser!*",
     "*Don't worry, one Metroid kill doesn't make you a serial killer.*",
