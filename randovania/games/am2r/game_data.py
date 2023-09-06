@@ -12,13 +12,14 @@ def _options():
 
 def _gui() -> game.GameGui:
     from randovania.games.am2r import gui
+    from randovania.games.am2r.pickup_database import progressive_items
 
     return game.GameGui(
         game_tab=gui.AM2RGameTabWidget,
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.AM2RCosmeticPatchesDialog,
         export_dialog=gui.AM2RGameExportDialog,
-        progressive_item_gui_tuples=(),
+        progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(),
     )
 
