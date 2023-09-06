@@ -12,8 +12,11 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 
 
-@pytest.mark.parametrize(("has_artifacts"), [(False), (True)])
-def test_dread_format_params(has_artifacts: bool):
+@pytest.mark.parametrize(("has_artifacts"), [
+    (False),
+    (True)
+])
+def test_am2r_format_params(has_artifacts: bool):
     # Setup
     preset = PresetManager(None).default_preset_for_game(RandovaniaGame.AM2R).get_preset()
     assert isinstance(preset.configuration, AM2RConfiguration)
