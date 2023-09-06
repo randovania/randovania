@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Door from Quarantine Access A to Central Dynamo being inoperable with Reverse Lower Mines enabled.
 - Fixed: Minor issues with new skippable cutscenes option.
 - Changed: Remove white screen flash effect when crates explode.
+- Changed: Skippable cutscene modes are no longer experimental. Skippable is the new default. Competitive cutscene mode has been updated appropriately.
+- Removed: Major/Minor Cutscene Mode (Major hidden behind experimental options)
 
 ## [6.2.0] - 2023-09-??
 
