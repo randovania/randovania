@@ -38,6 +38,7 @@ class MSRPresetDescriber(GamePresetDescriber):
             "Item Pool": [
                 {
                     "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
+                    "Progressive Jump": has_shuffled_item(standard_pickups, "Progressive Jump"),
                     "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
                 }
             ],
