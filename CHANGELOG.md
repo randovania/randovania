@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Artaria
 
-- Changed: EMMI Zone Spinner: The connection to the pickup that is available before flipping the spinner now also requires door lock rando to be enabled. The result is that the spinner event is now not a dangerous resource unless door lock rando is enabled.
+- Changed: EMMI Zone Spinner: The connection to the pickup that is available before flipping the spinner now also requires door lock rando and Highly Dangerous Logic to be enabled.
 
 ##### Burenia
 
