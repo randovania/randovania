@@ -17,9 +17,9 @@ _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.MAJOR: "Major cutscene removal",
     LayoutCutsceneMode.MINOR: "Minor cutscene removal",
     LayoutCutsceneMode.COMPETITIVE: "Competitive cutscene removal",
-    LayoutCutsceneMode.SKIPPABLE: "Skippable cutscenes (Experimental)",
-    LayoutCutsceneMode.SKIPPABLE_COMPETITIVE: "Competitive cutscene removal (Experimental)",
-    LayoutCutsceneMode.ORIGINAL: None,
+    LayoutCutsceneMode.SKIPPABLE: None,
+    LayoutCutsceneMode.SKIPPABLE_COMPETITIVE: "Competitive cutscenes",
+    LayoutCutsceneMode.ORIGINAL: "Original cutscenes",
 }
 
 _PRIME1_PHAZON_SUIT_HINT = {
