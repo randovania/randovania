@@ -3,18 +3,17 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
-    from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.node import Node
+    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.resource_info import ResourceCollection
+    from randovania.game_description.resources.resource_collection import ResourceCollection
 
 
 def get_item_id_for_item(item: ItemResourceInfo) -> str:
@@ -26,7 +25,7 @@ def get_item_id_for_item(item: ItemResourceInfo) -> str:
         raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
-class MSRPatchDataFactory(BasePatchDataFactory):
+class MSRPatchDataFactory(PatchDataFactory):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.memo_data = MSRAcquiredMemo.with_expansion_text()
@@ -75,14 +74,8 @@ class MSRPatchDataFactory(BasePatchDataFactory):
 
         return details
 
-    def _node_for(self, identifier: AreaIdentifier | NodeIdentifier) -> Node:
-        if isinstance(identifier, NodeIdentifier):
-            return self.game.region_list.node_by_identifier(identifier)
-        else:
-            area = self.game.region_list.area_by_area_location(identifier)
-            node = area.node_with_name(area.default_node)
-            assert node is not None
-            return node
+    def _node_for(self, identifier:  NodeIdentifier) -> Node:
+        return self.game.region_list.node_by_identifier(identifier)
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
@@ -99,7 +92,7 @@ class MSRPatchDataFactory(BasePatchDataFactory):
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
             exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
         )
 
         energy_per_tank = self.configuration.energy_per_tank
@@ -130,5 +123,5 @@ class MSRAcquiredMemo(dict):
         )
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
-        result["Aeion Tank"] = "Aeion Tank acquired.\nAieon capacity increased by {Aeion}"
+        result["Aeion Tank"] = "Aeion Tank acquired.\nAeion capacity increased by {Aeion}"
         return result

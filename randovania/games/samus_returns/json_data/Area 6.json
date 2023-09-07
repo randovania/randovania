@@ -104,7 +104,7 @@
                         }
                     }
                 },
-                "Elevator to Area 7 - Transport to Area 6": {
+                "Elevator to Area 7": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -122,13 +122,13 @@
                         "start_point_actor_name": "ST_FromArea09"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 7",
                         "area": "Transport to Area 6",
-                        "node": "Elevator to Area 6 - Transport to Area 7"
+                        "node": "Elevator to Area 6"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -282,7 +282,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -294,7 +294,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "resource",
@@ -341,7 +341,7 @@
                     "connections": {
                         "Before Diggernaut Area": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Start Point": {
                             "type": "and",
@@ -370,7 +370,7 @@
                     "connections": {
                         "Door to Diggernaut Hallway": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -389,7 +389,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 7 - Transport to Area 6": {
+                        "Elevator to Area 7": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -431,7 +431,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "resource",
@@ -447,7 +447,7 @@
                         },
                         "Door to Diggernaut Arena": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Above Pickup": {
                             "type": "and",
@@ -550,7 +550,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "resource",
@@ -750,7 +750,7 @@
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "Destroy Missile Block"
+                                                                "data": "Shoot Any Missile"
                                                             },
                                                             {
                                                                 "type": "or",
@@ -782,12 +782,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -820,39 +832,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -1345,34 +1326,14 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega 1",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Door to Red Plant Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Omega 1",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Event - Omega Metroid": {
@@ -1383,6 +1344,15 @@
                                     {
                                         "type": "template",
                                         "data": "Defeat Omega Metroid"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Zeta 4",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1659,15 +1629,6 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
                                             "name": "Grapple",
                                             "amount": 1,
                                             "negate": false
@@ -1693,10 +1654,14 @@
                                                                 }
                                                             },
                                                             {
+                                                                "type": "template",
+                                                                "data": "Shoot Super Missile"
+                                                            },
+                                                            {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "SMAmmo",
+                                                                    "name": "Morph",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -1705,22 +1670,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Any Bomb"
                                                 }
                                             ]
                                         }
@@ -1822,21 +1773,16 @@
                     "event_name": "Area 6 - Stolen Power Bomb Room Grapple Block",
                     "connections": {
                         "Door to Omega Arena Access (Bottom)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -1844,7 +1790,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Bomb",
+                                                        "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -1853,36 +1799,14 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "PBAmmo",
+                                                        "name": "Screw",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Screw",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SMAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Shoot Super Missile"
                                                 }
                                             ]
                                         }
@@ -2497,11 +2421,11 @@
                     "connections": {
                         "Under Bridge": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Left of Bridge": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2841,7 +2765,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2945,7 +2869,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     }
                                 ]
                             }
@@ -3255,7 +3179,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -3340,7 +3264,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -3533,7 +3457,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -4744,7 +4668,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -4868,7 +4792,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -4999,7 +4923,7 @@
                     "connections": {
                         "Door to Zeta Arena": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Start Point (Left)": {
                             "type": "and",
@@ -5041,7 +4965,7 @@
                     "connections": {
                         "Door to Omega Arena": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Start Point (Right)": {
                             "type": "and",
@@ -5327,21 +5251,17 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Zeta Arena Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Zeta 4",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Crumble Bridge": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Zeta 4",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Tunnel to Zeta Arena Access": {
@@ -5351,7 +5271,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -5395,7 +5315,7 @@
             }
         },
         "Transport to Area 5 Entrance": {
-            "default_node": "Elevator to Area 5 Entrance - Chozo Seal",
+            "default_node": "Elevator to Area 5 - Entrance",
             "extra": {
                 "total_boundings": {
                     "x1": -1200.0,
@@ -5484,7 +5404,7 @@
                 "asset_id": "collision_camera_051"
             },
             "nodes": {
-                "Elevator to Area 5 Entrance - Chozo Seal": {
+                "Elevator to Area 5 - Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5502,13 +5422,13 @@
                         "start_point_actor_name": "ST_FromArea06"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 5 - Entrance",
                         "area": "Chozo Seal",
-                        "node": "Elevator to Area 4 West - Transport to Area 5 Entrance"
+                        "node": "Elevator to Area 6"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5621,7 +5541,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 5 Entrance - Chozo Seal": {
+                        "Elevator to Area 5 - Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5963,7 +5883,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -6278,7 +6198,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "or",
@@ -6287,7 +6207,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -6368,11 +6288,11 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Missile Block"
+                                                    "data": "Shoot Any Missile"
                                                 }
                                             ]
                                         }
@@ -6466,12 +6386,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Power Bomb"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "PBAmmo",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -7032,7 +6964,7 @@
                     "connections": {
                         "Next to Bottom Puzzle": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -7102,12 +7034,24 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "PBAmmo",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7264,18 +7208,13 @@
                             }
                         },
                         "Door to Transport to Area 5 Entrance (Top)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -7283,13 +7222,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -7341,7 +7275,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -7588,13 +7522,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -7602,13 +7531,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -7749,7 +7673,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -7857,7 +7781,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "or",
@@ -7934,21 +7858,16 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
@@ -7966,7 +7885,7 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "PBAmmo",
-                                                                    "amount": 1,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }

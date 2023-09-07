@@ -8,6 +8,7 @@ import pytest
 from frozendict import frozendict
 
 from randovania.game_connection.game_connection import ConnectedGameState
+from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.multiworld_client import MultiworldClient
 from randovania.interface_common.players_configuration import INVALID_UUID
@@ -15,7 +16,6 @@ from randovania.interface_common.world_database import WorldData, WorldDatabase,
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerUser, MultiplayerWorld
-from randovania.network_common.session_state import MultiplayerSessionState
 from randovania.network_common.world_sync import (
     ServerSyncRequest,
     ServerSyncResponse,
@@ -142,21 +142,21 @@ def test_create_new_sync_request(client, has_old_pending, has_last_status):
             id=uid_1,
             source=MagicMock(),
             status=GameConnectionStatus.InGame,
-            current_inventory={},
+            current_inventory=Inventory.empty(),
             collected_indices=MagicMock(),
         ),
         MagicMock(): ConnectedGameState(
             id=INVALID_UUID,
             source=MagicMock(),
             status=GameConnectionStatus.InGame,
-            current_inventory={},
+            current_inventory=Inventory.empty(),
             collected_indices=MagicMock(),
         ),
         MagicMock(): ConnectedGameState(
             id=uid_4,
             source=MagicMock(),
             status=GameConnectionStatus.InGame,
-            current_inventory={},
+            current_inventory=Inventory.empty(),
             collected_indices=MagicMock(),
         ),
     }
@@ -217,7 +217,6 @@ async def test_server_sync(client, mocker: MockerFixture):
     uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
     uid_2 = uuid.UUID("00000000-0000-1111-0000-000000000000")
     uid_3 = uuid.UUID("000000000000-0000-0000-0000-11111111")
-
 
     request = ServerSyncRequest(worlds=frozendict({
         uid_1: ServerWorldSync(
@@ -322,7 +321,6 @@ async def test_on_session_meta_update_not_logged_in(client: MultiworldClient):
 
 async def test_on_session_meta_update_not_in_session(client: MultiworldClient):
     uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
-    uid_2 = uuid.UUID("11111111-0000-0000-0000-111111111111")
 
     entry = MagicMock()
     entry.worlds = [
@@ -330,7 +328,6 @@ async def test_on_session_meta_update_not_in_session(client: MultiworldClient):
     ]
     entry.users = {}
     client._world_sync_errors[uid_1] = error.WorldNotAssociatedError()
-    client._world_sync_errors[uid_2] = error.SessionInWrongStateError(MultiplayerSessionState.IN_PROGRESS)
 
     # Run
     await client.on_session_meta_update(entry)
@@ -338,7 +335,6 @@ async def test_on_session_meta_update_not_in_session(client: MultiworldClient):
     # Assert
     assert client._world_sync_errors == {
         uid_1: error.WorldNotAssociatedError(),
-        uid_2: error.SessionInWrongStateError(MultiplayerSessionState.IN_PROGRESS),
     }
 
 
@@ -360,20 +356,3 @@ async def test_on_session_meta_update_not_own_world(client: MultiworldClient):
     # Assert
     assert client._world_sync_errors == {uid_1: error.WorldNotAssociatedError()}
 
-
-async def test_on_session_meta_wrong_state(client: MultiworldClient):
-    uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
-
-    entry = MagicMock()
-    entry.worlds = [
-        MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")
-    ]
-    entry.users = {}
-    entry.state = MultiplayerSessionState.IN_PROGRESS
-    client._world_sync_errors[uid_1] = error.SessionInWrongStateError(MultiplayerSessionState.IN_PROGRESS)
-
-    # Run
-    await client.on_session_meta_update(entry)
-
-    # Assert
-    assert client._world_sync_errors == {}

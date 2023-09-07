@@ -5,13 +5,15 @@ import dataclasses
 import typing
 from dataclasses import dataclass
 
-from randovania.game_description.db.area_identifier import AreaIdentifier
+from randovania.game_description.assignment import (
+    PickupTarget,
+)
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
+from randovania.game_description.pickup.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 
-ElevatorConnection = dict[NodeIdentifier, AreaIdentifier]
+TeleporterConnection = dict[NodeIdentifier, NodeIdentifier]
 StartingEquipment = list[PickupEntry] | ResourceCollection
 
 
@@ -25,7 +27,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.assignment import (
         DockWeaknessAssociation,
         NodeConfigurationAssociation,
-        PickupTarget,
         PickupTargetAssociation,
     )
     from randovania.game_description.db.dock import DockWeakness
@@ -35,6 +36,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.hint import Hint
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -92,6 +94,12 @@ class GamePatches:
             new_pickup_assignment[index] = pickup
 
         return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)
+
+    def assign_own_pickups(self, assignments: Iterable[tuple[PickupIndex, PickupEntry]]) -> GamePatches:
+        return self.assign_new_pickups(
+            (index, PickupTarget(pickup, self.player_index))
+            for index, pickup in assignments
+        )
 
     def assign_node_configuration(self, assignment: Iterable[NodeConfigurationAssociation]) -> GamePatches:
         new_configurable = copy.copy(self.configurable_nodes)

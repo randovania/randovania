@@ -80,7 +80,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
                                                     "type": "or",
@@ -166,7 +166,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -423,7 +423,7 @@
                     "connections": {
                         "Door to Fiery Path": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -458,7 +458,7 @@
                     "connections": {
                         "Pickup (Energy Tank)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Door to Transport to Area 3 Interior West": {
                             "type": "or",
@@ -631,7 +631,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -640,7 +640,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Missile Block"
+                                                    "data": "Shoot Any Missile"
                                                 },
                                                 {
                                                     "type": "or",
@@ -725,7 +725,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Missile Block"
+                                                    "data": "Shoot Any Missile"
                                                 }
                                             ]
                                         }
@@ -1025,7 +1025,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -1107,7 +1107,7 @@
                     "connections": {
                         "Tunnel to Double Back (Bottom)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -1521,7 +1521,7 @@
             }
         },
         "Transport to Area 3 Exterior": {
-            "default_node": "Elevator to Area 3 Exterior - Outer Hub",
+            "default_node": "Elevator to Area 3 - Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": 6700.0,
@@ -1550,7 +1550,7 @@
                 "asset_id": "collision_camera_021"
             },
             "nodes": {
-                "Elevator to Area 3 Exterior - Outer Hub": {
+                "Elevator to Area 3 - Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1568,13 +1568,13 @@
                         "start_point_actor_name": "ST_FromArea03A"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 3 - Exterior",
                         "area": "Outer Hub",
-                        "node": "Elevator to Area 3 Interior East - Transport to Area 3 Exterior"
+                        "node": "Elevator to Area 3 - Interior (East)"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1627,7 +1627,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 3 Exterior - Outer Hub": {
+                        "Elevator to Area 3 - Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1662,7 +1662,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 3 Exterior - Outer Hub": {
+                        "Elevator to Area 3 - Exterior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2155,7 +2155,7 @@
             }
         },
         "Transport to Area 3 Interior West": {
-            "default_node": "Elevator to Area 3 Interior West - Transport to Area 3 Interior East",
+            "default_node": "Elevator to Area 3 - Interior (West)",
             "extra": {
                 "total_boundings": {
                     "x1": 6500.0,
@@ -2226,7 +2226,7 @@
                         }
                     }
                 },
-                "Elevator to Area 3 Interior West - Transport to Area 3 Interior East": {
+                "Elevator to Area 3 - Interior (West)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2244,13 +2244,13 @@
                         "start_point_actor_name": "ST_FromArea03B"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 3 - Interior (West)",
                         "area": "Transport to Area 3 Interior East",
-                        "node": "Elevator to Area 3 Interior East - Transport to Area 3 Interior West"
+                        "node": "Elevator to Area 3 - Interior (East)"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2489,7 +2489,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Area 3 Interior West - Transport to Area 3 Interior East": {
+                        "Elevator to Area 3 - Interior (West)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2624,7 +2624,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block",
                     "connections": {
-                        "Elevator to Area 3 Interior West - Transport to Area 3 Interior East": {
+                        "Elevator to Area 3 - Interior (West)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2772,32 +2772,6 @@
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Area 3 (Interior East) - Gamma Metroid Awakened",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Gamma 3",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -3445,29 +3419,12 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Fiery Path": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Alpha 13",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Varia",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Pickup (Super Missile Tank)": {
@@ -3494,13 +3451,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     },
                                     {
                                         "type": "or",
@@ -4254,7 +4206,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Bomb Block"
+                                                    "data": "Lay Any Bomb"
                                                 }
                                             ]
                                         }
@@ -4319,7 +4271,7 @@
                     "connections": {
                         "Tunnel to Transport to Area 3 Interior West (Top)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },

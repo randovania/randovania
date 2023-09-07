@@ -179,7 +179,6 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
             name="Main",
             areas=[Area(
                 name="First Area",
-                default_node=None,
                 nodes=[intro_node],
                 connections={intro_node: {}},
                 extra={},
@@ -329,6 +328,7 @@ def new_game_command_logic(args):
             "--game",
             enum_value,
         ],
+        check=False,
     ).returncode)
 
 

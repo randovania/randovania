@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.layout.versioned_preset import VersionedPreset
     from randovania.network_common.multiplayer_session import MultiplayerWorld
+    from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 Param = typing.ParamSpec("Param")
 RetType = typing.TypeVar("RetType")
@@ -152,14 +153,10 @@ class MultiplayerSessionApi(QtCore.QObject):
         await self._session_admin_global(admin_actions.SessionAdminGlobalAction.DUPLICATE_SESSION, new_name)
 
     @handle_network_errors
-    async def start_session(self):
-        self.logger.info("Starting session")
-        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.START_SESSION)
-
-    @handle_network_errors
-    async def finish_session(self):
-        self.logger.info("Finishing session")
-        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.FINISH_SESSION)
+    async def change_visibility(self, new_visibility: MultiplayerSessionVisibility):
+        self.logger.info("Setting visibility to %s", new_visibility)
+        await self._session_admin_global(admin_actions.SessionAdminGlobalAction.CHANGE_VISIBILITY,
+                                         new_visibility.value)
 
     @handle_network_errors
     async def abort_generation(self):
@@ -289,6 +286,13 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
+    async def set_everyone_can_claim(self, flag: bool):
+        self.logger.info("Setting whether everyone can claim to %s", flag)
+        await self._session_admin_global(
+            admin_actions.SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM, flag,
+        )
+
+    @handle_network_errors
     async def switch_readiness(self, user_id: int):
         self.logger.info("Switching ready-ness of %d", user_id)
         await self._session_admin_player(
@@ -301,3 +305,4 @@ class MultiplayerSessionApi(QtCore.QObject):
             "multiplayer_request_session_update",
             self.current_session_id
         )
+

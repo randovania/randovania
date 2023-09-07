@@ -1,36 +1,27 @@
 from __future__ import annotations
 
 import copy
-import dataclasses
-import functools
 import shutil
 from typing import TYPE_CHECKING
 
 import mp2hudcolor
 from open_prime_rando.dol_patching.echoes import dol_patcher
 from ppc_asm import dol_file
-from retro_data_structures.asset_manager import PathFileProvider
+from retro_data_structures.asset_manager import AssetManager, PathFileProvider
+from retro_data_structures.game_check import Game as RDSGame
 
-from randovania import get_data_path, monitoring
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
+from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
 from randovania.games.prime2.patcher import claris_randomizer
 from randovania.lib import json_lib, status_update_lib
+from randovania.patching.patchers.exceptions import UnableToExportError
 from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 
 if TYPE_CHECKING:
     from pathlib import Path
-
-
-@dataclasses.dataclass(frozen=True)
-class EchoesGameExportParams(GameExportParams):
-    input_path: Path | None
-    output_path: Path
-    contents_files_path: Path
-    asset_cache_path: Path
-    backup_files_path: Path
-    prime_path: Path | None
-    use_prime_models: bool
 
 
 class EchoesGameExporter(GameExporter):
@@ -104,7 +95,7 @@ class EchoesGameExporter(GameExporter):
                     backups_update
                 )
             except FileNotFoundError:
-                raise RuntimeError(
+                raise UnableToExportError(
                     "Your internal copy is missing files.\nPlease press 'Delete internal copy' and select "
                     "a clean game ISO.")
 
@@ -130,6 +121,8 @@ class EchoesGameExporter(GameExporter):
                 export_params.prime_path, contents_files_path, assets_path,
                 patch_data, randomizer_data, convert_update,
             )
+
+        copy_coin_chest(contents_files_path)
 
         # Claris Rando
         claris_update = updaters.pop(0)
@@ -187,7 +180,29 @@ class EchoesGameExporter(GameExporter):
         )
 
 
-@functools.lru_cache
-def decode_randomizer_data() -> dict:
-    randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
-    return json_lib.read_path(randomizer_data_path)
+def copy_coin_chest(contents_path: Path):
+    """
+    Claris patcher doesn't read from Metroid6.pak, where these assets are found.
+    Copy them into the main paks so that we can actually use the Coin Chest model
+    """
+    manager = AssetManager(
+        PathFileProvider(contents_path),
+        RDSGame.ECHOES
+    )
+
+    coinchest_ancs = 0xE3067A51
+    paks = [
+        pak for pak in manager.all_paks
+        if "Metroid" in pak
+    ]
+    for dep in manager.get_dependencies_for_asset(coinchest_ancs):
+        # stupid hack. it won't actually ensure they're present
+        # unless it thinks the assets were modified
+        manager.replace_asset(
+            dep.id,
+            manager.get_raw_asset(dep.id)
+        )
+        for pak in paks:
+            manager.ensure_present(pak, dep.id)
+
+    manager.save_modifications(contents_path)

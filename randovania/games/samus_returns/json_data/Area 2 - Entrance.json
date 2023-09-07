@@ -10,7 +10,7 @@
     },
     "areas": {
         "Chozo Seal": {
-            "default_node": "Elevator To Area 1 - Chozo Seal",
+            "default_node": "Elevator to Area 1",
             "extra": {
                 "total_boundings": {
                     "x1": 19000.0,
@@ -90,7 +90,7 @@
                         }
                     }
                 },
-                "Elevator To Area 1 - Chozo Seal": {
+                "Elevator to Area 1": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -108,13 +108,13 @@
                         "start_point_actor_name": "ST_FromArea01"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Chozo Seal",
-                        "node": "Elevator to Surface East - Transport to Area 1"
+                        "node": "Elevator to Area 2 - Entrance"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -129,7 +129,7 @@
                         }
                     }
                 },
-                "Elevator to Area 3 Exterior - Transport to Area 2 Entrance": {
+                "Elevator to Area 3 - Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -147,13 +147,13 @@
                         "start_point_actor_name": "ST_FromArea03"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 3 - Exterior",
                         "area": "Transport to Area 2 Entrance",
-                        "node": "Elevator to Area 2 Entrance - Chozo Seal"
+                        "node": "Elevator to Area 2 - Entrance"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -189,7 +189,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator To Area 1 - Chozo Seal": {
+                        "Elevator to Area 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -240,7 +240,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "resource",
@@ -254,7 +254,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Area 3 Exterior - Transport to Area 2 Entrance": {
+                        "Elevator to Area 3 - Exterior": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -280,21 +280,16 @@
                             }
                         },
                         "Pickup (Power Bomb Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -302,44 +297,52 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "PBAmmo",
+                                                        "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
+                                                                    "type": "tricks",
+                                                                    "name": "MeleeClip",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Baby",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Baby",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bomb",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "MeleeClip",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -519,7 +522,7 @@
                     "connections": {
                         "Chozo Seal": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -964,7 +967,7 @@
             }
         },
         "Transport to Area 2 Exterior": {
-            "default_node": "Elevator to Area 2 Exterior - Outer Hub",
+            "default_node": "Elevator to Area 2 - Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": 3900.0,
@@ -1070,7 +1073,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 Exterior - Outer Hub": {
+                "Elevator to Area 2 - Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1088,13 +1091,13 @@
                         "start_point_actor_name": "ST_FromArea02A"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Exterior",
                         "area": "Outer Hub",
-                        "node": "Elevator to Area 2 Entrance - Transport to Area 2 Exterior"
+                        "node": "Elevator to Area 2 - Entrance"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1185,7 +1188,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Area 2 Exterior - Outer Hub": {
+                        "Elevator to Area 2 - Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1690,29 +1693,12 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -1832,7 +1818,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     }
                                 ]
                             }
@@ -1889,12 +1875,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Teleporter Room": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 6",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Dock to Main Shaft": {
@@ -1913,7 +1897,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     }
                                 ]
                             }

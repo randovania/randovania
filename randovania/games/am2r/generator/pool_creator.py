@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.pickup import pickup_category
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig, AM2RConfiguration
 from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.exceptions import InvalidConfiguration
@@ -31,7 +31,7 @@ def create_am2r_artifact(artifact_number: int,
         progression=((resource_database.get_item(f"Metroid DNA {artifact_number + 1}"), 1),),
         model=PickupModel(
             game=resource_database.game_enum,
-            name="Metroid DNA"
+            name="sItemDNA"
         ),
         pickup_category=METROID_DNA_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,

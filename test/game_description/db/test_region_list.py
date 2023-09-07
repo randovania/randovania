@@ -18,7 +18,7 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
@@ -30,6 +30,7 @@ if TYPE_CHECKING:
 
 def test_connections_from_dock_blast_shield(empty_patches):
     # Setup
+    db = empty_patches.game.resource_database
     trivial = Requirement.trivial()
     req_1 = ResourceRequirement.simple(SimpleResourceInfo(0, "Ev1", "Ev1", ResourceType.EVENT))
     req_2 = ResourceRequirement.simple(SimpleResourceInfo(1, "Ev2", "Ev2", ResourceType.EVENT))
@@ -42,13 +43,13 @@ def test_connections_from_dock_blast_shield(empty_patches):
 
     node_1 = DockNode(node_1_identifier, 0, False, None, "", ("default",), {}, False, dock_type,
                       node_2_identifier, weak_1, None, None, False, ())
-    node_1_lock = DockLockNode.create_from_dock(node_1, 1)
+    node_1_lock = DockLockNode.create_from_dock(node_1, 1, db)
     node_2 = DockNode(node_2_identifier, 2, False, None, "", ("default",), {}, False, dock_type,
                       node_1_identifier, weak_2, None, None, False, ())
-    node_2_lock = DockLockNode.create_from_dock(node_2, 3)
+    node_2_lock = DockLockNode.create_from_dock(node_2, 3, db)
 
-    area_1 = Area("Area 1", None, [node_1, node_1_lock], {}, {})
-    area_2 = Area("Area 2", None, [node_2, node_2_lock], {}, {})
+    area_1 = Area("Area 1", [node_1, node_1_lock], {}, {})
+    area_2 = Area("Area 2", [node_2, node_2_lock], {}, {})
 
     region = Region("W", [area_1, area_2], {})
     region_list = RegionList([region])

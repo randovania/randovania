@@ -17,11 +17,13 @@ if typing.TYPE_CHECKING:
 
 _FIELDS = [
     "septogg_helpers",
-    "change_level_design",
     "respawn_bomb_blocks",
     "skip_cutscenes",
+    "skip_save_cutscene",
+    "skip_item_cutscenes",
     "grave_grotto_blocks",
     "fusion_mode",
+    "supers_on_missile_doors",
     "nest_pipes",
     "softlock_prevention_blocks",
     "a3_entrance_blocks",

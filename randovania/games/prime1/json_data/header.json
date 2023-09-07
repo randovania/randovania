@@ -1,5 +1,5 @@
 {
-    "schema_version": 21,
+    "schema_version": 22,
     "game": "prime1",
     "resource_database": {
         "items": {
@@ -1518,7 +1518,7 @@
                     },
                     "Super Missile Blast Shield": {
                         "extra": {
-                            "shieldType": "Blue",
+                            "shieldType": "Super",
                             "blastShieldType": "Super"
                         },
                         "requirement": {
@@ -1535,7 +1535,7 @@
                     },
                     "Power Bomb Blast Shield": {
                         "extra": {
-                            "shieldType": "Blue",
+                            "shieldType": "Power Bomb",
                             "blastShieldType": "Power Bomb"
                         },
                         "requirement": {
@@ -1574,7 +1574,7 @@
                     },
                     "Wavebuster Blast Shield": {
                         "extra": {
-                            "shieldType": "Purple",
+                            "shieldType": "Wavebuster",
                             "blastShieldType": "Wavebuster"
                         },
                         "requirement": {
@@ -1626,7 +1626,7 @@
                     },
                     "Ice Spreader Blast Shield": {
                         "extra": {
-                            "shieldType": "Ice",
+                            "shieldType": "Ice Spreader",
                             "blastShieldType": "Ice Spreader"
                         },
                         "requirement": {
@@ -1678,7 +1678,7 @@
                     },
                     "Flamethrower Blast Shield": {
                         "extra": {
-                            "shieldType": "Red",
+                            "shieldType": "Flamethrower",
                             "blastShieldType": "Flamethrower"
                         },
                         "requirement": {
@@ -1728,68 +1728,82 @@
                             }
                         }
                     },
-                    "Charge Beam Door": {
+                    "Charge Beam Blast Shield": {
                         "extra": {
-                            "shieldType": "Charge"
+                            "shieldType": "Charge",
+                            "blastShieldType": "Charge"
                         },
                         "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Any Beam"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Charge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Open Normal Door"
                         },
-                        "lock": null
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Any Beam"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Charge",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     },
-                    "Bomb Door": {
+                    "Bomb Blast Shield": {
                         "extra": {
-                            "shieldType": "Bomb"
+                            "shieldType": "Bomb",
+                            "blastShieldType": "Bomb"
                         },
                         "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Open Normal Door"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bombs",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Open Normal Door"
                         },
-                        "lock": null
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Open Normal Door"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "MorphBall",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bombs",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     }
                 },
                 "dock_rando": {
@@ -1803,8 +1817,8 @@
                         "Wave Door"
                     ],
                     "change_to": [
-                        "Bomb Door",
-                        "Charge Beam Door",
+                        "Bomb Blast Shield",
+                        "Charge Beam Blast Shield",
                         "Flamethrower Blast Shield",
                         "Ice Door",
                         "Ice Spreader Blast Shield",
@@ -2086,6 +2100,142 @@
             "resolver_attempts": 125,
             "to_shuffle_proportion": 1.0
         }
+    },
+    "used_trick_levels": {
+        "BJ": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "LJump": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "Dash": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "Standable": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "StandEnemies": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "CBJ": [
+            2,
+            3,
+            4,
+            5
+        ],
+        "SJump": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "Movement": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "Combat": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "Knowledge": [
+            1,
+            2,
+            3
+        ],
+        "InvisibleObjects": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "DBoosting": [
+            3,
+            4,
+            5
+        ],
+        "RJump": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "BSJ": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "ClipThruObjects": [
+            1,
+            3,
+            4
+        ],
+        "OoB": [
+            2,
+            3,
+            4,
+            5
+        ],
+        "WallBoost": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "UnderwaterMovement": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "HeatRun": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
+        "BoostlessSpiner": [
+            2,
+            3
+        ],
+        "IS": [
+            2
+        ],
+        "IUJ": [
+            4,
+            5
+        ]
     },
     "regions": [
         "Impact Crater.json",

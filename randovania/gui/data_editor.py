@@ -26,7 +26,7 @@ from randovania.game_description.editor import Editor
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
@@ -46,6 +46,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 SHOW_REGION_MIN_MAX_SPINNER = False
 
@@ -129,7 +130,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_details_label.linkActivated.connect(self._on_click_link_to_other_node)
         self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
         self.area_spawn_check.stateChanged.connect(self.on_area_spawn_check)
-        self.default_node_check.stateChanged.connect(self.on_default_node_check)
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
         self.other_node_connection_swap_button.clicked.connect(self._swap_selected_connection)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
@@ -201,7 +201,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.region_selector_box.clear()
         for region in sorted(self.region_list.regions, key=lambda x: x.name):
-            name = "{0.name} ({0.dark_name})".format(region) if region.dark_name else region.name
+            name = f"{region.name} ({region.dark_name})" if region.dark_name else region.name
             self.region_selector_box.addItem(name, userData=region)
 
         if current_region:
@@ -273,7 +273,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _on_image_spin_update(self):
         w = self.current_region
-        if type(w.extra) != dict:
+        if not isinstance(w.extra, dict):
             object.__setattr__(w, "extra", dict(w.extra))
         w.extra["map_min_x"] = self.spin_min_x.value()
         w.extra["map_min_y"] = self.spin_min_y.value()
@@ -354,8 +354,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if region_name is not None and area_name is not None:
             self.focus_on_region_by_name(region_name)
             self.focus_on_area_by_name(area_name)
-            if node_name is None:
-                node_name = self.current_area.default_node
 
             for radio_button in self.radio_button_to_node.keys():
                 if radio_button.text() == node_name:
@@ -373,14 +371,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         assert old_node is not None
         new_node = dataclasses.replace(old_node, valid_starting_location=bool(state))
         self.replace_node_with(self.current_area, old_node, new_node)
-
-    def on_default_node_check(self, state: int):
-        state = bool(state)
-        if not state:
-            return
-
-        object.__setattr__(self.current_area, "default_node", self.current_node.name)
-        self.default_node_check.setEnabled(False)
 
     def replace_node_with(self, area: Area, old_node: Node, new_node: Node):
         if old_node == new_node:
@@ -448,10 +438,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         is_area_spawn = self.current_node.valid_starting_location
         self.area_spawn_check.setChecked(is_area_spawn)
-
-        is_default_node = self.current_area.default_node == node.name
-        self.default_node_check.setChecked(is_default_node)
-        self.default_node_check.setEnabled(self.edit_mode and not is_default_node)
 
         self.area_view_canvas.highlight_node(node)
 
@@ -829,7 +815,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.other_node_connection_edit_button.setVisible(self.edit_mode)
         self.node_heals_check.setEnabled(self.edit_mode)
         self.area_spawn_check.setEnabled(self.edit_mode)
-        self.default_node_check.setEnabled(self.edit_mode and self.default_node_check.isEnabled())
         self.node_edit_button.setVisible(self.edit_mode)
         self.resource_editor.set_allow_edits(self.edit_mode)
         self.area_view_canvas.set_edit_mode(self.edit_mode)

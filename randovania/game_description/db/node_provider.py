@@ -36,6 +36,10 @@ class NodeProvider:
     def all_areas(self) -> Iterator[Area]:
         raise NotImplementedError
 
+    @property
+    def all_nodes(self) -> tuple[Node | None, ...]:
+        raise NotImplementedError
+
     def iterate_nodes(self) -> tuple[Node, ...]:
         raise NotImplementedError
 
@@ -77,17 +81,6 @@ class NodeProvider:
             region_name=self.nodes_to_region(node).name,
             area_name=self.nodes_to_area(node).name,
         )
-
-    def default_node_for_area(self, connection: AreaIdentifier) -> Node:
-        area = self.area_by_area_location(connection)
-        if area.default_node is None:
-            raise IndexError(f"Area '{area.name}' does not have a default_node")
-
-        node = area.node_with_name(area.default_node)
-        if node is None:
-            raise IndexError(f"Area '{area.name}' default_node ({area.default_node}) is missing")
-
-        return node
 
     def open_requirement_for(self, weakness: DockWeakness) -> Requirement:
         return weakness.requirement

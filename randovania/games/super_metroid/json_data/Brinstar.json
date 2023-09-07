@@ -5,7 +5,7 @@
     },
     "areas": {
         "Green Brinstar Main Shaft": {
-            "default_node": "Elevator - Elevator to Green Brinstar",
+            "default_node": "Teleporter to Crateria",
             "extra": {
                 "map_name": "79AD9",
                 "asset_id": 67
@@ -37,7 +37,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator - Elevator to Green Brinstar": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -72,7 +72,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator - Elevator to Green Brinstar": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -107,7 +107,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator - Elevator to Green Brinstar": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -142,7 +142,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator - Elevator to Green Brinstar": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -177,7 +177,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator - Elevator to Green Brinstar": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -254,7 +254,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator - Elevator to Green Brinstar": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -282,12 +282,12 @@
                         }
                     }
                 },
-                "Elevator - Elevator to Green Brinstar": {
+                "Teleporter to Crateria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 248.99194847020934,
-                        "y": 4717.65539452496,
+                        "x": 248.99,
+                        "y": 4717.66,
                         "z": 0.0
                     },
                     "description": "",
@@ -303,7 +303,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Elevator to Green Brinstar",
-                        "node": "Door to Lower Mushrooms"
+                        "node": "Teleporter to Brinstar"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -4230,7 +4230,7 @@
             }
         },
         "Retro Brinstar": {
-            "default_node": "Elevator - Elevator to Blue Brinstar",
+            "default_node": "Teleporter to Crateria",
             "extra": {
                 "map_name": "79E9F",
                 "asset_id": 93
@@ -4262,27 +4262,89 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator - Elevator to Blue Brinstar": {
-                            "type": "and",
+                        "Teleporter to Crateria": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Use PBs for both bomb block and PB blocks",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Lay Power Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "PowerBomb",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Destroy bomb blocks with something else and PB blocks with PBs",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Lay Power Bombs"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Lay Bombs"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SpeedBooster",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Machball",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Shortcharge",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4359,7 +4421,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator - Elevator to Blue Brinstar": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4368,12 +4430,12 @@
                         }
                     }
                 },
-                "Elevator - Elevator to Blue Brinstar": {
+                "Teleporter to Crateria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2808.850627722265,
-                        "y": 122.58877786318203,
+                        "x": 2808.85,
+                        "y": 122.59,
                         "z": 0.0
                     },
                     "description": "",
@@ -4389,7 +4451,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Elevator to Blue Brinstar",
-                        "node": "Door to Old Mother Brain"
+                        "node": "Teleporter to Brinstar"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -4403,22 +4465,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerBomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Lay Power Bombs"
                                     }
                                 ]
                             }
@@ -4507,7 +4555,7 @@
                     "valid_starting_location": false,
                     "event_name": "Event9",
                     "connections": {
-                        "Elevator - Elevator to Blue Brinstar": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4586,7 +4634,7 @@
                                 ]
                             }
                         },
-                        "Elevator - Elevator to Blue Brinstar": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4775,61 +4823,106 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Blue Brinstar Boulder Room": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerBomb",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Destroy Bottom PB blocks",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Lay Power Bombs"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Destroy upper bomb blocks",
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bombs",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": "Use Mid-Air Morph or IBJ",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerBomb",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ScrewAttack",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Get up shaft",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "Bombs",
+                                                                    "name": "SpaceJump",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -4838,9 +4931,56 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "IBJ",
+                                                                    "name": "WallJump",
                                                                     "amount": 2,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Shinespark",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SpeedBooster",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Shinespark",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "VIBJ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Lay Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -4871,6 +5011,24 @@
                                         "data": {
                                             "type": "items",
                                             "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DBoost",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -4938,12 +5096,38 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "PowerBomb",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -5049,12 +5233,63 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Blue Brinstar Double Missile Room": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get out of the water",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get over boulder pit",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "X-Ray",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5089,7 +5324,60 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get out of the water",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get over boulder pit",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "X-Ray",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6132,7 +6420,7 @@
             }
         },
         "Red Brinstar Zoro Room": {
-            "default_node": "Elevator - Elevator to Red Brinstar",
+            "default_node": "Teleporter to Crateria",
             "extra": {
                 "map_name": "7A322",
                 "asset_id": 105
@@ -6267,7 +6555,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator - Elevator to Red Brinstar": {
+                        "Teleporter to Crateria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6391,12 +6679,12 @@
                         }
                     }
                 },
-                "Elevator - Elevator to Red Brinstar": {
+                "Teleporter to Crateria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 246.9307568438003,
-                        "y": 2678.9994632313474,
+                        "x": 246.93,
+                        "y": 2679.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -6412,7 +6700,7 @@
                     "default_connection": {
                         "region": "Crateria",
                         "area": "Elevator to Red Brinstar",
-                        "node": "Door to Crateria Kihunter Room"
+                        "node": "Teleporter to Brinstar"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -7252,7 +7540,7 @@
                                 ]
                             }
                         },
-                        "Elevator - Business Center": {
+                        "Teleporter to Norfair": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7332,12 +7620,12 @@
                         }
                     }
                 },
-                "Elevator - Business Center": {
+                "Teleporter to Norfair": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 250.49039200614916,
-                        "y": 700.2449397899052,
+                        "x": 250.49,
+                        "y": 700.24,
                         "z": 0.0
                     },
                     "description": "",
@@ -7353,7 +7641,7 @@
                     "default_connection": {
                         "region": "Norfair",
                         "area": "Business Center",
-                        "node": "Elevator - Warehouse Entrance"
+                        "node": "Teleporter to Brinstar"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,

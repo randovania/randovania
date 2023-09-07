@@ -9,8 +9,9 @@ import aiohttp.client_exceptions
 import pytest
 import socketio.exceptions
 
-from randovania.game_description.resources.item_resource_info import InventoryItem, ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
 from randovania.network_common import connection_headers, remote_inventory
@@ -23,12 +24,12 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture()
-def client(tmpdir):
-    return NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
+def client(tmp_path):
+    return NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
 
 
-async def test_on_connect_no_restore(tmpdir):
-    client = NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
+async def test_on_connect_no_restore(tmp_path):
+    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
 
     # Run
     await client.on_connect()
@@ -55,7 +56,7 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
     else:
         call_result = InvalidSessionError().as_json
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.call = AsyncMock(return_value=call_result)
 
     # Run
@@ -94,7 +95,7 @@ async def test_connect_to_server(tmp_path):
     async def connect(*args, **kwargs):
         client._waiting_for_on_connect.set_result(True)
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False
 
@@ -121,7 +122,7 @@ async def test_internal_connect_to_server_failure(tmp_path):
             )
         )
 
-    client.sio = MagicMock()
+    client.sa = MagicMock()
     client.sio.disconnect = AsyncMock()
     client.sio.connect = AsyncMock(side_effect=connect)
     client.sio.connected = False
@@ -349,9 +350,9 @@ async def test_on_world_user_inventory_raw(client: NetworkClient):
     uid = "00000000-0000-1111-0000-000000000000"
     item = ItemResourceInfo(0, "Super Key", "MyKey", 1)
 
-    inventory = {
+    inventory = Inventory({
         item: InventoryItem(1, 4)
-    }
+    })
     encoded = remote_inventory.inventory_to_encoded_remote(inventory)
 
     await client._on_world_user_inventory_raw(uid, 1234, encoded)

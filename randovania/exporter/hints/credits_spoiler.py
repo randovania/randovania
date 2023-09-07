@@ -8,7 +8,7 @@ from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 

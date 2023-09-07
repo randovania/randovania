@@ -8,8 +8,8 @@ from frozendict import frozendict
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.pickup.pickup_entry import ResourceLock
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import ResourceLock
 from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
@@ -39,9 +39,7 @@ class AmmoPickupDefinition(JsonDataclass):
             if self.unlocked_by is None:
                 raise ValueError("If temporaries is set, unlocked_by must be set.")
             if len(self.items) != 1:
-                raise ValueError("If temporaries is set, only one item is supported. Got {} instead".format(
-                    len(self.items)
-                ))
+                raise ValueError(f"If temporaries is set, only one item is supported. Got {len(self.items)} instead")
         elif self.unlocked_by is not None:
             raise ValueError("If temporaries is not set, unlocked_by must not be set.")
 

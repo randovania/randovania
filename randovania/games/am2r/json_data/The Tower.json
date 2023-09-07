@@ -1,11 +1,79 @@
 {
     "name": "The Tower",
-    "extra": {},
+    "extra": {
+        "internal_number": 4
+    },
     "areas": {
         "Tower Exterior South East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h01"
+                "map_name": "rm_a4h01",
+                "minimap_data": [
+                    {
+                        "x": 36,
+                        "y": 35
+                    },
+                    {
+                        "x": 36,
+                        "y": 36
+                    },
+                    {
+                        "x": 36,
+                        "y": 37
+                    },
+                    {
+                        "x": 36,
+                        "y": 38
+                    },
+                    {
+                        "x": 36,
+                        "y": 39
+                    },
+                    {
+                        "x": 36,
+                        "y": 40
+                    },
+                    {
+                        "x": 36,
+                        "y": 41
+                    },
+                    {
+                        "x": 36,
+                        "y": 42
+                    },
+                    {
+                        "x": 37,
+                        "y": 35
+                    },
+                    {
+                        "x": 37,
+                        "y": 36
+                    },
+                    {
+                        "x": 37,
+                        "y": 37
+                    },
+                    {
+                        "x": 37,
+                        "y": 38
+                    },
+                    {
+                        "x": 37,
+                        "y": 39
+                    },
+                    {
+                        "x": 37,
+                        "y": 40
+                    },
+                    {
+                        "x": 37,
+                        "y": 41
+                    },
+                    {
+                        "x": 37,
+                        "y": 42
+                    }
+                ]
             },
             "nodes": {
                 "Door to Inner Save Station East Access": {
@@ -36,7 +104,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Tower East Exterior Access": {
+                        "Area Transition to Main Caves": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -99,7 +167,7 @@
                                 ]
                             }
                         },
-                        "Dock to Southern Cave Pipe Access": {
+                        "Horizontal Dock to Southern Cave Pipe Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -222,7 +290,7 @@
                         }
                     }
                 },
-                "Dock to Tower East Exterior Access": {
+                "Area Transition to Main Caves": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -236,11 +304,11 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Tower East Exterior Access",
-                        "node": "Dock to Tower Exterior South East"
+                        "node": "Area Transition to The Tower"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -351,7 +419,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Tower East Exterior Access": {
+                        "Area Transition to Main Caves": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -498,7 +566,7 @@
                         }
                     }
                 },
-                "Dock to Southern Cave Pipe Access": {
+                "Horizontal Dock to Southern Cave Pipe Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -512,13 +580,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Southern Cave Pipe Access",
-                        "node": "Dock to Tower Exterior South East"
+                        "node": "Horizontal Dock to Tower Exterior South East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -621,7 +689,29 @@
         "Tower Exterior North East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h02"
+                "map_name": "rm_a4h02",
+                "minimap_data": [
+                    {
+                        "x": 36,
+                        "y": 30
+                    },
+                    {
+                        "x": 36,
+                        "y": 31
+                    },
+                    {
+                        "x": 36,
+                        "y": 32
+                    },
+                    {
+                        "x": 36,
+                        "y": 33
+                    },
+                    {
+                        "x": 36,
+                        "y": 34
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tower Exterior South East": {
@@ -685,7 +775,7 @@
                                 ]
                             }
                         },
-                        "Dock to Exterior Save Station": {
+                        "Horizontal Dock to Exterior Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -826,7 +916,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Exterior Save Station": {
+                        "Horizontal Dock to Exterior Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -891,7 +981,7 @@
                                 ]
                             }
                         },
-                        "Dock to Exterior Save Station": {
+                        "Horizontal Dock to Exterior Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -995,7 +1085,7 @@
                         }
                     }
                 },
-                "Dock to Exterior Save Station": {
+                "Horizontal Dock to Exterior Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1009,13 +1099,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Exterior Save Station",
-                        "node": "Dock to Tower Exterior North East"
+                        "node": "Horizontal Dock to Tower Exterior North East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1024,7 +1114,7 @@
                         "Dock to Tower Exterior North": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "(TODO: Revisit later for climb from rock wall)",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1213,7 +1303,69 @@
         "Tower Exterior North": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h03"
+                "map_name": "rm_a4h03",
+                "minimap_data": [
+                    {
+                        "x": 32,
+                        "y": 27
+                    },
+                    {
+                        "x": 32,
+                        "y": 28
+                    },
+                    {
+                        "x": 32,
+                        "y": 29
+                    },
+                    {
+                        "x": 33,
+                        "y": 27
+                    },
+                    {
+                        "x": 33,
+                        "y": 28
+                    },
+                    {
+                        "x": 33,
+                        "y": 29
+                    },
+                    {
+                        "x": 34,
+                        "y": 27
+                    },
+                    {
+                        "x": 34,
+                        "y": 28
+                    },
+                    {
+                        "x": 34,
+                        "y": 29
+                    },
+                    {
+                        "x": 35,
+                        "y": 27
+                    },
+                    {
+                        "x": 35,
+                        "y": 28
+                    },
+                    {
+                        "x": 35,
+                        "y": 29
+                    },
+                    {
+                        "x": 36,
+                        "y": 27
+                    },
+                    {
+                        "x": 36,
+                        "y": 28
+                    },
+                    {
+                        "x": 36,
+                        "y": 29
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tower Exterior North East": {
@@ -1243,10 +1395,33 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Top": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Climb from tower side (TODO: Revisit later for climb from rock wall)",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1278,10 +1453,33 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Top": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1313,10 +1511,59 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Top": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1356,7 +1603,7 @@
                         }
                     }
                 },
-                "Dock to Gamma Nest North East Access": {
+                "Horizontal Dock to Gamma Nest North East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1370,13 +1617,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Gamma Nest North East Access",
-                        "node": "Dock to Tower Exterior North"
+                        "node": "Horizontal Dock to Tower Exterior North"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1498,7 +1745,7 @@
                                 ]
                             }
                         },
-                        "Dock to Gamma Nest North East Access": {
+                        "Horizontal Dock to Gamma Nest North East Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1586,143 +1833,23 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Spider Ball"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Power Grip",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidAirMorph",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Power Bombs"
-                                                },
-                                                {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Spider Method",
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Use Bombs"
+                                                                "data": "Can Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Any Bombs"
                                                             },
                                                             {
                                                                 "type": "or",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Spider Ball"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "IBJ",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space Jump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Speed Booster",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Shinesparking",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "MidAirMorph",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
@@ -1732,7 +1859,7 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "items",
-                                                                                            "name": "Power Grip",
+                                                                                            "name": "Hi-Jump",
                                                                                             "amount": 1,
                                                                                             "negate": false
                                                                                         }
@@ -1741,8 +1868,8 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "tricks",
-                                                                                            "name": "Movement",
-                                                                                            "amount": 3,
+                                                                                            "name": "MidAirMorph",
+                                                                                            "amount": 1,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -1753,9 +1880,18 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Walljump",
+                                                                                "name": "MorphGlide",
                                                                                 "amount": 2,
                                                                                 "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "EntranceRando",
+                                                                                "amount": 1,
+                                                                                "negate": true
                                                                             }
                                                                         }
                                                                     ]
@@ -1765,12 +1901,219 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": "Non-Spider Methods",
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Way to break the blocks",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Power Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Bombs"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "IBJ",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "Space Jump",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "MidAirMorph",
+                                                                                                                    "amount": 2,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Ways to climb to the tunnel",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Space Jump Method",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Space Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Power Grip",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "MidAirMorph",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Shinespark Method",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Speed Booster",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Shinesparking",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Power Grip",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Walljump",
+                                                                                                                    "amount": 3,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "MidAirMorph",
+                                                                                                                    "amount": 3,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "IBJ from mid-air or very close to the edge",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Bombs"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1786,7 +2129,105 @@
         "Tower Exterior West": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h04"
+                "map_name": "rm_a4h04",
+                "minimap_data": [
+                    {
+                        "x": 31,
+                        "y": 32
+                    },
+                    {
+                        "x": 31,
+                        "y": 33
+                    },
+                    {
+                        "x": 31,
+                        "y": 34
+                    },
+                    {
+                        "x": 31,
+                        "y": 35
+                    },
+                    {
+                        "x": 31,
+                        "y": 36
+                    },
+                    {
+                        "x": 31,
+                        "y": 37
+                    },
+                    {
+                        "x": 31,
+                        "y": 38
+                    },
+                    {
+                        "x": 31,
+                        "y": 39
+                    },
+                    {
+                        "x": 31,
+                        "y": 40
+                    },
+                    {
+                        "x": 31,
+                        "y": 41
+                    },
+                    {
+                        "x": 31,
+                        "y": 42
+                    },
+                    {
+                        "x": 32,
+                        "y": 30
+                    },
+                    {
+                        "x": 32,
+                        "y": 31
+                    },
+                    {
+                        "x": 32,
+                        "y": 32
+                    },
+                    {
+                        "x": 32,
+                        "y": 33
+                    },
+                    {
+                        "x": 32,
+                        "y": 34
+                    },
+                    {
+                        "x": 32,
+                        "y": 35
+                    },
+                    {
+                        "x": 32,
+                        "y": 36
+                    },
+                    {
+                        "x": 32,
+                        "y": 37
+                    },
+                    {
+                        "x": 32,
+                        "y": 38
+                    },
+                    {
+                        "x": 32,
+                        "y": 39
+                    },
+                    {
+                        "x": 32,
+                        "y": 40
+                    },
+                    {
+                        "x": 32,
+                        "y": 41
+                    },
+                    {
+                        "x": 32,
+                        "y": 42
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Exterior Zeta Nest West Access": {
@@ -1815,7 +2256,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gamma Nest West Access": {
+                        "Horizontal Dock to Gamma Nest West Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1892,7 +2333,7 @@
                         }
                     }
                 },
-                "Dock to Gamma Nest West Access": {
+                "Horizontal Dock to Gamma Nest West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1906,13 +2347,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Gamma Nest West Access",
-                        "node": "Dock to Tower Exterior West"
+                        "node": "Horizontal Dock to Tower Exterior West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1926,26 +2367,86 @@
                             }
                         },
                         "Door to Tower Activation Station": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "MidAirMorph",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Spin Cancels",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Morph Glide",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1986,7 +2487,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gamma Nest West Access": {
+                        "Horizontal Dock to Gamma Nest West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2028,27 +2529,52 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gamma Nest West Access": {
-                            "type": "and",
+                        "Horizontal Dock to Gamma Nest West Access": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "MidAirMorph",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Spin Cancels",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Morph Glide",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MorphGlide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2367,7 +2893,21 @@
         "Exterior Zeta Nest East Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h05"
+                "map_name": "rm_a4h05",
+                "minimap_data": [
+                    {
+                        "x": 38,
+                        "y": 37
+                    },
+                    {
+                        "x": 39,
+                        "y": 37
+                    },
+                    {
+                        "x": 40,
+                        "y": 37
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Exterior Zeta Nest East": {
@@ -2428,7 +2968,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "MidAirMorph",
+                                                        "name": "MorphGlide",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -2589,7 +3129,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "MidAirMorph",
+                                                        "name": "MorphGlide",
                                                         "amount": 3,
                                                         "negate": false
                                                     }
@@ -2641,7 +3181,17 @@
         "Exterior Zeta Nest East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h06"
+                "map_name": "rm_a4h06",
+                "minimap_data": [
+                    {
+                        "x": 41,
+                        "y": 37
+                    },
+                    {
+                        "x": 42,
+                        "y": 37
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Exterior Zeta Nest East Access": {
@@ -2713,6 +3263,32 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed Booster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -2758,15 +3334,6 @@
                                                         "type": "items",
                                                         "name": "Speed Booster",
                                                         "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -2818,7 +3385,17 @@
         "Gamma Nest South East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h07"
+                "map_name": "rm_a4h07",
+                "minimap_data": [
+                    {
+                        "x": 37,
+                        "y": 33
+                    },
+                    {
+                        "x": 37,
+                        "y": 34
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tower Exterior South East": {
@@ -2854,7 +3431,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Gamma"
+                                        "data": "Defeat dodging Gamma"
                                     }
                                 ]
                             }
@@ -2926,7 +3503,21 @@
         "Gamma Nest North East Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h08"
+                "map_name": "rm_a4h08",
+                "minimap_data": [
+                    {
+                        "x": 37,
+                        "y": 28
+                    },
+                    {
+                        "x": 38,
+                        "y": 28
+                    },
+                    {
+                        "x": 39,
+                        "y": 28
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Gamma Nest North East": {
@@ -3026,7 +3617,7 @@
                         }
                     }
                 },
-                "Dock to Tower Exterior North": {
+                "Horizontal Dock to Tower Exterior North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3040,13 +3631,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior North",
-                        "node": "Dock to Gamma Nest North East Access"
+                        "node": "Horizontal Dock to Gamma Nest North East Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3181,7 +3772,7 @@
                                 ]
                             }
                         },
-                        "Dock to Tower Exterior North": {
+                        "Horizontal Dock to Tower Exterior North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3231,7 +3822,17 @@
         "Gamma Nest North East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h09"
+                "map_name": "rm_a4h09",
+                "minimap_data": [
+                    {
+                        "x": 40,
+                        "y": 28
+                    },
+                    {
+                        "x": 41,
+                        "y": 28
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Gamma Nest North East Access": {
@@ -3267,7 +3868,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Gamma"
+                                        "data": "Defeat dodging Gamma"
                                     }
                                 ]
                             }
@@ -3339,10 +3940,28 @@
         "Gamma Nest West Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h10"
+                "map_name": "rm_a4h10",
+                "minimap_data": [
+                    {
+                        "x": 27,
+                        "y": 36
+                    },
+                    {
+                        "x": 28,
+                        "y": 36
+                    },
+                    {
+                        "x": 29,
+                        "y": 36
+                    },
+                    {
+                        "x": 30,
+                        "y": 36
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Tower Exterior West": {
+                "Horizontal Dock to Tower Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3356,13 +3975,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior West",
-                        "node": "Dock to Gamma Nest West Access"
+                        "node": "Horizontal Dock to Gamma Nest West Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3706,7 +4325,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Tower Exterior West": {
+                        "Horizontal Dock to Tower Exterior West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3851,7 +4470,17 @@
         "Gamma Nest West": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h11"
+                "map_name": "rm_a4h11",
+                "minimap_data": [
+                    {
+                        "x": 25,
+                        "y": 36
+                    },
+                    {
+                        "x": 26,
+                        "y": 36
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Gamma Nest West Access": {
@@ -3887,7 +4516,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Gamma"
+                                        "data": "Defeat dodging Gamma"
                                     }
                                 ]
                             }
@@ -3959,7 +4588,33 @@
         "Exterior Zeta Nest West Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h12"
+                "map_name": "rm_a4h12",
+                "minimap_data": [
+                    {
+                        "x": 28,
+                        "y": 41
+                    },
+                    {
+                        "x": 28,
+                        "y": 42
+                    },
+                    {
+                        "x": 29,
+                        "y": 41
+                    },
+                    {
+                        "x": 29,
+                        "y": 42
+                    },
+                    {
+                        "x": 30,
+                        "y": 41
+                    },
+                    {
+                        "x": 30,
+                        "y": 42
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tower Exterior West": {
@@ -4120,7 +4775,7 @@
                         }
                     }
                 },
-                "Dock to Exterior Zeta Nest West": {
+                "Horizontal Dock to Exterior Zeta Nest West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4134,13 +4789,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Exterior Zeta Nest West",
-                        "node": "Dock to Exterior Zeta Nest West Access"
+                        "node": "Horizontal Dock to Exterior Zeta Nest West Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4289,7 +4944,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Exterior Zeta Nest West": {
+                        "Horizontal Dock to Exterior Zeta Nest West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4889,10 +5544,24 @@
         "Exterior Zeta Nest West": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h13"
+                "map_name": "rm_a4h13",
+                "minimap_data": [
+                    {
+                        "x": 25,
+                        "y": 42
+                    },
+                    {
+                        "x": 26,
+                        "y": 42
+                    },
+                    {
+                        "x": 27,
+                        "y": 42
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Exterior Zeta Nest West Access": {
+                "Horizontal Dock to Exterior Zeta Nest West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4906,13 +5575,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Exterior Zeta Nest West Access",
-                        "node": "Dock to Exterior Zeta Nest West"
+                        "node": "Horizontal Dock to Exterior Zeta Nest West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4948,7 +5617,7 @@
                     "valid_starting_location": false,
                     "event_name": "Zeta1",
                     "connections": {
-                        "Dock to Exterior Zeta Nest West Access": {
+                        "Horizontal Dock to Exterior Zeta Nest West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4997,7 +5666,13 @@
         "Exterior Save Station": {
             "default_node": "Save Station",
             "extra": {
-                "map_name": "rm_a4h14"
+                "map_name": "rm_a4h14",
+                "minimap_data": [
+                    {
+                        "x": 37,
+                        "y": 32
+                    }
+                ]
             },
             "nodes": {
                 "Save Station": {
@@ -5017,7 +5692,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Tower Exterior North East": {
+                        "Horizontal Dock to Tower Exterior North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5026,7 +5701,7 @@
                         }
                     }
                 },
-                "Dock to Tower Exterior North East": {
+                "Horizontal Dock to Tower Exterior North East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5040,13 +5715,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior North East",
-                        "node": "Dock to Exterior Save Station"
+                        "node": "Horizontal Dock to Exterior Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5066,10 +5741,20 @@
         "Southern Cave Pipe Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h15"
+                "map_name": "rm_a4h15",
+                "minimap_data": [
+                    {
+                        "x": 38,
+                        "y": 42
+                    },
+                    {
+                        "x": 38,
+                        "y": 43
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Tower Exterior South East": {
+                "Horizontal Dock to Tower Exterior South East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5083,19 +5768,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior South East",
-                        "node": "Dock to Southern Cave Pipe Access"
+                        "node": "Horizontal Dock to Southern Cave Pipe Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Southern Cave Pipe": {
+                        "Horizontal Dock to Southern Cave Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5104,7 +5789,7 @@
                         }
                     }
                 },
-                "Dock to Southern Cave Pipe": {
+                "Horizontal Dock to Southern Cave Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5118,19 +5803,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Southern Cave Pipe",
-                        "node": "Dock to Southern Cave Pipe Access"
+                        "node": "Horizontal Dock to Southern Cave Pipe Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Tower Exterior South East": {
+                        "Horizontal Dock to Tower Exterior South East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5170,7 +5855,7 @@
                     "pickup_index": 259,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Southern Cave Pipe": {
+                        "Horizontal Dock to Southern Cave Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5182,12 +5867,22 @@
             }
         },
         "Southern Cave Pipe": {
-            "default_node": "Dock to Southern Cave Pipe Access",
+            "default_node": "Horizontal Dock to Southern Cave Pipe Access",
             "extra": {
-                "map_name": "rm_a4h16"
+                "map_name": "rm_a4h16",
+                "minimap_data": [
+                    {
+                        "x": 36,
+                        "y": 43
+                    },
+                    {
+                        "x": 37,
+                        "y": 43
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Southern Cave Pipe Access": {
+                "Horizontal Dock to Southern Cave Pipe Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5201,13 +5896,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Southern Cave Pipe Access",
-                        "node": "Dock to Southern Cave Pipe"
+                        "node": "Horizontal Dock to Southern Cave Pipe"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5244,7 +5939,11 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 127561,
+                        "dest_x": 200,
+                        "dest_y": 128
+                    },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -5258,7 +5957,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Southern Cave Pipe Access": {
+                        "Horizontal Dock to Southern Cave Pipe Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5282,7 +5981,21 @@
         "Inner Save Station East Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a01"
+                "map_name": "rm_a4a01",
+                "minimap_data": [
+                    {
+                        "x": 35,
+                        "y": 39
+                    },
+                    {
+                        "x": 35,
+                        "y": 40
+                    },
+                    {
+                        "x": 35,
+                        "y": 41
+                    }
+                ]
             },
             "nodes": {
                 "Door to Tower Exterior South East": {
@@ -5461,7 +6174,13 @@
         "Inner Save Station": {
             "default_node": "Save Station",
             "extra": {
-                "map_name": "rm_a4a02"
+                "map_name": "rm_a4a02",
+                "minimap_data": [
+                    {
+                        "x": 34,
+                        "y": 39
+                    }
+                ]
             },
             "nodes": {
                 "Save Station": {
@@ -5576,7 +6295,17 @@
         "Inner Save Station West Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a03"
+                "map_name": "rm_a4a03",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 39
+                    },
+                    {
+                        "x": 33,
+                        "y": 40
+                    }
+                ]
             },
             "nodes": {
                 "Door to Tower Exterior West": {
@@ -5663,7 +6392,17 @@
         "Tower Activation Station": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a04"
+                "map_name": "rm_a4a04",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 38
+                    },
+                    {
+                        "x": 34,
+                        "y": 38
+                    }
+                ]
             },
             "nodes": {
                 "Door to Gunzoo Shaft": {
@@ -5853,7 +6592,25 @@
         "Tester Arena": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a05"
+                "map_name": "rm_a4a05",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 34
+                    },
+                    {
+                        "x": 33,
+                        "y": 35
+                    },
+                    {
+                        "x": 33,
+                        "y": 36
+                    },
+                    {
+                        "x": 33,
+                        "y": 37
+                    }
+                ]
             },
             "nodes": {
                 "Door to Tester Arena Access North": {
@@ -5880,7 +6637,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Hydro Station Water Turbine"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -5917,7 +6676,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Hydro Station Water Turbine"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6216,7 +6977,21 @@
         "Tester Arena Access South": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a06"
+                "map_name": "rm_a4a06",
+                "minimap_data": [
+                    {
+                        "x": 34,
+                        "y": 35
+                    },
+                    {
+                        "x": 34,
+                        "y": 36
+                    },
+                    {
+                        "x": 34,
+                        "y": 37
+                    }
+                ]
             },
             "nodes": {
                 "Door to Gunzoo Shaft": {
@@ -6280,7 +7055,9 @@
                     },
                     "default_dock_weakness": "Tower Energy Restored Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Hydro Station Water Turbine"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6480,7 +7257,25 @@
         "Gunzoo Shaft": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a07"
+                "map_name": "rm_a4a07",
+                "minimap_data": [
+                    {
+                        "x": 35,
+                        "y": 35
+                    },
+                    {
+                        "x": 35,
+                        "y": 36
+                    },
+                    {
+                        "x": 35,
+                        "y": 37
+                    },
+                    {
+                        "x": 35,
+                        "y": 38
+                    }
+                ]
             },
             "nodes": {
                 "Door to Tester Arena Access South": {
@@ -6627,7 +7422,17 @@
         "Tester Arena Access North": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a08"
+                "map_name": "rm_a4a08",
+                "minimap_data": [
+                    {
+                        "x": 34,
+                        "y": 34
+                    },
+                    {
+                        "x": 35,
+                        "y": 34
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Plasma Beam Chamber Access": {
@@ -6699,7 +7504,9 @@
                     },
                     "default_dock_weakness": "Tower Energy Restored Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Hydro Station Water Turbine"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7002,7 +7809,17 @@
         "Plasma Beam Chamber Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a09"
+                "map_name": "rm_a4a09",
+                "minimap_data": [
+                    {
+                        "x": 34,
+                        "y": 33
+                    },
+                    {
+                        "x": 35,
+                        "y": 33
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tester Arena Access North": {
@@ -7239,7 +8056,13 @@
         "Plasma Beam Chamber": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a10"
+                "map_name": "rm_a4a10",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 33
+                    }
+                ]
             },
             "nodes": {
                 "Tunnel to Plasma Beam Chamber Access": {
@@ -7400,7 +8223,21 @@
         "Inner Zeta Nest Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a11"
+                "map_name": "rm_a4a11",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 32
+                    },
+                    {
+                        "x": 34,
+                        "y": 32
+                    },
+                    {
+                        "x": 35,
+                        "y": 32
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Inner Zeta Nest": {
@@ -7499,106 +8336,78 @@
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Power Grip",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "MidAirMorph",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Speed Booster",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Shinesparking",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "or",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Power Grip",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Use Spring Ball"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Spider Ball"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -7655,7 +8464,21 @@
         "Inner Zeta Nest": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a12"
+                "map_name": "rm_a4a12",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 31
+                    },
+                    {
+                        "x": 34,
+                        "y": 31
+                    },
+                    {
+                        "x": 35,
+                        "y": 31
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Inner Zeta Nest Access": {
@@ -7696,6 +8519,173 @@
                                     {
                                         "type": "template",
                                         "data": "Defeat Zeta"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get into Tunnel",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed Booster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Shinesparking",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Power Grip",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Spring Ball",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Power Grip",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "MidAirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Space Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Hi-Jump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -7776,7 +8766,21 @@
         "Dark Maze": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a13"
+                "map_name": "rm_a4a13",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 30
+                    },
+                    {
+                        "x": 34,
+                        "y": 30
+                    },
+                    {
+                        "x": 35,
+                        "y": 30
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tower Exterior North (Left)": {
@@ -8164,6 +9168,36 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hi-Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ChargedBombJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Charged Bomb Jump"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -8204,7 +9238,17 @@
         "Inner Tower Pipe": {
             "default_node": "Dock to Inner Save Station East Access",
             "extra": {
-                "map_name": "rm_a4a14"
+                "map_name": "rm_a4a14",
+                "minimap_data": [
+                    {
+                        "x": 34,
+                        "y": 40
+                    },
+                    {
+                        "x": 34,
+                        "y": 41
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Inner Save Station East Access": {
@@ -8264,7 +9308,11 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 129328,
+                        "dest_x": 152,
+                        "dest_y": 368
+                    },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -8306,7 +9354,17 @@
         "Power Plant Entrance": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4b01"
+                "map_name": "rm_a4b01",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 42
+                    },
+                    {
+                        "x": 34,
+                        "y": 42
+                    }
+                ]
             },
             "nodes": {
                 "Door to Tower Exterior West": {
@@ -8337,21 +9395,47 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Power Plant Destroyed Shaft": {
-                            "type": "and",
+                        "Horizontal Dock to Power Plant Destroyed Shaft": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Low Mid-Air Morph Tunnel Climb"
+                                        "data": "Tunnel Climb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Dock to Power Plant Destroyed Shaft": {
+                "Horizontal Dock to Power Plant Destroyed Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8365,13 +9449,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Power Plant Destroyed Shaft",
-                        "node": "Dock to Power Plant Entrance"
+                        "node": "Horizontal Dock to Power Plant Entrance"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8401,10 +9485,32 @@
         "Power Plant Destroyed Shaft": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4b02a"
+                "map_name": "rm_a4b02a",
+                "minimap_data": [
+                    {
+                        "x": 35,
+                        "y": 42
+                    },
+                    {
+                        "x": 35,
+                        "y": 43
+                    },
+                    {
+                        "x": 35,
+                        "y": 44
+                    },
+                    {
+                        "x": 35,
+                        "y": 45
+                    },
+                    {
+                        "x": 35,
+                        "y": 46
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Power Plant Entrance": {
+                "Horizontal Dock to Power Plant Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8418,13 +9524,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Power Plant Entrance",
-                        "node": "Dock to Power Plant Destroyed Shaft"
+                        "node": "Horizontal Dock to Power Plant Destroyed Shaft"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8506,7 +9612,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Power Plant Entrance": {
+                        "Horizontal Dock to Power Plant Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8662,7 +9768,7 @@
                     "pickup_index": 253,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Power Plant Entrance": {
+                        "Horizontal Dock to Power Plant Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8681,7 +9787,17 @@
         "Power Plant Hidden Storage": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4b02b"
+                "map_name": "rm_a4b02b",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 46
+                    },
+                    {
+                        "x": 34,
+                        "y": 46
+                    }
+                ]
             },
             "nodes": {
                 "Tunnel to Power Plant Destroyed Shaft": {
@@ -8752,7 +9868,7 @@
                         }
                     }
                 },
-                "Pickup (Super Missile Tank)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -8824,7 +9940,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (Super Missile Tank)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,

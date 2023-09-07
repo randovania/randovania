@@ -10,7 +10,7 @@
     },
     "areas": {
         "Chozo Seal": {
-            "default_node": "Elevator to Surface East - Transport to Area 1",
+            "default_node": "Elevator to Surface - East",
             "extra": {
                 "total_boundings": {
                     "x1": -20550.0,
@@ -364,7 +364,7 @@
                         }
                     }
                 },
-                "Elevator to Surface East - Transport to Area 1": {
+                "Elevator to Surface - East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -382,13 +382,13 @@
                         "start_point_actor_name": "ST_FromArea00"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Transport to Area 1",
-                        "node": "Elevator to Area 1 - Chozo Seal"
+                        "node": "Elevator to Area 1"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -403,7 +403,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 Entrance - Chozo Seal": {
+                "Elevator to Area 2 - Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -421,13 +421,13 @@
                         "start_point_actor_name": "ST_FromArea02"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Entrance",
                         "area": "Chozo Seal",
-                        "node": "Elevator To Area 1 - Chozo Seal"
+                        "node": "Elevator to Area 1"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -486,7 +486,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator to Surface East - Transport to Area 1": {
+                        "Elevator to Surface - East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -663,7 +663,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Missile Block"
+                                                    "data": "Shoot Any Missile"
                                                 }
                                             ]
                                         }
@@ -739,7 +739,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 2 Entrance - Chozo Seal": {
+                        "Elevator to Area 2 - Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -858,7 +858,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "and",
@@ -876,7 +876,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Missile Block"
+                                                    "data": "Shoot Any Missile"
                                                 }
                                             ]
                                         }
@@ -1324,7 +1324,7 @@
                     "connections": {
                         "Tunnel to Bomb Access": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -1423,11 +1423,11 @@
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Room Center": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -1464,7 +1464,7 @@
                         },
                         "Tunnel to Bomb Access": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -1866,30 +1866,8 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Bomb",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PBAmmo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Lay Any Bomb"
                                                             }
                                                         ]
                                                     }
@@ -1949,20 +1927,8 @@
                             }
                         },
                         "Tunnel to Spider Ball Room": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2063,7 +2029,7 @@
                     "connections": {
                         "Tunnel to Spider Ball Balcony": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2198,13 +2164,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2514,7 +2475,7 @@
                         },
                         "Inside Arena": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2536,12 +2497,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door from Outer Hub": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 2",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid": {
@@ -2555,7 +2514,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -2727,7 +2686,7 @@
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2756,7 +2715,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "resource",
@@ -3313,7 +3272,7 @@
                         },
                         "Pickup (Missile Tank Hidden)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "2nd Level": {
                             "type": "and",
@@ -3341,7 +3300,7 @@
                     "connections": {
                         "Tunnel to Inner Shaft": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Dock to Save Station North": {
                             "type": "and",
@@ -3467,12 +3426,12 @@
                         }
                     }
                 },
-                "Door to Alpha Shaft Right": {
+                "Dock to Alpha Shaft Right": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1338.8170351917367,
-                        "y": 1462.1029637501476,
+                        "x": 1338.82,
+                        "y": 1462.1,
                         "z": 0.0
                     },
                     "description": "",
@@ -3481,13 +3440,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Alpha Shaft Right",
                         "node": "Dock to Alpha Shaft Left"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3509,7 +3468,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Bomb Block"
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -3593,11 +3552,16 @@
                                 "items": []
                             }
                         },
-                        "Door to Alpha Shaft Right": {
+                        "Dock to Alpha Shaft Right": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3941,7 +3905,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "or",
@@ -4160,12 +4124,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Alpha Shaft Left": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 4",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid": {
@@ -4287,12 +4249,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Alpha Arena East Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Alpha 3",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid": {
@@ -4407,7 +4367,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -4619,7 +4579,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "resource",
@@ -4889,7 +4849,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     }
                                 ]
                             }
@@ -4948,7 +4908,7 @@
                     "connections": {
                         "Tunnel to Alpha Shaft Left": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -5322,13 +5282,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Super Missile"
                                     },
                                     {
                                         "type": "or",
@@ -5829,7 +5784,7 @@
                     "connections": {
                         "Dock to Alpha Shaft Right": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Tunnel to Alpha Shaft Right": {
                             "type": "template",
@@ -6379,7 +6334,7 @@
                         },
                         "Tunnel to Teleporter Room": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -6624,7 +6579,7 @@
                     "connections": {
                         "Tunnel to Outer Hub": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -6688,7 +6643,7 @@
                     "connections": {
                         "Tunnel to Save Station South": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Tunnel to Central Shaft": {
                             "type": "resource",
@@ -6781,8 +6736,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1338.9479277364505,
-                        "y": 1457.881686149486,
+                        "x": 1338.95,
+                        "y": 1457.88,
                         "z": 0.0
                     },
                     "description": "",
@@ -6795,7 +6750,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Alpha Shaft Left",
-                        "node": "Door to Alpha Shaft Right"
+                        "node": "Dock to Alpha Shaft Right"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -6847,7 +6802,7 @@
                         },
                         "Dock to Alpha Shaft Left": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -7086,7 +7041,7 @@
                         },
                         "Tunnel to Bomb Room": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -7523,7 +7478,7 @@
                     "connections": {
                         "Dock to Shaft East": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -7564,7 +7519,7 @@
                         },
                         "Tunnel to Teleporter Access": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Event - Teleporter Unlocked": {
                             "type": "and",
@@ -7870,7 +7825,7 @@
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -8116,7 +8071,7 @@
                     "connections": {
                         "Tunnel to Alpha Arena West Access (Bottom)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Event - Alpha Metroid": {
                             "type": "template",

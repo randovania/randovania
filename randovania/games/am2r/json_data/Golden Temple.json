@@ -1,14 +1,22 @@
 {
     "name": "Golden Temple",
-    "extra": {},
+    "extra": {
+        "internal_number": 1
+    },
     "areas": {
         "Guardian Arena": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1h01"
+                "map_name": "rm_a1h01",
+                "minimap_data": [
+                    {
+                        "x": 51,
+                        "y": 13
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Mumbo Manor": {
+                "Area Transition to Main Caves": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -22,11 +30,11 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Mumbo Manor",
-                        "node": "Dock to Guardian Arena"
+                        "node": "Area Transition to Golden Temple"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -34,7 +42,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Needler Shaft": {
+                        "Horizontal Dock to Needler Nation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -43,7 +51,7 @@
                         }
                     }
                 },
-                "Dock to Needler Shaft": {
+                "Horizontal Dock to Needler Nation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -57,19 +65,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Needler Shaft",
-                        "node": "Dock to Guardian Arena"
+                        "area": "Needler Nation",
+                        "node": "Horizontal Dock to Guardian Arena"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Mumbo Manor": {
+                        "Area Transition to Main Caves": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -95,7 +103,7 @@
                                 ]
                             }
                         },
-                        "Dock to Torture Room": {
+                        "Dock to Guardian Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -440,7 +448,7 @@
                         }
                     }
                 },
-                "Dock to Torture Room": {
+                "Dock to Guardian Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -457,7 +465,7 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Torture Room",
+                        "area": "Guardian Storage",
                         "node": "Dock to Guardian Arena"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -466,7 +474,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Needler Shaft": {
+                        "Horizontal Dock to Needler Nation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -491,7 +499,7 @@
                     "valid_starting_location": false,
                     "event_name": "BossGuardian",
                     "connections": {
-                        "Dock to Needler Shaft": {
+                        "Horizontal Dock to Needler Nation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -505,7 +513,13 @@
         "Breeding Grounds Save Station": {
             "default_node": "Save Station",
             "extra": {
-                "map_name": "rm_a1h02"
+                "map_name": "rm_a1h02",
+                "minimap_data": [
+                    {
+                        "x": 53,
+                        "y": 14
+                    }
+                ]
             },
             "nodes": {
                 "Save Station": {
@@ -525,14 +539,14 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Needler Shaft": {
+                        "Horizontal Dock to Needler Nation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Breeding Grounds Entrance": {
+                        "Horizontal Dock to Breeding Grounds Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -541,7 +555,7 @@
                         }
                     }
                 },
-                "Dock to Needler Shaft": {
+                "Horizontal Dock to Needler Nation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -555,13 +569,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Needler Shaft",
-                        "node": "Dock to Breeding Grounds Save Station"
+                        "area": "Needler Nation",
+                        "node": "Horizontal Dock to Breeding Grounds Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -576,7 +590,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Entrance": {
+                "Horizontal Dock to Breeding Grounds Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -590,13 +604,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Entrance",
-                        "node": "Dock to Breeding Grounds Save Station"
+                        "node": "Horizontal Dock to Breeding Grounds Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -613,13 +627,31 @@
                 }
             }
         },
-        "Needler Shaft": {
+        "Needler Nation": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1h03"
+                "map_name": "rm_a1h03",
+                "minimap_data": [
+                    {
+                        "x": 52,
+                        "y": 11
+                    },
+                    {
+                        "x": 52,
+                        "y": 12
+                    },
+                    {
+                        "x": 52,
+                        "y": 13
+                    },
+                    {
+                        "x": 52,
+                        "y": 14
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Guardian Arena": {
+                "Horizontal Dock to Guardian Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -633,26 +665,26 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Guardian Arena",
-                        "node": "Dock to Needler Shaft"
+                        "node": "Horizontal Dock to Needler Nation"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gawron Tunnel": {
+                        "Horizontal Dock to Gawron Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Breeding Grounds Save Station": {
+                        "Horizontal Dock to Breeding Grounds Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -661,7 +693,7 @@
                         }
                     }
                 },
-                "Dock to Gawron Tunnel": {
+                "Horizontal Dock to Gawron Gangway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -675,19 +707,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Gawron Tunnel",
-                        "node": "Dock to Needler Shaft"
+                        "area": "Gawron Gangway",
+                        "node": "Horizontal Dock to Needler Nation"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Guardian Arena": {
+                        "Horizontal Dock to Guardian Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -696,7 +728,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Save Station": {
+                "Horizontal Dock to Breeding Grounds Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -710,19 +742,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Save Station",
-                        "node": "Dock to Needler Shaft"
+                        "node": "Horizontal Dock to Needler Nation"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Guardian Arena": {
+                        "Horizontal Dock to Guardian Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -733,13 +765,35 @@
                 }
             }
         },
-        "Gawron Tunnel": {
+        "Gawron Gangway": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1h04"
+                "map_name": "rm_a1h04",
+                "minimap_data": [
+                    {
+                        "x": 53,
+                        "y": 11
+                    },
+                    {
+                        "x": 54,
+                        "y": 11
+                    },
+                    {
+                        "x": 55,
+                        "y": 11
+                    },
+                    {
+                        "x": 56,
+                        "y": 11
+                    },
+                    {
+                        "x": 57,
+                        "y": 11
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Needler Shaft": {
+                "Horizontal Dock to Needler Nation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -753,19 +807,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Needler Shaft",
-                        "node": "Dock to Gawron Tunnel"
+                        "area": "Needler Nation",
+                        "node": "Horizontal Dock to Gawron Gangway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Golden Temple Exterior": {
+                        "Horizontal Dock to Golden Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -774,7 +828,7 @@
                         }
                     }
                 },
-                "Dock to Golden Temple Exterior": {
+                "Horizontal Dock to Golden Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -788,19 +842,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Golden Temple Exterior",
-                        "node": "Dock to Gawron Tunnel"
+                        "node": "Horizontal Dock to Gawron Gangway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Needler Shaft": {
+                        "Horizontal Dock to Needler Nation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -814,10 +868,172 @@
         "Golden Temple Exterior": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1h05"
+                "map_name": "rm_a1h05",
+                "minimap_data": [
+                    {
+                        "x": 58,
+                        "y": 7
+                    },
+                    {
+                        "x": 58,
+                        "y": 8
+                    },
+                    {
+                        "x": 58,
+                        "y": 9
+                    },
+                    {
+                        "x": 58,
+                        "y": 10
+                    },
+                    {
+                        "x": 58,
+                        "y": 11
+                    },
+                    {
+                        "x": 59,
+                        "y": 7
+                    },
+                    {
+                        "x": 59,
+                        "y": 8
+                    },
+                    {
+                        "x": 59,
+                        "y": 9
+                    },
+                    {
+                        "x": 59,
+                        "y": 10
+                    },
+                    {
+                        "x": 59,
+                        "y": 11
+                    },
+                    {
+                        "x": 60,
+                        "y": 7
+                    },
+                    {
+                        "x": 60,
+                        "y": 8
+                    },
+                    {
+                        "x": 60,
+                        "y": 9
+                    },
+                    {
+                        "x": 60,
+                        "y": 10
+                    },
+                    {
+                        "x": 61,
+                        "y": 7
+                    },
+                    {
+                        "x": 61,
+                        "y": 8
+                    },
+                    {
+                        "x": 61,
+                        "y": 9
+                    },
+                    {
+                        "x": 61,
+                        "y": 10
+                    },
+                    {
+                        "x": 62,
+                        "y": 7
+                    },
+                    {
+                        "x": 62,
+                        "y": 8
+                    },
+                    {
+                        "x": 62,
+                        "y": 9
+                    },
+                    {
+                        "x": 63,
+                        "y": 7
+                    },
+                    {
+                        "x": 63,
+                        "y": 8
+                    },
+                    {
+                        "x": 63,
+                        "y": 9
+                    },
+                    {
+                        "x": 64,
+                        "y": 7
+                    },
+                    {
+                        "x": 64,
+                        "y": 8
+                    },
+                    {
+                        "x": 64,
+                        "y": 9
+                    },
+                    {
+                        "x": 65,
+                        "y": 7
+                    },
+                    {
+                        "x": 65,
+                        "y": 8
+                    },
+                    {
+                        "x": 65,
+                        "y": 9
+                    },
+                    {
+                        "x": 66,
+                        "y": 7
+                    },
+                    {
+                        "x": 66,
+                        "y": 8
+                    },
+                    {
+                        "x": 66,
+                        "y": 9
+                    },
+                    {
+                        "x": 66,
+                        "y": 10
+                    },
+                    {
+                        "x": 66,
+                        "y": 11
+                    },
+                    {
+                        "x": 67,
+                        "y": 7
+                    },
+                    {
+                        "x": 67,
+                        "y": 8
+                    },
+                    {
+                        "x": 67,
+                        "y": 9
+                    },
+                    {
+                        "x": 67,
+                        "y": 10
+                    },
+                    {
+                        "x": 67,
+                        "y": 11
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Gawron Tunnel": {
+                "Horizontal Dock to Gawron Gangway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -831,13 +1047,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Gawron Tunnel",
-                        "node": "Dock to Golden Temple Exterior"
+                        "area": "Gawron Gangway",
+                        "node": "Horizontal Dock to Golden Temple Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -852,7 +1068,7 @@
                         }
                     }
                 },
-                "Dock to Outer Temple Save Station": {
+                "Horizontal Dock to Outer Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -866,13 +1082,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Outer Temple Save Station",
-                        "node": "Dock to Golden Temple Exterior"
+                        "node": "Horizontal Dock to Golden Temple Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -885,7 +1101,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Exterior Alpha Nest": {
+                        "Horizontal Dock to Exterior Alpha Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1209,13 +1425,22 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Inner Temple East Hall": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "ZipFromDestroyable"
+                                        "data": "Zip From Destroyable Object"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
                                     }
                                 ]
                             }
@@ -1336,6 +1561,62 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "CBJ up",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Charged Bomb Jump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ChargedBombJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Power Grip",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1349,7 +1630,7 @@
                         }
                     }
                 },
-                "Dock to 3-Orb Hallway": {
+                "Horizontal Dock to 3-Orb Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1363,13 +1644,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "3-Orb Hallway",
-                        "node": "Dock to Golden Temple Exterior"
+                        "node": "Horizontal Dock to Golden Temple Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1417,7 +1698,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Outer Temple Save Station": {
+                        "Horizontal Dock to Outer Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1425,13 +1706,22 @@
                             }
                         },
                         "Door to Inner Temple Save Station": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "ZipFromDestroyable"
+                                        "data": "Zip From Destroyable Object"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
                                     }
                                 ]
                             }
@@ -1515,7 +1805,7 @@
                         }
                     }
                 },
-                "Dock to Exterior Alpha Nest": {
+                "Horizontal Dock to Exterior Alpha Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1529,19 +1819,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Exterior Alpha Nest",
-                        "node": "Dock to Golden Temple Exterior"
+                        "node": "Horizontal Dock to Golden Temple Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Outer Temple Save Station": {
+                        "Horizontal Dock to Outer Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1643,7 +1933,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to 3-Orb Hallway": {
+                        "Horizontal Dock to 3-Orb Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1823,6 +2113,62 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "CBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Charged Bomb Jump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ChargedBombJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Power Grip",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1851,7 +2197,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Exterior Alpha Nest": {
+                        "Horizontal Dock to Exterior Alpha Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1912,6 +2258,117 @@
                                                         "name": "Morph Ball",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph Ball",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": "Morph glide completely",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "MidAirMorph",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "Morph glide just before it and get up at the ledge",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "MorphGlide",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "or",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "Power Grip",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Walljump",
+                                                                                                                    "amount": 3,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2037,7 +2494,7 @@
                     "valid_starting_location": false,
                     "event_name": "A1Visited",
                     "connections": {
-                        "Dock to Gawron Tunnel": {
+                        "Horizontal Dock to Gawron Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2058,10 +2515,20 @@
         "Exterior Alpha Nest": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1h06"
+                "map_name": "rm_a1h06",
+                "minimap_data": [
+                    {
+                        "x": 68,
+                        "y": 9
+                    },
+                    {
+                        "x": 69,
+                        "y": 9
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Golden Temple Exterior": {
+                "Horizontal Dock to Golden Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2075,13 +2542,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Golden Temple Exterior",
-                        "node": "Dock to Exterior Alpha Nest"
+                        "node": "Horizontal Dock to Exterior Alpha Nest"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2094,7 +2561,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat non-dodging Alpha"
                                     }
                                 ]
                             }
@@ -2117,7 +2584,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha2",
                     "connections": {
-                        "Dock to Golden Temple Exterior": {
+                        "Horizontal Dock to Golden Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2166,7 +2633,17 @@
         "Outer Temple Save Station": {
             "default_node": "Save Station",
             "extra": {
-                "map_name": "rm_a1h07"
+                "map_name": "rm_a1h07",
+                "minimap_data": [
+                    {
+                        "x": 68,
+                        "y": 11
+                    },
+                    {
+                        "x": 69,
+                        "y": 11
+                    }
+                ]
             },
             "nodes": {
                 "Save Station": {
@@ -2186,7 +2663,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Golden Temple Exterior": {
+                        "Horizontal Dock to Golden Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2212,7 +2689,7 @@
                         }
                     }
                 },
-                "Dock to Golden Temple Exterior": {
+                "Horizontal Dock to Golden Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2226,13 +2703,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Golden Temple Exterior",
-                        "node": "Dock to Outer Temple Save Station"
+                        "node": "Horizontal Dock to Outer Temple Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2297,7 +2774,17 @@
         "Spider Ball Chamber": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1h08"
+                "map_name": "rm_a1h08",
+                "minimap_data": [
+                    {
+                        "x": 69,
+                        "y": 12
+                    },
+                    {
+                        "x": 69,
+                        "y": 13
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Outer Temple Save Station": {
@@ -2436,6 +2923,32 @@
                                                         "amount": 2,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -2447,10 +2960,20 @@
                 }
             }
         },
-        "Torture Room": {
+        "Guardian Storage": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1h09"
+                "map_name": "rm_a1h09",
+                "minimap_data": [
+                    {
+                        "x": 51,
+                        "y": 11
+                    },
+                    {
+                        "x": 51,
+                        "y": 12
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Guardian Arena": {
@@ -2471,7 +2994,7 @@
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Guardian Arena",
-                        "node": "Dock to Torture Room"
+                        "node": "Dock to Guardian Storage"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2983,7 +3506,7 @@
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Storage Cavern",
-                        "node": "Door to Torture Room"
+                        "node": "Door to Guardian Storage"
                     },
                     "default_dock_weakness": "Power Bomb Door",
                     "exclude_from_dock_rando": false,
@@ -3045,10 +3568,16 @@
         "Storage Cavern": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1h10"
+                "map_name": "rm_a1h10",
+                "minimap_data": [
+                    {
+                        "x": 50,
+                        "y": 11
+                    }
+                ]
             },
             "nodes": {
-                "Door to Torture Room": {
+                "Door to Guardian Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3067,7 +3596,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Torture Room",
+                        "area": "Guardian Storage",
                         "node": "Door to Storage Cavern"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -3104,7 +3633,7 @@
                     "pickup_index": 112,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Torture Room": {
+                        "Door to Guardian Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3118,7 +3647,13 @@
         "Inner Temple Save Station": {
             "default_node": "Save Station",
             "extra": {
-                "map_name": "rm_a1a01"
+                "map_name": "rm_a1a01",
+                "minimap_data": [
+                    {
+                        "x": 60,
+                        "y": 11
+                    }
+                ]
             },
             "nodes": {
                 "Save Station": {
@@ -3145,7 +3680,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Inner Temple West Hall": {
+                        "Horizontal Dock to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3191,7 +3726,7 @@
                         }
                     }
                 },
-                "Dock to Inner Temple West Hall": {
+                "Horizontal Dock to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3205,13 +3740,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple West Hall",
-                        "node": "Dock to Inner Temple Save Station"
+                        "node": "Horizontal Dock to Inner Temple Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3231,10 +3766,24 @@
         "Inner Temple West Hall": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1a02"
+                "map_name": "rm_a1a02",
+                "minimap_data": [
+                    {
+                        "x": 61,
+                        "y": 11
+                    },
+                    {
+                        "x": 61,
+                        "y": 12
+                    },
+                    {
+                        "x": 61,
+                        "y": 13
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Inner Temple Save Station": {
+                "Horizontal Dock to Inner Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3248,13 +3797,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple Save Station",
-                        "node": "Dock to Inner Temple West Hall"
+                        "node": "Horizontal Dock to Inner Temple West Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3269,7 +3818,7 @@
                         }
                     }
                 },
-                "Dock to Bomb Chamber Access": {
+                "Horizontal Dock to Bomb Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3283,13 +3832,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Bomb Chamber Access",
-                        "node": "Dock to Inner Temple West Hall"
+                        "node": "Horizontal Dock to Inner Temple West Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3364,13 +3913,17 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Dock to 1-Orb Hallway": {
+                "Horizontal Dock to 1-Orb Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3384,19 +3937,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "1-Orb Hallway",
-                        "node": "Dock to Inner Temple West Hall"
+                        "node": "Horizontal Dock to Inner Temple West Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Bomb Chamber Access": {
+                        "Horizontal Dock to Bomb Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3441,21 +3994,21 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Inner Temple Save Station": {
+                        "Horizontal Dock to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Bomb Chamber Access": {
+                        "Horizontal Dock to Bomb Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to 1-Orb Hallway": {
+                        "Horizontal Dock to 1-Orb Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3469,10 +4022,20 @@
         "Bomb Chamber Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1a03"
+                "map_name": "rm_a1a03",
+                "minimap_data": [
+                    {
+                        "x": 59,
+                        "y": 13
+                    },
+                    {
+                        "x": 60,
+                        "y": 13
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Inner Temple West Hall": {
+                "Horizontal Dock to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3486,13 +4049,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple West Hall",
-                        "node": "Dock to Bomb Chamber Access"
+                        "node": "Horizontal Dock to Bomb Chamber Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3535,7 +4098,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Inner Temple West Hall": {
+                        "Horizontal Dock to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3549,7 +4112,13 @@
         "Bomb Chamber": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1a04"
+                "map_name": "rm_a1a04",
+                "minimap_data": [
+                    {
+                        "x": 58,
+                        "y": 13
+                    }
+                ]
             },
             "nodes": {
                 "Door to Bomb Chamber Access": {
@@ -3671,10 +4240,24 @@
         "3-Orb Hallway": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1a05"
+                "map_name": "rm_a1a05",
+                "minimap_data": [
+                    {
+                        "x": 62,
+                        "y": 10
+                    },
+                    {
+                        "x": 63,
+                        "y": 10
+                    },
+                    {
+                        "x": 64,
+                        "y": 10
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Inner Temple East Hall": {
+                "Horizontal Dock to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3688,19 +4271,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple East Hall",
-                        "node": "Dock to 3-Orb Hallway"
+                        "node": "Horizontal Dock to 3-Orb Hallway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Golden Temple Exterior": {
+                        "Horizontal Dock to Golden Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3757,7 +4340,7 @@
                         }
                     }
                 },
-                "Dock to Golden Temple Exterior": {
+                "Horizontal Dock to Golden Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3771,19 +4354,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Golden Temple Exterior",
-                        "node": "Dock to 3-Orb Hallway"
+                        "node": "Horizontal Dock to 3-Orb Hallway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3835,7 +4418,7 @@
                     "pickup_index": 101,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Golden Temple Exterior": {
+                        "Horizontal Dock to Golden Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3863,7 +4446,7 @@
                     "pickup_index": 102,
                     "location_category": "major",
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3901,7 +4484,7 @@
                     "pickup_index": 108,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3936,7 +4519,7 @@
                     "valid_starting_location": false,
                     "event_name": "A1Orb3",
                     "connections": {
-                        "Dock to Golden Temple Exterior": {
+                        "Horizontal Dock to Golden Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3950,7 +4533,29 @@
         "Inner Temple East Hall": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1a06"
+                "map_name": "rm_a1a06",
+                "minimap_data": [
+                    {
+                        "x": 65,
+                        "y": 10
+                    },
+                    {
+                        "x": 65,
+                        "y": 11
+                    },
+                    {
+                        "x": 65,
+                        "y": 12
+                    },
+                    {
+                        "x": 65,
+                        "y": 13
+                    },
+                    {
+                        "x": 65,
+                        "y": 14
+                    }
+                ]
             },
             "nodes": {
                 "Door to Golden Temple Exterior": {
@@ -3990,7 +4595,7 @@
                         }
                     }
                 },
-                "Dock to Charge Beam Chamber Access": {
+                "Horizontal Dock to Charge Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4004,13 +4609,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Charge Beam Chamber Access",
-                        "node": "Dock to Inner Temple East Hall"
+                        "node": "Horizontal Dock to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4025,7 +4630,7 @@
                         }
                     }
                 },
-                "Dock to Armory": {
+                "Horizontal Dock to Armory": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4039,13 +4644,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Armory",
-                        "node": "Dock to Inner Temple East Hall"
+                        "node": "Horizontal Dock to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4060,7 +4665,7 @@
                         }
                     }
                 },
-                "Dock to 3-Orb Hallway": {
+                "Horizontal Dock to 3-Orb Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4074,13 +4679,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "3-Orb Hallway",
-                        "node": "Dock to Inner Temple East Hall"
+                        "node": "Horizontal Dock to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4095,7 +4700,7 @@
                         }
                     }
                 },
-                "Dock to 1-Orb Hallway": {
+                "Horizontal Dock to 1-Orb Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4109,13 +4714,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "1-Orb Hallway",
-                        "node": "Dock to Inner Temple East Hall"
+                        "node": "Horizontal Dock to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4130,7 +4735,7 @@
                         }
                     }
                 },
-                "Dock to Inner Temple Pipe": {
+                "Horizontal Dock to Inner Temple Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4144,13 +4749,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple Pipe",
-                        "node": "Dock to Inner Temple East Hall"
+                        "node": "Horizontal Dock to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4248,35 +4853,35 @@
                                 "items": []
                             }
                         },
-                        "Dock to Charge Beam Chamber Access": {
+                        "Horizontal Dock to Charge Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Armory": {
+                        "Horizontal Dock to Armory": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to 3-Orb Hallway": {
+                        "Horizontal Dock to 3-Orb Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to 1-Orb Hallway": {
+                        "Horizontal Dock to 1-Orb Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Inner Temple Pipe": {
+                        "Horizontal Dock to Inner Temple Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4384,10 +4989,24 @@
         "1-Orb Hallway": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1a07"
+                "map_name": "rm_a1a07",
+                "minimap_data": [
+                    {
+                        "x": 62,
+                        "y": 12
+                    },
+                    {
+                        "x": 63,
+                        "y": 12
+                    },
+                    {
+                        "x": 64,
+                        "y": 12
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Inner Temple West Hall": {
+                "Horizontal Dock to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4401,13 +5020,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple West Hall",
-                        "node": "Dock to 1-Orb Hallway"
+                        "node": "Horizontal Dock to 1-Orb Hallway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4427,7 +5046,7 @@
                         }
                     }
                 },
-                "Dock to Inner Temple East Hall": {
+                "Horizontal Dock to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4441,13 +5060,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple East Hall",
-                        "node": "Dock to 1-Orb Hallway"
+                        "node": "Horizontal Dock to 1-Orb Hallway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4463,8 +5082,25 @@
                                         "data": "Can Use Any Bombs"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Low Mid-Air Morph Tunnel Climb"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Tunnel Climb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4503,7 +5139,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Inner Temple West Hall": {
+                        "Horizontal Dock to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4515,7 +5151,7 @@
                                 ]
                             }
                         },
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4531,7 +5167,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4555,7 +5196,7 @@
                     "pickup_index": 103,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4584,7 +5225,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4594,10 +5240,24 @@
         "Armory": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1a08"
+                "map_name": "rm_a1a08",
+                "minimap_data": [
+                    {
+                        "x": 66,
+                        "y": 13
+                    },
+                    {
+                        "x": 67,
+                        "y": 13
+                    },
+                    {
+                        "x": 68,
+                        "y": 13
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Inner Temple East Hall": {
+                "Horizontal Dock to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4611,13 +5271,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple East Hall",
-                        "node": "Dock to Armory"
+                        "node": "Horizontal Dock to Armory"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4783,7 +5443,7 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Can Use Any Bombs"
+                                                                            "data": "Can Use Bombs"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -4802,6 +5462,27 @@
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Spider from previous room",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "misc",
+                                                                                            "name": "EntranceRando",
+                                                                                            "amount": 1,
+                                                                                            "negate": true
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Any Bombs"
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -4812,6 +5493,32 @@
                                                                     "type": "items",
                                                                     "name": "Spider Ball",
                                                                     "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Expert midair morph",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "MidAirMorph",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -4886,7 +5593,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4944,21 +5651,21 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "and",
+                                                                "type": "or",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Walljump",
-                                                                                "amount": 2,
+                                                                                "type": "items",
+                                                                                "name": "Power Grip",
+                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "or",
+                                                                            "type": "and",
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
@@ -4974,9 +5681,9 @@
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Power Grip",
-                                                                                            "amount": 1,
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 2,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -4989,7 +5696,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Spider requires another power bomb, or a way to spider at the top",
+                                                                    "comment": "Spider requires 2 power bombs, or a way to spider at the top",
                                                                     "items": [
                                                                         {
                                                                             "type": "or",
@@ -4997,8 +5704,13 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Use Power Bombs"
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Power Bombs",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
                                                                                     },
                                                                                     {
                                                                                         "type": "template",
@@ -5053,7 +5765,7 @@
                     "pickup_index": 104,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5081,7 +5793,7 @@
                     "pickup_index": 105,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5109,7 +5821,7 @@
                     "pickup_index": 106,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5171,10 +5883,20 @@
         "Charge Beam Chamber Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1a09"
+                "map_name": "rm_a1a09",
+                "minimap_data": [
+                    {
+                        "x": 63,
+                        "y": 14
+                    },
+                    {
+                        "x": 64,
+                        "y": 14
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Inner Temple East Hall": {
+                "Horizontal Dock to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5188,13 +5910,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple East Hall",
-                        "node": "Dock to Charge Beam Chamber Access"
+                        "node": "Horizontal Dock to Charge Beam Chamber Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5247,106 +5969,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph Ball",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Get into the tunnel",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Power Grip",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider Ball",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidAirMorph",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spring Ball",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Bombs",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "High Mid-Air Morph Tunnel Climb"
                                     }
                                 ]
                             }
@@ -5358,7 +5988,13 @@
         "Charge Beam Chamber": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1a10"
+                "map_name": "rm_a1a10",
+                "minimap_data": [
+                    {
+                        "x": 62,
+                        "y": 14
+                    }
+                ]
             },
             "nodes": {
                 "Door to Charge Beam Chamber Access": {
@@ -5429,12 +6065,26 @@
             }
         },
         "Inner Temple Pipe": {
-            "default_node": "Dock to Inner Temple East Hall",
+            "default_node": "Horizontal Dock to Inner Temple East Hall",
             "extra": {
-                "map_name": "rm_a1a11"
+                "map_name": "rm_a1a11",
+                "minimap_data": [
+                    {
+                        "x": 62,
+                        "y": 13
+                    },
+                    {
+                        "x": 63,
+                        "y": 13
+                    },
+                    {
+                        "x": 64,
+                        "y": 13
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Inner Temple East Hall": {
+                "Horizontal Dock to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5448,13 +6098,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple East Hall",
-                        "node": "Dock to Inner Temple Pipe"
+                        "node": "Horizontal Dock to Inner Temple Pipe"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5491,7 +6141,11 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 108742,
+                        "dest_x": 152,
+                        "dest_y": 128
+                    },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -5505,7 +6159,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5529,7 +6183,57 @@
         "Parkour Course": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1a12"
+                "map_name": "rm_a1a12",
+                "minimap_data": [
+                    {
+                        "x": 66,
+                        "y": 14
+                    },
+                    {
+                        "x": 66,
+                        "y": 15
+                    },
+                    {
+                        "x": 66,
+                        "y": 16
+                    },
+                    {
+                        "x": 67,
+                        "y": 14
+                    },
+                    {
+                        "x": 67,
+                        "y": 15
+                    },
+                    {
+                        "x": 67,
+                        "y": 16
+                    },
+                    {
+                        "x": 68,
+                        "y": 14
+                    },
+                    {
+                        "x": 68,
+                        "y": 15
+                    },
+                    {
+                        "x": 68,
+                        "y": 16
+                    },
+                    {
+                        "x": 69,
+                        "y": 14
+                    },
+                    {
+                        "x": 69,
+                        "y": 15
+                    },
+                    {
+                        "x": 69,
+                        "y": 16
+                    }
+                ]
             },
             "nodes": {
                 "Door to Inner Temple East Hall": {
@@ -5608,15 +6312,6 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
                                                         "type": "items",
                                                         "name": "Space Jump",
                                                         "amount": 1,
@@ -5628,6 +6323,45 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Walljump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
                                                         "amount": 3,
                                                         "negate": false
                                                     }
@@ -5692,10 +6426,28 @@
         "Breeding Grounds Entrance": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1b01"
+                "map_name": "rm_a1b01",
+                "minimap_data": [
+                    {
+                        "x": 54,
+                        "y": 14
+                    },
+                    {
+                        "x": 55,
+                        "y": 14
+                    },
+                    {
+                        "x": 56,
+                        "y": 14
+                    },
+                    {
+                        "x": 57,
+                        "y": 14
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Save Station": {
+                "Horizontal Dock to Breeding Grounds Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5709,13 +6461,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Save Station",
-                        "node": "Dock to Breeding Grounds Entrance"
+                        "node": "Horizontal Dock to Breeding Grounds Entrance"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5735,7 +6487,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Hub": {
+                "Horizontal Dock to Breeding Grounds Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5749,26 +6501,52 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Hub",
-                        "node": "Dock to Breeding Grounds Entrance"
+                        "node": "Horizontal Dock to Breeding Grounds Entrance"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Past Bombs": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Low Mid-Air Morph Tunnel Climb"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Tunnel Climb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -5790,7 +6568,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Breeding Grounds Save Station": {
+                        "Horizontal Dock to Breeding Grounds Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5802,14 +6580,40 @@
                                 ]
                             }
                         },
-                        "Dock to Breeding Grounds Hub": {
-                            "type": "or",
+                        "Horizontal Dock to Breeding Grounds Hub": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Low Mid-Air Morph Tunnel Climb"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Tunnel Climb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -5821,10 +6625,24 @@
         "Breeding Grounds Hub": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1b02"
+                "map_name": "rm_a1b02",
+                "minimap_data": [
+                    {
+                        "x": 58,
+                        "y": 14
+                    },
+                    {
+                        "x": 58,
+                        "y": 15
+                    },
+                    {
+                        "x": 58,
+                        "y": 16
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Breeding Grounds South West": {
+                "Horizontal Dock to Breeding Grounds Alpha Nest South West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5838,26 +6656,26 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Breeding Grounds South West",
-                        "node": "Dock to Breeding Grounds Hub"
+                        "area": "Breeding Grounds Alpha Nest South West",
+                        "node": "Horizontal Dock to Breeding Grounds Hub"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds North East": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Breeding Grounds South East": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest South East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5866,7 +6684,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Entrance": {
+                "Horizontal Dock to Breeding Grounds Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5880,19 +6698,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Entrance",
-                        "node": "Dock to Breeding Grounds Hub"
+                        "node": "Horizontal Dock to Breeding Grounds Hub"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "5-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds North East": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5901,7 +6719,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds North East": {
+                "Horizontal Dock to Breeding Grounds Alpha Nest North East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5915,26 +6733,26 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Breeding Grounds North East",
-                        "node": "Dock to Breeding Grounds Hub"
+                        "area": "Breeding Grounds Alpha Nest North East",
+                        "node": "Horizontal Dock to Breeding Grounds Hub"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds South West": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest South West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Breeding Grounds Entrance": {
+                        "Horizontal Dock to Breeding Grounds Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5943,7 +6761,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds South East": {
+                "Horizontal Dock to Breeding Grounds Alpha Nest South East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5957,19 +6775,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
-                        "area": "Breeding Grounds South East",
-                        "node": "Dock to Breeding Grounds Hub"
+                        "area": "Breeding Grounds Alpha Nest South East",
+                        "node": "Horizontal Dock to Breeding Grounds Hub"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds South West": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest South West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5980,13 +6798,35 @@
                 }
             }
         },
-        "Breeding Grounds North East": {
+        "Breeding Grounds Alpha Nest North East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1b03"
+                "map_name": "rm_a1b03",
+                "minimap_data": [
+                    {
+                        "x": 59,
+                        "y": 15
+                    },
+                    {
+                        "x": 60,
+                        "y": 15
+                    },
+                    {
+                        "x": 61,
+                        "y": 15
+                    },
+                    {
+                        "x": 62,
+                        "y": 15
+                    },
+                    {
+                        "x": 63,
+                        "y": 15
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Hub": {
+                "Horizontal Dock to Breeding Grounds Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6000,13 +6840,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Hub",
-                        "node": "Dock to Breeding Grounds North East"
+                        "node": "Horizontal Dock to Breeding Grounds Alpha Nest North East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6019,7 +6859,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat non-dodging Alpha"
                                     }
                                 ]
                             }
@@ -6042,7 +6882,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha3",
                     "connections": {
-                        "Dock to Breeding Grounds Hub": {
+                        "Horizontal Dock to Breeding Grounds Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6088,13 +6928,31 @@
                 }
             }
         },
-        "Breeding Grounds South West": {
+        "Breeding Grounds Alpha Nest South West": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1b04"
+                "map_name": "rm_a1b04",
+                "minimap_data": [
+                    {
+                        "x": 54,
+                        "y": 16
+                    },
+                    {
+                        "x": 55,
+                        "y": 16
+                    },
+                    {
+                        "x": 56,
+                        "y": 16
+                    },
+                    {
+                        "x": 57,
+                        "y": 16
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Hub": {
+                "Horizontal Dock to Breeding Grounds Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6108,13 +6966,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Hub",
-                        "node": "Dock to Breeding Grounds South West"
+                        "node": "Horizontal Dock to Breeding Grounds Alpha Nest South West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6127,7 +6985,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat dodging Alpha"
                                     }
                                 ]
                             }
@@ -6150,7 +7008,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha5",
                     "connections": {
-                        "Dock to Breeding Grounds Hub": {
+                        "Horizontal Dock to Breeding Grounds Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6196,13 +7054,23 @@
                 }
             }
         },
-        "Breeding Grounds South East": {
+        "Breeding Grounds Alpha Nest South East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a1b05"
+                "map_name": "rm_a1b05",
+                "minimap_data": [
+                    {
+                        "x": 59,
+                        "y": 16
+                    },
+                    {
+                        "x": 60,
+                        "y": 16
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Hub": {
+                "Horizontal Dock to Breeding Grounds Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6216,13 +7084,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Hub",
-                        "node": "Dock to Breeding Grounds South East"
+                        "node": "Horizontal Dock to Breeding Grounds Alpha Nest South East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6235,7 +7103,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Alpha"
+                                        "data": "Defeat non-dodging Alpha"
                                     }
                                 ]
                             }
@@ -6258,7 +7126,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha4",
                     "connections": {
-                        "Dock to Breeding Grounds Hub": {
+                        "Horizontal Dock to Breeding Grounds Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,

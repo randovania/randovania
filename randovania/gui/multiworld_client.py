@@ -30,7 +30,6 @@ if TYPE_CHECKING:
 _ERRORS_THAT_STOP_SYNC = (
     error.WorldDoesNotExistError,
     error.WorldNotAssociatedError,
-    error.SessionInWrongStateError,
 )
 
 
@@ -40,7 +39,7 @@ class MultiworldClient(QtCore.QObject):
     _remote_games: dict[uuid.UUID, MultiplayerWorldPickups]
 
     _last_reported_status: dict[uuid.UUID, GameConnectionStatus]
-    _recently_connected: bool = True
+    _ignore_last_sync: bool = True
     _worlds_with_details: set[uuid.UUID]
     _world_sync_errors: dict[uuid.UUID, error.BaseNetworkError]
     _last_sync: ServerSyncRequest = ServerSyncRequest(worlds=frozendict({}))
@@ -130,8 +129,8 @@ class MultiworldClient(QtCore.QObject):
             # Wait a bit, in case a RemoteConnector is sending multiple events in quick succession
             await asyncio.sleep(1)
 
-            if self._recently_connected:
-                self._recently_connected = False
+            if self._ignore_last_sync:
+                self._ignore_last_sync = False
                 self._last_sync = ServerSyncRequest(worlds=frozendict({}))
 
             request = self._create_new_sync_request()
@@ -256,10 +255,6 @@ class MultiworldClient(QtCore.QObject):
                 case error.WorldNotAssociatedError:
                     error_cleared = uid in user_worlds
 
-                case error.SessionInWrongStateError:
-                    assert isinstance(err, error.SessionInWrongStateError)
-                    error_cleared = uid in worlds_by_id and session.state == err.state
-
             if error_cleared:
                 any_error_cleared = True
                 self._world_sync_errors.pop(uid)
@@ -279,11 +274,13 @@ class MultiworldClient(QtCore.QObject):
         self.start_server_sync_task()
 
     def on_connection_state_updated(self, state: ConnectionState):
-        if state == ConnectionState.Connected:
-            self._recently_connected = True
-            self.start_server_sync_task()
-        else:
+        if state != ConnectionState.Connected:
             self._worlds_with_details.clear()
+
+        if state in {ConnectionState.Connected, ConnectionState.Disconnected}:
+            # If disconnected, cause a connection to upload what we have
+            self._ignore_last_sync = True
+            self.start_server_sync_task()
 
     @property
     def last_sync_exception(self):

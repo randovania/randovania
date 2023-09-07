@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 import randovania
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.pickup_node import PickupNode
@@ -25,8 +25,8 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import Region, RegionList
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection
     from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
 
@@ -138,6 +138,10 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         "respawn": False,
         "showIcon": pickup_markers
     }
+
+    if detail.original_model.name == "UnlimitedMissiles":
+        result["scale"] = [1.8, 1.8, 1.8]
+
     if modal_hud_override:
         result["modalHudmemo"] = True
 
@@ -189,8 +193,7 @@ def _name_for_start_location(region_list: RegionList, location: NodeIdentifier) 
 
 
 def _create_results_screen_text(description: LayoutDescription) -> str:
-    return "{} | Seed Hash - {} ({})".format(
-        randovania.VERSION, description.shareable_word_hash, description.shareable_hash)
+    return f"{randovania.VERSION} | Seed Hash - {description.shareable_word_hash} ({description.shareable_hash})"
 
 
 def _random_factor(rng: Random, min: float, max: float, target: float):
@@ -235,6 +238,7 @@ def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
         aabb[1] + (aabb[4] - aabb[1]) * y_factor,
         aabb[2] + (aabb[5] - aabb[2]) * z_factor,
     ]
+
 
 # ruff: noqa: C901
 
@@ -575,7 +579,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                         rng.shuffle(candidates)
 
 
-class PrimePatchDataFactory(BasePatchDataFactory):
+class PrimePatchDataFactory(PatchDataFactory):
     cosmetic_patches: PrimeCosmeticPatches
     configuration: PrimeConfiguration
 
@@ -629,7 +633,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 self.players_config,
                 self.game_enum()
             ),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
         )
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
@@ -703,11 +707,12 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         # serialize door modifications
         for region in regions:
             for area in region.areas:
-                dock_nodes = (node for node in area.nodes
-                               if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types)
-                dock_nodes = sorted(dock_nodes, key=lambda n: n.extra["dock_index"])
+                dock_nodes: list[DockNode] = sorted(
+                    (node for node in area.nodes
+                     if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types),
+                    key=lambda n: n.extra["dock_index"]
+                )
                 for node in dock_nodes:
-                    node: DockNode = node
                     if node.extra.get("exclude_dock_rando", False):
                         continue
 
@@ -785,7 +790,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
 
-        if self.cosmetic_patches.open_map and self.configuration.elevators.is_vanilla:
+        if self.cosmetic_patches.open_map and self.configuration.teleporters.is_vanilla:
             map_default_state = "visible"
         else:
             map_default_state = "default"
@@ -919,6 +924,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "qolGameBreaking": not self.configuration.legacy_mode,
                 "qolCosmetic": not self.configuration.legacy_mode,
                 "qolPickupScans": not self.configuration.legacy_mode,
+                "qolGeneral": not self.configuration.legacy_mode,
                 "qolCutscenes": qol_cutscenes,
                 "mapDefaultState": map_default_state,
                 "artifactHintBehavior": None,
@@ -947,6 +953,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "heatDamagePerSec": self.configuration.heat_damage,
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,
+                "doorOpenMode": "PrimaryBlastShield",
 
                 "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": starting_items,
@@ -971,10 +978,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     "gameNameFull": f"Metroid Prime: Randomizer - {self.description.shareable_hash}",
                     "description": f"Seed Hash: {self.description.shareable_word_hash}",
                 },
-                "mainMenuMessage": "Randovania v{}\n{}".format(
-                    randovania.VERSION,
-                    self.description.shareable_word_hash
-                ),
+                "mainMenuMessage": f"Randovania v{randovania.VERSION}\n{self.description.shareable_word_hash}",
 
                 "creditsString": credits_string,
                 "artifactHints": {

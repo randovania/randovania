@@ -15,7 +15,7 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
     MultiplayerWorld,
 )
-from randovania.network_common.session_state import MultiplayerSessionState
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.server import database
 
 
@@ -32,7 +32,8 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
     someone = database.User.create(name="Someone")
-    s = database.MultiplayerSession.create(name="Debug", creator=someone)
+    s = database.MultiplayerSession.create(name="Debug", creator=someone,
+                                           visibility=MultiplayerSessionVisibility.HIDDEN)
     game_details = None
     worlds = []
     actions = []
@@ -47,9 +48,9 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         s.layout_description = description
         s.save()
         game_details = GameDetails(
-            seed_hash='CXQTEVPI',
+            seed_hash='NMY7DGIN',
             spoiler=True,
-            word_hash='Aether Honor Spreader',
+            word_hash='Spreader Liftvine Great',
         )
         worlds.append(MultiplayerWorld(id=w1.uuid, name="Prime 1", preset_raw=w1.preset))
         worlds.append(MultiplayerWorld(id=w2.uuid, name="Prime 2", preset_raw=w2.preset))
@@ -70,7 +71,9 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         name='Debug',
         users_list=[],
         worlds=worlds,
-        state=MultiplayerSessionState.SETUP,
+        visibility=MultiplayerSessionVisibility.HIDDEN,
+        allow_coop=False,
+        allow_everyone_claim_world=False,
     )
     assert result_actions == MultiplayerSessionActions(session_id=1, actions=actions)
 

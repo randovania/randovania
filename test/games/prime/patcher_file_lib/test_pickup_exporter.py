@@ -13,14 +13,14 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.ammo_pickup import AMMO_PICKUP_CATEGORY
 from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CATEGORY
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import (
+from randovania.game_description.pickup.pickup_entry import (
     ConditionalResources,
     PickupEntry,
     PickupModel,
     ResourceConversion,
     ResourceLock,
 )
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
@@ -164,7 +164,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         model_style,
         PickupModelDataSource.ETM,
         creator,
-        pickup_creator.create_visual_etm(),
+        pickup_creator.create_visual_nothing(RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTransferModule"),
     )
 
     # Assert
@@ -301,7 +301,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         PickupModelStyle.HIDE_ALL,
         PickupModelDataSource.RANDOM,
         creator,
-        pickup_creator.create_visual_etm(),
+        pickup_creator.create_visual_nothing(RandovaniaGame.METROID_PRIME_ECHOES, "EnergyTransferModule"),
     )
 
     # Assert

@@ -5,6 +5,7 @@ from unittest.mock import MagicMock
 
 from PySide6 import QtWidgets
 
+from randovania.game_description.resources.inventory import Inventory
 from randovania.gui.widgets.item_tracker_popup_window import ItemTrackerPopupWindow
 
 if TYPE_CHECKING:
@@ -35,7 +36,7 @@ def test_change_tracker_layout(skip_qtbot, mocker: pytest_mock.MockerFixture,
     skip_qtbot.addWidget(popup)
 
     mock_tracker.assert_called_once_with([1])
-    result.update_state.assert_called_once_with({})
+    result.update_state.assert_called_once_with(Inventory.empty())
 
     popup._on_select_theme(p2)
     mock_tracker.assert_called_with([2])

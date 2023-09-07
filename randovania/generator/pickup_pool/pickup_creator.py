@@ -3,10 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.pickup import pickup_category
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.games.game import RandovaniaGame
-from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -16,6 +14,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceQuantity
+    from randovania.games.game import RandovaniaGame
     from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
@@ -113,10 +112,11 @@ def create_ammo_pickup(ammo: AmmoPickupDefinition,
     )
 
 
-def create_nothing_pickup(resource_database: ResourceDatabase) -> PickupEntry:
+def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str = "Nothing") -> PickupEntry:
     """
     Creates a Nothing pickup.
     :param resource_database:
+    :param model_name:
     :return:
     """
     return PickupEntry(
@@ -126,7 +126,7 @@ def create_nothing_pickup(resource_database: ResourceDatabase) -> PickupEntry:
         ),
         model=PickupModel(
             game=resource_database.game_enum,
-            name="Nothing",
+            name=model_name,
         ),
         pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
         broad_category=pickup_category.USELESS_PICKUP_CATEGORY,
@@ -136,17 +136,22 @@ def create_nothing_pickup(resource_database: ResourceDatabase) -> PickupEntry:
     )
 
 
-def create_visual_etm() -> PickupEntry:
+def create_visual_nothing(game: RandovaniaGame,
+                          model_name: str,
+                          pickup_name: str = "Unknown item") -> PickupEntry:
     """
-    Creates an ETM that should only be used as a visual pickup.
+    Creates a Nothing pickup that should only be used for visual purposes.
+    :param game: The game from where the model comes from.
+    :param model_name: The model name for the Nothing pickup.
+    :param pickup_name: The name of the Nothing pickup. Defaults to "Unknown item".
     :return:
     """
     return PickupEntry(
-        name="Unknown item",
+        name=pickup_name,
         progression=(),
         model=PickupModel(
-            game=RandovaniaGame.METROID_PRIME_ECHOES,
-            name=echoes_items.USELESS_PICKUP_MODEL,
+            game=game,
+            name=model_name,
         ),
         pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
         broad_category=pickup_category.USELESS_PICKUP_CATEGORY,

@@ -8,9 +8,11 @@ from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
+    PrimeTrilogyTeleporterConfiguration,
+)
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib.teleporters import (
-    TeleporterConfiguration,
     TeleporterList,
     TeleporterShuffleMode,
     TeleporterTargetList,
@@ -18,10 +20,10 @@ from randovania.layout.lib.teleporters import (
 
 
 class Data(NamedTuple):
-    reference: TeleporterConfiguration
+    reference: PrimeTrilogyTeleporterConfiguration
     encoded: bytes
     bit_count: int
-    expected: TeleporterConfiguration
+    expected: PrimeTrilogyTeleporterConfiguration
     description: str
 
 
@@ -55,19 +57,19 @@ def _a(region, area, instance_id=None):
     params=[
         _m(b'\x08', 5, 'Original connections'),
         _m(b'\x18', 5, 'Original connections', skip_final_bosses=True),
-        _m(b'\xc1', 8, 'One-way, elevator room with cycles', mode="one-way-elevator"),
-        _m(b'\xc81d', 22, 'One-way, elevator room with cycles; excluded 1 teleporters',
-           mode="one-way-elevator", excluded_teleporters=[
-                _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C")
+        _m(b'\xc1', 8, 'One-way, with cycles', mode="one-way-teleporter"),
+        _m(b'\xc81d', 22, 'One-way, with cycles; excluded 1 elevators',
+           mode="one-way-teleporter", excluded_teleporters=[
+                _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
             ]),
         _m(b'\xe4\x03,\xd0', 28, 'One-way, anywhere; excluded 1 targets', mode="one-way-anything", excluded_targets=[
-            _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C")
+            _a("Temple Grounds", "Temple Transport C", "Elevator to Great Temple")
         ]),
     ],
 )
 def test_data(request):
     game = RandovaniaGame.METROID_PRIME_ECHOES
-    reference = TeleporterConfiguration(
+    reference = PrimeTrilogyTeleporterConfiguration(
         mode=TeleporterShuffleMode.VANILLA,
         skip_final_bosses=False,
         allow_unvisited_room_names=False,
@@ -78,7 +80,7 @@ def test_data(request):
         reference=reference,
         encoded=request.param["encoded"],
         bit_count=request.param["bit_count"],
-        expected=TeleporterConfiguration.from_json(request.param["json"], game=game),
+        expected=PrimeTrilogyTeleporterConfiguration.from_json(request.param["json"], game=game),
         description=request.param["description"],
     )
 
@@ -86,7 +88,7 @@ def test_data(request):
 def test_decode(test_data):
     # Run
     decoder = BitPackDecoder(test_data.encoded)
-    result = TeleporterConfiguration.bit_pack_unpack(decoder, {
+    result = PrimeTrilogyTeleporterConfiguration.bit_pack_unpack(decoder, {
         "reference": test_data.reference
     })
 
@@ -109,4 +111,4 @@ def test_encode(test_data):
 
 
 def test_description(test_data):
-    assert test_data.expected.description() == test_data.description
+    assert test_data.expected.description("elevators") == test_data.description

@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import Self
 
-from randovania.network_common.session_state import MultiplayerSessionState
-
 
 class BaseNetworkError(Exception):
     @classmethod
@@ -172,25 +170,3 @@ class WorldNotAssociatedError(BaseNetworkError):
     @classmethod
     def code(cls):
         return 11
-
-
-class SessionInWrongStateError(BaseNetworkError):
-    """When a MultiplayerSession was expected to be in a specific state, but wasn't."""
-
-    def __init__(self, state: MultiplayerSessionState):
-        self.state = state
-
-    @classmethod
-    def code(cls):
-        return 12
-
-    @property
-    def detail(self) -> str:
-        return self.state.value
-
-    @classmethod
-    def from_detail(cls, detail: str) -> Self:
-        return cls(MultiplayerSessionState(detail))
-
-    def __str__(self):
-        return f"Session was not in state {self.state.user_friendly_name}"

@@ -66,3 +66,6 @@ class WindowManager(QtWidgets.QMainWindow):
                                                 session_id: int, options: Options
                                                 ):
         raise NotImplementedError
+
+    def open_app_navigation_link(self, link: str):
+        raise NotImplementedError

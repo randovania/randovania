@@ -14,8 +14,8 @@ if TYPE_CHECKING:
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection
     from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -45,12 +45,12 @@ class AM2RBootstrap(MetroidBootstrap):
 
         logical_patches = {
             "septogg_helpers": "Septogg",
-            "change_level_design": "LevelDesign",
             "screw_blocks": "ScrewBlocks",
             "skip_cutscenes": "SkipCutscenes",
             "respawn_bomb_blocks": "RespawnBombBlocks",
             "a3_entrance_blocks": "A3Entrance",
-            "grave_grotto_blocks": "GraveGrottoBlocks"
+            "grave_grotto_blocks": "GraveGrottoBlocks",
+            "supers_on_missile_doors": "SupersOnMissileDoors",
         }
 
         for name, index in logical_patches.items():
@@ -76,16 +76,15 @@ class AM2RBootstrap(MetroidBootstrap):
         locations = all_dna_locations(patches.game, config)
         rng.shuffle(locations)
 
-        all_dna = [pickup for pickup in list(pool_results.to_place)
-                   if pickup.pickup_category is METROID_DNA_CATEGORY]
-        if len(all_dna) > len(locations):
+        dna_to_assign = [pickup for pickup in list(pool_results.to_place)
+                     if pickup.pickup_category is METROID_DNA_CATEGORY]
+
+        if len(dna_to_assign) > len(locations):
             raise InvalidConfiguration(
-                f"Has {len(all_dna)} DNA in the pool, but only {len(locations)} valid locations."
+                f"Has {len(dna_to_assign)} DNA in the pool, but only {len(locations)} valid locations."
             )
 
-        rng.shuffle(all_dna)
-
-        for dna, location in zip(all_dna, locations, strict=False):
+        for dna, location in zip(dna_to_assign, locations, strict=False):
             pool_results.to_place.remove(dna)
             pool_results.assignment[location.pickup_index] = dna
 

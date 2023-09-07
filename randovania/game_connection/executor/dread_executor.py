@@ -53,7 +53,7 @@ class ClientInterests(IntEnum):
 # FIXME: This is a copy of ODR's implementation just that the first param is a path instead of a name
 # for a file within ODR's template folder
 def replace_lua_template(file: Path, replacement: dict[str, Any], wrap_strings: bool = False) -> str:
-    from open_dread_rando.lua_util import lua_convert
+    from open_dread_rando.misc_patches.lua_util import lua_convert
     code = file.read_text()
     for key, content in replacement.items():
         # Replace `TEMPLATE("key")`-style replacements
@@ -129,6 +129,7 @@ class DreadExecutor:
         self.logger = logging.getLogger(type(self).__name__)
         self.signals = DreadExecutorToConnectorSignals()
         self._ip = ip
+        self.version = "Unknown version"
 
     @property
     def ip(self):
@@ -146,7 +147,7 @@ class DreadExecutor:
             self._socket_error = None
             self.logger.debug("Connecting to %s:%d.", self._ip, self._port)
             reader, writer = await asyncio.open_connection(self._ip, self._port)
-            self._socket = DreadSocketHolder(reader, writer, int(1), int(4096), 0)
+            self._socket = DreadSocketHolder(reader, writer, 1, 4096, 0)
             self._socket.request_number = 0
 
             # Send interests
@@ -158,13 +159,14 @@ class DreadExecutor:
 
             # Send API details request
             self.logger.debug("Requesting API details.")
-            await self.run_lua_code("return string.format('%d,%d,%s,%s', RL.Version, RL.BufferSize,"
-                                     "tostring(RL.Bootstrap), Init.sLayoutUUID)")
+            await self.run_lua_code("return string.format('%d,%d,%s,%s,%s', RL.Version, RL.BufferSize,"
+                                     "tostring(RL.Bootstrap), Init.sLayoutUUID, GameVersion)")
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.debug("Waiting for API details response.")
             response = await self._read_response()
-            api_version, buffer_size, bootstrap, self.layout_uuid_str = response.decode("ascii").split(",")
+            (api_version, buffer_size, bootstrap, self.layout_uuid_str,
+             self.version) = response.decode("ascii").split(",")
             self.logger.debug("Remote replied with API level %s, buffer_size %s, bootstrap %s and layout_uuid %s, "
                               "connection successful.", api_version, buffer_size, bootstrap, self.layout_uuid_str)
             self._socket.api_version = int(api_version)

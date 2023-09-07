@@ -22,6 +22,10 @@ class DebugConnectorBuilder(ConnectorBuilder):
         self.target_game = RandovaniaGame(game)
         self.layout_uuid = uuid.UUID(layout_uuid)
 
+    @classmethod
+    def create(cls, game: RandovaniaGame, layout_uuid: uuid.UUID) -> DebugConnectorBuilder:
+        return cls(game.value, str(layout_uuid))
+
     @property
     def connector_builder_choice(self) -> ConnectorBuilderChoice:
         return ConnectorBuilderChoice.DEBUG

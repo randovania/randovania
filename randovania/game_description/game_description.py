@@ -1,12 +1,14 @@
 """Classes that describes the raw data of a game db."""
 from __future__ import annotations
 
+import collections
 import copy
 import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.region_list import RegionList
+from randovania.game_description.resources.resource_type import ResourceType
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -15,9 +17,11 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGainTuple, ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.games.game import RandovaniaGame
 
 
@@ -69,6 +73,7 @@ class GameDescription:
     minimal_logic: MinimalLogicData | None
     _dangerous_resources: frozenset[ResourceInfo] | None = None
     region_list: RegionList
+    _used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None
     mutable: bool = False
 
     def __deepcopy__(self, memodict):
@@ -97,6 +102,7 @@ class GameDescription:
                  initial_states: dict[str, ResourceGainTuple],
                  minimal_logic: MinimalLogicData | None,
                  region_list: RegionList,
+                 used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None,
                  ):
         self.game = game
         self.dock_weakness_database = dock_weakness_database
@@ -108,6 +114,7 @@ class GameDescription:
         self.initial_states = initial_states
         self.minimal_logic = minimal_logic
         self.region_list = region_list
+        self._used_trick_levels = used_trick_levels
 
     def patch_requirements(self, resources: ResourceCollection, damage_multiplier: float):
         if not self.mutable:
@@ -138,6 +145,29 @@ class GameDescription:
             self._dangerous_resources = frozenset(first) | frozenset(second)
 
         return self._dangerous_resources
+
+    def get_used_trick_levels(self, *, ignore_cache: bool = False) -> dict[TrickResourceInfo, set[int]]:
+        if self._used_trick_levels is not None and not ignore_cache:
+            return self._used_trick_levels
+
+        result = collections.defaultdict(set)
+
+        def process(req: Requirement):
+            for resource_requirement in req.iterate_resource_requirements(self.resource_database):
+                if resource_requirement.resource.resource_type == ResourceType.TRICK:
+                    result[resource_requirement.resource].add(resource_requirement.amount)
+
+        for dock_weakness in self.dock_weakness_database.all_weaknesses:
+            process(dock_weakness.requirement)
+            if dock_weakness.lock is not None:
+                process(dock_weakness.lock.requirement)
+
+        for area in self.region_list.all_areas:
+            for _, _, requirement in area.all_connections:
+                process(requirement)
+
+        self._used_trick_levels = dict(result)
+        return result
 
     def get_mutable(self) -> GameDescription:
         if self.mutable:

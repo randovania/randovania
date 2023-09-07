@@ -37,7 +37,9 @@ def all_dna_locations(game: GameDescription, config: DreadArtifactConfig):
 class DreadBootstrap(MetroidBootstrap):
     def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
                                     resource_database: ResourceDatabase) -> set[str]:
-        enabled_resources = set()
+        assert isinstance(configuration, DreadConfiguration)
+
+        enabled_resources = {"SeparateBeams", "SeparateMissiles"}
 
         logical_patches = {
             "allow_highly_dangerous_logic": "HighDanger",
@@ -48,6 +50,9 @@ class DreadBootstrap(MetroidBootstrap):
 
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("DoorLocks")
+
+        if not configuration.teleporters.is_vanilla:
+            enabled_resources.add("Teleporters")
 
         return enabled_resources
 

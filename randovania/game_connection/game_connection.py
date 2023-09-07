@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 from PySide6.QtCore import QObject, Signal
 
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
+from randovania.game_description.resources.inventory import Inventory
 from randovania.lib.infinite_timer import InfiniteTimer
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
@@ -20,7 +21,6 @@ if TYPE_CHECKING:
     from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
-    from randovania.game_description.resources.item_resource_info import Inventory
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.interface_common.options import Options
     from randovania.interface_common.world_database import WorldDatabase
@@ -31,7 +31,7 @@ class ConnectedGameState:
     id: uuid.UUID
     source: RemoteConnector
     status: GameConnectionStatus
-    current_inventory: Inventory = dataclasses.field(default_factory=dict)
+    current_inventory: Inventory = dataclasses.field(default_factory=Inventory.empty)
     collected_indices: set[PickupIndex] = dataclasses.field(default_factory=set)
 
 
@@ -157,6 +157,12 @@ class GameConnection(QObject):
         connected_state = self._ensure_connected_state_exists(connector)
         connected_state.current_inventory = inventory
         self.GameStateUpdated.emit(connected_state)
+
+    def get_builder_for_connector(self, connector: RemoteConnector) -> ConnectorBuilder:
+        for builder, this_connector in self.remote_connectors.items():
+            if this_connector == connector:
+                return builder
+        raise KeyError("Unknown connector")
 
     def get_backend_choice_for_state(self, state: ConnectedGameState) -> ConnectorBuilderChoice:
         for builder, connector in self.remote_connectors.items():

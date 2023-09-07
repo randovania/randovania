@@ -12,8 +12,8 @@ Extra - asset_id: collision_camera_011
       Any of the following:
           Baby Metroid
           All of the following:
-              Destroy Bomb Block
-              Lighting Armor or Grapple Beam
+              Lay Any Bomb
+              Lightning Armor or Grapple Beam
 
 > Door to Gamma Arena South; Heals? False
   * Layers: default
@@ -23,7 +23,7 @@ Extra - asset_id: collision_camera_011
   > Pickup (Power Bomb Tank)
       Any of the following:
           Baby Metroid
-          Lighting Armor and Destroy Bomb Block
+          Lightning Armor and Lay Any Bomb
 
 ----------------
 Gamma Arena South Access
@@ -65,7 +65,7 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_energytank
   > Door to Fiery Path
-      Destroy Bomb Block
+      Lay Any Bomb
 
 > Door to Fiery Path; Heals? False
   * Layers: default
@@ -73,7 +73,7 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_name: Door009
   * Extra - actor_type: doorchargecharge
   > Pickup (Energy Tank)
-      Destroy Bomb Block
+      Lay Any Bomb
   > Door to Transport to Area 3 Interior West
       Any of the following:
           Climb Rooms Vertically (No High Jump)
@@ -103,9 +103,9 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_type: item_supermissiletank
   > Door to Gamma Awakening Access
       Any of the following:
-          Destroy Bomb Block
+          Lay Any Bomb
           All of the following:
-              Destroy Missile Block
+              Shoot Any Missile
               Movement (Intermediate) or Shoot Wave Beam
 
 > Door to Gamma Awakening Access; Heals? False
@@ -116,7 +116,7 @@ Extra - asset_id: collision_camera_015
   > Pickup (Super Missile Tank)
       Any of the following:
           Lay Power Bomb
-          Morph Ball and Destroy Missile Block
+          Morph Ball and Shoot Any Missile
 
 ----------------
 Double Back
@@ -158,7 +158,7 @@ Extra - asset_id: collision_camera_017
   > Tunnel to Transport to Area 3 Exterior
       Morph Ball
   > Tunnel to Main Shaft (Bottom)
-      After Area 3 (Interior East) - Double Back Grapple Block Right and Destroy Bomb Block
+      After Area 3 (Interior East) - Double Back Grapple Block Right and Lay Any Bomb
   > Event - Grapple Block Left
       Grapple Beam
 
@@ -173,7 +173,7 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_senergytank
   > Tunnel to Double Back (Bottom)
-      Destroy Bomb Block
+      Lay Any Bomb
 
 > Energy Recharge Station; Heals? False
   * Layers: default
@@ -258,9 +258,9 @@ Transport to Area 3 Exterior
 Extra - total_boundings: {'x1': 6700.0, 'x2': 8000.0, 'y1': 14841.900390625, 'y2': 15600.0}
 Extra - polygon: [[6700.0, 15600.0], [6700.0, 14841.900390625], [8000.0, 14841.900390625], [8000.0, 15600.0]]
 Extra - asset_id: collision_camera_021
-> Elevator to Area 3 Exterior - Outer Hub; Heals? False; Spawn Point; Default Node
+> Elevator to Area 3 - Exterior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Outer Hub/Elevator to Area 3 Interior East - Transport to Area 3 Exterior
+  * Elevator to Outer Hub/Elevator to Area 3 - Interior (East)
   * Extra - actor_name: LE_Platform_Elevator_FromArea03A
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03A
@@ -274,13 +274,13 @@ Extra - asset_id: collision_camera_021
   * Power Beam Door to Main Shaft/Door to Transport to Area 3 Exterior
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 3 Exterior - Outer Hub
+  > Elevator to Area 3 - Exterior
       Trivial
 
 > Tunnel to Double Back; Heals? False
   * Layers: default
   * Tunnel to Double Back/Tunnel to Transport to Area 3 Exterior
-  > Elevator to Area 3 Exterior - Outer Hub
+  > Elevator to Area 3 - Exterior
       Morph Ball
 
 ----------------
@@ -355,9 +355,9 @@ Extra - asset_id: collision_camera_023
   > Door to Fiery Path Access
       Trivial
 
-> Elevator to Area 3 Interior West - Transport to Area 3 Interior East; Heals? False; Spawn Point; Default Node
+> Elevator to Area 3 - Interior (West); Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 3 Interior East/Elevator to Area 3 Interior East - Transport to Area 3 Interior West
+  * Elevator to Transport to Area 3 Interior East/Elevator to Area 3 - Interior (East)
   * Extra - actor_name: LE_Platform_Elevator_FromArea03B
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03B
@@ -389,7 +389,7 @@ Extra - asset_id: collision_camera_023
       Any of the following:
           Grapple Beam or Gravity Suit or Space Jump or Can Spiderspark
           Underwater Bomb Jump (Intermediate) and Lay Bomb
-  > Elevator to Area 3 Interior West - Transport to Area 3 Interior East
+  > Elevator to Area 3 - Interior (West)
       Morph Ball and After Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block
   > Save Station
       Morph Ball
@@ -413,7 +413,7 @@ Extra - asset_id: collision_camera_023
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 3 (Interior East) - Transport to Area 3 Interior West Grapple Block
-  > Elevator to Area 3 Interior West - Transport to Area 3 Interior East
+  > Elevator to Area 3 - Interior (West)
       Trivial
 
 > Tunnel to Gamma Awakening (Top); Heals? False
@@ -437,7 +437,6 @@ Extra - asset_id: collision_camera_023
           Any of the following:
               Grapple Beam or Space Jump or Simple IBJ
               Movement (Beginner) and Can Spiderspark
-          Before Area 3 (Interior East) - Gamma Metroid Upper Awakened or After Area 3 (Interior East) - Gamma Metroid Upper
   > Tunnel to Gamma Awakening (Top)
       All of the following:
           Morph Ball
@@ -542,10 +541,10 @@ Extra - asset_id: collision_camera_026
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
   > Door to Fiery Path
-      Varia Suit and After Area 3 (Interior East) - Alpha Metroid
+      Varia Suit
   > Pickup (Super Missile Tank)
       All of the following:
-          Grapple Beam and Gravity Suit and Super Missile
+          Grapple Beam and Gravity Suit and Shoot Super Missile
           High Jump Boots or Space Jump or Can Spiderspark or Simple IBJ
   > Event - Alpha Metroid
       Varia Suit and Defeat Alpha Metroid
@@ -654,7 +653,7 @@ Extra - asset_id: collision_camera_030
       All of the following:
           Morph Ball
           Movement (Intermediate) or Climb Rooms Vertically (High Jump)
-          Lighting Armor or Destroy Bomb Block
+          Lightning Armor or Lay Any Bomb
 
 > Tunnel to Transport to Area 3 Interior West (Top); Heals? False
   * Layers: default
@@ -666,7 +665,7 @@ Extra - asset_id: collision_camera_030
   * Layers: default
   * Event Area 3 (Interior East) - Gamma Metroid Upper Awakened
   > Tunnel to Transport to Area 3 Interior West (Top)
-      Destroy Bomb Block
+      Lay Any Bomb
 
 > Start Point; Heals? False; Default Node
   * Layers: default

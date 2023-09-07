@@ -256,9 +256,8 @@ Extra - asset_id: collision_camera_002
   > Pickup (Energy Part)
       Any of the following:
           Speed Booster
-          All of the following:
-              # A grounded bomb jump with cross bombs to get past the fan
-              Movement (Beginner) and Lay Cross Bomb
+          # A grounded bomb jump with cross bombs to get past the fan
+          Movement (Beginner) and Lay Cross Bomb
           Flash Shift and Movement (Advanced)
   > Event - Dairon Hub Grapple Block
       Grapple Beam
@@ -358,6 +357,7 @@ Extra - asset_id: collision_camera_003
   * Extra - target_spawn_point: wagontrain_aqua_000_platform
   * Extra - start_point_actor_name: wagontrain_baselab_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+  * Extra - transporter_name: Burenia - Sea Bridge
   > Door to Burenia Hub to Dairon
       Trivial
 
@@ -387,6 +387,7 @@ Extra - asset_id: collision_camera_004
   * Extra - target_spawn_point: wagontrain_aqua_001_platform
   * Extra - start_point_actor_name: wagontrain_baselab_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+  * Extra - transporter_name: Burenia - Submarine
   > Door to Burenia Hub to Dairon
       Trivial
 
@@ -521,6 +522,7 @@ Extra - asset_id: collision_camera_006
   * Extra - target_spawn_point: elevator_aqua_000_platform
   * Extra - start_point_actor_name: elevator_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  * Extra - transporter_name: Burenia - Upper
   > Door to Save Station North
       After Burenia - Elevator Blob
   > Event - Elevator Blob
@@ -606,9 +608,7 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Water Bottom
-      All of the following:
-          Morph Ball
-          Gravity Suit or Before Drogyga or Perform WBJ
+      Morph Ball
 
 > Dock to Drogyga Arena; Heals? False
   * Layers: default
@@ -623,7 +623,9 @@ Extra - asset_id: collision_camera_007
           Flash Shift or Grapple Beam or Space Jump
           All of the following:
               Speed Booster
-              Gravity Suit or Before Drogyga
+              Any of the following:
+                  Gravity Suit
+                  Before Drogyga and Enabled Highly Dangerous Logic
   > Water Bottom
       Trivial
 
@@ -660,9 +662,8 @@ Extra - asset_id: collision_camera_007
           Morph Ball
           Any of the following:
               Gravity Suit
-              All of the following:
-                  # The water only appears after defeating Drogyga
-                  Before Drogyga and Enabled Highly Dangerous Logic
+              # The water only appears after defeating Drogyga
+              Before Drogyga and Enabled Highly Dangerous Logic
               Water Bomb Jump (Beginner) and Lay Bomb
   > Left of Grapple Blocks
       Any of the following:
@@ -670,9 +671,8 @@ Extra - asset_id: collision_camera_007
           All of the following:
               Any of the following:
                   Gravity Suit
-                  All of the following:
-                      # The water only appears after defeating Drogyga
-                      Before Drogyga and Enabled Highly Dangerous Logic
+                  # The water only appears after defeating Drogyga
+                  Before Drogyga and Enabled Highly Dangerous Logic
               Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
           All of the following:
               After Drogyga
@@ -759,7 +759,10 @@ Extra - asset_id: collision_camera_008
                   Any of the following:
                       All of the following:
                           Flash Shift Skip (Beginner)
-                          Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
+                          Any of the following:
+                              Movement (Beginner) or Lay Cross Bomb or Use Spin Boost
+                              # https://youtu.be/177_e_V1FI8
+                              Wall Jump (Beginner)
                       Flash Shift Skip (Intermediate) and Lay Bomb
 
 > Pickup (Missile+ Tank); Heals? False
@@ -820,9 +823,8 @@ Extra - asset_id: collision_camera_008
               Speed Booster
               Knowledge (Beginner) or Disabled Door Lock Randomizer
           Slide and Slide Jump (Beginner)
-          All of the following:
-              # Diagonal WBJ
-              Water Bomb Jump (Intermediate) and Perform WBJ
+          # Diagonal WBJ
+          Water Bomb Jump (Intermediate) and Perform WBJ
   > Event - Ferenia Teleport Blob
       Shoot Diffusion or Wave
   > Teleporter to Ferenia
@@ -935,6 +937,9 @@ Extra - asset_id: collision_camera_010
               Flash Shift or Spider Magnet or Use Spin Boost
               Speed Booster and Speed Booster Conservation (Beginner) and Disabled Door Lock Randomizer
               Grapple Beam and Grapple Movement (Beginner)
+              All of the following:
+                  Bomb and Diagonal Bomb Jump (Beginner)
+                  Gravity Suit or Water Bomb Jump (Intermediate)
   > Upper Left Magnet Wall
       Morph Ball
 
@@ -1069,9 +1074,8 @@ Extra - asset_id: collision_camera_010
   > Event - Lower Magnet Wall
       Spider Magnet and Horizontal Water Movement
   > Upper Water Ledge - Right
-      All of the following:
-          # https://youtu.be/HdSOvizUQjo
-          Flash Shift and Gravity Suit and Slide and Spin Boost and Slide Jump (Beginner) and Wall Jump (Intermediate)
+      # https://youtu.be/HdSOvizUQjo
+      Flash Shift and Gravity Suit and Slide and Spin Boost and Slide Jump (Beginner) and Wall Jump (Intermediate)
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
@@ -1189,7 +1193,7 @@ Extra - asset_id: collision_camera_010
   > Missile Tank Plus Platform
       Any of the following:
           Gravity Suit
-          Grapple Beam and Before Burenia - Hub Magnet Wall and Grapple Movement (Beginner)
+          Grapple Beam and Before Burenia - Hub Magnet Wall and Grapple Movement (Beginner) and Enabled Highly Dangerous Logic
   > Event - Lower Magnet Wall
       Gravity Suit and Spider Magnet and Speed Booster
   > Upper Water Ledge - Left
@@ -1222,15 +1226,12 @@ Extra - asset_id: collision_camera_010
           All of the following:
               Gravity Suit and Spin Boost
               Any of the following:
-                  All of the following:
-                      # https://youtu.be/EKucxlQ6XtE
-                      Slide and Slide Jump (Intermediate)
-                  All of the following:
-                      # https://youtu.be/rb01nTDYOXk
-                      Movement (Intermediate)
-                  All of the following:
-                      # https://youtu.be/wlCOhr95pAY
-                      Wall Jump (Intermediate)
+                  # https://youtu.be/EKucxlQ6XtE
+                  Slide and Slide Jump (Intermediate)
+                  # https://youtu.be/rb01nTDYOXk
+                  Movement (Intermediate)
+                  # https://youtu.be/wlCOhr95pAY
+                  Wall Jump (Intermediate)
   > Falling from above
       Trivial
 
@@ -1242,15 +1243,12 @@ Extra - asset_id: collision_camera_010
           All of the following:
               Gravity Suit and Spin Boost
               Any of the following:
-                  All of the following:
-                      # https://youtu.be/EKucxlQ6XtE
-                      Slide and Slide Jump (Intermediate)
-                  All of the following:
-                      # https://youtu.be/rb01nTDYOXk
-                      Movement (Intermediate)
-                  All of the following:
-                      # https://youtu.be/wlCOhr95pAY
-                      Wall Jump (Intermediate)
+                  # https://youtu.be/EKucxlQ6XtE
+                  Slide and Slide Jump (Intermediate)
+                  # https://youtu.be/rb01nTDYOXk
+                  Movement (Intermediate)
+                  # https://youtu.be/wlCOhr95pAY
+                  Wall Jump (Intermediate)
   > Falling from above
       Trivial
   > Outside Upper Tunnel
@@ -1371,9 +1369,8 @@ Extra - asset_id: collision_camera_010
   > Water Space Jump Platform
       Morph Ball and After Burenia - Main Hub Bottom Grapple Block
   > Inside Tunnel
-      All of the following:
-          # https://youtu.be/yb_tJYnFFIw
-          Gravity Suit and Aim Down Clip (Advanced) and Disabled Door Lock Randomizer and Can SSC
+      # https://youtu.be/yb_tJYnFFIw
+      Gravity Suit and Aim Down Clip (Advanced) and Disabled Door Lock Randomizer and Can SSC
 
 > Event - Main Hub Bottom Blob, Left; Heals? False
   * Layers: default
@@ -1406,9 +1403,8 @@ Extra - asset_id: collision_camera_010
   > Inside Tunnel
       Any of the following:
           Morph Ball and Screw Attack
-          All of the following:
-              # https://youtu.be/yb_tJYnFFIw
-              Gravity Suit and Aim Down Clip (Intermediate) and Can SSC
+          # https://youtu.be/yb_tJYnFFIw
+          Gravity Suit and Aim Down Clip (Intermediate) and Can SSC
 
 > Dock to Gravity Suit Room Access; Heals? False
   * Layers: default
@@ -1704,9 +1700,8 @@ Extra - asset_id: collision_camera_015
   > Upper Water Platform
       All of the following:
           After Burenia - Early Gravity Pickup 1 and After Burenia - Ghavoran Teleport Enky and Speed Booster Conservation (Advanced) and Can SSC
-          Any of the following:
-              # Cross Bomb - https://www.youtube.com/watch?v=1l7rJwAUSLE Power Bomb - https://www.youtube.com/watch?v=477-pmla1kU
-              Lay Cross Bomb or Lay Power Bomb
+          # Cross Bomb - https://www.youtube.com/watch?v=1l7rJwAUSLE Power Bomb - https://www.youtube.com/watch?v=477-pmla1kU
+          Lay Cross Bomb or Lay Power Bomb
           Aim Down Clip (Intermediate) or Shinesink Clip (Intermediate)
   > Event - Ghavoran Teleport Speed Blocks Destroyed
       Speed Booster and After Burenia - Early Gravity Pickup 1
@@ -1826,7 +1821,7 @@ Extra - asset_id: collision_camera_015
   * Slide Tunnel to Main Hub Tower Middle/Tunnel to Teleport to Ghavoran (Upper Tunnel)
   > Door to Main Hub Tower Middle (Plasma)
       All of the following:
-          Wave Beam and Disabled Door Lock Randomizer and Can Slide Underwater
+          Wave Beam and Disabled Door Lock Randomizer and Can Slide Underwater and Shoot Plasma Beam
           Any of the following:
               Gravity Suit or Spider Magnet or Movement (Beginner) or Perform WBJ
               Grapple Beam and Grapple Movement (Beginner)
@@ -1924,6 +1919,7 @@ Extra - asset_id: collision_camera_017
   * Extra - target_spawn_point: elevator_aqua_000_platform
   * Extra - start_point_actor_name: elevator_cave_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  * Extra - transporter_name: Burenia - Lower
   > Door to Navigation Station South
       Trivial
 
@@ -2138,9 +2134,8 @@ Extra - asset_id: collision_camera_021
   > Breakable Floor
       After Burenia - Destroy Gravity Suit Floor
   > Blob Alcove
-      All of the following:
-          # https://youtu.be/-NZ2QPUxno0
-          Before Burenia - Destroy Gravity Suit Floor and Aim Down Clip (Expert) and Can SSC
+      # https://youtu.be/-NZ2QPUxno0
+      Before Burenia - Destroy Gravity Suit Floor and Aim Down Clip (Expert) and Can SSC
   > Next to Bottom Pickup
       All of the following:
           Screw Attack
@@ -2735,21 +2730,18 @@ Extra - asset_id: collision_camera_028
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Event - Drogyga
       All of the following:
-          Any of the following:
-              # Methods of fighting; beam damage does not damage the core, even plasma and wave
-              Shoot Charge Beam or Shoot Missile
+          # Methods of fighting; beam damage does not damage the core, even plasma and wave
+          Shoot Charge Beam or Shoot Missile
           Any of the following:
               # Activate the switches
-              All of the following:
-                  # Magnetless
-                  Gravity Suit and Space Jump
+              # Magnetless
+              Gravity Suit and Space Jump
               All of the following:
                   # Gravityless
                   Grapple Beam
                   Flash Shift or Spider Magnet or Space Jump
-          Any of the following:
-              # Energy Requirements
-              Combat (Beginner) or Normal Damage ≥ 399
+          # Energy Requirements
+          Combat (Beginner) or Normal Damage ≥ 399
 
 > Dock to Drogyga Access; Heals? False
   * Layers: default

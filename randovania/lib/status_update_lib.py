@@ -35,6 +35,7 @@ class OffsetProgressUpdate:
         self.scale = scale
 
     def __call__(self, message: str, percentage: float) -> None:
+        percentage = min(percentage, 1.0)
         new_value = percentage if percentage < 0 else self.offset + percentage * self.scale
         self.status_update(
             message,

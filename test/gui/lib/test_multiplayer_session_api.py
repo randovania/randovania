@@ -12,6 +12,7 @@ from randovania.gui.lib import multiplayer_session_api
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.network_client.network_client import UnableToConnect
 from randovania.network_common import admin_actions, error
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -117,37 +118,22 @@ async def test_duplicate_session(session_api, caplog, preset_manager):
     ]
 
 
-async def test_start_session(session_api, caplog, preset_manager):
+@pytest.mark.parametrize("visibility", MultiplayerSessionVisibility)
+async def test_change_visibility(session_api, caplog, visibility):
     # Run
-    await session_api.start_session()
+    await session_api.change_visibility(visibility)
 
     # Assert
     session_api.network_client.server_call.assert_called_once_with(
         "multiplayer_admin_session", [
             1234,
-            admin_actions.SessionAdminGlobalAction.START_SESSION.value,
+            admin_actions.SessionAdminGlobalAction.CHANGE_VISIBILITY.value,
+            visibility.value,
         ],
     )
     assert caplog.record_tuples == [
         ('MultiplayerSessionApi', logging.INFO,
-         '[Session 1234] Starting session')
-    ]
-
-
-async def test_finish_session(session_api, caplog, preset_manager):
-    # Run
-    await session_api.finish_session()
-
-    # Assert
-    session_api.network_client.server_call.assert_called_once_with(
-        "multiplayer_admin_session", [
-            1234,
-            admin_actions.SessionAdminGlobalAction.FINISH_SESSION.value,
-        ],
-    )
-    assert caplog.record_tuples == [
-        ('MultiplayerSessionApi', logging.INFO,
-         '[Session 1234] Finishing session')
+         f'[Session 1234] Setting visibility to {visibility}')
     ]
 
 
@@ -415,6 +401,42 @@ async def test_switch_admin(session_api, caplog):
         ('MultiplayerSessionApi', logging.INFO,
          "[Session 1234] Switching admin-ness of 50")
     ]
+
+
+@pytest.mark.parametrize("new_state", [False, True])
+async def test_set_everyone_can_claim(session_api, caplog, new_state):
+    # Run
+    await session_api.set_everyone_can_claim(new_state)
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session", [
+            1234,
+            admin_actions.SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM.value, new_state,
+        ],
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         f'[Session 1234] Setting whether everyone can claim to {new_state}')
+    ]
+
+
+async def test_switch_readiness(session_api, caplog):
+    # Run
+    await session_api.switch_readiness(50)
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_player", [
+            1234, 50,
+            admin_actions.SessionAdminUserAction.SWITCH_READY.value,
+        ],
+    )
+    assert caplog.record_tuples == [
+        ('MultiplayerSessionApi', logging.INFO,
+         "[Session 1234] Switching ready-ness of 50")
+    ]
+
 
 
 async def test_request_session_update(session_api, caplog):

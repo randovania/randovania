@@ -86,9 +86,7 @@ class PrimeFamilyHintNamer(HintNamer):
 
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
-        return "{} has no need to be located.".format(
-            colorize_text(self.color_item, resource.long_name, with_color)
-        )
+        return f"{colorize_text(self.color_item, resource.long_name, with_color)} has no need to be located."
 
     def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
                                    location: PickupLocation, hide_area: bool, with_color: bool) -> str:

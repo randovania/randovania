@@ -5,14 +5,16 @@ from typing import TYPE_CHECKING
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.resources.pickup_entry import PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -20,9 +22,9 @@ if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
+    from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupEntry
-    from randovania.game_description.resources.resource_info import ResourceCollection
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 
 _ALTERNATIVE_MODELS = {
@@ -85,7 +87,13 @@ def get_resources_for_details(pickup: PickupEntry, conditional_resources: list[C
     return resources
 
 
-class DreadPatchDataFactory(BasePatchDataFactory):
+def _get_destination_room_for_teleportal(connection: Node):
+    return connection.extra.get(
+        "transporter_name",
+        f"{connection.identifier.region_name} - {connection.identifier.area_name}"
+    )
+
+class DreadPatchDataFactory(PatchDataFactory):
     cosmetic_patches: DreadCosmeticPatches
     configuration: DreadConfiguration
     spawnpoint_name_prefix = "SP_RDV_"
@@ -356,6 +364,16 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 region_dict[cc_name] = area_name
             all_dict[scenario] = region_dict
 
+        # rename transporters to the correct transporter rooms
+        for node, connection in self.patches.all_dock_connections():
+            if (isinstance(node, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types):
+
+                src_region, src_area = self.game.region_list.region_and_area_by_area_identifier(
+                    node.identifier.area_identifier)
+                src_cc = src_area.extra["asset_id"]
+                dest_name = _get_destination_room_for_teleportal(connection)
+                all_dict[src_region.extra["scenario_id"]][src_cc] = f'Transport to {dest_name}'
         return all_dict
 
     def _cosmetic_patch_data(self) -> dict:
@@ -375,6 +393,14 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                     "enable_room_name_display": c.show_room_names.value,
                 },
                 "camera_names_dict": self._build_area_name_dict()
+            },
+            "shield_versions": {
+                "ice_missile": c.alt_ice_missile.value,
+                "storm_missile": c.alt_storm_missile.value,
+                "diffusion_beam": c.alt_diffusion_beam.value,
+                "bomb": c.alt_bomb.value,
+                "cross_bomb": c.alt_cross_bomb.value,
+                "power_bomb": c.alt_power_bomb.value,
             },
         }
 
@@ -459,11 +485,20 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
             exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
         )
 
         energy_per_tank = self.configuration.energy_per_tank if self.configuration.immediate_energy_parts else 100.0
 
+        teleporters =[{
+                    "teleporter": self._teleporter_ref_for(node),
+                    "destination": self._start_point_ref_for(connection),
+                    "connection_name": _get_destination_room_for_teleportal(connection)
+                }
+                for node, connection in self.patches.all_dock_connections()
+                if (isinstance(node, DockNode)
+                    and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types)
+        ]
         return {
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
@@ -474,7 +509,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 for pickup_item in pickup_list
                 if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
-            "elevators": [],
+            "elevators": teleporters if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else [],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
             "spoiler_log": self._credits_spoiler(),

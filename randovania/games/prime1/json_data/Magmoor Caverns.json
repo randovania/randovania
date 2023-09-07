@@ -5,7 +5,7 @@
     },
     "areas": {
         "Transport to Chozo Ruins North": {
-            "default_node": "Elevator to Chozo Ruins - Transport to Magmoor Caverns North",
+            "default_node": "Teleporter to Chozo Ruins",
             "extra": {
                 "asset_id": 1005235657,
                 "size_index": 0.3,
@@ -48,7 +48,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Chozo Ruins - Transport to Magmoor Caverns North": {
+                        "Teleporter to Chozo Ruins": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -57,7 +57,7 @@
                         }
                     }
                 },
-                "Elevator to Chozo Ruins - Transport to Magmoor Caverns North": {
+                "Teleporter to Chozo Ruins": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -74,7 +74,7 @@
                     "default_connection": {
                         "region": "Chozo Ruins",
                         "area": "Transport to Magmoor Caverns North",
-                        "node": "Elevator to Magmoor Caverns - Transport to Chozo Ruins North"
+                        "node": "Teleporter to Magmoor Caverns"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -9091,7 +9091,7 @@
             }
         },
         "Transport to Phendrana Drifts North": {
-            "default_node": "Elevator - Transport to Magmoor Caverns West",
+            "default_node": "Teleporter to Phendrana Drifts",
             "extra": {
                 "asset_id": 3702104715,
                 "size_index": 0.3,
@@ -9134,7 +9134,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator - Transport to Magmoor Caverns West": {
+                        "Teleporter to Phendrana Drifts": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9143,7 +9143,7 @@
                         }
                     }
                 },
-                "Elevator - Transport to Magmoor Caverns West": {
+                "Teleporter to Phendrana Drifts": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -9160,7 +9160,7 @@
                     "default_connection": {
                         "region": "Phendrana Drifts",
                         "area": "Transport to Magmoor Caverns West",
-                        "node": "Elevator - Transport to Phendrana Drifts North"
+                        "node": "Teleporter to Magmoor Caverns"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -12104,7 +12104,7 @@
             }
         },
         "Transport to Tallon Overworld West": {
-            "default_node": "Elevator to Tallon Overworld - Transport to Magmoor Caverns East",
+            "default_node": "Teleporter to Tallon Overworld",
             "extra": {
                 "asset_id": 1279075404,
                 "size_index": 0.3,
@@ -12192,7 +12192,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator to Tallon Overworld - Transport to Magmoor Caverns East": {
+                        "Teleporter to Tallon Overworld": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12201,7 +12201,7 @@
                         }
                     }
                 },
-                "Elevator to Tallon Overworld - Transport to Magmoor Caverns East": {
+                "Teleporter to Tallon Overworld": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -12218,7 +12218,7 @@
                     "default_connection": {
                         "region": "Tallon Overworld",
                         "area": "Transport to Magmoor Caverns East",
-                        "node": "Elevator to Magmoor Caverns - Transport to Tallon Overworld West"
+                        "node": "Teleporter to Magmoor Caverns"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -13635,7 +13635,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/6tAv_ivVvAQ",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -13956,7 +13956,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/6tAv_ivVvAQ?t=37",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -14902,12 +14902,20 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "ClipThruObjects",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "https://youtu.be/Edzhf9hl0w8",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ClipThruObjects",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -17037,7 +17045,7 @@
             }
         },
         "Transport to Phazon Mines West": {
-            "default_node": "Elevator - Transport to Magmoor Caverns South",
+            "default_node": "Teleporter to Phazon Mines",
             "extra": {
                 "asset_id": 4012840000,
                 "size_index": 0.3,
@@ -17080,7 +17088,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator - Transport to Magmoor Caverns South": {
+                        "Teleporter to Phazon Mines": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17089,7 +17097,7 @@
                         }
                     }
                 },
-                "Elevator - Transport to Magmoor Caverns South": {
+                "Teleporter to Phazon Mines": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -17106,7 +17114,7 @@
                     "default_connection": {
                         "region": "Phazon Mines",
                         "area": "Transport to Magmoor Caverns South",
-                        "node": "Elevator - Transport to Phazon Mines West"
+                        "node": "Teleporter to Magmoor Caverns"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -17142,7 +17150,7 @@
             }
         },
         "Transport to Phendrana Drifts South": {
-            "default_node": "Elevator - Transport to Magmoor Caverns South",
+            "default_node": "Teleporter to Phendrana Drifts",
             "extra": {
                 "asset_id": 3249312307,
                 "size_index": 0.6,
@@ -17192,7 +17200,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator - Transport to Magmoor Caverns South": {
+                        "Teleporter to Phendrana Drifts": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17239,7 +17247,7 @@
                         }
                     }
                 },
-                "Elevator - Transport to Magmoor Caverns South": {
+                "Teleporter to Phendrana Drifts": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -17256,7 +17264,7 @@
                     "default_connection": {
                         "region": "Phendrana Drifts",
                         "area": "Transport to Magmoor Caverns South",
-                        "node": "Elevator - Transport to Phendrana Drifts South"
+                        "node": "Teleporter to Magmoor Caverns"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,

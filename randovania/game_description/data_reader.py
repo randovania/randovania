@@ -32,7 +32,7 @@ from randovania.game_description.requirements.requirement_or import RequirementO
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
-from randovania.game_description.resources.damage_resource_info import DamageReduction
+from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -105,8 +105,7 @@ def read_damage_reductions(data: list[dict], items: list[ItemResourceInfo]) -> t
 def read_resource_reductions_dict(data: list[dict], db: ResourceDatabase,
                                   ) -> dict[SimpleResourceInfo, list[DamageReduction]]:
     return {
-        db.get_by_type_and_index(ResourceType.DAMAGE, item["name"]): read_damage_reductions(item["reductions"],
-                                                                                            db.item)
+        db.get_damage(item["name"]): list(read_damage_reductions(item["reductions"], db.item))
         for item in data
     }
 
@@ -347,7 +346,7 @@ class RegionReader:
             elif node_type == "event":
                 return EventNode(
                     **generic_args,
-                    event=self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_name"])
+                    event=self.resource_database.get_event(data["event_name"])
                 )
 
             elif node_type == "configurable_node":
@@ -401,7 +400,7 @@ class RegionReader:
 
         for node in list(nodes):
             if isinstance(node, DockNode):
-                lock_node = DockLockNode.create_from_dock(node, self.next_node_index)
+                lock_node = DockLockNode.create_from_dock(node, self.next_node_index, self.resource_database)
                 nodes.append(lock_node)
                 connections[lock_node] = {}
                 self.next_node_index += 1
@@ -416,8 +415,8 @@ class RegionReader:
             self.next_node_index += 1
 
         try:
-            return Area(area_name, data["default_node"],
-                        nodes, connections, data["extra"])
+            return Area(area_name, nodes, connections, data["extra"],
+                        data["default_node"])
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
 
@@ -495,6 +494,16 @@ def read_minimal_logic_db(data: dict | None) -> MinimalLogicData | None:
     )
 
 
+def read_used_trick_levels(data: dict[str, list[int]] | None, resource_database: ResourceDatabase
+                           ) -> dict[TrickResourceInfo, set[int]] | None:
+    if data is None:
+        return None
+    return {
+        resource_database.get_by_type_and_index(ResourceType.TRICK, trick): set(levels)
+        for trick, levels in data.items()
+    }
+
+
 def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescription]:
     data = game_migration.migrate_to_current(data)
 
@@ -511,6 +520,7 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
     starting_location = NodeIdentifier.from_json(data["starting_location"])
     initial_states = read_initial_states(data["initial_states"], resource_database)
     minimal_logic = read_minimal_logic_db(data["minimal_logic"])
+    used_trick_levels = read_used_trick_levels(data["used_trick_levels"], resource_database)
 
     return region_reader, GameDescription(
         game=game,
@@ -522,6 +532,7 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
         starting_location=starting_location,
         initial_states=initial_states,
         minimal_logic=minimal_logic,
+        used_trick_levels=used_trick_levels,
     )
 
 

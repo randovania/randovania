@@ -14,8 +14,8 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.games.prime2.gui.preset_settings.echoes_hints_tab import PresetEchoesHints
     from randovania.games.prime2.gui.preset_settings.echoes_item_pool_tab import EchoesPresetItemPool
     from randovania.games.prime2.gui.preset_settings.echoes_patches_tab import PresetEchoesPatches
+    from randovania.games.prime2.gui.preset_settings.echoes_teleporters_tab import PresetTeleportersPrime2
     from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
-    from randovania.gui.preset_settings.elevators_tab import PresetElevators
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
@@ -24,7 +24,7 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     return [
         PresetTrickLevel,
         PresetPatcherEnergy,
-        PresetElevators,
+        PresetTeleportersPrime2,
         PresetMetroidStartingArea,
         PresetGeneration,
         PresetEchoesGoal,

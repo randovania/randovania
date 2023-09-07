@@ -19,7 +19,7 @@ from randovania.game_description.hint import (
     RelativeDataArea,
     RelativeDataItem,
 )
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
@@ -43,7 +43,7 @@ async def test_run_filler(echoes_game_description,
                         for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)]
 
     player_pools = [
-        await create_player_pool(rng, default_echoes_configuration, 0, 1),
+        await create_player_pool(rng, default_echoes_configuration, 0, 1, MagicMock()),
     ]
     initial_pickup_count = len(player_pools[0].pickups)
 

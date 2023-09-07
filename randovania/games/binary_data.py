@@ -39,6 +39,7 @@ _EXPECTED_FIELDS = [
     "minimal_logic",
     "victory_condition",
     "dock_weakness_database",
+    "used_trick_levels",
     "regions",
 ]
 
@@ -290,6 +291,8 @@ ConstructDockWeaknessDatabase = Struct(
     ),
 )
 
+ConstructUsedTrickLevels = OptionalValue(ConstructDict(PrefixedArray(VarInt, construct.Byte)))
+
 ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
@@ -305,6 +308,7 @@ ConstructGame = Struct(
         victory_condition=ConstructRequirement,
 
         dock_weakness_database=ConstructDockWeaknessDatabase,
+        used_trick_levels=ConstructUsedTrickLevels,
         regions=PrefixedArray(VarInt, ConstructRegion),
     ), "lzma")
 )

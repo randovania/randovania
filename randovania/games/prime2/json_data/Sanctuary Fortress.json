@@ -6,7 +6,7 @@
     },
     "areas": {
         "Transport to Temple Grounds": {
-            "default_node": "Elevator to Temple Grounds - Transport to Sanctuary Fortress",
+            "default_node": "Elevator to Temple Grounds",
             "extra": {
                 "asset_id": 3528156989,
                 "in_dark_aether": false
@@ -36,7 +36,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Temple Grounds - Transport to Sanctuary Fortress": {
+                        "Elevator to Temple Grounds": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -47,7 +47,7 @@
                         }
                     }
                 },
-                "Elevator to Temple Grounds - Transport to Sanctuary Fortress": {
+                "Elevator to Temple Grounds": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -65,7 +65,7 @@
                     "default_connection": {
                         "region": "Temple Grounds",
                         "area": "Transport to Sanctuary Fortress",
-                        "node": "Elevator to Sanctuary Fortress - Transport to Temple Grounds"
+                        "node": "Elevator to Sanctuary Fortress"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -376,7 +376,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=wW_QjW48jwM",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -419,21 +419,37 @@
                                                                                             "comment": null,
                                                                                             "items": [
                                                                                                 {
-                                                                                                    "type": "resource",
+                                                                                                    "type": "and",
                                                                                                     "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Bombs",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "Bombs",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "type": "resource",
+                                                                                                    "type": "and",
                                                                                                     "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "Movement",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
+                                                                                                        "comment": "https://www.youtube.com/watch?v=wW_QjW48jwM&t=22s",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Movement",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
                                                                                                     }
                                                                                                 }
                                                                                             ]
@@ -445,7 +461,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=wW_QjW48jwM&t=37s",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -617,7 +633,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=2brsOGq0P7Y",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -644,7 +660,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=2brsOGq0P7Y&t=72s",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -665,7 +681,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=2brsOGq0P7Y&t=55s",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1582,30 +1598,21 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event45",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
+                                                        "type": "events",
+                                                        "name": "Event45",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
@@ -1613,32 +1620,32 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "MorphBall",
+                                                                    "name": "SpaceJump",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "and",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MorphBall",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Spider",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "or",
+                                                                                        "type": "and",
                                                                                         "data": {
                                                                                             "comment": null,
                                                                                             "items": [
@@ -1646,7 +1653,50 @@
                                                                                                     "type": "resource",
                                                                                                     "data": {
                                                                                                         "type": "items",
-                                                                                                        "name": "Boost",
+                                                                                                        "name": "Spider",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "or",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Movement",
+                                                                                                                    "amount": 3,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "Boost",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "https://www.youtube.com/watch?v=3JCa2JxsH7U",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Bombs",
                                                                                                         "amount": 1,
                                                                                                         "negate": false
                                                                                                     }
@@ -1655,38 +1705,12 @@
                                                                                                     "type": "resource",
                                                                                                     "data": {
                                                                                                         "type": "tricks",
-                                                                                                        "name": "Movement",
+                                                                                                        "name": "BSJ",
                                                                                                         "amount": 3,
                                                                                                         "negate": false
                                                                                                     }
                                                                                                 }
                                                                                             ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Bombs",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "BSJ",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -1962,7 +1986,7 @@
                                                                                                             {
                                                                                                                 "type": "and",
                                                                                                                 "data": {
-                                                                                                                    "comment": null,
+                                                                                                                    "comment": "https://www.youtube.com/watch?v=LyIhjAc4pqM",
                                                                                                                     "items": [
                                                                                                                         {
                                                                                                                             "type": "resource",
@@ -2480,7 +2504,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=XbJsYZe8rd0",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -2721,7 +2745,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=4aYwB8NJnbM",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -2742,7 +2766,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=5xM-JJK94PY",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2979,21 +3003,37 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "SlopeJump",
-                                                                                "amount": 3,
-                                                                                "negate": false
+                                                                                "comment": "https://www.youtube.com/watch?v=9M2mgcDrb24",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SlopeJump",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "StandableTerrain",
-                                                                                "amount": 2,
-                                                                                "negate": false
+                                                                                "comment": "https://www.youtube.com/watch?v=1v1vgt6R-wI",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandableTerrain",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -3026,21 +3066,37 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "SlopeJump",
-                                                                                "amount": 2,
-                                                                                "negate": false
+                                                                                "comment": "https://www.youtube.com/watch?v=BnCRXrOvPGs&t=6s",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SlopeJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "StandableTerrain",
-                                                                                "amount": 2,
-                                                                                "negate": false
+                                                                                "comment": "https://www.youtube.com/watch?v=FtylAcZbKFA&t=8s",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandableTerrain",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -3405,21 +3461,37 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "SlopeJump",
-                                                                                "amount": 2,
-                                                                                "negate": false
+                                                                                "comment": "https://www.youtube.com/watch?v=BnCRXrOvPGs",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SlopeJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "StandableTerrain",
-                                                                                "amount": 2,
-                                                                                "negate": false
+                                                                                "comment": "https://www.youtube.com/watch?v=FtylAcZbKFA",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandableTerrain",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -4145,7 +4217,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=56Zl76nNi9k&t=20s",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4171,7 +4243,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=56Zl76nNi9k",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -4423,7 +4495,7 @@
                         "Pickup (Missile)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://www.youtube.com/watch?v=UOhW8IGOGVU",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5169,7 +5241,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=gSKWrUk5uM4",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -6699,7 +6771,7 @@
             }
         },
         "Transport to Agon Wastes": {
-            "default_node": "Elevator to Agon Wastes - Transport to Sanctuary Fortress",
+            "default_node": "Elevator to Agon Wastes",
             "extra": {
                 "asset_id": 900285955,
                 "in_dark_aether": false
@@ -6729,7 +6801,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Agon Wastes - Transport to Sanctuary Fortress": {
+                        "Elevator to Agon Wastes": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6740,7 +6812,7 @@
                         }
                     }
                 },
-                "Elevator to Agon Wastes - Transport to Sanctuary Fortress": {
+                "Elevator to Agon Wastes": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -6758,7 +6830,7 @@
                     "default_connection": {
                         "region": "Agon Wastes",
                         "area": "Transport to Sanctuary Fortress",
-                        "node": "Elevator to Sanctuary Fortress - Transport to Agon Wastes"
+                        "node": "Elevator to Sanctuary Fortress"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -7411,7 +7483,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=12HEtxdV0b0",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -7425,7 +7497,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=12HEtxdV0b0&t=12s",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -8142,7 +8214,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=7Inlx2zKVpY&t=38s",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -8387,7 +8459,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=7Inlx2zKVpY",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -9433,7 +9505,7 @@
             }
         },
         "Transport to Torvus Bog": {
-            "default_node": "Elevator to Torvus Bog - Transport to Sanctuary Fortress",
+            "default_node": "Elevator to Torvus Bog",
             "extra": {
                 "asset_id": 3145160350,
                 "in_dark_aether": false
@@ -9463,7 +9535,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Elevator to Torvus Bog - Transport to Sanctuary Fortress": {
+                        "Elevator to Torvus Bog": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9474,7 +9546,7 @@
                         }
                     }
                 },
-                "Elevator to Torvus Bog - Transport to Sanctuary Fortress": {
+                "Elevator to Torvus Bog": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -9492,7 +9564,7 @@
                     "default_connection": {
                         "region": "Torvus Bog",
                         "area": "Transport to Sanctuary Fortress",
-                        "node": "Elevator to Sanctuary Fortress - Transport to Torvus Bog"
+                        "node": "Elevator to Sanctuary Fortress"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -9882,7 +9954,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "NSJ with cannons",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9924,6 +9996,32 @@
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bombs",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "BombJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -9946,7 +10044,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "NSJ with Screw Attack at Z-Axis https://youtu.be/_OKEYHWQQr0?t=14",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -9957,7 +10055,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "SAnoSJ",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -9968,6 +10066,24 @@
                                                         "name": "RoomRando",
                                                         "amount": 1,
                                                         "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BSJ",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -10010,7 +10126,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "NSJ using Cannon",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10052,6 +10168,32 @@
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Bombs",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "BombJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -10074,7 +10216,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "NSJ with Screw Attack at Z-Axis https://youtu.be/_OKEYHWQQr0",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -10104,7 +10246,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=s2bGJML2QGo&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=73",
+                                            "comment": "Boost Jump https://youtu.be/s2bGJML2QGo",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -12457,7 +12599,7 @@
                         "Door to Main Gyro Chamber": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://www.youtube.com/watch?v=L92JqO2ZUtk",
                                 "items": [
                                     {
                                         "type": "template",
@@ -12582,7 +12724,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=RZF84ZLzefI&t=43s",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -12709,7 +12851,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=RZF84ZLzefI&t=54s",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -12806,6 +12948,59 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=RZF84ZLzefI&t=73s",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Scan",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "EDash",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "TerminalFall",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 10,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -12874,7 +13069,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=L92JqO2ZUtk&t=54s",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -12909,7 +13104,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=L92JqO2ZUtk&t=76s",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -12953,7 +13148,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=L92JqO2ZUtk&t=44s",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -13039,7 +13234,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=RZF84ZLzefI",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -13166,7 +13361,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=RZF84ZLzefI&t=11s",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -13209,6 +13404,59 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Damage",
+                                                        "amount": 10,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=RZF84ZLzefI&t=25s",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Scan",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "EDash",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "TerminalFall",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "DarkWorld1",
                                                         "amount": 10,
                                                         "negate": false
                                                     }
@@ -13341,7 +13589,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=KSEnyKhKPfs",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -13390,7 +13638,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=tyWptkkVeaM",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -13425,7 +13673,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=U9s1qZJqnl4",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -13491,7 +13739,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=GK3YgiXGNFk",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -13576,7 +13824,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=KSEnyKhKPfs",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -13625,7 +13873,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=tyWptkkVeaM",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -13679,7 +13927,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": null,
+                                                                                            "comment": "https://www.youtube.com/watch?v=HFPeu4D8Yo0",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -13705,7 +13953,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": null,
+                                                                                            "comment": "https://www.youtube.com/watch?v=U9s1qZJqnl4",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -13775,7 +14023,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=KSEnyKhKPfs&t=13s",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -13993,7 +14241,7 @@
                         "Event - Aerial Training Site Barrier": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://www.youtube.com/watch?v=wPLKS7hOhrE&t=23s",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -14518,7 +14766,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=Bi3Ap-JiotU",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -14883,7 +15131,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Works the same as -> https://www.youtube.com/watch?v=Bi3Ap-JiotU",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -15167,7 +15415,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Works the same as -> https://www.youtube.com/watch?v=Bi3Ap-JiotU",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -15261,7 +15509,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=Bi3Ap-JiotU",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -15727,7 +15975,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Works the same as -> https://www.youtube.com/watch?v=Bi3Ap-JiotU",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -16056,7 +16304,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=qYFQpPuZhI4",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -16400,7 +16648,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=qYFQpPuZhI4",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -16589,7 +16837,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Works the same from all sides https://www.youtube.com/watch?v=qYFQpPuZhI4",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -17753,7 +18001,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -17857,7 +18105,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=FsMEbSXfSx0",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -17896,7 +18144,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=l5vF1J2hO-Q",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -17979,7 +18227,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -18009,7 +18257,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=O3RgTYbAnZo&t=6s",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -18377,7 +18625,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=0MYrEDFJ9iY",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -18418,7 +18666,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=l5vF1J2hO-Q",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -18468,7 +18716,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=FsMEbSXfSx0",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -18503,7 +18751,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -18553,7 +18801,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=O3RgTYbAnZo",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -18588,7 +18836,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -18633,7 +18881,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=0MYrEDFJ9iY",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -18668,7 +18916,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -18806,7 +19054,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -18836,7 +19084,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=RWg9H4wuGWc",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -19120,7 +19368,7 @@
                         "Event - Hive Dynamo Access Echo Gate": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://www.youtube.com/watch?v=sq8RvkCcL7M",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -20084,7 +20332,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=xjROhTAzEXk",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -20148,7 +20396,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=2yDHWXXEXkk",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -20340,7 +20588,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=1uWwpO7IHtk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -21713,7 +21961,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=oWT_41KIE0E",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -21810,7 +22058,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=2c9fDMqBWy8",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -22205,7 +22453,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=oWT_41KIE0E",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -22302,7 +22550,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": null,
+                                                                                                        "comment": "https://www.youtube.com/watch?v=2c9fDMqBWy8",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
@@ -22734,7 +22982,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=oWT_41KIE0E",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -22831,7 +23079,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": null,
+                                                                                                        "comment": "https://www.youtube.com/watch?v=2c9fDMqBWy8",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
@@ -23120,7 +23368,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=oWT_41KIE0E",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -23217,7 +23465,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=2c9fDMqBWy8",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -23492,12 +23740,12 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=apnuLwmVQZ8&t=12s",
                                                                     "items": [
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=apnuLwmVQZ8",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -23683,7 +23931,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=OwfkdD8Eq5Y",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -23704,7 +23952,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=_F2o-m4I9mg",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -23771,7 +24019,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=BDpZiXoh7To",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -23812,7 +24060,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=QoXSNfUE7c0",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -26265,7 +26513,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=K1JpFBIHOKA",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -26420,7 +26668,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=K1JpFBIHOKA&t=17s",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -26554,7 +26802,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=9SOVgXKKAyY",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -26684,7 +26932,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=9SOVgXKKAyY",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -26782,7 +27030,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=9SOVgXKKAyY",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -27029,7 +27277,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=9SOVgXKKAyY",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -27059,7 +27307,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=K7btnz2qmsg&t=20s",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -27140,7 +27388,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=9SOVgXKKAyY",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -27170,7 +27418,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=K7btnz2qmsg",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -27270,7 +27518,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "https://www.youtube.com/watch?v=9SOVgXKKAyY",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -27356,6 +27604,23 @@
                                                                                 "name": "EDash",
                                                                                 "amount": 4,
                                                                                 "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Works the same as: (Lock on Blue/Anni Door) -> https://www.youtube.com/watch?v=K7btnz2qmsg&t=20s",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "EDash",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -27817,7 +28082,7 @@
                                 "negate": true
                             }
                         },
-                        "Elevator to Sanctuary Fortress - Aerie": {
+                        "Elevator to Aerie": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -27853,7 +28118,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Elevator to Sanctuary Fortress - Aerie": {
+                "Elevator to Aerie": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -27871,7 +28136,7 @@
                     "default_connection": {
                         "region": "Sanctuary Fortress",
                         "area": "Aerie",
-                        "node": "Dock to Aerie Access"
+                        "node": "Elevator to Aerie Transport Station"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -27928,7 +28193,7 @@
                                 "items": []
                             }
                         },
-                        "Teleport to Great Temple - Main Energy Controller": {
+                        "Teleporter to Great Temple": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -27937,7 +28202,7 @@
                                 "negate": false
                             }
                         },
-                        "Teleport to Agon Wastes - Agon Energy Controller": {
+                        "Teleporter to Agon Wastes": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -27946,7 +28211,7 @@
                                 "negate": false
                             }
                         },
-                        "Teleport to Torvus Bog - Torvus Energy Controller": {
+                        "Teleporter to Torvus Bog": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -27995,7 +28260,7 @@
                         }
                     }
                 },
-                "Teleport to Great Temple - Main Energy Controller": {
+                "Teleporter to Great Temple": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -28013,7 +28278,7 @@
                     "default_connection": {
                         "region": "Great Temple",
                         "area": "Main Energy Controller",
-                        "node": "Door to Controller Transport"
+                        "node": "Teleporter to Sanctuary Fortress"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -28030,7 +28295,7 @@
                         }
                     }
                 },
-                "Teleport to Agon Wastes - Agon Energy Controller": {
+                "Teleporter to Agon Wastes": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -28048,7 +28313,7 @@
                     "default_connection": {
                         "region": "Agon Wastes",
                         "area": "Agon Energy Controller",
-                        "node": "Door to Controller Access"
+                        "node": "Teleporter to Sanctuary Fortress"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -28065,7 +28330,7 @@
                         }
                     }
                 },
-                "Teleport to Torvus Bog - Torvus Energy Controller": {
+                "Teleporter to Torvus Bog": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -28083,7 +28348,7 @@
                     "default_connection": {
                         "region": "Torvus Bog",
                         "area": "Torvus Energy Controller",
-                        "node": "Door to Controller Access"
+                        "node": "Teleporter to Sanctuary Fortress"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -28212,7 +28477,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://www.youtube.com/watch?v=jZSV9kcd8SY",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -28345,7 +28610,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": null,
+                                                                                            "comment": "https://www.youtube.com/watch?v=Jk2D09aqPzI",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "template",
@@ -28381,7 +28646,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Same as -> https://www.youtube.com/watch?v=jZSV9kcd8SY",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -28620,7 +28885,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=sHQjdLh4sp4",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -28684,7 +28949,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://www.youtube.com/watch?v=sHQjdLh4sp4&t=11s",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -29326,7 +29591,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=gDuR-CqnKzM",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -29472,7 +29737,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=-oxfsO9wVzs&list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&index=11",
+                                                        "comment": "https://www.youtube.com/watch?v=gDuR-CqnKzM",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -29935,7 +30200,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=su_5kgsXU8Y",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -29961,7 +30226,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://www.youtube.com/watch?v=gt_lKlVVr28",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -30088,7 +30353,7 @@
                         }
                     }
                 },
-                "Elevator to Sanctuary Fortress - Aerie Transport Station": {
+                "Elevator to Aerie Transport Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": null,
@@ -30106,7 +30371,7 @@
                     "default_connection": {
                         "region": "Sanctuary Fortress",
                         "area": "Aerie Transport Station",
-                        "node": "Door to Checkpoint Station"
+                        "node": "Elevator to Aerie"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -30207,7 +30472,7 @@
                         "Pickup (Echo Visor)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://www.youtube.com/watch?v=29qB37vxSgY",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -30243,7 +30508,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Sanctuary Fortress - Aerie Transport Station": {
+                        "Elevator to Aerie Transport Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -30526,12 +30791,20 @@
                                                                                                                             }
                                                                                                                         },
                                                                                                                         {
-                                                                                                                            "type": "resource",
+                                                                                                                            "type": "and",
                                                                                                                             "data": {
-                                                                                                                                "type": "tricks",
-                                                                                                                                "name": "Movement",
-                                                                                                                                "amount": 2,
-                                                                                                                                "negate": false
+                                                                                                                                "comment": "https://www.youtube.com/watch?v=Lkzy0HJEO6k&t=33s",
+                                                                                                                                "items": [
+                                                                                                                                    {
+                                                                                                                                        "type": "resource",
+                                                                                                                                        "data": {
+                                                                                                                                            "type": "tricks",
+                                                                                                                                            "name": "Movement",
+                                                                                                                                            "amount": 2,
+                                                                                                                                            "negate": false
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                ]
                                                                                                                             }
                                                                                                                         }
                                                                                                                     ]
@@ -30543,7 +30816,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": null,
+                                                                                                        "comment": "https://www.youtube.com/watch?v=Lkzy0HJEO6k&t=16s",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
@@ -30603,7 +30876,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": null,
+                                                                                                        "comment": "https://www.youtube.com/watch?v=Lkzy0HJEO6k",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
@@ -30629,7 +30902,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": null,
+                                                                                                        "comment": "https://www.youtube.com/watch?v=Lkzy0HJEO6k&t=60s",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",

@@ -72,9 +72,7 @@ def create_beam_configuration_description(beams: BeamConfiguration) -> list[dict
         return " and ".join(names)
 
     def format_missile_cost(b: BeamAmmoConfiguration) -> str:
-        return "{missiles} missiles for combo".format(
-            missiles=b.combo_missile_cost,
-        )
+        return f"{b.combo_missile_cost} missiles for combo"
 
     for name, default_beam, actual_beam in zip(beam_names, default_config.all_beams, beams.all_beams):
         different = []
@@ -140,7 +138,8 @@ class EchoesPresetDescriber(GamePresetDescriber):
             ],
             "Gameplay": [
                 {f"Translator Gates: {configuration.translator_configuration.description()}": True},
-                {f"Elevators: {configuration.elevators.description()}": not configuration.elevators.is_vanilla},
+                {f"Elevators: {configuration.teleporters.description('elevators')}":
+                 not configuration.teleporters.is_vanilla},
                 {"Portals: Randomized": configuration.portal_rando},
             ],
             "Game Changes": [
@@ -153,7 +152,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
                 ),
                 {"Warp to start": configuration.warp_to_start,
                  "Menu Mod": configuration.menu_mod,
-                 "Final bosses removed": configuration.elevators.skip_final_bosses,
+                 "Final bosses removed": configuration.teleporters.skip_final_bosses,
                  "Unlocked Save Station doors": configuration.blue_save_doors,
                  "Inverted Aether": configuration.inverted_mode},
                 {"New Patcher": configuration.use_new_patcher},

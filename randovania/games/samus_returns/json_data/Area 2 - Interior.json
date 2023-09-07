@@ -10,7 +10,7 @@
     },
     "areas": {
         "Main Hub": {
-            "default_node": "Elevator to Area 2 Exterior - Outer Hub",
+            "default_node": "Elevator to Area 2 - Exterior",
             "extra": {
                 "total_boundings": {
                     "x1": -10700.0,
@@ -96,7 +96,7 @@
                         }
                     }
                 },
-                "Elevator to Area 2 Exterior - Outer Hub": {
+                "Elevator to Area 2 - Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -114,13 +114,13 @@
                         "start_point_actor_name": "ST_FromArea02A"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
                         "region": "Area 2 - Exterior",
                         "area": "Outer Hub",
-                        "node": "Elevator to Area 2 Entrance - Transport to Area 2 Exterior"
+                        "node": "Elevator to Area 2 - Interior"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -154,7 +154,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Elevator to Area 2 Exterior - Outer Hub": {
+                        "Elevator to Area 2 - Exterior": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1134,7 +1134,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "or",
@@ -1152,7 +1152,7 @@
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "Destroy Bomb Block"
+                                                                "data": "Lay Any Bomb"
                                                             }
                                                         ]
                                                     }
@@ -1326,7 +1326,7 @@
                         },
                         "Pickup (Super Missile Tank)": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Bottom of Morph Ball Shaft": {
                             "type": "resource",
@@ -1365,7 +1365,7 @@
                     "connections": {
                         "Door to Gamma Arena": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         },
                         "Top of Morph Ball Shaft": {
                             "type": "and",
@@ -1755,7 +1755,7 @@
                     "connections": {
                         "Under Pickup": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -1830,13 +1830,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
                                                 },
                                                 {
                                                     "type": "and",
@@ -2195,6 +2190,10 @@
                                                                                             "amount": 4,
                                                                                             "negate": false
                                                                                         }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Lay Power Bomb"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -2302,7 +2301,7 @@
                         },
                         "Energy Recharge Station": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2363,7 +2362,7 @@
                     "connections": {
                         "Door to Varia Suit Room": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -2906,29 +2905,12 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Area 5 (Interior) - Gravity Suit Room Pickup",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -3163,7 +3145,7 @@
                     "connections": {
                         "Tunnel to High Jump Room": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -3417,7 +3399,7 @@
                     "connections": {
                         "Room Center": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -3454,7 +3436,7 @@
                         },
                         "Tunnel to High Jump Secret": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 }
@@ -3896,7 +3878,7 @@
                     "connections": {
                         "Door to Teleporter Shaft": {
                             "type": "template",
-                            "data": "Destroy Bomb Block"
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -3949,7 +3931,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Destroy Missile Block"
+                                                    "data": "Shoot Any Missile"
                                                 }
                                             ]
                                         }
@@ -4110,21 +4092,17 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Fiery Path": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Gamma 1",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Varia Suit Room": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Gamma 1",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Gamma Metroid": {

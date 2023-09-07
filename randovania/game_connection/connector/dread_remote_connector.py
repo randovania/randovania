@@ -14,16 +14,16 @@ from randovania.game_connection.connector.remote_connector import (
     RemoteConnector,
 )
 from randovania.game_description import default_database
-from randovania.game_description.resources.item_resource_info import Inventory, InventoryItem
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.dread.exporter.patch_data_factory import get_resources_for_details
 from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.game_connection.executor.dread_executor import DreadExecutor
     from randovania.game_description.db.region import Region
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
@@ -32,13 +32,11 @@ def format_received_item(item_name: str, player_name: str) -> str:
     generic = "Received {item_name} from {provider_name}."
     return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
 
+
 def resources_to_give_for_pickup(db: ResourceDatabase, pickup: PickupEntry, inventory: Inventory,
                                  ) -> tuple[str, list[list[dict]]]:
     inventory_resources = ResourceCollection.with_database(db)
-    inventory_resources.add_resource_gain([
-        (item, inv_item.capacity)
-        for item, inv_item in inventory.items()
-    ])
+    inventory_resources.add_resource_gain(inventory.as_resource_gain())
     conditional = pickup.conditional_for_resources(inventory_resources)
     if conditional.name is not None:
         item_name = conditional.name
@@ -50,7 +48,9 @@ def resources_to_give_for_pickup(db: ResourceDatabase, pickup: PickupEntry, inve
 
     return item_name, resources
 
+
 class DreadRemoteConnector(RemoteConnector):
+    last_inventory: Inventory
     _game_enum: RandovaniaGame = RandovaniaGame.METROID_DREAD
 
     def __init__(self, executor: DreadExecutor):
@@ -72,9 +72,8 @@ class DreadRemoteConnector(RemoteConnector):
     def game_enum(self) -> RandovaniaGame:
         return self._game_enum
 
-    # TODO: we could fetch and add the game version here
     def description(self):
-        return f"{self.game_enum.long_name}"
+        return f"{self.game_enum.long_name}: {self.executor.version}"
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
         return (self.in_cooldown, self.current_region)
@@ -93,7 +92,7 @@ class DreadRemoteConnector(RemoteConnector):
     # reset all values on init, disconnect or after switching back to main menu
     def reset_values(self):
         self.remote_pickups = ()
-        self.last_inventory = {}
+        self.last_inventory = Inventory.empty()
         self.in_cooldown = True
         self.received_pickups = None
         self.inventory_index = None
@@ -136,10 +135,10 @@ class DreadRemoteConnector(RemoteConnector):
 
         items = [r for r in self.game.resource_database.item if "item_id" in r.extra]
 
-        inventory = {
+        inventory = Inventory({
             item: InventoryItem(quantity, quantity)
             for item, quantity in zip(items, inventory_ints)
-        }
+        })
         self.last_inventory = inventory
         self.InventoryUpdated.emit(inventory)
 
@@ -175,7 +174,7 @@ class DreadRemoteConnector(RemoteConnector):
 
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
 
-        from open_dread_rando.lua_util import lua_convert
+        from open_dread_rando.misc_patches.lua_util import lua_convert
         progression_as_lua = lua_convert(items_list, True)
         message = format_received_item(item_name, provider_name)
 
@@ -183,7 +182,7 @@ class DreadRemoteConnector(RemoteConnector):
                           len(remote_pickups), num_pickups, message)
 
         main_item_id = items_list[0][0]["item_id"]
-        from open_dread_rando.lua_editor import LuaEditor
+        from open_dread_rando.pickups.lua_editor import LuaEditor
         parent = LuaEditor.get_parent_for(None, main_item_id)
 
         execute_string = "RL.ReceivePickup({},{},{},{},{})".format(
@@ -196,3 +195,8 @@ class DreadRemoteConnector(RemoteConnector):
 
         await self.executor.run_lua_code(execute_string)
         return
+
+    async def display_arbitrary_message(self, message: str):
+        escaped_message = message.replace("\\", "\\\\").replace("'", "\\'")
+        execute_string = f"Game.AddSF(0, 'Scenario.QueueAsyncPopup', 'si', '{escaped_message}', 10.0)"
+        await self.executor.run_lua_code(execute_string)

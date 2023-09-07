@@ -9,6 +9,9 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
+from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
+    PrimeTrilogyTeleporterConfiguration,
+)
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
@@ -22,7 +25,6 @@ from randovania.layout.base.dock_rando_configuration import DockRandoConfigurati
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
-from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 T = TypeVar("T")
 
@@ -54,21 +56,21 @@ def make_dummy(cls: type[T]) -> T:
 
 @pytest.fixture(
     params=[
-        {"encoded": b'@\x00\x05\x8c\x7f\x17\x0c\x04\xb0\x03\xfe',
+        {"encoded": b'@\x00\x02\xc6?\x8b\x86\x02X\x01\xff',
          "sky_temple_keys": LayoutSkyTempleKeyMode.NINE.value,
          },
-        {"encoded": b'@\x00\x00\x0c\x7f\x17\x0c\x04\xb0\x03\xfe',
+        {"encoded": b'@\x00\x00\x06?\x8b\x86\x02X\x01\xff',
          "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_BOSSES.value,
          },
-        {"encoded": b'@\x00\x02"\xff\x17\x0c\x04\xb0\x03\xfe',
+        {"encoded": b'@\x00\x01\x11\x7f\x8b\x86\x02X\x01\xff',
          "sky_temple_keys": LayoutSkyTempleKeyMode.TWO.value,
          "energy_per_tank": 280,
          },
-        {"encoded": b'@\x00\x00\x8c\x7fE\xec\x04\xb0\x03\xfe',
+        {"encoded": b'@\x00\x00F?\xa2\xf6\x02X\x01\xff',
          "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
          "varia_suit_damage": 18.0,
          },
-        {"encoded": b'\x10\x00\x00\x8c\x7f\x17\x0c\x04\xb0\x03\xfe',
+        {"encoded": b'\x10\x00\x00F?\x8b\x86\x02X\x01\xff',
          "pickup_model_style": PickupModelStyle.HIDE_MODEL.value,
          "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
          "damage_strictness": LayoutDamageStrictness.STRICT.value,
@@ -89,7 +91,7 @@ def layout_config_with_data(request, default_echoes_configuration):
         "standard_pickup_configuration": StandardPickupConfiguration,
         "ammo_pickup_configuration": AmmoPickupConfiguration,
 
-        "elevators": TeleporterConfiguration,
+        "teleporters": PrimeTrilogyTeleporterConfiguration,
         "translator_configuration": TranslatorConfiguration,
         "hints": HintConfiguration,
         "beam_configuration": BeamConfiguration,

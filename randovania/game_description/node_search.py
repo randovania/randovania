@@ -25,7 +25,7 @@ def distances_to_node(region_list: RegionList,
     Compute the shortest distance from a node to all reachable areas.
     :param region_list:
     :param starting_node:
-    :param ignore_elevators:
+    :param dock_types_to_ignore:
     :param cutoff: Exclude areas with a length longer that cutoff.
     :param patches:
     :return: Dict keyed by area to shortest distance to starting_node.

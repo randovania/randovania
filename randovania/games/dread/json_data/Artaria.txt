@@ -556,9 +556,8 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_name: DoorEmmy10_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Next to Pickup
-      Any of the following:
-          # If this lock is unmoved, it can cause death if the room has been loaded
-          After Artaria - EMMI Magnet Door Lock or Knowledge (Intermediate)
+      # If this lock is unmoved, it can cause death if the room has been loaded
+      After Artaria - EMMI Magnet Door Lock or Knowledge (Intermediate)
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -623,9 +622,8 @@ Extra - asset_id: collision_camera_006
       Any of the following:
           Flash Shift or Simple IBJ or Use Spin Boost
           Speed Booster and Disabled Door Lock Randomizer
-          All of the following:
-              # Enemy that you freeze only spawns after White EMMI is defeated.
-              After Artaria - Central Unit and Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+          # Enemy that you freeze only spawns after White EMMI is defeated.
+          After Artaria - Central Unit and Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
           Morph Ball and Single-wall Wall Jump (Intermediate)
   > Door to EMMI Zone First Entrance
       Flash Shift or Speed Booster or Wall Jump (Advanced) or Simple IBJ or Use Spin Boost
@@ -648,7 +646,7 @@ Extra - asset_id: collision_camera_006
 
 > Door to EMMI Zone Ballspark Hallway; Heals? False
   * Layers: default
-  * Access Open to EMMI Zone Ballspark Hallway/Door to White EMMI Introduction; Dock Lock Rando incompatible with: Grapple Beam Door
+  * Access Open to EMMI Zone Ballspark Hallway/Door to White EMMI Introduction; Excluded from Dock Lock Rando
   * Extra - actor_name: DoorFrame_014
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -722,7 +720,7 @@ Extra - asset_id: collision_camera_008
   > Door to White EMMI Introduction (Thermal)
       Trivial
   > Door to EMMI Zone Exit North (Upper)
-      Wave Beam
+      Wave Beam and Disabled Door Lock Randomizer and Shoot Wide Beam
 
 > Door to White EMMI Introduction (Lower); Heals? False
   * Layers: default
@@ -1018,9 +1016,8 @@ Extra - asset_id: collision_camera_010
       Any of the following:
           Simple IBJ or Use Spin Boost
           Speed Booster and Disabled Door Lock Randomizer
-          All of the following:
-              # https://youtu.be/bDwcjN4JTYQ
-              Grapple Beam and Grapple Movement (Intermediate)
+          # https://youtu.be/bDwcjN4JTYQ
+          Grapple Beam and Grapple Movement (Intermediate)
   > Pickup (Power Bomb Tank)
       Ballspark
   > Tunnel to Wide Beam Block Room
@@ -1084,9 +1081,8 @@ Extra - asset_id: collision_camera_010
               # very dumb triple flash shift off of frozen enemy.
               Flash Shift and Stand on Frozen Enemy (Advanced) and Shoot Ice Missile
               After Artaria - Central Unit or Movement (Intermediate)
-          All of the following:
-              # can reach trivially by jumping up from tunnel and flashing 4 times
-              Flash Shift and Flash Shift Upgrade ≥ 3
+          # can reach trivially by jumping up from tunnel and flashing 4 times
+          Flash Shift and Flash Shift Upgrade ≥ 3
   > Door to Wide Beam Block Room (Upper)
       Trivial
   > Pickup (Power Bomb Tank)
@@ -1096,9 +1092,8 @@ Extra - asset_id: collision_camera_010
               Space Jump
               All of the following:
                   Grapple Beam and Movement (Intermediate)
-                  All of the following:
-                      # https://www.youtube.com/watch?v=DXiz4wBXVFY
-                      Flash Shift and Spider Magnet and Single-wall Wall Jump (Advanced)
+                  # https://www.youtube.com/watch?v=DXiz4wBXVFY
+                  Flash Shift and Spider Magnet and Single-wall Wall Jump (Advanced)
               All of the following:
                   Spider Magnet
                   Grapple Beam or Use Spin Boost
@@ -1268,7 +1263,7 @@ Extra - asset_id: collision_camera_011
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Energy Recharge
-      After Artaria - Thermal Device
+      After Artaria - Chain Reaction End and After Artaria - Thermal Device
 
 > Energy Recharge; Heals? True
   * Layers: default
@@ -1284,13 +1279,11 @@ Extra - asset_id: collision_camera_011
               Slide and Pseudo-Wave Beam (Beginner) and Slide Jump (Beginner)
   > Door to Varia Suit Tutorial South
       All of the following:
-          After Artaria - Thermal Device
+          After Artaria - Chain Reaction End and After Artaria - Thermal Device
           Any of the following:
               Space Jump or Simple IBJ
               Wall Jump (Intermediate) and Use Spin Boost
-              All of the following:
-                  Gravity Suit and Speed Booster Conservation (Beginner) and Disabled Door Lock Randomizer and Ballspark
-                  After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
+              Gravity Suit and After Artaria - Post Chain Reaction Debris and Speed Booster Conservation (Beginner) and Disabled Door Lock Randomizer and Ballspark
   > Teleporter to Cataris
       Trivial
   > Tunnel to EMMI Zone Exit Northwest
@@ -1990,31 +1983,40 @@ Extra - asset_id: collision_camera_020
       After Corpius
   > Event - Corpius
       All of the following:
-          Any of the following:
-              # Requirements for dodging attacks. Not required if at least beginner combat.
-              Spider Magnet or Space Jump or Combat (Beginner)
+          # Requirements for dodging attacks. Not required if at least beginner combat.
+          Spider Magnet or Space Jump or Combat (Beginner)
           Any of the following:
               # Requirements for killing Corpius
-              Lay Cross Bomb or Shoot Charge Beam
+              Shoot Charge Beam
+              # Refill missile ammo by shooting beam
+              Missiles and Before Elun - Release X Parasites and Shoot Beam
               All of the following:
-                  # Refill missile ammo by shooting beam
-                  Missiles and Shoot Beam
-              All of the following:
-                  Combat (Intermediate)
+                  # Minimum: 9 Ice Missiles. 1.5x leeway for trickless
+                  Shoot Super Ice Missile
                   Any of the following:
-                      Lay Bomb
-                      All of the following:
-                          # Minimum: 9 Ice Missiles
-                          Missiles ≥ 10 and Shoot Ice Missile
-                      All of the following:
-                          # Minimum: 12 Super Missiles
-                          Missiles ≥ 13 and Shoot Super Missile
-                      All of the following:
-                          # Minimum: 35 Normal Missiles
-                          Missiles ≥ 40
-          Any of the following:
-              # Energy Requirements
-              Combat (Beginner) or Normal Damage ≥ 199
+                      Missiles ≥ 14
+                      Missiles ≥ 9 and Combat (Intermediate)
+              All of the following:
+                  # Minimum: 12 Super Missiles. 1.5x leeway for trickless
+                  Shoot Super Missile
+                  Any of the following:
+                      Missiles ≥ 18
+                      Missiles ≥ 12 and Combat (Intermediate)
+              All of the following:
+                  # Minimum: 35 Normal Missiles. 1.5x leeway for trickless
+                  Any of the following:
+                      Missiles ≥ 53
+                      Missiles ≥ 35 and Combat (Intermediate)
+              Combat (Beginner) and Lay Cross Bomb
+              Combat (Intermediate) and Lay Normal Bomb
+              All of the following:
+                  # Minimum: 5 volleys of Storm Missiles 1.5x leeway for trickless
+                  Storm Missile and Shoot Missile
+                  Any of the following:
+                      Missiles ≥ 24
+                      Missiles ≥ 15 and Combat (Intermediate)
+          # Energy Requirements
+          Combat (Beginner) or Normal Damage ≥ 199
 
 > Pickup (Phantom Cloak); Heals? False
   * Layers: default
@@ -2407,13 +2409,11 @@ Extra - asset_id: collision_camera_026
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Start Point
-      All of the following:
-          # TODO: Find heat values after constand damage numbers are decided on
-          Morph Ball and Varia Suit and After Artaria - Chain Reaction Device
+      # TODO: Find heat values after constand damage numbers are decided on
+      Morph Ball and Varia Suit and After Artaria - Chain Reaction End
   > Tunnel to Shutter Platform Puzzle
-      All of the following:
-          # TODO: Find heat values after constant damage numbers are decided on
-          Varia Suit and After Artaria - Chain Reaction Device
+      # TODO: Find heat values after constant damage numbers are decided on
+      Varia Suit and After Artaria - Chain Reaction End
 
 > Door to Chain Reaction Access; Heals? False
   * Layers: default
@@ -2462,26 +2462,25 @@ Extra - asset_id: collision_camera_026
   > Door to Varia Suit Tutorial North
       All of the following:
           # TODO: Find heat values after constant damage numbers are decided on
-          Morph Ball and Varia Suit and After Artaria - Chain Reaction Device
+          Morph Ball and Varia Suit and After Artaria - Chain Reaction End
           Flash Shift or Simple IBJ or Use Spin Boost
   > Door to Chain Reaction Access
       Before Artaria - Chain Reaction Device
   > Door to Varia Suit Tutorial South
       All of the following:
-          After Artaria - Chain Reaction Device
+          After Artaria - Chain Reaction End
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Event - Chain Reaction Device
-      Before Artaria - Chain Reaction Device
+      Before Artaria - Chain Reaction End
 
 > Tunnel to Shutter Platform Puzzle; Heals? False
   * Layers: default
   * Slide Tunnel to Shutter Platform Puzzle/Tunnel to Chain Reaction Room
   > Door to Varia Suit Tutorial North
-      All of the following:
-          # TODO: Find heat values after constant damage numbers are decided on
-          Varia Suit and After Artaria - Chain Reaction Device
+      # TODO: Find heat values after constant damage numbers are decided on
+      Varia Suit and After Artaria - Chain Reaction End
 
 ----------------
 Varia Suit Tutorial South
@@ -2643,6 +2642,12 @@ Extra - asset_id: collision_camera_030
 > Tunnel to Chain Reaction Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Chain Reaction Room/Tunnel to Shutter Platform Puzzle
+  > Event - Chain Reaction End
+      Trivial
+
+> Event - Chain Reaction End; Heals? False
+  * Layers: default
+  * Event Artaria - Chain Reaction End
   > Start Point
       Trivial
 
@@ -2832,6 +2837,7 @@ Extra - asset_id: collision_camera_034
   * Extra - target_spawn_point: elevator_cave_000_platform
   * Extra - start_point_actor_name: elevator_baselab_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  * Extra - transporter_name: Artaria - Grapple
   > Door to Spider Beam Tower
       Trivial
 
@@ -3177,7 +3183,7 @@ Extra - polygon: [[2800.0, 1750.0], [1300.0, 1750.0], [300.0, 1542.0], [-1300.0,
 Extra - asset_id: collision_camera_053
 > Door to White EMMI Introduction; Heals? False
   * Layers: default
-  * Access Open to White EMMI Introduction/Door to EMMI Zone Ballspark Hallway; Dock Lock Rando incompatible with: Grapple Beam Door
+  * Access Open to White EMMI Introduction/Door to EMMI Zone Ballspark Hallway; Excluded from Dock Lock Rando
   * Extra - actor_name: DoorFrame_014
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3319,9 +3325,8 @@ Extra - asset_id: collision_camera_055
   > Door to Chain Reaction Room
       Morph Ball
   > Door to Teleport to Cataris
-      All of the following:
-          # TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.
-          Open Charge Door
+      # TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.
+      Open Charge Door
   > Tunnel to Teleport to Cataris (Tunnel)
       Trivial
 
@@ -4112,9 +4117,8 @@ Extra - asset_id: collision_camera_069
   > Event - EMMI Wide Beam Block
       Any of the following:
           Push Wide Beam Block
-          All of the following:
-              # https://youtu.be/ubyYAvEgBck
-              Diffusion Abuse (Hypermode) and Shoot Diffusion Beam
+          # https://youtu.be/ubyYAvEgBck
+          Diffusion Abuse (Hypermode) and Shoot Diffusion Beam
   > Tunnel to EMMI Zone Hub
       Trivial
 
@@ -4132,7 +4136,7 @@ Extra - asset_id: collision_camera_069
   > Door to EMMI Zone Spinner
       After Artaria - EMMI Wide Beam Block
   > Event - EMMI Wide Beam Block
-      Wave Beam and Push Wide Beam Block
+      Push Wide Beam Block with Wave Beam
 
 > Door to EMMI Zone Spinner; Heals? False
   * Layers: default
@@ -4458,7 +4462,7 @@ Extra - asset_id: collision_camera_075
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Hub (Upper)
       Any of the following:
-          Simple IBJ or Use Spin Boost
+          Can Slide or Simple IBJ or Use Spin Boost
           All of the following:
               Speed Booster and Disabled Door Lock Randomizer
               Gravity Suit or Before Artaria - Water Reservoir Blob
@@ -4574,6 +4578,7 @@ Extra - asset_id: collision_camera_077
   * Extra - target_spawn_point: LE_Platform_Elevator_FromCave
   * Extra - start_point_actor_name: LE_Platform_Elevator_FromMagma
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  * Extra - transporter_name: Artaria - Thermal Device
   > Door to Hot Cataris Shortcut
       Trivial
   > Door to Lower Path to Cataris
@@ -4674,9 +4679,8 @@ Extra - asset_id: collision_camera_079
               Speed Booster
               Any of the following:
                   Morph Ball
-                  All of the following:
-                      # Avoid being pushed through the cloak door
-                      Movement (Intermediate) and Disabled Door Lock Randomizer
+                  # Avoid being pushed through the cloak door
+                  Movement (Intermediate) and Disabled Door Lock Randomizer
           All of the following:
               Flash Shift
               Grapple Beam or Wall Jump (Beginner)
@@ -4736,6 +4740,7 @@ Extra - asset_id: collision_camera_080
   * Extra - target_spawn_point: elevator_cave_000_platform
   * Extra - start_point_actor_name: elevator_aqua_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  * Extra - transporter_name: Artaria - Screw Attack
   > Door to Screw Attack Room
       Trivial
   > Pickup (Missile Tank)

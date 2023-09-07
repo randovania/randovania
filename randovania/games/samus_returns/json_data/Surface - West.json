@@ -332,7 +332,7 @@
             }
         },
         "Transport to Area 8": {
-            "default_node": "Elevator to Area 8 - Transport to Surface (West)",
+            "default_node": "Elevator to Area 8",
             "extra": {
                 "total_boundings": {
                     "x1": -40700.0,
@@ -451,7 +451,7 @@
                         }
                     }
                 },
-                "Elevator to Area 8 - Transport to Surface (West)": {
+                "Elevator to Area 8": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -469,13 +469,13 @@
                         "start_point_actor_name": "ST_FromArea10"
                     },
                     "valid_starting_location": true,
-                    "dock_type": "teleporter",
+                    "dock_type": "elevator",
                     "default_connection": {
-                        "region": "Area 1",
-                        "area": "Chozo Seal",
-                        "node": "Elevator to Surface East - Transport to Area 1"
+                        "region": "Area 8",
+                        "area": "Transport to Surface West",
+                        "node": "Elevator to Surface - West"
                     },
-                    "default_dock_weakness": "Teleporter",
+                    "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1045,7 +1045,7 @@
                                 ]
                             }
                         },
-                        "Elevator to Area 8 - Transport to Surface (West)": {
+                        "Elevator to Area 8": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1192,7 +1192,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "or",
@@ -1462,7 +1462,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Destroy Missile Block"
+                                        "data": "Shoot Any Missile"
                                     },
                                     {
                                         "type": "or",

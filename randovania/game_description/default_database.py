@@ -50,6 +50,7 @@ def write_pickup_database_for_game(pickup_db: pickup_database.PickupDatabase, ga
 
 
 @functools.lru_cache
+# TODO: this game specific function should be removed from here.
 def default_prime2_memo_data() -> dict:
     memo_data = json_lib.read_path(
         RandovaniaGame.METROID_PRIME_ECHOES.data_path.joinpath("pickup_database", "memo_data.json")

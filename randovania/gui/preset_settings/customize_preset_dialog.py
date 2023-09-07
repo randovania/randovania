@@ -92,7 +92,7 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
             (self.patches_tab_widget, [x for x in self._tab_types if x.uses_patches_tab()]),
             (self.logic_tab_widget, [x for x in self._tab_types if not x.uses_patches_tab()]),
         ]:
-            for i in range(0, parent.count()):
+            for i in range(parent.count()):
                 tab = tabs[i]
                 visible = (self.editor._options.experimental_settings or not tab.is_experimental())
                 parent.setTabVisible(i, visible)

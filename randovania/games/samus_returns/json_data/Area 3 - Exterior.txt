@@ -8,7 +8,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: LE_Platform_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
-  > Elevator to Area 2 Entrance - Chozo Seal
+  > Elevator to Area 2 - Entrance
       Trivial
   > Door to Entrance Hub
       Grapple Beam or Climb Rooms Vertically (No High Jump)
@@ -17,9 +17,9 @@ Extra - asset_id: collision_camera_002
   > Event - Chozo Seal Unlocked
       After Area 3 (Interior East) - Alpha Metroid and After Area 3 (Interior West) - Alpha Metroid+ West and After Area 3 (Interior West) - Alpha Metroid+ East and After Area 3 (Exterior) - Gamma Metroid and After Area 3 (Interior East) - Gamma Metroid Upper and After Area 3 (Interior East) - Gamma Metroid Lower and After Area 3 (Interior West) - Gamma Metroid Upper and After Area 3 (Interior West) - Gamma Metroid Lower and After Area 3 (Interior West) - Gamma Metroid+ Heat and After Area 3 (Interior West) - Gamma Metroid+ Lower
 
-> Elevator to Area 2 Entrance - Chozo Seal; Heals? False; Spawn Point; Default Node
+> Elevator to Area 2 - Entrance; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Chozo Seal/Elevator To Area 1 - Chozo Seal
+  * Elevator to Chozo Seal/Elevator to Area 3 - Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02
@@ -52,7 +52,7 @@ Extra - asset_id: collision_camera_002
   > Door to Transport to Area 4 West (Top)
       Trivial
   > Door to Glow Fly Tunnel (Top)
-      Destroy Bomb Block
+      Lay Any Bomb
 
 > Door to Transport to Area 4 West (Middle); Heals? False
   * Layers: default
@@ -60,7 +60,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
   > Door to Glow Fly Tunnel (Top)
-      Morph Ball and Destroy Missile Block
+      Morph Ball and Shoot Any Missile
   > Door to Glow Fly Tunnel (Bottom)
       Trivial
 
@@ -78,9 +78,9 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
   > Door from Transport to Area 4 West
-      Destroy Bomb Block
+      Lay Any Bomb
   > Door to Transport to Area 4 West (Middle)
-      Morph Ball and Movement (Beginner) and Destroy Missile Block
+      Morph Ball and Movement (Beginner) and Shoot Any Missile
 
 > Door to Glow Fly Tunnel (Bottom); Heals? False
   * Layers: default
@@ -112,12 +112,12 @@ Extra - asset_id: collision_camera_016
       All of the following:
           Morph Ball
           Any of the following:
-              Climb Rooms Vertically (No High Jump) and Destroy Bomb Block
+              Climb Rooms Vertically (No High Jump) and Lay Any Bomb
               All of the following:
                   Baby Metroid and Climb Rooms Vertically (High Jump)
                   Phase Drift or Movement (Beginner)
   > Tunnel to Outer Hub (Bottom)
-      Destroy Bomb Block
+      Lay Any Bomb
 
 > Tunnel to Outer Hub (Top); Heals? False
   * Layers: default
@@ -127,7 +127,7 @@ Extra - asset_id: collision_camera_016
           Morph Ball
           Any of the following:
               All of the following:
-                  Power Bomb and Climb Rooms Vertically (No High Jump)
+                  Climb Rooms Vertically (No High Jump) and Lay Power Bomb
                   Phase Drift or Movement (Beginner)
               All of the following:
                   Baby Metroid
@@ -215,9 +215,9 @@ Extra - asset_id: collision_camera_030
   > Below Crumble Blocks
       Trivial
 
-> Elevator to Area 3 Interior East - Transport to Area 3 Exterior; Heals? False; Spawn Point; Default Node
+> Elevator to Area 3 - Interior (East); Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 3 Exterior/Elevator to Area 3 Exterior - Outer Hub
+  * Elevator to Transport to Area 3 Exterior/Elevator to Area 3 - Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea03C
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03C
@@ -231,7 +231,7 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_name: LE_Platform_SaveStation_002
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation_002
-  > Elevator to Area 3 Interior East - Transport to Area 3 Exterior
+  > Elevator to Area 3 - Interior (East)
       Trivial
   > Above Grapple Beam Room
       Trivial
@@ -326,7 +326,7 @@ Extra - asset_id: collision_camera_030
   * Layers: default
   > Pickup (Missile Tank Shaft)
       Morph Ball
-  > Elevator to Area 3 Interior East - Transport to Area 3 Exterior
+  > Elevator to Area 3 - Interior (East)
       Any of the following:
           Climb Rooms Vertically (High Jump)
           Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Beginner) and Unmorph Extend (Advanced)
@@ -340,23 +340,23 @@ Transport to Area 3 Interior West (Lower)
 Extra - total_boundings: {'x1': -18100.0, 'x2': -16800.0, 'y1': 2020.9200439453125, 'y2': 2779.080078125}
 Extra - polygon: [[-18100.0, 2779.080078125], [-18100.0, 2020.9200439453125], [-16800.0, 2020.9200439453125], [-16800.0, 2779.080078125]]
 Extra - asset_id: collision_camera_031
-> Elevator to Area 3 Interior West - Area 3 Exterior (Lower); Heals? False; Spawn Point; Default Node
+> Elevator to Area 3 - Interior (West); Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 3 Exterior (Lower)/Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Lower)
+  * Elevator to Transport to Area 3 Exterior (Lower)/Elevator to Area 3 - Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea03B_02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03B_02
   > Door to Entrance Hub
       Trivial
   > Pickup (Missile Tank)
-      Morph Ball and Destroy Missile Block
+      Morph Ball and Shoot Any Missile
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * Power Beam Door to Entrance Hub/Door to Transport to Area 3 Interior West (Lower)
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
-  > Elevator to Area 3 Interior West - Area 3 Exterior (Lower)
+  > Elevator to Area 3 - Interior (West)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -364,7 +364,7 @@ Extra - asset_id: collision_camera_031
   * Pickup 62; Category? Minor
   * Extra - actor_name: HP_ChozoHologram_002
   * Extra - actor_type: item_missiletank
-  > Elevator to Area 3 Interior West - Area 3 Exterior (Lower)
+  > Elevator to Area 3 - Interior (West)
       Trivial
 
 ----------------
@@ -382,9 +382,9 @@ Extra - asset_id: collision_camera_032
           Out of Bounds Movement (Intermediate)
           Morph Ball and After Area 3 (Exterior) - Transport to Area 4 West Grapple Block
 
-> Elevator to Area 4 West - Chozo Seals; Heals? False; Spawn Point; Default Node
+> Elevator to Area 4 - West; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Chozo Seals/Elevator to Area 3 Exterior - Transport to Area 4 West
+  * Elevator to Chozo Seals/Elevator to Area 3 - Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea04
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea04
@@ -430,7 +430,7 @@ Extra - asset_id: collision_camera_032
   * Charge Beam Door to Transport to Area 2 Entrance/Door to Transport to Area 4 West (Bottom)
   * Extra - actor_name: Door008
   * Extra - actor_type: doorchargecharge
-  > Elevator to Area 4 West - Chozo Seals
+  > Elevator to Area 4 - West
       Trivial
 
 > Event - Grapple Block; Heals? False
@@ -477,34 +477,30 @@ Extra - asset_id: collision_camera_035
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge
   * Extra - actor_type: weightactivatedplatform
-  > Elevator to Area 3 Interior West - Transport to Area 3 Exterior (Upper)
-      Destroy Bomb Block
+  > Elevator to Area 3 - Interior (West)
+      Lay Any Bomb
   > Door to Outer Hub Access
       Morph Ball
 
-> Elevator to Area 3 Interior West - Transport to Area 3 Exterior (Upper); Heals? False; Spawn Point; Default Node
+> Elevator to Area 3 - Interior (West); Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 3 Exterior (Upper)/Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Upper)
+  * Elevator to Transport to Area 3 Exterior (Upper)/Elevator to Area 3 - Exterior
   * Extra - actor_name: LE_Platform_Elevator_FromArea03B_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03B_01
   > Ammo Recharge Station
-      Destroy Bomb Block
+      Lay Any Bomb
   > Door to Entrance Hub
       Trivial
   > Door to Outer Hub Access
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Shoot Beam Burst
-              Power Bomb and Knowledge (Beginner)
+      Morph Ball and Destroy Blob Throwers/Steel Orbs
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * Power Beam Door to Entrance Hub/Door to Transport to Area 3 Interior West (Upper)
   * Extra - actor_name: Door013
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 3 Interior West - Transport to Area 3 Exterior (Upper)
+  > Elevator to Area 3 - Interior (West)
       Trivial
 
 > Door to Outer Hub Access; Heals? False
@@ -514,12 +510,8 @@ Extra - asset_id: collision_camera_035
   * Extra - actor_type: doorpowerpower
   > Ammo Recharge Station
       Morph Ball
-  > Elevator to Area 3 Interior West - Transport to Area 3 Exterior (Upper)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Shoot Beam Burst
-              Power Bomb and Knowledge (Beginner)
+  > Elevator to Area 3 - Interior (West)
+      Morph Ball and Destroy Blob Throwers/Steel Orbs
 
 ----------------
 Entrance Hub
@@ -571,8 +563,7 @@ Extra - asset_id: collision_camera_036
   * Extra - actor_type: doorpowerpower
   > Top of Climb
       Any of the following:
-          Shoot Beam Burst
-          Morph Ball and Power Bomb ≥ 2 and Knowledge (Beginner)
+          Destroy Blob Throwers/Steel Orbs
           All of the following:
               Phase Drift and Movement (Advanced)
               Any of the following:
@@ -595,8 +586,7 @@ Extra - asset_id: collision_camera_036
       Trivial
   > Door to Transport to Area 3 Interior West (Upper)
       Any of the following:
-          Shoot Beam Burst
-          Morph Ball and Power Bomb ≥ 2 and Knowledge (Beginner)
+          Destroy Blob Throwers/Steel Orbs
           All of the following:
               Phase Drift and Movement (Advanced)
               Any of the following:
@@ -621,7 +611,7 @@ Extra - asset_id: collision_camera_036
   > Left of Statue
       All of the following:
           Morph Ball
-          Lighting Armor or Spider Ball
+          Lightning Armor or Spider Ball
 
 > Right of Statue; Heals? False
   * Layers: default
@@ -653,7 +643,7 @@ Extra - asset_id: collision_camera_036
   > Top of Climb
       All of the following:
           Morph Ball
-          Lighting Armor or Spider Ball
+          Lightning Armor or Spider Ball
 
 ----------------
 Gamma Shaft
@@ -669,7 +659,7 @@ Extra - asset_id: collision_camera_037
       Morph Ball or After Area 3 (Exterior) - Gamma Shaft Grapple Block
   > Pickup (Missile Tank)
       All of the following:
-          Morph Ball and Destroy Missile Block
+          Morph Ball and Shoot Any Missile
           Any of the following:
               Screw Attack and Space Jump
               All of the following:
@@ -698,7 +688,7 @@ Extra - asset_id: collision_camera_037
                           Infinite Bomb Jump (Advanced)
                           Spider Ball and Infinite Bomb Jump (Intermediate)
   > Pickup (Power Bomb Tank)
-      Lighting Armor and Lay Power Bomb
+      Lightning Armor and Lay Power Bomb
   > Event - Grapple Block
       Grapple Beam
 
@@ -716,7 +706,7 @@ Extra - asset_id: collision_camera_037
   * Extra - actor_name: HiddenPowerup002
   * Extra - actor_type: item_powerbombtank
   > Door to Outer Hub
-      Lighting Armor and Morph Ball
+      Lightning Armor and Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -742,7 +732,7 @@ Extra - asset_id: collision_camera_038
   * Extra - actor_type: doorpowerpower
   > Event - Gamma Metroid
       All of the following:
-          Defeat Gamma Metroid and Destroy Bomb Block
+          Defeat Gamma Metroid and Lay Any Bomb
           Walljump (Beginner) or Climb Rooms Vertically (High Jump)
 
 > Event - Gamma Metroid; Heals? False
@@ -750,7 +740,7 @@ Extra - asset_id: collision_camera_038
   * Event Area 3 (Exterior) - Gamma Metroid
   > Door to Gamma Shaft
       Any of the following:
-          Spider Ball and Destroy Bomb Block
+          Spider Ball and Lay Any Bomb
           All of the following:
               Lay Power Bomb
               Space Jump or Single-wall Wall Jump (Intermediate)
@@ -794,7 +784,8 @@ Extra - asset_id: collision_camera_040
               All of the following:
                   Any of the following:
                       # Destroying the Autrack
-                      Missile ≥ 20 or Super Missile ≥ 4 or Screw Attack or Lay Power Bomb
+                      Missile ≥ 20 or Screw Attack or Lay Power Bomb
+                      Super Missile ≥ 4 and Shoot Super Missile
                   High Jump Boots or Unmorph Extend (Intermediate) or Walljump (Intermediate) or Simple IBJ
 
 > Door to Outer Hub; Heals? False
@@ -804,10 +795,9 @@ Extra - asset_id: collision_camera_040
   * Extra - actor_type: doorpowerpower
   > Right of Crumble Block
       Any of the following:
-          High Jump Boots or Space Jump or Shoot Beam Burst or Use Spider Ball
+          High Jump Boots or Space Jump or Destroy Blob Throwers/Steel Orbs or Use Spider Ball
           Phase Drift and Movement (Beginner)
           Infinite Bomb Jump (Intermediate) and Lay Bomb
-          Knowledge (Beginner) and Lay Power Bomb
           Morph Ball and Damage Boost (Intermediate) and Unmorph Extend (Advanced)
 
 > Tunnel to Entrance Hub; Heals? False
@@ -836,10 +826,9 @@ Extra - asset_id: collision_camera_040
           Ice Beam Clip (Intermediate) and Fully Freeze Enemy
   > Door to Outer Hub
       Any of the following:
-          High Jump Boots or Space Jump or Damage Boost (Beginner) or Shoot Beam Burst or Use Spider Ball
+          High Jump Boots or Space Jump or Damage Boost (Beginner) or Destroy Blob Throwers/Steel Orbs or Use Spider Ball
           Infinite Bomb Jump (Intermediate) and Lay Bomb
           Phase Drift and Movement (Beginner)
-          Knowledge (Beginner) and Lay Power Bomb
   > Event - Grapple Block Right
       Grapple Beam and Morph Ball
 

@@ -6,14 +6,40 @@ from unittest.mock import ANY, MagicMock
 
 import pytest
 
+from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
+from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.game_exporter import (
     EchoesGameExporter,
-    EchoesGameExportParams,
-    decode_randomizer_data,
 )
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     import pytest_mock
+
+
+def test_do_export_broken_internal_copy(tmp_path: Path):
+    patch_data = {
+        "menu_mod": False,
+    }
+
+    export_params = EchoesGameExportParams(
+        input_path=None,
+        output_path=MagicMock(),
+        contents_files_path=tmp_path.joinpath("contents"),
+        asset_cache_path=tmp_path.joinpath("asset_cache_path"),
+        backup_files_path=tmp_path.joinpath("backup"),
+        prime_path=MagicMock(),
+        use_prime_models=False,
+        spoiler_output=None,
+    )
+    progress_update = MagicMock()
+    exporter = EchoesGameExporter()
+
+    # Run
+    with pytest.raises(UnableToExportError):
+        exporter._do_export_game(patch_data, export_params, progress_update)
 
 
 @pytest.mark.parametrize("has_input_iso", [False, True])
@@ -43,6 +69,7 @@ def test_do_export_game(mocker: pytest_mock.MockerFixture,
     mock_mp2hudcolor_c = mocker.patch("mp2hudcolor.mp2hudcolor_c")
     mock_convert_prime1 = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime1_pickups")
     mock_menu_mod = mocker.patch("randovania.games.prime2.patcher.claris_randomizer.add_menu_mod_to_files")
+    mock_coin_chest = mocker.patch("randovania.games.prime2.exporter.game_exporter.copy_coin_chest")
 
     mock_dol_file = mocker.patch("ppc_asm.dol_file.DolFile")
     mock_apply_dol = mocker.patch("open_prime_rando.dol_patching.echoes.dol_patcher.apply_patches")
@@ -120,6 +147,8 @@ def test_do_export_game(mocker: pytest_mock.MockerFixture,
         )
     else:
         mock_convert_prime1.assert_not_called()
+
+    mock_coin_chest.assert_called_once_with(export_params.contents_files_path)
 
     mock_apply_patcher.assert_called_once_with(
         export_params.contents_files_path,

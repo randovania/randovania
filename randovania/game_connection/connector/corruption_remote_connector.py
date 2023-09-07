@@ -7,14 +7,15 @@ from open_prime_rando.dol_patching import all_prime_dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch, PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
-from randovania.game_description.resources.item_resource_info import InventoryItem
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 
 if TYPE_CHECKING:
     from open_prime_rando.dol_patching.corruption.dol_patches import CorruptionDolVersion
 
+    from randovania.game_connection.connector.remote_connector import PickupEntryWithOwner
     from randovania.game_description.db.region import Region
-    from randovania.game_description.resources.item_resource_info import Inventory, ItemResourceInfo
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -103,7 +104,7 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
         patches = [
             all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
-                self.version.powerup_functions, self.game.game,
+                self.version.powerup_functions, self.version.game,
                 item.extra["item_id"], delta,
             )
             for item, delta in resources_to_give.as_resource_gain()
@@ -113,10 +114,11 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
     def _dol_patch_for_hud_message(self, message: str) -> DolRemotePatch:
         raise RuntimeError("Unable to prepare dol patches for hud display in Corruption")
 
-    async def receive_remote_pickups(self, inventory: Inventory, remote_pickups: tuple[tuple[str, PickupEntry], ...]) \
-            -> None:
+    async def receive_remote_pickups(
+            self, inventory: Inventory, remote_pickups: tuple[PickupEntryWithOwner, ...],
+    ) -> bool:
         # Not yet implemented
-        return
+        return False
 
     async def execute_remote_patches(self, patches: list[DolRemotePatch]) -> None:
         raise RuntimeError("Unable to execute remote patches in Corruption")

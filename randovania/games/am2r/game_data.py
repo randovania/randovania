@@ -2,12 +2,11 @@ from __future__ import annotations
 
 from randovania.games import game
 from randovania.games.am2r import layout
-from randovania.layout.preset_describer import GamePresetDescriber
 
 
 def _options():
-    from randovania.interface_common.options import PerGameOptions
-    return PerGameOptions
+    from randovania.games.am2r.exporter.options import AM2RPerGameOptions
+    return AM2RPerGameOptions
 
 
 def _gui() -> game.GameGui:
@@ -55,12 +54,43 @@ game_data: game.GameData = game.GameData(
         },
     ],
 
-    faq=[],
+    faq=[
+        ("Which versions of AM2R are supported?",
+         "Only version 1.5.5 is supported. "
+         "Currently there are no plans to support other versions."),
+        ("Why can I not fire Missiles / Super Missiles / Power Bombs?",
+         "You likely have the 'Required Mains' option enabled. This means you first "
+         "need to find the Launcher for your Missiles / Super Missiles / Power Bombs before you can use them."),
+        ("I saved in a place that I can't get out of, what do I do?",
+         "You can use the 'Restart from Start Location' option, which will "
+         "reload your last save but make you spawn at the original start location."),
+        ("What causes Serris to spawn?",
+         "Serris will spawn once you collect the item in Distribution Center - Ice Beam Chamber and then hit "
+         "the fight trigger on the left side of the Serris Arena."),
+        ("Can I defeat Serris without Ice Beam?",
+         "Yes, Serris automatically changes her weakness to not "
+         "require Ice Beam if you fight her before acquiring it."),
+        ("Where can I find the Hints?", "There are eight hints in total, and the map will show "
+                                        "an 'H' icon on places where hints exist. They can can be found in:\n\n"
+            "- Main Caves - Research Site Access\n"
+            "- Golden Temple - Breeding Grounds Hub\n"
+            "- Hydro Station - Breeding Grounds Lobby\n"
+            "- Industrial Complex - Breeding Grounds Fly Stadium\n"
+            "- The Tower - Tower Exterior North\n"
+            "- Distribution Center - Distribution Facility Tower East\n"
+            "- The Depths - Bubble Lair Shinespark Cave\n"
+            "- Genetics Laboratory - Destroyed Chozo Memorial"),
+        ("What are shinies?",
+         "Some items have a 1 in 1024 chance of being a Pokémon-style shiny: "
+         "they look different but behave entirely the same as normal. "
+         "In a multiworld game, only your own items can be shiny.")
+
+    ],
 
     layout=game.GameLayout(
         configuration=layout.AM2RConfiguration,
         cosmetic_patches=layout.AM2RCosmeticPatches,
-        preset_describer=GamePresetDescriber(),
+        preset_describer=layout.AM2RPresetDescriber(),
     ),
 
     options=_options,

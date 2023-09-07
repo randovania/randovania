@@ -94,12 +94,12 @@ def create_app():
     from randovania.server import database_migration
     database_migration.apply_migrations()
 
-    sio = ServerApp(app)
-    app.sio = sio
-    multiplayer.setup_app(sio)
-    user_session.setup_app(sio)
+    sa = ServerApp(app)
+    app.sa = sa
+    multiplayer.setup_app(sa)
+    user_session.setup_app(sa)
 
-    connected_clients = sio.metrics.info("connected_clients", "How many clients are connected right now.")
+    connected_clients = sa.metrics.info("connected_clients", "How many clients are connected right now.")
     connected_clients.set(0)
 
     @app.route("/")
@@ -111,7 +111,7 @@ def create_app():
 
     server_version = randovania.VERSION
 
-    @sio.sio.server.on("connect")
+    @sa.get_server().on("connect")
     def connect(sid, environ):
         try:
             if "HTTP_X_RANDOVANIA_VERSION" not in environ:
@@ -120,7 +120,7 @@ def create_app():
             client_app_version = environ["HTTP_X_RANDOVANIA_VERSION"]
             error_message = client_check.check_client_version(version_checking, client_app_version, server_version)
             if error_message is None and not randovania.is_dev_version():
-                error_message = client_check.check_client_headers(sio.expected_headers, environ)
+                error_message = client_check.check_client_headers(sa.expected_headers, environ)
 
             forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
 
@@ -143,13 +143,13 @@ def create_app():
             raise ConnectionRefusedError(f"Unable to check if request is valid: {e}.\n"
                                          f"Please file a bug report.")
 
-    @sio.sio.server.on("disconnect")
+    @sa.get_server().on("disconnect")
     def disconnect(sid):
         connected_clients.dec()
 
-        app.logger.info(f"Client at {sio.current_client_ip(sid)} disconnected.")
+        app.logger.info(f"Client at {sa.current_client_ip(sid)} disconnected.")
 
-        session = sio.get_server().get_session(sid)
-        world_api.report_disconnect(sio, session, app.logger)
+        session = sa.get_server().get_session(sid)
+        world_api.report_disconnect(sa, session, app.logger)
 
     return app
