@@ -42,9 +42,6 @@ class MetroidGameExportDialog(GameExportDialog):
         )
 
     def get_game_export_params(self) -> MetroidGameExportParams:
-        """Creates the GameExportParams for this specific game,
-        based on the data provided by the user in this window."""
-
         spoiler_output = spoiler_path_for(self.auto_save_spoiler, self.output_file)
 
         return MetroidGameExportParams(

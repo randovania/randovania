@@ -8,6 +8,7 @@ from randovania.layout.preset_describer import GamePresetDescriber
 
 def _options():
     from randovania.interface_common.options import PerGameOptions
+
     return PerGameOptions
 
 
@@ -38,11 +39,13 @@ def _generator() -> game.GameGenerator:
 
 def _patch_data_factory():
     from randovania.games.metroid.exporter.patch_data_factory import MetroidPatchDataFactory
+
     return MetroidPatchDataFactory
 
 
 def _exporter():
     from randovania.games.metroid.exporter.game_exporter import MetroidGameExporter
+
     return MetroidGameExporter()
 
 
@@ -50,37 +53,27 @@ game_data: game.GameData = game.GameData(
     short_name="Metroid",
     long_name="Metroid",
     development_state=game.DevelopmentState.EXPERIMENTAL,
-
     presets=[
-        {
-            "path": "starter_preset.rdvpreset"
-        },
+        {"path": "starter_preset.rdvpreset"},
     ],
-
     faq=[
-        ("Which versions of Metroid Planets are supported?",
-         "Only version 1.27g is supported. "
-         "Later versions are embedding code in the executable"
-         "which prevents from modifying the code.")
+        (
+            "Which versions of Metroid Planets are supported?",
+            "Only version 1.27g is supported. "
+            "Later versions are embedding code in the executable"
+            "which prevents from modifying the code.",
+        )
     ],
-
     layout=game.GameLayout(
         configuration=layout.MetroidConfiguration,
         cosmetic_patches=layout.MetroidCosmeticPatches,
         preset_describer=GamePresetDescriber(),
     ),
-
     options=_options,
-
     gui=_gui,
-
     generator=_generator,
-
     patch_data_factory=_patch_data_factory,
-
     exporter=_exporter,
-
     multiple_start_nodes_per_area=False,
-
     defaults_available_in_game_sessions=randovania.is_dev_version(),
 )
