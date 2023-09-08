@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.metroid.layout.metroid_cosmetic_patches import MetroidCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.planets_cosmetic_patches_dialog_ui import Ui_MetroidCosmeticPatchesDialog
+from randovania.gui.generated.metroid_cosmetic_patches_dialog_ui import Ui_MetroidCosmeticPatchesDialog
 
 if TYPE_CHECKING:
     from PySide6.QtWidgets import QWidget

@@ -18,7 +18,7 @@ class MetroidConfiguration(BaseConfiguration):
     def active_layers(self) -> set[str]:
         result = super().active_layers()
 
-        if self.include_extra_pickups:
-            result.add("extra_pickups")
+        # if self.include_extra_pickups:
+        #    result.add("extra_pickups")
 
         return result
