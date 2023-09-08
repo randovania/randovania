@@ -5290,6 +5290,32 @@
                     "valid_starting_location": false,
                     "event_name": "A1Orb1",
                     "connections": {
+                        "Horizontal Dock to Inner Temple East Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Logical return path after activating with wave beam",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave Beam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Middle": {
                             "type": "and",
                             "data": {
