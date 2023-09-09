@@ -54,8 +54,8 @@ def test_dread_format_params(has_artifacts: bool, rb_damage_mode: DreadRavenBeak
         "Item Pool": [
             "Size: 148 of 149" if has_artifacts else "Size: 145 of 149",
             "Starts with Pulse Radar",
-            "Progressive Beam, Progressive Charge Beam, Progressive Missile, "
-            "Progressive Bomb, Progressive Suit, Progressive Spin"
+            "Progressive Charge Beam, Progressive Bomb, "
+            "Progressive Suit, Progressive Spin"
         ],
         "Logic Settings": [
             "All tricks disabled"

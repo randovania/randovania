@@ -7,7 +7,73 @@
         "Tower Exterior South East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h01"
+                "map_name": "rm_a4h01",
+                "minimap_data": [
+                    {
+                        "x": 36,
+                        "y": 35
+                    },
+                    {
+                        "x": 36,
+                        "y": 36
+                    },
+                    {
+                        "x": 36,
+                        "y": 37
+                    },
+                    {
+                        "x": 36,
+                        "y": 38
+                    },
+                    {
+                        "x": 36,
+                        "y": 39
+                    },
+                    {
+                        "x": 36,
+                        "y": 40
+                    },
+                    {
+                        "x": 36,
+                        "y": 41
+                    },
+                    {
+                        "x": 36,
+                        "y": 42
+                    },
+                    {
+                        "x": 37,
+                        "y": 35
+                    },
+                    {
+                        "x": 37,
+                        "y": 36
+                    },
+                    {
+                        "x": 37,
+                        "y": 37
+                    },
+                    {
+                        "x": 37,
+                        "y": 38
+                    },
+                    {
+                        "x": 37,
+                        "y": 39
+                    },
+                    {
+                        "x": 37,
+                        "y": 40
+                    },
+                    {
+                        "x": 37,
+                        "y": 41
+                    },
+                    {
+                        "x": 37,
+                        "y": 42
+                    }
+                ]
             },
             "nodes": {
                 "Door to Inner Save Station East Access": {
@@ -38,7 +104,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Tower East Exterior Access": {
+                        "Area Transition to Main Caves": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -101,7 +167,7 @@
                                 ]
                             }
                         },
-                        "Dock to Southern Cave Pipe Access": {
+                        "Horizontal Dock to Southern Cave Pipe Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -224,7 +290,7 @@
                         }
                     }
                 },
-                "Dock to Tower East Exterior Access": {
+                "Area Transition to Main Caves": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -236,13 +302,17 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 125458,
+                        "source_x": 640,
+                        "source_y": 1568
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Tower East Exterior Access",
-                        "node": "Dock to Tower Exterior South East"
+                        "node": "Area Transition to The Tower"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -257,7 +327,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Exterior Zeta Nest East Access": {
+                        "Horizontal Dock to Exterior Zeta Nest East Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -327,7 +397,7 @@
                         }
                     }
                 },
-                "Dock to Exterior Zeta Nest East Access": {
+                "Horizontal Dock to Exterior Zeta Nest East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -341,19 +411,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Exterior Zeta Nest East Access",
-                        "node": "Dock to Tower Exterior South East"
+                        "node": "Horizontal Dock to Tower Exterior South East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Tower East Exterior Access": {
+                        "Area Transition to Main Caves": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -500,7 +570,7 @@
                         }
                     }
                 },
-                "Dock to Southern Cave Pipe Access": {
+                "Horizontal Dock to Southern Cave Pipe Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -514,13 +584,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Southern Cave Pipe Access",
-                        "node": "Dock to Tower Exterior South East"
+                        "node": "Horizontal Dock to Tower Exterior South East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -597,7 +667,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Exterior Zeta Nest East Access": {
+                        "Horizontal Dock to Exterior Zeta Nest East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -623,7 +693,29 @@
         "Tower Exterior North East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h02"
+                "map_name": "rm_a4h02",
+                "minimap_data": [
+                    {
+                        "x": 36,
+                        "y": 30
+                    },
+                    {
+                        "x": 36,
+                        "y": 31
+                    },
+                    {
+                        "x": 36,
+                        "y": 32
+                    },
+                    {
+                        "x": 36,
+                        "y": 33
+                    },
+                    {
+                        "x": 36,
+                        "y": 34
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tower Exterior South East": {
@@ -687,7 +779,7 @@
                                 ]
                             }
                         },
-                        "Dock to Exterior Save Station": {
+                        "Horizontal Dock to Exterior Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -828,7 +920,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Exterior Save Station": {
+                        "Horizontal Dock to Exterior Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -893,7 +985,7 @@
                                 ]
                             }
                         },
-                        "Dock to Exterior Save Station": {
+                        "Horizontal Dock to Exterior Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -997,7 +1089,7 @@
                         }
                     }
                 },
-                "Dock to Exterior Save Station": {
+                "Horizontal Dock to Exterior Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1011,13 +1103,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Exterior Save Station",
-                        "node": "Dock to Tower Exterior North East"
+                        "node": "Horizontal Dock to Tower Exterior North East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1215,7 +1307,69 @@
         "Tower Exterior North": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h03"
+                "map_name": "rm_a4h03",
+                "minimap_data": [
+                    {
+                        "x": 32,
+                        "y": 27
+                    },
+                    {
+                        "x": 32,
+                        "y": 28
+                    },
+                    {
+                        "x": 32,
+                        "y": 29
+                    },
+                    {
+                        "x": 33,
+                        "y": 27
+                    },
+                    {
+                        "x": 33,
+                        "y": 28
+                    },
+                    {
+                        "x": 33,
+                        "y": 29
+                    },
+                    {
+                        "x": 34,
+                        "y": 27
+                    },
+                    {
+                        "x": 34,
+                        "y": 28
+                    },
+                    {
+                        "x": 34,
+                        "y": 29
+                    },
+                    {
+                        "x": 35,
+                        "y": 27
+                    },
+                    {
+                        "x": 35,
+                        "y": 28
+                    },
+                    {
+                        "x": 35,
+                        "y": 29
+                    },
+                    {
+                        "x": 36,
+                        "y": 27
+                    },
+                    {
+                        "x": 36,
+                        "y": 28
+                    },
+                    {
+                        "x": 36,
+                        "y": 29
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tower Exterior North East": {
@@ -1453,7 +1607,7 @@
                         }
                     }
                 },
-                "Dock to Gamma Nest North East Access": {
+                "Horizontal Dock to Gamma Nest North East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1467,13 +1621,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Gamma Nest North East Access",
-                        "node": "Dock to Tower Exterior North"
+                        "node": "Horizontal Dock to Tower Exterior North"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1595,7 +1749,7 @@
                                 ]
                             }
                         },
-                        "Dock to Gamma Nest North East Access": {
+                        "Horizontal Dock to Gamma Nest North East Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1979,10 +2133,108 @@
         "Tower Exterior West": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h04"
+                "map_name": "rm_a4h04",
+                "minimap_data": [
+                    {
+                        "x": 31,
+                        "y": 32
+                    },
+                    {
+                        "x": 31,
+                        "y": 33
+                    },
+                    {
+                        "x": 31,
+                        "y": 34
+                    },
+                    {
+                        "x": 31,
+                        "y": 35
+                    },
+                    {
+                        "x": 31,
+                        "y": 36
+                    },
+                    {
+                        "x": 31,
+                        "y": 37
+                    },
+                    {
+                        "x": 31,
+                        "y": 38
+                    },
+                    {
+                        "x": 31,
+                        "y": 39
+                    },
+                    {
+                        "x": 31,
+                        "y": 40
+                    },
+                    {
+                        "x": 31,
+                        "y": 41
+                    },
+                    {
+                        "x": 31,
+                        "y": 42
+                    },
+                    {
+                        "x": 32,
+                        "y": 30
+                    },
+                    {
+                        "x": 32,
+                        "y": 31
+                    },
+                    {
+                        "x": 32,
+                        "y": 32
+                    },
+                    {
+                        "x": 32,
+                        "y": 33
+                    },
+                    {
+                        "x": 32,
+                        "y": 34
+                    },
+                    {
+                        "x": 32,
+                        "y": 35
+                    },
+                    {
+                        "x": 32,
+                        "y": 36
+                    },
+                    {
+                        "x": 32,
+                        "y": 37
+                    },
+                    {
+                        "x": 32,
+                        "y": 38
+                    },
+                    {
+                        "x": 32,
+                        "y": 39
+                    },
+                    {
+                        "x": 32,
+                        "y": 40
+                    },
+                    {
+                        "x": 32,
+                        "y": 41
+                    },
+                    {
+                        "x": 32,
+                        "y": 42
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Exterior Zeta Nest West Access": {
+                "Horizontal Dock to Exterior Zeta Nest West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1996,19 +2248,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Exterior Zeta Nest West Access",
-                        "node": "Dock to Tower Exterior West"
+                        "node": "Horizontal Dock to Tower Exterior West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gamma Nest West Access": {
+                        "Horizontal Dock to Gamma Nest West Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2085,7 +2337,7 @@
                         }
                     }
                 },
-                "Dock to Gamma Nest West Access": {
+                "Horizontal Dock to Gamma Nest West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2099,19 +2351,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Gamma Nest West Access",
-                        "node": "Dock to Tower Exterior West"
+                        "node": "Horizontal Dock to Tower Exterior West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Exterior Zeta Nest West Access": {
+                        "Horizontal Dock to Exterior Zeta Nest West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2239,7 +2491,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gamma Nest West Access": {
+                        "Horizontal Dock to Gamma Nest West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2281,7 +2533,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Gamma Nest West Access": {
+                        "Horizontal Dock to Gamma Nest West Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2416,7 +2668,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Exterior Zeta Nest West Access": {
+                        "Horizontal Dock to Exterior Zeta Nest West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2508,7 +2760,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Exterior Zeta Nest West Access": {
+                        "Horizontal Dock to Exterior Zeta Nest West Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2574,7 +2826,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Exterior Zeta Nest West Access": {
+                        "Horizontal Dock to Exterior Zeta Nest West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2645,10 +2897,24 @@
         "Exterior Zeta Nest East Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h05"
+                "map_name": "rm_a4h05",
+                "minimap_data": [
+                    {
+                        "x": 38,
+                        "y": 37
+                    },
+                    {
+                        "x": 39,
+                        "y": 37
+                    },
+                    {
+                        "x": 40,
+                        "y": 37
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Exterior Zeta Nest East": {
+                "Horizontal Dock to Exterior Zeta Nest East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2662,19 +2928,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Exterior Zeta Nest East",
-                        "node": "Dock to Exterior Zeta Nest East Access"
+                        "node": "Horizontal Dock to Exterior Zeta Nest East Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Tower Exterior South East": {
+                        "Horizontal Dock to Tower Exterior South East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2792,7 +3058,7 @@
                         }
                     }
                 },
-                "Dock to Tower Exterior South East": {
+                "Horizontal Dock to Tower Exterior South East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2806,19 +3072,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior South East",
-                        "node": "Dock to Exterior Zeta Nest East Access"
+                        "node": "Horizontal Dock to Exterior Zeta Nest East Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Exterior Zeta Nest East": {
+                        "Horizontal Dock to Exterior Zeta Nest East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2919,10 +3185,20 @@
         "Exterior Zeta Nest East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h06"
+                "map_name": "rm_a4h06",
+                "minimap_data": [
+                    {
+                        "x": 41,
+                        "y": 37
+                    },
+                    {
+                        "x": 42,
+                        "y": 37
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Exterior Zeta Nest East Access": {
+                "Horizontal Dock to Exterior Zeta Nest East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2936,13 +3212,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Exterior Zeta Nest East Access",
-                        "node": "Dock to Exterior Zeta Nest East"
+                        "node": "Horizontal Dock to Exterior Zeta Nest East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3042,7 +3318,7 @@
                     "valid_starting_location": false,
                     "event_name": "Zeta2",
                     "connections": {
-                        "Dock to Exterior Zeta Nest East Access": {
+                        "Horizontal Dock to Exterior Zeta Nest East Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3113,7 +3389,17 @@
         "Gamma Nest South East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h07"
+                "map_name": "rm_a4h07",
+                "minimap_data": [
+                    {
+                        "x": 37,
+                        "y": 33
+                    },
+                    {
+                        "x": 37,
+                        "y": 34
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tower Exterior South East": {
@@ -3221,10 +3507,24 @@
         "Gamma Nest North East Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h08"
+                "map_name": "rm_a4h08",
+                "minimap_data": [
+                    {
+                        "x": 37,
+                        "y": 28
+                    },
+                    {
+                        "x": 38,
+                        "y": 28
+                    },
+                    {
+                        "x": 39,
+                        "y": 28
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Gamma Nest North East": {
+                "Horizontal Dock to Gamma Nest North East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3238,13 +3538,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Gamma Nest North East",
-                        "node": "Dock to Gamma Nest North East Access"
+                        "node": "Horizontal Dock to Gamma Nest North East Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3321,7 +3621,7 @@
                         }
                     }
                 },
-                "Dock to Tower Exterior North": {
+                "Horizontal Dock to Tower Exterior North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3335,13 +3635,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior North",
-                        "node": "Dock to Gamma Nest North East Access"
+                        "node": "Horizontal Dock to Gamma Nest North East Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3433,7 +3733,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Gamma Nest North East": {
+                        "Horizontal Dock to Gamma Nest North East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3476,7 +3776,7 @@
                                 ]
                             }
                         },
-                        "Dock to Tower Exterior North": {
+                        "Horizontal Dock to Tower Exterior North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3526,10 +3826,20 @@
         "Gamma Nest North East": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h09"
+                "map_name": "rm_a4h09",
+                "minimap_data": [
+                    {
+                        "x": 40,
+                        "y": 28
+                    },
+                    {
+                        "x": 41,
+                        "y": 28
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Gamma Nest North East Access": {
+                "Horizontal Dock to Gamma Nest North East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3543,13 +3853,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Gamma Nest North East Access",
-                        "node": "Dock to Gamma Nest North East"
+                        "node": "Horizontal Dock to Gamma Nest North East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3585,7 +3895,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma13",
                     "connections": {
-                        "Dock to Gamma Nest North East Access": {
+                        "Horizontal Dock to Gamma Nest North East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3634,10 +3944,28 @@
         "Gamma Nest West Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h10"
+                "map_name": "rm_a4h10",
+                "minimap_data": [
+                    {
+                        "x": 27,
+                        "y": 36
+                    },
+                    {
+                        "x": 28,
+                        "y": 36
+                    },
+                    {
+                        "x": 29,
+                        "y": 36
+                    },
+                    {
+                        "x": 30,
+                        "y": 36
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Tower Exterior West": {
+                "Horizontal Dock to Tower Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3651,13 +3979,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior West",
-                        "node": "Dock to Gamma Nest West Access"
+                        "node": "Horizontal Dock to Gamma Nest West Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3760,7 +4088,7 @@
                         }
                     }
                 },
-                "Dock to Gamma Nest West": {
+                "Horizontal Dock to Gamma Nest West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3774,13 +4102,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Gamma Nest West",
-                        "node": "Dock to Gamma Nest West Access"
+                        "node": "Horizontal Dock to Gamma Nest West Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3872,7 +4200,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Gamma Nest West": {
+                        "Horizontal Dock to Gamma Nest West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4001,7 +4329,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Tower Exterior West": {
+                        "Horizontal Dock to Tower Exterior West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4146,10 +4474,20 @@
         "Gamma Nest West": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h11"
+                "map_name": "rm_a4h11",
+                "minimap_data": [
+                    {
+                        "x": 25,
+                        "y": 36
+                    },
+                    {
+                        "x": 26,
+                        "y": 36
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Gamma Nest West Access": {
+                "Horizontal Dock to Gamma Nest West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4163,13 +4501,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Gamma Nest West Access",
-                        "node": "Dock to Gamma Nest West"
+                        "node": "Horizontal Dock to Gamma Nest West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4205,7 +4543,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma11",
                     "connections": {
-                        "Dock to Gamma Nest West Access": {
+                        "Horizontal Dock to Gamma Nest West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4254,10 +4592,36 @@
         "Exterior Zeta Nest West Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h12"
+                "map_name": "rm_a4h12",
+                "minimap_data": [
+                    {
+                        "x": 28,
+                        "y": 41
+                    },
+                    {
+                        "x": 28,
+                        "y": 42
+                    },
+                    {
+                        "x": 29,
+                        "y": 41
+                    },
+                    {
+                        "x": 29,
+                        "y": 42
+                    },
+                    {
+                        "x": 30,
+                        "y": 41
+                    },
+                    {
+                        "x": 30,
+                        "y": 42
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Tower Exterior West": {
+                "Horizontal Dock to Tower Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4271,13 +4635,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior West",
-                        "node": "Dock to Exterior Zeta Nest West Access"
+                        "node": "Horizontal Dock to Exterior Zeta Nest West Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4415,7 +4779,7 @@
                         }
                     }
                 },
-                "Dock to Exterior Zeta Nest West": {
+                "Horizontal Dock to Exterior Zeta Nest West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4429,13 +4793,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Exterior Zeta Nest West",
-                        "node": "Dock to Exterior Zeta Nest West Access"
+                        "node": "Horizontal Dock to Exterior Zeta Nest West Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4584,7 +4948,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Exterior Zeta Nest West": {
+                        "Horizontal Dock to Exterior Zeta Nest West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4964,7 +5328,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Tower Exterior West": {
+                        "Horizontal Dock to Tower Exterior West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5184,10 +5548,24 @@
         "Exterior Zeta Nest West": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h13"
+                "map_name": "rm_a4h13",
+                "minimap_data": [
+                    {
+                        "x": 25,
+                        "y": 42
+                    },
+                    {
+                        "x": 26,
+                        "y": 42
+                    },
+                    {
+                        "x": 27,
+                        "y": 42
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Exterior Zeta Nest West Access": {
+                "Horizontal Dock to Exterior Zeta Nest West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5201,13 +5579,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Exterior Zeta Nest West Access",
-                        "node": "Dock to Exterior Zeta Nest West"
+                        "node": "Horizontal Dock to Exterior Zeta Nest West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5243,7 +5621,7 @@
                     "valid_starting_location": false,
                     "event_name": "Zeta1",
                     "connections": {
-                        "Dock to Exterior Zeta Nest West Access": {
+                        "Horizontal Dock to Exterior Zeta Nest West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5292,7 +5670,13 @@
         "Exterior Save Station": {
             "default_node": "Save Station",
             "extra": {
-                "map_name": "rm_a4h14"
+                "map_name": "rm_a4h14",
+                "minimap_data": [
+                    {
+                        "x": 37,
+                        "y": 32
+                    }
+                ]
             },
             "nodes": {
                 "Save Station": {
@@ -5312,7 +5696,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Tower Exterior North East": {
+                        "Horizontal Dock to Tower Exterior North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5321,7 +5705,7 @@
                         }
                     }
                 },
-                "Dock to Tower Exterior North East": {
+                "Horizontal Dock to Tower Exterior North East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5335,13 +5719,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior North East",
-                        "node": "Dock to Exterior Save Station"
+                        "node": "Horizontal Dock to Exterior Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5361,10 +5745,20 @@
         "Southern Cave Pipe Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4h15"
+                "map_name": "rm_a4h15",
+                "minimap_data": [
+                    {
+                        "x": 38,
+                        "y": 42
+                    },
+                    {
+                        "x": 38,
+                        "y": 43
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Tower Exterior South East": {
+                "Horizontal Dock to Tower Exterior South East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5378,19 +5772,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior South East",
-                        "node": "Dock to Southern Cave Pipe Access"
+                        "node": "Horizontal Dock to Southern Cave Pipe Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Southern Cave Pipe": {
+                        "Horizontal Dock to Southern Cave Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5399,7 +5793,7 @@
                         }
                     }
                 },
-                "Dock to Southern Cave Pipe": {
+                "Horizontal Dock to Southern Cave Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5413,19 +5807,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Southern Cave Pipe",
-                        "node": "Dock to Southern Cave Pipe Access"
+                        "node": "Horizontal Dock to Southern Cave Pipe Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Tower Exterior South East": {
+                        "Horizontal Dock to Tower Exterior South East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5465,7 +5859,7 @@
                     "pickup_index": 259,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Southern Cave Pipe": {
+                        "Horizontal Dock to Southern Cave Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5477,12 +5871,22 @@
             }
         },
         "Southern Cave Pipe": {
-            "default_node": "Dock to Southern Cave Pipe Access",
+            "default_node": "Horizontal Dock to Southern Cave Pipe Access",
             "extra": {
-                "map_name": "rm_a4h16"
+                "map_name": "rm_a4h16",
+                "minimap_data": [
+                    {
+                        "x": 36,
+                        "y": 43
+                    },
+                    {
+                        "x": 37,
+                        "y": 43
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Southern Cave Pipe Access": {
+                "Horizontal Dock to Southern Cave Pipe Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5496,13 +5900,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Southern Cave Pipe Access",
-                        "node": "Dock to Southern Cave Pipe"
+                        "node": "Horizontal Dock to Southern Cave Pipe"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5539,7 +5943,11 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 127561,
+                        "dest_x": 200,
+                        "dest_y": 128
+                    },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -5553,7 +5961,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Southern Cave Pipe Access": {
+                        "Horizontal Dock to Southern Cave Pipe Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5577,7 +5985,21 @@
         "Inner Save Station East Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a01"
+                "map_name": "rm_a4a01",
+                "minimap_data": [
+                    {
+                        "x": 35,
+                        "y": 39
+                    },
+                    {
+                        "x": 35,
+                        "y": 40
+                    },
+                    {
+                        "x": 35,
+                        "y": 41
+                    }
+                ]
             },
             "nodes": {
                 "Door to Tower Exterior South East": {
@@ -5620,7 +6042,7 @@
                                 ]
                             }
                         },
-                        "Dock to Inner Tower Pipe": {
+                        "Horizontal Dock to Inner Tower Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5697,7 +6119,7 @@
                         }
                     }
                 },
-                "Dock to Inner Tower Pipe": {
+                "Horizontal Dock to Inner Tower Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5711,13 +6133,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Inner Tower Pipe",
-                        "node": "Dock to Inner Save Station East Access"
+                        "node": "Horizontal Dock to Inner Save Station East Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5756,7 +6178,13 @@
         "Inner Save Station": {
             "default_node": "Save Station",
             "extra": {
-                "map_name": "rm_a4a02"
+                "map_name": "rm_a4a02",
+                "minimap_data": [
+                    {
+                        "x": 34,
+                        "y": 39
+                    }
+                ]
             },
             "nodes": {
                 "Save Station": {
@@ -5871,7 +6299,17 @@
         "Inner Save Station West Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a03"
+                "map_name": "rm_a4a03",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 39
+                    },
+                    {
+                        "x": 33,
+                        "y": 40
+                    }
+                ]
             },
             "nodes": {
                 "Door to Tower Exterior West": {
@@ -5958,7 +6396,17 @@
         "Tower Activation Station": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a04"
+                "map_name": "rm_a4a04",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 38
+                    },
+                    {
+                        "x": 34,
+                        "y": 38
+                    }
+                ]
             },
             "nodes": {
                 "Door to Gunzoo Shaft": {
@@ -6148,7 +6596,25 @@
         "Tester Arena": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a05"
+                "map_name": "rm_a4a05",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 34
+                    },
+                    {
+                        "x": 33,
+                        "y": 35
+                    },
+                    {
+                        "x": 33,
+                        "y": 36
+                    },
+                    {
+                        "x": 33,
+                        "y": 37
+                    }
+                ]
             },
             "nodes": {
                 "Door to Tester Arena Access North": {
@@ -6175,7 +6641,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Hydro Station Water Turbine"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6212,7 +6680,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Hydro Station Water Turbine"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6285,32 +6755,6 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Movement requirements",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space Jump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
                                             "comment": "Energy requirements",
                                             "items": [
                                                 {
@@ -6361,15 +6805,6 @@
                                                     "data": {
                                                         "comment": "Without Space jump",
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space Jump",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "or",
                                                                 "data": {
@@ -6511,7 +6946,21 @@
         "Tester Arena Access South": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a06"
+                "map_name": "rm_a4a06",
+                "minimap_data": [
+                    {
+                        "x": 34,
+                        "y": 35
+                    },
+                    {
+                        "x": 34,
+                        "y": 36
+                    },
+                    {
+                        "x": 34,
+                        "y": 37
+                    }
+                ]
             },
             "nodes": {
                 "Door to Gunzoo Shaft": {
@@ -6575,7 +7024,9 @@
                     },
                     "default_dock_weakness": "Tower Energy Restored Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Hydro Station Water Turbine"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6775,7 +7226,25 @@
         "Gunzoo Shaft": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a07"
+                "map_name": "rm_a4a07",
+                "minimap_data": [
+                    {
+                        "x": 35,
+                        "y": 35
+                    },
+                    {
+                        "x": 35,
+                        "y": 36
+                    },
+                    {
+                        "x": 35,
+                        "y": 37
+                    },
+                    {
+                        "x": 35,
+                        "y": 38
+                    }
+                ]
             },
             "nodes": {
                 "Door to Tester Arena Access South": {
@@ -6922,7 +7391,17 @@
         "Tester Arena Access North": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a08"
+                "map_name": "rm_a4a08",
+                "minimap_data": [
+                    {
+                        "x": 34,
+                        "y": 34
+                    },
+                    {
+                        "x": 35,
+                        "y": 34
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Plasma Beam Chamber Access": {
@@ -6994,7 +7473,9 @@
                     },
                     "default_dock_weakness": "Tower Energy Restored Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Hydro Station Water Turbine"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -7297,7 +7778,17 @@
         "Plasma Beam Chamber Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a09"
+                "map_name": "rm_a4a09",
+                "minimap_data": [
+                    {
+                        "x": 34,
+                        "y": 33
+                    },
+                    {
+                        "x": 35,
+                        "y": 33
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tester Arena Access North": {
@@ -7534,7 +8025,13 @@
         "Plasma Beam Chamber": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a10"
+                "map_name": "rm_a4a10",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 33
+                    }
+                ]
             },
             "nodes": {
                 "Tunnel to Plasma Beam Chamber Access": {
@@ -7695,7 +8192,21 @@
         "Inner Zeta Nest Access": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a11"
+                "map_name": "rm_a4a11",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 32
+                    },
+                    {
+                        "x": 34,
+                        "y": 32
+                    },
+                    {
+                        "x": 35,
+                        "y": 32
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Inner Zeta Nest": {
@@ -7922,7 +8433,21 @@
         "Inner Zeta Nest": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a12"
+                "map_name": "rm_a4a12",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 31
+                    },
+                    {
+                        "x": 34,
+                        "y": 31
+                    },
+                    {
+                        "x": 35,
+                        "y": 31
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Inner Zeta Nest Access": {
@@ -8210,7 +8735,21 @@
         "Dark Maze": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4a13"
+                "map_name": "rm_a4a13",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 30
+                    },
+                    {
+                        "x": 34,
+                        "y": 30
+                    },
+                    {
+                        "x": 35,
+                        "y": 30
+                    }
+                ]
             },
             "nodes": {
                 "Dock to Tower Exterior North (Left)": {
@@ -8666,12 +9205,22 @@
             }
         },
         "Inner Tower Pipe": {
-            "default_node": "Dock to Inner Save Station East Access",
+            "default_node": "Horizontal Dock to Inner Save Station East Access",
             "extra": {
-                "map_name": "rm_a4a14"
+                "map_name": "rm_a4a14",
+                "minimap_data": [
+                    {
+                        "x": 34,
+                        "y": 40
+                    },
+                    {
+                        "x": 34,
+                        "y": 41
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Inner Save Station East Access": {
+                "Horizontal Dock to Inner Save Station East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8685,13 +9234,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Inner Save Station East Access",
-                        "node": "Dock to Inner Tower Pipe"
+                        "node": "Horizontal Dock to Inner Tower Pipe"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8728,7 +9277,11 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 129328,
+                        "dest_x": 152,
+                        "dest_y": 368
+                    },
                     "valid_starting_location": false,
                     "dock_type": "teleporter",
                     "default_connection": {
@@ -8742,7 +9295,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Inner Save Station East Access": {
+                        "Horizontal Dock to Inner Save Station East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8770,7 +9323,17 @@
         "Power Plant Entrance": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4b01"
+                "map_name": "rm_a4b01",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 42
+                    },
+                    {
+                        "x": 34,
+                        "y": 42
+                    }
+                ]
             },
             "nodes": {
                 "Door to Tower Exterior West": {
@@ -8801,7 +9364,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Power Plant Destroyed Shaft": {
+                        "Horizontal Dock to Power Plant Destroyed Shaft": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8841,7 +9404,7 @@
                         }
                     }
                 },
-                "Dock to Power Plant Destroyed Shaft": {
+                "Horizontal Dock to Power Plant Destroyed Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8855,13 +9418,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Power Plant Destroyed Shaft",
-                        "node": "Dock to Power Plant Entrance"
+                        "node": "Horizontal Dock to Power Plant Entrance"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8891,10 +9454,32 @@
         "Power Plant Destroyed Shaft": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4b02a"
+                "map_name": "rm_a4b02a",
+                "minimap_data": [
+                    {
+                        "x": 35,
+                        "y": 42
+                    },
+                    {
+                        "x": 35,
+                        "y": 43
+                    },
+                    {
+                        "x": 35,
+                        "y": 44
+                    },
+                    {
+                        "x": 35,
+                        "y": 45
+                    },
+                    {
+                        "x": 35,
+                        "y": 46
+                    }
+                ]
             },
             "nodes": {
-                "Dock to Power Plant Entrance": {
+                "Horizontal Dock to Power Plant Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8908,13 +9493,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Power Plant Entrance",
-                        "node": "Dock to Power Plant Destroyed Shaft"
+                        "node": "Horizontal Dock to Power Plant Destroyed Shaft"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8996,7 +9581,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Power Plant Entrance": {
+                        "Horizontal Dock to Power Plant Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9152,7 +9737,7 @@
                     "pickup_index": 253,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Power Plant Entrance": {
+                        "Horizontal Dock to Power Plant Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9171,7 +9756,17 @@
         "Power Plant Hidden Storage": {
             "default_node": null,
             "extra": {
-                "map_name": "rm_a4b02b"
+                "map_name": "rm_a4b02b",
+                "minimap_data": [
+                    {
+                        "x": 33,
+                        "y": 46
+                    },
+                    {
+                        "x": 34,
+                        "y": 46
+                    }
+                ]
             },
             "nodes": {
                 "Tunnel to Power Plant Destroyed Shaft": {

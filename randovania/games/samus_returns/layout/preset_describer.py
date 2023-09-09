@@ -38,11 +38,13 @@ class MSRPresetDescriber(GamePresetDescriber):
             "Item Pool": [
                 {
                     "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
+                    "Progressive Jump": has_shuffled_item(standard_pickups, "Progressive Jump"),
                     "Progressive Suit": has_shuffled_item(standard_pickups, "Progressive Suit"),
                 }
             ],
             "Gameplay": [
-                {f"Elevators/Shuttles: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
+                {f"Elevators/Shuttles: {configuration.teleporters.description()}":
+                 not configuration.teleporters.is_vanilla}
             ],
             "Game Changes": [
                 message_for_required_mains(

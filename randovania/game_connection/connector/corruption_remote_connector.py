@@ -7,15 +7,15 @@ from open_prime_rando.dol_patching import all_prime_dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch, PrimeRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
-from randovania.game_description.resources.item_resource_info import InventoryItem
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 
 if TYPE_CHECKING:
     from open_prime_rando.dol_patching.corruption.dol_patches import CorruptionDolVersion
 
     from randovania.game_connection.connector.remote_connector import PickupEntryWithOwner
     from randovania.game_description.db.region import Region
-    from randovania.game_description.resources.item_resource_info import Inventory, ItemResourceInfo
-    from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
 def format_received_item(item_name: str, player_name: str) -> str:

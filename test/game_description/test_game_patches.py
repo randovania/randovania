@@ -5,7 +5,7 @@ from randovania.generator.pickup_pool import pickup_creator
 
 def test_assign_extra_pickups(empty_patches):
     # Setup
-    sample_pickup = pickup_creator.create_visual_etm()
+    sample_pickup = pickup_creator.create_visual_nothing("Test Game", "Visual Nothing")
 
     # Run
     new_patches = empty_patches.assign_extra_starting_pickups([

@@ -20,7 +20,7 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.DreadCosmeticPatchesDialog,
         export_dialog=gui.DreadGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(gui.DreadHintDetailsTab,),
+        spoiler_visualizer=(gui.DreadHintDetailsTab, gui.DreadTeleporterDetailsTab),
         game_tab=gui.DreadGameTabWidget,
     )
 
@@ -108,6 +108,11 @@ game_data: game.GameData = game.GameData(
             "I opened the Wide Beam door in Dairon's Teleport to Cataris, but it won't let me through!",
             "Unlocking this door before turning on the power will render it unopenable.\n\n"
             "To fix this, simply save and reload the game."
+        ),
+        (
+            "I received a Beam/Missile upgrade from an E.M.M.I., and now my arm cannon doesn't work!",
+            "Reload from checkpoint immediately to fix the issue. "
+            "Your checkpoint was saved after killing the E.M.M.I., so you will not lose progress."
         ),
     ],
 

@@ -1,19 +1,24 @@
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import MagicMock, call
+from typing import TYPE_CHECKING
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
-from PySide6 import QtCore
+from PySide6 import QtCore, QtWidgets
 
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
-from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
+from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.games.prime2.gui.dialog.game_export_dialog import EchoesGameExportDialog
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.interface_common.options import Options
+from randovania.patching.patchers.exceptions import UnableToExportError
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 @pytest.mark.parametrize("has_output_dir", [False, True])
@@ -200,4 +205,32 @@ def test_get_game_export_params(skip_qtbot, tmp_path, is_prime_multi, use_extern
         asset_cache_path=tmp_path.joinpath("internal_copies", "prime2", "prime1_models"),
         prime_path=prime_path,
         use_prime_models=is_prime_multi and use_external_models,
+    )
+
+
+async def test_handle_unable_to_export(skip_qtbot, tmp_path: Path, mocker: pytest_mock.MockerFixture) -> None:
+    options = MagicMock()
+    options.internal_copies_path = tmp_path.joinpath("internal_copies")
+    options.options_for_game.return_value = EchoesPerGameOptions(
+        cosmetic_patches=EchoesCosmeticPatches.default(),
+        output_directory=None,
+    )
+
+    tmp_path.joinpath("internal_copies", "prime2").mkdir(parents=True)
+    tmp_path.joinpath("internal_copies", "prime2", "example_file.txt").write_text("hey I'm a game")
+
+    mock_message_box = mocker.patch("randovania.gui.lib.async_dialog.message_box", new_callable=AsyncMock)
+
+    window = EchoesGameExportDialog(options, {}, "MyHash", True, [])
+
+    # Run
+    await window.handle_unable_to_export(UnableToExportError("I dunno, something broke"))
+
+    # Assert
+    assert not tmp_path.joinpath("internal_copies", "prime2").is_dir()
+    mock_message_box.assert_awaited_once_with(
+        None,
+        QtWidgets.QMessageBox.Icon.Critical,
+        "Error during exporting",
+        "I dunno, something broke",
     )

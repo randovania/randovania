@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 from randovania.games.common.prime_family.gui.export_validator import is_prime1_iso_validator, is_prime2_iso_validator
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
-from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
+from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
@@ -27,6 +27,7 @@ if TYPE_CHECKING:
 
     from randovania.exporter.game_exporter import GameExportParams
     from randovania.interface_common.options import Options
+    from randovania.patching.patchers.exceptions import UnableToExportError
 
 _VALID_GAME_TEXT = "(internal game copy)"
 
@@ -162,7 +163,6 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
                 input_path=self.prime_file,
             ))
 
-
     # Getters
     @property
     def input_file(self) -> Path | None:
@@ -234,3 +234,8 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             prime_path=self.prime_file,
             use_prime_models=self._use_prime_models,
         )
+
+    async def handle_unable_to_export(self, error: UnableToExportError):
+        delete_internal_copy(self._options.internal_copies_path)
+
+        return await super().handle_unable_to_export(error)

@@ -5,14 +5,14 @@ from typing import TYPE_CHECKING
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat
 from randovania.game_description.pickup.pickup_category import PickupCategory
-from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import (
+from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupGeneratorParams,
     PickupModel,
     ResourceConversion,
     ResourceLock,
 )
+from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:

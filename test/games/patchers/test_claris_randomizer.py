@@ -8,8 +8,9 @@ from unittest.mock import ANY, MagicMock, call, patch
 import pytest
 
 from randovania.games.prime2.patcher import claris_randomizer
+from randovania.games.prime2.patcher.claris_randomizer import ClarisRandomizerExportError
 from randovania.interface_common import persistence
-from randovania.patching.patchers.exceptions import ExportFailure
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -86,7 +87,7 @@ def test_run_with_args_failure(mock_process_command: MagicMock):
     mock_process_command.side_effect = side_effect
 
     # Run
-    with pytest.raises(ExportFailure) as error:
+    with pytest.raises(ClarisRandomizerExportError) as error:
         claris_randomizer._run_with_args([], input_data, finish_string, status_update)
 
     # Assert
@@ -225,6 +226,21 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
 def test_get_custom_data_path(skip_qtbot):
     # prevent test from running on docker, since it depends on client packages
     assert claris_randomizer._get_custom_data_path().suffix == ".json"
+
+
+def test_apply_patcher_file_newer_version(tmp_path):
+    patcher_data = {}
+    randomizer_data = {}
+    progress_update = MagicMock()
+
+    game_root = tmp_path.joinpath("game_root")
+    game_root.mkdir()
+    claris_randomizer._patch_version_file(game_root).write_text(str(10000))
+
+    # Run
+    with pytest.raises(UnableToExportError, match="The internal game copy was outdated and has been deleted. "
+                                                  "Please export again and select an ISO."):
+        claris_randomizer.apply_patcher_file(game_root, patcher_data, randomizer_data, progress_update)
 
 
 @pytest.mark.parametrize("include_menu_mod", [False, True])

@@ -10,5 +10,9 @@ def tuples():
         (
             "Progressive Suit",
             ("Varia Suit", "Gravity Suit")
+        ),
+        (
+            "Progressive Jump",
+            ("High Jump Boots", "Space Jump")
         )
     ]

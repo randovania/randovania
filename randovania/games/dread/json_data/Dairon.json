@@ -353,25 +353,8 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Event - Push Wide Beam Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Push Wide Beam Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Push Wide Beam Block with Wave Beam"
                         },
                         "Wide Beam Block - Adjacent": {
                             "type": "resource",
@@ -1154,19 +1137,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Push Wide Beam Block"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
@@ -1174,6 +1144,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Push Wide Beam Block with Wave Beam"
                                     }
                                 ]
                             }
@@ -1483,13 +1457,14 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_baselab_000_platform",
                         "start_point_actor_name": "elevator_sanctuary_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "transporter_name": "Dairon - Grapple Block"
                     },
                     "valid_starting_location": false,
                     "dock_type": "elevator",
                     "default_connection": {
                         "region": "Ferenia",
-                        "area": "East Transport to Darion",
+                        "area": "East Transport to Dairon",
                         "node": "Elevator to Dairon"
                     },
                     "default_dock_weakness": "Elevator",
@@ -5030,7 +5005,8 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_baselab_000_platform",
                         "start_point_actor_name": "elevator_cave_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "transporter_name": "Dairon - Superheated"
                     },
                     "valid_starting_location": false,
                     "dock_type": "elevator",
@@ -8341,48 +8317,48 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Use Spin Boost"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "DaironYellowSpeedBlocks",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Speed",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "or",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "events",
-                                                                                            "name": "DaironYellowSpeedBlocks",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "misc",
-                                                                                            "name": "DoorLocks",
-                                                                                            "amount": 1,
-                                                                                            "negate": true
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "misc",
+                                                                    "name": "DoorLocks",
+                                                                    "amount": 1,
+                                                                    "negate": true
                                                                 }
                                                             }
                                                         ]
@@ -8800,6 +8776,10 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Ferenia Transport Wide Beam Block  Above": {
+                            "type": "template",
+                            "data": "Push Wide Beam Block with Wave Beam"
                         }
                     }
                 },
@@ -8821,7 +8801,8 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_baselab_001_platform",
                         "start_point_actor_name": "elevator_sanctuary_001_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "transporter_name": "Dairon - DNA Station"
                     },
                     "valid_starting_location": false,
                     "dock_type": "elevator",
@@ -8862,6 +8843,31 @@
                     "event_name": "DaironWideBeamBlockFerenia",
                     "connections": {
                         "Door to Navigation Station North (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Ferenia Transport Wide Beam Block  Above": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2522.42,
+                        "y": 6899.28,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "DaironWideBeamBlockFerenia",
+                    "connections": {
+                        "Door to Navigation Station North (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17016,7 +17022,8 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_baselab_000_platform",
                         "start_point_actor_name": "wagontrain_magma_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "transporter_name": "Dairon - Entrance"
                     },
                     "valid_starting_location": false,
                     "dock_type": "shuttle",
@@ -17294,7 +17301,8 @@
                         "elevator_component": "CTrainWithPortalUsableComponent",
                         "target_spawn_point": "wagontrain_baselab_001_platform",
                         "start_point_actor_name": "wagontrain_aqua_001_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "transporter_name": "Dairon - Submarine"
                     },
                     "valid_starting_location": false,
                     "dock_type": "shuttle",
@@ -17410,7 +17418,8 @@
                         "elevator_component": "CTrainUsableComponent",
                         "target_spawn_point": "wagontrain_baselab_000_platform",
                         "start_point_actor_name": "wagontrain_aqua_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad",
+                        "transporter_name": "Dairon - Sea Bridge"
                     },
                     "valid_starting_location": false,
                     "dock_type": "shuttle",
@@ -17484,7 +17493,8 @@
                         "elevator_component": "CElevatorUsableComponent",
                         "target_spawn_point": "elevator_baselab_000_platform",
                         "start_point_actor_name": "elevator_forest_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+                        "transporter_name": "Dairon - Freezer"
                     },
                     "valid_starting_location": false,
                     "dock_type": "elevator",

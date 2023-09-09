@@ -16,11 +16,11 @@ from retro_data_structures.game_check import Game as RDSGame
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description import default_database
-from randovania.game_description.resources.pickup_entry import PickupModel
+from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
-from randovania.patching.prime import asset_conversion
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -176,6 +176,8 @@ class PrimeGameExporter(GameExporter):
         cache_dir = os.fspath(export_params.cache_path)
 
         symbols = py_randomprime.symbols_for_file(input_file)
+        if symbols is None:
+            raise UnableToExportError("Unsupported Metroid Prime version.")
 
         new_config = copy.copy(patch_data)
         has_spoiler = new_config.pop("hasSpoiler")
@@ -203,6 +205,7 @@ class PrimeGameExporter(GameExporter):
         if random_enemy_attributes is not None:
             enemy_updater = split_updater.create_split()
 
+        from randovania.patching.prime import asset_conversion
         assets_meta = {}
         if export_params.use_echoes_models:
             assets_path = export_params.asset_cache_path

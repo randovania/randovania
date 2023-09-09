@@ -108,8 +108,6 @@ class LayoutDescription:
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> typing.Self:
-        json_dict = description_migration.convert_to_current_version(json_dict)
-
         if "secret" in json_dict:
             try:
                 secret = obfuscator.deobfuscate_json(json_dict["secret"])
@@ -121,6 +119,8 @@ class LayoutDescription:
 
         if "game_modifications" not in json_dict:
             raise InvalidLayoutDescription("Unable to read details of a race game file")
+
+        json_dict = description_migration.convert_to_current_version(json_dict)
 
         def get_preset(i, p):
             try:

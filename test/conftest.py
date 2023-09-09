@@ -14,14 +14,14 @@ from frozendict import frozendict
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup.pickup_category import PickupCategory
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.games import default_data
 from randovania.games.blank.layout import BlankConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
-from randovania.games.prime2.exporter.game_exporter import decode_randomizer_data
+from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
@@ -358,9 +358,10 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
 
 
     @pytest.fixture()
-    def event_loop(qapp, request: pytest.FixtureRequest):
+    def event_loop(request: pytest.FixtureRequest):
         if "skip_qtbot" in request.fixturenames:
-            loop = EventLoopWithRunningFlag(qapp, set_running_loop=False)
+            loop = EventLoopWithRunningFlag(request.getfixturevalue("qapp"),
+                                            set_running_loop=False)
         else:
             loop = asyncio.get_event_loop_policy().new_event_loop()
         yield loop

@@ -34,7 +34,7 @@ class DockNode(Node):
     areas are "physically" next to each other.
 
     TeleporterNode is expected to be used exceptionally, where it can be reasonable to list all of them in the
-    UI for user selection (elevator rando, for example).
+    UI for user selection (teleporter rando, for example).
     """
     dock_type: DockType
     default_connection: NodeIdentifier

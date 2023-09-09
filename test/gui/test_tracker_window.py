@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture(params=[{},
-                        {"elevators": TeleporterShuffleMode.ONE_WAY_ANYTHING,
+                        {"teleporters": TeleporterShuffleMode.ONE_WAY_ANYTHING,
                          "translator_configuration": True}])
 def layout_config(request, default_echoes_configuration):
     if "translator_configuration" in request.param:
@@ -117,8 +117,8 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
                                        translator_requirement=translator_requirement)
         layout_config = dataclasses.replace(
             configuration,
-            elevators=dataclasses.replace(
-                configuration.elevators,
+            teleporters=dataclasses.replace(
+                configuration.teleporters,
                 mode=TeleporterShuffleMode.ONE_WAY_ANYTHING,
             ),
             translator_configuration=new_gate)
@@ -181,7 +181,7 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
             'Super Missile': 0,
             'Violet Translator': 0,
         },
-        "elevators": [
+        "teleporters": [
             {'data': None,
              'teleporter': {'area': 'Transport to Temple Grounds',
                             'node': 'Elevator to Temple Grounds',
@@ -294,11 +294,11 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
     }
 
     if shuffle_advanced:
-        for elevator in state["elevators"]:
-            if (elevator["teleporter"]["region"] == "Agon Wastes"
-                and elevator["teleporter"]["node"] == "Elevator to Sanctuary Fortress"
-                and elevator["teleporter"]["area"] == "Transport to Sanctuary Fortress"):
-                elevator["data"] = {'area': "Agon Energy Controller", 'region': "Agon Wastes"}
+        for teleporter in state["teleporters"]:
+            if (teleporter["teleporter"]["region"] == "Agon Wastes"
+                and teleporter["teleporter"]["node"] == "Elevator to Sanctuary Fortress"
+                and teleporter["teleporter"]["area"] == "Transport to Sanctuary Fortress"):
+                teleporter["data"] = {'area': "Agon Energy Controller", 'region': "Agon Wastes"}
         state["configurable_nodes"]['Temple Grounds/Hive Access Tunnel/Translator Gate'] = "violet"
     VersionedPreset.with_preset(preset).save_to_file(tmp_path.joinpath("preset.rdvpreset"))
     tmp_path.joinpath("state.json").write_text(json.dumps(state), "utf-8")

@@ -15,10 +15,10 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.default_database import default_prime2_memo_data
+from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
@@ -30,6 +30,7 @@ from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
+from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
@@ -173,7 +174,7 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
 
 def test_create_elevators_field_no_elevator(empty_patches, echoes_game_description):
-    with pytest.raises(ValueError, match="Invalid elevator count. Expected 22, got 0."):
+    with pytest.raises(InvalidConfiguration, match="Invalid elevator count. Expected 22, got 0."):
         patch_data_factory._create_elevators_field(
             empty_patches,
             echoes_game_description,
@@ -359,19 +360,19 @@ def test_create_translator_gates_field(echoes_game_description):
     ]
 
 
-@pytest.mark.parametrize("elevators", [TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.TWO_WAY_RANDOMIZED])
-def test_apply_translator_gate_patches(elevators):
+@pytest.mark.parametrize("teleporters", [TeleporterShuffleMode.VANILLA, TeleporterShuffleMode.TWO_WAY_RANDOMIZED])
+def test_apply_translator_gate_patches(teleporters):
     # Setup
     target = {}
 
     # Run
-    patch_data_factory._apply_translator_gate_patches(target, elevators)
+    patch_data_factory._apply_translator_gate_patches(target, teleporters)
 
     # Assert
     assert target == {
         "always_up_gfmc_compound": True,
         "always_up_torvus_temple": True,
-        "always_up_great_temple": elevators != TeleporterShuffleMode.VANILLA,
+        "always_up_great_temple": teleporters != TeleporterShuffleMode.VANILLA,
     }
 
 
@@ -599,12 +600,13 @@ def test_create_string_patches(
     # Run
     result = patch_data_factory._create_string_patches(
         HintConfiguration(sky_temple_keys=stk_mode),
+        False,
         game,
         all_patches,
         namer,
         player_config,
         rng,
-        []
+        None,
     )
 
     # Assert
@@ -667,7 +669,7 @@ def test_generate_patcher_data(test_files_dir, use_new_patcher):
     assert len(result["translator_gates"]) == 17
 
     assert isinstance(result["string_patches"], list)
-    assert len(result["string_patches"]) == 61
+    assert len(result["string_patches"]) == 43 if use_new_patcher else 61
 
     assert result["specific_patches"] == {
         "hive_chamber_b_post_state": True,

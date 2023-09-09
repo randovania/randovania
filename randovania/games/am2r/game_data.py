@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from randovania.games import game
 from randovania.games.am2r import layout
-from randovania.layout.preset_describer import GamePresetDescriber
 
 
 def _options():
@@ -65,19 +64,22 @@ game_data: game.GameData = game.GameData(
         ("I saved in a place that I can't get out of, what do I do?",
          "You can use the 'Restart from Start Location' option, which will "
          "reload your last save but make you spawn at the original start location."),
-        ("When does Serris spawn?",
-         "Serris spawns once you collect the vanilla Ice Beam location in Distribution Center."),
+        ("What causes Serris to spawn?",
+         "Serris will spawn once you collect the item in Distribution Center - Ice Beam Chamber and then hit "
+         "the fight trigger on the left side of the Serris Arena."),
         ("Can I defeat Serris without Ice Beam?",
          "Yes, Serris automatically changes her weakness to not "
          "require Ice Beam if you fight her before acquiring it."),
-        ("Where can I find the Wisdom Septoggs?", "There are seven Wisdom Septoggs. They can can be found in:\n\n"
-            "- Main Caves - Research Site Storage\n"
+        ("Where can I find the Hints?", "There are eight hints in total, and the map will show "
+                                        "an 'H' icon on places where hints exist. They can can be found in:\n\n"
+            "- Main Caves - Research Site Access\n"
             "- Golden Temple - Breeding Grounds Hub\n"
             "- Hydro Station - Breeding Grounds Lobby\n"
             "- Industrial Complex - Breeding Grounds Fly Stadium\n"
             "- The Tower - Tower Exterior North\n"
             "- Distribution Center - Distribution Facility Tower East\n"
-            "- The Nest - Depths Shinespark Cave East"),
+            "- The Depths - Bubble Lair Shinespark Cave\n"
+            "- Genetics Laboratory - Destroyed Chozo Memorial"),
         ("What are shinies?",
          "Some items have a 1 in 1024 chance of being a Pokémon-style shiny: "
          "they look different but behave entirely the same as normal. "
@@ -88,7 +90,7 @@ game_data: game.GameData = game.GameData(
     layout=game.GameLayout(
         configuration=layout.AM2RConfiguration,
         cosmetic_patches=layout.AM2RCosmeticPatches,
-        preset_describer=GamePresetDescriber(),
+        preset_describer=layout.AM2RPresetDescriber(),
     ),
 
     options=_options,

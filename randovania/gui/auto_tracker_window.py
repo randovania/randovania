@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtGui, QtWidgets
 
 from randovania import get_data_path
+from randovania.game_description.resources.inventory import Inventory
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
@@ -145,7 +146,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         tracker_name: str | None = None
         target_game: RandovaniaGame | None = None
 
-        inventory = {}
+        inventory: Inventory = Inventory.empty()
 
         if self.item_tracker is not None:
             inventory = self.item_tracker.current_state

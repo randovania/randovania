@@ -10,8 +10,8 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.requirements.requirement_and import RequirementAnd
     from randovania.game_description.requirements.requirement_or import RequirementOr
     from randovania.game_description.requirements.requirement_set import RequirementSet
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection
 
 
 class RequirementArrayBase(Requirement):

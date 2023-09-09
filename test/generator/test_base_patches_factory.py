@@ -42,22 +42,25 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
 
     config = default_echoes_configuration
     config = dataclasses.replace(config,
-                                 elevators=dataclasses.replace(config.elevators,
+                                 teleporters=dataclasses.replace(config.teleporters,
                                                                skip_final_bosses=skip_final_bosses))
 
     # Run
-    result = patches_factory.add_elevator_connections_to_patches(
-        config,
-        Random(0),
-        echoes_game_patches,
+    result = echoes_game_patches.assign_dock_connections(
+                patches_factory.dock_connections_assignment(
+                    config,
+                    echoes_game_patches.game,
+                    Random(0),
+                )
     )
+
 
     # Assert
     assert result == expected
 
 
 @pytest.mark.parametrize("skip_final_bosses", [False, True])
-def test_add_elevator_connections_to_patches_random(echoes_game_description,
+def test_add_elevator_connections_to_dock_connections_random(echoes_game_description,
                                                     skip_final_bosses: bool,
                                                     default_echoes_configuration,
                                                     echoes_game_patches):
@@ -65,8 +68,8 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     patches_factory = echoes_game_description.game.generator.base_patches_factory
     layout_configuration = dataclasses.replace(
         default_echoes_configuration,
-        elevators=dataclasses.replace(
-            default_echoes_configuration.elevators,
+        teleporters=dataclasses.replace(
+            default_echoes_configuration.teleporters,
             mode=TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
             skip_final_bosses=skip_final_bosses,
         ),
@@ -133,14 +136,15 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
        "Sanctuary Fortress", "Aerie", "Elevator to Aerie Transport Station")
     ni("Sanctuary Fortress", "Aerie", "Elevator to Aerie Transport Station",
        "Sanctuary Fortress", "Aerie Transport Station", "Elevator to Aerie")
-
     expected = echoes_game_patches.assign_dock_connections(elevator_connection)
 
     # Run
-    result = patches_factory.add_elevator_connections_to_patches(
-        layout_configuration,
-        Random(0),
-        echoes_game_patches,
+    result = echoes_game_patches.assign_dock_connections(
+                patches_factory.dock_connections_assignment(
+                    layout_configuration,
+                    echoes_game_patches.game,
+                    Random(0),
+                )
     )
 
     # Assert
@@ -260,8 +264,8 @@ def test_create_base_patches(mocker):
     mock_create_from_game: MagicMock = mocker.patch(
         "randovania.generator.base_patches_factory.GamePatches.create_from_game", autospec=True,
     )
-    mock_add_elevator_connections_to_patches: MagicMock = mocker.patch(
-        "randovania.generator.base_patches_factory.BasePatchesFactory.add_elevator_connections_to_patches",
+    mock_dock_connections_assignment: MagicMock = mocker.patch(
+        "randovania.generator.base_patches_factory.BasePatchesFactory.dock_connections_assignment",
         autospec=True,
     )
     mock_gate_assignment_for_configuration: MagicMock = mocker.patch(
@@ -274,8 +278,8 @@ def test_create_base_patches(mocker):
 
     patches = ([
         mock_create_from_game.return_value,
-        mock_add_elevator_connections_to_patches.return_value,
     ])
+    patches.append(patches[-1].assign_dock_connections.return_value)
     patches.append(patches[-1].assign_node_configuration.return_value)
     patches.append(patches[-1].assign_starting_location.return_value)
 
@@ -289,7 +293,10 @@ def test_create_base_patches(mocker):
         game, 0, layout_configuration,
     )
 
-    mock_add_elevator_connections_to_patches.assert_called_once_with(factory, layout_configuration, rng, patches[0])
+
+    # Docks Assignment
+    mock_dock_connections_assignment.assert_called_once_with(factory, layout_configuration, game, rng)
+    patches[0].assign_dock_connections.assert_called_once_with(mock_dock_connections_assignment.return_value)
 
     # Gate Assignment
     mock_gate_assignment_for_configuration.assert_called_once_with(factory, layout_configuration, game, rng)

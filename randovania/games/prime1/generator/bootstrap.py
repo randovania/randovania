@@ -5,13 +5,13 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.damage_resource_info import DamageReduction
+from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceCollection
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 

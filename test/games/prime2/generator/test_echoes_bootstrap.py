@@ -9,11 +9,13 @@ import pytest
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
+    PrimeTrilogyTeleporterConfiguration,
+)
 from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
 from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.generator.pickup_pool import pool_creator
-from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 _GUARDIAN_INDICES = [
     PickupIndex(43),  # Dark Suit
@@ -30,16 +32,16 @@ _SUB_GUARDIAN_INDICES = [
 ]
 
 
-@pytest.mark.parametrize("vanilla_elevators", [False, True])
+@pytest.mark.parametrize("vanilla_teleporters", [False, True])
 def test_misc_resources_for_configuration(echoes_resource_database,
                                           default_echoes_configuration,
-                                          vanilla_elevators: bool,
+                                          vanilla_teleporters: bool,
                                           ):
     # Setup
-    elevators = MagicMock(spec=TeleporterConfiguration)
+    teleporters = MagicMock(spec=PrimeTrilogyTeleporterConfiguration)
     configuration = dataclasses.replace(default_echoes_configuration,
-                                        elevators=elevators)
-    elevators.is_vanilla = vanilla_elevators
+                                        teleporters=teleporters)
+    teleporters.is_vanilla = vanilla_teleporters
     gfmc_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGFMCGate")
     torvus_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaTorvusTempleGate")
     great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGreatTempleEmeraldGate")
@@ -58,7 +60,7 @@ def test_misc_resources_for_configuration(echoes_resource_database,
     assert relevant_tricks == {
         gfmc_resource: 0,
         torvus_resource: 0,
-        great_resource: 0 if not vanilla_elevators else 1,
+        great_resource: 0 if not vanilla_teleporters else 1,
     }
 
 

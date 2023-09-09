@@ -3,9 +3,9 @@ Transport to Area 3 Exterior (Upper)
 Extra - total_boundings: {'x1': -14150.0, 'x2': -10800.0, 'y1': -7300.0, 'y2': 6900.0}
 Extra - polygon: [[-13200.0, 6900.0], [-13200.0, 5800.0], [-14150.0, 5600.0], [-14150.0, -600.0], [-13400.0, -700.0], [-13400.0, -7300.0], [-11600.0, -7300.0], [-11600.0, -2400.0], [-10800.0, -2000.0], [-10800.0, 6900.0]]
 Extra - asset_id: collision_camera_006
-> Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Upper); Heals? False; Spawn Point; Default Node
+> Elevator to Area 3 - Exterior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 3 Interior West (Upper)/Elevator to Area 3 Interior West - Transport to Area 3 Exterior (Upper)
+  * Elevator to Transport to Area 3 Interior West (Upper)/Elevator to Area 3 - Interior (West)
   * Extra - actor_name: LE_Platform_Elevator_FromArea03A_01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03A_01
@@ -23,7 +23,7 @@ Extra - asset_id: collision_camera_006
       Trivial
   > Tunnel to Gamma Arena South
       All of the following:
-          Morph Ball and Super Missile
+          Morph Ball and Shoot Super Missile
           Any of the following:
               Can Spiderspark
               All of the following:
@@ -40,7 +40,7 @@ Extra - asset_id: collision_camera_006
   > Door to Alpha+ Arena West
       Trivial
   > Pickup (Missile Tank)
-      Destroy Bomb Block
+      Lay Any Bomb
 
 > Door to Gamma Arena South; Heals? False
   * Layers: default
@@ -55,7 +55,7 @@ Extra - asset_id: collision_camera_006
   * Power Beam Door to Alpha+ Arena West/Door to Transport to Area 3 Exterior (Upper)
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Upper)
+  > Elevator to Area 3 - Exterior
       Walljump (Beginner) or Climb Rooms Vertically (No High Jump)
   > Door to Gamma Arena North
       Trivial
@@ -109,9 +109,9 @@ Extra - asset_id: collision_camera_007
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_002_Checkpoint
   > Door to Transport to Area 3 Exterior (Upper)
-      After Area 3 (Interior West) - Alpha Metroid+ West
+      Trivial
   > Door to Transport to Area 3 Exterior (Lower)
-      After Area 3 (Interior West) - Alpha Metroid+ West
+      Trivial
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
 
@@ -146,7 +146,7 @@ Extra - asset_id: collision_camera_008
   * Layers: default
   * Extra - start_point_actor_name: ST_Gamma_001_Checkpoint
   > Door to Transport to Area 3 Exterior (Upper)
-      After Area 3 (Interior West) - Gamma Metroid Upper
+      Trivial
   > Event - Gamma Metroid
       Defeat Gamma Metroid
   > Start Point (Outside Arena)
@@ -154,7 +154,7 @@ Extra - asset_id: collision_camera_008
           Morph Ball
           Any of the following:
               Shoot Beam Burst
-              Power Bomb and Knowledge (Beginner)
+              Knowledge (Beginner) and Lay Power Bomb
 
 > Start Point (Outside Arena); Heals? False
   * Layers: default
@@ -166,7 +166,7 @@ Extra - asset_id: collision_camera_008
           Morph Ball
           Any of the following:
               Shoot Beam Burst
-              Power Bomb and Knowledge (Beginner)
+              Knowledge (Beginner) and Lay Power Bomb
 
 ----------------
 Gamma Arena South
@@ -184,7 +184,7 @@ Extra - asset_id: collision_camera_009
       All of the following:
           Morph Ball
           Any of the following:
-              Destroy Missile Block
+              Shoot Any Missile
               All of the following:
                   Baby Metroid
                   Phase Drift or Spider Ball or Movement (Beginner)
@@ -205,7 +205,7 @@ Extra - asset_id: collision_camera_009
   > Door to Transport to Area 3 Exterior (Upper)
       Morph Ball
   > Event - Gamma Metroid
-      Defeat Gamma Metroid and Destroy Bomb Block
+      Defeat Gamma Metroid and Lay Any Bomb
   > Left of Fan
       Lay Power Bomb
   > Start Point (Outside Arena)
@@ -221,14 +221,14 @@ Extra - asset_id: collision_camera_009
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid Lower
   > Door to Shaft West
-      Destroy Bomb Block
+      Lay Any Bomb
   > Start Point (Inside Arena)
       Trivial
 
 > Below Pickup; Heals? False
   * Layers: default
   > Tunnel to Transport to Area 3 Exterior (Upper)
-      Morph Ball and Super Missile
+      Morph Ball and Shoot Super Missile
   > Left of Missile Block
       Any of the following:
           Can Spiderspark
@@ -244,7 +244,7 @@ Extra - asset_id: collision_camera_009
   * Layers: default
   > Pickup (Super Missile Tank)
       All of the following:
-          Morph Ball and Destroy Missile Block
+          Morph Ball and Shoot Any Missile
           Phase Drift or Movement (Advanced)
   > Below Pickup
       Morph Ball
@@ -262,9 +262,9 @@ Extra - asset_id: collision_camera_009
                   High Jump Boots or Space Jump or Walljump (Beginner)
                   Mid-Air Morph (Intermediate) and Simple IBJ
   > Door to Shaft West
-      Destroy Bomb Block
+      Lay Any Bomb
   > Below Pickup
-      Destroy Bomb Block
+      Lay Any Bomb
 
 > Start Point (Inside Arena); Heals? False
   * Layers: default
@@ -364,7 +364,7 @@ Extra - asset_id: collision_camera_012
           Grapple Beam or Can Spiderspark or Climb Rooms Vertically (High Jump)
           Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
   > Pickup (Missile Tank)
-      Morph Ball and Destroy Missile Block
+      Morph Ball and Shoot Any Missile
   > Tunnel to Teleporter Access
       Morph Ball and After Area 3 (Interior West) - Teleporter Access Grapple Block
 
@@ -385,10 +385,10 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_name: LE_Item_007
   * Extra - actor_type: item_missiletank
   > Tunnel to Shaft West
-      Destroy Bomb Block
+      Lay Any Bomb
   > Left of Grapple Block
       All of the following:
-          Morph Ball and Destroy Missile Block
+          Morph Ball and Shoot Any Missile
           Grapple Beam or Space Jump or Can Spiderspark or Simple IBJ
 
 > Tunnel to Shaft West; Heals? False
@@ -396,7 +396,7 @@ Extra - asset_id: collision_camera_024
   * Tunnel with Bomb Block to Shaft West/Tunnel to Mid-Shaft Shortcut
   > Pickup (Missile Tank)
       All of the following:
-          Morph Ball and Destroy Missile Block
+          Morph Ball and Shoot Any Missile
           Grapple Beam or Space Jump or Can Spiderspark or Simple IBJ
 
 > Tunnel to Shaft East; Heals? False
@@ -432,7 +432,7 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_type: item_missiletank
   > Door to Central Shaft
       All of the following:
-          Destroy Bomb Block
+          Lay Any Bomb
           Any of the following:
               Spider Ball or Movement (Beginner)
               All of the following:
@@ -448,7 +448,7 @@ Extra - asset_id: collision_camera_025
       Trivial
   > Tunnel to Mid-Shaft Shortcut
       All of the following:
-          Destroy Bomb Block
+          Lay Any Bomb
           Any of the following:
               Space Jump or Can Spiderspark or Simple IBJ
               All of the following:
@@ -465,14 +465,14 @@ Extra - asset_id: collision_camera_025
           Morph Ball
           Any of the following:
               All of the following:
-                  Power Bomb
+                  Lay Power Bomb
                   Any of the following:
                       Spider Ball or Movement (Beginner)
                       All of the following:
                           Gravity Suit
                           High Jump Boots or Space Jump or Simple IBJ
               All of the following:
-                  Destroy Missile Block
+                  Shoot Any Missile
                   Any of the following:
                       Gravity Suit or Can Spiderspark
                       Bomb and Underwater Bomb Jump (Advanced)
@@ -529,7 +529,7 @@ Extra - asset_id: collision_camera_026
           Morph Ball
           Any of the following:
               Shoot Beam Burst
-              Power Bomb and Knowledge (Beginner)
+              Knowledge (Beginner) and Lay Power Bomb
           Grapple Beam or Can Spiderspark or Climb Rooms Vertically (No High Jump)
   > Above Teleporter
       Trivial
@@ -687,16 +687,16 @@ Transport to Area 3 Interior East
 Extra - total_boundings: {'x1': 3800.0, 'x2': 8700.0, 'y1': -100.0, 'y2': 1500.0}
 Extra - polygon: [[3800.0, 1500.0], [3800.0, -100.0], [8700.0, -100.0], [8700.0, 1500.0]]
 Extra - asset_id: collision_camera_032
-> Elevator to Area 3 Interior East - Transport to Area 3 Interior West; Heals? False; Spawn Point; Default Node
+> Elevator to Area 3 - Interior (East); Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 3 Interior West/Elevator to Area 3 Interior West - Transport to Area 3 Interior East
+  * Elevator to Transport to Area 3 Interior West/Elevator to Area 3 - Interior (West)
   * Extra - actor_name: LE_Platform_Elevator_FromArea03C
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03C
   > Door to Shaft East
       Trivial
   > Pickup (Super Missile Tank)
-      Morph Ball and Destroy Missile Block
+      Morph Ball and Shoot Any Missile
   > Event - Grapple Block
       Grapple Beam and Missile
 
@@ -713,7 +713,7 @@ Extra - asset_id: collision_camera_032
   * Power Beam Door to Shaft East/Door to Transport to Area 3 Interior East
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 3 Interior East - Transport to Area 3 Interior West
+  > Elevator to Area 3 - Interior (East)
       Any of the following:
           Phase Drift or Can Spiderspark
           All of the following:
@@ -729,13 +729,13 @@ Extra - asset_id: collision_camera_032
   * Pickup 72; Category? Minor
   * Extra - actor_name: HiddenPowerup003
   * Extra - actor_type: item_supermissiletank
-  > Elevator to Area 3 Interior East - Transport to Area 3 Interior West
+  > Elevator to Area 3 - Interior (East)
       Trivial
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Transport to Area 3 Interior East Grapple Block
-  > Elevator to Area 3 Interior East - Transport to Area 3 Interior West
+  > Elevator to Area 3 - Interior (East)
       Trivial
 
 ----------------
@@ -749,21 +749,21 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Event - Gamma Metoid+
-      Defeat Gamma Metroid+ and Destroy Bomb Block
+      Defeat Gamma Metroid+ and Lay Any Bomb
   > Start Point
-      Destroy Bomb Block
+      Lay Any Bomb
 
 > Event - Gamma Metoid+; Heals? False
   * Layers: default
   * Event Area 3 (Interior West) - Gamma Metroid+ Lower
   > Door to Gamma+ Arena South Access
-      Climb Rooms Vertically (No High Jump) and Destroy Bomb Block
+      Climb Rooms Vertically (No High Jump) and Lay Any Bomb
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Gamma_004A_Checkpoint
   > Door to Gamma+ Arena South Access
-      Destroy Bomb Block
+      Lay Any Bomb
 
 ----------------
 Gamma+ Arena South Access
@@ -807,7 +807,9 @@ Extra - asset_id: collision_camera_036
   > Start Point (Right)
       All of the following:
           Morph Ball and Varia Suit
-          Bomb or Power Bomb ≥ 3
+          Any of the following:
+              Bomb
+              Power Bomb ≥ 3 and Lay Power Bomb
           Gravity Suit or Spider Ball
   > Start Point (Left)
       Trivial
@@ -823,7 +825,7 @@ Extra - asset_id: collision_camera_036
   * Extra - start_point_actor_name: ST_Gamma_003_Checkpoint
   > Door to Alpha+ Arena East
       All of the following:
-          Varia Suit and Destroy Bomb Block
+          Varia Suit and Lay Any Bomb
           Gravity Suit or Spider Ball
   > Event - Gamma Metroid+
       Varia Suit and Defeat Gamma Metroid+
@@ -839,9 +841,9 @@ Transport to Area 3 Exterior (Lower)
 Extra - total_boundings: {'x1': -19050.0, 'x2': -17750.0, 'y1': 581.125, 'y2': 1339.0699462890625}
 Extra - polygon: [[-19050.0, 1339.0699462890625], [-19050.0, 581.125], [-17750.0, 581.125], [-17750.0, 1339.0699462890625]]
 Extra - asset_id: collision_camera_037
-> Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Lower); Heals? False; Spawn Point; Default Node
+> Elevator to Area 3 - Exterior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Area 3 Interior West (Lower)/Elevator to Area 3 Interior West - Area 3 Exterior (Lower)
+  * Elevator to Transport to Area 3 Interior West (Lower)/Elevator to Area 3 - Interior (West)
   * Extra - actor_name: LE_Platform_Elevator_FromArea03A_02
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03A_02
@@ -853,7 +855,7 @@ Extra - asset_id: collision_camera_037
   * Power Beam Door to Alpha+ Arena West/Door to Transport to Area 3 Exterior (Lower)
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
-  > Elevator to Area 3 Exterior - Transport to Area 3 Interior West (Lower)
+  > Elevator to Area 3 - Exterior
       Trivial
 
 ----------------
@@ -887,11 +889,11 @@ Extra - asset_id: collision_camera_038
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_003_Checkpoint
   > Door to Upper Shaft
-      After Area 3 (Interior West) - Alpha Metroid+ East
+      Trivial
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
   > Start Point (Outside Arena)
-      Destroy Bomb Block
+      Lay Any Bomb
 
 > Start Point (Outside Arena); Heals? False
   * Layers: default
@@ -899,7 +901,7 @@ Extra - asset_id: collision_camera_038
   > Door to Gamma+ Arena Heat
       Morph Ball
   > Start Point (Inside Arena)
-      Destroy Bomb Block
+      Lay Any Bomb
 
 ----------------
 Teleporter Access

@@ -13,8 +13,8 @@ from retro_data_structures.game_check import Game as RDSGame
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector
 from randovania.game_connection.connector.prime_remote_connector import DolRemotePatch
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationException
-from randovania.game_description.resources.item_resource_info import InventoryItem
-from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.pickup.pickup_entry import PickupEntry
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.standard_pickup_state import StandardPickupState
@@ -89,10 +89,10 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
     inventory = await connector.get_inventory()
 
     # Assert
-    assert inventory == {
+    assert inventory == Inventory({
         item: InventoryItem(_override.get(item.short_name, item.max_capacity), item.max_capacity)
         for item in connector.game.resource_database.item
-    }
+    })
 
 
 async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
@@ -258,10 +258,10 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
                              (db.energy_tank, db.energy_tank.max_capacity),
                              *item_percentage_resource,
                          ))
-    inventory = {
+    inventory = Inventory({
         connector.multiworld_magic_item: InventoryItem(0, 0),
         db.energy_tank: InventoryItem(1, 1),
-    }
+    })
 
     # Run
     patches, message = await connector._patches_for_pickup("Someone", pickup, inventory)
@@ -337,9 +337,9 @@ async def test_receive_required_missile_launcher(connector: EchoesRemoteConnecto
     connector.execute_remote_patches = AsyncMock()
     permanent_pickups = (("Received Missile Launcher from Someone Else", pickup),)
 
-    inventory = {
+    inventory = Inventory({
         connector.multiworld_magic_item: InventoryItem(0, 0),
-    }
+    })
 
     # Run
     await connector.receive_remote_pickups(

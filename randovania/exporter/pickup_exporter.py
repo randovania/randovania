@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.exporter import item_names
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.resources.pickup_entry import (
+from randovania.game_description.pickup.pickup_entry import (
     ConditionalResources,
     PickupEntry,
     PickupModel,
@@ -267,10 +267,10 @@ class PickupExporterMulti(PickupExporter):
 def _get_visual_model(original_index: int,
                       pickup_list: list[PickupTarget],
                       data_source: PickupModelDataSource,
-                      visual_etm: PickupEntry,
+                      visual_nothing: PickupEntry,
                       ) -> PickupEntry:
     if data_source == PickupModelDataSource.ETM:
-        return visual_etm
+        return visual_nothing
     elif data_source == PickupModelDataSource.RANDOM:
         return pickup_list[original_index % len(pickup_list)].pickup
     elif data_source == PickupModelDataSource.LOCATION:
@@ -286,7 +286,7 @@ def export_all_indices(patches: GamePatches,
                        model_style: PickupModelStyle,
                        data_source: PickupModelDataSource,
                        exporter: PickupExporter,
-                       visual_etm: PickupEntry,
+                       visual_nothing: PickupEntry,
                        ) -> list[ExportedPickupDetails]:
     """
     Creates the patcher data for all pickups in the game
@@ -297,7 +297,7 @@ def export_all_indices(patches: GamePatches,
     :param model_style:
     :param data_source:
     :param exporter:
-    :param visual_etm:
+    :param visual_nothing:
     :return:
     """
     pickup_assignment = patches.pickup_assignment
@@ -314,7 +314,7 @@ def export_all_indices(patches: GamePatches,
     pickups = [
         exporter.export(index,
                         pickup_assignment.get(index, useless_target),
-                        _get_visual_model(i, pickup_list, data_source, visual_etm),
+                        _get_visual_model(i, pickup_list, data_source, visual_nothing),
                         model_style,
                         )
         for i, index in enumerate(indices)
