@@ -11,9 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Added: 3 videos to logic database for a a diagonal bomb jump in Ghavoran, a single wall jump in Cataris, and a diffusion abuse trick in Artaria.
-- Changed: SWJ trick in Cataris Teleport to Artaria (Blue) now requires a slide jump.
 #### Logic Database
+
+- Added: 3 videos to logic database for a diagonal bomb jump in Ghavoran, a single-wall jump in Cataris, and a diffusion abuse trick in Artaria.
 
 ##### Artaria
 
@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Cataris
 
 - Changed: Thermal Device Room South: The connections to the thermal door that closes after using the thermal device now logically remains open when door lock rando is disabled and the "Can Slide" and "Shoot Beam" templates are satisfied. This is a handwave that makes the thermal device no longer a dangerous resource.
+- Changed: Single-wall Jump trick in Cataris Teleport to Artaria (Blue) now requires a slide jump.
 
 ##### Dairon
 
