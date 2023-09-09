@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
--Added: 3 videos to logic database for a a diagonal bomb jump in Ghavoran, a single wall jump in Cataris, and a diffusion abuse trick in Artaria.
--Changed: SWJ trick in Cataris Teleport to Artaria (Blue) now requires a slide jump.
+- Added: 3 videos to logic database for a a diagonal bomb jump in Ghavoran, a single wall jump in Cataris, and a diffusion abuse trick in Artaria.
+- Changed: SWJ trick in Cataris Teleport to Artaria (Blue) now requires a slide jump.
 #### Logic Database
 
 ##### Artaria
