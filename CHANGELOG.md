@@ -40,6 +40,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The connection of EMMI Zone Exit Southeast and EMMI Zone Exit West is now a proper door. This enables it to now be shuffled in door lock rando.
 
+### Metroid Prime 2: Echoes
+- Changed: When Progressive Grapple is enabled, it will now show `2 shuffled copies` rather than `Shuffled` for better consistency.
+
 ## [6.2.1] - 2023-09-??
 
 ### Metroid Prime
