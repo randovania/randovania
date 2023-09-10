@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import platform
 import sys
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, call, patch
@@ -106,6 +107,8 @@ def test_process_command_no_mono(mocker: pytest_mock.MockerFixture, tmp_path: Pa
 
     if mock_is_windows:
         expectation = pytest.raises(FileNotFoundError)
+        if platform.system() != "Windows":
+            pytest.skip("windows variant process_command can only be ran on windows")
     else:
         expectation = pytest.raises(UnableToExportError)
 
