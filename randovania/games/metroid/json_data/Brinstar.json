@@ -3,14 +3,14 @@
     "extra": {},
     "areas": {
         "Corridor 1": {
-            "default_node": "Spawn Point",
+            "default_node": "Starting Point",
             "extra": {
                 "map_name": "Brinstar/x47_y202"
             },
             "nodes": {
-                "Spawn Point": {
+                "Starting Point": {
                     "node_type": "generic",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": 440.0,
                         "y": 64.0,
@@ -27,6 +27,13 @@
                     "valid_starting_location": true,
                     "connections": {
                         "Pickup (Morph Ball)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fake Block shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -54,7 +61,7 @@
                     "pickup_index": 0,
                     "location_category": "major",
                     "connections": {
-                        "Door to Fake Block shaft": {
+                        "Starting Point": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -108,14 +115,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Morph Ball)": {
+                        "Starting Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -206,8 +206,11 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Corridor 1": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -810,8 +813,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -868,14 +876,28 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Hi-Jump",
+                                            "type": "events",
+                                            "name": "Event1",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event2",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1115,8 +1137,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 128.0,
-                        "y": 1144.0,
+                        "x": 123.22088933853644,
+                        "y": 1218.4940020234137,
                         "z": 0.0
                     },
                     "description": "",
@@ -1183,7 +1205,14 @@
                     "pickup_index": 9,
                     "location_category": "major",
                     "connections": {
-                        "Center of room": {
+                        "Door to Gold-colored shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Transport to Norfair": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1218,7 +1247,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Center of room": {
+                        "Pickup (Missile Launcher)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1253,45 +1282,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Center of room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Center of room": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1144.0,
-                        "y": 148.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
                         "Pickup (Missile Launcher)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Gold-colored shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Transport to Norfair": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2446,7 +2437,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Bomb Block shaft (Right)": {
+                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2481,13 +2472,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to End shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
@@ -2516,6 +2500,13 @@
                     "pickup_index": 7,
                     "location_category": "minor",
                     "connections": {
+                        "Door to End shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Bomb Block shaft (Right)": {
                             "type": "and",
                             "data": {
@@ -2565,13 +2556,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Secret Path": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -2607,10 +2591,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Secret Path": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
                         }
                     }
                 },
@@ -2634,6 +2614,13 @@
                     "location_category": "minor",
                     "connections": {
                         "Door to Corridor-connecting room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Secret Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2667,6 +2654,18 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Secret Path": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2685,11 +2684,19 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Corridor-connecting room": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    }
+                                ]
+                            }
                         },
-                        "Door to End shaft": {
+                        "Pickup (Energy Tank)": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
@@ -2956,10 +2963,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Bridge": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hi-Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ice Beam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
