@@ -48,10 +48,12 @@ class AM2RPatchDataFactory(PatchDataFactory):
                                "Locked" in res_lock.temporary_item.long_name and
                                len(pickup.collection_text) > 1) else 0
 
+            # TODO: figure out later on how to get proper sprite names and sprite animation speed for offworld items
             pickup_map_dict[object_name] = {
                 "sprite_details": {
                     "name": pickup.model.name,
                     "speed": item_info[pickup.original_pickup.name]["sprite_speed"]
+                    if not self.players_config.is_multiworld else 0.2
                 },
                 "item_effect": pickup.original_pickup.name if not pickup.other_player else "Nothing",
                 "quantity": quantity,
