@@ -1,26 +1,26 @@
 ----------------
 Corridor 1
 Extra - map_name: Brinstar/x47_y202
-> Spawn Point; Heals? False; Spawn Point; Default Node
+> Starting Point; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - global_x: 648
   * Extra - global_y: 3296
   > Pickup (Morph Ball)
+      Trivial
+  > Door to Fake Block shaft
       Trivial
 
 > Pickup (Morph Ball); Heals? False
   * Layers: default
   * Pickup 0; Category? Major
   * Extra - object_id: 100018
-  > Door to Fake Block shaft
+  > Starting Point
       Hi-Jump Boots or Morph Ball
 
 > Door to Fake Block shaft; Heals? False
   * Layers: default
   * Normal Door to Fake Block shaft/Door to Corridor 1
-  > Spawn Point
-      Trivial
-  > Pickup (Morph Ball)
+  > Starting Point
       Trivial
 
 ----------------
@@ -38,7 +38,7 @@ Extra - map_name: Brinstar/x88_y233
   * Layers: default
   * Normal Door to Kraid Elevator/Door to Fake Block shaft
   > Door to Corridor 1
-      Can Use Bombs
+      Trivial
 
 > Door to Overhang corridor; Heals? False
   * Layers: default
@@ -154,13 +154,13 @@ Extra - map_name: Brinstar/x56_y22
   * Layers: default
   * Missile Door to Corridor 2/Door to Entrance to Tourian
   > Door to Transport to Tourian
-      After Kraid Boss Killed and After Ridley Boss Killed and Can Use Bombs
+      Morph Ball and After Kraid Boss Killed and After Ridley Boss Killed
 
 > Door to Transport to Tourian; Heals? False
   * Layers: default
   * Normal Door to Transport to Tourian/Door to Entrance to Tourian
   > Door to Corridor 2
-      Hi-Jump Boots and Can Use Bombs
+      Morph Ball and After Kraid Boss Killed and After Ridley Boss Killed
 
 ----------------
 Vestibule
@@ -222,28 +222,21 @@ Extra - map_name: Brinstar/x272_y157
   * Layers: default
   * Pickup 9; Category? Major
   * Extra - object_id: 100035
-  > Center of room
+  > Door to Gold-colored shaft
+      Trivial
+  > Door to Transport to Norfair
       Trivial
 
 > Door to Gold-colored shaft; Heals? False
   * Layers: default
   * Normal Door to Gold-colored shaft/Door to Corridor 5
-  > Center of room
+  > Pickup (Missile Launcher)
       Trivial
 
 > Door to Transport to Norfair; Heals? False
   * Layers: default
   * Normal Door to Transport to Norfair/Door to Corridor 5
-  > Center of room
-      Trivial
-
-> Center of room; Heals? False
-  * Layers: default
   > Pickup (Missile Launcher)
-      Trivial
-  > Door to Gold-colored shaft
-      Trivial
-  > Door to Transport to Norfair
       Trivial
 
 ----------------
@@ -476,14 +469,12 @@ Extra - map_name: Brinstar/x464_y97
 > Door to End shaft; Heals? False
   * Layers: default
   * Normal Door to End shaft/Door to Corridor 6
-  > Door to Bomb Block shaft (Right)
+  > Pickup (Energy Tank)
       Trivial
 
 > Door to Bomb Block shaft (Right); Heals? False
   * Layers: default
   * Normal Door to Bomb Block shaft (Right)/Door to Corridor 6
-  > Door to End shaft
-      Trivial
   > Pickup (Energy Tank)
       Trivial
 
@@ -491,6 +482,8 @@ Extra - map_name: Brinstar/x464_y97
   * Layers: default
   * Pickup 7; Category? Minor
   * Extra - object_id: 100033
+  > Door to End shaft
+      Trivial
   > Door to Bomb Block shaft (Right)
       Trivial
 
@@ -502,22 +495,20 @@ Extra - map_name: Brinstar/x392_y37
   * Normal Door to Corridor-connecting room/Door to Corridor 7
   > Pickup (Missile Tank)
       Trivial
-  > Secret Path
-      Trivial
 
 > Door to End shaft; Heals? False
   * Layers: default
   * Normal Door to End shaft/Door to Corridor 7
   > Pickup (Energy Tank)
       Trivial
-  > Secret Path
-      Can Use Bombs
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 4; Category? Minor
   * Extra - object_id: 100030
   > Door to Corridor-connecting room
+      Trivial
+  > Secret Path
       Trivial
 
 > Pickup (Energy Tank); Heals? False
@@ -526,12 +517,14 @@ Extra - map_name: Brinstar/x392_y37
   * Extra - object_id: 100031
   > Door to End shaft
       Trivial
+  > Secret Path
+      Can Use Bombs
 
 > Secret Path; Heals? False
   * Layers: default
-  > Door to Corridor-connecting room
+  > Pickup (Missile Tank)
       Can Use Bombs
-  > Door to End shaft
+  > Pickup (Energy Tank)
       Can Use Bombs
 
 ----------------
@@ -583,7 +576,7 @@ Extra - map_name: Brinstar/x344_y113
   * Layers: default
   * Normal Door to Cavernous hall/Door to Bomb Block shaft (Right)
   > Bridge
-      Trivial
+      Hi-Jump Boots or Ice Beam
 
 > Bridge; Heals? False
   * Layers: default
