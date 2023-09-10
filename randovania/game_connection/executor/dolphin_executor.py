@@ -75,9 +75,10 @@ class DolphinExecutor(MemoryOperationExecutor):
             if address not in pointers:
                 raise MemoryOperationException(f"Invalid op: {address:x} is not in pointers")
 
-            if pointers[address] is None:
+            new_address = pointers[address]
+            if new_address is None:
                 return None
-            address = pointers[address] + op.offset
+            address = new_address + op.offset
 
         _validate_range(address, op.byte_count)
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, TypeVar
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterator
+    from collections.abc import Callable, Iterable, Iterator
     from random import Random
 
 T = TypeVar('T')
@@ -21,7 +21,7 @@ def shuffle(rng: Random, x: Iterator[T]) -> list[T]:
     return result
 
 
-def iterate_with_weights(items: Iterator[T],
+def iterate_with_weights(items: Iterable[T],
                          item_weights: dict[T, float],
                          rng: Random,
                          ) -> Iterator[T]:
@@ -33,15 +33,15 @@ def iterate_with_weights(items: Iterator[T],
     :return:
     """
 
-    items = list(items)
-    weights = [max(item_weights[action], 0) for action in items]
+    item_list = list(items)
+    weights = [max(item_weights[action], 0) for action in item_list]
 
-    while items and any(weight > 0 for weight in weights):
-        pickup_node = rng.choices(items, weights)[0]
+    while item_list and any(weight > 0 for weight in weights):
+        pickup_node = rng.choices(item_list, weights)[0]
 
         # Remove the pickup_node from the potential list, along with its weight
-        index = items.index(pickup_node)
-        items.pop(index)
+        index = item_list.index(pickup_node)
+        item_list.pop(index)
         weights.pop(index)
 
         yield pickup_node

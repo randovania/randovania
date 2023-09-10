@@ -47,7 +47,7 @@ def database() -> ResourceDatabase:
         ],
         requirement_template={},
         damage_reductions={},
-        energy_tank_item=None,
+        energy_tank_item=ItemResourceInfo(4, "E", "E", 1),
     )
 
 
@@ -79,11 +79,11 @@ def make_single_set(id_req: tuple[ResourceInfo, ResourceRequirement]) -> Require
 
 
 def test_empty_requirement_set_satisfied():
-    assert not RequirementSet([]).satisfied(_empty_col(), 99, None)
+    assert not RequirementSet([]).satisfied(_empty_col(), 99, MagicMock())
 
 
 def test_empty_requirement_list_satisfied():
-    assert RequirementList([]).satisfied(_empty_col(), 99, None)
+    assert RequirementList([]).satisfied(_empty_col(), 99, MagicMock())
 
 
 def test_simplify_requirement_set_static(blank_game_description):
@@ -364,15 +364,15 @@ def test_requirement_or_str(database):
 
 
 def test_impossible_requirement_as_set():
-    assert Requirement.impossible().as_set(None) == RequirementSet.impossible()
+    assert Requirement.impossible().as_set(MagicMock()) == RequirementSet.impossible()
 
 
 def test_impossible_requirement_satisfied():
-    assert not Requirement.impossible().satisfied(_empty_col(), 99, None)
+    assert not Requirement.impossible().satisfied(_empty_col(), 99, MagicMock())
 
 
 def test_impossible_requirement_damage():
-    assert Requirement.impossible().damage(_empty_col(), None) == MAX_DAMAGE
+    assert Requirement.impossible().damage(_empty_col(), MagicMock()) == MAX_DAMAGE
 
 
 def test_impossible_requirement_str():
@@ -380,15 +380,15 @@ def test_impossible_requirement_str():
 
 
 def test_trivial_requirement_as_set():
-    assert Requirement.trivial().as_set(None) == RequirementSet.trivial()
+    assert Requirement.trivial().as_set(MagicMock()) == RequirementSet.trivial()
 
 
 def test_trivial_requirement_satisfied():
-    assert Requirement.trivial().satisfied(_empty_col(), 99, None)
+    assert Requirement.trivial().satisfied(_empty_col(), 99, MagicMock())
 
 
 def test_trivial_requirement_damage():
-    assert Requirement.trivial().damage(_empty_col(), None) == 0
+    assert Requirement.trivial().damage(_empty_col(), MagicMock()) == 0
 
 
 def test_trivial_requirement_str():
@@ -688,7 +688,7 @@ def test_requirement_set_constructor(echoes_resource_database):
 def test_node_resource_info_as_requirement(blank_game_description):
     db = blank_game_description.resource_database
     node = blank_game_description.region_list.all_nodes[0]
-    context = NodeContext(None, None, db, blank_game_description.region_list)
+    context = NodeContext(MagicMock(), MagicMock(), db, blank_game_description.region_list)
 
     nri = NodeResourceInfo.from_node
     req = ResourceRequirement.simple(nri(node, context))
@@ -749,7 +749,7 @@ def test_sort_resource_requirement(blank_game_description):
     assert node is not None
 
     resources = [
-        NodeResourceInfo.from_node(node, NodeContext(None, None, db, blank_game_description.region_list)),
+        NodeResourceInfo.from_node(node, NodeContext(MagicMock(), MagicMock(), db, blank_game_description.region_list)),
         SimpleResourceInfo(1, "Resource", "Resource", ResourceType.MISC),
         TrickResourceInfo(2, "Trick", "Trick", "Long Description"),
         ItemResourceInfo(3, "Item", "Item", 1),

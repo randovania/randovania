@@ -13,19 +13,21 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
 
+_ItemKey = tuple[int, int, bool]
 
-def _key_hash(req: ResourceRequirement):
+
+def _key_hash(req: ResourceRequirement) -> _ItemKey:
     return req.resource.resource_index, req.amount, req.negate
 
 
 class RequirementList:
     __slots__ = ("_bitmask", "_items", "_extra", "_cached_hash")
     _bitmask: int
-    _items: dict[tuple[int, int, bool], ResourceRequirement]
+    _items: dict[_ItemKey, ResourceRequirement]
     _extra: list[ResourceRequirement]
     _cached_hash: int | None
 
-    def __deepcopy__(self, memodict):
+    def __deepcopy__(self, memodict: dict) -> RequirementList:
         return self
 
     def __init__(self, items: Iterable[ResourceRequirement]):
@@ -41,11 +43,11 @@ class RequirementList:
             else:
                 self._extra.append(it)
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         return isinstance(other, RequirementList) and self._items == other._items
 
     @property
-    def as_stable_sort_tuple(self):
+    def as_stable_sort_tuple(self) -> tuple[int, list[_ItemKey]]:
         return len(self._items), sorted(self._items.keys())
 
     def __hash__(self) -> int:
@@ -53,7 +55,7 @@ class RequirementList:
             self._cached_hash = hash(tuple(self._items.keys()))
         return self._cached_hash
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return repr(list(self._items.values()))
 
     def __str__(self) -> str:
@@ -62,7 +64,7 @@ class RequirementList:
         else:
             return "Trivial"
 
-    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase):
+    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         return sum(requirement.damage(current_resources, database) for requirement in self._extra)
 
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:

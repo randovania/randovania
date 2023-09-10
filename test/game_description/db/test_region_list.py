@@ -26,9 +26,10 @@ from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
 
 
-def test_connections_from_dock_blast_shield(empty_patches):
+def test_connections_from_dock_blast_shield(empty_patches: GamePatches):
     # Setup
     db = empty_patches.game.resource_database
     trivial = Requirement.trivial()

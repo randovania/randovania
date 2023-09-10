@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from randovania.game_description.assignment import (
     PickupTarget,
 )
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -30,7 +31,6 @@ if typing.TYPE_CHECKING:
         PickupTargetAssociation,
     )
     from randovania.game_description.db.dock import DockWeakness
-    from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.hint import Hint
@@ -59,7 +59,7 @@ class GamePatches:
         hash=False, compare=False
     )
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if isinstance(self.starting_equipment, ResourceCollection | list):
             if isinstance(self.starting_equipment, ResourceCollection):
                 for resource, _ in self.starting_equipment.as_resource_gain():
@@ -158,15 +158,19 @@ class GamePatches:
                 target_index = self.game.region_list.node_by_identifier(node.default_connection).node_index
                 object.__setattr__(node, "cache_default_connection", target_index)
 
-        return self.game.region_list.all_nodes[target_index]
+        result = self.game.region_list.all_nodes[target_index]
+        assert result is not None
+        return result
 
     def all_dock_connections(self) -> Iterator[tuple[DockNode, Node]]:
         nodes = self.game.region_list.all_nodes
         for index, target in enumerate(self.dock_connection):
             if target is not None:
                 node = nodes[index]
-                assert node is not None
-                yield node, nodes[target]
+                other = nodes[target]
+                assert isinstance(node, DockNode)
+                assert other is not None
+                yield node, other
 
     # Dock Weakness
     def assign_dock_weakness(self, weaknesses: Iterable[tuple[DockNode, DockWeakness]]) -> GamePatches:
@@ -206,7 +210,7 @@ class GamePatches:
         for index, weakness in enumerate(self.dock_weakness):
             if weakness is not None:
                 node = nodes[index]
-                assert node is not None
+                assert isinstance(node, DockNode)
                 yield node, weakness
 
     def all_weaknesses_to_shuffle(self) -> Iterator[DockNode]:
@@ -214,7 +218,7 @@ class GamePatches:
         for index, shuffle in enumerate(self.weaknesses_to_shuffle):
             if shuffle:
                 node = nodes[index]
-                assert node is not None
+                assert isinstance(node, DockNode)
                 yield node
 
     def starting_resources(self) -> ResourceCollection:
@@ -230,6 +234,6 @@ class GamePatches:
     def get_cached_dock_connections_from(self, node: DockNode) -> tuple[tuple[Node, Requirement], ...] | None:
         return self.cached_dock_connections_from[node.node_index]
 
-    def set_cached_dock_connections_from(self, node: DockNode, cache: tuple[tuple[Node, Requirement], ...]):
+    def set_cached_dock_connections_from(self, node: DockNode, cache: tuple[tuple[Node, Requirement], ...]) -> None:
         self.cached_dock_connections_from[node.node_index] = cache
 

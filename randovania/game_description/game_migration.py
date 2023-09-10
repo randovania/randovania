@@ -203,7 +203,7 @@ def _migrate_v17(data: dict) -> dict:
     if "worlds" in data:
         data["regions"] = data.pop("worlds")
 
-    def _fix(target):
+    def _fix(target: dict) -> None:
         target["region"] = target.pop("world_name")
         target["area"] = target.pop("area_name")
         if "node_name" in target:
@@ -233,7 +233,7 @@ def _migrate_v19(data: dict) -> dict:
         return data
 
     # changes TeleporterNode to DockNode
-    def change_node(node_to_change, regions_data: dict):
+    def change_node(node_to_change: dict, regions_data: dict) -> None:
         node_to_change["node_type"] = "dock"
         node_to_change["default_connection"] = node_to_change.pop("destination")
 
@@ -253,7 +253,7 @@ def _migrate_v19(data: dict) -> dict:
         node_to_change["dock_type"] = "teleporter"
 
     # adds the required weaknesses
-    def add_dock_weakness(data: dict, game):
+    def add_dock_weakness(data: dict, game: str) -> None:
         teleporter_weakness = {
             "name": "Teleporter",
             "extra": {"is_teleporter": True, "ignore_for_hints": True},
@@ -339,6 +339,6 @@ _MIGRATIONS = [
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
-def migrate_to_current(data: dict):
+def migrate_to_current(data: dict) -> dict:
     return migration_lib.apply_migrations(data, _MIGRATIONS,
                                           copy_before_migrating=True)

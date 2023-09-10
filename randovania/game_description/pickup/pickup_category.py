@@ -13,7 +13,7 @@ class PickupCategory:
     hinted_as_major: bool
     is_key: bool = False
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         assert self.name, "Name must not be empty"
         assert self.long_name, "Long name must not be empty"
         assert len(self.hint_details) == 2, "Hint details must be 2 elements"

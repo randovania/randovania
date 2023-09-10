@@ -34,7 +34,7 @@ class HintNode(ResourceNode):
     kind: HintNodeKind
     requirement_to_collect: Requirement
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"HintNode({self.name!r})"
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:

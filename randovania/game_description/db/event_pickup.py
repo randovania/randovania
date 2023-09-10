@@ -37,7 +37,7 @@ class EventPickupNode(ResourceNode):
             False, event_node, next_node
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "EventPickupNode({!r} -> {}+{})".format(
             self.name,
             self.event_node.event.long_name,

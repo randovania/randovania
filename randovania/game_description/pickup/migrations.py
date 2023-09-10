@@ -88,5 +88,5 @@ _MIGRATIONS = [
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
-def migrate_current(data: dict):
+def migrate_current(data: dict) -> dict:
     return migration_lib.apply_migrations(data, _MIGRATIONS)

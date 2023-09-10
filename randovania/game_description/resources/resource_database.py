@@ -88,6 +88,9 @@ class ResourceDatabase:
     def get_event(self, short_name: str) -> SimpleResourceInfo:
         return search.find_resource_info_with_id(self.event, short_name, ResourceType.EVENT)
 
+    def get_trick(self, short_name: str) -> TrickResourceInfo:
+        return search.find_resource_info_with_id(self.trick, short_name, ResourceType.TRICK)
+
     def get_damage(self, short_name: str) -> SimpleResourceInfo:
         return search.find_resource_info_with_id(self.damage, short_name, ResourceType.DAMAGE)
 

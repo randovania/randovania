@@ -36,7 +36,8 @@ class MyChar(BitPackEnum, Enum):
             options.remove(MyChar.RANDOM)
             options.remove(MyChar.CUSTOM)
             return rng.choice(options).mychar_bmp(rng)
-        return str(RandovaniaGame.CAVE_STORY.data_path.joinpath(f"assets/mychar/{self.value}.bmp"))
+
+        return RandovaniaGame.CAVE_STORY.data_path.joinpath(f"assets/mychar/{self.value}.bmp")
 
     @property
     def ui_icon(self) -> Path:
@@ -48,6 +49,7 @@ class MyChar(BitPackEnum, Enum):
             return "Select a random MyChar for each seed."
         if self == MyChar.CUSTOM:
             return "Provide your own MyChar! Place it in your data folder."
+        return None
 
     def next_mychar(self, reverse: bool) -> MyChar:
         upcoming = list(MyChar)

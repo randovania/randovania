@@ -8,14 +8,15 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.requirement_set import RequirementSet
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Iterator
 
+    from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def _halt_damage_on_zero(items: Iterable[Requirement], current_resources: ResourceCollection,
-                         database: ResourceDatabase):
+                         database: ResourceDatabase) -> Iterator[int]:
     for item in items:
         dmg = item.damage(current_resources, database)
         yield dmg
@@ -44,12 +45,12 @@ class RequirementOr(RequirementArrayBase):
             return Requirement.trivial()
 
         num_and_requirements = 0
-        common_requirements = None
+        common_requirements: list[Requirement] | None = None
         for item in new_items:
             if isinstance(item, RequirementAnd) and mergeable_array(item, keep_comments):
                 num_and_requirements += 1
                 if common_requirements is None:
-                    common_requirements = item.items
+                    common_requirements = list(item.items)
                 else:
                     common_requirements = [
                         common
@@ -85,15 +86,15 @@ class RequirementOr(RequirementArrayBase):
         return RequirementOr(final_items, comment=self.comment)
 
     def as_set(self, database: ResourceDatabase) -> RequirementSet:
-        alternatives = set()
+        alternatives: set[RequirementList] = set()
         for item in self.items:
             alternatives |= item.as_set(database).alternatives
         return RequirementSet(alternatives)
 
     @classmethod
-    def combinator(cls):
+    def combinator(cls) -> str:
         return " or "
 
     @classmethod
-    def _str_no_items(cls):
+    def _str_no_items(cls) -> str:
         return "Impossible"

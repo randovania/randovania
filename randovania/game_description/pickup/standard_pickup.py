@@ -38,7 +38,7 @@ class StandardPickupDefinition(JsonDataclass):
     description: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.progression and not self.ammo:
             raise ValueError(f"Standard Pickup {self.name} has no progression nor ammo.")
 

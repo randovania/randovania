@@ -19,7 +19,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.lib import frozen_lib, json_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterator
+    from collections.abc import Callable, Iterable, Iterator
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
@@ -30,10 +30,14 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.array_base import RequirementArrayBase
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
+    from randovania.game_description.resources.resource_type import ResourceType
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+
+    _Resource = TypeVar('_Resource', SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo)
 
 REGION_NAME_TO_FILE_NAME_RE = re.compile(r'[^a-zA-Z0-9\- ]')
 
@@ -97,7 +101,7 @@ def write_optional_requirement(requirement: Requirement | None) -> dict | None:
 # Resource
 
 def write_resource_gain(resource_gain: ResourceGain) -> list:
-    def sorter(item: tuple[ResourceInfo, int]):
+    def sorter(item: tuple[ResourceInfo, int]) -> tuple[ResourceType, str, int]:
         return item[0].resource_type, item[0].short_name, item[1]
 
     return [
@@ -133,17 +137,14 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
     }
 
 
-X = TypeVar('X')
-
-
-def write_array(array: list[X], writer: Callable[[X], dict]) -> dict:
+def write_array(array: list[_Resource], writer: Callable[[_Resource], dict]) -> dict:
     return {
         item.short_name: writer(item)
         for item in array
     }
 
 
-def check_for_duplicated_index(array: list, field: str) -> Iterator[str]:
+def check_for_duplicated_index(array: Iterable[ResourceInfo], field: str) -> Iterator[str]:
     indices_seen = set()
     for item in array:
         if getattr(item, field) in indices_seen:
@@ -152,10 +153,12 @@ def check_for_duplicated_index(array: list, field: str) -> Iterator[str]:
             indices_seen.add(getattr(item, field))
 
 
-def write_resource_database(resource_database: ResourceDatabase):
-    errors = []
+def write_resource_database(resource_database: ResourceDatabase) -> dict:
+    errors: list[str] = []
+
     for array in (resource_database.item, resource_database.event, resource_database.trick, resource_database.damage,
                   resource_database.version, resource_database.misc):
+        assert isinstance(array, list)
         errors.extend(check_for_duplicated_index(array, "short_name"))
 
     if errors:
@@ -256,7 +259,7 @@ def write_node(node: Node) -> dict:
     :return:
     """
 
-    data = {}
+    data: dict = {}
     common_fields = {
         "heal": node.heal,
         "coordinates": {"x": node.location.x, "y": node.location.y, "z": node.location.z} if node.location else None,
@@ -371,7 +374,7 @@ def write_region(region: Region) -> dict:
 
 def write_region_list(region_list: RegionList) -> list:
     errors = []
-    known_indices = {}
+    known_indices: dict[PickupIndex, str] = {}
 
     regions = []
     for region in region_list.regions:
@@ -454,7 +457,7 @@ def write_game_description(game: GameDescription) -> dict:
     }
 
 
-def write_as_split_files(data: dict, base_path: Path):
+def write_as_split_files(data: dict, base_path: Path) -> None:
     data = copy.copy(data)
     regions = data.pop("regions")
     data["regions"] = []

@@ -24,25 +24,25 @@ class InfiniteTimer(QtCore.QObject):
         self._timer.setInterval(int(self._dt * 1000))
         self._timer.setSingleShot(True)
 
-    def start(self):
+    def start(self) -> None:
         self._timer.start()
         self.should_start_timer = True
 
-    def stop(self):
+    def stop(self) -> None:
         self.should_start_timer = False
         self._timer.stop()
         if self._current_task is not None:
             self._current_task.cancel()
 
-    async def _target_wrap(self):
+    async def _target_wrap(self) -> None:
         try:
             return await self.target()
         finally:
             if shiboken6.isValid(self) and self.should_start_timer:
                 self._timer.start()
 
-    def _on_timeout(self):
-        def _error_handler(t):
+    def _on_timeout(self) -> None:
+        def _error_handler(t: asyncio.Task) -> None:
             self._current_task = None
             try:
                 return t.result()

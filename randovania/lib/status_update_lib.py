@@ -44,15 +44,17 @@ class OffsetProgressUpdate:
 
 
 class DynamicSplitProgressUpdate:
+    splits: dict[OffsetProgressUpdate, float]
+
     def __init__(self, status_update: ProgressUpdateCallable):
         self.status_update = status_update
         self.splits = {}
 
-    def update_splits(self):
+    def update_splits(self) -> None:
         total = sum(self.splits.values())
         scale = 1.0 / total
 
-        offset = 0
+        offset = 0.0
         for split, weight in self.splits.items():
             this_scale = scale * weight
             split.offset = offset

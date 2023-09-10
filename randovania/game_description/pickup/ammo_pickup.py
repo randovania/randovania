@@ -34,7 +34,7 @@ class AmmoPickupDefinition(JsonDataclass):
     description: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.temporary is not None:
             if self.unlocked_by is None:
                 raise ValueError("If temporaries is set, unlocked_by must be set.")
@@ -66,6 +66,7 @@ class AmmoPickupDefinition(JsonDataclass):
 
     def create_resource_lock(self, resource_database: ResourceDatabase) -> ResourceLock | None:
         if self.unlocked_by is not None:
+            assert self.temporary is not None
             return ResourceLock(
                 locked_by=resource_database.get_item(self.unlocked_by),
                 item_to_lock=resource_database.get_item(self.items[0]),

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -10,9 +9,6 @@ from randovania.game_description.db.area import Area
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 
-if TYPE_CHECKING:
-    from randovania.game_description.requirements.base import Requirement
-
 
 @pytest.mark.parametrize(("danger_a", "danger_b", "expected_result"), [
     ([], [], []),
@@ -21,9 +17,10 @@ if TYPE_CHECKING:
     (["a"], ["b"], ["a", "b"]),
     (["a"], ["a"], ["a"]),
 ])
-def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
-    set_a: Requirement = MagicMock()
-    set_b: Requirement = MagicMock()
+def test_calculate_dangerous_resources(danger_a: list[str], danger_b: list[str], expected_result: list[str]):
+    set_a = MagicMock()
+    set_b = MagicMock()
+    db = MagicMock()
 
     set_a.as_set.return_value.dangerous_resources = danger_a
     set_b.as_set.return_value.dangerous_resources = danger_b
@@ -61,7 +58,7 @@ def test_calculate_dangerous_resources(danger_a, danger_b, expected_result):
     wl = RegionList([region])
 
     # Run
-    result = game_description._calculate_dangerous_resources_in_areas(wl, None)
+    result = game_description._calculate_dangerous_resources_in_areas(wl, db)
 
     # Assert
     assert set(result) == set(expected_result)
