@@ -34,8 +34,13 @@ class WindowManager(QtWidgets.QMainWindow):
     async def open_map_tracker(self, configuration: Preset):
         raise NotImplementedError
 
-    def open_data_visualizer_at(self, region_name: str | None, area_name: str | None, game: RandovaniaGame,
-                                trick_levels: TrickLevelConfiguration | None = None):
+    def open_data_visualizer_at(
+        self,
+        region_name: str | None,
+        area_name: str | None,
+        game: RandovaniaGame,
+        trick_levels: TrickLevelConfiguration | None = None,
+    ):
         raise NotImplementedError
 
     def open_game_details(self, layout: LayoutDescription, players: list[str] | None = None):
@@ -62,9 +67,9 @@ class WindowManager(QtWidgets.QMainWindow):
         window.CloseEvent.connect(remove_window)
         self.tracked_windows.append(window)
 
-    async def ensure_multiplayer_session_window(self, network_client: QtNetworkClient,
-                                                session_id: int, options: Options
-                                                ):
+    async def ensure_multiplayer_session_window(
+        self, network_client: QtNetworkClient, session_id: int, options: Options
+    ):
         raise NotImplementedError
 
     def open_app_navigation_link(self, link: str):

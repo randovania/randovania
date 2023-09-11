@@ -14,6 +14,7 @@ from randovania.lib import json_lib
 def iterate_with_log(x):
     try:
         import tqdm
+
         return tqdm.tqdm(x)
     except ImportError:
         print("WARNING: tqdm not found. Use `pip install tqdm` to have progress feedback.")

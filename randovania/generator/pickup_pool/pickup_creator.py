@@ -5,8 +5,6 @@ from typing import TYPE_CHECKING
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.games.game import RandovaniaGame
-from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -16,15 +14,16 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceQuantity
+    from randovania.games.game import RandovaniaGame
     from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 def create_standard_pickup(
-        pickup: StandardPickupDefinition,
-        state: StandardPickupState,
-        resource_database: ResourceDatabase,
-        ammo: AmmoPickupDefinition | None,
-        ammo_requires_main_item: bool,
+    pickup: StandardPickupDefinition,
+    state: StandardPickupState,
+    resource_database: ResourceDatabase,
+    ammo: AmmoPickupDefinition | None,
+    ammo_requires_main_item: bool,
 ) -> PickupEntry:
     """
     Creates a Pickup for the given MajorItem
@@ -41,8 +40,7 @@ def create_standard_pickup(
         for ammo_name, ammo_count in zip(pickup.ammo, state.included_ammo, strict=True)
     ]
     extra_resources.extend(
-        (resource_database.get_item(item), count)
-        for item, count in pickup.additional_resources.items()
+        (resource_database.get_item(item), count) for item, count in pickup.additional_resources.items()
     )
 
     def _create_resources(base_resource: str | None) -> ResourceQuantity:
@@ -50,10 +48,7 @@ def create_standard_pickup(
 
     return PickupEntry(
         name=pickup.name,
-        progression=tuple(
-            _create_resources(progression)
-            for progression in pickup.progression
-        ),
+        progression=tuple(_create_resources(progression) for progression in pickup.progression),
         extra_resources=tuple(extra_resources),
         model=PickupModel(
             game=resource_database.game_enum,
@@ -73,11 +68,12 @@ def create_standard_pickup(
     )
 
 
-def create_ammo_pickup(ammo: AmmoPickupDefinition,
-                       ammo_count: Sequence[int],
-                       requires_main_item: bool,
-                       resource_database: ResourceDatabase,
-                       ) -> PickupEntry:
+def create_ammo_pickup(
+    ammo: AmmoPickupDefinition,
+    ammo_count: Sequence[int],
+    requires_main_item: bool,
+    resource_database: ResourceDatabase,
+) -> PickupEntry:
     """
     Creates a Pickup for an expansion of the given ammo.
     :param ammo:
@@ -86,12 +82,8 @@ def create_ammo_pickup(ammo: AmmoPickupDefinition,
     :param resource_database:
     :return:
     """
-    resources = [(resource_database.get_item(item), count)
-                 for item, count in zip(ammo.items, ammo_count)]
-    resources.extend(
-        (resource_database.get_item(item), count)
-        for item, count in ammo.additional_resources.items()
-    )
+    resources = [(resource_database.get_item(item), count) for item, count in zip(ammo.items, ammo_count)]
+    resources.extend((resource_database.get_item(item), count) for item, count in ammo.additional_resources.items())
 
     return PickupEntry(
         name=ammo.name,
@@ -122,9 +114,7 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
     """
     return PickupEntry(
         name="Nothing",
-        progression=(
-            (resource_database.get_item_by_name("Nothing"), 1),
-        ),
+        progression=((resource_database.get_item_by_name("Nothing"), 1),),
         model=PickupModel(
             game=resource_database.game_enum,
             name=model_name,
@@ -137,17 +127,20 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
     )
 
 
-def create_visual_etm() -> PickupEntry:
+def create_visual_nothing(game: RandovaniaGame, model_name: str, pickup_name: str = "Unknown item") -> PickupEntry:
     """
-    Creates an ETM that should only be used as a visual pickup.
+    Creates a Nothing pickup that should only be used for visual purposes.
+    :param game: The game from where the model comes from.
+    :param model_name: The model name for the Nothing pickup.
+    :param pickup_name: The name of the Nothing pickup. Defaults to "Unknown item".
     :return:
     """
     return PickupEntry(
-        name="Unknown item",
+        name=pickup_name,
         progression=(),
         model=PickupModel(
-            game=RandovaniaGame.METROID_PRIME_ECHOES,
-            name=echoes_items.USELESS_PICKUP_MODEL,
+            game=game,
+            name=model_name,
         ),
         pickup_category=pickup_category.USELESS_PICKUP_CATEGORY,
         broad_category=pickup_category.USELESS_PICKUP_CATEGORY,

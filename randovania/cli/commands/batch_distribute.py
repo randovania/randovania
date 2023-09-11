@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
 
 def get_generator_params(base_params: GeneratorParameters, seed_number: int) -> GeneratorParameters:
     from randovania.layout.permalink import GeneratorParameters
+
     assert isinstance(base_params, GeneratorParameters)
 
     return GeneratorParameters(
@@ -30,38 +31,28 @@ def get_generator_params(base_params: GeneratorParameters, seed_number: int) -> 
     )
 
 
-class BatchDistributionGenerationError(Exception):
-    def __init__(self, delta_time: float, base_exception: Exception):
-        super().__init__(base_exception)
-        self.delta_time = delta_time
-        self.base_exception = base_exception
-
-
-def batch_distribute_helper(base_params: GeneratorParameters,
-                            seed_number: int,
-                            timeout: int,
-                            validate: bool,
-                            output_dir: Path,
-                            ) -> float:
+def batch_distribute_helper(
+    base_params: GeneratorParameters,
+    seed_number: int,
+    timeout: int,
+    validate: bool,
+    output_dir: Path,
+) -> float:
     from randovania.generator import generator
+
     permalink = get_generator_params(base_params, seed_number)
 
     start_time = time.perf_counter()
-    try:
-        description = asyncio.run(generator.generate_and_validate_description(
-            generator_params=permalink, status_update=None,
-            validate_after_generation=validate, timeout=timeout,
+    description = asyncio.run(
+        generator.generate_and_validate_description(
+            generator_params=permalink,
+            status_update=None,
+            validate_after_generation=validate,
+            timeout=timeout,
             attempts=0,
-        ))
-        delta_time = time.perf_counter() - start_time
-
-    except (ImpossibleForSolver, GenerationFailure) as e:
-        delta_time = time.perf_counter() - start_time
-        if isinstance(e, GenerationFailure):
-            err = e.source
-        else:
-            err = e
-        raise BatchDistributionGenerationError(delta_time, err) from e
+        )
+    )
+    delta_time = time.perf_counter() - start_time
 
     description.save_to_file(output_dir.joinpath(f"{seed_number}.{description.file_extension()}"))
     return delta_time
@@ -71,7 +62,6 @@ def batch_distribute_command_logic(args):
     from randovania.layout.permalink import Permalink
 
     finished_count = 0
-    total_cpu_time = 0.0
 
     timeout: int = args.timeout
     validate: bool = args.validate
@@ -88,10 +78,9 @@ def batch_distribute_command_logic(args):
     def get_permalink_text(seed: int) -> str:
         return Permalink.from_parameters(get_generator_params(base_params, seed)).as_base64_str
 
-    def report_update(seed: int, msg: str, cpu_time: float = 0):
-        nonlocal finished_count, total_cpu_time
+    def report_update(seed: int, msg: str):
+        nonlocal finished_count
         finished_count += 1
-        total_cpu_time += cpu_time
         front = number_format.format(finished_count, seed_count)
         print(f"{front} [ {get_permalink_text(seed)} ] {msg}")
 
@@ -99,16 +88,11 @@ def batch_distribute_command_logic(args):
 
     def with_result(seed: int, r: Future):
         try:
-            report_update(seed, f"Finished seed in {r.result()} seconds.", r.result())
-
-        except BatchDistributionGenerationError as e:
-            report_update(seed, f"Failed to generate seed: {e}", e.delta_time)
-
+            report_update(seed, f"Finished seed in {r.result()} seconds.")
         except ImpossibleForSolver as e:
             report_update(seed, f"Failed to generate seed: {e}")
         except GenerationFailure as e:
             report_update(seed, f"Failed to generate seed: {e}\nReason: {e.source}")
-
         except CancelledError:
             nonlocal finished_count
             finished_count += 1
@@ -125,40 +109,27 @@ def batch_distribute_command_logic(args):
                 for seed_number in range(base_params.seed_number, base_params.seed_number + args.seed_count):
                     result = pool.submit(
                         batch_distribute_helper,
-                        base_params, seed_number, timeout, validate, output_dir,
+                        base_params,
+                        seed_number,
+                        timeout,
+                        validate,
+                        output_dir,
                     )
                     result.add_done_callback(functools.partial(with_result, seed_number))
                     all_futures.append(result)
     except KeyboardInterrupt:
         pass
 
-    if args.cpu_time:
-        args.cpu_time.write_text(str(total_cpu_time))
-
 
 def add_batch_distribute_command(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "batch-distribute",
-        help="Generate multiple layouts in parallel"
-    )
+    parser: ArgumentParser = sub_parsers.add_parser("batch-distribute", help="Generate multiple layouts in parallel")
 
     parser.add_argument("permalink", type=str, help="The permalink to use")
-    parser.add_argument("--process-count", type=int,
-                        help="How many processes to use. Defaults to CPU count.")
-    parser.add_argument("--cpu-time", type=Path,
-                        help="Where to write the total CPU time spent.")
+    parser.add_argument("--process-count", type=int, help="How many processes to use. Defaults to CPU count.")
     parser.add_argument(
-        "--timeout",
-        type=int,
-        default=90,
-        help="How many seconds to wait before timing out a generation/validation.")
+        "--timeout", type=int, default=90, help="How many seconds to wait before timing out a generation/validation."
+    )
     cli_lib.add_validate_argument(parser)
-    parser.add_argument(
-        "seed_count",
-        type=int,
-        help="How many layouts to generate.")
-    parser.add_argument(
-        "output_dir",
-        type=Path,
-        help="Where to place the seed logs.")
+    parser.add_argument("seed_count", type=int, help="How many layouts to generate.")
+    parser.add_argument("output_dir", type=Path, help="Where to place the seed logs.")
     parser.set_defaults(func=batch_distribute_command_logic)

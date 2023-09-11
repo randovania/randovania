@@ -127,7 +127,7 @@ async def test_add_connector_builder_dread(window: GameConnectionWindow, abort, 
     mocker.patch(
         "randovania.games.dread.gui.dialog.dread_connector_prompt_dialog.DreadConnectorPromptDialog.prompt",
         new_callable=AsyncMock,
-        return_value=None if abort else "my_ip"
+        return_value=None if abort else "my_ip",
     )
 
     # Run
@@ -215,11 +215,13 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
     assert window.ui_for_builder[builder_a].status.text() == "Not Connected."
     assert window.ui_for_builder[builder_b].status.text() == "Not Connected. Connecting!"
 
-    game_connection.get_connector_for_builder = MagicMock(side_effect=lambda builder: {
-        builder_a: connector_a,
-        builder_b: connector_b,
-        builder_c: connector_c,
-    }[builder])
+    game_connection.get_connector_for_builder = MagicMock(
+        side_effect=lambda builder: {
+            builder_a: connector_a,
+            builder_b: connector_b,
+            builder_c: connector_c,
+        }[builder]
+    )
 
     data_b = MagicMock()
     data_b.collected_locations = [10]
@@ -231,13 +233,19 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
     data_c.server_data.world_name = "TheWorld"
     data_c.server_data.session_name = "TheSession"
 
-    window_manager.multiworld_client.database.get_data_for = MagicMock(side_effect=lambda uid: {
-        connector_b.layout_uuid: data_b,
-        connector_c.layout_uuid: data_c,
-    }[uid])
-    window_manager.multiworld_client.get_world_sync_error = MagicMock(side_effect=lambda uid: ({
-        connector_c.layout_uuid: error.ServerError(),
-    }).get(uid))
+    window_manager.multiworld_client.database.get_data_for = MagicMock(
+        side_effect=lambda uid: {
+            connector_b.layout_uuid: data_b,
+            connector_c.layout_uuid: data_c,
+        }[uid]
+    )
+    window_manager.multiworld_client.get_world_sync_error = MagicMock(
+        side_effect=lambda uid: (
+            {
+                connector_c.layout_uuid: error.ServerError(),
+            }
+        ).get(uid)
+    )
 
     window.update_builder_ui()
 
@@ -258,18 +266,22 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
     assert window.ui_for_builder[builder_c].open_session_action.isEnabled()
 
 
-@pytest.mark.parametrize("result", [
-    QtWidgets.QDialog.DialogCode.Accepted,
-    QtWidgets.QDialog.DialogCode.Rejected,
-])
+@pytest.mark.parametrize(
+    "result",
+    [
+        QtWidgets.QDialog.DialogCode.Accepted,
+        QtWidgets.QDialog.DialogCode.Rejected,
+    ],
+)
 async def test_prompt_for_text(window: GameConnectionWindow, mocker, result):
     def side_effect(dialog: TextPromptDialog):
         dialog.prompt_edit.setText("UserInput")
         assert dialog.windowTitle() == "Title"
         return result
 
-    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
-                                       side_effect=side_effect)
+    mock_execute_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock, side_effect=side_effect
+    )
     response = await window._prompt_for_text("Title", "Label")
 
     if result == QtWidgets.QDialog.DialogCode.Accepted:
@@ -279,17 +291,21 @@ async def test_prompt_for_text(window: GameConnectionWindow, mocker, result):
     mock_execute_dialog.assert_awaited_once()
 
 
-@pytest.mark.parametrize("result", [
-    QtWidgets.QDialog.DialogCode.Accepted,
-    QtWidgets.QDialog.DialogCode.Rejected,
-])
+@pytest.mark.parametrize(
+    "result",
+    [
+        QtWidgets.QDialog.DialogCode.Accepted,
+        QtWidgets.QDialog.DialogCode.Rejected,
+    ],
+)
 async def test_prompt_for_game(window: GameConnectionWindow, mocker, result):
     def side_effect(dialog: QtWidgets.QInputDialog):
         dialog.setTextValue(RandovaniaGame.BLANK.long_name)
         return result
 
-    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
-                                       side_effect=side_effect)
+    mock_execute_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock, side_effect=side_effect
+    )
     response = await window._prompt_for_game("Title", "Label")
 
     if result == QtWidgets.QDialog.DialogCode.Accepted:
@@ -358,8 +374,7 @@ async def test_attempt_join_success(window: GameConnectionWindow):
     window.game_connection.get_connector_for_builder.assert_called_once_with(builder)
     window._check_session_data.assert_called_once_with(layout_uuid)
     window.window_manager.ensure_multiplayer_session_window.assert_called_once_with(
-        window.network_client, window._check_session_data.return_value,
-        window.options
+        window.network_client, window._check_session_data.return_value, window.options
     )
 
 

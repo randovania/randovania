@@ -14,21 +14,28 @@ if TYPE_CHECKING:
     from randovania.bitpacking.bitpacking import BitPackDecoder
 
 
-@pytest.mark.parametrize("value", [
-    10,
-    65,
-    0,
-    1,
-    2,
-    134,
-])
-@pytest.mark.parametrize("limits", [
-    (5, 20, 500),
-    (3, 50, 150),
-])
-def test_encode_int_with_limits_round_trip(value: int,
-                                           limits: tuple[int, ...],
-                                           ):
+@pytest.mark.parametrize(
+    "value",
+    [
+        10,
+        65,
+        0,
+        1,
+        2,
+        134,
+    ],
+)
+@pytest.mark.parametrize(
+    "limits",
+    [
+        (5, 20, 500),
+        (3, 50, 150),
+    ],
+)
+def test_encode_int_with_limits_round_trip(
+    value: int,
+    limits: tuple[int, ...],
+):
     # Run
     data = bitpacking._pack_encode_results(list(bitpacking.encode_int_with_limits(value, limits)))
     decoded = bitpacking.decode_int_with_limits(bitpacking.BitPackDecoder(data), limits)
@@ -75,20 +82,20 @@ def test_decode_int_with_limits(limits_fixture):
     result = bitpacking.decode_int_with_limits(decoder, limits)
 
     # Assert
-    decoder.decode_single.assert_has_calls([
-        call(limit)
-        for _, limit in encoded
-    ])
+    decoder.decode_single.assert_has_calls([call(limit) for _, limit in encoded])
     assert result == value
 
 
-@pytest.mark.parametrize(("value", "limits", "expected"), [
-    (0, (1, 4), "u1"),
-    (1, (1, 4), "u1u2"),
-    (2, (1, 4), "u1u2"),
-    (3, (1, 4), "u1u2"),
-    (4, (1, 4), "u1u2"),
-])
+@pytest.mark.parametrize(
+    ("value", "limits", "expected"),
+    [
+        (0, (1, 4), "u1"),
+        (1, (1, 4), "u1u2"),
+        (2, (1, 4), "u1u2"),
+        (3, (1, 4), "u1u2"),
+        (4, (1, 4), "u1u2"),
+    ],
+)
 def test_encode_int_with_limits_bitstring(value, limits, expected):
     # Run
     result = bitpacking._format_string_for(list(bitpacking.encode_int_with_limits(value, limits)))
@@ -132,27 +139,33 @@ def test_decode_bool(bool_fixture):
     assert result == value
 
 
-@pytest.mark.parametrize(("value", "metadata"), [
-    (0.0, {"min": 0.0, "max": 1.0, "precision": 1}),
-    (0.0, {"min": -1.0, "max": 1.0, "precision": 1}),
-    (-0.5, {"min": -1.0, "max": 1.0, "precision": 1}),
-    (1.0, {"min": 0.0, "max": 1.0, "precision": 1}),
-    (1.0, {"min": 0.0, "max": 1.0, "precision": 2}),
-])
+@pytest.mark.parametrize(
+    ("value", "metadata"),
+    [
+        (0.0, {"min": 0.0, "max": 1.0, "precision": 1}),
+        (0.0, {"min": -1.0, "max": 1.0, "precision": 1}),
+        (-0.5, {"min": -1.0, "max": 1.0, "precision": 1}),
+        (1.0, {"min": 0.0, "max": 1.0, "precision": 1}),
+        (1.0, {"min": 0.0, "max": 1.0, "precision": 2}),
+    ],
+)
 def test_round_trip_float(value: float, metadata: dict):
     result = bitpacking.round_trip(bitpacking.BitPackFloat(value), metadata)
     assert result == value
 
 
-@pytest.mark.parametrize(("elements", "array"), [
-    ([], [10, 20]),
-    ([10], [10, 20]),
-    ([10, 20], [10, 20]),
-    ([10, 20], [10, 20, 30]),
-    ([10, 20], [10, 20, 30, 50]),
-    (list(range(15)), list(range(100))),
-    ([x * 2 for x in range(150)], list(range(300))),
-])
+@pytest.mark.parametrize(
+    ("elements", "array"),
+    [
+        ([], [10, 20]),
+        ([10], [10, 20]),
+        ([10, 20], [10, 20]),
+        ([10, 20], [10, 20, 30]),
+        ([10, 20], [10, 20, 30, 50]),
+        (list(range(15)), list(range(100))),
+        ([x * 2 for x in range(150)], list(range(300))),
+    ],
+)
 def test_sorted_array_elements_round_trip(elements, array):
     generator = bitpacking.pack_sorted_array_elements(elements, array)
     b = bitpacking._pack_encode_results(list(generator))
@@ -163,18 +176,21 @@ def test_sorted_array_elements_round_trip(elements, array):
     assert elements == decoded_elements
 
 
-@pytest.mark.parametrize(("elements", "array", "expected_size"), [
-    ([], [], 0),
-    ([], range(100), 8),
-    ([90], range(100), 18),
-    (range(100), range(100), 8),
-    (range(100), range(300), 219),
-    (list(range(100)) + list(range(200, 300)), range(300), 318),
-    (range(200), range(300), 120),
-    (range(200, 300), range(300), 120),
-    ([x * 2 for x in range(150)], range(300), 458),
-    ([x * 3 for x in range(100)], range(300), 310),
-])
+@pytest.mark.parametrize(
+    ("elements", "array", "expected_size"),
+    [
+        ([], [], 0),
+        ([], range(100), 8),
+        ([90], range(100), 18),
+        (range(100), range(100), 8),
+        (range(100), range(300), 219),
+        (list(range(100)) + list(range(200, 300)), range(300), 318),
+        (range(200), range(300), 120),
+        (range(200, 300), range(300), 120),
+        ([x * 2 for x in range(150)], range(300), 458),
+        ([x * 3 for x in range(100)], range(300), 310),
+    ],
+)
 def test_sorted_array_elements_size(elements, array, expected_size):
     count = 0
     for _, size in bitpacking.pack_sorted_array_elements(list(elements), list(array)):
@@ -191,11 +207,14 @@ def test_pack_array_element_single():
     assert len(list(bitpacking.pack_array_element("x", ["x"]))) == 0
 
 
-@pytest.mark.parametrize(("element", "array"), [
-    (10, [10, 20]),
-    ("x", [10, "x", 20]),
-    ("x", ["x"]),
-])
+@pytest.mark.parametrize(
+    ("element", "array"),
+    [
+        (10, [10, 20]),
+        ("x", [10, "x", 20]),
+        ("x", ["x"]),
+    ],
+)
 def test_array_elements_round_trip(element, array):
     generator = bitpacking.pack_array_element(element, array)
     b = bitpacking._pack_encode_results(list(generator))
@@ -232,16 +251,22 @@ class DataclassForTest(bitpacking.BitPackDataclass):
     uses_reference: BitPackValueUsingReference
 
 
-@pytest.mark.parametrize(("data_value", "data_reference"), [
-    (5, 5),
-    (20, 5),
-    (50, 5),
-])
-@pytest.mark.parametrize(("int_v", "int_reference"), [
-    (15, 5),
-    (12, None),
-    (None, 20),
-])
+@pytest.mark.parametrize(
+    ("data_value", "data_reference"),
+    [
+        (5, 5),
+        (20, 5),
+        (50, 5),
+    ],
+)
+@pytest.mark.parametrize(
+    ("int_v", "int_reference"),
+    [
+        (15, 5),
+        (12, None),
+        (None, 20),
+    ],
+)
 def test_round_trip_dataclass_for_test(int_v, data_value, int_reference, data_reference):
     data = DataclassForTest(int_v, BitPackValueUsingReference(data_value))
     ref = DataclassForTest(data_value, BitPackValueUsingReference(data_reference))
@@ -250,13 +275,16 @@ def test_round_trip_dataclass_for_test(int_v, data_value, int_reference, data_re
     assert result == data
 
 
-@pytest.mark.parametrize(("int_v", "int_reference", "data_value", "data_reference", "expected"), [
-    (None, 1, 5, 5, b"\x00"),
-    (2, None, 5, 5, b"\xc8"),
-    (None, None, 5, 5, b"\x00"),
-    (1, None, 20, 5, b'\xc6<'),
-    (5, 30, 50, 5, b"\xd6\xb4"),
-])
+@pytest.mark.parametrize(
+    ("int_v", "int_reference", "data_value", "data_reference", "expected"),
+    [
+        (None, 1, 5, 5, b"\x00"),
+        (2, None, 5, 5, b"\xc8"),
+        (None, None, 5, 5, b"\x00"),
+        (1, None, 20, 5, b"\xc6<"),
+        (5, 30, 50, 5, b"\xd6\xb4"),
+    ],
+)
 def test_encode_dataclass_for_test(int_v, int_reference, data_value, data_reference, expected):
     data = DataclassForTest(int_v, BitPackValueUsingReference(data_value))
     ref = DataclassForTest(data_value, BitPackValueUsingReference(data_reference))

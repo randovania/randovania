@@ -2694,8 +2694,171 @@
                                         "data": {
                                             "type": "damage",
                                             "name": "Damage",
-                                            "amount": 99,
+                                            "amount": 199,
                                             "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Defeat Dual Gammas": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Ammo Requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 30,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 6,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Missile-Less Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Charge Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Gravity Suit",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MissileLessMetroids",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "MissileLessMetroids",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "or",
+                            "data": {
+                                "comment": "Energy Requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 320,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity Suit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 170,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2856,7 +3019,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Super Missile Launcher",
+                                            "name": "Super Missiles",
                                             "amount": 7,
                                             "negate": false
                                         }
@@ -3748,10 +3911,45 @@
         "Default": []
     },
     "minimal_logic": {
-        "items_to_exclude": [],
-        "custom_item_amount": [],
-        "events_to_exclude": [],
-        "description": "Nothing is checked."
+        "items_to_exclude": [
+            {
+                "name": "Bombs",
+                "when_shuffled": null
+            },
+            {
+                "name": "Ice Beam",
+                "when_shuffled": null
+            },
+            {
+                "name": "Screw Attack",
+                "when_shuffled": null
+            }
+        ],
+        "custom_item_amount": [
+            {
+                "name": "Energy Tank",
+                "value": 10
+            },
+            {
+                "name": "Missiles",
+                "value": 250
+            },
+            {
+                "name": "Super Missiles",
+                "value": 10
+            },
+            {
+                "name": "Power Bombs",
+                "value": 10
+            }
+        ],
+        "events_to_exclude": [
+            {
+                "name": "VictoryEvent",
+                "reason": "Victory Condition"
+            }
+        ],
+        "description": "Items checked for: Bombs, Ice Beam and Screw Attack."
     },
     "victory_condition": {
         "type": "and",
@@ -3882,7 +4080,7 @@
                             }
                         }
                     },
-                    "Water Turbine Door": {
+                    "Hydro Station Water Turbine": {
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -4261,6 +4459,7 @@
                         "Distribution Center Robot Home EMP Door",
                         "Golden Temple EMP Door",
                         "Hydro Station EMP Door",
+                        "Hydro Station Water Turbine",
                         "Industrial Complex EMP Door",
                         "Missile Door",
                         "Normal Door",
@@ -4284,6 +4483,7 @@
                         "Golden Temple EMP Door",
                         "Guardian-Locked Door",
                         "Hydro Station EMP Door",
+                        "Hydro Station Water Turbine",
                         "Ice Beam Door",
                         "Industrial Complex EMP Door",
                         "Locked Door",
@@ -4302,6 +4502,46 @@
                         "Wave Beam Door"
                     ]
                 }
+            },
+            "horizontal_dock": {
+                "name": "Horizontal Dock",
+                "extra": {},
+                "items": {
+                    "4-Tiles High Dock": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "5-Tiles High Dock": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "3-Tiles High Dock": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
             },
             "tunnel": {
                 "name": "Tunnel",
@@ -4459,7 +4699,8 @@
             1,
             2,
             3,
-            4
+            4,
+            5
         ],
         "Movement": [
             1,
@@ -4490,9 +4731,11 @@
         "Knowledge": [
             1,
             2,
-            3
+            3,
+            4
         ],
         "ShortCharge": [
+            1,
             2,
             4,
             5
@@ -4511,7 +4754,7 @@
         "Industrial Complex.json",
         "The Tower.json",
         "Distribution Center.json",
-        "The Nest.json",
+        "The Depths.json",
         "Genetics Laboratory.json",
         "GFS Thoth.json"
     ]

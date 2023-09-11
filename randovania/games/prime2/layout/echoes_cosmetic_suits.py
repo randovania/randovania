@@ -21,10 +21,7 @@ class SuitColor(BitPackEnum, Enum):
     @property
     def ui_icons(self) -> dict[str, Path]:
         base_path = RandovaniaGame.METROID_PRIME_ECHOES.data_path.joinpath("assets", "suit_renders")
-        return {
-            suit: base_path.joinpath(suit, f"{self.value}.png")
-            for suit in ("simple", "varia", "dark", "light")
-        }
+        return {suit: base_path.joinpath(suit, f"{self.value}.png") for suit in ("simple", "varia", "dark", "light")}
 
     def next_color(self, reverse: bool) -> "SuitColor":
         upcoming = list(SuitColor)
@@ -32,19 +29,22 @@ class SuitColor(BitPackEnum, Enum):
         return upcoming[(upcoming.index(self) + offset) % len(upcoming)]
 
 
-enum_lib.add_long_name(SuitColor, {
-    SuitColor.PLAYER_1: "Player 1",
-    SuitColor.PLAYER_2: "Player 2",
-    SuitColor.PLAYER_3: "Player 3",
-    SuitColor.PLAYER_4: "Player 4",
-    SuitColor.RANDOM:   "Random",
-})
+enum_lib.add_long_name(
+    SuitColor,
+    {
+        SuitColor.PLAYER_1: "Player 1",
+        SuitColor.PLAYER_2: "Player 2",
+        SuitColor.PLAYER_3: "Player 3",
+        SuitColor.PLAYER_4: "Player 4",
+        SuitColor.RANDOM: "Random",
+    },
+)
 
 
 @dataclasses.dataclass(frozen=True)
 class EchoesSuitPreferences(JsonDataclass):
     varia: SuitColor = SuitColor.PLAYER_1
-    dark:  SuitColor = SuitColor.PLAYER_1
+    dark: SuitColor = SuitColor.PLAYER_1
     light: SuitColor = SuitColor.PLAYER_1
 
     randomize_separately: bool = False
@@ -59,17 +59,17 @@ class EchoesSuitPreferences(JsonDataclass):
 
         if self.randomize_separately:
             random = EchoesSuitPreferences(
-                varia = rng.choice(choices),
-                dark  = rng.choice(choices),
-                light = rng.choice(choices),
+                varia=rng.choice(choices),
+                dark=rng.choice(choices),
+                light=rng.choice(choices),
                 randomize_separately=True,
             )
         else:
             suit = rng.choice(choices)
             random = EchoesSuitPreferences(
-                varia = suit,
-                dark  = suit,
-                light = suit,
+                varia=suit,
+                dark=suit,
+                light=suit,
                 randomize_separately=False,
             )
 
@@ -79,8 +79,8 @@ class EchoesSuitPreferences(JsonDataclass):
             return mine if mine != SuitColor.RANDOM else other
 
         return EchoesSuitPreferences(
-            varia = random_if_needed("varia"),
-            dark  = random_if_needed("dark"),
-            light = random_if_needed("light"),
+            varia=random_if_needed("varia"),
+            dark=random_if_needed("dark"),
+            light=random_if_needed("light"),
             randomize_separately=self.randomize_separately,
         )

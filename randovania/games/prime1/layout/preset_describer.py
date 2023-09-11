@@ -3,7 +3,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.games.prime1.layout.hint_configuration import PhazonSuitHintMode
-from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode, PrimeConfiguration, RoomRandoMode
+from randovania.games.prime1.layout.prime_configuration import (
+    LayoutCutsceneMode,
+    PrimeConfiguration,
+    RoomRandoMode,
+)
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
@@ -17,9 +21,9 @@ _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.MAJOR: "Major cutscene removal",
     LayoutCutsceneMode.MINOR: "Minor cutscene removal",
     LayoutCutsceneMode.COMPETITIVE: "Competitive cutscene removal",
-    LayoutCutsceneMode.SKIPPABLE: "Skippable cutscenes (Experimental)",
-    LayoutCutsceneMode.SKIPPABLE_COMPETITIVE: "Competitive cutscene removal (Experimental)",
-    LayoutCutsceneMode.ORIGINAL: None,
+    LayoutCutsceneMode.SKIPPABLE: None,
+    LayoutCutsceneMode.SKIPPABLE_COMPETITIVE: "Competitive cutscenes",
+    LayoutCutsceneMode.ORIGINAL: "Original cutscenes",
 }
 
 _PRIME1_PHAZON_SUIT_HINT = {
@@ -69,28 +73,38 @@ class PrimePresetDescriber(GamePresetDescriber):
 
         if configuration.enemy_attributes is not None:
             enemy_rando_range_scale = attribute_in_range(
-                [configuration.enemy_attributes.enemy_rando_range_scale_low,
-                 configuration.enemy_attributes.enemy_rando_range_scale_high],
+                [
+                    configuration.enemy_attributes.enemy_rando_range_scale_low,
+                    configuration.enemy_attributes.enemy_rando_range_scale_high,
+                ],
                 "Size",
             )
             enemy_rando_range_health = attribute_in_range(
-                [configuration.enemy_attributes.enemy_rando_range_health_low,
-                 configuration.enemy_attributes.enemy_rando_range_health_high],
+                [
+                    configuration.enemy_attributes.enemy_rando_range_health_low,
+                    configuration.enemy_attributes.enemy_rando_range_health_high,
+                ],
                 "Health",
             )
             enemy_rando_range_speed = attribute_in_range(
-                [configuration.enemy_attributes.enemy_rando_range_speed_low,
-                 configuration.enemy_attributes.enemy_rando_range_speed_high],
+                [
+                    configuration.enemy_attributes.enemy_rando_range_speed_low,
+                    configuration.enemy_attributes.enemy_rando_range_speed_high,
+                ],
                 "Speed",
             )
             enemy_rando_range_damage = attribute_in_range(
-                [configuration.enemy_attributes.enemy_rando_range_damage_low,
-                 configuration.enemy_attributes.enemy_rando_range_damage_high],
+                [
+                    configuration.enemy_attributes.enemy_rando_range_damage_low,
+                    configuration.enemy_attributes.enemy_rando_range_damage_high,
+                ],
                 "Damage",
             )
             enemy_rando_range_knockback = attribute_in_range(
-                [configuration.enemy_attributes.enemy_rando_range_knockback_low,
-                 configuration.enemy_attributes.enemy_rando_range_knockback_high],
+                [
+                    configuration.enemy_attributes.enemy_rando_range_knockback_low,
+                    configuration.enemy_attributes.enemy_rando_range_knockback_high,
+                ],
                 "Knockback",
             )
             enemy_rando_diff_xyz = different_xyz_randomization(configuration.enemy_attributes.enemy_rando_diff_xyz)
@@ -108,31 +122,30 @@ class PrimePresetDescriber(GamePresetDescriber):
                 {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
             ],
             "Gameplay": [
-                {f"Elevators: {configuration.elevators.description()}": not configuration.elevators.is_vanilla},
                 {
-                    "Dangerous Gravity Suit Logic":
-                        configuration.allow_underwater_movement_without_gravity,
+                    f"Elevators: {configuration.teleporters.description('elevators')}": (
+                        not configuration.teleporters.is_vanilla
+                    )
+                },
+                {
+                    "Dangerous Gravity Suit Logic": configuration.allow_underwater_movement_without_gravity,
                 },
             ],
-            "Quality of Life": [
-                {
-                    f"Phazon suit hint: {phazon_hint}": phazon_hint is not None
-                }
-            ],
+            "Quality of Life": [{f"Phazon suit hint: {phazon_hint}": phazon_hint is not None}],
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
                     {
                         "Missiles needs Launcher": "Missile Expansion",
                         "Power Bomb needs Main": "Power Bomb Expansion",
-                    }
+                    },
                 ),
                 {
                     "Progressive suit damage reduction": configuration.progressive_damage_reduction,
                 },
                 {
                     "Warp to start": configuration.warp_to_start,
-                    "Final bosses removed": configuration.elevators.skip_final_bosses,
+                    "Final bosses removed": configuration.teleporters.skip_final_bosses,
                     "Unlocked Vault door": configuration.main_plaza_door,
                     "Unlocked Save Station doors": configuration.blue_save_doors,
                     "Phazon Elite without Dynamo": configuration.phazon_elite_without_dynamo,
@@ -169,7 +182,7 @@ class PrimePresetDescriber(GamePresetDescriber):
                     enemy_rando_range_damage: enemy_rando_range_damage is not None,
                     enemy_rando_range_knockback: enemy_rando_range_knockback is not None,
                     enemy_rando_diff_xyz: enemy_rando_diff_xyz is not None,
-                }
+                },
             ],
         }
         if enemy_rando_range_scale is not None:
@@ -196,7 +209,9 @@ class PrimePresetDescriber(GamePresetDescriber):
             template_strings["Game Changes"].append("Legacy Mode")
 
         # Artifacts
-        template_strings["Item Pool"].append(f"{configuration.artifact_target.num_artifacts} Artifacts, "
-                                             f"{configuration.artifact_minimum_progression} min actions")
+        template_strings["Item Pool"].append(
+            f"{configuration.artifact_target.num_artifacts} Artifacts, "
+            f"{configuration.artifact_minimum_progression} min actions"
+        )
 
         return template_strings

@@ -4,7 +4,7 @@ import dataclasses
 import multiprocessing
 import subprocess
 from concurrent.futures import ProcessPoolExecutor
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import randovania
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from pathlib import Path
 
     from randovania.lib import status_update_lib
+
 
 @dataclasses.dataclass(frozen=True)
 class AM2RGameExportParams(GameExportParams):
@@ -39,19 +40,30 @@ class AM2RGameExporter(GameExporter):
         """
         return False
 
-    def _do_export_game(self, patch_data: dict, export_params: AM2RGameExportParams,
-                        progress_update: status_update_lib.ProgressUpdateCallable):
+    def _do_export_game(
+        self,
+        patch_data: dict,
+        export_params: AM2RGameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ) -> None:
         # Check if dotnet is available
-        dotnet_process = subprocess.run(["dotnet", "--help"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        if dotnet_process.returncode != 0:
-            raise UnableToExportError("You do not have .NET installed!\n"
-                                         "Please ensure that it is installed and located in PATH. It can be installed "
-                                         "from here:\n"
-                                         "https://aka.ms/dotnet/download")
+        dotnet_ran_fine = False
+        try:
+            dotnet_process = subprocess.run(["dotnet", "--info"], check=False)
+            dotnet_ran_fine = dotnet_process.returncode == 0
+        except FileNotFoundError:
+            dotnet_ran_fine = False
+        if not dotnet_ran_fine:
+            raise UnableToExportError(
+                "You do not have .NET installed!\n"
+                "Please ensure that it is installed and located in PATH. It can be installed "
+                "from here:\n"
+                "https://aka.ms/dotnet/download"
+            )
 
         receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 
-        def on_done(_):
+        def on_done(_: Any) -> None:
             output_pipe.send(None)
 
         with ProcessPoolExecutor(max_workers=1) as executor:
@@ -74,11 +86,11 @@ class AM2RGameExporter(GameExporter):
             future.result()
 
 
-def _run_patcher(patch_data: dict, export_params: AM2RGameExportParams, output_pipe: Connection):
+def _run_patcher(patch_data: dict, export_params: AM2RGameExportParams, output_pipe: Connection) -> None:
     # Delay this, so that we only load CLR/dotnet when exporting
     import am2r_yams
 
-    def status_update(message: str, progress: float):
+    def status_update(message: str, progress: float) -> None:
         output_pipe.send((message, progress))
         if output_pipe.poll():
             raise RuntimeError(output_pipe.recv())

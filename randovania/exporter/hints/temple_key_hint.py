@@ -13,12 +13,13 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
 
 
-def create_temple_key_hint(all_patches: dict[int, GamePatches],
-                           player_index: int,
-                           temple: HintDarkTemple,
-                           namer: HintNamer,
-                           with_color: bool,
-                           ) -> str:
+def create_temple_key_hint(
+    all_patches: dict[int, GamePatches],
+    player_index: int,
+    temple: HintDarkTemple,
+    namer: HintNamer,
+    with_color: bool,
+) -> str:
     """
     Creates the text for .
     :param all_patches:
@@ -31,8 +32,9 @@ def create_temple_key_hint(all_patches: dict[int, GamePatches],
     all_region_names = {}
 
     _TEMPLE_NAMES = ["Dark Agon Temple", "Dark Torvus Temple", "Hive Temple"]
-    temple_index = [HintDarkTemple.AGON_WASTES, HintDarkTemple.TORVUS_BOG,
-                    HintDarkTemple.SANCTUARY_FORTRESS].index(temple)
+    temple_index = [HintDarkTemple.AGON_WASTES, HintDarkTemple.TORVUS_BOG, HintDarkTemple.SANCTUARY_FORTRESS].index(
+        temple
+    )
 
     db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_ECHOES)
     items = [db.get_item(index) for index in echoes_items.DARK_TEMPLE_KEY_ITEMS[temple_index]]
@@ -45,8 +47,10 @@ def create_temple_key_hint(all_patches: dict[int, GamePatches],
             break
 
     temple_name = namer.format_temple_name(_TEMPLE_NAMES[temple_index], with_color=with_color)
-    names_sorted = [namer.format_region(location, with_color=with_color)
-                    for name, (_, location) in sorted(all_region_names.items(), key=lambda it: it[0])]
+    names_sorted = [
+        namer.format_region(location, with_color=with_color)
+        for name, (_, location) in sorted(all_region_names.items(), key=lambda it: it[0])
+    ]
     if len(names_sorted) == 0:
         return f"The keys to {temple_name} are nowhere to be found."
     elif len(names_sorted) == 1:

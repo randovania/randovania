@@ -8,6 +8,7 @@ from randovania.layout.preset_describer import GamePresetDescriber
 
 def _options():
     from randovania.interface_common.options import PerGameOptions
+
     return PerGameOptions
 
 
@@ -38,11 +39,13 @@ def _generator() -> game.GameGenerator:
 
 def _patch_data_factory():
     from randovania.games.blank.exporter.patch_data_factory import BlankPatchDataFactory
+
     return BlankPatchDataFactory
 
 
 def _exporter():
     from randovania.games.blank.exporter.game_exporter import BlankGameExporter
+
     return BlankGameExporter()
 
 
@@ -50,32 +53,20 @@ game_data: game.GameData = game.GameData(
     short_name="Blank",
     long_name="Blank Development Game",
     development_state=game.DevelopmentState.EXPERIMENTAL,
-
     presets=[
-        {
-            "path": "starter_preset.rdvpreset"
-        },
+        {"path": "starter_preset.rdvpreset"},
     ],
-
     faq=[],
-
     layout=game.GameLayout(
         configuration=layout.BlankConfiguration,
         cosmetic_patches=layout.BlankCosmeticPatches,
         preset_describer=GamePresetDescriber(),
     ),
-
     options=_options,
-
     gui=_gui,
-
     generator=_generator,
-
     patch_data_factory=_patch_data_factory,
-
     exporter=_exporter,
-
     multiple_start_nodes_per_area=True,
-
     defaults_available_in_game_sessions=randovania.is_dev_version(),
 )

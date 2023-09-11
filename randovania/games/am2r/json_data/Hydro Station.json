@@ -28,7 +28,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Hydro Station Exterior": {
+                "Horizontal Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -42,13 +42,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Exterior",
-                        "node": "Dock to Hydro Station Entrance"
+                        "node": "Horizontal Dock to Hydro Station Entrance"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -80,7 +80,11 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 109738,
+                        "source_x": 1280,
+                        "source_y": 160
+                    },
                     "valid_starting_location": false,
                     "dock_type": "area_transition",
                     "default_connection": {
@@ -94,7 +98,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Hydro Station Exterior": {
+                        "Horizontal Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -375,7 +379,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Hydro Station Entrance": {
+                "Horizontal Dock to Hydro Station Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -389,19 +393,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Entrance",
-                        "node": "Dock to Hydro Station Exterior"
+                        "node": "Horizontal Dock to Hydro Station Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Broken Save Station": {
+                        "Horizontal Dock to Broken Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -460,7 +464,7 @@
                         }
                     }
                 },
-                "Dock to Broken Save Station": {
+                "Horizontal Dock to Broken Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -474,19 +478,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Broken Save Station",
-                        "node": "Dock to Hydro Station Exterior"
+                        "node": "Horizontal Dock to Hydro Station Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Hydro Station Entrance": {
+                        "Horizontal Dock to Hydro Station Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -495,7 +499,7 @@
                         }
                     }
                 },
-                "Dock to Inner Save Station": {
+                "Horizontal Dock to Inner Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -509,13 +513,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Inner Save Station",
-                        "node": "Dock to Hydro Station Exterior"
+                        "node": "Horizontal Dock to Hydro Station Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -528,7 +532,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Breeding Grounds Access (Bottom)": {
+                        "Horizontal Dock to Breeding Grounds Access (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -558,7 +562,7 @@
                         }
                     }
                 },
-                "Dock to Inner Alpha Nest North": {
+                "Horizontal Dock to Inner Alpha Nest North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -572,13 +576,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Inner Alpha Nest North",
-                        "node": "Dock to Hydro Station Exterior"
+                        "node": "Horizontal Dock to Hydro Station Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -629,7 +633,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Broken Save Station": {
+                        "Horizontal Dock to Broken Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -671,7 +675,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Exterior Alpha Nest": {
+                        "Horizontal Dock to Exterior Alpha Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -868,7 +872,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Morph Glide",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -880,12 +884,97 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "MorphGlide",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Without HJ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MorphGlide",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "MorphGlide",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Power Grip",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "With HJ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MorphGlide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -918,13 +1007,13 @@
                         "area": "Water Turbine Station",
                         "node": "Door to Hydro Station Exterior"
                     },
-                    "default_dock_weakness": "Water Turbine Door",
-                    "exclude_from_dock_rando": true,
+                    "default_dock_weakness": "Hydro Station Water Turbine",
+                    "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Inner Save Station": {
+                        "Horizontal Dock to Inner Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -933,7 +1022,7 @@
                         }
                     }
                 },
-                "Dock to Exterior Alpha Nest": {
+                "Horizontal Dock to Exterior Alpha Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -947,19 +1036,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Exterior Alpha Nest",
-                        "node": "Dock to Hydro Station Exterior"
+                        "node": "Horizontal Dock to Hydro Station Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Access (Top)": {
+                        "Horizontal Dock to Breeding Grounds Access (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -980,7 +1069,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Access (Top)": {
+                "Horizontal Dock to Breeding Grounds Access (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -994,19 +1083,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Access",
-                        "node": "Dock to Hydro Station Exterior (Top)"
+                        "node": "Horizontal Dock to Hydro Station Exterior (Top)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Access (Bottom)": {
+                        "Horizontal Dock to Breeding Grounds Access (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1015,7 +1104,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Access (Bottom)": {
+                "Horizontal Dock to Breeding Grounds Access (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1029,26 +1118,26 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Access",
-                        "node": "Dock to Hydro Station Exterior (Bottom)"
+                        "node": "Horizontal Dock to Hydro Station Exterior (Bottom)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Inner Save Station": {
+                        "Horizontal Dock to Inner Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Breeding Grounds Access (Top)": {
+                        "Horizontal Dock to Breeding Grounds Access (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1129,14 +1218,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Inner Save Station": {
+                        "Horizontal Dock to Inner Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Inner Alpha Nest North": {
+                        "Horizontal Dock to Inner Alpha Nest North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1350,7 +1439,7 @@
                                 ]
                             }
                         },
-                        "Dock to Breeding Grounds Access (Top)": {
+                        "Horizontal Dock to Breeding Grounds Access (Top)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1423,7 +1512,7 @@
                     "pickup_index": 163,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Broken Save Station": {
+                        "Horizontal Dock to Broken Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1442,7 +1531,7 @@
                                 ]
                             }
                         },
-                        "Dock to Exterior Alpha Nest": {
+                        "Horizontal Dock to Exterior Alpha Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1474,7 +1563,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Hydro Station Exterior": {
+                "Horizontal Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1488,13 +1577,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Exterior",
-                        "node": "Dock to Exterior Alpha Nest"
+                        "node": "Horizontal Dock to Exterior Alpha Nest"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1530,7 +1619,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha7",
                     "connections": {
-                        "Dock to Hydro Station Exterior": {
+                        "Horizontal Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1588,7 +1677,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Autrack Corridor": {
+                "Horizontal Dock to Autrack Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1602,19 +1691,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Autrack Corridor",
-                        "node": "Dock to Broken Save Station"
+                        "node": "Horizontal Dock to Broken Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Hydro Station Exterior": {
+                        "Horizontal Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1623,7 +1712,7 @@
                         }
                     }
                 },
-                "Dock to Hydro Station Exterior": {
+                "Horizontal Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1637,19 +1726,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Exterior",
-                        "node": "Dock to Broken Save Station"
+                        "node": "Horizontal Dock to Broken Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Autrack Corridor": {
+                        "Horizontal Dock to Autrack Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1689,14 +1778,14 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Hydro Station Exterior": {
+                        "Horizontal Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Autrack Corridor": {
+                        "Horizontal Dock to Autrack Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1705,7 +1794,7 @@
                         }
                     }
                 },
-                "Dock to Hydro Station Exterior": {
+                "Horizontal Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1719,13 +1808,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Exterior",
-                        "node": "Dock to Inner Save Station"
+                        "node": "Horizontal Dock to Inner Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1740,7 +1829,7 @@
                         }
                     }
                 },
-                "Dock to Autrack Corridor": {
+                "Horizontal Dock to Autrack Corridor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1754,13 +1843,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Autrack Corridor",
-                        "node": "Dock to Inner Save Station"
+                        "node": "Horizontal Dock to Inner Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1805,7 +1894,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Inner Save Station": {
+                "Horizontal Dock to Inner Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1819,19 +1908,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Inner Save Station",
-                        "node": "Dock to Autrack Corridor"
+                        "node": "Horizontal Dock to Autrack Corridor"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Broken Save Station": {
+                        "Horizontal Dock to Broken Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1850,7 +1939,7 @@
                         }
                     }
                 },
-                "Dock to Broken Save Station": {
+                "Horizontal Dock to Broken Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1864,19 +1953,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Broken Save Station",
-                        "node": "Dock to Autrack Corridor"
+                        "node": "Horizontal Dock to Autrack Corridor"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Inner Save Station": {
+                        "Horizontal Dock to Inner Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2391,7 +2480,9 @@
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Hydro Station Water Turbine"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2485,7 +2576,9 @@
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Hydro Station Water Turbine"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2690,7 +2783,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Hydro Station Exterior": {
+                "Horizontal Dock to Hydro Station Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2704,13 +2797,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Exterior",
-                        "node": "Dock to Inner Alpha Nest North"
+                        "node": "Horizontal Dock to Inner Alpha Nest North"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2817,7 +2910,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Hydro Station Exterior": {
+                        "Horizontal Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2932,7 +3025,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha8",
                     "connections": {
-                        "Dock to Hydro Station Exterior": {
+                        "Horizontal Dock to Hydro Station Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3653,7 +3746,7 @@
                         }
                     }
                 },
-                "Dock to Inner Alpha Nest South": {
+                "Horizontal Dock to Inner Alpha Nest South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3667,13 +3760,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Inner Alpha Nest South",
-                        "node": "Dock to Water Turbine Station"
+                        "node": "Horizontal Dock to Water Turbine Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3688,7 +3781,7 @@
                         }
                     }
                 },
-                "Dock to Water Turbine Station Pipe": {
+                "Horizontal Dock to Water Turbine Station Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3702,13 +3795,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Water Turbine Station Pipe",
-                        "node": "Dock to Water Turbine Station"
+                        "node": "Horizontal Dock to Water Turbine Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3922,14 +4015,14 @@
                     "valid_starting_location": false,
                     "event_name": "A2BottomWaterTurbine",
                     "connections": {
-                        "Dock to Inner Alpha Nest South": {
+                        "Horizontal Dock to Inner Alpha Nest South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Water Turbine Station Pipe": {
+                        "Horizontal Dock to Water Turbine Station Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4024,7 +4117,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Water Turbine Station": {
+                "Horizontal Dock to Water Turbine Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4038,13 +4131,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Water Turbine Station",
-                        "node": "Dock to Inner Alpha Nest South"
+                        "node": "Horizontal Dock to Inner Alpha Nest South"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4150,7 +4243,7 @@
                                 ]
                             }
                         },
-                        "Dock to Lower Hydro Station Pipe": {
+                        "Horizontal Dock to Lower Hydro Station Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4371,7 +4464,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Water Turbine Station": {
+                        "Horizontal Dock to Water Turbine Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4380,7 +4473,7 @@
                         }
                     }
                 },
-                "Dock to Lower Hydro Station Pipe": {
+                "Horizontal Dock to Lower Hydro Station Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4394,19 +4487,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Lower Hydro Station Pipe",
-                        "node": "Dock to Inner Alpha Nest South"
+                        "node": "Horizontal Dock to Inner Alpha Nest South"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Water Turbine Station": {
+                        "Horizontal Dock to Water Turbine Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4450,7 +4543,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha9",
                     "connections": {
-                        "Dock to Water Turbine Station": {
+                        "Horizontal Dock to Water Turbine Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4485,7 +4578,7 @@
                     "pickup_index": 151,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Water Turbine Station": {
+                        "Horizontal Dock to Water Turbine Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4714,7 +4807,7 @@
                         }
                     }
                 },
-                "Dock to Lower Hydro Station Hub": {
+                "Horizontal Dock to Lower Hydro Station Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4728,13 +4821,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Lower Hydro Station Hub",
-                        "node": "Dock to Wave Beam Chamber Access"
+                        "node": "Horizontal Dock to Wave Beam Chamber Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4813,7 +4906,7 @@
                                 ]
                             }
                         },
-                        "Dock to Lower Hydro Station Hub": {
+                        "Horizontal Dock to Lower Hydro Station Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5086,7 +5179,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Wave Beam Chamber Access": {
+                "Horizontal Dock to Wave Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5100,13 +5193,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Wave Beam Chamber Access",
-                        "node": "Dock to Lower Hydro Station Hub"
+                        "node": "Horizontal Dock to Lower Hydro Station Hub"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5121,7 +5214,7 @@
                         }
                     }
                 },
-                "Dock to Hi-Jump Chamber Access": {
+                "Horizontal Dock to Hi-Jump Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5135,13 +5228,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hi-Jump Chamber Access",
-                        "node": "Dock to Lower Hydro Station Hub"
+                        "node": "Horizontal Dock to Lower Hydro Station Hub"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5156,7 +5249,7 @@
                         }
                     }
                 },
-                "Dock to Autoad Playground": {
+                "Horizontal Dock to Autoad Playground": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5170,13 +5263,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Autoad Playground",
-                        "node": "Dock to Lower Hydro Station Hub"
+                        "node": "Horizontal Dock to Lower Hydro Station Hub"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5191,7 +5284,7 @@
                         }
                     }
                 },
-                "Dock to Lower Hydro Station Pipe": {
+                "Horizontal Dock to Lower Hydro Station Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5205,13 +5298,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Lower Hydro Station Pipe",
-                        "node": "Dock to Lower Hydro Station Hub"
+                        "node": "Horizontal Dock to Lower Hydro Station Hub"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5260,28 +5353,28 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Wave Beam Chamber Access": {
+                        "Horizontal Dock to Wave Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Hi-Jump Chamber Access": {
+                        "Horizontal Dock to Hi-Jump Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Autoad Playground": {
+                        "Horizontal Dock to Autoad Playground": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Lower Hydro Station Pipe": {
+                        "Horizontal Dock to Lower Hydro Station Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5359,15 +5452,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Lower Hydro Station Hub": {
+                        "Horizontal Dock to Lower Hydro Station Hub": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Hijump Wall"
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -5376,13 +5465,119 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get up w/o Septogg",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Spider Method",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "CBJ method",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Charged Bomb Jump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ChargedBombJump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "IBJ method",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "WJ method",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Dock to Lower Hydro Station Hub": {
+                "Horizontal Dock to Lower Hydro Station Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5396,13 +5591,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Lower Hydro Station Hub",
-                        "node": "Dock to Hi-Jump Chamber Access"
+                        "node": "Horizontal Dock to Hi-Jump Chamber Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5574,7 +5769,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Wallfire Venue": {
+                "Horizontal Dock to Wallfire Venue": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5588,19 +5783,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Wallfire Venue",
-                        "node": "Dock to Autoad Playground"
+                        "node": "Horizontal Dock to Autoad Playground"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Lower Hydro Station Hub": {
+                        "Horizontal Dock to Lower Hydro Station Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5732,7 +5927,7 @@
                         }
                     }
                 },
-                "Dock to Lower Hydro Station Hub": {
+                "Horizontal Dock to Lower Hydro Station Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5746,19 +5941,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Lower Hydro Station Hub",
-                        "node": "Dock to Autoad Playground"
+                        "node": "Horizontal Dock to Autoad Playground"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Wallfire Venue": {
+                        "Horizontal Dock to Wallfire Venue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5802,7 +5997,7 @@
                     "pickup_index": 153,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Wallfire Venue": {
+                        "Horizontal Dock to Wallfire Venue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5839,7 +6034,7 @@
                     "pickup_index": 154,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Lower Hydro Station Hub": {
+                        "Horizontal Dock to Lower Hydro Station Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5875,7 +6070,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Autoad Playground": {
+                "Horizontal Dock to Autoad Playground": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5889,19 +6084,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Autoad Playground",
-                        "node": "Dock to Wallfire Venue"
+                        "node": "Horizontal Dock to Wallfire Venue"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Hydro Station Basement": {
+                        "Horizontal Dock to Hydro Station Basement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5910,7 +6105,7 @@
                         }
                     }
                 },
-                "Dock to Hydro Station Basement": {
+                "Horizontal Dock to Hydro Station Basement": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5924,19 +6119,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Basement",
-                        "node": "Dock to Wallfire Venue"
+                        "node": "Horizontal Dock to Wallfire Venue"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Autoad Playground": {
+                        "Horizontal Dock to Autoad Playground": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5972,7 +6167,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Wallfire Venue": {
+                "Horizontal Dock to Wallfire Venue": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5986,13 +6181,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Wallfire Venue",
-                        "node": "Dock to Hydro Station Basement"
+                        "node": "Horizontal Dock to Hydro Station Basement"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6300,7 +6495,7 @@
                     "pickup_index": 155,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Wallfire Venue": {
+                        "Horizontal Dock to Wallfire Venue": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6317,7 +6512,7 @@
             }
         },
         "Lower Hydro Station Pipe": {
-            "default_node": "Dock to Inner Alpha Nest South",
+            "default_node": "Horizontal Dock to Inner Alpha Nest South",
             "extra": {
                 "map_name": "rm_a2a18",
                 "minimap_data": [
@@ -6332,7 +6527,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Inner Alpha Nest South": {
+                "Horizontal Dock to Inner Alpha Nest South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6346,19 +6541,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Inner Alpha Nest South",
-                        "node": "Dock to Lower Hydro Station Pipe"
+                        "node": "Horizontal Dock to Lower Hydro Station Pipe"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Lower Hydro Station Hub": {
+                        "Horizontal Dock to Lower Hydro Station Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6367,7 +6562,7 @@
                         }
                     }
                 },
-                "Dock to Lower Hydro Station Hub": {
+                "Horizontal Dock to Lower Hydro Station Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6381,19 +6576,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Lower Hydro Station Hub",
-                        "node": "Dock to Lower Hydro Station Pipe"
+                        "node": "Horizontal Dock to Lower Hydro Station Pipe"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Inner Alpha Nest South": {
+                        "Horizontal Dock to Inner Alpha Nest South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6504,7 +6699,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Lower Hydro Station Hub": {
+                        "Horizontal Dock to Lower Hydro Station Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6526,7 +6721,7 @@
             }
         },
         "Water Turbine Station Pipe": {
-            "default_node": "Dock to Water Turbine Station",
+            "default_node": "Horizontal Dock to Water Turbine Station",
             "extra": {
                 "map_name": "rm_a2a19",
                 "minimap_data": [
@@ -6541,7 +6736,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Water Turbine Station": {
+                "Horizontal Dock to Water Turbine Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6555,13 +6750,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Water Turbine Station",
-                        "node": "Dock to Water Turbine Station Pipe"
+                        "node": "Horizontal Dock to Water Turbine Station Pipe"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6616,7 +6811,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Water Turbine Station": {
+                        "Horizontal Dock to Water Turbine Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6661,7 +6856,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Hydro Station Exterior (Top)": {
+                "Horizontal Dock to Hydro Station Exterior (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6675,13 +6870,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Exterior",
-                        "node": "Dock to Breeding Grounds Access (Top)"
+                        "node": "Horizontal Dock to Breeding Grounds Access (Top)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6727,7 +6922,7 @@
                         }
                     }
                 },
-                "Dock to Hydro Station Exterior (Bottom)": {
+                "Horizontal Dock to Hydro Station Exterior (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6741,13 +6936,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Exterior",
-                        "node": "Dock to Breeding Grounds Access (Bottom)"
+                        "node": "Horizontal Dock to Breeding Grounds Access (Bottom)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7294,7 +7489,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Hydro Station Exterior (Bottom)": {
+                        "Horizontal Dock to Hydro Station Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7341,7 +7536,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Hydro Station Exterior (Bottom)": {
+                        "Horizontal Dock to Hydro Station Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7366,7 +7561,7 @@
                     "valid_starting_location": false,
                     "event_name": "EMPA2",
                     "connections": {
-                        "Dock to Hydro Station Exterior (Bottom)": {
+                        "Horizontal Dock to Hydro Station Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7390,7 +7585,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Hydro Station Exterior (Top)": {
+                        "Horizontal Dock to Hydro Station Exterior (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7407,7 +7602,7 @@
                                 ]
                             }
                         },
-                        "Dock to Hydro Station Exterior (Bottom)": {
+                        "Horizontal Dock to Hydro Station Exterior (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7492,12 +7687,12 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Tunnel Climb"
+                                        "data": "Low Mid-Air Morph Tunnel Climb"
                                     }
                                 ]
                             }
                         },
-                        "Dock to Breeding Grounds Shaft": {
+                        "Horizontal Dock to Breeding Grounds Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7551,7 +7746,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Shaft": {
+                "Horizontal Dock to Breeding Grounds Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7565,13 +7760,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Shaft",
-                        "node": "Dock to Breeding Grounds Save Station"
+                        "node": "Horizontal Dock to Breeding Grounds Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7612,7 +7807,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Save Station": {
+                "Horizontal Dock to Breeding Grounds Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7626,13 +7821,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Save Station",
-                        "node": "Dock to Breeding Grounds Shaft"
+                        "node": "Horizontal Dock to Breeding Grounds Shaft"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7647,7 +7842,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Alpha Nest East": {
+                "Horizontal Dock to Breeding Grounds Alpha Nest East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7661,19 +7856,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Alpha Nest East",
-                        "node": "Dock to Breeding Grounds Shaft"
+                        "node": "Horizontal Dock to Breeding Grounds Shaft"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Lobby": {
+                        "Horizontal Dock to Breeding Grounds Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7780,7 +7975,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Lobby": {
+                "Horizontal Dock to Breeding Grounds Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7794,19 +7989,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Lobby",
-                        "node": "Dock to Breeding Grounds Shaft"
+                        "node": "Horizontal Dock to Breeding Grounds Shaft"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Alpha Nest East": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7820,7 +8015,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Overgrown Alley": {
+                "Horizontal Dock to Breeding Grounds Overgrown Alley": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7834,13 +8029,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Overgrown Alley",
-                        "node": "Dock to Breeding Grounds Shaft"
+                        "node": "Horizontal Dock to Breeding Grounds Shaft"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -7854,7 +8049,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Destroy Blocks",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7868,7 +8063,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "If you come from left entrance and don't have screw, blocks get changed for speed",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -7895,8 +8090,47 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Go Through Vines"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Go Through Vines",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity Suit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -7918,7 +8152,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Breeding Grounds Save Station": {
+                        "Horizontal Dock to Breeding Grounds Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7930,14 +8164,14 @@
                                 ]
                             }
                         },
-                        "Dock to Breeding Grounds Alpha Nest East": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Breeding Grounds Overgrown Alley": {
+                        "Horizontal Dock to Breeding Grounds Overgrown Alley": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7952,8 +8186,47 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Go Through Vines"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Go Through Vines",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity Suit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -7998,7 +8271,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Shaft": {
+                "Horizontal Dock to Breeding Grounds Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8012,13 +8285,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Shaft",
-                        "node": "Dock to Breeding Grounds Alpha Nest East"
+                        "node": "Horizontal Dock to Breeding Grounds Alpha Nest East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8032,6 +8305,70 @@
                                     {
                                         "type": "template",
                                         "data": "Defeat dodging Alpha"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Power Grip Wall"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Go through vines",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity Suit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageBoost",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Lava",
+                                                                                "amount": 15,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -8054,7 +8391,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha10",
                     "connections": {
-                        "Dock to Breeding Grounds Shaft": {
+                        "Horizontal Dock to Breeding Grounds Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8129,7 +8466,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Shaft": {
+                "Horizontal Dock to Breeding Grounds Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8143,13 +8480,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Shaft",
-                        "node": "Dock to Breeding Grounds Lobby"
+                        "node": "Horizontal Dock to Breeding Grounds Lobby"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8164,7 +8501,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Gamma Nest": {
+                "Horizontal Dock to Breeding Grounds Gamma Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8178,13 +8515,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Gamma Nest",
-                        "node": "Dock to Breeding Grounds Lobby"
+                        "node": "Horizontal Dock to Breeding Grounds Lobby"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8204,7 +8541,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Alpha Nest West": {
+                "Horizontal Dock to Breeding Grounds Alpha Nest West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8218,13 +8555,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Alpha Nest West",
-                        "node": "Dock to Breeding Grounds Lobby"
+                        "node": "Horizontal Dock to Breeding Grounds Lobby"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8291,21 +8628,21 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Breeding Grounds Shaft": {
+                        "Horizontal Dock to Breeding Grounds Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Breeding Grounds Gamma Nest": {
+                        "Horizontal Dock to Breeding Grounds Gamma Nest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Breeding Grounds Alpha Nest West": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8433,7 +8770,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Lobby": {
+                "Horizontal Dock to Breeding Grounds Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8447,13 +8784,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Lobby",
-                        "node": "Dock to Breeding Grounds Alpha Nest West"
+                        "node": "Horizontal Dock to Breeding Grounds Alpha Nest West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8465,8 +8802,47 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Go Through Vines"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Go Through Vines",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity Suit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 60,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -8504,12 +8880,238 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Go Through Vines"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Go Through Vines -  bottom way",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity Suit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageBoost",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Lava",
+                                                                                "amount": 80,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Hijump With Power Grip Wall"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Top way over floating blocks",
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Hijump Method",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Power Grip",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Spider Method",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Spider Ball"
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Bombs"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Spring Ball"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "MidAirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "WJ Method",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph Ball",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MorphGlide",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "CBJ method",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Charged Bomb Jump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ChargedBombJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "IBJ method",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "DiagonalIBJ",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -8562,7 +9164,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha11",
                     "connections": {
-                        "Dock to Breeding Grounds Lobby": {
+                        "Horizontal Dock to Breeding Grounds Lobby": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8633,7 +9235,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Lobby": {
+                "Horizontal Dock to Breeding Grounds Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8647,19 +9249,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Lobby",
-                        "node": "Dock to Breeding Grounds Gamma Nest"
+                        "node": "Horizontal Dock to Breeding Grounds Gamma Nest"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Alpha Nest South": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8668,7 +9270,7 @@
                         }
                     }
                 },
-                "Dock to Breeding Grounds Alpha Nest South": {
+                "Horizontal Dock to Breeding Grounds Alpha Nest South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8682,19 +9284,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Alpha Nest South",
-                        "node": "Dock to Breeding Grounds Gamma Nest"
+                        "node": "Horizontal Dock to Breeding Grounds Gamma Nest"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Breeding Grounds Lobby": {
+                        "Horizontal Dock to Breeding Grounds Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8740,7 +9342,7 @@
                     "valid_starting_location": false,
                     "event_name": "Gamma1",
                     "connections": {
-                        "Dock to Breeding Grounds Alpha Nest South": {
+                        "Horizontal Dock to Breeding Grounds Alpha Nest South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8838,7 +9440,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Gamma Nest": {
+                "Horizontal Dock to Breeding Grounds Gamma Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8852,13 +9454,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Gamma Nest",
-                        "node": "Dock to Breeding Grounds Alpha Nest South"
+                        "node": "Horizontal Dock to Breeding Grounds Alpha Nest South"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8879,8 +9481,47 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Go Through Vines"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Go through Vines",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity Suit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Lava",
+                                                                                "amount": 35,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageBoost",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "and",
@@ -8897,15 +9538,191 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Hijump Wall"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Space Jump Wall"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "WJ + Glide from left wall",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph Ball",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "MorphGlide",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Power Grip",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Spider Method",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "EntranceRando",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Bombs"
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Spring Ball"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MidAirMorph",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "CBJ method",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Charged Bomb Jump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ChargedBombJump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "IBJ method",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DiagonalIBJ",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -8931,7 +9748,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha12",
                     "connections": {
-                        "Dock to Breeding Grounds Gamma Nest": {
+                        "Horizontal Dock to Breeding Grounds Gamma Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9055,7 +9872,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Breeding Grounds Shaft": {
+                "Horizontal Dock to Breeding Grounds Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9069,13 +9886,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Breeding Grounds Shaft",
-                        "node": "Dock to Breeding Grounds Overgrown Alley"
+                        "node": "Horizontal Dock to Breeding Grounds Overgrown Alley"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -9087,8 +9904,47 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Go Through Vines"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Go Through Vines",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity Suit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 25,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -9146,7 +10002,51 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Go Through Vines",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity Suit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9206,14 +10106,53 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Breeding Grounds Shaft": {
+                        "Horizontal Dock to Breeding Grounds Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Go Through Vines"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Go Through Vines",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity Suit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 25,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -9224,8 +10163,47 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Go Through Vines"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Go Through Vines",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity Suit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Lava",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "template",
@@ -9292,15 +10270,50 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
+                                            "type": "items",
+                                            "name": "Speed Booster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get charge",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
                                                         "type": "items",
-                                                        "name": "Speed Booster",
+                                                        "name": "Super Missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Destroy blocks",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -9310,7 +10323,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Shinesparking",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }

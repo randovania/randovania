@@ -26,13 +26,7 @@ def describe_command_logic(args):
 
 
 def add_describe_command(sub_parsers):
-    parser: ArgumentParser = sub_parsers.add_parser(
-        "describe",
-        help="Describes a rdvgame file."
-    )
-    parser.add_argument(
-        "layout_file",
-        type=Path,
-        help="The rdvgame file to validate.")
+    parser: ArgumentParser = sub_parsers.add_parser("describe", help="Describes a rdvgame file.")
+    parser.add_argument("layout_file", type=Path, help="The rdvgame file to validate.")
 
     parser.set_defaults(func=describe_command_logic)

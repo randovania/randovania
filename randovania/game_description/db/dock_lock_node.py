@@ -39,12 +39,12 @@ class DockLockNode(ResourceNode):
                 dock.identifier,
                 dock.name,
                 dock.name,
-            )
+            ),
         )
         object.__setattr__(dock, "lock_node", result)
         return result
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"DockLockNode({self.name!r} -> {self.dock.name})"
 
     def resource(self, context: NodeContext) -> ResourceInfo:
@@ -78,7 +78,8 @@ class DockLockNode(ResourceNode):
             yield dock_resource, 1
 
         if not context.has_resource(target_resource) and front_weak.can_unlock_from_back(
-                dock.get_back_weakness(context)):
+            dock.get_back_weakness(context)
+        ):
             yield target_resource, 1
 
     def connections_from(self, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:

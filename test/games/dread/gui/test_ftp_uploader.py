@@ -49,8 +49,11 @@ def test_upload(ftpserver: PytestLocalFTPServer, tmp_path):
         server_home.joinpath("remote", "b.txt"),
         server_home.joinpath("remote", "bar"),
     ]
-    progress_update.assert_has_calls([
-        call('Uploaded /remote/a.txt', ANY),
-        call('Uploaded /remote/b.txt', ANY),
-        call('Uploaded /remote/bar', ANY),
-    ], any_order=True)
+    progress_update.assert_has_calls(
+        [
+            call("Uploaded /remote/a.txt", ANY),
+            call("Uploaded /remote/b.txt", ANY),
+            call("Uploaded /remote/bar", ANY),
+        ],
+        any_order=True,
+    )

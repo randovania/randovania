@@ -66,30 +66,25 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
     def tab_title(self) -> str:
         return "Pickups"
 
-    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
-                       players: PlayersConfiguration):
+    def update_content(
+        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+    ):
         self._update_search_pickup_group(all_patches, players)
 
         patches = all_patches[players.player_index]
-        pickup_names = {
-            pickup.pickup.name
-            for pickup in patches.pickup_assignment.values()
-        }
+        pickup_names = {pickup.pickup.name for pickup in patches.pickup_assignment.values()}
         game_description = filtered_database.game_description_for_layout(configuration)
         self._create_pickup_spoilers(game_description)
         starting_area = game_description.region_list.area_by_area_location(patches.starting_location)
 
-        extra_items = item_names.additional_starting_equipment(configuration,
-                                                               game_description,
-                                                               patches)
+        extra_items = item_names.additional_starting_equipment(configuration, game_description, patches)
 
-        self.spoiler_starting_location_label.setText("Starting Location: {}".format(
-            game_description.region_list.area_name(starting_area)
-        ))
-        self.spoiler_starting_items_label.setText("Random Starting Items: {}".format(
-            ", ".join(extra_items)
-            if extra_items else "None"
-        ))
+        self.spoiler_starting_location_label.setText(
+            f"Starting Location: {game_description.region_list.area_name(starting_area)}"
+        )
+        self.spoiler_starting_items_label.setText(
+            "Random Starting Items: {}".format(", ".join(extra_items) if extra_items else "None")
+        )
         self._update_show_all_button_state()
 
         self.pickup_spoiler_pickup_combobox.clear()
@@ -212,13 +207,15 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
                     node = rl.node_from_pickup_index(pickup_index)
                     area = rl.nodes_to_area(node)
 
-                    rows.append((
-                        pickup_target.pickup.name,
-                        players.player_names[source_index],
-                        rl.region_name_from_area(area, True),
-                        area.name,
-                        node.name,
-                    ))
+                    rows.append(
+                        (
+                            pickup_target.pickup.name,
+                            players.player_names[source_index],
+                            rl.region_name_from_area(area, True),
+                            area.name,
+                            node.name,
+                        )
+                    )
                     pickup_names.add(pickup_target.pickup.name)
 
         self.search_pickup_model.setRowCount(len(rows))

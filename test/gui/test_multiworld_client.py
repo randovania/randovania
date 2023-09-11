@@ -81,9 +81,7 @@ async def test_on_game_state_updated(client: MultiworldClient, tmp_path, exists)
     client.start_server_sync_task = MagicMock()
 
     remote_game = MagicMock()
-    client._remote_games = {
-        the_id: remote_game
-    }
+    client._remote_games = {the_id: remote_game}
 
     connector = AsyncMock()
     state = MagicMock()
@@ -113,9 +111,7 @@ async def test_on_network_game_updated(client):
     await client.on_network_game_updated(pickups)
 
     # Assert
-    assert client._remote_games == {
-        pickups.world_id: pickups
-    }
+    assert client._remote_games == {pickups.world_id: pickups}
     client.start_server_sync_task.assert_called_once_with()
 
 
@@ -218,73 +214,83 @@ async def test_server_sync(client, mocker: MockerFixture):
     uid_2 = uuid.UUID("00000000-0000-1111-0000-000000000000")
     uid_3 = uuid.UUID("000000000000-0000-0000-0000-11111111")
 
-    request = ServerSyncRequest(worlds=frozendict({
-        uid_1: ServerWorldSync(
-            status=GameConnectionStatus.InGame,
-            collected_locations=(5,),
-            inventory=b"foo",
-            request_details=True,
-        ),
-        uid_2: ServerWorldSync(
-            status=GameConnectionStatus.TitleScreen,
-            collected_locations=(),
-            inventory=b"bar",
-            request_details=False,
-        ),
-        uid_3: ServerWorldSync(
-            status=GameConnectionStatus.Disconnected,
-            collected_locations=(15, 20),
-            inventory=None,
-            request_details=False,
-        ),
-    }))
-    client._create_new_sync_request = MagicMock(side_effect=[
-        request,
-        request,  # the first perform_world_sync fails, so this is called again
-        ServerSyncRequest(worlds=frozendict({})),  # Since the third world failed, the sync loop runs again.
-        ServerSyncRequest(worlds=frozendict({})),  # And a last time, to make sure there were no new requests
-    ])
-    client.network_client.perform_world_sync = AsyncMock(side_effect=[
-        error.RequestTimeoutError,
-        ServerSyncResponse(
-            worlds=frozendict({
-                uid_1: ServerWorldResponse(
-                    world_name="World 1",
-                    session_id=567,
-                    session_name="The Session",
+    request = ServerSyncRequest(
+        worlds=frozendict(
+            {
+                uid_1: ServerWorldSync(
+                    status=GameConnectionStatus.InGame,
+                    collected_locations=(5,),
+                    inventory=b"foo",
+                    request_details=True,
                 ),
-            }),
-            errors=frozendict({
-                uid_3: error.WorldDoesNotExistError()
-            }),
-        ),
-        ServerSyncResponse(frozendict({}), frozendict({})),
-    ])
+                uid_2: ServerWorldSync(
+                    status=GameConnectionStatus.TitleScreen,
+                    collected_locations=(),
+                    inventory=b"bar",
+                    request_details=False,
+                ),
+                uid_3: ServerWorldSync(
+                    status=GameConnectionStatus.Disconnected,
+                    collected_locations=(15, 20),
+                    inventory=None,
+                    request_details=False,
+                ),
+            }
+        )
+    )
+    client._create_new_sync_request = MagicMock(
+        side_effect=[
+            request,
+            request,  # the first perform_world_sync fails, so this is called again
+            ServerSyncRequest(worlds=frozendict({})),  # Since the third world failed, the sync loop runs again.
+            ServerSyncRequest(worlds=frozendict({})),  # And a last time, to make sure there were no new requests
+        ]
+    )
+    client.network_client.perform_world_sync = AsyncMock(
+        side_effect=[
+            error.RequestTimeoutError,
+            ServerSyncResponse(
+                worlds=frozendict(
+                    {
+                        uid_1: ServerWorldResponse(
+                            world_name="World 1",
+                            session_id=567,
+                            session_name="The Session",
+                        ),
+                    }
+                ),
+                errors=frozendict({uid_3: error.WorldDoesNotExistError()}),
+            ),
+            ServerSyncResponse(frozendict({}), frozendict({})),
+        ]
+    )
 
     # Run
     await client._server_sync()
 
     # Assert
-    client.network_client.perform_world_sync.assert_has_awaits([
-        call(request), call(request),
-        call(ServerSyncRequest(worlds=frozendict({}))),
-    ])
-    mock_sleep.assert_has_awaits([
-        # First request
-        call(1),
-        call(15),  # perform_world_sync call timed out
-
-        # Second request
-        call(1),
-        call(4),  # the sync response had errors
-
-        # Third request
-        call(1),
-        call(4),  # the sync response was successful
-
-        # Fourth request
-        call(1),  # identical to last, ends
-    ])
+    client.network_client.perform_world_sync.assert_has_awaits(
+        [
+            call(request),
+            call(request),
+            call(ServerSyncRequest(worlds=frozendict({}))),
+        ]
+    )
+    mock_sleep.assert_has_awaits(
+        [
+            # First request
+            call(1),
+            call(15),  # perform_world_sync call timed out
+            # Second request
+            call(1),
+            call(4),  # the sync response had errors
+            # Third request
+            call(1),
+            call(4),  # the sync response was successful
+            # Fourth request
+            call(1),  # identical to last, ends
+        ]
+    )
     # TODO: test that the error handling
 
     assert client.database.get_data_for(uid_1) == WorldData(
@@ -293,7 +299,7 @@ async def test_server_sync(client, mocker: MockerFixture):
             world_name="World 1",
             session_id=567,
             session_name="The Session",
-        )
+        ),
     )
     assert client._world_sync_errors == {
         uid_3: error.WorldDoesNotExistError(),
@@ -305,9 +311,7 @@ async def test_on_session_meta_update_not_logged_in(client: MultiworldClient):
     uid_2 = uuid.UUID("11111111-0000-0000-0000-111111111111")
 
     entry = MagicMock()
-    entry.worlds = [
-        MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")
-    ]
+    entry.worlds = [MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")]
     client.network_client.current_user = None
     client._world_sync_errors[uid_1] = error.WorldDoesNotExistError()
     client._world_sync_errors[uid_2] = error.WorldNotAssociatedError()
@@ -323,9 +327,7 @@ async def test_on_session_meta_update_not_in_session(client: MultiworldClient):
     uid_1 = uuid.UUID("11111111-0000-0000-0000-000000000000")
 
     entry = MagicMock()
-    entry.worlds = [
-        MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")
-    ]
+    entry.worlds = [MultiplayerWorld(id=uid_1, name="Names", preset_raw="{}")]
     entry.users = {}
     client._world_sync_errors[uid_1] = error.WorldNotAssociatedError()
 
@@ -344,9 +346,7 @@ async def test_on_session_meta_update_not_own_world(client: MultiworldClient):
 
     entry = MagicMock()
     entry.users = {
-        client.network_client.current_user.id: MultiplayerUser(
-            10, "You", False, False, {uid_2: MagicMock()}
-        )
+        client.network_client.current_user.id: MultiplayerUser(10, "You", False, False, {uid_2: MagicMock()})
     }
     client._world_sync_errors[uid_1] = error.WorldNotAssociatedError()
 
@@ -355,4 +355,3 @@ async def test_on_session_meta_update_not_own_world(client: MultiworldClient):
 
     # Assert
     assert client._world_sync_errors == {uid_1: error.WorldNotAssociatedError()}
-

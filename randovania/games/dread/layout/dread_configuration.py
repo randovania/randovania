@@ -38,16 +38,19 @@ class DreadRavenBeakDamageMode(BitPackEnum, Enum):
         return self == DreadRavenBeakDamageMode.CONSISTENT_LOW
 
 
-enum_lib.add_long_name(DreadRavenBeakDamageMode, {
-    DreadRavenBeakDamageMode.UNMODIFIED: "Unmodified",
-    DreadRavenBeakDamageMode.CONSISTENT_LOW: "Consistent, with damage reduction",
-    DreadRavenBeakDamageMode.CONSISTENT_HIGH: "Consistent, without damage reduction",
-})
+enum_lib.add_long_name(
+    DreadRavenBeakDamageMode,
+    {
+        DreadRavenBeakDamageMode.UNMODIFIED: "Unmodified",
+        DreadRavenBeakDamageMode.CONSISTENT_LOW: "Consistent, with damage reduction",
+        DreadRavenBeakDamageMode.CONSISTENT_HIGH: "Consistent, without damage reduction",
+    },
+)
 
 
 @dataclasses.dataclass(frozen=True)
 class DreadConfiguration(BaseConfiguration):
-    elevators: DreadTeleporterConfiguration
+    teleporters: DreadTeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     immediate_energy_parts: bool
     hanubia_shortcut_no_grapple: bool

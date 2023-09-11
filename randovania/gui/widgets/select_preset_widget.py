@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import json
 import logging
 import re
 import traceback
@@ -186,7 +187,8 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
     @asyncSlot()
     async def _on_delete_preset(self):
         result = await async_dialog.warning(
-            self, "Delete preset?",
+            self,
+            "Delete preset?",
             f"Are you sure you want to delete preset {self._current_preset_data.name}?",
             buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
             default_button=async_dialog.StandardButton.No,
@@ -200,8 +202,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
     async def _on_view_preset_history(self):
         if self._preset_history is not None:
             return await async_dialog.warning(
-                self, "Dialog already open",
-                "Another preset history dialog is already open. Please close it first."
+                self, "Dialog already open", "Another preset history dialog is already open. Please close it first."
             )
 
         preset = self._current_preset_data
@@ -234,6 +235,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
 
     def _on_open_required_tricks_for_preset(self):
         from randovania.gui.dialog.trick_usage_popup import TrickUsagePopup
+
         self._trick_usage_popup = TrickUsagePopup(self, self._window_manager, self._current_preset_data.get_preset())
         self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
         self._trick_usage_popup.open()
@@ -247,14 +249,12 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         raise RuntimeError("Feature not implemented")
 
     def import_preset_file(self, path: Path):
-        preset = VersionedPreset.from_file_sync(path)
         try:
+            preset = VersionedPreset.from_file_sync(path)
             preset.get_preset()
-        except InvalidPreset:
+        except (InvalidPreset, json.JSONDecodeError):
             QtWidgets.QMessageBox.critical(
-                self._window_manager,
-                "Error loading preset",
-                f"The file at '{path}' contains an invalid preset."
+                self._window_manager, "Error loading preset", f"The file at '{path}' contains an invalid preset."
             )
             return
 
@@ -268,7 +268,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
                     existing_preset.name,
                 ),
                 async_dialog.StandardButton.Yes | async_dialog.StandardButton.No | async_dialog.StandardButton.Cancel,
-                async_dialog.StandardButton.Cancel
+                async_dialog.StandardButton.Cancel,
             )
             if user_response == async_dialog.StandardButton.Cancel:
                 return
@@ -330,9 +330,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
                     exception_desc = f"<p>{e.original_exception}</p>"
                 else:
                     logging.warning(f"Invalid preset for {preset.name}")
-                    exception_desc = "<pre>{}</pre>".format(
-                        "\n".join(traceback.format_exception(e.original_exception))
-                    )
+                    exception_desc = "<pre>{}</pre>".format("\n".join(traceback.format_exception(e.original_exception)))
 
                 description = (
                     f"<p>Preset {preset.name} can't be used as it contains errors.</p>"
@@ -354,11 +352,14 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         if path is None:
             return
 
-        common_qt_lib.open_directory_in_explorer(path, common_qt_lib.FallbackDialog(
-            "Preset",
-            f"The selected preset can be found at:\n{path}",
-            self,
-        ))
+        common_qt_lib.open_directory_in_explorer(
+            path,
+            common_qt_lib.FallbackDialog(
+                "Preset",
+                f"The selected preset can be found at:\n{path}",
+                self,
+            ),
+        )
 
     def change_game(self, game: RandovaniaGame):
         self._game = game

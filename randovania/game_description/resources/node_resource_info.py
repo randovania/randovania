@@ -17,8 +17,9 @@ class NodeResourceInfo:
     node_identifier: NodeIdentifier
     long_name: str = dataclasses.field(hash=False, repr=False)
     short_name: str = dataclasses.field(hash=False, repr=False)
-    resource_type: ResourceType = dataclasses.field(init=False, hash=False, repr=False,
-                                                    default=ResourceType.NODE_IDENTIFIER)
+    resource_type: ResourceType = dataclasses.field(
+        init=False, hash=False, repr=False, default=ResourceType.NODE_IDENTIFIER
+    )
 
     def __str__(self) -> str:
         return self.long_name
@@ -39,3 +40,7 @@ class NodeResourceInfo:
     def to_node(self, context: NodeContext) -> Node:
         node_index = self.resource_index - context.database.first_unused_resource_index()
         return typing.cast(Node, context.node_provider.all_nodes[node_index])
+
+    @property
+    def extra(self) -> dict:
+        return {}

@@ -43,13 +43,14 @@ class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
 class LayoutSafeZone(BitPackDataclass, JsonDataclass):
     fully_heal: bool
     prevents_dark_aether: bool
-    heal_per_second: float = dataclasses.field(metadata={"min": 0.0, "max": 100.0,
-                                                         "if_different": 1.0, "precision": 1.0})
+    heal_per_second: float = dataclasses.field(
+        metadata={"min": 0.0, "max": 100.0, "if_different": 1.0, "precision": 1.0}
+    )
 
 
 @dataclasses.dataclass(frozen=True)
 class EchoesConfiguration(BaseConfiguration):
-    elevators: PrimeTrilogyTeleporterConfiguration
+    teleporters: PrimeTrilogyTeleporterConfiguration
     sky_temple_keys: LayoutSkyTempleKeyMode
     translator_configuration: TranslatorConfiguration
     hints: HintConfiguration

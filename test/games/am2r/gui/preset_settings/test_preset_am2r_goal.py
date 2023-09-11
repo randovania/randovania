@@ -11,15 +11,22 @@ from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.interface_common.preset_editor import PresetEditor
 
 
-@pytest.mark.parametrize(("prefer_metroids", "prefer_bosses", "expected_max_slider"), [
-    (False, False, 0), (False, True, 6), (True, False, 46), (True, True, 46)
-])
-def test_preferred_dna(skip_qtbot, am2r_game_description, preset_manager, prefer_metroids: bool,
-                       prefer_bosses: bool, expected_max_slider: int):
+@pytest.mark.parametrize(
+    ("prefer_metroids", "prefer_bosses", "expected_max_slider"),
+    [(False, False, 0), (False, True, 6), (True, False, 46), (True, True, 46)],
+)
+def test_preferred_dna(
+    skip_qtbot,
+    am2r_game_description,
+    preset_manager,
+    prefer_metroids: bool,
+    prefer_bosses: bool,
+    expected_max_slider: int,
+):
     # Setup
     game = am2r_game_description.game
     base = preset_manager.default_preset_for_game(game).get_preset()
-    preset = dataclasses.replace(base, uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'))
+    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
     base_configuration = preset.configuration
     options = MagicMock()
     assert isinstance(base_configuration, AM2RConfiguration)

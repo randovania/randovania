@@ -32,7 +32,7 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
             ),
             random_boss_sizes=True,
             superheated_probability=531,
-            submerged_probability=287
+            submerged_probability=287,
         )
     else:
         configuration = dataclasses.replace(
@@ -40,36 +40,28 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
             enemy_attributes=None,
             random_boss_sizes=True,
             superheated_probability=531,
-            submerged_probability=287
+            submerged_probability=287,
         )
 
     # Run
     result = RandovaniaGame.METROID_PRIME.data.layout.preset_describer.format_params(configuration)
     expected = {
-        "Logic Settings": [
-            "All tricks disabled"
-        ],
+        "Logic Settings": ["All tricks disabled"],
         "Item Pool": [
             "Size: 95 of 100",
             "Vanilla starting items",
             "Shuffles 2x Charge Beam",
             "6 Artifacts, 6 min actions",
         ],
-        "Gameplay": [
-            "Starts at Tallon Overworld - Landing Site"
-        ],
-        "Quality of Life": [
-            "Phazon suit hint: Area only"
-        ],
-        "Difficulty": [
-        ],
+        "Gameplay": ["Starts at Tallon Overworld - Landing Site"],
+        "Quality of Life": ["Phazon suit hint: Area only"],
+        "Difficulty": [],
         "Game Changes": [
             "Progressive suit damage reduction",
             "Warp to start, Unlocked Vault door, Unlocked Save Station doors, Phazon Elite without Dynamo",
             "53.1% chance of superheated, 28.7% chance of submerged",
-            "Competitive cutscene removal",
-            "Allowed backwards: Frigate, Labs, Upper Mines"
-        ]
+            "Allowed backwards: Frigate, Labs, Upper Mines",
+        ],
     }
 
     if use_enemy_attribute_randomizer:
@@ -77,7 +69,7 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
             5,
             "Random Size within range 0.25 - 5.25, Random Health within range 2.25 - 8.23, "
             "Random Speed within range 0.15 - 7.25, Random Damage within range 1.25 - 100.25, "
-            "Enemies will be stretched randomly"
+            "Enemies will be stretched randomly",
         )
     else:
         expected["Game Changes"].insert(2, "Random Boss Sizes")

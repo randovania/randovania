@@ -32,7 +32,8 @@ async def deploy(remote_host: str, remote_user: str, server_environment: str, ve
             "docker",
             "stack",
             "deploy",
-            "-c", stack_file,
+            "-c",
+            stack_file,
             f"randovania-{server_environment}",
         ],
         check=True,
@@ -71,5 +72,5 @@ async def main():
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())

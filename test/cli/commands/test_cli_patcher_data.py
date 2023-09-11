@@ -28,7 +28,7 @@ async def test_patcher_data_logic_async(mocker: pytest_mock.MockerFixture):
             1: "Player 2",
             2: "Player 3",
             3: "Player 4",
-        }
+        },
     )
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.default.return_value
 
@@ -47,8 +47,9 @@ async def test_patcher_data_logic_async(mocker: pytest_mock.MockerFixture):
 def test_patcher_data_logic(mocker: pytest_mock.MockerFixture):
     args = MagicMock()
     mock_run = mocker.patch("asyncio.run")
-    mock_async = mocker.patch("randovania.cli.commands.patcher_data.patcher_data_command_logic_async",
-                              new_callable=MagicMock)
+    mock_async = mocker.patch(
+        "randovania.cli.commands.patcher_data.patcher_data_command_logic_async", new_callable=MagicMock
+    )
 
     # Run
     patcher_data.patcher_data_command_logic(args)

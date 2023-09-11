@@ -31,8 +31,9 @@ def default_filler_config() -> FillerConfiguration:
 
 
 @pytest.fixture()
-def state_for_blank(default_filler_config, blank_game_description, default_blank_configuration,
-                    empty_patches) -> player_state.PlayerState:
+def state_for_blank(
+    default_filler_config, blank_game_description, default_blank_configuration, empty_patches
+) -> player_state.PlayerState:
     game = blank_game_description.get_mutable()
 
     return player_state.PlayerState(
@@ -70,12 +71,22 @@ def test_current_state_report(state_for_blank):
 @pytest.mark.parametrize("randomization_mode", [RandomizationMode.FULL, RandomizationMode.MAJOR_MINOR_SPLIT])
 @pytest.mark.parametrize("must_be_local", [False, True])
 @pytest.mark.parametrize("num_assigned_pickups", [0, 1])
-def test_filter_usable_locations(state_for_blank, must_be_local, num_assigned_pickups, default_blank_configuration,
-                                 randomization_mode, blank_pickup, empty_patches, default_filler_config):
+def test_filter_usable_locations(
+    state_for_blank,
+    must_be_local,
+    num_assigned_pickups,
+    default_blank_configuration,
+    randomization_mode,
+    blank_pickup,
+    empty_patches,
+    default_filler_config,
+):
     blank_wl = state_for_blank.game.region_list
-    state_for_blank.configuration = dataclasses.replace(state_for_blank.configuration,
-                                                        randomization_mode=randomization_mode,
-                                                        first_progression_must_be_local=must_be_local)
+    state_for_blank.configuration = dataclasses.replace(
+        state_for_blank.configuration,
+        randomization_mode=randomization_mode,
+        first_progression_must_be_local=must_be_local,
+    )
     state_for_blank.num_assigned_pickups = num_assigned_pickups
 
     second_state = player_state.PlayerState(

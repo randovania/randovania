@@ -19,6 +19,7 @@ _FIELDS = [
     "septogg_helpers",
     "respawn_bomb_blocks",
     "skip_cutscenes",
+    "skip_save_cutscene",
     "skip_item_cutscenes",
     "grave_grotto_blocks",
     "fusion_mode",
@@ -26,7 +27,7 @@ _FIELDS = [
     "nest_pipes",
     "softlock_prevention_blocks",
     "a3_entrance_blocks",
-    "screw_blocks"
+    "screw_blocks",
 ]
 
 

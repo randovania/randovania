@@ -33,10 +33,9 @@ class InvalidLayoutDescription(Exception):
 
 @lru_cache(maxsize=1)
 def _all_hash_words() -> list[str]:
-    return list(itertools.chain.from_iterable(
-        game.hash_words for game in RandovaniaGame
-        if game.hash_words is not None
-    ))
+    return list(
+        itertools.chain.from_iterable(game.hash_words for game in RandovaniaGame if game.hash_words is not None)
+    )
 
 
 def shareable_hash(hash_bytes: bytes) -> str:
@@ -44,7 +43,7 @@ def shareable_hash(hash_bytes: bytes) -> str:
 
 
 def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
-    rng = Random(sum(hash_byte * (2 ** 8) ** i for i, hash_byte in enumerate(hash_bytes)))
+    rng = Random(sum(hash_byte * (2**8) ** i for i, hash_byte in enumerate(hash_bytes)))
 
     games_left = []
     selected_words = []
@@ -70,10 +69,7 @@ def _info_hash(data: dict) -> str:
 BinaryLayoutDescription = construct.Struct(
     magic=construct.Const(b"RDVG"),
     version=construct.Const(1, construct.VarInt),
-    data=construct.Prefixed(
-        construct.VarInt,
-        construct.Compressed(JsonEncodedValue, "zlib")
-    ),
+    data=construct.Prefixed(construct.VarInt, construct.Compressed(JsonEncodedValue, "zlib")),
 )
 
 
@@ -93,11 +89,12 @@ class LayoutDescription:
         return "rdvgame"
 
     @classmethod
-    def create_new(cls,
-                   generator_parameters: GeneratorParameters,
-                   all_patches: dict[int, GamePatches],
-                   item_order: tuple[str, ...],
-                   ) -> typing.Self:
+    def create_new(
+        cls,
+        generator_parameters: GeneratorParameters,
+        all_patches: dict[int, GamePatches],
+        item_order: tuple[str, ...],
+    ) -> typing.Self:
         return cls(
             randovania_version_text=randovania.VERSION,
             randovania_version_git=randovania.GIT_HASH,
@@ -108,8 +105,6 @@ class LayoutDescription:
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> typing.Self:
-        json_dict = description_migration.convert_to_current_version(json_dict)
-
         if "secret" in json_dict:
             try:
                 secret = obfuscator.deobfuscate_json(json_dict["secret"])
@@ -122,13 +117,13 @@ class LayoutDescription:
         if "game_modifications" not in json_dict:
             raise InvalidLayoutDescription("Unable to read details of a race game file")
 
+        json_dict = description_migration.convert_to_current_version(json_dict)
+
         def get_preset(i, p):
             try:
                 return VersionedPreset(p).get_preset()
             except InvalidPreset as e:
-                raise InvalidLayoutDescription(
-                    f"Invalid preset for world {i + 1}: {e}"
-                ) from e.original_exception
+                raise InvalidLayoutDescription(f"Invalid preset for world {i + 1}: {e}") from e.original_exception
 
         if "presets" not in json_dict["info"]:
             raise InvalidLayoutDescription("Missing presets.")
@@ -136,10 +131,7 @@ class LayoutDescription:
         generator_parameters = GeneratorParameters(
             seed_number=json_dict["info"]["seed"],
             spoiler=json_dict["info"]["has_spoiler"],
-            presets=[
-                get_preset(i, preset)
-                for i, preset in enumerate(json_dict["info"]["presets"])
-            ],
+            presets=[get_preset(i, preset) for i, preset in enumerate(json_dict["info"]["presets"])],
         )
         if len(json_dict["game_modifications"]) != generator_parameters.world_count:
             raise InvalidLayoutDescription("Preset count does not match modifications count")
@@ -149,10 +141,9 @@ class LayoutDescription:
             randovania_version_git=bytes.fromhex(json_dict["info"]["randovania_version_git"]),
             generator_parameters=generator_parameters,
             all_patches=game_patches_serializer.decode(
-                json_dict["game_modifications"], {
-                    index: preset.configuration
-                    for index, preset in enumerate(generator_parameters.presets)
-                }),
+                json_dict["game_modifications"],
+                {index: preset.configuration for index, preset in enumerate(generator_parameters.presets)},
+            ),
             item_order=json_dict["item_order"],
         )
 
@@ -164,10 +155,7 @@ class LayoutDescription:
     def from_bytes(cls, data: bytes, *, presets: list[VersionedPreset] | None = None) -> typing.Self:
         decoded = BinaryLayoutDescription.parse(data)
         if presets is not None:
-            decoded["data"]["info"]["presets"] = [
-                preset.as_json
-                for preset in presets
-            ]
+            decoded["data"]["info"]["presets"] = [preset.as_json for preset in presets]
 
         return cls.from_json_dict(decoded["data"])
 
@@ -217,11 +205,8 @@ class LayoutDescription:
                 "seed": self.generator_parameters.seed_number,
                 "hash": self.shareable_hash,
                 "word_hash": self.shareable_word_hash,
-                "presets": [
-                    VersionedPreset.with_preset(preset).as_json
-                    for preset in self.all_presets
-                ],
-            }
+                "presets": [VersionedPreset.with_preset(preset).as_json for preset in self.all_presets],
+            },
         }
 
         spoiler = {
@@ -245,9 +230,11 @@ class LayoutDescription:
         if not include_presets:
             as_json["info"].pop("presets")
 
-        return BinaryLayoutDescription.build({
-            "data": as_json,
-        })
+        return BinaryLayoutDescription.build(
+            {
+                "data": as_json,
+            }
+        )
 
     @property
     def all_games(self) -> frozenset[RandovaniaGame]:
@@ -274,6 +261,4 @@ class LayoutDescription:
         )
 
     def save_to_file(self, json_path: Path):
-        json_lib.write_path(
-            json_path, self.as_json()
-        )
+        json_lib.write_path(json_path, self.as_json())

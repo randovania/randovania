@@ -23,11 +23,12 @@ if TYPE_CHECKING:
 export_busy = False
 
 
-def generate_layout(options: Options,
-                    parameters: GeneratorParameters,
-                    progress_update: ProgressUpdateCallable,
-                    retries: int | None = None,
-                    ) -> LayoutDescription:
+def generate_layout(
+    options: Options,
+    parameters: GeneratorParameters,
+    progress_update: ProgressUpdateCallable,
+    retries: int | None = None,
+) -> LayoutDescription:
     """
     Creates a LayoutDescription for the configured permalink
     :param options:
@@ -42,9 +43,10 @@ def generate_layout(options: Options,
         span.set_tag("game", next(iter(games)) if len(games) == 1 else "cross-game")
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)
-        span.set_tag("dock_rando", any(
-            preset.configuration.dock_rando.mode == DockRandoMode.DOCKS for preset in parameters.presets
-        ))
+        span.set_tag(
+            "dock_rando",
+            any(preset.configuration.dock_rando.mode == DockRandoMode.DOCKS for preset in parameters.presets),
+        )
 
         extra_args = {
             "generator_params": parameters,
@@ -85,9 +87,7 @@ def generate_layout(options: Options,
             raise
 
 
-def _generate_layout_worker(output_pipe: Connection,
-                            debug_level: int,
-                            extra_args: dict):
+def _generate_layout_worker(output_pipe: Connection, debug_level: int, extra_args: dict):
     def status_update(message: str):
         output_pipe.send(message)
         if output_pipe.poll():
@@ -97,10 +97,11 @@ def _generate_layout_worker(output_pipe: Connection,
     return asyncio.run(generator.generate_and_validate_description(status_update=status_update, **extra_args))
 
 
-def generate_in_another_process(status_update: Callable[[str], None],
-                                debug_level: int,
-                                extra_args: dict,
-                                ) -> LayoutDescription:
+def generate_in_another_process(
+    status_update: Callable[[str], None],
+    debug_level: int,
+    extra_args: dict,
+) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 
     def on_done(_):
@@ -122,12 +123,15 @@ def generate_in_another_process(status_update: Callable[[str], None],
         return future.result()
 
 
-def generate_in_host_process(status_update: Callable[[str], None],
-                             debug_level: int,
-                             extra_args: dict,
-                             ) -> LayoutDescription:
+def generate_in_host_process(
+    status_update: Callable[[str], None],
+    debug_level: int,
+    extra_args: dict,
+) -> LayoutDescription:
     with debug.with_level(debug_level):
-        return asyncio.run(generator.generate_and_validate_description(
-            **extra_args,
-            status_update=status_update,
-        ))
+        return asyncio.run(
+            generator.generate_and_validate_description(
+                **extra_args,
+                status_update=status_update,
+            )
+        )

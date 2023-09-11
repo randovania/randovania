@@ -44,8 +44,9 @@ def test_build_available_indices(has_exclusion: bool):
     )
 
     # Run
-    indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(region_list,
-                                                                                                      configuration)
+    indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(
+        region_list, configuration
+    )
 
     # Assert
     a_pickups = {PickupIndex(1), PickupIndex(2)}

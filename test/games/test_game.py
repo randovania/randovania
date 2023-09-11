@@ -35,10 +35,12 @@ def test_generator(game_enum):
 
 
 def test_patch_data_factory(game_enum):
-    from randovania.exporter.patch_data_factory import BasePatchDataFactory
-    assert issubclass(game_enum.patch_data_factory, BasePatchDataFactory)
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+
+    assert issubclass(game_enum.patch_data_factory, PatchDataFactory)
 
 
 def test_exporter(game_enum):
     from randovania.exporter.game_exporter import GameExporter
+
     assert isinstance(game_enum.exporter, GameExporter)

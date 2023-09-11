@@ -39,15 +39,18 @@ class D2OldSyntax(JsonDataclass):
 
 @pytest.fixture(
     params=[
-        {"instance": D2(a=A.bar, b=D1(a=5, b='foo', c=1)),
-         "json": {'a': 'bar', 'b': {'a': 5, 'b': 'foo', 'c': 1}},
-         },
-        {"instance": D2(a=None, b=D1(a=5, b='foo', c=2)),
-         "json": {'a': None, 'b': {'a': 5, 'b': 'foo', 'c': 2}},
-         },
-        {"instance": D2(a=None, b=D1(a=5, b='foo')),
-         "json": {'a': None, 'b': {'a': 5, 'b': 'foo', 'c': 5}},
-         }
+        {
+            "instance": D2(a=A.bar, b=D1(a=5, b="foo", c=1)),
+            "json": {"a": "bar", "b": {"a": 5, "b": "foo", "c": 1}},
+        },
+        {
+            "instance": D2(a=None, b=D1(a=5, b="foo", c=2)),
+            "json": {"a": None, "b": {"a": 5, "b": "foo", "c": 2}},
+        },
+        {
+            "instance": D2(a=None, b=D1(a=5, b="foo")),
+            "json": {"a": None, "b": {"a": 5, "b": "foo", "c": 5}},
+        },
     ],
 )
 def sample_values(request):
@@ -65,8 +68,8 @@ def test_from_json(sample_values):
 
 
 def test_from_json_old():
-    value = D2OldSyntax(a=A.bar, b=D1(a=5, b='foo', c=1))
-    data = {'a': 'bar', 'b': {'a': 5, 'b': 'foo', 'c': 1}}
+    value = D2OldSyntax(a=A.bar, b=D1(a=5, b="foo", c=1))
+    data = {"a": "bar", "b": {"a": 5, "b": "foo", "c": 1}}
     assert D2OldSyntax.from_json(data) == value
 
 

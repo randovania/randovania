@@ -17,13 +17,15 @@ if TYPE_CHECKING:
 @pytest.mark.parametrize("repeat", [1, 2])
 @pytest.mark.parametrize("preset_name", [None, "Starter Preset"])
 @pytest.mark.parametrize("no_retry", [False, True])
-def test_generate_logic(no_retry: bool, preset_name: str | None, repeat: int, mocker: pytest_mock.MockerFixture,
-                        preset_manager):
+def test_generate_logic(
+    no_retry: bool, preset_name: str | None, repeat: int, mocker: pytest_mock.MockerFixture, preset_manager
+):
     # Setup
     layout_description = MagicMock()
     mock_run = mocker.patch("asyncio.run", return_value=layout_description)
-    mock_generate = mocker.patch("randovania.generator.generator.generate_and_validate_description",
-                                 new_callable=MagicMock)
+    mock_generate = mocker.patch(
+        "randovania.generator.generator.generate_and_validate_description", new_callable=MagicMock
+    )
     mock_from_str: MagicMock = mocker.patch("randovania.layout.permalink.Permalink.from_str", autospec=True)
 
     args = MagicMock()
@@ -74,13 +76,10 @@ def test_generate_logic(no_retry: bool, preset_name: str | None, repeat: int, mo
                 timeout=None,
                 **extra_args,
             )
-        ] * repeat
+        ]
+        * repeat
     )
-    mock_run.assert_has_calls(
-        [
-            call(mock_generate.return_value)
-        ] * repeat
-    )
+    mock_run.assert_has_calls([call(mock_generate.return_value)] * repeat)
 
     save_file_mock: MagicMock = layout_description.save_to_file
     save_file_mock.assert_called_once_with(args.output_file)

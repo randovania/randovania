@@ -47,8 +47,9 @@ def _commit(message: str, file_path: Path, repository: Path, remove: bool):
     else:
         dulwich.porcelain.add(repository, [file_path])
 
-    dulwich.porcelain.commit(repository, message=f"{message} using Randovania v{randovania.VERSION}",
-                             author=author, committer=author)
+    dulwich.porcelain.commit(
+        repository, message=f"{message} using Randovania v{randovania.VERSION}", author=author, committer=author
+    )
 
 
 def _get_preset_at_version(repository: Path, commit_sha: bytes, file_path: Path) -> str:
@@ -68,9 +69,7 @@ def _history_for_file(repository: Path, file_path: Path) -> Iterator[tuple[datet
     with dulwich.porcelain.open_repo_closing(repository) as r:
         r = typing.cast(dulwich.repo.Repo, r)
 
-        paths = [
-            dulwich.porcelain.path_to_tree_path(repository, file_path)
-        ]
+        paths = [dulwich.porcelain.path_to_tree_path(repository, file_path)]
         walker = r.get_walker(paths=paths)
         for entry in walker:
             assert isinstance(entry, WalkEntry)
@@ -87,8 +86,7 @@ class PresetManager:
     def __init__(self, data_dir: Path | None):
         self.logger = logging.getLogger("PresetManager")
         self.included_presets = {
-            preset.uuid: preset
-            for preset in [VersionedPreset.from_file_sync(f) for f in read_preset_list()]
+            preset.uuid: preset for preset in [VersionedPreset.from_file_sync(f) for f in read_preset_list()]
         }
         for preset in self.included_presets.values():
             preset.is_included_preset = True

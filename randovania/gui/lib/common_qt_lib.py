@@ -25,11 +25,9 @@ def lock_application(value: bool):
     QtWidgets.QApplication.instance().main_window.setEnabled(value)
 
 
-def _prompt_user_for_file(window: QtWidgets.QWidget,
-                          caption: str,
-                          filter: str,
-                          dir: str | None = None,
-                          new_file: bool = False) -> Path | None:
+def _prompt_user_for_file(
+    window: QtWidgets.QWidget, caption: str, filter: str, dir: str | None = None, new_file: bool = False
+) -> Path | None:
     """
     Helper function for all `prompt_user_for_*` functions.
     :param window:
@@ -48,10 +46,9 @@ def _prompt_user_for_file(window: QtWidgets.QWidget,
     return Path(open_result[0])
 
 
-def _prompt_user_for_directory(window: QtWidgets.QWidget,
-                               caption: str,
-                               dir: str | None = None,
-                               new_file: bool = False) -> Path | None:
+def _prompt_user_for_directory(
+    window: QtWidgets.QWidget, caption: str, dir: str | None = None, new_file: bool = False
+) -> Path | None:
     if new_file:
         dialog = QtWidgets.QFileDialog(window)
         dialog.setFileMode(QtWidgets.QFileDialog.FileMode.DirectoryOnly)
@@ -66,15 +63,17 @@ def _prompt_user_for_directory(window: QtWidgets.QWidget,
         return None
 
     else:
-        open_result = QtWidgets.QFileDialog.getExistingDirectory(window, caption, dir,
-                                                                 QtWidgets.QFileDialog.ShowDirsOnly)
+        open_result = QtWidgets.QFileDialog.getExistingDirectory(
+            window, caption, dir, QtWidgets.QFileDialog.ShowDirsOnly
+        )
         if not open_result or open_result == ("", ""):
             return None
         return Path(open_result)
 
 
-def prompt_user_for_vanilla_input_file(window: QtWidgets.QWidget, extensions: list[str],
-                                       existing_file: Path | None = None) -> Path | None:
+def prompt_user_for_vanilla_input_file(
+    window: QtWidgets.QWidget, extensions: list[str], existing_file: Path | None = None
+) -> Path | None:
     """
     Shows an QFileDialog asking the user for a vanilla game file
     :param window:
@@ -83,8 +82,9 @@ def prompt_user_for_vanilla_input_file(window: QtWidgets.QWidget, extensions: li
     :return: A string if the user selected a file, None otherwise
     """
     if extensions and extensions == [""]:
-        return _prompt_user_for_directory(window, "Select the vanilla game folder",
-                                          dir=str(existing_file) if existing_file is not None else None)
+        return _prompt_user_for_directory(
+            window, "Select the vanilla game folder", dir=str(existing_file) if existing_file is not None else None
+        )
     return _prompt_user_for_file(
         window,
         caption="Select the vanilla game {}.".format("/".join(extensions)),
@@ -93,9 +93,7 @@ def prompt_user_for_vanilla_input_file(window: QtWidgets.QWidget, extensions: li
     )
 
 
-def prompt_user_for_output_file(window: QtWidgets.QWidget,
-                                default_name: str,
-                                extensions: list[str]) -> Path | None:
+def prompt_user_for_output_file(window: QtWidgets.QWidget, default_name: str, extensions: list[str]) -> Path | None:
     """
     Shows an QFileDialog asking the user where to place the output file
     :param window:
@@ -104,9 +102,9 @@ def prompt_user_for_output_file(window: QtWidgets.QWidget,
     :return: A string if the user selected a file, None otherwise
     """
     if extensions and extensions == [""]:
-        return _prompt_user_for_directory(window, "Where to place the Randomized game directory",
-                                          dir=default_name,
-                                          new_file=False)
+        return _prompt_user_for_directory(
+            window, "Where to place the Randomized game directory", dir=default_name, new_file=False
+        )
 
     return _prompt_user_for_file(
         window,
@@ -125,10 +123,14 @@ def prompt_user_for_output_game_log(window: QtWidgets.QWidget, default_name: str
     :return: A string if the user selected a file, None otherwise
     """
     from randovania.layout.layout_description import LayoutDescription
-    return _prompt_user_for_file(window, caption="Select a Randovania seed log.",
-                                 dir=default_name,
-                                 filter=f"Randovania Game, *.{LayoutDescription.file_extension()}",
-                                 new_file=True)
+
+    return _prompt_user_for_file(
+        window,
+        caption="Select a Randovania seed log.",
+        dir=default_name,
+        filter=f"Randovania Game, *.{LayoutDescription.file_extension()}",
+        new_file=True,
+    )
 
 
 def prompt_user_for_input_game_log(window: QtWidgets.QWidget) -> Path | None:
@@ -138,9 +140,13 @@ def prompt_user_for_input_game_log(window: QtWidgets.QWidget) -> Path | None:
     :return: A string if the user selected a file, None otherwise
     """
     from randovania.layout.layout_description import LayoutDescription
-    return _prompt_user_for_file(window, caption="Select a Randovania seed log.",
-                                 filter=f"Randovania Game, *.{LayoutDescription.file_extension()}",
-                                 new_file=False)
+
+    return _prompt_user_for_file(
+        window,
+        caption="Select a Randovania seed log.",
+        filter=f"Randovania Game, *.{LayoutDescription.file_extension()}",
+        new_file=False,
+    )
 
 
 def prompt_user_for_database_file(window: QtWidgets.QWidget) -> Path | None:
@@ -152,8 +158,7 @@ def prompt_user_for_database_file(window: QtWidgets.QWidget) -> Path | None:
     return _prompt_user_for_file(window, caption="Select a Randovania database file.", filter="*.json")
 
 
-def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name: str | None = None) -> None | (
-        Path):
+def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name: str | None = None) -> None | (Path):
     """
     Shows an QFileDialog asking the user for a Randovania preset file
     :param window:
@@ -161,11 +166,14 @@ def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name:
     :return: A path if the user selected a file, None otherwise
     """
     from randovania.layout.versioned_preset import VersionedPreset
-    return _prompt_user_for_file(window, caption="Select a Randovania Preset file.",
-                                 filter=f"Randovania Preset, *.{VersionedPreset.file_extension()};;"
-                                        f"All Files (*.*)",
-                                 dir=name,
-                                 new_file=new_file)
+
+    return _prompt_user_for_file(
+        window,
+        caption="Select a Randovania Preset file.",
+        filter=f"Randovania Preset, *.{VersionedPreset.file_extension()};;All Files (*.*)",
+        dir=name,
+        new_file=new_file,
+    )
 
 
 def set_default_window_icon(window: QtWidgets.QWidget):
@@ -180,8 +188,7 @@ def set_default_window_icon(window: QtWidgets.QWidget):
 def set_error_border_stylesheet(edit: QtWidgets.QWidget, has_error: bool):
     edit.has_error = has_error
     if has_error:
-        edit.setStyleSheet(":enabled { border: 1px solid red; }"
-                           ":disabled { border: 1px solid red; background: #CCC }")
+        edit.setStyleSheet(":enabled { border: 1px solid red; }:disabled { border: 1px solid red; background: #CCC }")
     else:
         edit.setStyleSheet("")
 
@@ -205,19 +212,21 @@ def set_edit_if_different_text(edit: QtWidgets.QTextEdit, new_text: str):
 
 def get_network_client():
     from randovania.gui.lib.qt_network_client import QtNetworkClient
+
     return typing.cast(QtNetworkClient, QtWidgets.QApplication.instance().network_client)
 
 
 def get_game_connection():
     from randovania.game_connection.game_connection import GameConnection
+
     return typing.cast(GameConnection, QtWidgets.QApplication.instance().game_connection)
 
 
 def show_install_visual_cpp_redist(details: str):
     from PySide6 import QtWidgets
 
-    download_url = 'https://aka.ms/vs/16/release/vc_redist.x64.exe'
-    support_url = 'https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads'
+    download_url = "https://aka.ms/vs/16/release/vc_redist.x64.exe"
+    support_url = "https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads"
 
     box = QtWidgets.QMessageBox(
         QtWidgets.QMessageBox.Critical,
@@ -234,6 +243,7 @@ def show_install_visual_cpp_redist(details: str):
 
 def set_clipboard(text: str):
     from PySide6 import QtWidgets
+
     QtWidgets.QApplication.clipboard().setText(text)
 
 
@@ -248,9 +258,9 @@ def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | Non
         if platform.system() == "Windows":
             os.startfile(path)
         elif platform.system() == "Darwin":
-            subprocess.run(["open", path])
+            subprocess.run(["open", path], check=False)
         else:
-            subprocess.run(["xdg-open", path])
+            subprocess.run(["xdg-open", path], check=False)
 
     except OSError:
         if fallback_dialog is None:
@@ -270,6 +280,6 @@ def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | Non
 def set_icon_data_paths(label: QtWidgets.QLabel):
     image_pattern = re.compile('<img src="data/(.*?)"/>')
 
-    repl = fr'<img src="{get_data_path().as_posix()}/\g<1>"/>'
+    repl = rf'<img src="{get_data_path().as_posix()}/\g<1>"/>'
     new_text = image_pattern.sub(repl, label.text())
     label.setText(new_text)

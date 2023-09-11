@@ -32,9 +32,7 @@ class DebugRemoteConnector(RemoteConnector):
         self._last_inventory_event = Inventory({})
 
         self.messages = []
-        self.item_collection = ResourceCollection.with_database(
-            default_database.resource_database_for(game)
-        )
+        self.item_collection = ResourceCollection.with_database(default_database.resource_database_for(game))
         self._last_remote_pickup = 0
 
     @property
@@ -51,7 +49,7 @@ class DebugRemoteConnector(RemoteConnector):
     async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):
         self.remote_pickups = remote_pickups
 
-        for remote_pickup in remote_pickups[self._last_remote_pickup:]:
+        for remote_pickup in remote_pickups[self._last_remote_pickup :]:
             self.messages.append(f"Received {remote_pickup[1].name} from {remote_pickup[0]}")
             self.item_collection.add_resource_gain(remote_pickup[1].resource_gain(self.item_collection))
             self._last_remote_pickup += 1
@@ -68,10 +66,12 @@ class DebugRemoteConnector(RemoteConnector):
         return self._finished
 
     def emit_inventory(self):
-        new_inventory = Inventory({
-            resource: InventoryItem(quantity, quantity)
-            for resource, quantity in self.item_collection.as_resource_gain()
-        })
+        new_inventory = Inventory(
+            {
+                resource: InventoryItem(quantity, quantity)
+                for resource, quantity in self.item_collection.as_resource_gain()
+            }
+        )
         if self._last_inventory_event != new_inventory:
             self._last_inventory_event = new_inventory
             self.InventoryUpdated.emit(new_inventory)

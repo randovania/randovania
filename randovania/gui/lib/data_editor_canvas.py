@@ -47,8 +47,7 @@ class BoundsFloat(NamedTuple):
 
     @property
     def as_rect(self) -> QRectF:
-        return QRectF(QPointF(self.min_x, self.min_y),
-                      QPointF(self.max_x, self.max_y))
+        return QRectF(QPointF(self.min_x, self.min_y), QPointF(self.max_x, self.max_y))
 
 
 def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str):
@@ -117,8 +116,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def select_region(self, region: Region):
         self.region = region
-        image_path = self.game.data_path.joinpath("assets", "maps",
-                                                  f"{region.name}.png") if self.game is not None else None
+        image_path = (
+            self.game.data_path.joinpath("assets", "maps", f"{region.name}.png") if self.game is not None else None
+        )
         if image_path is not None and image_path.exists():
             self._background_image = QtGui.QImage(os.fspath(image_path))
             self.image_bounds = BoundsInt(
@@ -158,8 +158,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def get_image_point(self, x: float, y: float):
         bounds = self.image_bounds
-        return QPointF(bounds.min_x + (bounds.max_x - bounds.min_x) * x,
-                       bounds.min_y + (bounds.max_y - bounds.min_y) * y)
+        return QPointF(
+            bounds.min_x + (bounds.max_x - bounds.min_x) * x, bounds.min_y + (bounds.max_y - bounds.min_y) * y
+        )
 
     def select_area(self, area: Area | None):
         self.area = area
@@ -179,8 +180,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 max_x = max(max_x, node.location.x)
                 max_y = max(max_y, node.location.y)
 
-        image_path = self.game.data_path.joinpath("assets", "maps",
-                                                  f"{area.map_name}.png") if self.game is not None else None
+        image_path = (
+            self.game.data_path.joinpath("assets", "maps", f"{area.map_name}.png") if self.game is not None else None
+        )
         if image_path is not None and image_path.exists():
             self._background_image = QtGui.QImage(os.fspath(image_path))
             min_x = area.extra.get("map_min_x", 0)
@@ -225,9 +227,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
         return self.visible_nodes is None or node in self.visible_nodes
 
     def is_connection_visible(self, requirement: Requirement) -> bool:
-        return self.state is None or requirement.satisfied(self.state.resources,
-                                                           self.state.energy,
-                                                           self.state.resource_database)
+        return self.state is None or requirement.satisfied(
+            self.state.resources, self.state.energy, self.state.resource_database
+        )
 
     def _update_scale_variables(self):
         self.border_x = self.rect().width() * 0.05
@@ -235,8 +237,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
         canvas_width = max(self.rect().width() - self.border_x * 2, 1)
         canvas_height = max(self.rect().height() - self.border_y * 2, 1)
 
-        self.scale = min(canvas_width / self.area_size.width(),
-                         canvas_height / self.area_size.height()) * self.additional_zoom
+        self.scale = (
+            min(canvas_width / self.area_size.width(), canvas_height / self.area_size.height()) * self.additional_zoom
+        )
 
         self.canvas_size = QSizeF(canvas_width, canvas_width)
 
@@ -244,8 +247,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
         return [
             node
             for node in self.area.actual_nodes
-            if node.location is not None and (
-                    self.game_loc_to_qt_local(node.location) - qt_local_position).manhattanLength() < 10
+            if node.location is not None
+            and (self.game_loc_to_qt_local(node.location) - qt_local_position).manhattanLength() < 10
         ]
 
     def _other_areas_at_position(self, qt_local_position: QPointF):
@@ -336,31 +339,40 @@ class DataEditorCanvas(QtWidgets.QWidget):
             else:
                 sub_menu = QtWidgets.QMenu(node.name, self)
 
-            sub_menu.addAction("Highlight this").triggered.connect(
-                functools.partial(self.SelectNodeRequest.emit, node)
-            )
+            sub_menu.addAction("Highlight this").triggered.connect(functools.partial(self.SelectNodeRequest.emit, node))
             view_connections = sub_menu.addAction("View connections to this")
             view_connections.setEnabled(
-                (self.edit_mode and self.highlighted_node != node) or (
-                        node in self.area.connections.get(self.highlighted_node, {})
-                )
+                (self.edit_mode and self.highlighted_node != node)
+                or (node in self.area.connections.get(self.highlighted_node, {}))
             )
             view_connections.triggered.connect(functools.partial(self.SelectConnectionsRequest.emit, node))
 
             if self.edit_mode:
                 sub_menu.addSeparator()
-                sub_menu.addAction("Replace connection with Trivial").triggered.connect(functools.partial(
-                    self.ReplaceConnectionsRequest.emit, node, Requirement.trivial(),
-                ))
-                sub_menu.addAction("Remove connection").triggered.connect(functools.partial(
-                    self.ReplaceConnectionsRequest.emit, node, Requirement.impossible(),
-                ))
+                sub_menu.addAction("Replace connection with Trivial").triggered.connect(
+                    functools.partial(
+                        self.ReplaceConnectionsRequest.emit,
+                        node,
+                        Requirement.trivial(),
+                    )
+                )
+                sub_menu.addAction("Remove connection").triggered.connect(
+                    functools.partial(
+                        self.ReplaceConnectionsRequest.emit,
+                        node,
+                        Requirement.impossible(),
+                    )
+                )
                 if areas_at_mouse:
                     move_menu = QtWidgets.QMenu("Move to...", self)
                     for area in areas_at_mouse:
-                        move_menu.addAction(area.name).triggered.connect(functools.partial(
-                            self.MoveNodeToAreaRequest.emit, node, area,
-                        ))
+                        move_menu.addAction(area.name).triggered.connect(
+                            functools.partial(
+                                self.MoveNodeToAreaRequest.emit,
+                                node,
+                                area,
+                            )
+                        )
                     sub_menu.addMenu(move_menu)
 
             if sub_menu != menu:
@@ -385,9 +397,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
         return QPointF(self.scale * (x - self.area_bounds.min_x), self.scale * (self.area_bounds.max_y - y))
 
     def qt_local_to_game_loc(self, pos: QPointF) -> NodeLocation:
-        return NodeLocation((pos.x() / self.scale) + self.area_bounds.min_x,
-                            self.area_bounds.max_y - (pos.y() / self.scale),
-                            0.0)
+        return NodeLocation(
+            (pos.x() / self.scale) + self.area_bounds.min_x, self.area_bounds.max_y - (pos.y() / self.scale), 0.0
+        )
 
     def get_area_canvas_offset(self):
         return QPointF(
@@ -423,20 +435,22 @@ class DataEditorCanvas(QtWidgets.QWidget):
             percent_y_end = 1 - (abounds.min_y - wbounds.min_y - scaled_border_y) / (wbounds.max_y - wbounds.min_y)
 
             painter.drawImage(
-                QRectF(-scaled_border_x * self.scale,
-                       -scaled_border_y * self.scale,
-                       (scaled_border_x * 2 + self.area_size.width()) * self.scale,
-                       (scaled_border_y * 2 + self.area_size.height()) * self.scale),
+                QRectF(
+                    -scaled_border_x * self.scale,
+                    -scaled_border_y * self.scale,
+                    (scaled_border_x * 2 + self.area_size.width()) * self.scale,
+                    (scaled_border_y * 2 + self.area_size.height()) * self.scale,
+                ),
                 self._background_image,
-                QRectF(self.get_image_point(percent_x_start, percent_y_start),
-                       self.get_image_point(percent_x_end, percent_y_end)))
+                QRectF(
+                    self.get_image_point(percent_x_start, percent_y_start),
+                    self.get_image_point(percent_x_end, percent_y_end),
+                ),
+            )
 
         area = self.area
         if "polygon" in area.extra:
-            points = [
-                self.game_loc_to_qt_local(p)
-                for p in area.extra["polygon"]
-            ]
+            points = [self.game_loc_to_qt_local(p) for p in area.extra["polygon"]]
             painter.drawPolygon(points, QtGui.Qt.FillRule.OddEvenFill)
 
         pen_widget = painter.pen().width()
@@ -477,11 +491,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 line.setAngle(line_angle - 30)
                 tri_point_2 = line.pointAt(15 / line_len)
 
-                arrow = QtGui.QPolygonF([
-                    end_point,
-                    tri_point_1,
-                    tri_point_2
-                ])
+                arrow = QtGui.QPolygonF([end_point, tri_point_1, tri_point_2])
                 painter.drawPolygon(arrow)
 
         brush = painter.brush()

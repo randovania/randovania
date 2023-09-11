@@ -29,7 +29,8 @@ class PresetPrimeGeneration(PresetGeneration):
         super().setupUi(obj)
 
         self.min_progression_label = QtWidgets.QLabel(
-            "Only place artifacts after this many actions were performed by the generator.")
+            "Only place artifacts after this many actions were performed by the generator."
+        )
         self.min_progression_spin = QtWidgets.QSpinBox()
 
     @property

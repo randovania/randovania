@@ -20,21 +20,23 @@ if TYPE_CHECKING:
 
 
 async def export_game(
-        exporter: GameExporter,
-        export_dialog: GameExportDialog,
-        patch_data: dict,
-        layout_for_spoiler: LayoutDescription | None,
-        background: BackgroundTaskMixin,
-        progress_update_signal: Signal(str, int),
+    exporter: GameExporter,
+    export_dialog: GameExportDialog,
+    patch_data: dict,
+    layout_for_spoiler: LayoutDescription | None,
+    background: BackgroundTaskMixin,
+    progress_update_signal: Signal(str, int),
 ):
     export_params = export_dialog.get_game_export_params()
 
     if exporter.is_busy:
         return await async_dialog.message_box(
-            None, QtWidgets.QMessageBox.Icon.Critical,
+            None,
+            QtWidgets.QMessageBox.Icon.Critical,
             "Can't export game",
             "Error: Unable to export multiple games at the same time and "
-            "another window is exporting a game right now.")
+            "another window is exporting a game right now.",
+        )
 
     def work(progress_update: ProgressUpdateCallable):
         exporter.export_game(patch_data, export_params, progress_update=progress_update)
@@ -54,12 +56,7 @@ async def export_game(
 
     except UnableToExportError as e:
         logging.warning(e.reason)
-        await async_dialog.message_box(
-                None,
-                QtWidgets.QMessageBox.Icon.Critical,
-                "Error during exporting",
-                e.reason
-            )
+        await export_dialog.handle_unable_to_export(e)
 
     except Exception as e:
         logging.exception("Unable to export game")

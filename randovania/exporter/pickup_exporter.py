@@ -40,9 +40,12 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalRe
 
         lock = pickup.resource_lock
         # A lock that goes to the same item is ignored for the patcher, for simplification
-        if (pickup.respects_lock and not pickup.unlocks_resource
-                and lock is not None and lock.temporary_item != lock.item_to_lock):
-
+        if (
+            pickup.respects_lock
+            and not pickup.unlocks_resource
+            and lock is not None
+            and lock.temporary_item != lock.item_to_lock
+        ):
             locked_resources = lock.convert_gain(resources)
             return [
                 ConditionalResources(
@@ -89,36 +92,35 @@ def _pickup_description(pickup: PickupEntry) -> str:
         return ""
 
 
-def _get_single_hud_text(pickup_name: str,
-                         memo_data: dict[str, str],
-                         resources: ResourceGainTuple,
-                         ) -> str:
-    return memo_data[pickup_name].format(**{
+def _get_single_hud_text(
+    pickup_name: str,
+    memo_data: dict[str, str],
+    resources: ResourceGainTuple,
+) -> str:
+    return memo_data[pickup_name].format(
         **{
-            item_names.resource_user_friendly_name(resource): abs(quantity)
-            for resource, quantity in resources
-        },
-        **{
-            item_names.resource_user_friendly_delta(resource): "increased" if quantity >= 0 else "decreased"
-            for resource, quantity in resources
+            **{item_names.resource_user_friendly_name(resource): abs(quantity) for resource, quantity in resources},
+            **{
+                item_names.resource_user_friendly_delta(resource): "increased" if quantity >= 0 else "decreased"
+                for resource, quantity in resources
+            },
         }
-    })
+    )
 
 
-def _get_all_hud_text(conditionals: list[ConditionalResources],
-                      memo_data: dict[str, str],
-                      ) -> list[str]:
-    return [
-        _get_single_hud_text(conditional.name, memo_data, conditional.resources)
-        for conditional in conditionals
-    ]
+def _get_all_hud_text(
+    conditionals: list[ConditionalResources],
+    memo_data: dict[str, str],
+) -> list[str]:
+    return [_get_single_hud_text(conditional.name, memo_data, conditional.resources) for conditional in conditionals]
 
 
-def _calculate_collection_text(pickup: PickupEntry,
-                               visual_pickup: PickupEntry,
-                               model_style: PickupModelStyle,
-                               memo_data: dict[str, str],
-                               ) -> list[str]:
+def _calculate_collection_text(
+    pickup: PickupEntry,
+    visual_pickup: PickupEntry,
+    model_style: PickupModelStyle,
+    memo_data: dict[str, str],
+) -> list[str]:
     """
     Calculates what the hud_text for a pickup should be
     :param pickup:
@@ -158,22 +160,25 @@ class PickupExporter:
     def __init__(self, game: RandovaniaGame) -> None:
         self.game = game
 
-    def create_details(self,
-                       original_index: PickupIndex,
-                       pickup_target: PickupTarget,
-                       visual_pickup: PickupEntry,
-                       model_style: PickupModelStyle,
-                       name: str,
-                       description: str,
-                       model: PickupModel) -> ExportedPickupDetails:
+    def create_details(
+        self,
+        original_index: PickupIndex,
+        pickup_target: PickupTarget,
+        visual_pickup: PickupEntry,
+        model_style: PickupModelStyle,
+        name: str,
+        description: str,
+        model: PickupModel,
+    ) -> ExportedPickupDetails:
         raise NotImplementedError
 
-    def export(self,
-               original_index: PickupIndex,
-               pickup_target: PickupTarget,
-               visual_pickup: PickupEntry,
-               model_style: PickupModelStyle,
-               ) -> ExportedPickupDetails:
+    def export(
+        self,
+        original_index: PickupIndex,
+        pickup_target: PickupTarget,
+        visual_pickup: PickupEntry,
+        model_style: PickupModelStyle,
+    ) -> ExportedPickupDetails:
         model_pickup = pickup_target.pickup if model_style == PickupModelStyle.ALL_VISIBLE else visual_pickup
 
         if model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}:
@@ -183,8 +188,9 @@ class PickupExporter:
             name = visual_pickup.name
             description = ""
 
-        return self.create_details(original_index, pickup_target, visual_pickup,
-                                   model_style, name, description, model_pickup.model)
+        return self.create_details(
+            original_index, pickup_target, visual_pickup, model_style, name, description, model_pickup.model
+        )
 
 
 class PickupExporterSolo(PickupExporter):
@@ -192,14 +198,16 @@ class PickupExporterSolo(PickupExporter):
         self.memo_data = memo_data
         super().__init__(game)
 
-    def create_details(self,
-                       original_index: PickupIndex,
-                       pickup_target: PickupTarget,
-                       visual_pickup: PickupEntry,
-                       model_style: PickupModelStyle,
-                       name: str,
-                       description: str,
-                       model: PickupModel) -> ExportedPickupDetails:
+    def create_details(
+        self,
+        original_index: PickupIndex,
+        pickup_target: PickupTarget,
+        visual_pickup: PickupEntry,
+        model_style: PickupModelStyle,
+        name: str,
+        description: str,
+        model: PickupModel,
+    ) -> ExportedPickupDetails:
         pickup = pickup_target.pickup
         return ExportedPickupDetails(
             index=original_index,
@@ -221,17 +229,20 @@ class PickupExporterMulti(PickupExporter):
         self.players_config = players_config
         super().__init__(self.solo_creator.game)
 
-    def create_details(self,
-                       original_index: PickupIndex,
-                       pickup_target: PickupTarget,
-                       visual_pickup: PickupEntry,
-                       model_style: PickupModelStyle,
-                       name: str,
-                       description: str,
-                       model: PickupModel) -> ExportedPickupDetails:
+    def create_details(
+        self,
+        original_index: PickupIndex,
+        pickup_target: PickupTarget,
+        visual_pickup: PickupEntry,
+        model_style: PickupModelStyle,
+        name: str,
+        description: str,
+        model: PickupModel,
+    ) -> ExportedPickupDetails:
         if pickup_target.player == self.players_config.player_index:
-            details = self.solo_creator.create_details(original_index, pickup_target, visual_pickup,
-                                                       model_style, name, description, model)
+            details = self.solo_creator.create_details(
+                original_index, pickup_target, visual_pickup, model_style, name, description, model
+            )
             return dataclasses.replace(details, name=f"Your {details.name}")
         else:
             other_name = self.players_config.player_names[pickup_target.player]
@@ -240,9 +251,8 @@ class PickupExporterMulti(PickupExporter):
             offworld_model = PickupModel(
                 model.game,
                 model_pickup.offworld_models.get(
-                    self.game,
-                    default_database.pickup_database_for_game(self.game).default_offworld_model
-                )
+                    self.game, default_database.pickup_database_for_game(self.game).default_offworld_model
+                ),
             )
 
             is_different_game = self.game != model.game
@@ -251,11 +261,13 @@ class PickupExporterMulti(PickupExporter):
                 name=f"{other_name}'s {name}",
                 description=description,
                 collection_text=[f"Sent {name} to {other_name}!"],
-                conditional_resources=[ConditionalResources(
-                    name=None,
-                    item=None,
-                    resources=(),
-                )],
+                conditional_resources=[
+                    ConditionalResources(
+                        name=None,
+                        item=None,
+                        resources=(),
+                    )
+                ],
                 conversion=[],
                 model=offworld_model if is_different_game else model,
                 original_model=model,
@@ -264,13 +276,14 @@ class PickupExporterMulti(PickupExporter):
             )
 
 
-def _get_visual_model(original_index: int,
-                      pickup_list: list[PickupTarget],
-                      data_source: PickupModelDataSource,
-                      visual_etm: PickupEntry,
-                      ) -> PickupEntry:
+def _get_visual_model(
+    original_index: int,
+    pickup_list: list[PickupTarget],
+    data_source: PickupModelDataSource,
+    visual_nothing: PickupEntry,
+) -> PickupEntry:
     if data_source == PickupModelDataSource.ETM:
-        return visual_etm
+        return visual_nothing
     elif data_source == PickupModelDataSource.RANDOM:
         return pickup_list[original_index % len(pickup_list)].pickup
     elif data_source == PickupModelDataSource.LOCATION:
@@ -279,15 +292,16 @@ def _get_visual_model(original_index: int,
         raise ValueError(f"Unknown data_source: {data_source}")
 
 
-def export_all_indices(patches: GamePatches,
-                       useless_target: PickupTarget,
-                       region_list: RegionList,
-                       rng: Random,
-                       model_style: PickupModelStyle,
-                       data_source: PickupModelDataSource,
-                       exporter: PickupExporter,
-                       visual_etm: PickupEntry,
-                       ) -> list[ExportedPickupDetails]:
+def export_all_indices(
+    patches: GamePatches,
+    useless_target: PickupTarget,
+    region_list: RegionList,
+    rng: Random,
+    model_style: PickupModelStyle,
+    data_source: PickupModelDataSource,
+    exporter: PickupExporter,
+    visual_nothing: PickupEntry,
+) -> list[ExportedPickupDetails]:
     """
     Creates the patcher data for all pickups in the game
     :param patches:
@@ -297,7 +311,7 @@ def export_all_indices(patches: GamePatches,
     :param model_style:
     :param data_source:
     :param exporter:
-    :param visual_etm:
+    :param visual_nothing:
     :return:
     """
     pickup_assignment = patches.pickup_assignment
@@ -305,18 +319,15 @@ def export_all_indices(patches: GamePatches,
     pickup_list = list(pickup_assignment.values())
     rng.shuffle(pickup_list)
 
-    indices = sorted(
-        node.pickup_index
-        for node in region_list.iterate_nodes()
-        if isinstance(node, PickupNode)
-    )
+    indices = sorted(node.pickup_index for node in region_list.iterate_nodes() if isinstance(node, PickupNode))
 
     pickups = [
-        exporter.export(index,
-                        pickup_assignment.get(index, useless_target),
-                        _get_visual_model(i, pickup_list, data_source, visual_etm),
-                        model_style,
-                        )
+        exporter.export(
+            index,
+            pickup_assignment.get(index, useless_target),
+            _get_visual_model(i, pickup_list, data_source, visual_nothing),
+            model_style,
+        )
         for i, index in enumerate(indices)
     ]
 

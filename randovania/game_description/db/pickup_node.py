@@ -20,7 +20,7 @@ class PickupNode(ResourceNode):
     pickup_index: PickupIndex
     location_category: LocationCategory
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"PickupNode({self.name!r} -> {self.pickup_index.index})"
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:

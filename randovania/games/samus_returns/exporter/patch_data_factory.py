@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter import pickup_exporter
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
@@ -25,7 +25,7 @@ def get_item_id_for_item(item: ItemResourceInfo) -> str:
         raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
-class MSRPatchDataFactory(BasePatchDataFactory):
+class MSRPatchDataFactory(PatchDataFactory):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.memo_data = MSRAcquiredMemo.with_expansion_text()
@@ -59,7 +59,6 @@ class MSRPatchDataFactory(BasePatchDataFactory):
             return {}
 
     def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
-
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
 
@@ -74,15 +73,16 @@ class MSRPatchDataFactory(BasePatchDataFactory):
 
         return details
 
-    def _node_for(self, identifier:  NodeIdentifier) -> Node:
+    def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
 
-        useless_target = PickupTarget(pickup_creator.create_nothing_pickup(self.game.resource_database),
-                                      self.players_config.player_index)
+        useless_target = PickupTarget(
+            pickup_creator.create_nothing_pickup(self.game.resource_database), self.players_config.player_index
+        )
 
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
@@ -92,7 +92,7 @@ class MSRPatchDataFactory(BasePatchDataFactory):
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
             exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
         )
 
         energy_per_tank = self.configuration.energy_per_tank
@@ -101,9 +101,7 @@ class MSRPatchDataFactory(BasePatchDataFactory):
             "starting_location": starting_location,
             "starting_items": starting_items,
             "pickups": [
-                data
-                for pickup_item in pickup_list
-                if (data := self._pickup_detail_for_target(pickup_item)) is not None
+                data for pickup_item in pickup_list if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
             "energy_per_tank": energy_per_tank,
         }
@@ -117,10 +115,9 @@ class MSRAcquiredMemo(dict):
     def with_expansion_text(cls):
         result = cls()
         result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missile}."
-        result["Super Missile Tank"] = (
-            "Super Missile Tank acquired.\n"
-            "Super Missile capacity increased by {Super Missile}."
-        )
+        result[
+            "Super Missile Tank"
+        ] = "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}."
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
         result["Aeion Tank"] = "Aeion Tank acquired.\nAeion capacity increased by {Aeion}"

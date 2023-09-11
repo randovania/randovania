@@ -49,6 +49,6 @@ class MultiFormatOutputMixin:
         if button.isChecked():
             self._selected_output_format = button.text()[1:]
             current_filename = Path(self.output_file_edit.text())
-            if str(current_filename) != '.':
-                self.output_file_edit.setText(str(current_filename.with_suffix('.' + self._selected_output_format)))
+            if str(current_filename) != ".":
+                self.output_file_edit.setText(str(current_filename.with_suffix("." + self._selected_output_format)))
                 self.output_file_edit.field_validation()

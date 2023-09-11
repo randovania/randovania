@@ -60,12 +60,14 @@ class PresetDreadGeneration(PresetGeneration):
             )
 
     def _on_click_link_highdanger_logic_details(self, link: str):
-        self._exec_trick_details(ResourceDetailsPopup(
-            self,
-            self._window_manager,
-            self.game_description,
-            self.game_description.resource_database.get_by_type_and_index(ResourceType.MISC, "HighDanger"),
-        ))
+        self._exec_trick_details(
+            ResourceDetailsPopup(
+                self,
+                self._window_manager,
+                self.game_description,
+                self.game_description.resource_database.get_by_type_and_index(ResourceType.MISC, "HighDanger"),
+            )
+        )
 
     def _exec_trick_details(self, popup: ResourceDetailsPopup):
         self._trick_details_popup = popup

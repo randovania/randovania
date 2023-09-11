@@ -27,6 +27,7 @@ _FIELDS = [
     "spring_ball",
 ]
 
+
 class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
@@ -36,36 +37,29 @@ class PresetPrimeQol(PresetTab, Ui_PresetPrimeQol):
 
         # Signals
         self.cutscene_combo.setItemData(0, LayoutCutsceneMode.ORIGINAL)
-        self.cutscene_combo.setItemData(1, LayoutCutsceneMode.COMPETITIVE)
-        self.cutscene_combo.setItemData(2, LayoutCutsceneMode.MINOR)
+        self.cutscene_combo.setItemData(1, LayoutCutsceneMode.SKIPPABLE)
+        self.cutscene_combo.setItemData(2, LayoutCutsceneMode.SKIPPABLE_COMPETITIVE)
         self.cutscene_combo.setItemData(3, LayoutCutsceneMode.MAJOR)
-        self.cutscene_combo.setItemData(4, LayoutCutsceneMode.SKIPPABLE)
-        self.cutscene_combo.setItemData(5, LayoutCutsceneMode.SKIPPABLE_COMPETITIVE)
 
         if editor._options.experimental_settings:
-            # ruff made me do it this way
-            self.cutscene_label.setText("""
-                <html>
-                    <head/>
-                    <body>
-<p><span style=" font-weight:600;">Original</span>
-: No changes to the cutscenes are made.</p>
-<p><span style=" font-weight:600;">Competitive</span>
-: Similar to minor, but leaves a few rooms alone where skipping cutscenes would be inappropriate for races.</p>
-<p><span style=" font-weight:600;">Minor</span>
-: Removes cutscenes that don't affect the game too much when removed.</p>
-<p><span style=" font-weight:600;">Major</span>
-: Allows you to continue playing the game while cutscenes happen.</p>
-<p><span style=" font-weight:700;">Skippable (Experimental)</span>
-: Keeps all of the cutscenes in the game, but makes it so that they can be skipped with the START button.</p>
-<p><span style=" font-weight:700;">Competitive (Experimental)</span>
-: Removes some cutscenes from the game which hinder the flow of competitive play. All others are skippable.</p>
-                    </body>
-                </html>
-            """)
+            self.cutscene_label.setText(
+                """
+<html>
+<head/>
+<body>
+<p><span style=" font-weight:600;">Original</span>: No changes to the cutscenes are made.</p>
+<p><span style=" font-weight:700;">Skippable</span>: Keeps all of the cutscenes in the game, but makes it so that
+they can be skipped with the START button.</p>
+<p><span style=" font-weight:700;">Competitive</span>: Removes some cutscenes from the game which hinder the flow of
+competitive play. All others are skippable.</p>
+<p><span style=" font-weight:600;">Major [Deprecated]</span>: Allows you to continue playing the game while
+cutscenes happen. Inferior to the above options, but kept around because it's funny.</p>
+</body>
+</html>
+            """
+            )
         else:
-            self.cutscene_combo.removeItem(4)
-            self.cutscene_combo.removeItem(4)
+            self.cutscene_combo.removeItem(3)
 
         signal_handling.on_combo(self.cutscene_combo, self._on_cutscene_changed)
         for f in _FIELDS:

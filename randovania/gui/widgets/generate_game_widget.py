@@ -41,7 +41,8 @@ def persist_layout(history_dir: Path, description: LayoutDescription):
 
     date_format = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     file_path = history_dir.joinpath(
-        f"{date_format}_{games}_{description.shareable_word_hash}.{description.file_extension()}")
+        f"{date_format}_{games}_{description.shareable_word_hash}.{description.file_extension()}"
+    )
     description.save_to_file(file_path)
 
 
@@ -56,8 +57,13 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         self.setupUi(self)
         self.failure_handler = GenerationFailureHandler(self)
 
-    def setup_ui(self, game: RandovaniaGame, window_manager: WindowManager, background_task: BackgroundTaskMixin,
-                 options: Options):
+    def setup_ui(
+        self,
+        game: RandovaniaGame,
+        window_manager: WindowManager,
+        background_task: BackgroundTaskMixin,
+        options: Options,
+    ):
         self._window_manager = window_manager
         self._background_task = background_task
         self._options = options
@@ -116,7 +122,8 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                 buttons = async_dialog.StandardButton.No
 
             result = await async_dialog.warning(
-                self, "Unsupported Features",
+                self,
+                "Unsupported Features",
                 "Preset '{}' uses the unsupported features:\n{}\n\n{}".format(
                     preset.name,
                     ", ".join(unsupported_features),
@@ -131,11 +138,13 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
         while True:
             try:
                 return await self.generate_layout_from_permalink(
-                    permalink=Permalink.from_parameters(GeneratorParameters(
-                        seed_number=random.randint(0, 2 ** 31),
-                        spoiler=spoiler,
-                        presets=[preset.get_preset()] * num_players,
-                    )),
+                    permalink=Permalink.from_parameters(
+                        GeneratorParameters(
+                            seed_number=random.randint(0, 2**31),
+                            spoiler=spoiler,
+                            presets=[preset.get_preset()] * num_players,
+                        )
+                    ),
                     retries=retries,
                 )
             except RetryGeneration:
@@ -143,10 +152,9 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
     async def generate_layout_from_permalink(self, permalink: Permalink, retries: int | None = None):
         def work(progress_update: ProgressUpdateCallable):
-            return generator_frontend.generate_layout(progress_update=progress_update,
-                                                      parameters=permalink.parameters,
-                                                      options=self._options,
-                                                      retries=retries)
+            return generator_frontend.generate_layout(
+                progress_update=progress_update, parameters=permalink.parameters, options=self._options, retries=retries
+            )
 
         if self._window_manager.is_preview_mode:
             logging.info(f"Permalink: {permalink.as_base64_str}")
@@ -155,14 +163,17 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             layout = await self._background_task.run_in_background_async(work, "Creating a game...")
         except ImpossibleForSolver as e:
             code = await async_dialog.warning(
-                self, "Solver Error",
+                self,
+                "Solver Error",
                 f"{e}.\n\nDo you want to:"
                 f"\n- Keep the generated game, even without any guarantees it's possible"
                 f"\n- Retry the generation"
                 f"\n- Cancel the process",
-                buttons=(async_dialog.StandardButton.Save
-                         | async_dialog.StandardButton.Retry
-                         | async_dialog.StandardButton.Cancel),
+                buttons=(
+                    async_dialog.StandardButton.Save
+                    | async_dialog.StandardButton.Retry
+                    | async_dialog.StandardButton.Cancel
+                ),
                 default_button=async_dialog.StandardButton.Cancel,
             )
             if code == async_dialog.StandardButton.Save:
@@ -177,9 +188,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             return
 
         except Exception as e:
-            return await self.failure_handler.handle_exception(
-                e, self._background_task.progress_update_signal.emit
-            )
+            return await self.failure_handler.handle_exception(e, self._background_task.progress_update_signal.emit)
 
         self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 100)
         persist_layout(self._options.game_history_path, layout)

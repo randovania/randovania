@@ -18,7 +18,6 @@ if TYPE_CHECKING:
 
 
 class PresetEchoesHints(PresetTab, Ui_PresetEchoesHints):
-
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -42,8 +41,10 @@ class PresetEchoesHints(PresetTab, Ui_PresetEchoesHints):
         with self._editor as editor:
             editor.set_configuration_field(
                 "hints",
-                dataclasses.replace(editor.configuration.hints,
-                                    sky_temple_keys=self.hint_sky_temple_key_combo.currentData()))
+                dataclasses.replace(
+                    editor.configuration.hints, sky_temple_keys=self.hint_sky_temple_key_combo.currentData()
+                ),
+            )
 
     def on_preset_changed(self, preset: Preset):
         set_combo_with_value(self.hint_sky_temple_key_combo, preset.configuration.hints.sky_temple_keys)

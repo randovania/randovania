@@ -45,8 +45,9 @@ def test_add_new_preset(widget: SelectPresetWidget, preset_manager):
 
 @pytest.mark.parametrize("is_included_preset", [False, True])
 @pytest.mark.parametrize("has_existing_window", [False, True])
-async def test_on_customize_button(widget: SelectPresetWidget, mocker: pytest_mock.MockerFixture,
-                                   has_existing_window, is_included_preset):
+async def test_on_customize_button(
+    widget: SelectPresetWidget, mocker: pytest_mock.MockerFixture, has_existing_window, is_included_preset
+):
     mock_settings_window = mocker.patch("randovania.gui.widgets.select_preset_widget.CustomizePresetDialog")
     mock_editor = mocker.patch("randovania.gui.widgets.select_preset_widget.PresetEditor")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
@@ -148,18 +149,16 @@ async def test_on_view_preset_history(widget: SelectPresetWidget, has_result, mo
         assert widget._window_manager.preset_manager.custom_presets == {}
 
 
-def test_select_preset_incompatible_preset(widget: SelectPresetWidget, preset_manager,
-                                           mocker: pytest_mock.MockerFixture):
-    mocker.patch("randovania.layout.preset.Preset.settings_incompatible_with_multiworld",
-                 return_value=["Foo", "Bar"])
+def test_select_preset_incompatible_preset(
+    widget: SelectPresetWidget, preset_manager, mocker: pytest_mock.MockerFixture
+):
+    mocker.patch("randovania.layout.preset.Preset.settings_incompatible_with_multiworld", return_value=["Foo", "Bar"])
 
     can_generate = MagicMock()
     widget.CanGenerate.connect(can_generate)
 
     widget.for_multiworld = True
-    widget.on_preset_changed(
-        preset=preset_manager.default_preset_for_game(widget._game)
-    )
+    widget.on_preset_changed(preset=preset_manager.default_preset_for_game(widget._game))
 
     can_generate.assert_called_once_with(False)
     assert "The following settings are incompatible with multiworld" in widget.create_preset_description.text()

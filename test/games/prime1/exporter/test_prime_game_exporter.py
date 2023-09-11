@@ -10,25 +10,37 @@ from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter, Pr
 from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
 
 
-@pytest.mark.parametrize('use_echoes_models', [True, False])
-@pytest.mark.parametrize('use_enemy_attribute_randomizer', [False, True])
+@pytest.mark.parametrize("use_echoes_models", [True, False])
+@pytest.mark.parametrize("use_enemy_attribute_randomizer", [False, True])
 def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_randomizer):
-    mock_symbols_for_file: MagicMock = mocker.patch("py_randomprime.symbols_for_file", return_value={
-        "UpdateHintState__13CStateManagerFf": 0x80044D38,
-    })
+    mock_symbols_for_file: MagicMock = mocker.patch(
+        "py_randomprime.symbols_for_file",
+        return_value={
+            "UpdateHintState__13CStateManagerFf": 0x80044D38,
+        },
+    )
     seed = 103817502
     if use_enemy_attribute_randomizer:
-        enemy_attribute_randomizer = EnemyAttributeRandomizer(1.4, 1.8, 2.25, 1.9, 0.2, 7.9, 10.6, 11.0, 0.1, 106.0,
-                                                              True).as_json
+        enemy_attribute_randomizer = EnemyAttributeRandomizer(
+            1.4, 1.8, 2.25, 1.9, 0.2, 7.9, 10.6, 11.0, 0.1, 106.0, True
+        ).as_json
     else:
         enemy_attribute_randomizer = None
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
     mock_enemy_data: MagicMock = mocker.patch(
-        "randovania.games.prime1.exporter.game_exporter.PyRandom_Enemy_Attributes")
+        "randovania.games.prime1.exporter.game_exporter.PyRandom_Enemy_Attributes"
+    )
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
-    patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None",
-                  "randEnemyAttributes": enemy_attribute_randomizer, "seed": seed}
+    patch_data = {
+        "patch": "data",
+        "gameConfig": {},
+        "hasSpoiler": True,
+        "preferences": {},
+        "roomRandoMode": "None",
+        "randEnemyAttributes": enemy_attribute_randomizer,
+        "seed": seed,
+    }
     progress_update = MagicMock()
     echoes_input_path = tmp_path.joinpath("echoes.iso")
     asset_cache_path = tmp_path.joinpath("internal_copies", "prime1", "prime2_models")
@@ -50,21 +62,154 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
             use_echoes_models=use_echoes_models,
             cache_path=tmp_path.joinpath("cache_path"),
         ),
-        progress_update
+        progress_update,
     )
 
     # Assert
     expected = {
         "patch": "data",
-        'gameConfig': {
+        "gameConfig": {
             "updateHintStateReplacement": [
-                148, 33, 255, 204, 124, 8, 2, 166, 144, 1, 0, 56, 191, 193, 0, 44, 124, 127, 27, 120, 136, 159, 0, 2,
-                44, 4, 0, 0, 64, 130, 0, 24, 187, 193, 0, 44, 128, 1, 0, 56, 124, 8, 3,
-                166, 56, 33, 0, 52, 78, 128, 0, 32, 128, 127, 8, 112, 44, 3, 0, 0, 65,
-                130, 255, 228, 128, 3, 0, 8, 44, 0, 0, 0, 65, 129, 255, 216, 63, 192,
-                128, 4, 99, 222, 77, 164, 56, 128, 1, 96, 124, 4, 247, 172, 44, 4, 0, 0,
-                56, 132, 255, 224, 64, 130, 255, 244, 124, 0, 4, 172, 76, 0, 1, 44, 56, 192, 0, 0, 152,
-                223, 0, 2, 187, 193, 0, 44, 128, 1, 0, 56, 124, 8, 3, 166, 56, 33, 0, 52, 78, 128, 0, 32
+                148,
+                33,
+                255,
+                204,
+                124,
+                8,
+                2,
+                166,
+                144,
+                1,
+                0,
+                56,
+                191,
+                193,
+                0,
+                44,
+                124,
+                127,
+                27,
+                120,
+                136,
+                159,
+                0,
+                2,
+                44,
+                4,
+                0,
+                0,
+                64,
+                130,
+                0,
+                24,
+                187,
+                193,
+                0,
+                44,
+                128,
+                1,
+                0,
+                56,
+                124,
+                8,
+                3,
+                166,
+                56,
+                33,
+                0,
+                52,
+                78,
+                128,
+                0,
+                32,
+                128,
+                127,
+                8,
+                112,
+                44,
+                3,
+                0,
+                0,
+                65,
+                130,
+                255,
+                228,
+                128,
+                3,
+                0,
+                8,
+                44,
+                0,
+                0,
+                0,
+                65,
+                129,
+                255,
+                216,
+                63,
+                192,
+                128,
+                4,
+                99,
+                222,
+                77,
+                164,
+                56,
+                128,
+                1,
+                96,
+                124,
+                4,
+                247,
+                172,
+                44,
+                4,
+                0,
+                0,
+                56,
+                132,
+                255,
+                224,
+                64,
+                130,
+                255,
+                244,
+                124,
+                0,
+                4,
+                172,
+                76,
+                0,
+                1,
+                44,
+                56,
+                192,
+                0,
+                0,
+                152,
+                223,
+                0,
+                2,
+                187,
+                193,
+                0,
+                44,
+                128,
+                1,
+                0,
+                56,
+                124,
+                8,
+                3,
+                166,
+                56,
+                33,
+                0,
+                52,
+                78,
+                128,
+                0,
+                32,
             ]
         },
         "preferences": {
@@ -82,14 +227,27 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
         assert not asset_cache_path.exists()
 
     if use_enemy_attribute_randomizer:
-        mock_enemy_data.assert_called_once_with(os.fspath(tmp_path.joinpath("input.iso")),
-                                                os.fspath(tmp_path.joinpath("output.iso")), seed, 1.4, 1.8, 2.25, 1.9,
-                                                0.2, 7.9, 10.6, 11.0, 0.1, 106.0, True)
+        mock_enemy_data.assert_called_once_with(
+            os.fspath(tmp_path.joinpath("input.iso")),
+            os.fspath(tmp_path.joinpath("output.iso")),
+            seed,
+            1.4,
+            1.8,
+            2.25,
+            1.9,
+            0.2,
+            7.9,
+            10.6,
+            11.0,
+            0.1,
+            106.0,
+            True,
+        )
     else:
         mock_enemy_data.assert_not_called()
 
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
-    mock_patch_iso_raw.assert_called_once_with(json.dumps(expected, indent=4, separators=(',', ': ')), ANY)
+    mock_patch_iso_raw.assert_called_once_with(json.dumps(expected, indent=4, separators=(",", ": ")), ANY)
 
 
 def test_adjust_model_names():
@@ -102,27 +260,27 @@ def test_adjust_model_names():
                         "pickups": [
                             {
                                 "model": {"game": "prime1", "name": "Missile"},
-                                "original_model": {"game": "prime1", "name": "Missile"}
+                                "original_model": {"game": "prime1", "name": "Missile"},
                             },
                             {
                                 "model": {"game": "prime1", "name": "Space Jump Boots"},
-                                "original_model": {"game": "prime1", "name": "Space Jump Boots"}
+                                "original_model": {"game": "prime1", "name": "Space Jump Boots"},
                             },
                             {
                                 "model": {"game": "prime2", "name": "Missile"},
-                                "original_model": {"game": "prime2", "name": "MissileLauncher"}
+                                "original_model": {"game": "prime2", "name": "MissileLauncher"},
                             },
                             {
                                 "model": {"game": "prime2", "name": "Boost Ball"},
-                                "original_model": {"game": "prime2", "name": "BoostBall"}
+                                "original_model": {"game": "prime2", "name": "BoostBall"},
                             },
                             {
                                 "model": {"game": "prime2", "name": "Spider Ball"},
-                                "original_model": {"game": "prime2", "name": "SpiderBall"}
+                                "original_model": {"game": "prime2", "name": "SpiderBall"},
                             },
                             {
                                 "model": {"game": "prime2", "name": "Nothing"},
-                                "original_model": {"game": "prime2", "name": "DarkAmmoExpansion"}
+                                "original_model": {"game": "prime2", "name": "DarkAmmoExpansion"},
                             },
                         ]
                     }
@@ -131,12 +289,7 @@ def test_adjust_model_names():
         }
     }
 
-    asset_metadata = {
-        "items": {
-            "prime2_MissileLauncher": {},
-            "prime2_BoostBall": {}
-        }
-    }
+    asset_metadata = {"items": {"prime2_MissileLauncher": {}, "prime2_BoostBall": {}}}
 
     # Run
     adjust_model_names(patcher_data, asset_metadata, True)
@@ -163,9 +316,12 @@ def test_adjust_model_names():
 
 
 def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
-    mock_symbols_for_file: MagicMock = mocker.patch("py_randomprime.symbols_for_file", return_value={
-        "UpdateHintState__13CStateManagerFf": 0x80044D38,
-    })
+    mock_symbols_for_file: MagicMock = mocker.patch(
+        "py_randomprime.symbols_for_file",
+        return_value={
+            "UpdateHintState__13CStateManagerFf": 0x80044D38,
+        },
+    )
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     progress_update = MagicMock()
 
@@ -190,15 +346,25 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
                 use_echoes_models=False,
                 cache_path=tmp_path.joinpath("cache_path"),
             ),
-            progress_update
+            progress_update,
         )
 
     # Assert
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
     mock_patch_iso_raw.assert_called_once_with(ANY, ANY)
 
-    mock_create_map_using_matplotlib.assert_has_calls([
-        call(ANY, tmp_path.joinpath(f"output {x}.png"))
-        for x in ["Chozo Ruins", "Impact Crater", "Phendrana Drifts", "Frigate Orpheon",
-                  "Magmoor Caverns", "Phazon Mines", "Tallon Overworld"]
-    ], any_order=True)
+    mock_create_map_using_matplotlib.assert_has_calls(
+        [
+            call(ANY, tmp_path.joinpath(f"output {x}.png"))
+            for x in [
+                "Chozo Ruins",
+                "Impact Crater",
+                "Phendrana Drifts",
+                "Frigate Orpheon",
+                "Magmoor Caverns",
+                "Phazon Mines",
+                "Tallon Overworld",
+            ]
+        ],
+        any_order=True,
+    )

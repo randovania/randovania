@@ -40,7 +40,6 @@ if TYPE_CHECKING:
 
 
 def run_bootstrap(preset: Preset, include_tricks: set[tuple[str, LayoutTrickLevel]]):
-
     game_description = default_database.game_description_for(preset.game)
     configuration = preset.configuration
     for trick in include_tricks:
@@ -61,8 +60,9 @@ def run_bootstrap(preset: Preset, include_tricks: set[tuple[str, LayoutTrickLeve
         spoiler=True,
         presets=[preset],
     )
-    patches = generator.base_patches_factory.create_base_patches(configuration, Random(15000),
-                                                                 game, False, player_index=0)
+    patches = generator.base_patches_factory.create_base_patches(
+        configuration, Random(15000), game, False, player_index=0
+    )
     _, state = generator.bootstrap.logic_bootstrap(configuration, game, patches)
 
     return game, state, permalink
@@ -87,9 +87,10 @@ def _create_reaches_and_compare(game: GameDescription, state: State) -> tuple[Ge
     return first_reach, second_reach
 
 
-def _compare_actions(first_reach: GeneratorReach,
-                     second_reach: GeneratorReach,
-                     ) -> tuple[list[ResourceNode], list[ResourceNode]]:
+def _compare_actions(
+    first_reach: GeneratorReach,
+    second_reach: GeneratorReach,
+) -> tuple[list[ResourceNode], list[ResourceNode]]:
     first_actions = reach_lib.get_collectable_resource_nodes_of_reach(first_reach)
     second_actions = reach_lib.get_collectable_resource_nodes_of_reach(second_reach)
     assert set(first_actions) == set(second_actions)
@@ -101,17 +102,34 @@ _ignore_events_for_game = {
     RandovaniaGame.METROID_PRIME: {"Event33"},
     RandovaniaGame.METROID_PRIME_ECHOES: {"Event91", "Event92", "Event97"},
     RandovaniaGame.METROID_PRIME_CORRUPTION: {"Event1", "Event146", "Event147", "Event148", "Event154"},
-    RandovaniaGame.SUPER_METROID: {"Event4", "Event6", "Event7", "Event8",
-                                   "Event13", "Event14", "Event15", "Event16", "Event17"},
+    RandovaniaGame.SUPER_METROID: {
+        "Event4",
+        "Event6",
+        "Event7",
+        "Event8",
+        "Event13",
+        "Event14",
+        "Event15",
+        "Event16",
+        "Event17",
+    },
     RandovaniaGame.METROID_DREAD: {},
-    RandovaniaGame.CAVE_STORY: {'camp', 'eventBadEnd', 'eventBestEnd', 'eventCurly', 'eventCurly2',
-                                'eventCurly3', 'eventCurly4', 'eventHell4', 'eventPress'}
+    RandovaniaGame.CAVE_STORY: {
+        "camp",
+        "eventBadEnd",
+        "eventBestEnd",
+        "eventCurly",
+        "eventCurly2",
+        "eventCurly3",
+        "eventCurly4",
+        "eventHell4",
+        "eventPress",
+    },
 }
 
 _ignore_pickups_for_game = {
     # These 3 indices are in Olympus and are unreachable given the default preset
     RandovaniaGame.METROID_PRIME_CORRUPTION: {0, 1, 2},
-
     # Unknown reason why
     RandovaniaGame.SUPER_METROID: {0, 11, 78, 129},
     RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
@@ -119,26 +137,34 @@ _ignore_pickups_for_game = {
 
 _include_tricks_for_game = {
     # Some items require shinesparking to reach in vanilla, which due to varying difficulty has been made into a trick
-    RandovaniaGame.AM2R: {
-        ("Shinesparking", LayoutTrickLevel.ADVANCED)
-    }
+    RandovaniaGame.AM2R: {("Shinesparking", LayoutTrickLevel.ADVANCED)}
 }
 
 
 @pytest.mark.skip_resolver_tests()
-@pytest.mark.parametrize(("game_enum", "ignore_events", "ignore_pickups", "include_tricks"), [
-    pytest.param(
-        game, _ignore_events_for_game.get(game, set()), _ignore_pickups_for_game.get(game, set()),
-        _include_tricks_for_game.get(game, set()),
-        id=game.value,
-    )
-    for game in RandovaniaGame
-])
-def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
-                              ignore_events: set[str], ignore_pickups: set[int],
-                              include_tricks: set[tuple[str, LayoutTrickLevel]]):
+@pytest.mark.parametrize(
+    ("game_enum", "ignore_events", "ignore_pickups", "include_tricks"),
+    [
+        pytest.param(
+            game,
+            _ignore_events_for_game.get(game, set()),
+            _ignore_pickups_for_game.get(game, set()),
+            _include_tricks_for_game.get(game, set()),
+            id=game.value,
+        )
+        for game in RandovaniaGame
+    ],
+)
+def test_database_collectable(
+    preset_manager,
+    game_enum: RandovaniaGame,
+    ignore_events: set[str],
+    ignore_pickups: set[int],
+    include_tricks: set[tuple[str, LayoutTrickLevel]],
+):
     game, initial_state, permalink = run_bootstrap(
-        preset_manager.default_preset_for_game(game_enum).get_preset(), include_tricks)
+        preset_manager.default_preset_for_game(game_enum).get_preset(), include_tricks
+    )
 
     all_pickups = set(reach_lib.filter_pickup_nodes(game.region_list.iterate_nodes()))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration, game)
@@ -150,8 +176,10 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
     for trick in game.resource_database.trick:
         initial_state.resources.set_resource(trick, LayoutTrickLevel.maximum().as_number)
 
-    expected_events = sorted((event for event in game.resource_database.event if event.short_name not in ignore_events),
-                             key=lambda it: it.short_name)
+    expected_events = sorted(
+        (event for event in game.resource_database.event if event.short_name not in ignore_events),
+        key=lambda it: it.short_name,
+    )
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 
     reach = _create_reach_with_unsafe(game, initial_state.heal())
@@ -190,42 +218,65 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     node_a = GenericNode(nc("Node A"), 0, True, None, "", ("default",), {}, False)
     node_b = GenericNode(nc("Node B"), 1, True, None, "", ("default",), {}, False)
     node_c = GenericNode(nc("Node C"), 2, True, None, "", ("default",), {}, False)
-    translator_node = ConfigurableNode(translator_identif := nc("Translator Gate"),
-                                       3, True, None, "", ("default",), {}, False)
+    translator_node = ConfigurableNode(
+        translator_identif := nc("Translator Gate"), 3, True, None, "", ("default",), {}, False
+    )
 
-    region_list = RegionList([
-        Region("Test World", [
-            Area("Test Area A", [node_a, node_b, node_c, translator_node],
-                 {
-                     node_a: {
-                         node_b: Requirement.trivial(),
-                         translator_node: Requirement.trivial(),
-                     },
-                     node_b: {
-                         node_a: Requirement.trivial(),
-                     },
-                     node_c: {
-                         translator_node: Requirement.trivial(),
-                     },
-                     translator_node: {
-                         node_a: Requirement.trivial(),
-                         node_c: Requirement.trivial(),
-                     },
-                 },
-                 {}
-                 )
-        ], {})
-    ])
-    game = GameDescription(RandovaniaGame.METROID_PRIME_ECHOES, DockWeaknessDatabase([], {}, {}, (None, None), None),
-                           echoes_resource_database, ("default",), Requirement.impossible(),
-                           None, {}, None, region_list)
+    region_list = RegionList(
+        [
+            Region(
+                "Test World",
+                [
+                    Area(
+                        "Test Area A",
+                        [node_a, node_b, node_c, translator_node],
+                        {
+                            node_a: {
+                                node_b: Requirement.trivial(),
+                                translator_node: Requirement.trivial(),
+                            },
+                            node_b: {
+                                node_a: Requirement.trivial(),
+                            },
+                            node_c: {
+                                translator_node: Requirement.trivial(),
+                            },
+                            translator_node: {
+                                node_a: Requirement.trivial(),
+                                node_c: Requirement.trivial(),
+                            },
+                        },
+                        {},
+                    )
+                ],
+                {},
+            )
+        ]
+    )
+    game = GameDescription(
+        RandovaniaGame.METROID_PRIME_ECHOES,
+        DockWeaknessDatabase([], {}, {}, (None, None), None),
+        echoes_resource_database,
+        ("default",),
+        Requirement.impossible(),
+        None,
+        {},
+        None,
+        region_list,
+    )
 
-    patches = echoes_game_patches.assign_node_configuration([
-        (translator_identif, ResourceRequirement.simple(scan_visor)),
-    ])
+    patches = echoes_game_patches.assign_node_configuration(
+        [
+            (translator_identif, ResourceRequirement.simple(scan_visor)),
+        ]
+    )
     initial_state = State(
         ResourceCollection.from_dict(echoes_resource_database, {scan_visor: 1 if has_translator else 0}),
-        (), 99, node_a, patches, None,
+        (),
+        99,
+        node_a,
+        patches,
+        None,
         StateGameData(echoes_resource_database, game.region_list, 100, 99),
     )
 
@@ -242,17 +293,13 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 def test_reach_size_from_start_echoes(small_echoes_game_description, default_echoes_configuration, mocker):
     # Setup
     game = derived_nodes.remove_inactive_layers(
-        small_echoes_game_description,
-        default_echoes_configuration.active_layers()
+        small_echoes_game_description, default_echoes_configuration.active_layers()
     ).get_mutable()
 
     mocker.patch("randovania.game_description.default_database.game_description_for", return_value=game)
     generator = game.game.generator
 
-    specific_levels = {
-        trick.short_name: LayoutTrickLevel.maximum()
-        for trick in game.resource_database.trick
-    }
+    specific_levels = {trick.short_name: LayoutTrickLevel.maximum() for trick in game.resource_database.trick}
 
     def item(name: str):
         return find_resource_info_with_long_name(game.resource_database.item, name)
@@ -263,40 +310,38 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
         def get_index(n: Node):
             return n.node_index
 
-        result = [
-            game.region_list.node_by_identifier(ni(*name.split("/")))
-            for name in names
-        ]
+        result = [game.region_list.node_by_identifier(ni(*name.split("/"))) for name in names]
         result.sort(key=get_index)
         return result
 
     layout_configuration = dataclasses.replace(
         default_echoes_configuration,
-        trick_level=TrickLevelConfiguration(minimal_logic=False,
-                                            specific_levels=specific_levels,
-                                            game=default_echoes_configuration.game),
+        trick_level=TrickLevelConfiguration(
+            minimal_logic=False, specific_levels=specific_levels, game=default_echoes_configuration.game
+        ),
         starting_location=StartingLocationList.with_elements(
             [game.starting_location],
             game=RandovaniaGame.METROID_PRIME_ECHOES,
-        )
+        ),
     )
     patches = generator.base_patches_factory.create_base_patches(
-        layout_configuration, Random(15000),
-        game,
-        False, player_index=0)
+        layout_configuration, Random(15000), game, False, player_index=0
+    )
     state = generator.bootstrap.calculate_starting_state(game, patches, default_echoes_configuration)
-    state.resources.add_resource_gain([
-        (item("Combat Visor"), 1),
-        (item("Amber Translator"), 1),
-        (item("Scan Visor"), 1),
-        (item("Morph Ball"), 1),
-        (item("Power Beam"), 1),
-        (item("Charge Beam"), 1),
-        (item("Grapple Beam"), 1),
-        (item("Dark Beam"), 1),
-        (item("Dark Ammo"), 50),
-        (item("Missile"), 5),
-    ])
+    state.resources.add_resource_gain(
+        [
+            (item("Combat Visor"), 1),
+            (item("Amber Translator"), 1),
+            (item("Scan Visor"), 1),
+            (item("Morph Ball"), 1),
+            (item("Power Beam"), 1),
+            (item("Charge Beam"), 1),
+            (item("Grapple Beam"), 1),
+            (item("Dark Beam"), 1),
+            (item("Dark Ammo"), 50),
+            (item("Missile"), 5),
+        ]
+    )
 
     # Run
     reach = OldGeneratorReach.reach_from_state(game, state)
@@ -309,32 +354,25 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
         "Temple Grounds/Path of Eyes/Lore Scan",
         "Temple Grounds/Path of Eyes/Translator Gate",
         "Temple Grounds/Path of Eyes/Door to Torvus Transport Access",
-
         "Temple Grounds/Torvus Transport Access/Door to Path of Eyes",
         "Temple Grounds/Torvus Transport Access/Door to Transport to Torvus Bog",
         "Temple Grounds/Torvus Transport Access/Lock - Door to Transport to Torvus Bog",
-
         "Temple Grounds/Transport to Torvus Bog/Door to Torvus Transport Access",
         "Temple Grounds/Transport to Torvus Bog/Lock - Door to Torvus Transport Access",
         "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Temple Grounds",
-
         "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Torvus Bog",
         "Torvus Bog/Transport to Temple Grounds/Door to Temple Transport Access",
-
         "Torvus Bog/Temple Transport Access/Door to Transport to Temple Grounds",
         "Torvus Bog/Temple Transport Access/Door to Torvus Lagoon",
-
         "Torvus Bog/Torvus Lagoon/Door to Temple Transport Access",
         "Torvus Bog/Torvus Lagoon/Door to Path of Roots",
         "Torvus Bog/Torvus Lagoon/Keybearer Corpse (S-Dly)",
-
         "Torvus Bog/Path of Roots/Door to Torvus Lagoon",
         "Torvus Bog/Path of Roots/Door to Great Bridge",
         "Torvus Bog/Path of Roots/Pickup (Missile)",
         "Torvus Bog/Path of Roots/Next to Pickup",
         "Torvus Bog/Path of Roots/Under Lore Scan",
         "Torvus Bog/Path of Roots/Lore Scan",
-
         "Torvus Bog/Great Bridge/Door to Path of Roots",
     )
     assert len(list(reach.safe_nodes)) == 22

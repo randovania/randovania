@@ -32,14 +32,16 @@ _DANGEROUS_ACTION_MULTIPLIER = 0.75
 _EVENTS_WEIGHT_MULTIPLIER = 0.5
 _INDICES_WEIGHT_MULTIPLIER = 1
 _LOGBOOKS_WEIGHT_MULTIPLIER = 1
+_ADDITIONAL_NODES_WEIGHT_MULTIPLIER = 0.01
 _VICTORY_WEIGHT = 1000
 
 
-def _calculate_uncollected_index_weights(uncollected_indices: Set[PickupIndex],
-                                         assigned_indices: Set[PickupIndex],
-                                         considered_counts: Mapping[PickupIndex, int],
-                                         indices_groups: list[set[PickupIndex]],
-                                         ) -> dict[PickupIndex, float]:
+def _calculate_uncollected_index_weights(
+    uncollected_indices: Set[PickupIndex],
+    assigned_indices: Set[PickupIndex],
+    considered_counts: Mapping[PickupIndex, int],
+    indices_groups: list[set[PickupIndex]],
+) -> dict[PickupIndex, float]:
     result = {}
 
     for indices in indices_groups:
@@ -53,8 +55,9 @@ def _calculate_uncollected_index_weights(uncollected_indices: Set[PickupIndex],
     return result
 
 
-def _get_next_player(rng: Random, player_states: list[PlayerState],
-                     locations_weighted: WeightedLocations) -> PlayerState | None:
+def _get_next_player(
+    rng: Random, player_states: list[PlayerState], locations_weighted: WeightedLocations
+) -> PlayerState | None:
     """
     Gets the next player a pickup should be placed for.
     :param rng:
@@ -63,8 +66,7 @@ def _get_next_player(rng: Random, player_states: list[PlayerState],
     :return:
     """
     all_uncollected: dict[PlayerState, UncollectedState] = {
-        player_state: UncollectedState.from_reach(player_state.reach)
-        for player_state in player_states
+        player_state: UncollectedState.from_reach(player_state.reach) for player_state in player_states
     }
 
     max_actions = max(player_state.num_actions for player_state in player_states)
@@ -89,16 +91,18 @@ def _get_next_player(rng: Random, player_states: list[PlayerState],
             return None
         else:
             total_actions = sum(player_state.num_actions for player_state in player_states)
-            unfinished_players = ", ".join([str(player_state) for player_state in player_states
-                                            if not player_state.victory_condition_satisfied()])
+            unfinished_players = ", ".join(
+                [str(player_state) for player_state in player_states if not player_state.victory_condition_satisfied()]
+            )
 
             raise UnableToGenerate(
                 f"{unfinished_players} with no possible actions after {total_actions} total actions."
             )
 
 
-def weighted_potential_actions(player_state: PlayerState, status_update: Callable[[str], None],
-                               locations_weighted: WeightedLocations) -> dict[Action, float]:
+def weighted_potential_actions(
+    player_state: PlayerState, status_update: Callable[[str], None], locations_weighted: WeightedLocations
+) -> dict[Action, float]:
     """
     Weights all potential actions based on current criteria.
     :param player_state:
@@ -107,6 +111,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
     :return:
     """
     actions_weights: dict[Action, float] = {}
+    potential_reaches: dict[Action, GeneratorReach] = {}
     current_uncollected = UncollectedState.from_reach(player_state.reach)
 
     actions = player_state.potential_actions(locations_weighted)
@@ -134,16 +139,27 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
             multiplier *= sum(pickup.generator_params.probability_multiplier for pickup in pickups) / len(pickups)
             offset += sum(pickup.generator_params.probability_offset for pickup in pickups) / len(pickups)
 
-        base_weight = _calculate_weights_for(reach_lib.advance_to_with_reach_copy(player_state.reach, state),
-                                             current_uncollected)
+        potential_reach = reach_lib.advance_to_with_reach_copy(player_state.reach, state)
+        potential_reaches[action] = potential_reach
+        base_weight = _calculate_weights_for(potential_reach, current_uncollected)
         actions_weights[action] = base_weight * multiplier + offset
         update_for_option()
 
+    if sum(actions_weights.values()) == 0:
+        debug.debug_print("Using backup weights")
+        final_weights = {
+            action: _ADDITIONAL_NODES_WEIGHT_MULTIPLIER
+            * len((UncollectedState.from_reach(potential_reach) - current_uncollected).nodes)
+            for action, potential_reach in potential_reaches.items()
+        }
+    else:
+        final_weights = actions_weights
+
     if debug.debug_level() > 1:
-        for action, weight in actions_weights.items():
+        for action, weight in final_weights.items():
             print(f"{action.name} - {weight}")
 
-    return actions_weights
+    return final_weights
 
 
 def select_weighted_action(rng: Random, weighted_actions: dict[Action, float]) -> Action:
@@ -175,37 +191,46 @@ def _print_header(player_states: list[PlayerState]):
             with_region=True,
         )
 
-    debug.debug_print("{}\nRetcon filler started with standard pickups:\n{}".format(
-        "*" * 100,
-        "\n".join(
-            "Player {}: {}".format(
-                player_state.index,
-                pprint.pformat({
-                    item.name: player_state.pickups_left.count(item)
-                    for item in sorted(set(player_state.pickups_left), key=lambda item: item.name)
-                })
-            )
-            for player_state in player_states
+    debug.debug_print(
+        "{}\nRetcon filler started with standard pickups:\n{}".format(
+            "*" * 100,
+            "\n".join(
+                "Player {}: {}".format(
+                    player_state.index,
+                    pprint.pformat(
+                        {
+                            item.name: player_state.pickups_left.count(item)
+                            for item in sorted(set(player_state.pickups_left), key=lambda item: item.name)
+                        }
+                    ),
+                )
+                for player_state in player_states
+            ),
         )
-    ))
-    debug.debug_print("Static assignments:\n{}".format(
-        "\n".join(
-            "Player {}: {}".format(
-                player_state.index,
-                pprint.pformat({
-                    _name_for_index(player_state, index): target.pickup.name
-                    for index, target in player_state.reach.state.patches.pickup_assignment.items()
-                })
+    )
+    debug.debug_print(
+        "Static assignments:\n{}".format(
+            "\n".join(
+                "Player {}: {}".format(
+                    player_state.index,
+                    pprint.pformat(
+                        {
+                            _name_for_index(player_state, index): target.pickup.name
+                            for index, target in player_state.reach.state.patches.pickup_assignment.items()
+                        }
+                    ),
+                )
+                for player_state in player_states
             )
-            for player_state in player_states
         )
-    ))
+    )
 
 
-def retcon_playthrough_filler(rng: Random,
-                              player_states: list[PlayerState],
-                              status_update: Callable[[str], None],
-                              ) -> tuple[dict[PlayerState, GamePatches], tuple[str, ...]]:
+def retcon_playthrough_filler(
+    rng: Random,
+    player_states: list[PlayerState],
+    status_update: Callable[[str], None],
+) -> tuple[dict[PlayerState, GamePatches], tuple[str, ...]]:
     """
     Runs the retcon logic.
     :param rng:
@@ -253,8 +278,9 @@ def retcon_playthrough_filler(rng: Random,
                     current_player.advance_scan_asset_seen_count()
                     all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
 
-                log_entry = _assign_pickup_somewhere(new_pickup, current_player, player_states, rng,
-                                                     all_locations_weighted)
+                log_entry = _assign_pickup_somewhere(
+                    new_pickup, current_player, player_states, rng, all_locations_weighted
+                )
                 actions_log.append(log_entry)
                 debug.debug_print(f"* {log_entry}")
 
@@ -275,9 +301,13 @@ def retcon_playthrough_filler(rng: Random,
 def debug_print_weighted_locations(all_locations_weighted: WeightedLocations):
     print("==> Weighted Locations")
     for owner, index, weight in all_locations_weighted.all_items():
-        print("[Player {}] {} - {}".format(
-            owner.index, owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index)), weight,
-        ))
+        print(
+            "[Player {}] {} - {}".format(
+                owner.index,
+                owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index)),
+                weight,
+            )
+        )
 
 
 def should_be_starting_pickup(player: PlayerState, locations: WeightedLocations) -> bool:
@@ -295,12 +325,13 @@ def should_be_starting_pickup(player: PlayerState, locations: WeightedLocations)
     return result
 
 
-def _assign_pickup_somewhere(action: PickupEntry,
-                             current_player: PlayerState,
-                             player_states: list[PlayerState],
-                             rng: Random,
-                             all_locations: WeightedLocations,
-                             ) -> str:
+def _assign_pickup_somewhere(
+    action: PickupEntry,
+    current_player: PlayerState,
+    player_states: list[PlayerState],
+    rng: Random,
+    all_locations: WeightedLocations,
+) -> str:
     """
     Assigns a PickupEntry to a free, collected PickupIndex or as a starting item.
     :param action:
@@ -335,7 +366,8 @@ def _assign_pickup_somewhere(action: PickupEntry,
         )
         if hint_location is not None:
             index_owner_state.reach.state.patches = index_owner_state.reach.state.patches.assign_hint(
-                hint_location, Hint(HintType.LOCATION, None, pickup_index))
+                hint_location, Hint(HintType.LOCATION, None, pickup_index)
+            )
 
         if pickup_index in index_owner_state.reach.state.collected_pickup_indices:
             current_player.reach.advance_to(current_player.reach.state.assign_pickup_resources(action))
@@ -343,14 +375,20 @@ def _assign_pickup_somewhere(action: PickupEntry,
             # FIXME: isn't that condition always true?
             debug.debug_print(f"ERROR! Assigned {action.name} to {pickup_index}, but location wasn't collected!")
 
-        spoiler_entry = pickup_placement_spoiler_entry(current_player.index, action, index_owner_state.game,
-                                                       pickup_index, hint_location, index_owner_state.index,
-                                                       len(player_states) > 1, index_owner_state.reach.node_context())
+        spoiler_entry = pickup_placement_spoiler_entry(
+            current_player.index,
+            action,
+            index_owner_state.game,
+            pickup_index,
+            hint_location,
+            index_owner_state.index,
+            len(player_states) > 1,
+            index_owner_state.reach.node_context(),
+        )
 
     else:
         current_player.num_starting_pickups_placed += 1
-        if (current_player.num_starting_pickups_placed
-                > current_player.configuration.maximum_random_starting_pickups):
+        if current_player.num_starting_pickups_placed > current_player.configuration.maximum_random_starting_pickups:
             raise UnableToGenerate("Attempting to place more extra starting items than the number allowed.")
 
         spoiler_entry = f"{action.name} as starting item"
@@ -368,7 +406,7 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
 
     # print("================ WEIGHTS! ==================")
     for player_state in player_states:
-        delta = (total_assigned_pickups - player_state.num_assigned_pickups)
+        delta = total_assigned_pickups - player_state.num_assigned_pickups
         player_weight = 1 + delta
 
         # print(f"** Player {player_state.index} -- {player_weight}")
@@ -390,14 +428,15 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
     return WeightedLocations(all_weights)
 
 
-def _calculate_hint_location_for_action(action: PickupEntry,
-                                        index_owner_state: PlayerState,
-                                        all_locations: WeightedLocations,
-                                        current_uncollected: UncollectedState,
-                                        pickup_index: PickupIndex,
-                                        rng: Random,
-                                        hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
-                                        ) -> NodeIdentifier | None:
+def _calculate_hint_location_for_action(
+    action: PickupEntry,
+    index_owner_state: PlayerState,
+    all_locations: WeightedLocations,
+    current_uncollected: UncollectedState,
+    pickup_index: PickupIndex,
+    rng: Random,
+    hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
+) -> NodeIdentifier | None:
     """
     Calculates where a hint for the given action should be placed.
     :return: A LogbookAsset to use, or None if no hint should be placed.
@@ -419,28 +458,43 @@ def _calculate_hint_location_for_action(action: PickupEntry,
     return None
 
 
-def _calculate_weights_for(potential_reach: GeneratorReach,
-                           current_uncollected: UncollectedState,
-                           ) -> float:
+def _calculate_weights_for(
+    potential_reach: GeneratorReach,
+    current_uncollected: UncollectedState,
+) -> float:
+    """
+    Calculate a weight to be used for this action, based on what's collected in the reach.
+    """
     if potential_reach.victory_condition_satisfied():
         return _VICTORY_WEIGHT
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
-    return sum((
-        _EVENTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.events)),
-        _INDICES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.indices)),
-        _LOGBOOKS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.logbooks)),
-    ))
+    return sum(
+        (
+            _EVENTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.events)),
+            _INDICES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.indices)),
+            _LOGBOOKS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.logbooks)),
+        )
+    )
 
 
-def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: GameDescription,
-                                   pickup_index: PickupIndex, hint_identifier: NodeIdentifier | None,
-                                   player_index: int, add_indices: bool, node_context: NodeContext) -> str:
+def pickup_placement_spoiler_entry(
+    owner_index: int,
+    action: PickupEntry,
+    game: GameDescription,
+    pickup_index: PickupIndex,
+    hint_identifier: NodeIdentifier | None,
+    player_index: int,
+    add_indices: bool,
+    node_context: NodeContext,
+) -> str:
     region_list = game.region_list
     if hint_identifier is not None:
         hint_string = " with hint at {}".format(
-            region_list.node_name(region_list.node_by_identifier(hint_identifier),
-                                 with_region=True, distinguish_dark_aether=True))
+            region_list.node_name(
+                region_list.node_by_identifier(hint_identifier), with_region=True, distinguish_dark_aether=True
+            )
+        )
     else:
         hint_string = ""
 

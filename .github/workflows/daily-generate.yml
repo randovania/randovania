@@ -2,8 +2,25 @@ name: Daily Test Generate
 
 on:
   workflow_dispatch:
+    inputs:
+      game:
+        description: 'Which game to generate for'
+        type: choice
+        options:
+          - cave_story
+          - dread
+          - prime1
+          - prime2
+          - samus_returns
+          - am2r
+
   schedule:
-    - cron: '0 23 * * *'
+    - cron: '0 16 * * 3'  # Cave Story
+    - cron: '0 23 * * *'  # Dread
+    - cron: '0 16 * * 2'  # Prime 1
+    - cron: '0 16 * * 1'  # Prime 2
+    - cron: '0 16 * * 4'  # Samus Returns
+    - cron: '0 10 * * 1,5' # AM2R
 
 jobs:
   report:
@@ -12,7 +29,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -25,12 +42,42 @@ jobs:
       - name: Install Python packages
         run: venv/bin/python -m pip install -c requirements.txt -e .[server]
 
-      - name: Bulk Generate
-        run: |
-          source venv/bin/activate
-          ./tools/bulk_generate_for_discord.sh
+      - name: Bulk Generate (Cave Story)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game cave_story
+        if: inputs.game == 'cave_story' || github.event.schedule == '0 16 * * 3'
+        env:
+          WEBHOOK_URL: ${{ secrets.CAVE_STORY_DEV_TALK_WEBHOOK }}
+
+      - name: Bulk Generate (Dread)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game dread
+        if: inputs.game == 'dread' || github.event.schedule == '0 23 * * *'
         env:
           WEBHOOK_URL: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}
+
+      - name: Bulk Generate (Prime 1)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game prime1
+        if: inputs.game == 'prime1' || github.event.schedule == '0 16 * * 2'
+        env:
+          WEBHOOK_URL: ${{ secrets.PRIME_DEV_TALK_WEBHOOK }}
+
+      - name: Bulk Generate (Echoes)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game prime2
+        if: inputs.game == 'prime2' || github.event.schedule == '0 16 * * 1'
+        env:
+          WEBHOOK_URL: ${{ secrets.ECHOES_DEV_TALK_WEBHOOK }}
+
+      - name: Bulk Generate (Samus Returns)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game samus_returns
+        if: inputs.game == 'samus_returns' || github.event.schedule == '0 16 * * 4'
+        env:
+          WEBHOOK_URL: ${{ secrets.SR_DEV_TALK_WEBHOOK }}
+
+      - name: Bulk Generate (AM2R)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game am2r
+        if: inputs.game == 'am2r' || github.event.schedule == '0 10 * * 1,5'
+        env:
+          WEBHOOK_URL: ${{ secrets.AM2R_DEV_TALK_WEBHOOK }}
+
 
   notify_failure:
     runs-on: ubuntu-latest
@@ -40,7 +87,7 @@ jobs:
       - name: Alert Failure
         uses: sarisia/actions-status-discord@v1
         with:
-          webhook: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}
+          webhook: ${{ secrets.GENERAL_TALK_WEBHOOK }}
           nodetail: true
           title: Bulk Generation failed!
           description: |

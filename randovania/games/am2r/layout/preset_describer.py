@@ -14,8 +14,6 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-
-
 def describe_artifacts(artifacts: AM2RArtifactConfig) -> list[dict[str, bool]]:
     has_artifacts = artifacts.required_artifacts > 0
     if has_artifacts:
@@ -26,7 +24,7 @@ def describe_artifacts(artifacts: AM2RArtifactConfig) -> list[dict[str, bool]]:
             {
                 "Prefers Metroids": artifacts.prefer_metroids,
                 "Prefers major bosses": artifacts.prefer_bosses,
-            }
+            },
         ]
     else:
         return [
@@ -41,6 +39,7 @@ _AM2R_HINT_TEXT = {
     ItemHintMode.HIDE_AREA: "Area only",
     ItemHintMode.PRECISE: "Area and room",
 }
+
 
 class AM2RPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
@@ -59,11 +58,9 @@ class AM2RPresetDescriber(GamePresetDescriber):
                         "Missiles need Launcher": "Missile Expansion",
                         "Super Missiles need Launcher": "Super Missile Expansion",
                         "Power Bombs need Launcher": "Power Bomb Expansion",
-                    }
+                    },
                 ),
-                {
-                    f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100
-                },
+                {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
                 {
                     "Enable Septoggs": configuration.septogg_helpers,
                     "Add new Nest Pipes": configuration.nest_pipes,
@@ -77,18 +74,14 @@ class AM2RPresetDescriber(GamePresetDescriber):
                     "Skip gameplay cutscenes": configuration.skip_cutscenes,
                     "Skip item cutscenes": configuration.skip_item_cutscenes,
                     "Enable Fusion Mode": configuration.fusion_mode,
-                    "Open Missile Doors with Supers": configuration.supers_on_missile_doors
-                }
+                    "Open Missile Doors with Supers": configuration.supers_on_missile_doors,
+                },
             ],
             "Goal": describe_artifacts(configuration.artifacts),
             "Hints": [
-                {
-                    f"DNA Hint: {dna_hint}": dna_hint is not None
-                },
-                {
-                    f"Ice Beam Hint: {ice_beam_hint}": ice_beam_hint is not None
-                }
-            ]
+                {f"DNA Hint: {dna_hint}": dna_hint is not None},
+                {f"Ice Beam Hint: {ice_beam_hint}": ice_beam_hint is not None},
+            ],
         }
 
         fill_template_strings_from_tree(template_strings, extra_message_tree)

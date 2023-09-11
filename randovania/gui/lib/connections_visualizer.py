@@ -15,9 +15,9 @@ if TYPE_CHECKING:
 
 
 def create_tree_items_for_requirement(
-        tree: QtWidgets.QTreeWidget,
-        root: QtWidgets.QTreeWidget | QtWidgets.QTreeWidgetItem,
-        requirement: Requirement,
+    tree: QtWidgets.QTreeWidget,
+    root: QtWidgets.QTreeWidget | QtWidgets.QTreeWidgetItem,
+    requirement: Requirement,
 ) -> QtWidgets.QTreeWidgetItem:
     parents: list[QtWidgets.QTreeWidget | QtWidgets.QTreeWidgetItem] = [root]
 

@@ -24,8 +24,13 @@ class AmmoPickupWidgets(NamedTuple):
 
 
 class SplitAmmoWidget(QtWidgets.QCheckBox):
-    def __init__(self, parent: QtWidgets.QWidget, editor: PresetEditor,
-                 unified_ammo: AmmoPickupDefinition, split_ammo: Iterable[AmmoPickupDefinition]):
+    def __init__(
+        self,
+        parent: QtWidgets.QWidget,
+        editor: PresetEditor,
+        unified_ammo: AmmoPickupDefinition,
+        split_ammo: Iterable[AmmoPickupDefinition],
+    ):
         super().__init__(parent)
         self._editor = editor
         self.unified_ammo = unified_ammo
@@ -45,8 +50,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         ammo_configuration = preset.configuration.ammo_pickup_configuration
 
         has_unified = ammo_configuration.pickups_state[self.unified_ammo].pickup_count > 0
-        has_split = any(ammo_configuration.pickups_state[item].pickup_count > 0
-                        for item in self.split_ammo)
+        has_split = any(ammo_configuration.pickups_state[item].pickup_count > 0 for item in self.split_ammo)
 
         if not has_split and not has_unified:
             has_split, has_unified = self._last_check_state
@@ -68,8 +72,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
             ammo_configuration = editor.ammo_pickup_configuration
 
             current_total = sum(
-                ammo_configuration.pickups_state[ammo].pickup_count
-                for ammo in (self.unified_ammo, *self.split_ammo)
+                ammo_configuration.pickups_state[ammo].pickup_count for ammo in (self.unified_ammo, *self.split_ammo)
             )
 
             new_states = {}
@@ -78,9 +81,11 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
                 for i, split in enumerate(self.split_ammo):
                     new_count = current_total // len(self.split_ammo)
                     new_states[split] = AmmoPickupState(
-                        ammo_count=(math.ceil(
-                            ref.ammo_count[i] * (current_total / new_count),
-                        ),),
+                        ammo_count=(
+                            math.ceil(
+                                ref.ammo_count[i] * (current_total / new_count),
+                            ),
+                        ),
                         pickup_count=new_count,
                     )
                 new_states[self.unified_ammo] = AmmoPickupState(
@@ -90,16 +95,12 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
 
             else:
                 for split in self.split_ammo:
-                    new_states[split] = AmmoPickupState(
-                        ammo_count=(0,),
-                        pickup_count=0
-                    )
+                    new_states[split] = AmmoPickupState(ammo_count=(0,), pickup_count=0)
                 new_states[self.unified_ammo] = AmmoPickupState(
                     ammo_count=tuple(
                         math.ceil(
-                            ammo_configuration.pickups_state[split].ammo_count[0] * (
-                                    ammo_configuration.pickups_state[split].pickup_count / current_total
-                            )
+                            ammo_configuration.pickups_state[split].ammo_count[0]
+                            * (ammo_configuration.pickups_state[split].pickup_count / current_total)
                         )
                         for split in self.split_ammo
                     ),

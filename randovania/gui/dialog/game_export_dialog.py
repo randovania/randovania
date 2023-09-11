@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, TypeVar
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox
 
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.layout.layout_description import LayoutDescription
 
 if TYPE_CHECKING:
@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExportParams
     from randovania.games.game import RandovaniaGame
     from randovania.interface_common.options import Options, PerGameOptions
+    from randovania.patching.patchers.exceptions import UnableToExportError
 
 T = TypeVar("T")
 
@@ -79,12 +80,19 @@ class GameExportDialog(QtWidgets.QDialog):
         """Get the export params defined by the user. It'll be sent over to the `GameExporter`."""
         raise NotImplementedError
 
+    async def handle_unable_to_export(self, error: UnableToExportError):
+        """Called when exporting a game fails with `UnableToExportError`.
+        Default implementation shows an error dialog, but custom implementations can
+        perform additional troubleshooting."""
+        await async_dialog.message_box(
+            None, QtWidgets.QMessageBox.Icon.Critical, "Error during exporting", error.reason
+        )
 
-def _prompt_for_output_common(parent: QtWidgets.QWidget, suggested_name: str,
-                              valid_output_file_types: list[str]) -> Path | None:
-    output_file = common_qt_lib.prompt_user_for_output_file(
-        parent, suggested_name, valid_output_file_types
-    )
+
+def _prompt_for_output_common(
+    parent: QtWidgets.QWidget, suggested_name: str, valid_output_file_types: list[str]
+) -> Path | None:
+    output_file = common_qt_lib.prompt_user_for_output_file(parent, suggested_name, valid_output_file_types)
     if output_file is None:
         return None
 
@@ -103,28 +111,30 @@ def _prompt_for_output_common(parent: QtWidgets.QWidget, suggested_name: str,
     return output_file
 
 
-def prompt_for_output_file(parent: QtWidgets.QWidget, valid_output_file_types: list[str], suggested_name: str,
-                           output_file_edit: QtWidgets.QLineEdit) -> Path | None:
+def prompt_for_output_file(
+    parent: QtWidgets.QWidget,
+    valid_output_file_types: list[str],
+    suggested_name: str,
+    output_file_edit: QtWidgets.QLineEdit,
+) -> Path | None:
     if output_file_edit.text() and (previous_output := Path(output_file_edit.text()).parent).is_dir():
         suggested_name = str(previous_output.joinpath(suggested_name))
 
-    return _prompt_for_output_common(
-        parent, suggested_name, valid_output_file_types
-    )
+    return _prompt_for_output_common(parent, suggested_name, valid_output_file_types)
 
 
-def prompt_for_output_directory(parent: QtWidgets.QWidget, suggested_name: str,
-                                output_file_edit: QtWidgets.QLineEdit) -> Path | None:
+def prompt_for_output_directory(
+    parent: QtWidgets.QWidget, suggested_name: str, output_file_edit: QtWidgets.QLineEdit
+) -> Path | None:
     if output_file_edit.text():
         suggested_name = output_file_edit.text()
 
-    return _prompt_for_output_common(
-        parent, suggested_name, [""]
-    )
+    return _prompt_for_output_common(parent, suggested_name, [""])
 
 
-def prompt_for_input_file(parent: QtWidgets.QWidget, input_file_edit: QtWidgets.QLineEdit,
-                          valid_input_file_types: list[str]) -> Path | None:
+def prompt_for_input_file(
+    parent: QtWidgets.QWidget, input_file_edit: QtWidgets.QLineEdit, valid_input_file_types: list[str]
+) -> Path | None:
     existing_file = None
     if input_file_edit.text():
         input_file = Path(input_file_edit.text())
@@ -133,8 +143,7 @@ def prompt_for_input_file(parent: QtWidgets.QWidget, input_file_edit: QtWidgets.
         elif input_file.parent.is_dir():
             existing_file = input_file.parent
 
-    return common_qt_lib.prompt_user_for_vanilla_input_file(parent, valid_input_file_types,
-                                                            existing_file=existing_file)
+    return common_qt_lib.prompt_user_for_vanilla_input_file(parent, valid_input_file_types, existing_file=existing_file)
 
 
 def prompt_for_input_directory(parent: QtWidgets.QWidget, input_file_edit: QtWidgets.QLineEdit) -> Path | None:

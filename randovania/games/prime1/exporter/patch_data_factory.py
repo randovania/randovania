@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 import randovania
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
+from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.pickup_node import PickupNode
@@ -57,7 +57,7 @@ _STARTING_ITEM_NAME_TO_INDEX = {
     "variaSuit": "VariaSuit",
     "phazonSuit": "PhazonSuit",
     "energyTanks": "EnergyTank",
-    "wavebuster": "Wavebuster"
+    "wavebuster": "Wavebuster",
 }
 
 # The following locations have cutscenes that weren't removed
@@ -96,10 +96,9 @@ def _remove_empty(d):
         return {k: v for k, v in ((k, _remove_empty(v)) for k, v in d.items()) if not empty(v)}
 
 
-def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
-                                     modal_hud_override: bool,
-                                     pickup_markers: bool,
-                                     rng: Random) -> dict:
+def prime1_pickup_details_to_patcher(
+    detail: pickup_exporter.ExportedPickupDetails, modal_hud_override: bool, pickup_markers: bool, rng: Random
+) -> dict:
     model = detail.model.as_json
     original_model = detail.original_model.as_json
 
@@ -119,9 +118,12 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
             count = quantity
             break
 
-    if (model["name"] == "Missile" and not detail.other_player
-            and "Missile Expansion" in collection_text
-            and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
+    if (
+        model["name"] == "Missile"
+        and not detail.other_player
+        and "Missile Expansion" in collection_text
+        and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0
+    ):
         model["name"] = "Shiny Missile"
         collection_text = collection_text.replace("Missile Expansion", "Shiny Missile Expansion")
         name = name.replace("Missile Expansion", "Shiny Missile Expansion")
@@ -136,8 +138,12 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         "currIncrease": count,
         "maxIncrease": count,
         "respawn": False,
-        "showIcon": pickup_markers
+        "showIcon": pickup_markers,
     }
+
+    if detail.original_model.name == "UnlimitedMissiles":
+        result["scale"] = [1.8, 1.8, 1.8]
+
     if modal_hud_override:
         result["modalHudmemo"] = True
 
@@ -164,8 +170,9 @@ def _create_locations_with_modal_hud_memo(pickups: list[pickup_exporter.Exported
     return result
 
 
-def _starting_items_value_for(resource_database: ResourceDatabase,
-                              starting_items: ResourceCollection, index: str) -> bool | int:
+def _starting_items_value_for(
+    resource_database: ResourceDatabase, starting_items: ResourceCollection, index: str
+) -> bool | int:
     item = resource_database.get_item(index)
     value = starting_items[item]
     if item.max_capacity > 1:
@@ -238,8 +245,14 @@ def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
 
 # ruff: noqa: C901
 
-def _serialize_dock_modifications(region_data, regions: list[Region], room_rando_mode: RoomRandoMode,
-                                  rng: Random, dock_types_to_ignore: list[DockType]):
+
+def _serialize_dock_modifications(
+    region_data,
+    regions: list[Region],
+    room_rando_mode: RoomRandoMode,
+    rng: Random,
+    dock_types_to_ignore: list[DockType],
+):
     if room_rando_mode == RoomRandoMode.NONE:
         return
 
@@ -265,7 +278,9 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                 dock_num_by_area_node[(area.name, node.name)] = index
                 is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
                 default_connections_node_name[(area.name, index)] = (
-                    node.default_connection.area_name, node.default_connection.node_name)
+                    node.default_connection.area_name,
+                    node.default_connection.node_name,
+                )
 
                 if node.default_dock_weakness.name == "Permanently Locked":
                     disabled_doors.add((area.name, index))
@@ -278,7 +293,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
             size_indices[area.name] = area.extra["size_index"]
 
         default_connections = {}
-        for (src_name, src_dock) in default_connections_node_name:
+        for src_name, src_dock in default_connections_node_name:
             (dst_name, dst_node_name) = default_connections_node_name[(src_name, src_dock)]
 
             try:
@@ -366,7 +381,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                     # First try each of the unused docks
                     dst_name = None
                     dst_dock = None
-                    for (name, dock) in candidates:
+                    for name, dock in candidates:
                         if are_rooms_compatible(area.name, None, name, None, room_rando_mode):
                             dst_name = name
                             dst_dock = dock
@@ -374,14 +389,14 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
 
                     # If that wasn't successful, pick random destinations until it works out
                     deadman_count = 1000
-                    while dst_name is None or dst_dock is None or not are_rooms_compatible(area.name, dock_num,
-                                                                                           dst_name, dst_dock,
-                                                                                           room_rando_mode):
-
+                    while (
+                        dst_name is None
+                        or dst_dock is None
+                        or not are_rooms_compatible(area.name, dock_num, dst_name, dst_dock, room_rando_mode)
+                    ):
                         deadman_count -= 1
                         if deadman_count == 0:
-                            raise Exception(
-                                f"Failed to find suitible destination for {area.name}:{dock_num}")
+                            raise Exception(f"Failed to find suitible destination for {area.name}:{dock_num}")
 
                         dst_name = rng.choice(region.areas).name
                         dst_dock = None
@@ -411,15 +426,14 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
             shuffled = []
 
             def next_candidate(max_index):
-                for (src_name, src_dock) in candidates:
+                for src_name, src_dock in candidates:
                     if size_indices[src_name] > max_index:
                         return (src_name, src_dock)
                 return (None, None)
 
             def pick_random_dst(src_name, src_dock):
-                for (dst_name, dst_dock) in candidates:
-                    if are_rooms_compatible(src_name, src_dock, dst_name, dst_dock,
-                                            room_rando_mode):
+                for dst_name, dst_dock in candidates:
+                    if are_rooms_compatible(src_name, src_dock, dst_name, dst_dock, room_rando_mode):
                         return (dst_name, dst_dock)
                 return (None, None)
 
@@ -509,7 +523,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                             room_connections.append((room_name, dst_room_name))
 
                     # Handle unrandomized connections
-                    for (src_name, src_dock) in is_nonstandard:
+                    for src_name, src_dock in is_nonstandard:
                         if (src_name, src_dock) in disabled_doors:
                             continue
 
@@ -523,8 +537,9 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
 
                     if not networkx.is_strongly_connected(graph):
                         # Split graph into strongly connected components
-                        strongly_connected_components = sorted(networkx.strongly_connected_components(graph),
-                                                               key=len, reverse=True)
+                        strongly_connected_components = sorted(
+                            networkx.strongly_connected_components(graph), key=len, reverse=True
+                        )
                         assert len(strongly_connected_components) > 1
 
                         def component_number(name):
@@ -555,8 +570,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                             (dst_name, dst_dock) = b[1]
                             if component_number(src_name) == a_component_num:
                                 continue
-                            (src_name_b, src_dock_b, dst_name_b, dst_dock_b) = (
-                                src_name, src_dock, dst_name, dst_dock)
+                            (src_name_b, src_dock_b, dst_name_b, dst_dock_b) = (src_name, src_dock, dst_name, dst_dock)
                             break
 
                         # If we could not find two rooms that were part of two different components, still
@@ -575,7 +589,7 @@ def _serialize_dock_modifications(region_data, regions: list[Region], room_rando
                         rng.shuffle(candidates)
 
 
-class PrimePatchDataFactory(BasePatchDataFactory):
+class PrimePatchDataFactory(PatchDataFactory):
     cosmetic_patches: PrimeCosmeticPatches
     configuration: PrimeConfiguration
 
@@ -605,17 +619,22 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)
 
-        ammo_with_mains = [ammo.name
-                           for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
-                           if state.requires_main_item]
+        ammo_with_mains = [
+            ammo.name
+            for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
+            if state.requires_main_item
+        ]
         if ammo_with_mains:
-            raise ValueError("Preset has {} with required mains enabled. This is currently not supported.".format(
-                " and ".join(ammo_with_mains)
-            ))
+            raise ValueError(
+                "Preset has {} with required mains enabled. This is currently not supported.".format(
+                    " and ".join(ammo_with_mains)
+                )
+            )
 
         scan_visor = self.game.resource_database.get_item_by_name("Scan Visor")
-        useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
-                                      self.players_config.player_index)
+        useless_target = PickupTarget(
+            pickup_creator.create_nothing_pickup(db.resource_database), self.players_config.player_index
+        )
 
         pickup_list = pickup_exporter.export_all_indices(
             self.patches,
@@ -625,11 +644,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
             exporter=pickup_exporter.create_pickup_exporter(
-                pickup_exporter.GenericAcquiredMemo(),
-                self.players_config,
-                self.game_enum()
+                pickup_exporter.GenericAcquiredMemo(), self.players_config, self.game_enum()
             ),
-            visual_etm=pickup_creator.create_visual_etm(),
+            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
         )
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
@@ -658,13 +675,16 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         continue
 
                     identifier = db.region_list.identifier_for_node(node)
-                    target = _name_for_location(db.region_list,
-                                                self.patches.get_dock_connection_for(node).identifier.area_identifier)
+                    target = _name_for_location(
+                        db.region_list, self.patches.get_dock_connection_for(node).identifier.area_identifier
+                    )
 
-                    source_name = prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[(
-                        identifier.area_location.region_name,
-                        identifier.area_location.area_name,
-                    )]
+                    source_name = prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[
+                        (
+                            identifier.area_location.region_name,
+                            identifier.area_location.area_name,
+                        )
+                    ]
                     level_data[region.name]["transports"][source_name] = target
 
         # serialize pickup modifications
@@ -674,10 +694,12 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 pickup_nodes = sorted(pickup_nodes, key=lambda n: n.pickup_index)
                 for node in pickup_nodes:
                     pickup_index = node.pickup_index.index
-                    pickup = prime1_pickup_details_to_patcher(pickup_list[pickup_index],
-                                                              pickup_index in modal_hud_override,
-                                                              self.cosmetic_patches.pickup_markers,
-                                                              self.rng)
+                    pickup = prime1_pickup_details_to_patcher(
+                        pickup_list[pickup_index],
+                        pickup_index in modal_hud_override,
+                        self.cosmetic_patches.pickup_markers,
+                        self.rng,
+                    )
 
                     if node.extra.get("position_required"):
                         assert self.configuration.items_every_room
@@ -704,9 +726,12 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         for region in regions:
             for area in region.areas:
                 dock_nodes: list[DockNode] = sorted(
-                    (node for node in area.nodes
-                     if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types),
-                    key=lambda n: n.extra["dock_index"]
+                    (
+                        node
+                        for node in area.nodes
+                        if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types
+                    ),
+                    key=lambda n: n.extra["dock_index"],
                 )
                 for node in dock_nodes:
                     if node.extra.get("exclude_dock_rando", False):
@@ -719,15 +744,16 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     dock_index = node.extra["dock_index"]
                     dock_data = {
                         "shieldType": weakness.extra["shieldType"],
-                        "blastShieldType": weakness.extra.get("blastShieldType", "Empty")
+                        "blastShieldType": weakness.extra.get("blastShieldType", "Empty"),
                     }
 
                     level_data[region.name]["rooms"][area.name]["doors"][str(dock_index)] = dock_data
 
         # serialize dock destination modifications
         dock_types_to_ignore = self.game.dock_weakness_database.all_teleporter_dock_types
-        _serialize_dock_modifications(level_data, regions, self.configuration.room_rando,
-                                      self.rng, dock_types_to_ignore)
+        _serialize_dock_modifications(
+            level_data, regions, self.configuration.room_rando, self.rng, dock_types_to_ignore
+        )
 
         # serialize text modifications
         if self.configuration.hints.phazon_suit != PhazonSuitHintMode.DISABLED:
@@ -752,24 +778,17 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     }
 
                 if "Crater Entry Point" not in level_data["Impact Crater"]["rooms"]:
-                    level_data["Impact Crater"]["rooms"]["Crater Entry Point"] = {
-                        "pickups": [],
-                        "doors": {}
-                    }
+                    level_data["Impact Crater"]["rooms"]["Crater Entry Point"] = {"pickups": [], "doors": {}}
 
                 level_data["Impact Crater"]["rooms"]["Crater Entry Point"]["extraScans"] = [
                     {
-                        "position": [
-                            -19.4009,
-                            41.001,
-                            2.805
-                        ],
+                        "position": [-19.4009, 41.001, 2.805],
                         "combatVisible": True,
                         "text": phazon_hint_text,
                         "rotation": 45.0,
                         "isRed": True,
                         "logbookTitle": "Phazon Suit",
-                        "logbookCategory": 5  # Artifacts
+                        "logbookCategory": 5,  # Artifacts
                     }
                 ]
             except ValueError:
@@ -786,7 +805,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
 
-        if self.cosmetic_patches.open_map and self.configuration.elevators.is_vanilla:
+        if self.cosmetic_patches.open_map and self.configuration.teleporters.is_vanilla:
             map_default_state = "visible"
         else:
             map_default_state = "default"
@@ -800,17 +819,15 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             "&push;&font=C29C51F1;&main-color=#33ffd6;{}&pop;",
         )
 
-        artifacts = [
-            db.resource_database.get_item(index)
-            for index in prime_items.ARTIFACT_ITEMS
-        ]
+        artifacts = [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS]
         hint_config = self.configuration.hints
         if hint_config.artifacts == ArtifactHintMode.DISABLED:
             resulting_hints = {art: f"{art.long_name} is lost somewhere on Tallon IV." for art in artifacts}
         else:
             resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config, namer,
+                self.players_config,
+                namer,
                 hint_config.artifacts == ArtifactHintMode.HIDE_AREA,
                 [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
                 True,
@@ -830,7 +847,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             ctwk_config["hudColor"] = [
                 self.cosmetic_patches.hud_color[0] / 255,
                 self.cosmetic_patches.hud_color[1] / 255,
-                self.cosmetic_patches.hud_color[2] / 255
+                self.cosmetic_patches.hud_color[2] / 255,
             ]
 
         SUIT_ATTRIBUTES = ["powerDeg", "variaDeg", "gravityDeg", "phazonDeg"]
@@ -882,11 +899,12 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         random_enemy_sizes = False
         if self.configuration.enemy_attributes is not None:
             random_enemy_sizes = (
-                    self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0 or
-                    self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0
+                self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0
+                or self.configuration.enemy_attributes.enemy_rando_range_scale_low != 1.0
             )
 
         if self.configuration.random_boss_sizes and not random_enemy_sizes:
+
             def get_random_size(minimum, maximum):
                 if self.rng.choice([True, False]):
                     temp = [self.rng.uniform(minimum, 1.0), self.rng.uniform(minimum, 1.0)]
@@ -950,10 +968,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,
                 "doorOpenMode": "PrimaryBlastShield",
-
                 "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": starting_items,
-
                 "etankCapacity": self.configuration.energy_per_tank,
                 "itemMaxCapacity": {
                     "Energy Tank": db.resource_database.get_item("EnergyTank").max_capacity,
@@ -961,45 +977,34 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     "Missile": db.resource_database.get_item("Missile").max_capacity,
                     "Unknown Item 1": db.resource_database.get_item(prime_items.MULTIWORLD_ITEM).max_capacity,
                 },
-
                 "mainPlazaDoor": self.configuration.main_plaza_door,
                 "backwardsFrigate": self.configuration.backwards_frigate,
                 "backwardsLabs": self.configuration.backwards_labs,
                 "backwardsUpperMines": self.configuration.backwards_upper_mines,
                 "backwardsLowerMines": self.configuration.backwards_lower_mines,
                 "phazonEliteWithoutDynamo": self.configuration.phazon_elite_without_dynamo,
-
                 "gameBanner": {
                     "gameName": "Metroid Prime: Randomizer",
                     "gameNameFull": f"Metroid Prime: Randomizer - {self.description.shareable_hash}",
                     "description": f"Seed Hash: {self.description.shareable_word_hash}",
                 },
                 "mainMenuMessage": f"Randovania v{randovania.VERSION}\n{self.description.shareable_word_hash}",
-
                 "creditsString": credits_string,
-                "artifactHints": {
-                    artifact.long_name: text
-                    for artifact, text in resulting_hints.items()
-                },
+                "artifactHints": {artifact.long_name: text for artifact, text in resulting_hints.items()},
                 "artifactTempleLayerOverrides": {
-                    artifact.long_name: not starting_resources.has_resource(artifact)
-                    for artifact in artifacts
+                    artifact.long_name: not starting_resources.has_resource(artifact) for artifact in artifacts
                 },
             },
             "tweaks": ctwk_config,
             "levelData": level_data,
             "hasSpoiler": self.description.has_spoiler,
             "roomRandoMode": self.configuration.room_rando.value,
-
             "randEnemyAttributes": (
-                self.configuration.enemy_attributes.as_json
-                if self.configuration.enemy_attributes is not None
-                else None
+                self.configuration.enemy_attributes.as_json if self.configuration.enemy_attributes is not None else None
             ),
             "uuid": list(
                 self.players_config.get_own_uuid().bytes,
             ),
-
             # TODO
             # "externAssetsDir": path_to_converted_assets,
         }

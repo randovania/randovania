@@ -18,15 +18,14 @@ def test_am2r_pool_creator(am2r_game_description, dna_count):
     assert results == PoolResults(
         [create_am2r_artifact(i, db) for i in range(dna_count)],
         {},
-        [create_am2r_artifact(i, db) for i in range(dna_count, 46)]
+        [create_am2r_artifact(i, db) for i in range(dna_count, 46)],
     )
 
 
-@pytest.mark.parametrize(("metroids", "bosses", "artifacts"), [
-    (False, False, 1), (False, True, 7), (True, False, 47), (True, True, 47)
-])
-def test_am2r_artifact_pool_should_throw_on_invalid_config(am2r_game_description,
-                                                           metroids, bosses, artifacts):
+@pytest.mark.parametrize(
+    ("metroids", "bosses", "artifacts"), [(False, False, 1), (False, True, 7), (True, False, 47), (True, True, 47)]
+)
+def test_am2r_artifact_pool_should_throw_on_invalid_config(am2r_game_description, metroids, bosses, artifacts):
     # Setup
     configuration = AM2RArtifactConfig(prefer_metroids=metroids, prefer_bosses=bosses, required_artifacts=artifacts)
 

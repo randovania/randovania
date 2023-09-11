@@ -17,8 +17,7 @@ class EchoesHintNamer(PrimeFamilyHintNamer):
         super().__init__(all_patches, players_config)
 
         self.location_formatters[HintLocationPrecision.KEYBEARER] = TemplatedFormatter(
-            "The Flying Ing Cache in {node} contains {determiner}{pickup}.",
-            self
+            "The Flying Ing Cache in {node} contains {determiner}{pickup}.", self
         )
         self.location_formatters[HintLocationPrecision.GUARDIAN] = GuardianFormatter(
             lambda msg, with_color: colorize_text("#FF3333", msg, with_color),

@@ -21,8 +21,9 @@ def emit_session_global_event(session: MultiplayerSession, name: str, data):
     flask_socketio.emit(name, data, room=room_name_for(session.id), namespace="/")
 
 
-def get_membership_for(sio_or_user: ServerApp | database.User | int, session: int | database.MultiplayerSession
-                       ) -> database.MultiplayerMembership:
+def get_membership_for(
+    sio_or_user: ServerApp | database.User | int, session: int | database.MultiplayerSession
+) -> database.MultiplayerMembership:
     if isinstance(sio_or_user, ServerApp):
         user = sio_or_user.get_current_user()
     else:
@@ -57,8 +58,7 @@ def emit_session_actions_update(session: MultiplayerSession):
         span.set_data("session.id", session.id)
         span.set_data("session.name", session.name)
         span.set_data("session.actions", len(actions.actions))
-        emit_session_global_event(session, signals.SESSION_ACTIONS_UPDATE,
-                                  construct_pack.encode(actions))
+        emit_session_global_event(session, signals.SESSION_ACTIONS_UPDATE, construct_pack.encode(actions))
 
 
 def emit_session_audit_update(session: MultiplayerSession):
@@ -69,16 +69,11 @@ def emit_session_audit_update(session: MultiplayerSession):
         span.set_data("session.id", session.id)
         span.set_data("session.name", session.name)
         span.set_data("session.audit", len(log.entries))
-        emit_session_global_event(session, signals.SESSION_AUDIT_UPDATE,
-                                  construct_pack.encode(log))
+        emit_session_global_event(session, signals.SESSION_AUDIT_UPDATE, construct_pack.encode(log))
 
 
 def add_audit_entry(sa: ServerApp, session: MultiplayerSession, message: str):
-    MultiplayerAuditEntry.create(
-        session=session,
-        user=sa.get_current_user(),
-        message=message
-    )
+    MultiplayerAuditEntry.create(session=session, user=sa.get_current_user(), message=message)
     emit_session_audit_update(session)
 
 

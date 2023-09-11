@@ -39,9 +39,9 @@ class CorruptionPresetDescriber(GamePresetDescriber):
                     {
                         "Missiles needs Launcher": "Missile Expansion",
                         "Ship Missiles needs Main": "Ship Missile Expansion",
-                    }
+                    },
                 ),
-            ]
+            ],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
 
@@ -52,7 +52,8 @@ class CorruptionPresetDescriber(GamePresetDescriber):
         majors = configuration.standard_pickup_configuration
 
         from randovania.games.prime3.pickup_database import progressive_items
-        for (progressive_item_name, non_progressive_items) in progressive_items.tuples():
+
+        for progressive_item_name, non_progressive_items in progressive_items.tuples():
             handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
 
         return count

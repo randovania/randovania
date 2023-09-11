@@ -29,12 +29,10 @@ def test_generate_layout(mocker: pytest_mock.MockerFixture, another_process, spo
 
     mock_debug_level = mocker.patch("randovania.resolver.debug.debug_level")
     mock_generate_another_process = mocker.patch(
-        "randovania.interface_common.generator_frontend.generate_in_another_process",
-        autospec=True
+        "randovania.interface_common.generator_frontend.generate_in_another_process", autospec=True
     )
     mock_generate_host_process = mocker.patch(
-        "randovania.interface_common.generator_frontend.generate_in_host_process",
-        autospec=True
+        "randovania.interface_common.generator_frontend.generate_in_host_process", autospec=True
     )
     mock_constant_percentage_callback = mocker.patch(
         "randovania.interface_common.generator_frontend.ConstantPercentageCallback",
@@ -65,8 +63,7 @@ def test_generate_layout(mocker: pytest_mock.MockerFixture, another_process, spo
         extra_args["attempts"] = retries
 
     # Run
-    generator_frontend.generate_layout(options, parameters, progress_update,
-                                       retries=retries)
+    generator_frontend.generate_layout(options, parameters, progress_update, retries=retries)
 
     # Assert
     mock_debug_level.assert_called_once_with()

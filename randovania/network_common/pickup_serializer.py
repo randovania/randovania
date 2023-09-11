@@ -97,7 +97,7 @@ def _decode_pickup_category(decoder: BitPackDecoder) -> PickupCategory:
         long_name=bitpacking.decode_string(decoder),
         hint_details=(bitpacking.decode_string(decoder), bitpacking.decode_string(decoder)),
         hinted_as_major=bitpacking.decode_bool(decoder),
-        is_key=bitpacking.decode_bool(decoder)
+        is_key=bitpacking.decode_bool(decoder),
     )
 
 

@@ -1,4 +1,3 @@
-
 import construct
 import flask
 from playhouse import flask_utils
@@ -20,37 +19,38 @@ def admin_sessions(user):
     lines = []
     for session in paginated_query.get_object_list():
         assert isinstance(session, MultiplayerSession)
-        lines.append("<tr>{}</tr>".format("".join(f"<td>{col}</td>" for col in [
-            "<a href='{}'>{}</a>".format(
-                flask.url_for('admin_session', session_id=session.id),
-                session.name,
-            ),
-            session.creator.name,
-            session.creation_date,
-            len(session.members),
-            len(session.worlds),
-        ])))
+        lines.append(
+            "<tr>{}</tr>".format(
+                "".join(
+                    f"<td>{col}</td>"
+                    for col in [
+                        "<a href='{}'>{}</a>".format(
+                            flask.url_for("admin_session", session_id=session.id),
+                            session.name,
+                        ),
+                        session.creator.name,
+                        session.creation_date,
+                        len(session.members),
+                        len(session.worlds),
+                    ]
+                )
+            )
+        )
 
     page = paginated_query.get_page()
     previous = "Previous"
     if page > 1:
-        previous = "<a href='{}'>Previous</a>".format(
-            flask.url_for(".admin_sessions", page=page - 1)
-        )
+        previous = "<a href='{}'>Previous</a>".format(flask.url_for(".admin_sessions", page=page - 1))
 
     next_link = "Next"
     if page < paginated_query.get_page_count():
-        next_link = "<a href='{}'>Next</a>".format(
-            flask.url_for(".admin_sessions", page=page + 1)
-        )
+        next_link = "<a href='{}'>Next</a>".format(flask.url_for(".admin_sessions", page=page + 1))
 
     header = ["Name", "Creator", "Creation Date", "Num Users", "Num Worlds"]
     return (
-        "<table border='1'>"
-        "<tr>{header}</tr>"
-        "{content}</table>Page {page} of {num_pages}. {previous} / {next}."
+        "<table border='1'><tr>{header}</tr>{content}</table>Page {page} of {num_pages}. {previous} / {next}."
     ).format(
-        header="".join(f'<th>{it}</th>' for it in header),
+        header="".join(f"<th>{it}</th>" for it in header),
         content="".join(lines),
         page=page,
         num_pages=paginated_query.get_page_count(),
@@ -63,9 +63,13 @@ def admin_session(user, session_id):
     session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     rows = []
 
-    associations: list[WorldUserAssociation] = list(WorldUserAssociation.select().join(World).where(
-        World.session == session,
-    ))
+    associations: list[WorldUserAssociation] = list(
+        WorldUserAssociation.select()
+        .join(World)
+        .where(
+            World.session == session,
+        )
+    )
 
     for association in associations:
         inventory = []
@@ -84,12 +88,14 @@ def admin_session(user, session_id):
         else:
             inventory.append("Missing")
 
-        rows.append([
-            association.user.name,
-            association.world.name,
-            association.connection_state.pretty_text,
-            ", ".join(inventory),
-        ])
+        rows.append(
+            [
+                association.user.name,
+                association.world.name,
+                association.connection_state.pretty_text,
+                ", ".join(inventory),
+            ]
+        )
 
     header = ["User", "World", "Connection State", "Inventory"]
 

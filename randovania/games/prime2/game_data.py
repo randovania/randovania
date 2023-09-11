@@ -8,11 +8,14 @@ from randovania.games.prime2.layout.preset_describer import EchoesPresetDescribe
 
 def _options():
     from randovania.games.prime2.exporter.options import EchoesPerGameOptions
+
     return EchoesPerGameOptions
 
 
 def _gui() -> game.GameGui:
-    from randovania.games.common.prime_family.gui.teleporter_details_tab import TeleporterDetailsTab
+    from randovania.games.common.prime_family.gui.prime_trilogy_teleporter_details_tab import (
+        PrimeTrilogyTeleporterDetailsTab,
+    )
     from randovania.games.prime2 import gui
     from randovania.games.prime2.pickup_database import progressive_items
 
@@ -22,7 +25,7 @@ def _gui() -> game.GameGui:
         export_dialog=gui.EchoesGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(
-            TeleporterDetailsTab,
+            PrimeTrilogyTeleporterDetailsTab,
             gui.TranslatorGateDetailsTab,
             gui.PortalDetailsTab,
             gui.EchoesHintDetailsTab,
@@ -47,11 +50,13 @@ def _generator() -> game.GameGenerator:
 
 def _patch_data_factory():
     from randovania.games.prime2.exporter.patch_data_factory import EchoesPatchDataFactory
+
     return EchoesPatchDataFactory
 
 
 def _exporter():
     from randovania.games.prime2.exporter.game_exporter import EchoesGameExporter
+
     return EchoesGameExporter()
 
 
@@ -61,23 +66,15 @@ game_data: game.GameData = game.GameData(
     short_name="Echoes",
     long_name="Metroid Prime 2: Echoes",
     development_state=game.DevelopmentState.STABLE,
-
     presets=[
-        {
-            "path": "starter_preset.rdvpreset"
-        },
-        {
-            "path": "darkszero_deluxe.rdvpreset"
-        },
-        {
-            "path": "fewest_changes.rdvpreset"
-        }
+        {"path": "starter_preset.rdvpreset"},
+        {"path": "darkszero_deluxe.rdvpreset"},
+        {"path": "fewest_changes.rdvpreset"},
     ],
-
     faq=[
-        ("I can't use this spider track, even though I have Spider Ball!",
-
-         """The following rooms have surprising vanilla behaviour about their spider tracks:
+        (
+            "I can't use this spider track, even though I have Spider Ball!",
+            """The following rooms have surprising vanilla behaviour about their spider tracks:
 
 #### Main Reactor (Agon Wastes)
 
@@ -90,48 +87,39 @@ The spider tracks only works after you beat Spider Guardian. When playing with n
 #### Spider Guardian fight (Sanctuary Fortress)
 
 During the fight, the spider tracks only works in the first and last phases. After the fight, they all work normally.
-This means you need Boost Ball to fight Spider Guardian."""),
-
-        ("Where is the Flying Ing Cache inside Dark Oasis?",
-
-         "The Flying Ing Cache in this room appears only after you collect the item that appears after defeating Power Bomb Guardian."),
-
-        ("When causes the Dark Missile Trooper to spawn?",
-
-         "Defeating the Bomb Guardian."),
-
-        ("What causes the Missile Expansion on top of the GFMC Compound to spawn?",
-
-         "Collecting the item that appears after defeating the Jump Guardian."),
-
-        ("Why isn't the elevator in Torvus Temple working?",
-
-         "In order to open the elevator, you also need to pick the item in Torvus Energy Controller."),
-
-        ("Why can't I see the echo locks in Mining Plaza even when using the Echo Visor?",
-
-         "You need to beat Amorbis and then return the Agon Energy in order for these echo locks to appear."),
-
-        ("Why can't I cross the door between Underground Transport and Torvus Temple?",
-
-         "The energy gate that disappears after the pirate fight in Torvus Temple blocks this door."),
+This means you need Boost Ball to fight Spider Guardian.""",
+        ),
+        (
+            "Where is the Flying Ing Cache inside Dark Oasis?",
+            "The Flying Ing Cache in this room appears only after you collect the item that appears after defeating Power Bomb Guardian.",
+        ),
+        ("What causes the Dark Missile Trooper to spawn?", "Defeating the Bomb Guardian."),
+        (
+            "What causes the Missile Expansion on top of the GFMC Compound to spawn?",
+            "Collecting the item that appears after defeating the Jump Guardian.",
+        ),
+        (
+            "Why isn't the elevator in Torvus Temple working?",
+            "In order to open the elevator, you also need to pick the item in Torvus Energy Controller.",
+        ),
+        (
+            "Why can't I see the echo locks in Mining Plaza even when using the Echo Visor?",
+            "You need to beat Amorbis and then return the Agon Energy in order for these echo locks to appear.",
+        ),
+        (
+            "Why can't I cross the door between Underground Transport and Torvus Temple?",
+            "The energy gate that disappears after the pirate fight in Torvus Temple blocks this door.",
+        ),
     ],
-
     layout=game.GameLayout(
         configuration=EchoesConfiguration,
         cosmetic_patches=EchoesCosmeticPatches,
         preset_describer=EchoesPresetDescriber(),
     ),
-
     options=_options,
-
     gui=_gui,
-
     generator=_generator,
-
     patch_data_factory=_patch_data_factory,
-
     exporter=_exporter,
-
     defaults_available_in_game_sessions=True,
 )

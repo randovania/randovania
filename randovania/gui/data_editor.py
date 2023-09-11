@@ -162,13 +162,15 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.update_game(self.original_game_description)
 
         self.resource_editor = ResourceDatabaseEditor(self, self.resource_database)
-        self.resource_editor.setFeatures(self.resource_editor.features() &
-                                         ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable)
+        self.resource_editor.setFeatures(
+            self.resource_editor.features() & ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable
+        )
         self.tabifyDockWidget(self.points_of_interest_dock, self.resource_editor)
 
         self.layers_editor = ConnectionLayerWidget(self, self.original_game_description)
-        self.layers_editor.setFeatures(self.layers_editor.features() &
-                                       ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable)
+        self.layers_editor.setFeatures(
+            self.layers_editor.features() & ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable
+        )
         self.tabifyDockWidget(self.points_of_interest_dock, self.layers_editor)
 
         self.points_of_interest_dock.raise_()
@@ -176,8 +178,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.resource_editor.ResourceChanged.connect(self._on_resource_changed)
         self.layers_editor.FiltersUpdated.connect(self._on_filters_changed)
 
-        if self.game_description.game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES,
-                                          RandovaniaGame.METROID_PRIME_CORRUPTION}:
+        if self.game_description.game in {
+            RandovaniaGame.METROID_PRIME,
+            RandovaniaGame.METROID_PRIME_ECHOES,
+            RandovaniaGame.METROID_PRIME_CORRUPTION,
+        }:
             self.area_view_dock.hide()
 
         self.zoom_slider.setTickInterval(1)
@@ -237,10 +242,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self._warning_dialogs_disabled:
             return True
 
-        user_response = QMessageBox.warning(self, "Unsaved changes",
-                                            "You have unsaved changes. Do you want to close and discard?",
-                                            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                                            QMessageBox.StandardButton.No)
+        user_response = QMessageBox.warning(
+            self,
+            "Unsaved changes",
+            "You have unsaved changes. Do you want to close and discard?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
         return user_response == QMessageBox.StandardButton.Yes
 
     def on_select_region(self):
@@ -273,7 +281,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _on_image_spin_update(self):
         w = self.current_region
-        if type(w.extra) != dict:
+        if not isinstance(w.extra, dict):
             object.__setattr__(w, "extra", dict(w.extra))
         w.extra["map_min_x"] = self.spin_min_x.value()
         w.extra["map_min_y"] = self.spin_min_y.value()
@@ -447,7 +455,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             msg = f"Unable to describe node: {e}"
 
         if isinstance(node, DockNode):
-            msg = "{} to <a href=\"node://{}\">{}</a>".format(
+            msg = '{} to <a href="node://{}">{}</a>'.format(
                 node.default_dock_weakness.name,
                 node.default_connection.as_string,
                 node.default_connection.node_name,
@@ -459,11 +467,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.update_other_node_connection()
 
         for button, source_node in self.radio_button_to_node.items():
-            button.setStyleSheet(
-                "font-weight: bold;"
-                if node in self.current_area.connections[source_node]
-                else ""
-            )
+            button.setStyleSheet("font-weight: bold;" if node in self.current_area.connections[source_node] else "")
 
         self._previous_selected_node = node
 
@@ -531,19 +535,22 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             assert len(list(self.current_area.actual_nodes)) <= 1 or not self.edit_mode
             return
 
-        requirement = self.current_area.connections[current_node].get(self.current_connection_node,
-                                                                      Requirement.impossible())
+        requirement = self.current_area.connections[current_node].get(
+            self.current_connection_node, Requirement.impossible()
+        )
         if self._collection_for_filtering is not None:
-            requirement = _simplify_trivial_and_impossible(requirement.patch_requirements(
-                self._collection_for_filtering,
-                1.0,
-                self.game_description.resource_database,
-            ))
+            requirement = _simplify_trivial_and_impossible(
+                requirement.patch_requirements(
+                    self._collection_for_filtering,
+                    1.0,
+                    self.game_description.resource_database,
+                )
+            )
 
         self.other_node_alternatives_contents.clear()
-        create_tree_items_for_requirement(self.other_node_alternatives_contents,
-                                          self.other_node_alternatives_contents,
-                                          requirement)
+        create_tree_items_for_requirement(
+            self.other_node_alternatives_contents, self.other_node_alternatives_contents, requirement
+        )
 
     def _swap_selected_connection(self):
         self.focus_on_node(self.current_connection_node)
@@ -590,8 +597,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         message = "Database has the following errors:\n\n" + "\n\n".join(errors)
         message += "\n\nIgnore?"
 
-        box = ScrollMessageBox.create_new(self, QtWidgets.QMessageBox.Critical, "Integrity Check",
-                                          message, options, QMessageBox.No)
+        box = ScrollMessageBox.create_new(
+            self, QtWidgets.QMessageBox.Critical, "Integrity Check", message, options, QMessageBox.No
+        )
         user_response = box.exec_()
 
         return user_response == QMessageBox.Yes
@@ -617,8 +625,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             default_database.game_description_for.cache_clear()
 
     def _rename_area(self):
-        new_name, did_confirm = QInputDialog.getText(self, "New Name", "Insert area name:",
-                                                     text=self.current_area.name)
+        new_name, did_confirm = QInputDialog.getText(self, "New Name", "Insert area name:", text=self.current_area.name)
         if not did_confirm or new_name == "" or new_name == self.current_area.name:
             return
 
@@ -637,11 +644,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def _move_node(self, node: Node, location: NodeLocation):
         area = self.current_area
         assert node in area.nodes
-        self.replace_node_with(
-            area,
-            node,
-            dataclasses.replace(node, location=location)
-        )
+        self.replace_node_with(area, node, dataclasses.replace(node, location=location))
 
     def _create_new_node(self, location: NodeLocation | None):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
@@ -650,9 +653,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         if self.current_area.node_with_name(node_name) is not None:
             if not self._warning_dialogs_disabled:
-                QMessageBox.warning(self,
-                                    "New Node",
-                                    f"A node named '{node_name}' already exists.")
+                QMessageBox.warning(self, "New Node", f"A node named '{node_name}' already exists.")
             return
 
         self._do_create_node(node_name, location)
@@ -664,8 +665,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         return NodeIdentifier.create(self.current_region.name, self.current_area.name, node_name)
 
     def _do_create_node(self, node_name: str, location: NodeLocation | None):
-        new_node = GenericNode(self._create_identifier(node_name), self.editor.new_node_index(),
-                               False, location, "", ("default",), {}, False)
+        new_node = GenericNode(
+            self._create_identifier(node_name),
+            self.editor.new_node_index(),
+            False,
+            location,
+            "",
+            ("default",),
+            {},
+            False,
+        )
         self.editor.add_node(self.current_area, new_node)
         self.on_select_area(new_node)
 
@@ -675,17 +684,22 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         source_identifier = self.region_list.identifier_for_area(current_area)
 
         dock_type, dock_weakness = self.game_description.dock_weakness_database.default_weakness
-        source_name_base = next(integrity_check.raw_expected_dock_names(
-            dock_type, dock_weakness, target_identifier, source_identifier.region_name
-        ))
-        target_name_base = next(integrity_check.raw_expected_dock_names(
-            dock_type, dock_weakness, source_identifier, target_identifier.region_name
-        ))
+        source_name_base = next(
+            integrity_check.raw_expected_dock_names(
+                dock_type, dock_weakness, target_identifier, source_identifier.region_name
+            )
+        )
+        target_name_base = next(
+            integrity_check.raw_expected_dock_names(
+                dock_type, dock_weakness, source_identifier, target_identifier.region_name
+            )
+        )
 
         source_count = len(integrity_check.docks_with_same_base_name(current_area, source_name_base))
         if source_count != len(integrity_check.docks_with_same_base_name(target_area, target_name_base)):
-            raise ValueError(f"Expected {target_area.name} to also have {source_count} "
-                             f"docks with name {target_name_base}")
+            raise ValueError(
+                f"Expected {target_area.name} to also have {source_count} docks with name {target_name_base}"
+            )
 
         if source_count > 0:
             source_name = f"{source_name_base} ({source_count + 1})"
@@ -700,24 +714,36 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         new_node_this_area = DockNode(
             identifier=new_node_this_area_identifier,
             node_index=self.editor.new_node_index(),
-            heal=False, location=location, description="", layers=("default",), extra={}, valid_starting_location=False,
+            heal=False,
+            location=location,
+            description="",
+            layers=("default",),
+            extra={},
+            valid_starting_location=False,
             dock_type=dock_type,
             default_connection=new_node_other_area_identifier,
             default_dock_weakness=dock_weakness,
             exclude_from_dock_rando=False,
-            override_default_open_requirement=None, override_default_lock_requirement=None,
+            override_default_open_requirement=None,
+            override_default_lock_requirement=None,
             incompatible_dock_weaknesses=(),
         )
 
         new_node_other_area = DockNode(
             identifier=new_node_other_area_identifier,
             node_index=self.editor.new_node_index(),
-            heal=False, location=location, description="", layers=("default",), extra={}, valid_starting_location=False,
+            heal=False,
+            location=location,
+            description="",
+            layers=("default",),
+            extra={},
+            valid_starting_location=False,
             dock_type=dock_type,
             default_connection=new_node_this_area_identifier,
             default_dock_weakness=dock_weakness,
             exclude_from_dock_rando=False,
-            override_default_open_requirement=None, override_default_lock_requirement=None,
+            override_default_open_requirement=None,
+            override_default_lock_requirement=None,
             incompatible_dock_weaknesses=(),
         )
 
@@ -756,7 +782,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             "Delete Node",
             f"Are you sure you want to delete the node '{current_node.name}'?",
             QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No
+            QMessageBox.No,
         )
 
         if user_response != QMessageBox.Yes:
@@ -787,8 +813,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
             resources = self.layers_editor.selected_tricks()
             if resources:
-                self._collection_for_filtering = ResourceCollection.from_resource_gain(game.resource_database,
-                                                                                       resources.items())
+                self._collection_for_filtering = ResourceCollection.from_resource_gain(
+                    game.resource_database, resources.items()
+                )
             else:
                 self._collection_for_filtering = None
 
@@ -819,9 +846,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.resource_editor.set_allow_edits(self.edit_mode)
         self.area_view_canvas.set_edit_mode(self.edit_mode)
         self.layers_editor.set_edit_mode(self.edit_mode)
-        self.setWindowTitle(
-            "Data Editor" if self.edit_mode else "Data Visualizer"
-        )
+        self.setWindowTitle("Data Editor" if self.edit_mode else "Data Visualizer")
 
     @property
     def current_region(self) -> Region:

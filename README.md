@@ -229,8 +229,10 @@ In order to run the server:
    4. Run `python tools/prepare_dev_server_config.py` once.
    5. If you wish to use any Discord functionality, you'll need to create an app in Discord 
    and fill both ids in `tools/dev-server-configuration.json`.  
-   6. Run the server with `tools/start_dev_server.bat` and the client with `tools/start_debug_client.bat`.
-
+   6. Run the server and client. You can this on
+      1. Windows with `tools/start_dev_server.bat` for the server and `tools/start_debug_client.bat` for the client
+      2. Linux/macOS with `tools/start_dev_server.sh` for the server and `tools_start_debug_client.sh` for client
+   
 This repository uses [pre-commit](https://pre-commit.com/). The hook is automatically configured with 
 the `prepare_virtual_env` scripts.
 

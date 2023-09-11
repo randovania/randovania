@@ -16,14 +16,21 @@ if TYPE_CHECKING:
 
 
 def _state_has_item(state: StandardPickupState) -> bool:
-    return (state.num_shuffled_pickups > 0
-            or state.num_included_in_starting_pickups > 0
-            or state.include_copy_in_original_location)
+    return (
+        state.num_shuffled_pickups > 0
+        or state.num_included_in_starting_pickups > 0
+        or state.include_copy_in_original_location
+    )
 
 
 class ProgressiveItemWidget(QtWidgets.QCheckBox):
-    def __init__(self, parent: QtWidgets.QWidget, editor: PresetEditor,
-                 progressive_item: StandardPickupDefinition, non_progressive_items: Iterable[StandardPickupDefinition]):
+    def __init__(
+        self,
+        parent: QtWidgets.QWidget,
+        editor: PresetEditor,
+        progressive_item: StandardPickupDefinition,
+        non_progressive_items: Iterable[StandardPickupDefinition],
+    ):
         super().__init__(parent)
         self._editor = editor
         self.progressive_item = progressive_item
@@ -35,8 +42,9 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         major_configuration = preset.configuration.standard_pickup_configuration
 
         has_progressive = _state_has_item(major_configuration.pickups_state[self.progressive_item])
-        has_non_progressive = any(_state_has_item(major_configuration.pickups_state[item])
-                                  for item in self.non_progressive_items)
+        has_non_progressive = any(
+            _state_has_item(major_configuration.pickups_state[item]) for item in self.non_progressive_items
+        )
 
         if not has_progressive and not has_non_progressive:
             has_progressive = self.isChecked()

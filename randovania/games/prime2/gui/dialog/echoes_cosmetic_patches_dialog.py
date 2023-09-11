@@ -126,7 +126,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
                 light=suits.varia,
             )
 
-        suits=dataclasses.replace(
+        suits = dataclasses.replace(
             suits,
             randomize_separately=advanced,
         )
@@ -145,7 +145,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
             suit_colors=dataclasses.replace(
                 self.cosmetic_patches.suit_colors,
                 **{suit_name: new_suit},
-            )
+            ),
         )
         self._set_suit_colors(self.cosmetic_patches.suit_colors)
 
@@ -158,7 +158,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
                 varia=new_suit,
                 dark=new_suit,
                 light=new_suit,
-            )
+            ),
         )
         self._set_suit_colors(self.cosmetic_patches.suit_colors)
 
@@ -182,10 +182,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):
-            self._cosmetic_patches = dataclasses.replace(
-                self._cosmetic_patches,
-                **{attribute_name: bool(value)}
-            )
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, **{attribute_name: bool(value)})
 
         return persist
 
@@ -200,14 +197,14 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
 
     def _update_color_squares(self):
         color = self._cosmetic_patches.hud_color
-        style = 'background-color: rgb({},{},{})'.format(*color)
+        style = "background-color: rgb({},{},{})".format(*color)
         self.custom_hud_color_square.setStyleSheet(style)
 
     def _add_preview_color_square_to_layout(self, layout: QLayout, default_color: tuple[int, int, int]):
         color_square = QFrame(self.game_changes_box)
         color_square.setMinimumSize(QSize(22, 22))
         color_square.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))
-        color_square.setStyleSheet('background-color: rgb({},{},{})'.format(*default_color))
+        color_square.setStyleSheet("background-color: rgb({},{},{})".format(*default_color))
         layout.addWidget(color_square)
         return color_square
 
@@ -227,23 +224,14 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         )
 
     def _on_sound_mode_update(self):
-        self.preferences = dataclasses.replace(
-            self.preferences,
-            sound_mode=self.sound_mode_combo.currentData()
-        )
+        self.preferences = dataclasses.replace(self.preferences, sound_mode=self.sound_mode_combo.currentData())
 
     def _on_slider_update(self, slider: QSlider, field_name: str, _):
-        self.preferences = dataclasses.replace(
-            self.preferences,
-            **{field_name: slider.value()}
-        )
+        self.preferences = dataclasses.replace(self.preferences, **{field_name: slider.value()})
         update_label_with_slider(getattr(self, f"{field_name}_value_label"), slider)
 
     def _on_check_update(self, check: QCheckBox, field_name: str, _):
-        self.preferences = dataclasses.replace(
-            self.preferences,
-            **{field_name: check.isChecked()}
-        )
+        self.preferences = dataclasses.replace(self.preferences, **{field_name: check.isChecked()})
 
     def reset(self):
         self.on_new_cosmetic_patches(EchoesCosmeticPatches())

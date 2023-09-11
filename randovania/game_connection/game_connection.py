@@ -87,11 +87,13 @@ class GameConnection(QObject):
                 self.remote_connectors[build] = c
                 self._handle_new_connector(c)
 
-        await asyncio.gather(*[
-            try_build_connector(builder)
-            for builder in list(self.connection_builders)
-            if builder not in self.remote_connectors
-        ])
+        await asyncio.gather(
+            *[
+                try_build_connector(builder)
+                for builder in list(self.connection_builders)
+                if builder not in self.remote_connectors
+            ]
+        )
 
     def add_connection_builder(self, builder: ConnectorBuilder):
         self.connection_builders.append(builder)
@@ -135,8 +137,9 @@ class GameConnection(QObject):
 
     def _ensure_connected_state_exists(self, connector: RemoteConnector) -> ConnectedGameState:
         if connector not in self.connected_states:
-            self.connected_states[connector] = ConnectedGameState(connector.layout_uuid, connector,
-                                                                  GameConnectionStatus.TitleScreen)
+            self.connected_states[connector] = ConnectedGameState(
+                connector.layout_uuid, connector, GameConnectionStatus.TitleScreen
+            )
         return self.connected_states[connector]
 
     def _on_player_location_changed(self, connector: RemoteConnector, location: tuple[Region | None, Area | None]):

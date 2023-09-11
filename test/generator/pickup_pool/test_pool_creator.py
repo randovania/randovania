@@ -30,10 +30,12 @@ def test_calculate_pool_item_count(default_echoes_configuration):
 
 
 def test_get_total_pickup_count():
-    result = pool_creator.get_total_pickup_count({
-        LocationCategory.MAJOR: PoolCount(2, 5),
-        LocationCategory.MINOR: PoolCount(7, 6),
-        "Starting": PoolCount(0, 3),
-    })
+    result = pool_creator.get_total_pickup_count(
+        {
+            LocationCategory.MAJOR: PoolCount(2, 5),
+            LocationCategory.MINOR: PoolCount(7, 6),
+            "Starting": PoolCount(0, 3),
+        }
+    )
 
     assert result == (9, 14)

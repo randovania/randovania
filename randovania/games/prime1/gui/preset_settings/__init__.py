@@ -8,24 +8,24 @@ if TYPE_CHECKING:
 
 
 def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
-
-    from randovania.games.common.prime_family.gui.elevators_tab_prime1 import PresetElevatorsPrime1
     from randovania.games.prime1.gui.preset_settings.prime_enemy_stat_randomizer import PresetEnemyAttributeRandomizer
     from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
     from randovania.games.prime1.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
     from randovania.games.prime1.gui.preset_settings.prime_hints_tab import PresetPrimeHints
     from randovania.games.prime1.gui.preset_settings.prime_patches_chaos import PresetPrimeChaos
     from randovania.games.prime1.gui.preset_settings.prime_patches_qol import PresetPrimeQol
+    from randovania.games.prime1.gui.preset_settings.prime_teleporters_tab import PresetTeleportersPrime1
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
+
     return [
         PresetTrickLevel,
         PresetPatcherEnergy,
-        PresetElevatorsPrime1,
+        PresetTeleportersPrime1,
         PresetMetroidStartingArea,
         PresetPrimeGeneration,
         PresetPrimeGoal,

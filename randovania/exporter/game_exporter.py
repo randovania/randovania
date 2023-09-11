@@ -36,15 +36,23 @@ class GameExporter:
     def _before_export(self):
         pass
 
-    def _do_export_game(self, patch_data: dict, export_params: GameExportParams,
-                        progress_update: status_update_lib.ProgressUpdateCallable) -> None:
+    def _do_export_game(
+        self,
+        patch_data: dict,
+        export_params: GameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ) -> None:
         raise NotImplementedError
 
     def _after_export(self):
         pass
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams,
-                    progress_update: status_update_lib.ProgressUpdateCallable):
+    def export_game(
+        self,
+        patch_data: dict,
+        export_params: GameExportParams,
+        progress_update: status_update_lib.ProgressUpdateCallable,
+    ):
         self._before_export()
         try:
             with monitoring.attach_patcher_data(patch_data):

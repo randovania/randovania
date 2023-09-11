@@ -58,18 +58,13 @@ def _migrate_v5(data: dict) -> dict:
         percentage = "Percent" if is_prime2 else "ItemPercentage"
 
         for pickup in itertools.chain(data["standard_pickups"].values(), data["ammo_pickups"].values()):
-            pickup["additional_resources"] = {
-                percentage: 1
-            }
+            pickup["additional_resources"] = {percentage: 1}
 
     return data
 
 
 def _migrate_v6(data: dict) -> dict:
-    for pickup in itertools.chain(
-        data["standard_pickups"].values(),
-        data["ammo_pickups"].values()
-    ):
+    for pickup in itertools.chain(data["standard_pickups"].values(), data["ammo_pickups"].values()):
         pickup["offworld_models"] = {}
 
     data["default_offworld_model"] = ""
@@ -88,5 +83,5 @@ _MIGRATIONS = [
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
-def migrate_current(data: dict):
+def migrate_current(data: dict) -> dict:
     return migration_lib.apply_migrations(data, _MIGRATIONS)

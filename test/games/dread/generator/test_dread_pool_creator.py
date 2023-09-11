@@ -16,11 +16,7 @@ def test_artifact_pool(dread_game_description, dread_configuration, count: int):
 
     # Assert
     assert results == PoolResults(
-        to_place=[
-            pool_creator.create_dread_artifact(i, db) for i in range(count)
-        ],
+        to_place=[pool_creator.create_dread_artifact(i, db) for i in range(count)],
         assignment={},
-        starting=[
-            pool_creator.create_dread_artifact(i, db) for i in range(count, 12)
-        ],
+        starting=[pool_creator.create_dread_artifact(i, db) for i in range(count, 12)],
     )

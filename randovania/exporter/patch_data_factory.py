@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from randovania.layout.layout_description import LayoutDescription
 
 
-class BasePatchDataFactory:
+class PatchDataFactory:
     description: LayoutDescription
     players_config: PlayersConfiguration
     game: GameDescription
@@ -28,8 +28,12 @@ class BasePatchDataFactory:
     cosmetic_patches: BaseCosmeticPatches
     configuration: BaseConfiguration
 
-    def __init__(self, description: LayoutDescription, players_config: PlayersConfiguration,
-                 cosmetic_patches: BaseCosmeticPatches):
+    def __init__(
+        self,
+        description: LayoutDescription,
+        players_config: PlayersConfiguration,
+        cosmetic_patches: BaseCosmeticPatches,
+    ):
         self.description = description
         self.players_config = players_config
         self.cosmetic_patches = cosmetic_patches

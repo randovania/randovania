@@ -51,8 +51,7 @@ async def _download_from_github(page_size: int = 100) -> list[dict] | None:
             current_page = 1
 
             while True:
-                async with session.get(_RELEASES_URL,
-                                       params={"page": current_page, "per_page": page_size}) as response:
+                async with session.get(_RELEASES_URL, params={"page": current_page, "per_page": page_size}) as response:
                     response.raise_for_status()
                     last_result = await response.json()
                     result.extend(last_result)
@@ -75,7 +74,9 @@ async def _persist(data: list[dict]):
                     "last_check": datetime.datetime.now().isoformat(),
                     "data": data,
                 },
-                default=str))
+                default=str,
+            )
+        )
 
 
 async def get_releases() -> list[dict] | None:

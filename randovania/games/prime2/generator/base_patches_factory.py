@@ -11,10 +11,11 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.prime2.generator.teleporter_distributor import get_teleporter_connections_echoes
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng
-from randovania.generator.elevator_distributor import get_dock_connections_for_elevators
+from randovania.generator.teleporter_distributor import get_dock_connections_assignment_for_teleporter
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -72,20 +73,26 @@ WORLDS = [
 
 
 class EchoesBasePatchesFactory(BasePatchesFactory):
-    def create_base_patches(self,
-                            configuration: BaseConfiguration,
-                            rng: Random,
-                            game: GameDescription,
-                            is_multiworld: bool,
-                            player_index: int,
-                            rng_required: bool = True) -> GamePatches:
+    def create_base_patches(
+        self,
+        configuration: BaseConfiguration,
+        rng: Random,
+        game: GameDescription,
+        is_multiworld: bool,
+        player_index: int,
+        rng_required: bool = True,
+    ) -> GamePatches:
         assert isinstance(configuration, EchoesConfiguration)
         parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
         return self.assign_save_door_weaknesses(parent, configuration, game)
 
-    def dock_connections_assignment(self, configuration: EchoesConfiguration,
-                                    game: GameDescription, rng: Random ) -> Iterable[tuple[DockNode, Node]]:
-        dock_assignment = get_dock_connections_for_elevators(configuration, game, rng)
+    def dock_connections_assignment(
+        self, configuration: EchoesConfiguration, game: GameDescription, rng: Random
+    ) -> Iterable[tuple[DockNode, Node]]:
+        teleporter_connection = get_teleporter_connections_echoes(configuration.teleporters, game, rng)
+        dock_assignment = get_dock_connections_assignment_for_teleporter(
+            configuration.teleporters, game, teleporter_connection
+        )
 
         if not configuration.portal_rando:
             yield from dock_assignment
@@ -111,8 +118,9 @@ class EchoesBasePatchesFactory(BasePatchesFactory):
 
         yield from dock_assignment
 
-    def configurable_node_assignment(self, configuration: EchoesConfiguration, game: GameDescription,
-                                     rng: Random) -> Iterable[NodeConfigurationAssociation]:
+    def configurable_node_assignment(
+        self, configuration: EchoesConfiguration, game: GameDescription, rng: Random
+    ) -> Iterable[NodeConfigurationAssociation]:
         """
         :param configuration:
         :param game:
@@ -129,10 +137,7 @@ class EchoesBasePatchesFactory(BasePatchesFactory):
 
         result = []
 
-        scan_visor = search.find_resource_info_with_long_name(
-            game.resource_database.item,
-            "Scan Visor"
-        )
+        scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 
         for node in game.region_list.iterate_nodes():
@@ -144,21 +149,28 @@ class EchoesBasePatchesFactory(BasePatchesFactory):
             if requirement in random_requirements:
                 if rng is None:
                     raise MissingRng("Translator")
-                requirement = rng.choice(all_choices if requirement == LayoutTranslatorRequirement.RANDOM_WITH_REMOVED
-                                         else without_removed)
+                requirement = rng.choice(
+                    all_choices if requirement == LayoutTranslatorRequirement.RANDOM_WITH_REMOVED else without_removed
+                )
 
             translator = game.resource_database.get_by_type_and_index(ResourceType.ITEM, requirement.item_name)
-            result.append((identifier, RequirementAnd([
-                scan_visor_req,
-                ResourceRequirement.simple(translator),
-            ])))
+            result.append(
+                (
+                    identifier,
+                    RequirementAnd(
+                        [
+                            scan_visor_req,
+                            ResourceRequirement.simple(translator),
+                        ]
+                    ),
+                )
+            )
 
         return result
 
-    def assign_save_door_weaknesses(self,
-                                    patches: GamePatches,
-                                    configuration: EchoesConfiguration,
-                                    game: GameDescription) -> GamePatches:
+    def assign_save_door_weaknesses(
+        self, patches: GamePatches, configuration: EchoesConfiguration, game: GameDescription
+    ) -> GamePatches:
         if not configuration.blue_save_doors:
             return patches
 

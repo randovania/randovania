@@ -56,25 +56,30 @@ def make_dummy(cls: type[T]) -> T:
 
 @pytest.fixture(
     params=[
-        {"encoded": b'@\x00\x02\xc6?\x8b\x86\x02X\x01\xff',
-         "sky_temple_keys": LayoutSkyTempleKeyMode.NINE.value,
-         },
-        {"encoded": b'@\x00\x00\x06?\x8b\x86\x02X\x01\xff',
-         "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_BOSSES.value,
-         },
-        {"encoded": b'@\x00\x01\x11\x7f\x8b\x86\x02X\x01\xff',
-         "sky_temple_keys": LayoutSkyTempleKeyMode.TWO.value,
-         "energy_per_tank": 280,
-         },
-        {"encoded": b'@\x00\x00F?\xa2\xf6\x02X\x01\xff',
-         "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
-         "varia_suit_damage": 18.0,
-         },
-        {"encoded": b'\x10\x00\x00F?\x8b\x86\x02X\x01\xff',
-         "pickup_model_style": PickupModelStyle.HIDE_MODEL.value,
-         "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
-         "damage_strictness": LayoutDamageStrictness.STRICT.value,
-         },
+        {
+            "encoded": b"@\x00\x02\xc6?\x8b\x86\x02X\x01\xff",
+            "sky_temple_keys": LayoutSkyTempleKeyMode.NINE.value,
+        },
+        {
+            "encoded": b"@\x00\x00\x06?\x8b\x86\x02X\x01\xff",
+            "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_BOSSES.value,
+        },
+        {
+            "encoded": b"@\x00\x01\x11\x7f\x8b\x86\x02X\x01\xff",
+            "sky_temple_keys": LayoutSkyTempleKeyMode.TWO.value,
+            "energy_per_tank": 280,
+        },
+        {
+            "encoded": b"@\x00\x00F?\xa2\xf6\x02X\x01\xff",
+            "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
+            "varia_suit_damage": 18.0,
+        },
+        {
+            "encoded": b"\x10\x00\x00F?\x8b\x86\x02X\x01\xff",
+            "pickup_model_style": PickupModelStyle.HIDE_MODEL.value,
+            "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
+            "damage_strictness": LayoutDamageStrictness.STRICT.value,
+        },
     ],
 )
 def layout_config_with_data(request, default_echoes_configuration):
@@ -90,8 +95,7 @@ def layout_config_with_data(request, default_echoes_configuration):
         "available_locations": AvailableLocationsConfiguration,
         "standard_pickup_configuration": StandardPickupConfiguration,
         "ammo_pickup_configuration": AmmoPickupConfiguration,
-
-        "elevators": PrimeTrilogyTeleporterConfiguration,
+        "teleporters": PrimeTrilogyTeleporterConfiguration,
         "translator_configuration": TranslatorConfiguration,
         "hints": HintConfiguration,
         "beam_configuration": BeamConfiguration,
@@ -102,8 +106,9 @@ def layout_config_with_data(request, default_echoes_configuration):
         for key, cls in types_to_mock.items():
             assert key in data
             data[key] = stack.enter_context(make_dummy(cls))
-        yield request.param["encoded"], EchoesConfiguration.from_json(data,
-                                                                      game=RandovaniaGame.METROID_PRIME_ECHOES), data
+        yield request.param["encoded"], EchoesConfiguration.from_json(
+            data, game=RandovaniaGame.METROID_PRIME_ECHOES
+        ), data
 
 
 def test_decode(layout_config_with_data):

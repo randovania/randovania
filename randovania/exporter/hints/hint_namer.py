@@ -35,8 +35,14 @@ class HintNamer:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
         raise NotImplementedError
 
-    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
-                                   location: PickupLocation, hide_area: bool, with_color: bool) -> str:
+    def format_guaranteed_resource(
+        self,
+        resource: ItemResourceInfo,
+        player_name: str | None,
+        location: PickupLocation,
+        hide_area: bool,
+        with_color: bool,
+    ) -> str:
         """Used when for indicating where a given resource can be found."""
         raise NotImplementedError
 

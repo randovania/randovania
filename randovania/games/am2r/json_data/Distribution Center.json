@@ -36,7 +36,11 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "instance_id": 131683,
+                        "source_x": 0,
+                        "source_y": 128
+                    },
                     "valid_starting_location": false,
                     "dock_type": "area_transition",
                     "default_connection": {
@@ -50,7 +54,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Meboid Blockade Exterior ": {
+                        "Horizontal Dock to Meboid Blockade Exterior ": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -59,7 +63,7 @@
                         }
                     }
                 },
-                "Dock to Meboid Blockade Exterior ": {
+                "Horizontal Dock to Meboid Blockade Exterior ": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -73,13 +77,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Meboid Blockade Exterior ",
                         "node": "Dock to Distribution Entranceway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -150,7 +154,7 @@
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Distribution Entranceway",
-                        "node": "Dock to Meboid Blockade Exterior "
+                        "node": "Horizontal Dock to Meboid Blockade Exterior "
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -185,7 +189,7 @@
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Distribution Center Exterior West Access",
-                        "node": "Dock to Meboid Blockade Exterior "
+                        "node": "Horizontal Dock to Meboid Blockade Exterior "
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -245,7 +249,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Meboid Blockade Exterior ": {
+                "Horizontal Dock to Meboid Blockade Exterior ": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -259,19 +263,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Meboid Blockade Exterior ",
                         "node": "Dock to Distribution Center Exterior West Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Distribution Center Exterior West": {
+                        "Horizontal Dock to Distribution Center Exterior West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -280,7 +284,7 @@
                         }
                     }
                 },
-                "Dock to Distribution Center Exterior West": {
+                "Horizontal Dock to Distribution Center Exterior West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -294,19 +298,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Distribution Center Exterior West",
-                        "node": "Dock to Distribution Center Exterior West Access"
+                        "node": "Horizontal Dock to Distribution Center Exterior West Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Meboid Blockade Exterior ": {
+                        "Horizontal Dock to Meboid Blockade Exterior ": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -493,7 +497,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Distribution Center Exterior West Access": {
+                        "Horizontal Dock to Distribution Center Exterior West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -640,7 +644,7 @@
                         }
                     }
                 },
-                "Dock to Distribution Center Exterior West Access": {
+                "Horizontal Dock to Distribution Center Exterior West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -654,13 +658,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Distribution Center Exterior West Access",
-                        "node": "Dock to Distribution Center Exterior West"
+                        "node": "Horizontal Dock to Distribution Center Exterior West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6517,6 +6521,83 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "EMP Ball": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MorphGlide",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Shoot the EMP from the door",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "RNG dependant",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missiles",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Super Missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -6548,15 +6629,58 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Distribution Facility Intersection": {
+                        "Center": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space Jump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "Septogg",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "IBJ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark before door to Bullet Hell",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6575,61 +6699,93 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space Jump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Spider Ball"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "IBJ",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 4,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Charge speed from other room",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "DoorLockRando",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "EMPA5BulletHellRoomAccess",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShortCharge",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "misc",
-                                            "name": "Septogg",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "HJ + CBJ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ChargedBombJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Charged Bomb Jump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Event - EMP": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -6674,9 +6830,77 @@
                                         }
                                     },
                                     {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "Septogg",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "HJ + CBJ",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6691,66 +6915,97 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
+                                                        "name": "ChargedBombJump",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Spider Ball"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "IBJ",
-                                            "items": [
+                                                },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Use Bombs"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "Septogg",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "data": "Can Use Charged Bomb Jump"
                                                 }
                                             ]
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "EMP Ball": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 63.25,
+                        "y": 811.51,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - EMP": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 20,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 10,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Center": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 165.76357179096905,
+                        "y": 895.1627165325796,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Distribution Facility Intersection": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "EMP Ball": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -8101,7 +8356,7 @@
                         }
                     }
                 },
-                "Dock to Facility Storage Clogged Pipe North": {
+                "Horizontal Dock to Facility Storage Clogged Pipe North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8115,13 +8370,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Facility Storage Clogged Pipe North",
-                        "node": "Dock to Facility Storage Intersection East"
+                        "node": "Horizontal Dock to Facility Storage Intersection East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -8179,7 +8434,7 @@
                                 ]
                             }
                         },
-                        "Dock to Facility Storage Clogged Pipe North": {
+                        "Horizontal Dock to Facility Storage Clogged Pipe North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8252,7 +8507,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat dodging Gamma"
+                                        "data": "Defeat Dual Gammas"
                                     }
                                 ]
                             }
@@ -8264,7 +8519,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat dodging Gamma"
+                                        "data": "Defeat Dual Gammas"
                                     }
                                 ]
                             }
@@ -8840,7 +9095,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Serris Arena Access": {
+                "Horizontal Dock to Serris Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8854,19 +9109,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Serris Arena Access",
-                        "node": "Dock to Facility Storage Clogged Pipe North"
+                        "node": "Horizontal Dock to Facility Storage Clogged Pipe North"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Facility Storage Intersection East": {
+                        "Horizontal Dock to Facility Storage Intersection East": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8911,7 +9166,7 @@
                         }
                     }
                 },
-                "Dock to Facility Storage Intersection East": {
+                "Horizontal Dock to Facility Storage Intersection East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8925,19 +9180,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Facility Storage Intersection East",
-                        "node": "Dock to Facility Storage Clogged Pipe North"
+                        "node": "Horizontal Dock to Facility Storage Clogged Pipe North"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Serris Arena Access": {
+                        "Horizontal Dock to Serris Arena Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9068,7 +9323,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Spiky Spider Trial": {
+                "Horizontal Dock to Spiky Spider Trial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9082,13 +9337,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Spiky Spider Trial",
-                        "node": "Dock to Serris Arena Access"
+                        "node": "Horizontal Dock to Serris Arena Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -9106,7 +9361,7 @@
                                 ]
                             }
                         },
-                        "Dock to Facility Storage Clogged Pipe South": {
+                        "Horizontal Dock to Facility Storage Clogged Pipe South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9141,19 +9396,20 @@
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
-                        "Screw Attack Door"
+                        "Screw Attack Door",
+                        "Hydro Station Water Turbine"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Spiky Spider Trial": {
+                        "Horizontal Dock to Spiky Spider Trial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Facility Storage Clogged Pipe North": {
+                        "Horizontal Dock to Facility Storage Clogged Pipe North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9167,7 +9423,7 @@
                         }
                     }
                 },
-                "Dock to Facility Storage Clogged Pipe North": {
+                "Horizontal Dock to Facility Storage Clogged Pipe North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9181,13 +9437,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Facility Storage Clogged Pipe North",
-                        "node": "Dock to Serris Arena Access"
+                        "node": "Horizontal Dock to Serris Arena Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -9202,7 +9458,7 @@
                         }
                     }
                 },
-                "Dock to Facility Storage Clogged Pipe South": {
+                "Horizontal Dock to Facility Storage Clogged Pipe South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9216,19 +9472,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Facility Storage Clogged Pipe South",
-                        "node": "Dock to Serris Arena Access"
+                        "node": "Horizontal Dock to Serris Arena Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Spiky Spider Trial": {
+                        "Horizontal Dock to Spiky Spider Trial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9289,7 +9545,8 @@
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
-                        "Screw Attack Door"
+                        "Screw Attack Door",
+                        "Hydro Station Water Turbine"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -9334,7 +9591,8 @@
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
-                        "Screw Attack Door"
+                        "Screw Attack Door",
+                        "Hydro Station Water Turbine"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -9619,15 +9877,6 @@
                                                         "comment": "Without Gravity",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Gravity Suit",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
-                                                            {
                                                                 "type": "or",
                                                                 "data": {
                                                                     "comment": null,
@@ -9773,7 +10022,8 @@
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [
                         "Spider Ball Door",
-                        "Screw Attack Door"
+                        "Screw Attack Door",
+                        "Hydro Station Water Turbine"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -9858,7 +10108,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Serris Arena Access": {
+                "Horizontal Dock to Serris Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9872,19 +10122,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Serris Arena Access",
-                        "node": "Dock to Facility Storage Clogged Pipe South"
+                        "node": "Horizontal Dock to Facility Storage Clogged Pipe South"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Facility Storage Tower East": {
+                        "Horizontal Dock to Facility Storage Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9893,7 +10143,7 @@
                         }
                     }
                 },
-                "Dock to Facility Storage Tower East": {
+                "Horizontal Dock to Facility Storage Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9907,19 +10157,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Facility Storage Tower East",
-                        "node": "Dock to Facility Storage Clogged Pipe South"
+                        "node": "Horizontal Dock to Facility Storage Clogged Pipe South"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Serris Arena Access": {
+                        "Horizontal Dock to Serris Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9946,7 +10196,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Serris Arena Access": {
+                "Horizontal Dock to Serris Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9960,13 +10210,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Serris Arena Access",
-                        "node": "Dock to Spiky Spider Trial"
+                        "node": "Horizontal Dock to Spiky Spider Trial"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -10280,7 +10530,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Serris Arena Access": {
+                        "Horizontal Dock to Serris Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10503,7 +10753,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Facility Storage Tower Route North": {
+                "Horizontal Dock to Facility Storage Tower Route North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10517,19 +10767,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Facility Storage Tower Route North",
-                        "node": "Dock to Facility Storage Tower East"
+                        "node": "Horizontal Dock to Facility Storage Tower East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Facility Storage Clogged Pipe South": {
+                        "Horizontal Dock to Facility Storage Clogged Pipe South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10569,7 +10819,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Facility Storage Clogged Pipe South": {
+                        "Horizontal Dock to Facility Storage Clogged Pipe South": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10581,7 +10831,7 @@
                                 ]
                             }
                         },
-                        "Dock to Spiky Space Jump Trial Entrance": {
+                        "Horizontal Dock to Spiky Space Jump Trial Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10590,7 +10840,7 @@
                         }
                     }
                 },
-                "Dock to Facility Storage Clogged Pipe South": {
+                "Horizontal Dock to Facility Storage Clogged Pipe South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10604,19 +10854,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Facility Storage Clogged Pipe South",
-                        "node": "Dock to Facility Storage Tower East"
+                        "node": "Horizontal Dock to Facility Storage Tower East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Facility Storage Tower Route North": {
+                        "Horizontal Dock to Facility Storage Tower Route North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10771,7 +11021,7 @@
                         }
                     }
                 },
-                "Dock to Spiky Space Jump Trial Entrance": {
+                "Horizontal Dock to Spiky Space Jump Trial Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10785,13 +11035,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Spiky Space Jump Trial Entrance",
-                        "node": "Dock to Facility Storage Tower East"
+                        "node": "Horizontal Dock to Facility Storage Tower East"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -10851,7 +11101,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pipe to Gravity Area Blockade Pipe": {
+                        "Pipe to Gravity Area Barricade Pipe": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10870,7 +11120,7 @@
                         }
                     }
                 },
-                "Pipe to Gravity Area Blockade Pipe": {
+                "Pipe to Gravity Area Barricade Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10891,7 +11141,7 @@
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Gravity Area Blockade Pipe",
+                        "area": "Gravity Area Barricade Pipe",
                         "node": "Pipe to Facility Storage Spiked Path Pipe"
                     },
                     "default_dock_weakness": "Teleporter",
@@ -11199,7 +11449,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Facility Storage Tower East": {
+                "Horizontal Dock to Facility Storage Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11213,13 +11463,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Facility Storage Tower East",
-                        "node": "Dock to Spiky Space Jump Trial Entrance"
+                        "node": "Horizontal Dock to Spiky Space Jump Trial Entrance"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -11274,7 +11524,7 @@
                         }
                     }
                 },
-                "Dock to Spiky Space Jump Trial": {
+                "Horizontal Dock to Spiky Space Jump Trial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11288,13 +11538,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Spiky Space Jump Trial",
-                        "node": "Dock to Spiky Space Jump Trial Entrance"
+                        "node": "Horizontal Dock to Spiky Space Jump Trial Entrance"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -11406,14 +11656,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Facility Storage Tower East": {
+                        "Horizontal Dock to Facility Storage Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Spiky Space Jump Trial": {
+                        "Horizontal Dock to Spiky Space Jump Trial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11499,7 +11749,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Spiky Space Jump Trial Reward Room": {
+                "Horizontal Dock to Spiky Space Jump Trial Reward Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11513,19 +11763,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Spiky Space Jump Trial Reward Room",
-                        "node": "Dock to Spiky Space Jump Trial"
+                        "node": "Horizontal Dock to Spiky Space Jump Trial"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Spiky Space Jump Trial Entrance": {
+                        "Horizontal Dock to Spiky Space Jump Trial Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11639,7 +11889,7 @@
                         }
                     }
                 },
-                "Dock to Spiky Space Jump Trial Entrance": {
+                "Horizontal Dock to Spiky Space Jump Trial Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11653,19 +11903,19 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Spiky Space Jump Trial Entrance",
-                        "node": "Dock to Spiky Space Jump Trial"
+                        "node": "Horizontal Dock to Spiky Space Jump Trial"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Spiky Space Jump Trial Reward Room": {
+                        "Horizontal Dock to Spiky Space Jump Trial Reward Room": {
                             "type": "or",
                             "data": {
                                 "comment": "TODO: HJ/DMG boost and DIBJ",
@@ -11936,7 +12186,7 @@
                     "pickup_index": 305,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Spiky Space Jump Trial Entrance": {
+                        "Horizontal Dock to Spiky Space Jump Trial Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11963,7 +12213,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Spiky Space Jump Trial": {
+                "Horizontal Dock to Spiky Space Jump Trial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11977,13 +12227,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Spiky Space Jump Trial",
-                        "node": "Dock to Spiky Space Jump Trial Reward Room"
+                        "node": "Horizontal Dock to Spiky Space Jump Trial Reward Room"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "4-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -12022,7 +12272,7 @@
                     "pickup_index": 306,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Spiky Space Jump Trial": {
+                        "Horizontal Dock to Spiky Space Jump Trial": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -12113,7 +12363,7 @@
                 ]
             },
             "nodes": {
-                "Dock to Facility Storage Tower East": {
+                "Horizontal Dock to Facility Storage Tower East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12127,13 +12377,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "horizontal_dock",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Facility Storage Tower East",
-                        "node": "Dock to Facility Storage Tower Route North"
+                        "node": "Horizontal Dock to Facility Storage Tower Route North"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "3-Tiles High Dock",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -12224,7 +12474,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Facility Storage Tower East": {
+                        "Horizontal Dock to Facility Storage Tower East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12818,7 +13068,7 @@
                 ]
             },
             "nodes": {
-                "Door to Gravity Area One-Way Route": {
+                "Door to Gravity Area Trapdoor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12837,7 +13087,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Gravity Area One-Way Route",
+                        "area": "Gravity Area Trapdoor",
                         "node": "Door to Gravity Area Moto Room"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -12883,7 +13133,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gravity Area One-Way Route": {
+                        "Door to Gravity Area Trapdoor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12894,7 +13144,7 @@
                 }
             }
         },
-        "Gravity Area One-Way Route": {
+        "Gravity Area Trapdoor": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5a03",
@@ -12930,13 +13180,13 @@
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Gravity Area Corridor",
-                        "node": "Door to Gravity Area One-Way Route"
+                        "node": "Door to Gravity Area Trapdoor"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [
-                        "Spider Ball Door",
-                        "Screw Attack Door"
+                        "Bomb Door",
+                        "Hydro Station Water Turbine"
                     ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
@@ -13134,7 +13384,7 @@
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Gravity Area Moto Room",
-                        "node": "Door to Gravity Area One-Way Route"
+                        "node": "Door to Gravity Area Trapdoor"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -13173,7 +13423,7 @@
                 ]
             },
             "nodes": {
-                "Door to Gravity Area One-Way Route": {
+                "Door to Gravity Area Trapdoor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13192,7 +13442,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Gravity Area One-Way Route",
+                        "area": "Gravity Area Trapdoor",
                         "node": "Door to Gravity Area Corridor"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -13300,7 +13550,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Gravity Area One-Way Route": {
+                        "Door to Gravity Area Trapdoor": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -13409,7 +13659,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gravity Chamber Access": {
+                        "Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13441,130 +13691,21 @@
                         "node": "Door to Gravity Area Shaft"
                     },
                     "default_dock_weakness": "Missile Door",
-                    "exclude_from_dock_rando": true,
+                    "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gravity Area Corridor": {
-                            "type": "or",
+                        "Bottom": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "Septogg",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity Suit",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Top": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed Booster",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Shinesparking",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity Suit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "Septogg",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Space Jump Wall"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
                 },
-                "Door to Gravity Area Blockade": {
+                "Door to Gravity Area Barricade": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13583,7 +13724,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Gravity Area Blockade",
+                        "area": "Gravity Area Barricade",
                         "node": "Door to Gravity Area Shaft"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -13623,7 +13764,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Gravity Area Blockade": {
+                        "Door to Gravity Area Barricade": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13635,6 +13776,157 @@
                                             "name": "Gravity Suit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Bottom": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 150.0,
+                        "y": 64.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Gravity Area Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "Septogg",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Gravity Chamber Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": "The door cannot be opened unless these conditions are met.",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity Suit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Super Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Top": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Space Jump Wall"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed Booster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Shinesparking",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity Suit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "Septogg",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -13943,7 +14235,7 @@
                 }
             }
         },
-        "Gravity Area Blockade": {
+        "Gravity Area Barricade": {
             "default_node": null,
             "extra": {
                 "map_name": "rm_a5a08",
@@ -13987,7 +14279,7 @@
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Gravity Area Shaft",
-                        "node": "Door to Gravity Area Blockade"
+                        "node": "Door to Gravity Area Barricade"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -13995,7 +14287,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gravity Area Blockade Pipe": {
+                        "Door to Gravity Area Barricade Pipe": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14018,7 +14310,7 @@
                         }
                     }
                 },
-                "Door to Gravity Area Blockade Pipe": {
+                "Door to Gravity Area Barricade Pipe": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14037,8 +14329,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Gravity Area Blockade Pipe",
-                        "node": "Door to Gravity Area Blockade"
+                        "area": "Gravity Area Barricade Pipe",
+                        "node": "Door to Gravity Area Barricade"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -14071,8 +14363,8 @@
                 }
             }
         },
-        "Gravity Area Blockade Pipe": {
-            "default_node": "Door to Gravity Area Blockade",
+        "Gravity Area Barricade Pipe": {
+            "default_node": "Door to Gravity Area Barricade",
             "extra": {
                 "map_name": "rm_a5a09",
                 "minimap_data": [
@@ -14083,7 +14375,7 @@
                 ]
             },
             "nodes": {
-                "Door to Gravity Area Blockade": {
+                "Door to Gravity Area Barricade": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14102,8 +14394,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
-                        "area": "Gravity Area Blockade",
-                        "node": "Door to Gravity Area Blockade Pipe"
+                        "area": "Gravity Area Barricade",
+                        "node": "Door to Gravity Area Barricade Pipe"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -14152,7 +14444,7 @@
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Facility Storage Spiked Path Pipe",
-                        "node": "Pipe to Gravity Area Blockade Pipe"
+                        "node": "Pipe to Gravity Area Barricade Pipe"
                     },
                     "default_dock_weakness": "Teleporter",
                     "exclude_from_dock_rando": false,
@@ -14160,7 +14452,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gravity Area Blockade": {
+                        "Door to Gravity Area Barricade": {
                             "type": "and",
                             "data": {
                                 "comment": null,

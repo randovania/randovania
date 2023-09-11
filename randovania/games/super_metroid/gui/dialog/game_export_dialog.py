@@ -24,7 +24,6 @@ if TYPE_CHECKING:
 
 
 class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_SuperMetroidGameExportDialog):
-
     @classmethod
     def game_enum(cls):
         return RandovaniaGame.SUPER_METROID
@@ -57,7 +56,7 @@ class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_
             fields={
                 self.input_file_edit: lambda: not self.input_file.is_file(),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
-            }
+            },
         )
 
     @property
@@ -97,8 +96,9 @@ class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_
 
     # Output File
     def _on_output_file_button(self):
-        output_file = prompt_for_output_file(self, self.valid_output_file_types, self.default_output_name,
-                                             self.output_file_edit)
+        output_file = prompt_for_output_file(
+            self, self.valid_output_file_types, self.default_output_name, self.output_file_edit
+        )
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 

@@ -66,7 +66,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -83,8 +83,13 @@ jobs:
       - name: Install core Python packages
         run: python -m pip install --upgrade -r requirements-setuptools.txt
 
-      - name: Install Python packages
-        run: python -m pip install -r requirements.txt -e . -e ".[gui]" -e ".[server]" -e ".[test]"
+      - name: Install Python packages (source)
+        run: python -m pip install -r requirements.txt -e ".[gui,server,test,typing]"
+        if: ${{ !matrix.executable }}
+
+      - name: Install Python packages (executable)
+        run: python -m pip install -e . -e ".[gui]" -e ".[test]" -c requirements.txt
+        if: ${{ matrix.executable }}
 
       - name: build ui files
         run: python setup.py build_ui
@@ -160,7 +165,7 @@ jobs:
     if: ${{ (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download the executable
         uses: actions/download-artifact@v3
@@ -253,7 +258,7 @@ jobs:
 
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -284,7 +289,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -310,7 +315,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -324,7 +329,7 @@ jobs:
       - name: Install Python packages
         run: |
           python -m pip install --upgrade -r requirements-setuptools.txt
-          python -m pip install -r requirements.txt -e ".[gui,server,test]"
+          python -m pip install -r requirements.txt -e ".[gui,server,test,typing]"
 
       - name: Mypy on modified files
         uses: tsuyoshicho/action-mypy@v3
@@ -352,7 +357,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -392,7 +397,7 @@ jobs:
 
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2.9.1
+        uses: docker/setup-buildx-action@v2.10.0
 
       - name: Should Push
         id: decide_push
@@ -412,7 +417,7 @@ jobs:
       -
         name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v4.1.1
+        uses: docker/build-push-action@v4.2.1
         with:
           context: .
           file: ./Dockerfile.server
@@ -443,7 +448,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 

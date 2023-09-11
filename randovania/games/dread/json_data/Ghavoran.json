@@ -1557,7 +1557,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Bomb horizontally to reach the item",
+                                                        "comment": "DBJ: https://youtu.be/8T5vedkSQRM",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2661,7 +2661,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: If the elevator to Dairon is shuffled is also an alternative",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2680,6 +2680,15 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "Teleporters",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -2690,6 +2699,58 @@
                         "Event - Super Missile Rotatable Enky": {
                             "type": "template",
                             "data": "Destroy Enky"
+                        },
+                        "Event - Super Missile Rotatable with Ledge Warp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "LedgeWarp",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSupersAreaAccess",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2722,7 +2783,9 @@
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Grapple Beam Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2736,12 +2799,29 @@
                             }
                         },
                         "Tunnel to Spider Magnet Elevator": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "GhavoranSupersRotatable",
-                                "amount": 1,
-                                "negate": true
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranSupersRotatable",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "Teleporters",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2903,15 +2983,6 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Elun Transport Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "GhavoranSupersRotatable",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        },
-                        "Event - Super Missile Rotatable": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2928,10 +2999,92 @@
                                     {
                                         "type": "resource",
                                         "data": {
+                                            "type": "misc",
+                                            "name": "Teleporters",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Super Missile Rotatable": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
                                             "type": "items",
                                             "name": "Morph",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Super Missile Rotatable with Ledge Warp": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "LedgeWarp",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSupersAreaAccess",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "HighDanger",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2956,6 +3109,31 @@
                     "event_name": "GhavoranSuperRotatableEnky",
                     "connections": {
                         "Dock to Spin Boost Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Super Missile Rotatable with Ledge Warp": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1992.84,
+                        "y": -1598.56,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "GhavoranSupersRotatable",
+                    "connections": {
+                        "Door to Navigation Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3162,6 +3340,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Super Missile Area Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3266,6 +3451,31 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "connections": {
+                        "Door to Super Missile Room Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Super Missile Area Access": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -532.81,
+                        "y": -4457.73,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "GhavoranSupersAreaAccess",
                     "connections": {
                         "Door to Super Missile Room Access": {
                             "type": "and",
@@ -4113,7 +4323,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to EMMI Zone Exit West": {
+                        "Door to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": "If you start in the room direclty below this one, you can carry a speed boost all the way to here",
@@ -4438,7 +4648,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to EMMI Zone Exit West": {
+                        "Door to EMMI Zone Exit West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4538,7 +4748,7 @@
                         }
                     }
                 },
-                "Dock to EMMI Zone Exit West": {
+                "Door to EMMI Zone Exit West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4559,13 +4769,13 @@
                         "right_shield_def": null
                     },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Ghavoran",
                         "area": "EMMI Zone Exit West",
-                        "node": "Dock to EMMI Zone Exit Southeast"
+                        "node": "Door to EMMI Zone Exit Southeast"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4671,7 +4881,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to EMMI Zone Exit West": {
+                        "Door to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5401,7 +5611,7 @@
                         }
                     }
                 },
-                "Dock to EMMI Zone Exit Southeast": {
+                "Door to EMMI Zone Exit Southeast": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5422,13 +5632,13 @@
                         "right_shield_def": null
                     },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Ghavoran",
                         "area": "EMMI Zone Exit Southeast",
-                        "node": "Dock to EMMI Zone Exit West"
+                        "node": "Door to EMMI Zone Exit West"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5613,7 +5823,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to EMMI Zone Exit Southeast": {
+                        "Door to EMMI Zone Exit Southeast": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12609,7 +12819,9 @@
                     },
                     "default_dock_weakness": "Super Missile Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Grapple Beam Door"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {

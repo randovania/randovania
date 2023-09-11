@@ -26,11 +26,12 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 
-def _create_resource_name_combo(resource_database: ResourceDatabase,
-                                resource_type: ResourceType,
-                                current_resource: ResourceInfo | None,
-                                parent: QWidget,
-                                ) -> QComboBox:
+def _create_resource_name_combo(
+    resource_database: ResourceDatabase,
+    resource_type: ResourceType,
+    current_resource: ResourceInfo | None,
+    parent: QWidget,
+) -> QComboBox:
     """
 
     :param resource_database:
@@ -49,8 +50,9 @@ def _create_resource_name_combo(resource_database: ResourceDatabase,
     return resource_name_combo
 
 
-def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWidget,
-                                resource_database: ResourceDatabase) -> QComboBox:
+def _create_resource_type_combo(
+    current_resource_type: ResourceType, parent: QWidget, resource_database: ResourceDatabase
+) -> QComboBox:
     """
 
     :param current_resource_type:
@@ -91,10 +93,13 @@ def _create_default_template_requirement(resource_database: ResourceDatabase) ->
 
 
 class ResourceRequirementEditor:
-    def __init__(self,
-                 parent: QWidget, layout: QHBoxLayout,
-                 resource_database: ResourceDatabase, item: ResourceRequirement,
-                 ):
+    def __init__(
+        self,
+        parent: QWidget,
+        layout: QHBoxLayout,
+        resource_database: ResourceDatabase,
+        item: ResourceRequirement,
+    ):
         self.parent = parent
         self.layout = layout
         self.resource_database = resource_database
@@ -103,10 +108,9 @@ class ResourceRequirementEditor:
         self.resource_type_combo.setMinimumWidth(75)
         self.resource_type_combo.setMaximumWidth(75)
 
-        self.resource_name_combo = _create_resource_name_combo(self.resource_database,
-                                                               item.resource.resource_type,
-                                                               item.resource,
-                                                               self.parent)
+        self.resource_name_combo = _create_resource_name_combo(
+            self.resource_database, item.resource.resource_type, item.resource, self.parent
+        )
 
         self.negate_combo = ScrollProtectedComboBox(parent)
         self.negate_combo.addItem("≥", False)
@@ -155,10 +159,9 @@ class ResourceRequirementEditor:
     def _update_type(self):
         old_combo = self.resource_name_combo
 
-        self.resource_name_combo = _create_resource_name_combo(self.resource_database,
-                                                               self.resource_type_combo.currentData(),
-                                                               None,
-                                                               self.parent)
+        self.resource_name_combo = _create_resource_name_combo(
+            self.resource_database, self.resource_type_combo.currentData(), None, self.parent
+        )
 
         self.layout.replaceWidget(old_combo, self.resource_name_combo)
         old_combo.deleteLater()
@@ -201,8 +204,14 @@ class ResourceRequirementEditor:
 
 
 class ArrayRequirementEditor:
-    def __init__(self, parent: QWidget, parent_layout: QVBoxLayout, line_layout: QHBoxLayout,
-                 resource_database: ResourceDatabase, requirement: RequirementArrayBase):
+    def __init__(
+        self,
+        parent: QWidget,
+        parent_layout: QVBoxLayout,
+        line_layout: QHBoxLayout,
+        resource_database: ResourceDatabase,
+        requirement: RequirementArrayBase,
+    ):
         self._editors = []
         self.resource_database = resource_database
         self._array_type = type(requirement)
@@ -261,19 +270,19 @@ class ArrayRequirementEditor:
             comment = None
 
         return self._array_type(
-            [
-                editor.current_requirement
-                for editor in self._editors
-            ],
+            [editor.current_requirement for editor in self._editors],
             comment=comment,
         )
 
 
 class TemplateRequirementEditor:
-    def __init__(self,
-                 parent: QWidget, layout: QHBoxLayout,
-                 resource_database: ResourceDatabase, item: RequirementTemplate,
-                 ):
+    def __init__(
+        self,
+        parent: QWidget,
+        layout: QHBoxLayout,
+        resource_database: ResourceDatabase,
+        item: RequirementTemplate,
+    ):
         self.parent = parent
         self.layout = layout
         self.resource_database = resource_database
@@ -299,12 +308,9 @@ class TemplateRequirementEditor:
 class RequirementEditor:
     _editor: None | ResourceRequirementEditor | ArrayRequirementEditor | TemplateRequirementEditor
 
-    def __init__(self,
-                 parent: QWidget,
-                 parent_layout: QVBoxLayout,
-                 resource_database: ResourceDatabase,
-                 *, on_remove=None):
-
+    def __init__(
+        self, parent: QWidget, parent_layout: QVBoxLayout, resource_database: ResourceDatabase, *, on_remove=None
+    ):
         self.parent = parent
         self.parent_layout = parent_layout
         self.resource_database = resource_database
@@ -347,8 +353,9 @@ class RequirementEditor:
             self._editor = ResourceRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)
 
         elif isinstance(requirement, RequirementArrayBase):
-            self._editor = ArrayRequirementEditor(self.parent, self.parent_layout, self.line_layout,
-                                                  self.resource_database, requirement)
+            self._editor = ArrayRequirementEditor(
+                self.parent, self.parent_layout, self.line_layout, self.resource_database, requirement
+            )
 
         elif isinstance(requirement, RequirementTemplate):
             self._editor = TemplateRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)

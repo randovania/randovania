@@ -11,8 +11,10 @@ if TYPE_CHECKING:
     from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 
-def find_bad_installation(hash_list: dict[str, str], progress_update: ProgressUpdateCallable,
-                          ) -> tuple[list[str], set[str]]:
+def find_bad_installation(
+    hash_list: dict[str, str],
+    progress_update: ProgressUpdateCallable,
+) -> tuple[list[str], set[str]]:
     root = randovania.get_file_path()
 
     extra_files = set()
@@ -34,8 +36,7 @@ def find_bad_installation(hash_list: dict[str, str], progress_update: ProgressUp
         except OSError:
             bad_files.append(name)
 
-        progress_update(f"{i + 1} out of {total} files checked.",
-                        (i + 1) / total)
+        progress_update(f"{i + 1} out of {total} files checked.", (i + 1) / total)
 
     extra_files.remove(os.fspath(Path("data").joinpath("frozen_file_list.json")))
     extra_files.remove("randovania.exe")

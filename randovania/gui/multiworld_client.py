@@ -139,8 +139,9 @@ class MultiworldClient(QtCore.QObject):
                 return
 
             for uid, world_request in request.worlds.items():
-                self.logger.debug("Syncing %s: State %s, collected %s", uid, world_request.status,
-                                  world_request.collected_locations)
+                self.logger.debug(
+                    "Syncing %s: State %s, collected %s", uid, world_request.status, world_request.collected_locations
+                )
 
             try:
                 result = await self.network_client.perform_world_sync(request)
@@ -178,9 +179,7 @@ class MultiworldClient(QtCore.QObject):
                 self._last_reported_status[uid] = world.status
                 self._world_sync_errors.pop(uid, None)
                 if world.collected_locations:
-                    modified_data[uid] = get_data(uid).extend_uploaded_locations(
-                        world.collected_locations
-                    )
+                    modified_data[uid] = get_data(uid).extend_uploaded_locations(world.collected_locations)
 
             for uid, world in result.worlds.items():
                 modified_data[uid] = dataclasses.replace(
@@ -189,16 +188,12 @@ class MultiworldClient(QtCore.QObject):
                         world_name=world.world_name,
                         session_id=world.session_id,
                         session_name=world.session_name,
-                    )
+                    ),
                 )
                 self._worlds_with_details.add(uid)
 
             self._last_sync = ServerSyncRequest(
-                worlds=frozendict([
-                    (uid, world)
-                    for uid, world in request.worlds.items()
-                    if uid not in result.errors
-                ])
+                worlds=frozendict([(uid, world) for uid, world in request.worlds.items() if uid not in result.errors])
             )
 
             if result.errors:

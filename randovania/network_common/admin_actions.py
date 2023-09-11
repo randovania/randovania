@@ -5,6 +5,7 @@ from enum import Enum
 
 class SessionAdminGlobalAction(Enum):
     """Actions that operate on the session itself"""
+
     CREATE_WORLD = "create_world"
     CHANGE_WORLD = "change_world"
     RENAME_WORLD = "rename_world"
@@ -24,6 +25,7 @@ class SessionAdminGlobalAction(Enum):
 
 class SessionAdminUserAction(Enum):
     """Actions that operate on top of a user"""
+
     KICK = "kick"
     CREATE_WORLD_FOR = "create_world_for"
     CLAIM = "claim"

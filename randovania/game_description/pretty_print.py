@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import typing
 from typing import TYPE_CHECKING, TextIO
 
 from randovania.game_description.data_writer import REGION_NAME_TO_FILE_NAME_RE
@@ -34,8 +35,7 @@ def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
         return requirement.pretty_text
 
 
-def pretty_print_requirement_array(requirement: RequirementArrayBase,
-                                   level: int) -> Iterator[tuple[int, str]]:
+def pretty_print_requirement_array(requirement: RequirementArrayBase, level: int) -> Iterator[tuple[int, str]]:
     if len(requirement.items) == 1 and requirement.comment is None:
         yield from pretty_print_requirement(requirement.items[0], level)
         return
@@ -45,10 +45,7 @@ def pretty_print_requirement_array(requirement: RequirementArrayBase,
     other_requirements = [item for item in requirement.items if isinstance(item, RequirementArrayBase)]
     assert len(resource_requirements) + len(template_requirements) + len(other_requirements) == len(requirement.items)
 
-    pretty_resources = [
-        pretty_print_resource_requirement(item)
-        for item in sorted(resource_requirements)
-    ]
+    pretty_resources = [pretty_print_resource_requirement(item) for item in sorted(resource_requirements)]
     sorted_templates = sorted(item.template_name for item in template_requirements)
 
     if isinstance(requirement, RequirementOr):
@@ -56,7 +53,9 @@ def pretty_print_requirement_array(requirement: RequirementArrayBase,
     else:
         title = "All"
 
-    if len(other_requirements) == 0 and requirement.comment is None:
+    if len(other_requirements) == 0:
+        if requirement.comment is not None:
+            yield level, f"# {requirement.comment}"
         yield level, requirement.combinator().join(pretty_resources + sorted_templates)
     else:
         yield level, f"{title} of the following:"
@@ -87,14 +86,13 @@ def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterat
         raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
 
 
-def pretty_print_node_type(node: Node, region_list: RegionList):
+def pretty_print_node_type(node: Node, region_list: RegionList) -> str:
     if isinstance(node, DockNode):
         try:
             other = region_list.node_by_identifier(node.default_connection)
             other_name = region_list.node_name(other)
         except IndexError as e:
-            other_name = (f"(Area {node.default_connection.area_name}, "
-                          f"index {node.default_connection.node_name}) [{e}]")
+            other_name = f"(Area {node.default_connection.area_name}, index {node.default_connection.node_name}) [{e}]"
 
         message = f"{node.default_dock_weakness.name} to {other_name}"
 
@@ -129,7 +127,7 @@ def pretty_print_node_type(node: Node, region_list: RegionList):
     return ""
 
 
-def pretty_print_area(game: GameDescription, area: Area, print_function=print):
+def pretty_print_area(game: GameDescription, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
     print_function(area.name)
     for extra_name, extra_field in area.extra.items():
         print_function(f"Extra - {extra_name}: {extra_field}")
@@ -161,7 +159,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
             print_function(f"  > {target_node.name}")
             for level, text in pretty_print_requirement(requirement.simplify(keep_comments=True)):
                 print_function("      {}{}".format("    " * level, text))
-        print_function()
+        print_function("")
 
 
 def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
@@ -215,7 +213,7 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
 
 
 def write_human_readable_region_list(game: GameDescription, output: TextIO) -> None:
-    def print_to_file(*args):
+    def print_to_file(*args: typing.Any) -> None:
         output.write("\t".join(str(arg) for arg in args) + "\n")
 
     output.write("\n")
@@ -226,14 +224,15 @@ def write_human_readable_region_list(game: GameDescription, output: TextIO) -> N
             pretty_print_area(game, area, print_function=print_to_file)
 
 
-def write_human_readable_game(game: GameDescription, base_path: Path):
+def write_human_readable_game(game: GameDescription, base_path: Path) -> None:
     with base_path.joinpath("header.txt").open("w", encoding="utf-8") as meta:
         write_human_readable_meta(game, meta)
 
     for region in game.region_list.regions:
-        name = REGION_NAME_TO_FILE_NAME_RE.sub(r'', region.name)
+        name = REGION_NAME_TO_FILE_NAME_RE.sub(r"", region.name)
         with base_path.joinpath(f"{name}.txt").open("w", encoding="utf-8") as region_file:
-            def print_to_file(*args):
+
+            def print_to_file(*args: typing.Any) -> None:
                 region_file.write("\t".join(str(arg) for arg in args) + "\n")
 
             for area in region.areas:
