@@ -528,10 +528,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     def setup_teleporters(self) -> None:
         self._teleporter_id_to_combo = {}
 
-        if not hasattr(self.game_configuration, "teleporters"):
+        teleporters_config: TeleporterConfiguration | None = getattr(self.game_configuration, "teleporters", None)
+        if teleporters_config is None:
             return
-
-        teleporters_config: TeleporterConfiguration = getattr(self.game_configuration, "teleporters")
 
         region_list = self.game_description.region_list
         nodes_by_region: dict[str, list[DockNode]] = collections.defaultdict(list)

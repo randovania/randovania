@@ -21,7 +21,8 @@ def is_frozen() -> bool:
 
 
 def is_flatpak() -> bool:
-    return platform.system() == "Linux" and os.environ.get("container", "") != ""
+    is_container = os.environ.get("container", "") != ""  # noqa: SIM112, variable is named that by flatpak
+    return platform.system() == "Linux" and is_container
 
 
 def is_dirty() -> bool:
@@ -43,7 +44,7 @@ def get_icon_path() -> Path:
 
 def get_file_path() -> Path:
     if is_frozen():
-        file_dir = Path(getattr(sys, "_MEIPASS"))
+        file_dir = Path(getattr(sys, "_MEIPASS"))  # noqa: B009
     else:
         file_dir = Path(__file__).parent
     return file_dir
@@ -93,8 +94,7 @@ def get_configuration() -> NetworkConfiguration:
                 "server_address": "http://127.0.0.1:5000",
                 "socketio_path": "/socket.io",
             }
-        else:
-            raise
+        raise
 
 
 def setup_logging(default_level: str, log_to_file: Path | None, quiet: bool = False) -> None:
