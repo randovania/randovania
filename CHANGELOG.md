@@ -46,8 +46,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Several videos for tricks to the Crateria database.
 
-#### Brinstar
-
 #### Crateria
 
 - Added: Wall-jumps as a method for traversing Crab Maze.
@@ -56,16 +54,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Damage boosting as an option of traversing the top of Crateria Super Missile Room.
 - Added: Wall jumps and spring ball jumps as an option for traverse East Ocean.
 - Fixed: Missing node connections in Crateria Power Bomb Room. 
-
-#### Ceres Station
-
-#### Maridia
-
-#### Norfair
-
-#### Tourian
-
-#### Wrecked Ship
 
 ## [6.2.1] - 2023-09-??
 
